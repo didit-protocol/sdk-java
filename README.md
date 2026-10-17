@@ -209,7 +209,7 @@ WebhookEvent event = Webhooks.verify(rawBody, headers, secret);
 - Verify the raw request body. If your framework only gives you the parsed JSON, use `Webhooks.verifyParsed(payload, headers, secret)`, which checks `X-Signature-V2` only.
 - During a secret rotation pass both secrets: `VerifyOptions.builder().secret(current).secret(previous).build()`.
 - Deliveries older or newer than 5 minutes are rejected; change it with `.tolerance(...)`.
-- `X-Signature-Simple` is deprecated and covers the envelope only; it is accepted only with `.allowSimple(true)`, and then `event.isBodyAuthenticated()` is false: re-fetch the record from the API before acting on it.
+- `X-Signature-Simple` is deprecated and covers the envelope only; `Webhooks.verify` accepts it only with `.allowSimple(true)` (`verifyParsed` never does), and then `event.isBodyAuthenticated()` is false: re-fetch the record from the API before acting on it.
 - A failed check throws `WebhookVerificationException` with `reason()`: `missing_signature`, `invalid_signature`, `missing_timestamp`, `timestamp_mismatch`, `timestamp_out_of_tolerance` or `invalid_payload`. Answer it with a 4xx status.
 
 Events are typed: `SessionStatusUpdatedEvent`, `SessionDataUpdatedEvent`, `UserStatusUpdatedEvent`, `UserDataUpdatedEvent`, `BusinessStatusUpdatedEvent`, `BusinessDataUpdatedEvent`, `ActivityCreatedEvent`, `TransactionCreatedEvent`, `TransactionStatusUpdatedEvent`, `TravelRuleStatusUpdatedEvent`, `WorkflowComplianceChangedEvent`, `KybRegistrySearchResolvedEvent`, and `UnknownEvent` for types this version does not know.
@@ -250,8 +250,8 @@ String userId = claims.subject();
 ```
 
 - Verification accepts ES256 only and checks `typ`, `iss`, `aud`, `exp`, `nbf` and `iat` (60 s leeway). Failures throw `TokenVerificationException` with `reason()`.
-- The issuer's discovery document and keys are cached as it says (5 minutes today); an unknown key id refetches them at most once a minute. Create one `Authentication` per issuer and reuse it.
-- `Authentication.createPkce()`, `createState()` and `createNonce()` start a sign-in; `exchangeCode(code, verifier, redirectUri)` finishes it; `verifyIdToken(idToken, nonce)` checks the ID token (pass `null` for a token from a refresh).
+- The issuer's discovery document and keys are cached as it says (5 minutes today); an unknown key id refetches them at most once a minute. Concurrent verifications share one fetch, and after a failed fetch they fail fast for 5 seconds instead of each calling the issuer. Create one `Authentication` per issuer and reuse it.
+- `Authentication.createPkce()`, `createState()` and `createNonce()` start a sign-in; `exchangeCode(code, verifier, redirectUri)` finishes it; `verifyIdToken(idToken, nonce)` checks the ID token (pass `null` for a token from a refresh, which carries no nonce; a token that does carry one is then refused).
 - `refresh(refreshToken)` rotates the tokens. Serialise the refreshes of one session: reusing a consumed refresh token revokes the session.
 - `getSession(accessToken)` is a live revocation check (rate-limited: do not call it on every request); `revokeSession(accessToken)` signs the user out.
 - `createStepUp(accessToken, StepUpParams.builder("payout").amount("250.00").currency("EUR").returnTo(url).build())` asks for a verification before a sensitive action; act only once `retrieveStepUp(accessToken, id).isApproved()`.
