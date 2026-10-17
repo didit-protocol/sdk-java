@@ -220,8 +220,8 @@ public final class ApiClient {
                 .orElseThrow(
                     () ->
                         new ConfigurationException(
-                            "No account token: pass accountToken(...) (from account().login(...))"
-                                + " or set DIDIT_ACCOUNT_TOKEN"));
+                            "No account token: pass accountToken(...) with the token from"
+                                + " account().login(...)"));
         put(headers, "Authorization", "Bearer " + token);
         break;
       case NONE:

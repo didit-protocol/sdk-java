@@ -1,7 +1,5 @@
 package me.didit.core;
 
-import java.util.Locale;
-
 /** Describes the runtime for the {@code User-Agent} header. */
 final class Platform {
   private static final String USER_AGENT = build();
@@ -40,9 +38,11 @@ final class Platform {
 
   private static String clean(String value) {
     StringBuilder out = new StringBuilder();
-    for (char c : value.toCharArray()) {
+    for (int i = 0; i < value.length(); i++) {
+      char c = value.charAt(i);
       out.append(c >= 0x20 && c < 0x7f && c != '(' && c != ')' && c != ';' ? c : '_');
     }
-    return out.toString().trim().toLowerCase(Locale.ROOT).equals("") ? "unknown" : out.toString();
+    String text = out.toString().trim();
+    return text.isEmpty() ? "unknown" : text;
   }
 }

@@ -116,7 +116,7 @@ public final class Didit extends DiditResources {
     }
 
     /**
-     * The account token for {@code account} operations. Defaults to {@code DIDIT_ACCOUNT_TOKEN}.
+     * The account token for {@code account} operations.
      *
      * @param accountToken the Bearer token from {@code account().login(...)}
      * @return this builder

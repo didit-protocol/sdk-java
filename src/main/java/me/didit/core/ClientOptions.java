@@ -23,8 +23,7 @@ import org.jspecify.annotations.Nullable;
  * The configuration of a client (DESIGN 6). Immutable; build it with {@link #builder()}.
  *
  * <p>Unset values fall back to environment variables: {@code DIDIT_API_KEY}, {@code
- * DIDIT_ORGANIZATION_ID}, {@code DIDIT_APPLICATION_ID}, {@code DIDIT_ACCOUNT_TOKEN} and {@code
- * DIDIT_LOG=debug}.
+ * DIDIT_ORGANIZATION_ID}, {@code DIDIT_APPLICATION_ID} and {@code DIDIT_LOG=debug}.
  */
 public final class ClientOptions {
   /** The verification API. */
@@ -55,7 +54,7 @@ public final class ClientOptions {
   private ClientOptions(Builder b, HttpTransport transport) {
     Function<String, @Nullable String> env = b.environment;
     this.apiKey = firstNonEmpty(b.apiKey, env.apply("DIDIT_API_KEY"));
-    this.accountToken = firstNonEmpty(b.accountToken, env.apply("DIDIT_ACCOUNT_TOKEN"));
+    this.accountToken = firstNonEmpty(b.accountToken, null);
     this.organizationId = firstNonEmpty(b.organizationId, env.apply("DIDIT_ORGANIZATION_ID"));
     this.applicationId = firstNonEmpty(b.applicationId, env.apply("DIDIT_APPLICATION_ID"));
     this.baseUrl = baseUrl(b.baseUrl, "baseUrl");
@@ -331,7 +330,7 @@ public final class ClientOptions {
     }
 
     /**
-     * The account token for {@code account} operations. Defaults to {@code DIDIT_ACCOUNT_TOKEN}.
+     * The account token for {@code account} operations.
      *
      * @param accountToken the Bearer token from {@code account().login(...)}
      * @return this builder
