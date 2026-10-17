@@ -30,9 +30,6 @@ dependencies {
   testRuntimeOnly(libs.junit.launcher)
 }
 
-val generatedSources =
-  listOf("me/didit/resources/**", "me/didit/types/**")
-
 tasks.withType<JavaCompile>().configureEach {
   options.release = 11
   options.encoding = "UTF-8"
@@ -122,13 +119,17 @@ tasks.check { dependsOn(tasks.jacocoTestCoverageVerification) }
 // The generated layer is checked by regenerating it (codegen/generate.py --check), not formatted.
 spotless {
   java {
-    target("src/**/*.java")
+    target("src/**/*.java", "examples/src/**/*.java")
     targetExclude(
       "src/main/java/me/didit/resources/**",
       "src/main/java/me/didit/types/**",
       "src/test/java/me/didit/resources/**",
     )
     googleJavaFormat(libs.versions.google.java.format.get())
+  }
+  kotlin {
+    target("examples/src/**/*.kt")
+    ktfmt().googleStyle()
   }
   kotlinGradle {
     target("*.gradle.kts", "examples/*.gradle.kts")
