@@ -197,14 +197,7 @@ class Builder:
         base = name
         candidate = base
         counter = 2
-        while (
-            candidate in used
-            or candidate in enclosing
-            or candidate in names.RESERVED_TYPE_NAMES
-            or candidate in self.top_names
-            and self.top_names[candidate].kind != "never"
-            and candidate in enclosing
-        ):
+        while candidate in used or candidate in enclosing or candidate in names.RESERVED_TYPE_NAMES:
             candidate = f"{base}Value" if counter == 2 else f"{base}{counter}"
             counter += 1
         cls = JClass(kind, candidate, outer, origin=origin, pointer=pointer, doc_name=doc.name)
@@ -463,9 +456,8 @@ class Builder:
                 vname = names.pascal(str(target["properties"][disc_prop]["enum"][0]))
                 detect: tuple[Any, ...] = ("discriminator", disc_prop, target["properties"][disc_prop]["enum"][0])
             elif "$ref" in v:
-                vname = self.ref_type(doc, v["$ref"], None, "Variant").cls.name if self.ref_type(
-                    doc, v["$ref"], None, "Variant"
-                ).cls else names.pascal(v["$ref"].rsplit("/", 1)[-1])
+                ref_t = self.ref_type(doc, v["$ref"], None, "Variant")
+                vname = ref_t.cls.name if ref_t.cls is not None else names.pascal(v["$ref"].rsplit("/", 1)[-1])
                 detect = self._shape_detect(target)
             elif isinstance(target, dict) and target.get("title") and len(names.words(target["title"])) <= 4:
                 vname = names.pascal(target["title"])
@@ -663,6 +655,10 @@ class Builder:
         query_props: list[Prop],
         context: str,
     ) -> None:
+        # A query parameter with the same name as a body field means the same thing
+        # (the backend reads either); the SDK sends it in the body only.
+        body_names = {name for name, _, _, _ in self._collect_object(doc, schema, pointer)[0]}
+        query_props[:] = [p for p in query_props if p.json_name not in body_names]
         temp = self._model(doc, schema, pointer + "#tmp", cls, "Tmp", "params", context, True, query_props)
         tmp_cls = temp.cls
         assert tmp_cls is not None
@@ -721,7 +717,7 @@ class Builder:
             code, _, schema, pointer, _ = json_entries[0]
             hint = prefix + "Response"
             rtype = self._response_type(doc, schema, pointer, hint)
-            page = self._page(op, doc, schema)
+            page = self._page(op, doc, schema, rtype)
             if page is not None:
                 style, item = page
                 return ResponseModel("page", type=item, page_style=style, statuses=codes)
@@ -745,37 +741,23 @@ class Builder:
             return self.ref_type(doc, schema["$ref"], None, hint)
         return self.schema_type(doc, schema, pointer, None, hint, origin="response")
 
-    def _page(self, op: Operation, doc: Document, schema: dict[str, Any]) -> tuple[str, TypeRef] | None:
-        if op.http_method != "get":
+    def _page(
+        self, op: Operation, doc: Document, schema: dict[str, Any], rtype: TypeRef
+    ) -> tuple[str, TypeRef] | None:
+        if op.http_method != "get" or rtype.kind != "class" or rtype.cls is None or rtype.cls.kind != "model":
             return None
-        target, last = doc.deref(schema)
-        if not isinstance(target, dict):
-            return None
-        props = target.get("properties") or {}
+        props = {p.json_name: p for p in rtype.cls.props}
         query = {p["name"] for p in op.parameters() if p["in"] == "query"}
         results = props.get("results")
         if results is None or "offset" not in query:
             return None
-        results_target, _ = doc.deref(results)
-        if not isinstance(results_target, dict) or results_target.get("type") != "array":
+        if results.type.kind != "list" or results.type.item is None:
             return None
         if "next" in props and "count" in props:
-            style = "next"
-        elif "next_offset" in props:
-            style = "next_offset"
-        else:
-            return None
-        rtype = self.by_pointer.get((doc.name, last or ""))
-        container_pointer = last or ""
-        if rtype is None:
-            raise SpecError(f"{op.key}: page response type was not registered")
-        list_type = self.by_pointer.get((doc.name, f"{container_pointer}/properties/results"))
-        if list_type is None:
-            # The results property may itself be a $ref.
-            list_type = self.schema_type(doc, results, f"{container_pointer}/properties/results", rtype.cls, "Results")
-        if list_type.kind != "list" or list_type.item is None:
-            raise SpecError(f"{op.key}: page results must be an array")
-        return style, list_type.item
+            return "next", results.type.item
+        if "next_offset" in props:
+            return "next_offset", results.type.item
+        return None
 
     def build(self) -> Model:
         # Components first, so their names are stable.
