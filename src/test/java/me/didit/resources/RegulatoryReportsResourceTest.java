@@ -109,10 +109,10 @@ final class RegulatoryReportsResourceTest {
   }
 
   @Test
-  void validate_() {
+  void validate() {
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.regulatoryReports().validate_("00000000-0000-4000-8000-00000001357a");
+    var result = client.regulatoryReports().validate("00000000-0000-4000-8000-00000001357a");
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/regulatory-reports/00000000-0000-4000-8000-00000001357a/validate/", request.path());
