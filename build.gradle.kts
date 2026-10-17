@@ -54,6 +54,8 @@ tasks.named<JavaCompile>("compileTestJava") {
   options.errorprone {
     // Tests stub nullable values and use reflection over the generated API.
     disable("NullAway")
+    // Style checks that only add noise to test code.
+    disable("StringSplitter", "CanonicalDuration", "InputStreamSlowMultibyteRead")
   }
 }
 
