@@ -40,10 +40,10 @@ jobs:
             21
       - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
       - name: Unit, generated, contract, webhook and Authentication tests
-        run: ./gradlew test "-PtestJavaVersion=${{ matrix.java }}" "-Porg.gradle.java.installations.fromEnv=JAVA_HOME_${{ matrix.java }}_X64,JAVA_HOME_${{ matrix.java }}_ARM64,JAVA_HOME_21_X64,JAVA_HOME_21_ARM64"
+        run: ./gradlew :test "-PtestJavaVersion=${{ matrix.java }}" "-Porg.gradle.java.installations.fromEnv=JAVA_HOME_${{ matrix.java }}_X64,JAVA_HOME_${{ matrix.java }}_ARM64,JAVA_HOME_21_X64,JAVA_HOME_21_ARM64"
       - name: Core coverage of 90 % or more
         if: matrix.os == 'ubuntu-latest' && matrix.java == 21
-        run: ./gradlew jacocoTestCoverageVerification
+        run: ./gradlew :jacocoTestCoverageVerification
 
   checks:
     name: Static checks, Javadoc and packaging
@@ -136,4 +136,4 @@ jobs:
         env:
           DIDIT_SANDBOX_API_KEY: ${{ secrets.DIDIT_SANDBOX_API_KEY }}
           DIDIT_SANDBOX_WORKFLOW_ID: ${{ vars.DIDIT_SANDBOX_WORKFLOW_ID }}
-        run: ./gradlew liveTest
+        run: ./gradlew :liveTest
