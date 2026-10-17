@@ -36,8 +36,10 @@ final class StubIssuer implements HttpTransport {
   final String kid = "k_test_current";
   final List<TransportRequest> requests = new ArrayList<>();
   final Map<String, Function<TransportRequest, TransportResponse>> routes = new LinkedHashMap<>();
+
   /** Routes whose response is held until the test completes the future. */
   final Map<String, CompletableFuture<TransportResponse>> held = new LinkedHashMap<>();
+
   String cacheControl = "public, max-age=300";
   ObjectNode discovery;
 

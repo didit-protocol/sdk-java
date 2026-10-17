@@ -318,7 +318,10 @@ final class AuthenticationTest {
     byte[] s = java.util.Arrays.copyOfRange(signature, 32, 64);
     for (byte[] forgedSignature :
         new byte[][] {
-          new byte[64], concat(new byte[32], s), concat(fixed(n), s), concat(fixed(n.add(BigInteger.ONE)), s)
+          new byte[64],
+          concat(new byte[32], s),
+          concat(fixed(n), s),
+          concat(fixed(n.add(BigInteger.ONE)), s)
         }) {
       assertEquals(
           Reason.INVALID_SIGNATURE,
@@ -450,8 +453,7 @@ final class AuthenticationTest {
     assertEquals(
         Reason.INVALID_NONCE,
         assertThrows(
-                TokenVerificationException.class,
-                () -> authWithClient().verifyIdToken(token, null))
+                TokenVerificationException.class, () -> authWithClient().verifyIdToken(token, null))
             .reason());
     // typ may be absent on an ID token.
     ObjectNode noTyp = issuer.header("JWT");
@@ -511,8 +513,7 @@ final class AuthenticationTest {
     String upper = "HTTP://localhost:8000";
     local.discovery.put("issuer", upper);
     local.discovery.put("jwks_uri", "http://localhost:8000/.well-known/jwks.json");
-    Authentication e =
-        Authentication.builder().issuer(upper).transport(local).clock(clock).build();
+    Authentication e = Authentication.builder().issuer(upper).transport(local).clock(clock).build();
     ObjectNode localClaims = local.accessClaims(now);
     localClaims.put("iss", upper);
     assertEquals(

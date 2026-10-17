@@ -443,7 +443,10 @@ public final class Authentication {
       BigInteger order = key.getParams().getOrder();
       BigInteger r = new BigInteger(1, Arrays.copyOfRange(signature, 0, 32));
       BigInteger s = new BigInteger(1, Arrays.copyOfRange(signature, 32, 64));
-      if (r.signum() == 0 || s.signum() == 0 || r.compareTo(order) >= 0 || s.compareTo(order) >= 0) {
+      if (r.signum() == 0
+          || s.signum() == 0
+          || r.compareTo(order) >= 0
+          || s.compareTo(order) >= 0) {
         throw new TokenVerificationException(
             Reason.INVALID_SIGNATURE, "The signature does not match");
       }
