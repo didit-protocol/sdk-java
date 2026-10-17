@@ -69,7 +69,9 @@ tasks.withType<Javadoc>().configureEach {
 
 tasks.test {
   useJUnitPlatform { excludeTags("live") }
-  javaLauncher = javaToolchains.launcherFor { languageVersion = testJdk.map(JavaLanguageVersion::of) }
+  javaLauncher = javaToolchains.launcherFor {
+    languageVersion = testJdk.map(JavaLanguageVersion::of)
+  }
   maxHeapSize = "1g"
   systemProperty("didit.repoRoot", rootDir.absolutePath)
   testLogging {
@@ -95,7 +97,13 @@ val liveTest by
 val coreClasses =
   sourceSets.main.map { main ->
     main.output.classesDirs.asFileTree.matching {
-      include("me/didit/*.class", "me/didit/core/**", "me/didit/errors/**", "me/didit/webhooks/**", "me/didit/authentication/**")
+      include(
+        "me/didit/*.class",
+        "me/didit/core/**",
+        "me/didit/errors/**",
+        "me/didit/webhooks/**",
+        "me/didit/authentication/**",
+      )
     }
   }
 
@@ -111,7 +119,14 @@ tasks.jacocoTestReport {
 tasks.jacocoTestCoverageVerification {
   dependsOn(tasks.test)
   classDirectories.setFrom(coreClasses)
-  violationRules { rule { limit { counter = "LINE"; minimum = "0.90".toBigDecimal() } } }
+  violationRules {
+    rule {
+      limit {
+        counter = "LINE"
+        minimum = "0.90".toBigDecimal()
+      }
+    }
+  }
 }
 
 tasks.check { dependsOn(tasks.jacocoTestCoverageVerification) }

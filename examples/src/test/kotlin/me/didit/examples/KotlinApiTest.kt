@@ -1,15 +1,5 @@
 package me.didit.examples
 
-import me.didit.Didit
-import me.didit.core.Headers
-import me.didit.core.HttpTransport
-import me.didit.core.TransportRequest
-import me.didit.core.TransportResponse
-import me.didit.errors.NotFoundException
-import me.didit.types.SessionsListResponse
-import me.didit.types.TransactionsCreateParams
-import me.didit.webhooks.SessionStatusUpdatedEvent
-import me.didit.webhooks.Webhooks
 import java.nio.charset.StandardCharsets
 import java.time.OffsetDateTime
 import java.util.concurrent.CompletableFuture
@@ -20,11 +10,21 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import me.didit.Didit
+import me.didit.core.Headers
+import me.didit.core.HttpTransport
+import me.didit.core.TransportRequest
+import me.didit.core.TransportResponse
+import me.didit.errors.NotFoundException
+import me.didit.types.SessionsListResponse
+import me.didit.types.TransactionsCreateParams
+import me.didit.webhooks.SessionStatusUpdatedEvent
+import me.didit.webhooks.Webhooks
 
 /**
- * The public API from Kotlin. This file compiles with -Xjspecify-annotations=strict and warnings
- * as errors, so Kotlin sees the library's nullability: passing null where the API takes it, and
- * plain types for required values.
+ * The public API from Kotlin. This file compiles with -Xjspecify-annotations=strict and warnings as
+ * errors, so Kotlin sees the library's nullability: passing null where the API takes it, and plain
+ * types for required values.
  */
 class KotlinApiTest {
   private class Stub(private vararg val bodies: Pair<Int, String>) : HttpTransport {
@@ -66,7 +66,12 @@ class KotlinApiTest {
         .transactionId("t-1")
         .transactionAt(OffsetDateTime.parse("2026-11-01T10:00:00Z"))
         .transactionCategory(TransactionsCreateParams.TransactionCategory.FINANCE)
-        .subject(TransactionsCreateParams.Subject.builder().vendorData("user-42").fullName("Ana Ruiz").build())
+        .subject(
+          TransactionsCreateParams.Subject.builder()
+            .vendorData("user-42")
+            .fullName("Ana Ruiz")
+            .build(),
+        )
         .transactionDetails(
           TransactionsCreateParams.TransactionDetails.builder()
             .direction(TransactionsCreateParams.TransactionDetails.Direction.INBOUND)
@@ -102,7 +107,8 @@ class KotlinApiTest {
   @Test
   fun errorsAreTyped() {
     val stub = Stub(404 to """{"detail":"Not found."}""")
-    val error = assertFailsWith<NotFoundException> { client(stub).sessions().retrieveDecision("missing") }
+    val error =
+      assertFailsWith<NotFoundException> { client(stub).sessions().retrieveDecision("missing") }
     assertEquals(404, error.statusCode())
     assertEquals("Not found.", error.body().getOrNull()?.get("detail")?.asText())
   }
