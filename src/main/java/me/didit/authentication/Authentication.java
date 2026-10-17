@@ -579,7 +579,7 @@ public final class Authentication {
       URI candidate = base.resolve(jwksUri.textValue());
       String scheme =
           candidate.getScheme() == null ? "" : candidate.getScheme().toLowerCase(Locale.ROOT);
-      boolean httpIssuer = issuer.startsWith("http://");
+      boolean httpIssuer = "http".equalsIgnoreCase(base.getScheme());
       if (!scheme.equals("https") && !(httpIssuer && scheme.equals("http"))) {
         throw new ConfigurationException("The JWKS URI must use https");
       }
@@ -714,7 +714,10 @@ public final class Authentication {
         KeyFactory.getInstance("EC").generatePublic(new ECPublicKeySpec(new ECPoint(px, py), spec));
   }
 
-  /** {@code max-age} minus {@code Age}; none for no-store; 5 minutes when absent; 1 min..24 h. */
+  /**
+   * {@code max-age} minus {@code Age}, 5 minutes when absent, kept between 1 minute and 24 hours;
+   * {@code no-store} and {@code no-cache} give the 1-minute minimum.
+   */
   static Duration cacheLifetime(Headers headers) {
     Duration lifetime = DEFAULT_CACHE;
     String cacheControl = headers.firstValue("Cache-Control").orElse("").toLowerCase(Locale.ROOT);
@@ -1004,12 +1007,25 @@ public final class Authentication {
     return copy;
   }
 
-  private static DiditException connectionError(String where, Throwable error) {
+  private static Throwable unwrap(Throwable error) {
     Throwable cause = error;
     while ((cause instanceof CompletionException || cause instanceof ExecutionException)
         && cause.getCause() != null) {
       cause = cause.getCause();
     }
+    return cause;
+  }
+
+  /** The exception a failed future stands for. */
+  private static RuntimeException failure(Throwable error) {
+    Throwable cause = unwrap(error);
+    return cause instanceof RuntimeException
+        ? (RuntimeException) cause
+        : new DiditException("Authentication call failed", cause);
+  }
+
+  private static DiditException connectionError(String where, Throwable error) {
+    Throwable cause = unwrap(error);
     if (cause instanceof DiditException) {
       return (DiditException) cause;
     }
@@ -1052,15 +1068,7 @@ public final class Authentication {
       Thread.currentThread().interrupt();
       throw new ApiConnectionException("Interrupted while waiting for the issuer", e);
     } catch (ExecutionException e) {
-      Throwable cause = e.getCause();
-      while ((cause instanceof CompletionException || cause instanceof ExecutionException)
-          && cause.getCause() != null) {
-        cause = cause.getCause();
-      }
-      if (cause instanceof RuntimeException) {
-        throw (RuntimeException) cause;
-      }
-      throw new DiditException("Authentication call failed", cause);
+      throw failure(e);
     }
   }
 

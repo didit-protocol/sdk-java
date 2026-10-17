@@ -1,8 +1,11 @@
 package me.didit.authentication;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.Json;
 
@@ -37,26 +40,55 @@ abstract class JsonView {
     return json.deepCopy();
   }
 
+  /** Field names whose values stay out of {@code toString()}, at any depth. */
+  private static final Set<String> PERSONAL =
+      Set.of(
+          "code",
+          "nonce",
+          "email",
+          "phone",
+          "phone_number",
+          "birthdate",
+          "nationality",
+          "vendor_data",
+          "verified",
+          "verified_identity");
+
   @Override
   public String toString() {
     StringBuilder out = new StringBuilder(getClass().getSimpleName()).append('{');
     boolean first = true;
-    for (java.util.Map.Entry<String, JsonNode> e : json.properties()) {
+    for (Map.Entry<String, JsonNode> e : json.properties()) {
       if (!first) {
         out.append(", ");
       }
       first = false;
-      String key = e.getKey();
-      boolean secret =
-          key.contains("token")
-              || key.equals("code")
-              || key.equals("nonce")
-              || key.equals("email")
-              || key.equals("phone")
-              || key.equals("phone_number")
-              || key.equals("name");
-      out.append(key).append('=').append(secret ? "[REDACTED]" : e.getValue().toString());
+      out.append(e.getKey()).append('=').append(redacted(e.getKey(), e.getValue()));
     }
     return out.append('}').toString();
+  }
+
+  private static JsonNode redacted(String key, JsonNode value) {
+    if (value.isNull()) {
+      return value;
+    }
+    if (PERSONAL.contains(key) || key.contains("token") || key.contains("name")) {
+      return Json.nodes().textNode("[REDACTED]");
+    }
+    if (value.isObject()) {
+      ObjectNode out = Json.nodes().objectNode();
+      for (Map.Entry<String, JsonNode> e : value.properties()) {
+        out.set(e.getKey(), redacted(e.getKey(), e.getValue()));
+      }
+      return out;
+    }
+    if (value.isArray()) {
+      ArrayNode out = Json.nodes().arrayNode();
+      for (JsonNode item : value) {
+        out.add(redacted("", item));
+      }
+      return out;
+    }
+    return value;
   }
 }
