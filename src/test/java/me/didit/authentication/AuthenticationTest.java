@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.ConnectException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -109,12 +110,13 @@ final class AuthenticationTest {
     assertTrue(claims.actor().isEmpty());
     assertTrue(claims.field("vendor_data").isPresent());
     assertTrue(claims._json().has("iss"));
-    // The signature is checked once; the keys and discovery are cached.
+    // Each client fetches discovery and the keys once, then verifies from its cache.
     authWithClient().verifyAccessToken(access(issuer.accessClaims(now)));
     Authentication shared = auth();
     shared.verifyAccessToken(access(issuer.accessClaims(now)));
     shared.verifyAccessToken(access(issuer.accessClaims(now)));
     assertEquals(3, issuer.count("GET /.well-known/jwks.json"));
+    assertEquals(3, issuer.count("GET /.well-known/openid-configuration"));
   }
 
   @Test
@@ -295,10 +297,55 @@ final class AuthenticationTest {
             + "."
             + parts[2];
     assertEquals(Reason.INVALID_SIGNATURE, reject(auth(), forgedPayload));
-    // A DER or truncated signature.
+    // A truncated signature.
     assertEquals(
         Reason.INVALID_SIGNATURE,
         reject(auth(), parts[0] + "." + parts[1] + "." + parts[2].substring(0, 40)));
+    // A DER signature from the right key: JWS needs the 64-byte r || s form.
+    assertEquals(Reason.INVALID_SIGNATURE, reject(auth(), derSigned(parts[0] + "." + parts[1])));
+    // r or s outside [1, n-1], which unpatched JDKs (CVE-2022-21449) accepted for r = s = 0.
+    BigInteger n = ((ECPublicKey) issuer.keys.getPublic()).getParams().getOrder();
+    byte[] signature = Base64.getUrlDecoder().decode(parts[2]);
+    byte[] s = java.util.Arrays.copyOfRange(signature, 32, 64);
+    for (byte[] forgedSignature :
+        new byte[][] {
+          new byte[64], concat(new byte[32], s), concat(fixed(n), s), concat(fixed(n.add(BigInteger.ONE)), s)
+        }) {
+      assertEquals(
+          Reason.INVALID_SIGNATURE,
+          reject(
+              auth(),
+              parts[0]
+                  + "."
+                  + parts[1]
+                  + "."
+                  + Base64.getUrlEncoder().withoutPadding().encodeToString(forgedSignature)));
+    }
+  }
+
+  private static byte[] fixed(BigInteger value) {
+    byte[] raw = value.toByteArray();
+    byte[] out = new byte[32];
+    int copy = Math.min(raw.length, 32);
+    System.arraycopy(raw, raw.length - copy, out, 32 - copy, copy);
+    return out;
+  }
+
+  private static byte[] concat(byte[] a, byte[] b) {
+    byte[] out = java.util.Arrays.copyOf(a, a.length + b.length);
+    System.arraycopy(b, 0, out, a.length, b.length);
+    return out;
+  }
+
+  private String derSigned(String input) {
+    try {
+      java.security.Signature signer = java.security.Signature.getInstance("SHA256withECDSA");
+      signer.initSign(issuer.keys.getPrivate());
+      signer.update(input.getBytes(StandardCharsets.US_ASCII));
+      return input + "." + Base64.getUrlEncoder().withoutPadding().encodeToString(signer.sign());
+    } catch (java.security.GeneralSecurityException e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   @Test
@@ -339,6 +386,19 @@ final class AuthenticationTest {
     // A payload that is not an object, correctly signed.
     String arrayPayload = signRaw(issuer.header("at+jwt").toString(), "[1]");
     assertEquals(Reason.MALFORMED, reject(auth(), arrayPayload));
+    // A signature part whose length leaves a remainder of 1 is not base64url at all; the async
+    // variant reports it through the future, never by throwing.
+    for (String signature : new String[] {"A", parts[2] + "A"}) {
+      String bad = parts[0] + "." + parts[1] + "." + signature;
+      assertEquals(1, signature.length() % 4);
+      assertEquals(Reason.MALFORMED, reject(auth(), bad));
+      CompletableFuture<AccessTokenClaims> future = auth().verifyAccessTokenAsync(bad, null);
+      assertTrue(future.isCompletedExceptionally());
+      java.util.concurrent.ExecutionException e =
+          assertThrows(java.util.concurrent.ExecutionException.class, future::get);
+      assertEquals(Reason.MALFORMED, ((TokenVerificationException) e.getCause()).reason());
+    }
+    assertEquals(0, issuer.count("GET /.well-known/jwks.json"));
   }
 
   @Test
@@ -376,6 +436,13 @@ final class AuthenticationTest {
         assertThrows(
                 TokenVerificationException.class,
                 () -> authWithClient().verifyIdToken(refreshedToken, "nonce-1"))
+            .reason());
+    // Without an expected nonce, a token that carries one is refused (no silent opt-out).
+    assertEquals(
+        Reason.INVALID_NONCE,
+        assertThrows(
+                TokenVerificationException.class,
+                () -> authWithClient().verifyIdToken(token, null))
             .reason());
     // typ may be absent on an ID token.
     ObjectNode noTyp = issuer.header("JWT");
