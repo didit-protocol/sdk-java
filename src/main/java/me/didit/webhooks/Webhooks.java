@@ -362,7 +362,7 @@ public final class Webhooks {
       }
     }
     BigInteger now = BigInteger.valueOf(options.clock().instant().getEpochSecond());
-    BigInteger tolerance = BigInteger.valueOf(options.tolerance().getSeconds());
+    BigInteger tolerance = BigInteger.valueOf(options.tolerance().toSeconds());
     if (now.subtract(timestamp).abs().compareTo(tolerance) > 0) {
       throw new WebhookVerificationException(
           Reason.TIMESTAMP_OUT_OF_TOLERANCE,
@@ -384,7 +384,7 @@ public final class Webhooks {
     try {
       return CanonicalJson.write(payload);
     } catch (CanonicalJson.InvalidValueException e) {
-      throw new WebhookVerificationException(Reason.INVALID_PAYLOAD, e.getMessage());
+      throw new WebhookVerificationException(Reason.INVALID_PAYLOAD, String.valueOf(e.getMessage()));
     }
   }
 

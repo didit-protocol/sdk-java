@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 public final class VerifyOptions {
   /** The default tolerance between the delivery timestamp and now. */
-  public static final Duration DEFAULT_TOLERANCE = Duration.ofSeconds(300);
+  public static final Duration DEFAULT_TOLERANCE = Duration.ofMinutes(5);
 
   private final List<String> secrets;
   private final Duration tolerance;
