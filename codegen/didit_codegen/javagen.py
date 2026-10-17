@@ -510,3 +510,353 @@ def emit_types(model: Model) -> dict[str, str]:
         + "@NullMarked\npackage me.didit.types;\n\nimport org.jspecify.annotations.NullMarked;\n"
     )
     return files
+
+
+# -- resources --------------------------------------------------------------------
+
+
+@dataclass
+class Signature:
+    """One overload of an operation method."""
+
+    with_params: bool
+    with_options: bool
+
+
+def params_type(om: OpModel, ctx: Ctx) -> str | None:
+    if om.params_class is not None:
+        return ctx.ref(om.params_class)
+    if om.body_type is not None:
+        return ctx.java_type(om.body_type)
+    return None
+
+
+def signatures(om: OpModel) -> list[Signature]:
+    has_params = om.params_class is not None or om.body_type is not None
+    if not has_params:
+        return [Signature(False, True), Signature(False, False)]
+    sigs = [Signature(True, True), Signature(True, False)]
+    if not om.params_required:
+        sigs += [Signature(False, True), Signature(False, False)]
+    return sigs
+
+
+def result_type(om: OpModel, ctx: Ctx) -> tuple[str, str]:
+    """(data type, boxed data type) of the method result."""
+    r = om.response
+    if r.kind == "none":
+        return "void", "@Nullable Void"
+    if r.kind == "binary":
+        t = ctx.use("me.didit.core.BinaryResponse")
+        return t, t
+    if r.kind == "json_node":
+        t = ctx.use("com.fasterxml.jackson.databind.JsonNode")
+        return t, t
+    if r.kind == "page":
+        assert r.type is not None
+        ctx.use("me.didit.core.Page")
+        t = f"Page<{ctx.java_type(r.type)}>"
+        return t, t
+    assert r.type is not None
+    t = ctx.java_type(r.type)
+    return t, t
+
+
+def handler_expr(om: OpModel, ctx: Ctx) -> str:
+    ctx.use("me.didit.core.Responses")
+    r = om.response
+    if r.kind == "none":
+        return "Responses.none()"
+    if r.kind == "binary":
+        return "Responses.binary()"
+    if r.kind == "json_node":
+        return "Responses.jsonNode()"
+    if r.kind == "page":
+        assert r.type is not None
+        style = "Responses.page" if r.page_style == "next" else "Responses.offsetPage"
+        return f"{style}({ctx.conv(r.type)})"
+    assert r.type is not None
+    if r.type.kind == "class" and r.type.cls is not None and r.type.cls.kind == "status":
+        return f"Responses.byStatus({ctx.ref(r.type.cls)}::fromResponse)"
+    return f"Responses.json({ctx.conv(r.type)})"
+
+
+def handler_type(om: OpModel, ctx: Ctx) -> str:
+    _, boxed = result_type(om, ctx)
+    ctx.use("me.didit.core.ResponseHandler")
+    return f"ResponseHandler<{boxed}>"
+
+
+def constant_name(java_method: str) -> str:
+    return names.constant(java_method) + "_RESPONSE"
+
+
+def op_doc(om: OpModel, sig: Signature, ctx: Ctx, variant: str, ptype: str | None) -> str:
+    lines = javadoc.render(om.summary or "")
+    desc = javadoc.render(om.description) if om.description and om.description != om.summary else []
+    if desc:
+        lines = lines + ([""] if lines else []) + (["<p>" + desc[0]] + desc[1:] if lines else desc)
+    if lines:
+        lines.append("")
+    lines.append(f"<p>{{@code {om.op.http_method.upper()} {javadoc.escape(om.op.path)}}}")
+    if om.op.application_scoped:
+        lines.append(
+            "<p>Application scoped: the organization and application ids come from the client options."
+        )
+    if om.idempotency:
+        lines.append(
+            "<p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}."
+        )
+    if om.response.kind == "binary":
+        lines.append("<p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.")
+    if om.response.kind == "page":
+        lines.append("<p>Returns one page; iterate it to fetch every following page automatically.")
+    lines.append("")
+    for pp in om.path_params:
+        text = javadoc.escape(pp.description.splitlines()[0]) if pp.description else f"the {{@code {pp.json_name}}}"
+        lines.append(f"@param {pp.java_name} {text}")
+    if sig.with_params:
+        lines.append("@param params the request parameters")
+    if sig.with_options:
+        lines.append("@param options per-request options that override the client options")
+    data, _ = result_type(om, ctx)
+    if variant == "sync" and data != "void":
+        lines.append("@return the response body")
+    elif variant == "async":
+        lines.append("@return a future completed with the response body")
+    elif variant == "raw":
+        lines.append("@return the HTTP status, headers and request id with the parsed body")
+    elif variant == "raw_async":
+        lines.append("@return a future completed with the raw response")
+    if om.op.deprecated:
+        info = om.op.deprecated
+        note = f"The API removed this operation; it goes away in version {info.get('remove_in', 'the next minor version')}."
+        if info.get("replacement"):
+            note += f" Use {{@code {info['replacement']}}} instead."
+        lines += ["", "@deprecated " + note]
+    return javadoc.block(lines, "  " if variant in ("sync", "async") else "    ")
+
+
+def request_args(om: OpModel, sig: Signature, ptype: str | None) -> str:
+    args = [pp.java_name for pp in om.path_params]
+    if ptype is not None:
+        if sig.with_params:
+            args.append("params")
+        elif om.params_class is not None or (om.body_type is not None and om.body_type.cls and not any(p.required for p in om.body_type.cls.props)):
+            args.append(f"{ptype}.builder().build()")
+        else:
+            args.append("null")
+    return ", ".join(args)
+
+
+def decl_args(om: OpModel, sig: Signature, ptype: str | None) -> str:
+    args = [f"String {pp.java_name}" for pp in om.path_params]
+    if sig.with_params and ptype is not None:
+        args.append(f"{ptype} params")
+    if sig.with_options:
+        args.append("RequestOptions options")
+    return ", ".join(args)
+
+
+def emit_operation(om: OpModel, ctx: Ctx) -> tuple[str, str, str]:
+    """Returns (outer methods, raw methods, private request builder and handler)."""
+    ctx.use("me.didit.core.RequestOptions")
+    ctx.use("me.didit.core.RawResponse")
+    ctx.use("java.util.concurrent.CompletableFuture")
+    ptype = params_type(om, ctx)
+    data, boxed = result_type(om, ctx)
+    if boxed.startswith("@Nullable"):
+        ctx.use("org.jspecify.annotations.Nullable")
+    m = om.java_method
+    const = constant_name(m)
+    deprecated = "  @Deprecated\n" if om.op.deprecated else ""
+    raw_deprecated = "    @Deprecated\n" if om.op.deprecated else ""
+    outer: list[str] = []
+    raw: list[str] = []
+    for sig in signatures(om):
+        decl = decl_args(om, sig, ptype)
+        call = f"client.execute({m}Request({request_args(om, sig, ptype)}), {'options' if sig.with_options else 'RequestOptions.none()'}, {const})"
+        call_async = call.replace("client.execute(", "client.executeAsync(", 1)
+        # sync
+        outer.append(op_doc(om, sig, ctx, "sync", ptype))
+        outer.append(deprecated)
+        if data == "void":
+            outer.append(f"  public void {m}({decl}) {{\n    {call};\n  }}\n\n")
+        else:
+            outer.append(f"  public {data} {m}({decl}) {{\n    return {call}.data();\n  }}\n\n")
+        # async
+        outer.append(op_doc(om, sig, ctx, "async", ptype))
+        outer.append(deprecated)
+        if data == "void":
+            outer.append(
+                f"  public CompletableFuture<Void> {m}Async({decl}) {{\n    return {call_async}.thenAccept(response -> {{}});\n  }}\n\n"
+            )
+        else:
+            outer.append(
+                f"  public CompletableFuture<{boxed}> {m}Async({decl}) {{\n    return {call_async}.thenApply(RawResponse::data);\n  }}\n\n"
+            )
+        # raw
+        raw.append(op_doc(om, sig, ctx, "raw", ptype))
+        raw.append(raw_deprecated)
+        raw.append(f"    public RawResponse<{boxed}> {m}({decl}) {{\n      return {call};\n    }}\n\n")
+        raw.append(op_doc(om, sig, ctx, "raw_async", ptype))
+        raw.append(raw_deprecated)
+        raw.append(
+            f"    public CompletableFuture<RawResponse<{boxed}>> {m}Async({decl}) {{\n      return {call_async};\n    }}\n\n"
+        )
+
+    # Request builder
+    ctx.use("me.didit.core.ApiRequest")
+    req_args = [f"String {pp.java_name}" for pp in om.path_params]
+    if ptype is not None:
+        nullable_body = om.body_type is not None and om.body_type.cls is not None and any(
+            p.required for p in om.body_type.cls.props
+        ) and not om.body_required
+        if nullable_body:
+            ctx.use("org.jspecify.annotations.Nullable")
+            req_args.append(f"@Nullable {ptype} params")
+        else:
+            req_args.append(f"{ptype} params")
+    lines = [f"ApiRequest.builder({java_string(om.op.http_method.upper())}, {java_string(om.op.path)})"]
+    if om.op.spec == "account":
+        lines.append(".account()")
+    auth = om.op.sdk.get("auth")
+    if auth == "account_token":
+        lines.append(".auth(ApiRequest.Auth.ACCOUNT_TOKEN)")
+    elif auth == "none":
+        lines.append(".auth(ApiRequest.Auth.NONE)")
+    if om.op.application_scoped:
+        lines.append(".applicationScoped()")
+    for pp in om.path_params:
+        lines.append(f".pathParam({java_string(pp.json_name)}, {pp.java_name})")
+    if ptype is not None:
+        lines.append(".params(params)")
+    if om.query_fields:
+        lines.append(".queryFields(" + ", ".join(java_string(q) for q in om.query_fields) + ")")
+    for header, field_name in om.header_fields:
+        lines.append(f".headerField({java_string(header)}, {java_string(field_name)})")
+    if om.body_encoding == "multipart":
+        lines.append(".body(ApiRequest.BodyEncoding.MULTIPART)")
+    elif om.body_encoding == "json_or_multipart":
+        lines.append(".body(ApiRequest.BodyEncoding.JSON_OR_MULTIPART)")
+    elif om.body_encoding == "json":
+        lines.append(".body(ApiRequest.BodyEncoding.JSON)")
+    if om.response.kind == "binary":
+        lines.append(f".accept({java_string(om.response.content_type)})")
+    builder = "\n        ".join(lines)
+    private = (
+        f"  private static final {handler_type(om, ctx)} {const} = {handler_expr(om, ctx)};\n\n"
+        f"  private static ApiRequest {m}Request({', '.join(req_args)}) {{\n"
+        f"    return {builder}\n        .build();\n  }}\n\n"
+    )
+    return "".join(outer), "".join(raw), private
+
+
+def emit_resource(resource: str, ops: list[OpModel], children: list[str]) -> tuple[str, str]:
+    cls_name = names.resource_class(resource)
+    ctx = Ctx(RESOURCES_PKG, None)
+    ctx.use("me.didit.core.ApiClient")
+    out: list[str] = []
+    base = RESOURCE_BASES.get(resource)
+    extends = f" extends {ctx.use(base)}" if base else ""
+    has_ops = bool(ops)
+    any_deprecated = any(om.op.deprecated for om in ops)
+    out.append(f"/** The {{@code {resource}}} resource: {{@code client.{'().'.join(names.camel(s) for s in resource.split('.'))}()}}. */\n")
+    if any_deprecated:
+        out.append('@SuppressWarnings("deprecation")\n')
+    out.append(f"public final class {cls_name}{extends} {{\n")
+    if has_ops:
+        out.append("  private final ApiClient client;\n")
+        out.append("  private final WithRawResponse withRawResponse;\n")
+    for child in children:
+        out.append(f"  private final {names.resource_class(child)} {names.camel(child.split('.')[-1])};\n")
+    out.append("\n")
+    ctor = [f"  {cls_name}(ApiClient client) {{\n"]
+    if has_ops:
+        ctor.append("    this.client = client;\n    this.withRawResponse = new WithRawResponse(client);\n")
+    for child in children:
+        ctor.append(f"    this.{names.camel(child.split('.')[-1])} = new {names.resource_class(child)}(client);\n")
+    if not has_ops and not children:
+        ctor.append("    // No operations.\n")
+    if not has_ops:
+        # Keeps the constructor signature uniform for resources that only group others.
+        ctor.append("    java.util.Objects.requireNonNull(client, \"client\");\n")
+    ctor.append("  }\n\n")
+    out.extend(ctor)
+    for child in children:
+        accessor = names.camel(child.split(".")[-1])
+        out.append(f"  /**\n   * The {{@code {child}}} resource.\n   *\n   * @return the resource\n   */\n")
+        out.append(f"  public {names.resource_class(child)} {accessor}() {{\n    return {accessor};\n  }}\n\n")
+    raws: list[str] = []
+    privates: list[str] = []
+    if has_ops:
+        out.append(
+            "  /**\n   * The same operations, returning the HTTP status, headers and request id with the parsed body.\n"
+            "   *\n   * @return the raw response view\n   */\n"
+        )
+        out.append("  public WithRawResponse withRawResponse() {\n    return withRawResponse;\n  }\n\n")
+        for om in ops:
+            o, r, p = emit_operation(om, ctx)
+            out.append(o)
+            raws.append(r)
+            privates.append(p)
+        out.extend(privates)
+        out.append(
+            f"  /** The {{@code {resource}}} operations returning {{@link RawResponse}}. */\n"
+            "  public static final class WithRawResponse {\n"
+            "    private final ApiClient client;\n\n"
+            "    WithRawResponse(ApiClient client) {\n      this.client = client;\n    }\n\n"
+        )
+        body = "".join(raws).rstrip("\n") + "\n"
+        out.append(body)
+        out.append("  }\n")
+    text = "".join(out).rstrip("\n") + "\n}\n"
+    return f"{cls_name}.java", file_text(ctx, text)
+
+
+def resource_children(model: Model) -> dict[str, list[str]]:
+    children: dict[str, list[str]] = {res: [] for res in model.resources}
+    roots: list[str] = []
+    for res in model.resources:
+        if "." in res:
+            parent = res.rsplit(".", 1)[0]
+            children[parent].append(res)
+        else:
+            roots.append(res)
+    children[""] = roots
+    return children
+
+
+def emit_resources(model: Model) -> dict[str, str]:
+    files: dict[str, str] = {}
+    children = resource_children(model)
+    for res, ops in model.resources.items():
+        name, text = emit_resource(res, ops, sorted(children[res]))
+        files[name] = text
+    # Root accessors, extended by the hand-written me.didit.Didit client.
+    ctx = Ctx(RESOURCES_PKG, None)
+    ctx.use("me.didit.core.ApiClient")
+    out = [
+        "/**\n * The top-level resources of the Didit API. The hand-written {@code me.didit.Didit} client\n"
+        " * extends this class; use the client, not this class.\n */\n",
+        "public abstract class DiditResources {\n",
+    ]
+    roots = sorted(children[""])
+    for res in roots:
+        out.append(f"  private final {names.resource_class(res)} {names.camel(res)};\n")
+    out.append("\n  /**\n   * Creates the resource tree.\n   *\n   * @param client the HTTP client shared by every resource\n   */\n")
+    out.append("  protected DiditResources(ApiClient client) {\n")
+    for res in roots:
+        out.append(f"    this.{names.camel(res)} = new {names.resource_class(res)}(client);\n")
+    out.append("  }\n")
+    for res in roots:
+        out.append(f"\n  /**\n   * The {{@code {res}}} resource.\n   *\n   * @return the resource\n   */\n")
+        out.append(f"  public final {names.resource_class(res)} {names.camel(res)}() {{\n    return {names.camel(res)};\n  }}\n")
+    out.append("}\n")
+    files["DiditResources.java"] = file_text(ctx, "".join(out))
+    files["package-info.java"] = (
+        HEADER
+        + "/** The resources of the Didit API, one class per resource, generated from the OpenAPI documents. */\n"
+        + "@NullMarked\npackage me.didit.resources;\n\nimport org.jspecify.annotations.NullMarked;\n"
+    )
+    return files
