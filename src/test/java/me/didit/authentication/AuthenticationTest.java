@@ -400,7 +400,7 @@ final class AuthenticationTest {
     assertEquals(Reason.MALFORMED, reject(auth(), arrayPayload));
     // A signature part whose length leaves a remainder of 1 is not base64url at all; the async
     // variant reports it through the future, never by throwing.
-    for (String signature : new String[] {"A", parts[2] + "A"}) {
+    for (String signature : new String[] {"A", parts[2].substring(0, 85)}) {
       String bad = parts[0] + "." + parts[1] + "." + signature;
       assertEquals(1, signature.length() % 4);
       assertEquals(Reason.MALFORMED, reject(auth(), bad));
@@ -512,6 +512,7 @@ final class AuthenticationTest {
     StubIssuer local = new StubIssuer();
     String upper = "HTTP://localhost:8000";
     local.discovery.put("issuer", upper);
+    local.discovery.put("token_endpoint", "http://localhost:8000/token/");
     local.discovery.put("jwks_uri", "http://localhost:8000/.well-known/jwks.json");
     Authentication e = Authentication.builder().issuer(upper).transport(local).clock(clock).build();
     ObjectNode localClaims = local.accessClaims(now);
