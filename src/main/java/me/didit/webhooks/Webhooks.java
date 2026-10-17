@@ -181,12 +181,12 @@ public final class Webhooks {
         return WebhookEvent.of(payload, VerifiedBy.SIGNATURE);
       }
     }
-    return verifyCanonicalOrSimple(payload, headers, options, secrets);
+    return verifyCanonicalOrSimple(payload, headers, secrets, options.allowSimple());
   }
 
   /**
-   * Verifies a delivery whose body the framework already parsed. Only {@code X-Signature-V2} (and
-   * the opt-in Simple signature) can be checked this way; prefer {@link #verify} with the raw body.
+   * Verifies a delivery whose body the framework already parsed. Only {@code X-Signature-V2} can be
+   * checked this way; prefer {@link #verify} with the raw body.
    *
    * @param payload the parsed JSON body
    * @param headers the request headers; values may be strings or lists of strings
@@ -216,11 +216,12 @@ public final class Webhooks {
   }
 
   /**
-   * Verifies a delivery whose body the framework already parsed.
+   * Verifies a delivery whose body the framework already parsed. Only {@code X-Signature-V2} can be
+   * checked this way; {@link VerifyOptions.Builder#allowSimple} applies to {@link #verify} only.
    *
    * @param payload the parsed JSON body
    * @param headers the request headers; values may be strings or lists of strings
-   * @param options the secrets, tolerance and Simple opt-in
+   * @param options the secrets and tolerance
    * @return the typed event
    * @throws WebhookVerificationException when the delivery is not authentic or not fresh
    * @throws ConfigurationException when no secret or an empty one is given
@@ -232,11 +233,12 @@ public final class Webhooks {
 
   /**
    * Verifies a delivery whose body the framework already parsed, reading headers through a
-   * function.
+   * function. Only {@code X-Signature-V2} can be checked this way; {@link
+   * VerifyOptions.Builder#allowSimple} applies to {@link #verify} only.
    *
    * @param payload the parsed JSON body
    * @param headers returns a header's value by name, or {@code null}
-   * @param options the secrets, tolerance and Simple opt-in
+   * @param options the secrets and tolerance
    * @return the typed event
    * @throws WebhookVerificationException when the delivery is not authentic or not fresh
    * @throws ConfigurationException when no secret or an empty one is given
@@ -251,7 +253,7 @@ public final class Webhooks {
     ObjectNode object = ((ObjectNode) payload).deepCopy();
     checkTimestamp(object, headers, options);
     requireAnySignature(headers);
-    return verifyCanonicalOrSimple(object, headers, options, secrets);
+    return verifyCanonicalOrSimple(object, headers, secrets, false);
   }
 
   /**
@@ -299,8 +301,8 @@ public final class Webhooks {
   private static WebhookEvent verifyCanonicalOrSimple(
       ObjectNode payload,
       Function<String, @Nullable String> headers,
-      VerifyOptions options,
-      List<String> secrets) {
+      List<String> secrets,
+      boolean allowSimple) {
     boolean anyV2 = present(headers, SIGNATURE_V2) || present(headers, SIGNATURE_V2_PREVIOUS);
     if (anyV2) {
       byte[] canonical = canonical(payload).getBytes(StandardCharsets.UTF_8);
@@ -312,7 +314,7 @@ public final class Webhooks {
         }
       }
     }
-    if (options.allowSimple()) {
+    if (allowSimple) {
       byte[] simple = simpleString(payload).getBytes(StandardCharsets.UTF_8);
       for (String secret : secrets) {
         String expected = hmac(secret, simple);
