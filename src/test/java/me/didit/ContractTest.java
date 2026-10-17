@@ -116,6 +116,32 @@ final class ContractTest {
   }
 
   @Test
+  void deprecatedMethodsLeaveOnTime() {
+    JsonNode deprecated = deprecatedOperations();
+    for (Map.Entry<String, JsonNode> entry : deprecated.properties()) {
+      String removeIn = entry.getValue().path("remove_in").asText("");
+      assertTrue(
+          compareVersions(me.didit.core.Version.VERSION, removeIn) < 0,
+          entry.getKey() + " was due for removal in " + removeIn + ": delete it from openapi/deprecated-operations.json");
+    }
+    assertTrue(compareVersions("0.1.0", "0.2.0") < 0);
+    assertTrue(compareVersions("1.10.0", "1.9.0") > 0);
+    assertEquals(0, compareVersions("1.0.0", "1.0.0"));
+  }
+
+  static int compareVersions(String a, String b) {
+    String[] x = a.split("[.-]");
+    String[] y = b.split("[.-]");
+    for (int i = 0; i < Math.min(3, Math.min(x.length, y.length)); i++) {
+      int cmp = Integer.compare(Integer.parseInt(x[i]), Integer.parseInt(y[i]));
+      if (cmp != 0) {
+        return cmp;
+      }
+    }
+    return 0;
+  }
+
+  @Test
   void everyOperationHasSyncAsyncAndRawVariants() throws Exception {
     Map<String, Class<?>> resources = new TreeMap<>();
     walk(Didit.class, "", new TreeSet<>(), resources);
