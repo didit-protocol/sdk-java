@@ -1,0 +1,21 @@
+# Secret scanning for the whole history (CI job "secret-scan"). The repository goes public on the
+# first release, so nothing that looks like a credential may be committed.
+#
+# Allowed: the upstream API documents copied byte for byte from docs.didit.me (their examples
+# hold synthetic placeholder tokens) and the synthetic webhook secrets that start with whsec_test_.
+# Test keys for Authentication are generated at test time and never stored.
+title = "Didit Java SDK"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Upstream API documents and synthetic test webhook secrets"
+paths = [
+  '''^openapi/verification\.json$''',
+  '''^openapi/account\.json$''',
+  '''^openapi/webhook-vectors\.json$''',
+]
+regexes = [
+  '''whsec_test_[A-Za-z0-9_]+''',
+]

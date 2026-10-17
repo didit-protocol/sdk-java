@@ -1,0 +1,139 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test (Java ${{ matrix.java }}, ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        java: [11, 17, 21, 25]
+        include:
+          - os: macos-latest
+            java: 21
+          - os: windows-latest
+            java: 21
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          # The compiler and Gradle run on 21; the tests run on the matrix version.
+          java-version: |
+            ${{ matrix.java }}
+            21
+      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
+      - name: Unit, generated, contract, webhook and Authentication tests
+        run: ./gradlew test "-PtestJavaVersion=${{ matrix.java }}" "-Porg.gradle.java.installations.fromEnv=JAVA_HOME_${{ matrix.java }}_X64,JAVA_HOME_${{ matrix.java }}_ARM64,JAVA_HOME_21_X64,JAVA_HOME_21_ARM64"
+      - name: Core coverage of 90 % or more
+        if: matrix.os == 'ubuntu-latest' && matrix.java == 21
+        run: ./gradlew jacocoTestCoverageVerification
+
+  checks:
+    name: Static checks, Javadoc and packaging
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
+      - name: Formatting (google-java-format, ktfmt)
+        run: ./gradlew spotlessCheck
+      - name: Compile with -Werror, errorprone and NullAway
+        run: ./gradlew compileJava compileTestJava
+      - name: Javadoc (doclint, warnings as errors)
+        run: ./gradlew javadoc
+      - name: Package the jars and the POM
+        run: ./gradlew publishToMavenLocal
+
+  codegen:
+    name: Generated code is up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Generator tests
+        run: python3 -m unittest discover -s codegen/tests -t codegen
+      - name: Regenerate and compare
+        run: python3 codegen/generate.py --check
+
+  examples:
+    name: Examples and Kotlin API tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: |
+            17
+            21
+      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
+      - name: Build the examples (Spring Boot, Javalin, Ktor, Kotlin) and run their tests
+        run: ./gradlew :examples:build "-Porg.gradle.java.installations.fromEnv=JAVA_HOME_17_X64,JAVA_HOME_21_X64"
+      - name: Quickstart against the local mock API
+        run: ./gradlew :examples:quickstartDemo "-Porg.gradle.java.installations.fromEnv=JAVA_HOME_17_X64,JAVA_HOME_21_X64"
+
+  secret-scan:
+    name: Secret scan (gitleaks, full history)
+    runs-on: ubuntu-latest
+    env:
+      GITLEAKS_VERSION: 8.30.1
+      GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install gitleaks
+        run: |
+          curl -sSfL -o gitleaks.tar.gz "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  gitleaks.tar.gz" | sha256sum -c -
+          tar -xzf gitleaks.tar.gz gitleaks
+      - name: Scan every commit
+        run: ./gitleaks git --config .gitleaks.toml --redact --verbose --no-banner .
+
+  live:
+    name: Live sandbox smoke tests
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
+      - name: Smoke tests (skipped without DIDIT_SANDBOX_API_KEY)
+        env:
+          DIDIT_SANDBOX_API_KEY: ${{ secrets.DIDIT_SANDBOX_API_KEY }}
+          DIDIT_SANDBOX_WORKFLOW_ID: ${{ vars.DIDIT_SANDBOX_WORKFLOW_ID }}
+        run: ./gradlew liveTest
