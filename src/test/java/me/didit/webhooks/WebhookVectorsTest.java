@@ -101,6 +101,13 @@ final class WebhookVectorsTest {
           WebhookEvent event = Webhooks.verify(body, headers, options(vector, true));
           assertEquals(VerifiedBy.SIGNATURE_SIMPLE, event.verifiedBy());
           assertFalse(event.isBodyAuthenticated());
+          // A parsed body is checked against X-Signature-V2 only (DESIGN 9).
+          WebhookVerificationException parsed =
+              assertThrows(
+                  WebhookVerificationException.class,
+                  () ->
+                      Webhooks.verifyParsed(TestJson.parse(body), headers, options(vector, true)));
+          assertEquals("invalid_signature", parsed.reason().code());
           break;
         }
       default:

@@ -25,6 +25,7 @@ import java.security.spec.ECPublicKeySpec;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
@@ -68,7 +69,9 @@ import org.jspecify.annotations.Nullable;
  *
  * <p>Discovery and the signing keys are fetched lazily and cached as the issuer says (5 minutes
  * today, kept between 1 minute and 24 hours); a token with an unknown key id refetches the keys at
- * most once a minute. Thread-safe: create one per issuer and reuse it.
+ * most once a minute. Concurrent calls share one fetch, and after a failed key fetch verifications
+ * fail fast for 5 seconds before the issuer is asked again. Thread-safe: create one per issuer and
+ * reuse it.
  *
  * <p>Refreshes of one session must be serialised: each refresh token works once, and reusing a
  * consumed one revokes the session.
@@ -84,6 +87,7 @@ public final class Authentication {
   static final Duration MAX_CACHE = Duration.ofHours(24);
   static final Duration DEFAULT_CACHE = Duration.ofMinutes(5);
   static final Duration REFETCH_INTERVAL = Duration.ofMinutes(1);
+  static final Duration FAILED_FETCH_BACKOFF = Duration.ofSeconds(5);
   private static final int MAX_TOKEN_LENGTH = 16384;
   private static final Pattern BASE64URL = Pattern.compile("[A-Za-z0-9_-]+");
   private static final SecureRandom RANDOM = new SecureRandom();
@@ -100,9 +104,13 @@ public final class Authentication {
   private final Object lock = new Object();
   private @Nullable Discovery discovery;
   private Instant discoveryExpiry = Instant.MIN;
+  private @Nullable CompletableFuture<Discovery> discoveryFetch;
   private Map<String, ECPublicKey> keys = Map.of();
   private Instant keysExpiry = Instant.MIN;
   private Instant lastKeysFetch = Instant.MIN;
+  private @Nullable CompletableFuture<Map<String, ECPublicKey>> keysFetch;
+  private @Nullable RuntimeException keysFailure;
+  private Instant keysRetryAfter = Instant.MIN;
 
   private Authentication(Builder b, String issuer) {
     this.issuer = issuer;
@@ -247,7 +255,8 @@ public final class Authentication {
    * Verifies an ID token for the configured client id.
    *
    * @param token the ID token
-   * @param nonce the nonce sent with the sign-in, or {@code null} for a token from a refresh
+   * @param nonce the nonce sent with the sign-in, or {@code null} for a token without one (after a
+   *     refresh)
    * @return the verified claims
    * @throws TokenVerificationException when the token is not valid
    * @throws ConfigurationException when no client id is configured
@@ -260,7 +269,8 @@ public final class Authentication {
    * Verifies an ID token.
    *
    * @param token the ID token
-   * @param nonce the nonce sent with the sign-in, or {@code null} for a token from a refresh
+   * @param nonce the nonce sent with the sign-in, or {@code null} for a token without one (after a
+   *     refresh)
    * @param audience your application id, or {@code null} for the configured client id
    * @return the verified claims
    * @throws TokenVerificationException when the token is not valid
@@ -275,7 +285,8 @@ public final class Authentication {
    * Verifies an ID token.
    *
    * @param token the ID token
-   * @param nonce the nonce sent with the sign-in, or {@code null} for a token from a refresh
+   * @param nonce the nonce sent with the sign-in, or {@code null} for a token without one (after a
+   *     refresh)
    * @param audience your application id, or {@code null} for the configured client id
    * @return a future completed with the verified claims
    */
@@ -349,13 +360,18 @@ public final class Authentication {
       throw new TokenVerificationException(
           Reason.INVALID_AUDIENCE, "The token is not for audience " + audience);
     }
-    if (!access && nonce != null) {
+    if (!access) {
+      // Without an expected nonce (a refreshed ID token) the token must not carry one either.
       JsonNode actual = claims.get("nonce");
-      if (actual == null
-          || !actual.isTextual()
-          || !MessageDigest.isEqual(
-              actual.textValue().getBytes(StandardCharsets.UTF_8),
-              nonce.getBytes(StandardCharsets.UTF_8))) {
+      boolean ok =
+          nonce == null
+              ? actual == null || actual.isNull()
+              : actual != null
+                  && actual.isTextual()
+                  && MessageDigest.isEqual(
+                      actual.textValue().getBytes(StandardCharsets.UTF_8),
+                      nonce.getBytes(StandardCharsets.UTF_8));
+      if (!ok) {
         throw new TokenVerificationException(
             Reason.INVALID_NONCE, "The token's nonce does not match");
       }
@@ -414,7 +430,7 @@ public final class Authentication {
       if (kid == null || !kid.isTextual() || kid.textValue().isEmpty()) {
         throw malformed("The token has no key id");
       }
-      byte[] signature = Base64.getUrlDecoder().decode(parts[2]);
+      byte[] signature = bytes(parts[2]);
       if (signature.length != 64) {
         throw new TokenVerificationException(
             Reason.INVALID_SIGNATURE, "An ES256 signature is 64 bytes");
@@ -424,6 +440,17 @@ public final class Authentication {
     }
 
     void verifySignature(ECPublicKey key) {
+      // r and s must be in [1, n-1]; some JDKs (CVE-2022-21449) accepted r = s = 0.
+      BigInteger order = key.getParams().getOrder();
+      BigInteger r = new BigInteger(1, Arrays.copyOfRange(signature, 0, 32));
+      BigInteger s = new BigInteger(1, Arrays.copyOfRange(signature, 32, 64));
+      if (r.signum() == 0
+          || s.signum() == 0
+          || r.compareTo(order) >= 0
+          || s.compareTo(order) >= 0) {
+        throw new TokenVerificationException(
+            Reason.INVALID_SIGNATURE, "The signature does not match");
+      }
       try {
         Signature verifier = Signature.getInstance("SHA256withECDSAinP1363Format");
         verifier.initVerify(key);
@@ -442,14 +469,21 @@ public final class Authentication {
       return object(payload);
     }
 
+    private static byte[] bytes(String part) {
+      try {
+        return Base64.getUrlDecoder().decode(part);
+      } catch (IllegalArgumentException e) {
+        throw malformed("A JWT part is not base64url");
+      }
+    }
+
     private static String decode(String part) {
       try {
-        byte[] bytes = Base64.getUrlDecoder().decode(part);
         return StandardCharsets.UTF_8
             .newDecoder()
-            .decode(java.nio.ByteBuffer.wrap(bytes))
+            .decode(java.nio.ByteBuffer.wrap(bytes(part)))
             .toString();
-      } catch (IllegalArgumentException | java.nio.charset.CharacterCodingException e) {
+      } catch (java.nio.charset.CharacterCodingException e) {
         throw malformed("A JWT part is not base64url UTF-8");
       }
     }
@@ -484,25 +518,45 @@ public final class Authentication {
     }
   }
 
+  /** The cached discovery document; concurrent callers share one fetch. */
   CompletableFuture<Discovery> discoveryAsync() {
+    CompletableFuture<Void> start;
+    CompletableFuture<Discovery> fetch;
     synchronized (lock) {
       Discovery cached = discovery;
       if (cached != null && clock.instant().isBefore(discoveryExpiry)) {
         return CompletableFuture.completedFuture(cached);
       }
+      if (discoveryFetch != null) {
+        return discoveryFetch.copy();
+      }
+      // The fetch starts once it is registered, so a transport that answers at once still finds
+      // discoveryFetch set when it clears it.
+      start = new CompletableFuture<>();
+      URI uri = URI.create(issuer + "/.well-known/openid-configuration");
+      fetch =
+          start
+              .thenCompose(ignored -> send("GET", uri, Map.of(), new byte[0]))
+              .thenApply(
+                  response -> {
+                    ObjectNode doc = jsonObject(response, "the discovery document");
+                    Discovery parsed = parseDiscovery(doc);
+                    synchronized (lock) {
+                      discovery = parsed;
+                      discoveryExpiry = clock.instant().plus(cacheLifetime(response.headers()));
+                    }
+                    return parsed;
+                  })
+              .whenComplete(
+                  (parsed, error) -> {
+                    synchronized (lock) {
+                      discoveryFetch = null;
+                    }
+                  });
+      discoveryFetch = fetch;
     }
-    URI uri = URI.create(issuer + "/.well-known/openid-configuration");
-    return send("GET", uri, Map.of(), new byte[0])
-        .thenApply(
-            response -> {
-              ObjectNode doc = jsonObject(response, "the discovery document");
-              Discovery parsed = parseDiscovery(doc);
-              synchronized (lock) {
-                discovery = parsed;
-                discoveryExpiry = clock.instant().plus(cacheLifetime(response.headers()));
-              }
-              return parsed;
-            });
+    start.complete(null);
+    return fetch.copy();
   }
 
   private Discovery parseDiscovery(ObjectNode doc) {
@@ -530,7 +584,7 @@ public final class Authentication {
       URI candidate = base.resolve(jwksUri.textValue());
       String scheme =
           candidate.getScheme() == null ? "" : candidate.getScheme().toLowerCase(Locale.ROOT);
-      boolean httpIssuer = issuer.startsWith("http://");
+      boolean httpIssuer = "http".equalsIgnoreCase(base.getScheme());
       if (!scheme.equals("https") && !(httpIssuer && scheme.equals("http"))) {
         throw new ConfigurationException("The JWKS URI must use https");
       }
@@ -539,22 +593,50 @@ public final class Authentication {
     return new Discovery(tokenEndpoint, jwks);
   }
 
+  /**
+   * The key for a key id. The keys are fetched when they expire, or for an unknown key id at most
+   * once a minute; concurrent callers share one fetch, and a failed fetch is answered from memory
+   * for {@link #FAILED_FETCH_BACKOFF} so an issuer outage does not turn every request into a fetch.
+   */
   CompletableFuture<ECPublicKey> keyAsync(String kid) {
     Instant now = clock.instant();
-    boolean refetch;
+    CompletableFuture<Void> start = null;
+    CompletableFuture<Map<String, ECPublicKey>> fetch;
     synchronized (lock) {
       ECPublicKey key = keys.get(kid);
       if (key != null && now.isBefore(keysExpiry)) {
         return CompletableFuture.completedFuture(key);
       }
-      boolean expired = !now.isBefore(keysExpiry);
-      refetch = expired || !now.isBefore(lastKeysFetch.plus(REFETCH_INTERVAL));
-      if (!refetch) {
-        return CompletableFuture.failedFuture(
-            new TokenVerificationException(Reason.UNKNOWN_KEY, "No published key has this key id"));
+      fetch = keysFetch;
+      if (fetch == null) {
+        boolean expired = !now.isBefore(keysExpiry);
+        if (!expired && now.isBefore(lastKeysFetch.plus(REFETCH_INTERVAL))) {
+          return CompletableFuture.failedFuture(unknownKey());
+        }
+        RuntimeException failed = keysFailure;
+        if (failed != null && now.isBefore(keysRetryAfter)) {
+          return CompletableFuture.failedFuture(failed);
+        }
+        lastKeysFetch = now;
+        start = new CompletableFuture<>();
+        fetch = start.thenCompose(ignored -> fetchKeys());
+        keysFetch = fetch;
       }
-      lastKeysFetch = now;
     }
+    if (start != null) {
+      start.complete(null);
+    }
+    return fetch.thenApply(
+        parsed -> {
+          ECPublicKey key = parsed.get(kid);
+          if (key == null) {
+            throw unknownKey();
+          }
+          return key;
+        });
+  }
+
+  private CompletableFuture<Map<String, ECPublicKey>> fetchKeys() {
     return discoveryAsync()
         .thenCompose(d -> send("GET", d.jwksUri, Map.of(), new byte[0]))
         .thenApply(
@@ -564,14 +646,24 @@ public final class Authentication {
               synchronized (lock) {
                 keys = parsed;
                 keysExpiry = clock.instant().plus(cacheLifetime(response.headers()));
+                keysFailure = null;
               }
-              ECPublicKey key = parsed.get(kid);
-              if (key == null) {
-                throw new TokenVerificationException(
-                    Reason.UNKNOWN_KEY, "No published key has this key id");
+              return parsed;
+            })
+        .whenComplete(
+            (parsed, error) -> {
+              synchronized (lock) {
+                keysFetch = null;
+                if (error != null) {
+                  keysFailure = failure(error);
+                  keysRetryAfter = clock.instant().plus(FAILED_FETCH_BACKOFF);
+                }
               }
-              return key;
             });
+  }
+
+  private static TokenVerificationException unknownKey() {
+    return new TokenVerificationException(Reason.UNKNOWN_KEY, "No published key has this key id");
   }
 
   static Map<String, ECPublicKey> parseKeys(ObjectNode doc) {
@@ -621,7 +713,10 @@ public final class Authentication {
         KeyFactory.getInstance("EC").generatePublic(new ECPublicKeySpec(new ECPoint(px, py), spec));
   }
 
-  /** {@code max-age} minus {@code Age}; none for no-store; 5 minutes when absent; 1 min..24 h. */
+  /**
+   * {@code max-age} minus {@code Age}, 5 minutes when absent, kept between 1 minute and 24 hours;
+   * {@code no-store} and {@code no-cache} give the 1-minute minimum.
+   */
   static Duration cacheLifetime(Headers headers) {
     Duration lifetime = DEFAULT_CACHE;
     String cacheControl = headers.firstValue("Cache-Control").orElse("").toLowerCase(Locale.ROOT);
@@ -911,12 +1006,25 @@ public final class Authentication {
     return copy;
   }
 
-  private static DiditException connectionError(String where, Throwable error) {
+  private static Throwable unwrap(Throwable error) {
     Throwable cause = error;
     while ((cause instanceof CompletionException || cause instanceof ExecutionException)
         && cause.getCause() != null) {
       cause = cause.getCause();
     }
+    return cause;
+  }
+
+  /** The exception a failed future stands for. */
+  private static RuntimeException failure(Throwable error) {
+    Throwable cause = unwrap(error);
+    return cause instanceof RuntimeException
+        ? (RuntimeException) cause
+        : new DiditException("Authentication call failed", cause);
+  }
+
+  private static DiditException connectionError(String where, Throwable error) {
+    Throwable cause = unwrap(error);
     if (cause instanceof DiditException) {
       return (DiditException) cause;
     }
@@ -959,15 +1067,7 @@ public final class Authentication {
       Thread.currentThread().interrupt();
       throw new ApiConnectionException("Interrupted while waiting for the issuer", e);
     } catch (ExecutionException e) {
-      Throwable cause = e.getCause();
-      while ((cause instanceof CompletionException || cause instanceof ExecutionException)
-          && cause.getCause() != null) {
-        cause = cause.getCause();
-      }
-      if (cause instanceof RuntimeException) {
-        throw (RuntimeException) cause;
-      }
-      throw new DiditException("Authentication call failed", cause);
+      throw failure(e);
     }
   }
 

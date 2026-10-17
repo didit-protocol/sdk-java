@@ -36,6 +36,10 @@ final class StubIssuer implements HttpTransport {
   final String kid = "k_test_current";
   final List<TransportRequest> requests = new ArrayList<>();
   final Map<String, Function<TransportRequest, TransportResponse>> routes = new LinkedHashMap<>();
+
+  /** Routes whose response is held until the test completes the future. */
+  final Map<String, CompletableFuture<TransportResponse>> held = new LinkedHashMap<>();
+
   String cacheControl = "public, max-age=300";
   ObjectNode discovery;
 
@@ -122,6 +126,10 @@ final class StubIssuer implements HttpTransport {
   public synchronized CompletableFuture<TransportResponse> send(TransportRequest request) {
     requests.add(request);
     String route = request.method() + " " + request.uri().getPath();
+    CompletableFuture<TransportResponse> pending = held.get(route);
+    if (pending != null) {
+      return pending;
+    }
     Function<TransportRequest, TransportResponse> handler = routes.get(route);
     if (handler == null) {
       return CompletableFuture.completedFuture(json(404, "{\"detail\":\"not found\"}"));

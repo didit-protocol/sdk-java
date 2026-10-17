@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.ConnectException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -17,6 +18,7 @@ import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -24,7 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import me.didit.core.Headers;
+import me.didit.core.TransportResponse;
 import me.didit.errors.ApiConnectionException;
 import me.didit.errors.ApiTimeoutException;
 import me.didit.errors.AuthenticationException;
@@ -109,12 +113,13 @@ final class AuthenticationTest {
     assertTrue(claims.actor().isEmpty());
     assertTrue(claims.field("vendor_data").isPresent());
     assertTrue(claims._json().has("iss"));
-    // The signature is checked once; the keys and discovery are cached.
+    // Each client fetches discovery and the keys once, then verifies from its cache.
     authWithClient().verifyAccessToken(access(issuer.accessClaims(now)));
     Authentication shared = auth();
     shared.verifyAccessToken(access(issuer.accessClaims(now)));
     shared.verifyAccessToken(access(issuer.accessClaims(now)));
     assertEquals(3, issuer.count("GET /.well-known/jwks.json"));
+    assertEquals(3, issuer.count("GET /.well-known/openid-configuration"));
   }
 
   @Test
@@ -151,6 +156,12 @@ final class AuthenticationTest {
     assertTrue(v.liveness().orElseThrow());
     assertTrue(c.organization().isEmpty());
     assertEquals(List.of("other", StubIssuer.APP_ID), c.audience());
+    // toString() leaves identity data out, also inside nested objects.
+    String printed = c.toString();
+    for (String personal : new String[] {"Ana", "Ruiz", "1990-01-31", "ESP", "user-42"}) {
+      assertFalse(printed.contains(personal), personal);
+    }
+    assertTrue(printed.contains("agent-1"), printed);
     ObjectNode empty = issuer.accessClaims(now);
     empty.putObject("verified");
     assertTrue(auth().verifyAccessToken(access(empty)).verified().isEmpty());
@@ -295,10 +306,58 @@ final class AuthenticationTest {
             + "."
             + parts[2];
     assertEquals(Reason.INVALID_SIGNATURE, reject(auth(), forgedPayload));
-    // A DER or truncated signature.
+    // A truncated signature.
     assertEquals(
         Reason.INVALID_SIGNATURE,
         reject(auth(), parts[0] + "." + parts[1] + "." + parts[2].substring(0, 40)));
+    // A DER signature from the right key: JWS needs the 64-byte r || s form.
+    assertEquals(Reason.INVALID_SIGNATURE, reject(auth(), derSigned(parts[0] + "." + parts[1])));
+    // r or s outside [1, n-1], which unpatched JDKs (CVE-2022-21449) accepted for r = s = 0.
+    BigInteger n = ((ECPublicKey) issuer.keys.getPublic()).getParams().getOrder();
+    byte[] signature = Base64.getUrlDecoder().decode(parts[2]);
+    byte[] s = java.util.Arrays.copyOfRange(signature, 32, 64);
+    for (byte[] forgedSignature :
+        new byte[][] {
+          new byte[64],
+          concat(new byte[32], s),
+          concat(fixed(n), s),
+          concat(fixed(n.add(BigInteger.ONE)), s)
+        }) {
+      assertEquals(
+          Reason.INVALID_SIGNATURE,
+          reject(
+              auth(),
+              parts[0]
+                  + "."
+                  + parts[1]
+                  + "."
+                  + Base64.getUrlEncoder().withoutPadding().encodeToString(forgedSignature)));
+    }
+  }
+
+  private static byte[] fixed(BigInteger value) {
+    byte[] raw = value.toByteArray();
+    byte[] out = new byte[32];
+    int copy = Math.min(raw.length, 32);
+    System.arraycopy(raw, raw.length - copy, out, 32 - copy, copy);
+    return out;
+  }
+
+  private static byte[] concat(byte[] a, byte[] b) {
+    byte[] out = java.util.Arrays.copyOf(a, a.length + b.length);
+    System.arraycopy(b, 0, out, a.length, b.length);
+    return out;
+  }
+
+  private String derSigned(String input) {
+    try {
+      java.security.Signature signer = java.security.Signature.getInstance("SHA256withECDSA");
+      signer.initSign(issuer.keys.getPrivate());
+      signer.update(input.getBytes(StandardCharsets.US_ASCII));
+      return input + "." + Base64.getUrlEncoder().withoutPadding().encodeToString(signer.sign());
+    } catch (java.security.GeneralSecurityException e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   @Test
@@ -339,6 +398,20 @@ final class AuthenticationTest {
     // A payload that is not an object, correctly signed.
     String arrayPayload = signRaw(issuer.header("at+jwt").toString(), "[1]");
     assertEquals(Reason.MALFORMED, reject(auth(), arrayPayload));
+    // A signature part whose length leaves a remainder of 1 is not base64url at all; the async
+    // variant reports it through the future, never by throwing.
+    long fetches = issuer.count("GET /.well-known/jwks.json");
+    for (String signature : new String[] {"A", parts[2].substring(0, 85)}) {
+      String bad = parts[0] + "." + parts[1] + "." + signature;
+      assertEquals(1, signature.length() % 4);
+      assertEquals(Reason.MALFORMED, reject(auth(), bad));
+      CompletableFuture<AccessTokenClaims> future = auth().verifyAccessTokenAsync(bad, null);
+      assertTrue(future.isCompletedExceptionally());
+      java.util.concurrent.ExecutionException e =
+          assertThrows(java.util.concurrent.ExecutionException.class, future::get);
+      assertEquals(Reason.MALFORMED, ((TokenVerificationException) e.getCause()).reason());
+    }
+    assertEquals(fetches, issuer.count("GET /.well-known/jwks.json"));
   }
 
   @Test
@@ -377,6 +450,12 @@ final class AuthenticationTest {
                 TokenVerificationException.class,
                 () -> authWithClient().verifyIdToken(refreshedToken, "nonce-1"))
             .reason());
+    // Without an expected nonce, a token that carries one is refused (no silent opt-out).
+    assertEquals(
+        Reason.INVALID_NONCE,
+        assertThrows(
+                TokenVerificationException.class, () -> authWithClient().verifyIdToken(token, null))
+            .reason());
     // typ may be absent on an ID token.
     ObjectNode noTyp = issuer.header("JWT");
     noTyp.remove("typ");
@@ -392,7 +471,7 @@ final class AuthenticationTest {
     noEmail.remove("email_verified");
     assertFalse(
         authWithClient()
-            .verifyIdToken(issuer.sign(issuer.header("JWT"), noEmail), null)
+            .verifyIdToken(issuer.sign(issuer.header("JWT"), noEmail), "nonce-1")
             .emailVerified());
   }
 
@@ -429,6 +508,18 @@ final class AuthenticationTest {
             .issuer());
     // Discovery was fetched once and cached for both calls.
     assertEquals(1, fourth.count("GET /.well-known/openid-configuration"));
+
+    // A loopback issuer may use http for its keys, whatever the case of the scheme.
+    StubIssuer local = new StubIssuer();
+    String upper = "HTTP://localhost:8000";
+    local.discovery.put("issuer", upper);
+    local.discovery.put("token_endpoint", "http://localhost:8000/token/");
+    local.discovery.put("jwks_uri", "http://localhost:8000/.well-known/jwks.json");
+    Authentication e = Authentication.builder().issuer(upper).transport(local).clock(clock).build();
+    ObjectNode localClaims = local.accessClaims(now);
+    localClaims.put("iss", upper);
+    assertEquals(
+        upper, e.verifyAccessToken(local.sign(local.header("at+jwt"), localClaims)).issuer());
 
     StubIssuer fifth = new StubIssuer();
     fifth.discovery.remove("issuer");
@@ -478,11 +569,113 @@ final class AuthenticationTest {
     ObjectNode shortX = StubIssuer.jwk("short", (ECPublicKey) issuer.keys.getPublic());
     shortX.put("x", "AAAA");
     doc.withArray("keys").add(shortX);
+    ObjectNode p384 = doc.withArray("keys").addObject();
+    p384.put("kty", "EC");
+    p384.put("crv", "P-384");
+    p384.put("kid", "p384");
+    p384.put("x", Base64.getUrlEncoder().withoutPadding().encodeToString(new byte[48]));
+    p384.put("y", Base64.getUrlEncoder().withoutPadding().encodeToString(new byte[48]));
+    ObjectNode noCurve = StubIssuer.jwk("no-curve", (ECPublicKey) issuer.keys.getPublic());
+    noCurve.remove("crv");
+    doc.withArray("keys").add(noCurve);
     Map<String, ECPublicKey> keys = Authentication.parseKeys(doc);
     assertEquals(Set.of(issuer.kid), keys.keySet());
     assertThrows(
         me.didit.errors.UnexpectedResponseException.class,
         () -> Authentication.parseKeys(StubIssuer.parse("{}")));
+  }
+
+  @Test
+  void concurrentCallsShareOneFetch() throws Exception {
+    CompletableFuture<TransportResponse> keySet = new CompletableFuture<>();
+    issuer.held.put("GET /.well-known/jwks.json", keySet);
+    Authentication auth = auth();
+    String token = access(issuer.accessClaims(now));
+    List<CompletableFuture<AccessTokenClaims>> waiting = new ArrayList<>();
+    for (int i = 0; i < 5; i++) {
+      waiting.add(auth.verifyAccessTokenAsync(token, null));
+    }
+    // A token with an unknown key id joins the same fetch instead of starting another.
+    ObjectNode unknown = issuer.header("at+jwt");
+    unknown.put("kid", "k_other");
+    CompletableFuture<AccessTokenClaims> other =
+        auth.verifyAccessTokenAsync(issuer.sign(unknown, issuer.accessClaims(now)), null);
+    assertEquals(1, issuer.count("GET /.well-known/openid-configuration"));
+    assertEquals(1, issuer.count("GET /.well-known/jwks.json"));
+    assertFalse(waiting.get(0).isDone());
+    issuer.held.clear();
+    keySet.complete(StubIssuer.json(200, issuer.jwks(), "max-age=300"));
+    for (CompletableFuture<AccessTokenClaims> f : waiting) {
+      assertEquals(StubIssuer.ISSUER, f.get().issuer());
+    }
+    ExecutionException e = assertThrows(ExecutionException.class, other::get);
+    assertEquals(Reason.UNKNOWN_KEY, ((TokenVerificationException) e.getCause()).reason());
+    assertEquals(1, issuer.count("GET /.well-known/jwks.json"));
+
+    // Two token calls wait on one discovery request.
+    StubIssuer second = new StubIssuer();
+    CompletableFuture<TransportResponse> discovery = new CompletableFuture<>();
+    second.held.put("GET /.well-known/openid-configuration", discovery);
+    second.routes.put("POST /token/", r -> StubIssuer.json(200, "{\"access_token\":\"a\"}"));
+    Authentication a =
+        Authentication.builder().issuer(StubIssuer.ISSUER).transport(second).clock(clock).build();
+    CompletableFuture<TokenResponse> one = a.refreshAsync("r1");
+    CompletableFuture<TokenResponse> two = a.refreshAsync("r2");
+    assertEquals(1, second.count("GET /.well-known/openid-configuration"));
+    second.held.clear();
+    discovery.complete(StubIssuer.json(200, second.discovery, "max-age=300"));
+    assertEquals("a", one.get().accessToken());
+    assertEquals("a", two.get().accessToken());
+    assertEquals(2, second.count("POST /token/"));
+  }
+
+  @Test
+  void aFailedKeyFetchIsNotRepeatedForFiveSeconds() {
+    issuer.routes.put(
+        "GET /.well-known/jwks.json", r -> StubIssuer.json(503, "{\"detail\":\"down\"}"));
+    Authentication auth = auth();
+    String token = access(issuer.accessClaims(now));
+    ObjectNode unknown = issuer.header("at+jwt");
+    unknown.put("kid", "k_random");
+    String randomKid = issuer.sign(unknown, issuer.accessClaims(now));
+    assertThrows(
+        me.didit.errors.InternalServerException.class, () -> auth.verifyAccessToken(token));
+    // During the backoff, neither a known nor a random key id reaches the issuer.
+    clock.instant = now.plusSeconds(4);
+    assertThrows(
+        me.didit.errors.InternalServerException.class, () -> auth.verifyAccessToken(token));
+    assertThrows(
+        me.didit.errors.InternalServerException.class, () -> auth.verifyAccessToken(randomKid));
+    assertEquals(1, issuer.count("GET /.well-known/jwks.json"));
+    // Once it has passed, the next verification fetches again and succeeds.
+    clock.instant = now.plus(Authentication.FAILED_FETCH_BACKOFF);
+    issuer.routes.put(
+        "GET /.well-known/jwks.json", r -> StubIssuer.json(200, issuer.jwks(), "max-age=300"));
+    assertEquals(StubIssuer.ISSUER, auth.verifyAccessToken(token).issuer());
+    assertEquals(2, issuer.count("GET /.well-known/jwks.json"));
+
+    // Expired keys that cannot be refreshed follow the same rule.
+    Instant later = clock.instant.plusSeconds(301);
+    clock.instant = later;
+    issuer.routes.put(
+        "GET /.well-known/jwks.json", r -> StubIssuer.json(503, "{\"detail\":\"down\"}"));
+    String fresh = access(issuer.accessClaims(later));
+    assertThrows(
+        me.didit.errors.InternalServerException.class, () -> auth.verifyAccessToken(fresh));
+    assertThrows(
+        me.didit.errors.InternalServerException.class, () -> auth.verifyAccessToken(fresh));
+    assertEquals(3, issuer.count("GET /.well-known/jwks.json"));
+
+    // A discovery outage counts as a failed key fetch too.
+    StubIssuer down = new StubIssuer();
+    down.routes.put(
+        "GET /.well-known/openid-configuration", r -> StubIssuer.json(502, "{\"detail\":\"x\"}"));
+    Authentication b =
+        Authentication.builder().issuer(StubIssuer.ISSUER).transport(down).clock(clock).build();
+    String other = down.sign(down.header("at+jwt"), down.accessClaims(later));
+    assertThrows(me.didit.errors.InternalServerException.class, () -> b.verifyAccessToken(other));
+    assertThrows(me.didit.errors.InternalServerException.class, () -> b.verifyAccessToken(other));
+    assertEquals(1, down.count("GET /.well-known/openid-configuration"));
   }
 
   @Test
@@ -531,8 +724,18 @@ final class AuthenticationTest {
         assertThrows(BadRequestException.class, () -> auth().refresh("r"))
             .getMessage()
             .contains("mfa_required: MFA"));
+    // Token requests are never retried: resending a refresh token would revoke the session.
+    long sent = issuer.count("POST /token/");
     issuer.routes.put("POST /token/", r -> StubIssuer.json(500, "oops"));
     assertThrows(me.didit.errors.InternalServerException.class, () -> auth().refresh("r"));
+    issuer.routes.put("POST /token/", r -> StubIssuer.json(503, "{}"));
+    assertThrows(
+        me.didit.errors.InternalServerException.class,
+        () -> auth().exchangeCode("c", "v", "https://app.example.com/cb"));
+    issuer.held.put(
+        "POST /token/", CompletableFuture.failedFuture(new ConnectException("connection reset")));
+    assertThrows(ApiConnectionException.class, () -> auth().refresh("r"));
+    assertEquals(sent + 3, issuer.count("POST /token/"));
   }
 
   @Test
@@ -577,6 +780,10 @@ final class AuthenticationTest {
         r -> new me.didit.core.TransportResponse(204, Headers.empty(), new byte[0]));
     auth().revokeSession("at-1");
     assertEquals(1, issuer.count("DELETE /session/"));
+    // Not retried on a 5xx either.
+    issuer.routes.put("DELETE /session/", r -> StubIssuer.json(503, "{\"detail\":\"busy\"}"));
+    assertThrows(me.didit.errors.InternalServerException.class, () -> auth().revokeSession("at-1"));
+    assertEquals(2, issuer.count("DELETE /session/"));
 
     issuer.routes.put("POST /step-up/", r -> StubIssuer.json(200, "{\"required\":false}"));
     StepUp notNeeded =

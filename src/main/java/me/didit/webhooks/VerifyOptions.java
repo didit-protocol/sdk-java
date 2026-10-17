@@ -130,7 +130,7 @@ public final class VerifyOptions {
 
     /**
      * Accepts the deprecated {@code X-Signature-Simple}, which authenticates the envelope only. Off
-     * by default.
+     * by default. {@link Webhooks#verifyParsed} ignores it: it checks {@code X-Signature-V2} only.
      *
      * @param allowSimple whether to accept it
      * @return this builder

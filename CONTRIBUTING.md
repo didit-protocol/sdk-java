@@ -44,7 +44,7 @@ This is the official Didit Java and Kotlin SDK. It follows [docs/DESIGN.md](docs
 
 `.github/workflows/spec-sync.yml` runs daily. When the published API documents change it regenerates the SDK, runs every check and opens a pull request titled `chore(spec): sync API spec YYYY-MM-DD`, with the added, removed and changed operations and schemas. Removed operations stay, deprecated, until the next minor version; the contract test fails once that version is reached, as a reminder to delete them.
 
-You can push commits to the sync branch (for example hand-written webhook or Authentication changes): while the open sync pull request has a commit of yours, the workflow leaves it alone. Keep the `BREAKING CHANGE:` footer of the sync commit when you merge.
+You can push commits to the sync branch (for example hand-written webhook or Authentication changes): while the open sync pull request has a commit of yours, the workflow leaves it alone. Keep the `BREAKING CHANGE:` footer of the sync commit when you merge. The workflow reads the branch with its token, so it also works while the repository is private; if that read fails, the run fails instead of rebuilding the branch.
 
 ## Releases
 
@@ -53,7 +53,7 @@ Releases are cut by release-please from conventional commits; `CHANGELOG.md` is 
 1. The workflow `.github/workflows/release-please.yml` is off until the repository variable `RELEASES_ENABLED` is `true`.
 2. On each push to `main`, release-please updates a release pull request (version in `gradle.properties`, `Version.java` and the README, plus `CHANGELOG.md`).
 3. Merging it creates the `vX.Y.Z` tag and the GitHub release. The `publish` job then waits for a reviewer of the `maven-central` environment, runs `./gradlew check`, signs and uploads to Maven Central (Central Portal), and attests the jars.
-4. If a publish fails after the tag exists, fix the cause on `main` and rerun the failed `publish` job of that workflow run, or release the next patch version.
+4. If a publish fails after the tag exists: when the cause is outside the code (an expired token, a missing secret, a Central Portal outage), fix it and rerun the failed `publish` job of that workflow run. A rerun builds the tag's commit, so it never picks up a fix merged to `main` later; when the code has to change, merge the fix to `main` and release the next patch version instead.
 
 One-time setup by a repository admin, before the first release:
 
