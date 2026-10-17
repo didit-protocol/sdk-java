@@ -59,79 +59,31 @@ public final class IpResource {
   }
 
   /**
-   * Risk-score an IP address
-   *
-   * <p>Return geolocation, network ownership, VPN/Tor and data-center flags, threat data, and <code>country_mismatch</code> for a supplied IP address. The endpoint creates an API session and returns its id as <code>request_id</code>.
-   *
-   * <p><b>Decision.</b> <code>status</code> is <code>In Review</code> when the resolved country conflicts with <code>claimed_country</code>, or when the address is associated with VPN, Tor, or data-center infrastructure. Otherwise it is <code>Approved</code>.
-   *
-   * <p><b>Best effort.</b> IP enrichment is best effort. If no enrichment source returns usable data, the endpoint returns an approved response with <code>ip.ip_address: null</code>, <code>ip.country_mismatch: null</code>, and an empty <code>ip.threat</code> object.
-   *
-   * <p><b>Billing.</b> Live calls use IP Risk API pricing. The request is billable once the lookup starts.
-   *
-   * <p><b>Sandbox.</b> Sandbox keys validate the request and return deterministic approved data without consuming credits, creating a session, or contributing to Networks.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>. Missing or invalid credentials return <code>403</code> - this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests per minute per API key across all POST/PATCH/DELETE endpoints.
-   *
-   * <p>{@code POST /v3/ip/risk/}
+   * Asynchronous {@link #assessRisk(IPRiskRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<IPRiskResponse> assessRiskAsync(IPRiskRequest params, RequestOptions options) {
     return client.executeAsync(assessRiskRequest(params), options, ASSESS_RISK_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Risk-score an IP address
-   *
-   * <p>Return geolocation, network ownership, VPN/Tor and data-center flags, threat data, and <code>country_mismatch</code> for a supplied IP address. The endpoint creates an API session and returns its id as <code>request_id</code>.
-   *
-   * <p><b>Decision.</b> <code>status</code> is <code>In Review</code> when the resolved country conflicts with <code>claimed_country</code>, or when the address is associated with VPN, Tor, or data-center infrastructure. Otherwise it is <code>Approved</code>.
-   *
-   * <p><b>Best effort.</b> IP enrichment is best effort. If no enrichment source returns usable data, the endpoint returns an approved response with <code>ip.ip_address: null</code>, <code>ip.country_mismatch: null</code>, and an empty <code>ip.threat</code> object.
-   *
-   * <p><b>Billing.</b> Live calls use IP Risk API pricing. The request is billable once the lookup starts.
-   *
-   * <p><b>Sandbox.</b> Sandbox keys validate the request and return deterministic approved data without consuming credits, creating a session, or contributing to Networks.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>. Missing or invalid credentials return <code>403</code> - this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests per minute per API key across all POST/PATCH/DELETE endpoints.
-   *
-   * <p>{@code POST /v3/ip/risk/}
+   * Same as {@link #assessRisk(IPRiskRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public IPRiskResponse assessRisk(IPRiskRequest params) {
     return client.execute(assessRiskRequest(params), RequestOptions.none(), ASSESS_RISK_RESPONSE).data();
   }
 
   /**
-   * Risk-score an IP address
-   *
-   * <p>Return geolocation, network ownership, VPN/Tor and data-center flags, threat data, and <code>country_mismatch</code> for a supplied IP address. The endpoint creates an API session and returns its id as <code>request_id</code>.
-   *
-   * <p><b>Decision.</b> <code>status</code> is <code>In Review</code> when the resolved country conflicts with <code>claimed_country</code>, or when the address is associated with VPN, Tor, or data-center infrastructure. Otherwise it is <code>Approved</code>.
-   *
-   * <p><b>Best effort.</b> IP enrichment is best effort. If no enrichment source returns usable data, the endpoint returns an approved response with <code>ip.ip_address: null</code>, <code>ip.country_mismatch: null</code>, and an empty <code>ip.threat</code> object.
-   *
-   * <p><b>Billing.</b> Live calls use IP Risk API pricing. The request is billable once the lookup starts.
-   *
-   * <p><b>Sandbox.</b> Sandbox keys validate the request and return deterministic approved data without consuming credits, creating a session, or contributing to Networks.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>. Missing or invalid credentials return <code>403</code> - this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests per minute per API key across all POST/PATCH/DELETE endpoints.
-   *
-   * <p>{@code POST /v3/ip/risk/}
+   * Asynchronous {@link #assessRisk(IPRiskRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<IPRiskResponse> assessRiskAsync(IPRiskRequest params) {
     return client.executeAsync(assessRiskRequest(params), RequestOptions.none(), ASSESS_RISK_RESPONSE).thenApply(RawResponse::data);
@@ -155,106 +107,42 @@ public final class IpResource {
     }
 
     /**
-     * Risk-score an IP address
-     *
-     * <p>Return geolocation, network ownership, VPN/Tor and data-center flags, threat data, and <code>country_mismatch</code> for a supplied IP address. The endpoint creates an API session and returns its id as <code>request_id</code>.
-     *
-     * <p><b>Decision.</b> <code>status</code> is <code>In Review</code> when the resolved country conflicts with <code>claimed_country</code>, or when the address is associated with VPN, Tor, or data-center infrastructure. Otherwise it is <code>Approved</code>.
-     *
-     * <p><b>Best effort.</b> IP enrichment is best effort. If no enrichment source returns usable data, the endpoint returns an approved response with <code>ip.ip_address: null</code>, <code>ip.country_mismatch: null</code>, and an empty <code>ip.threat</code> object.
-     *
-     * <p><b>Billing.</b> Live calls use IP Risk API pricing. The request is billable once the lookup starts.
-     *
-     * <p><b>Sandbox.</b> Sandbox keys validate the request and return deterministic approved data without consuming credits, creating a session, or contributing to Networks.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>. Missing or invalid credentials return <code>403</code> - this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests per minute per API key across all POST/PATCH/DELETE endpoints.
-     *
-     * <p>{@code POST /v3/ip/risk/}
+     * {@link #assessRisk(IPRiskRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<IPRiskResponse> assessRisk(IPRiskRequest params, RequestOptions options) {
       return client.execute(assessRiskRequest(params), options, ASSESS_RISK_RESPONSE);
     }
 
     /**
-     * Risk-score an IP address
-     *
-     * <p>Return geolocation, network ownership, VPN/Tor and data-center flags, threat data, and <code>country_mismatch</code> for a supplied IP address. The endpoint creates an API session and returns its id as <code>request_id</code>.
-     *
-     * <p><b>Decision.</b> <code>status</code> is <code>In Review</code> when the resolved country conflicts with <code>claimed_country</code>, or when the address is associated with VPN, Tor, or data-center infrastructure. Otherwise it is <code>Approved</code>.
-     *
-     * <p><b>Best effort.</b> IP enrichment is best effort. If no enrichment source returns usable data, the endpoint returns an approved response with <code>ip.ip_address: null</code>, <code>ip.country_mismatch: null</code>, and an empty <code>ip.threat</code> object.
-     *
-     * <p><b>Billing.</b> Live calls use IP Risk API pricing. The request is billable once the lookup starts.
-     *
-     * <p><b>Sandbox.</b> Sandbox keys validate the request and return deterministic approved data without consuming credits, creating a session, or contributing to Networks.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>. Missing or invalid credentials return <code>403</code> - this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests per minute per API key across all POST/PATCH/DELETE endpoints.
-     *
-     * <p>{@code POST /v3/ip/risk/}
+     * Asynchronous {@link #assessRisk(IPRiskRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<IPRiskResponse>> assessRiskAsync(IPRiskRequest params, RequestOptions options) {
       return client.executeAsync(assessRiskRequest(params), options, ASSESS_RISK_RESPONSE);
     }
 
     /**
-     * Risk-score an IP address
-     *
-     * <p>Return geolocation, network ownership, VPN/Tor and data-center flags, threat data, and <code>country_mismatch</code> for a supplied IP address. The endpoint creates an API session and returns its id as <code>request_id</code>.
-     *
-     * <p><b>Decision.</b> <code>status</code> is <code>In Review</code> when the resolved country conflicts with <code>claimed_country</code>, or when the address is associated with VPN, Tor, or data-center infrastructure. Otherwise it is <code>Approved</code>.
-     *
-     * <p><b>Best effort.</b> IP enrichment is best effort. If no enrichment source returns usable data, the endpoint returns an approved response with <code>ip.ip_address: null</code>, <code>ip.country_mismatch: null</code>, and an empty <code>ip.threat</code> object.
-     *
-     * <p><b>Billing.</b> Live calls use IP Risk API pricing. The request is billable once the lookup starts.
-     *
-     * <p><b>Sandbox.</b> Sandbox keys validate the request and return deterministic approved data without consuming credits, creating a session, or contributing to Networks.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>. Missing or invalid credentials return <code>403</code> - this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests per minute per API key across all POST/PATCH/DELETE endpoints.
-     *
-     * <p>{@code POST /v3/ip/risk/}
+     * {@link #assessRisk(IPRiskRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<IPRiskResponse> assessRisk(IPRiskRequest params) {
       return client.execute(assessRiskRequest(params), RequestOptions.none(), ASSESS_RISK_RESPONSE);
     }
 
     /**
-     * Risk-score an IP address
-     *
-     * <p>Return geolocation, network ownership, VPN/Tor and data-center flags, threat data, and <code>country_mismatch</code> for a supplied IP address. The endpoint creates an API session and returns its id as <code>request_id</code>.
-     *
-     * <p><b>Decision.</b> <code>status</code> is <code>In Review</code> when the resolved country conflicts with <code>claimed_country</code>, or when the address is associated with VPN, Tor, or data-center infrastructure. Otherwise it is <code>Approved</code>.
-     *
-     * <p><b>Best effort.</b> IP enrichment is best effort. If no enrichment source returns usable data, the endpoint returns an approved response with <code>ip.ip_address: null</code>, <code>ip.country_mismatch: null</code>, and an empty <code>ip.threat</code> object.
-     *
-     * <p><b>Billing.</b> Live calls use IP Risk API pricing. The request is billable once the lookup starts.
-     *
-     * <p><b>Sandbox.</b> Sandbox keys validate the request and return deterministic approved data without consuming credits, creating a session, or contributing to Networks.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>. Missing or invalid credentials return <code>403</code> - this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests per minute per API key across all POST/PATCH/DELETE endpoints.
-     *
-     * <p>{@code POST /v3/ip/risk/}
+     * Asynchronous {@link #assessRisk(IPRiskRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<IPRiskResponse>> assessRiskAsync(IPRiskRequest params) {
       return client.executeAsync(assessRiskRequest(params), RequestOptions.none(), ASSESS_RISK_RESPONSE);

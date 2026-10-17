@@ -64,104 +64,69 @@ public final class UsersResource {
   }
 
   /**
-   * List users
-   *
-   * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-   *
-   * <p>{@code GET /v3/users/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(UsersListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<UserListItem>> listAsync(UsersListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List users
-   *
-   * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-   *
-   * <p>{@code GET /v3/users/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(UsersListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<UserListItem> list(UsersListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List users
-   *
-   * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-   *
-   * <p>{@code GET /v3/users/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(UsersListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<UserListItem>> listAsync(UsersListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List users
+   * Same as {@link #list(UsersListParams, RequestOptions)}, without parameters.
    *
-   * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-   *
-   * <p>{@code GET /v3/users/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<UserListItem> list(RequestOptions options) {
     return client.execute(listRequest(UsersListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List users
+   * Asynchronous {@link #list(UsersListParams, RequestOptions)}, without parameters.
    *
-   * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-   *
-   * <p>{@code GET /v3/users/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<UserListItem>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(UsersListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List users
+   * Same as {@link #list(UsersListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-   *
-   * <p>{@code GET /v3/users/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<UserListItem> list() {
     return client.execute(listRequest(UsersListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List users
+   * Asynchronous {@link #list(UsersListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-   *
-   * <p>{@code GET /v3/users/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<UserListItem>> listAsync() {
     return client.executeAsync(listRequest(UsersListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -183,43 +148,31 @@ public final class UsersResource {
   }
 
   /**
-   * Get user
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
-   * <p>Fetch one [user](/entities/users) by <code>vendor_data</code> (exact match). Adds <code>metadata</code>, <code>comments</code>, and <code>updated_at</code> to the list view, and switches <code>tags</code> to the detailed tag-link shape.
-   *
-   * <p>{@code GET /v3/users/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the user — a free-form string (NOT a UUID). This is the same value you passed as `vendor_data` when creating the session that first introduced this user, matched exactly as sent.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param vendorData the {@code vendor_data}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<UserDetailItem> retrieveAsync(String vendorData, RequestOptions options) {
     return client.executeAsync(retrieveRequest(vendorData), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get user
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Fetch one [user](/entities/users) by <code>vendor_data</code> (exact match). Adds <code>metadata</code>, <code>comments</code>, and <code>updated_at</code> to the list view, and switches <code>tags</code> to the detailed tag-link shape.
-   *
-   * <p>{@code GET /v3/users/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the user — a free-form string (NOT a UUID). This is the same value you passed as `vendor_data` when creating the session that first introduced this user, matched exactly as sent.
-   * @return the response body
+   * @param vendorData the {@code vendor_data}
+   * @return the result
    */
   public UserDetailItem retrieve(String vendorData) {
     return client.execute(retrieveRequest(vendorData), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get user
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Fetch one [user](/entities/users) by <code>vendor_data</code> (exact match). Adds <code>metadata</code>, <code>comments</code>, and <code>updated_at</code> to the list view, and switches <code>tags</code> to the detailed tag-link shape.
-   *
-   * <p>{@code GET /v3/users/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the user — a free-form string (NOT a UUID). This is the same value you passed as `vendor_data` when creating the session that first introduced this user, matched exactly as sent.
-   * @return a future completed with the response body
+   * @param vendorData the {@code vendor_data}
+   * @return a future completed with the result
    */
   public CompletableFuture<UserDetailItem> retrieveAsync(String vendorData) {
     return client.executeAsync(retrieveRequest(vendorData), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -242,104 +195,76 @@ public final class UsersResource {
   }
 
   /**
-   * Update user
+   * Asynchronous {@link #update(String, UsersUpdateParams, RequestOptions)}.
    *
-   * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-   *
-   * <p>{@code PATCH /v3/users/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
+   * @param vendorData the {@code vendor_data}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<UserDetailItem> updateAsync(String vendorData, UsersUpdateParams params, RequestOptions options) {
     return client.executeAsync(updateRequest(vendorData, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update user
+   * Same as {@link #update(String, UsersUpdateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-   *
-   * <p>{@code PATCH /v3/users/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
+   * @param vendorData the {@code vendor_data}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public UserDetailItem update(String vendorData, UsersUpdateParams params) {
     return client.execute(updateRequest(vendorData, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update user
+   * Asynchronous {@link #update(String, UsersUpdateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-   *
-   * <p>{@code PATCH /v3/users/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
+   * @param vendorData the {@code vendor_data}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<UserDetailItem> updateAsync(String vendorData, UsersUpdateParams params) {
     return client.executeAsync(updateRequest(vendorData, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update user
+   * Same as {@link #update(String, UsersUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-   *
-   * <p>{@code PATCH /v3/users/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param vendorData the {@code vendor_data}
+   * @param options per-request options
+   * @return the result
    */
   public UserDetailItem update(String vendorData, RequestOptions options) {
     return client.execute(updateRequest(vendorData, UsersUpdateParams.builder().build()), options, UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update user
+   * Asynchronous {@link #update(String, UsersUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-   *
-   * <p>{@code PATCH /v3/users/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param vendorData the {@code vendor_data}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<UserDetailItem> updateAsync(String vendorData, RequestOptions options) {
     return client.executeAsync(updateRequest(vendorData, UsersUpdateParams.builder().build()), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update user
+   * Same as {@link #update(String, UsersUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-   *
-   * <p>{@code PATCH /v3/users/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
-   * @return the response body
+   * @param vendorData the {@code vendor_data}
+   * @return the result
    */
   public UserDetailItem update(String vendorData) {
     return client.execute(updateRequest(vendorData, UsersUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update user
+   * Asynchronous {@link #update(String, UsersUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-   *
-   * <p>{@code PATCH /v3/users/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
-   * @return a future completed with the response body
+   * @param vendorData the {@code vendor_data}
+   * @return a future completed with the result
    */
   public CompletableFuture<UserDetailItem> updateAsync(String vendorData) {
     return client.executeAsync(updateRequest(vendorData, UsersUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -378,94 +303,31 @@ public final class UsersResource {
   }
 
   /**
-   * Download the full user history PDF report
+   * Asynchronous {@link #generatePdf(String, RequestOptions)}.
    *
-   * <p>Render and download one compliance-ready PDF containing the full verification history of the user identified by <code>vendor_data</code>. It is the same document the Console produces from <b>User detail → Actions → Download PDF</b>, so periodic compliance exports no longer need a person clicking in the Console.
-   *
-   * <p><b>What the report contains.</b> A cover page with the profile summary (name, date of birth, issuing states, approved emails and phones), the latest status of every feature, the session counters and an index of the sessions included — followed by the standard report of every included session, in chronological order (oldest first). Each session report is the same document <code>GET /v3/session/{sessionId}/generate-pdf/</code> returns for that session.
-   *
-   * <p><b>Eligible sessions.</b> Only User Verification (KYC) sessions in <code>Approved</code>, <code>Declined</code>, <code>In Review</code> or <code>Kyc Expired</code> are included; sessions in any other status are skipped. If the user has no session in one of those statuses the endpoint returns <code>403</code> — see below.
-   *
-   * <p><b>Cap.</b> The report is capped at the <b>20 most recent</b> reportable sessions. When a user has more, the newest 20 are included and the cover page states how many older sessions were left out. Use <code>GET /v3/sessions/?vendor_data=…</code> for the complete list as JSON.
-   *
-   * <p><b>Branding.</b> If your application has white-label customization, the cover and every session report are rendered with your logo and privacy-policy URL; otherwise they carry Didit branding. Reports are rendered in English — there is no language parameter.
-   *
-   * <p><b>No caching.</b> Every call re-renders the PDF from the current data, so a report generated after a manual review reflects the reviewer's decision. Two calls for the same user can produce byte-different files — archive the downloaded file if you need an immutable copy.
-   *
-   * <p><b>Latency.</b> Rendering is synchronous and downloads every stored image of every included session, so a user with many media-heavy sessions can take tens of seconds. Use a generous client read timeout (120 s recommended) and stream the body to disk. Generation stops at a server-side time budget instead of running until your client gives up: if that budget is reached, the response is still a valid PDF containing the most recent sessions, and the cover states how many were omitted.
-   *
-   * <p><b>Scope.</b> The user is resolved inside the application that owns the API key. A key can never export a user of another application — such a user does not exist for it and the endpoint returns <code>404</code>.
-   *
-   * <p><b>Trailing slash.</b> The canonical route ends with a trailing slash (<code>…/generate-pdf/</code>). A request without it is served directly with the same response — there is no <code>301</code> redirect, so no client has to follow redirects and <code>curl</code> does not need <code>-L</code>. Use the slashed URL as in the samples.
-   *
-   * <p>{@code GET /v3/users/{vendor_data}/generate-pdf/}
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-   *
-   * @param vendorData Your unique identifier for the user — a free-form string (NOT a UUID). This is the same value you passed as `vendor_data` when creating the user's sessions, matched exactly as sent. URL-encode it; a value containing `/` cannot be addressed by this route.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param vendorData the {@code vendor_data}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BinaryResponse> generatePdfAsync(String vendorData, RequestOptions options) {
     return client.executeAsync(generatePdfRequest(vendorData), options, GENERATE_PDF_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Download the full user history PDF report
+   * Same as {@link #generatePdf(String, RequestOptions)}, with the client's options.
    *
-   * <p>Render and download one compliance-ready PDF containing the full verification history of the user identified by <code>vendor_data</code>. It is the same document the Console produces from <b>User detail → Actions → Download PDF</b>, so periodic compliance exports no longer need a person clicking in the Console.
-   *
-   * <p><b>What the report contains.</b> A cover page with the profile summary (name, date of birth, issuing states, approved emails and phones), the latest status of every feature, the session counters and an index of the sessions included — followed by the standard report of every included session, in chronological order (oldest first). Each session report is the same document <code>GET /v3/session/{sessionId}/generate-pdf/</code> returns for that session.
-   *
-   * <p><b>Eligible sessions.</b> Only User Verification (KYC) sessions in <code>Approved</code>, <code>Declined</code>, <code>In Review</code> or <code>Kyc Expired</code> are included; sessions in any other status are skipped. If the user has no session in one of those statuses the endpoint returns <code>403</code> — see below.
-   *
-   * <p><b>Cap.</b> The report is capped at the <b>20 most recent</b> reportable sessions. When a user has more, the newest 20 are included and the cover page states how many older sessions were left out. Use <code>GET /v3/sessions/?vendor_data=…</code> for the complete list as JSON.
-   *
-   * <p><b>Branding.</b> If your application has white-label customization, the cover and every session report are rendered with your logo and privacy-policy URL; otherwise they carry Didit branding. Reports are rendered in English — there is no language parameter.
-   *
-   * <p><b>No caching.</b> Every call re-renders the PDF from the current data, so a report generated after a manual review reflects the reviewer's decision. Two calls for the same user can produce byte-different files — archive the downloaded file if you need an immutable copy.
-   *
-   * <p><b>Latency.</b> Rendering is synchronous and downloads every stored image of every included session, so a user with many media-heavy sessions can take tens of seconds. Use a generous client read timeout (120 s recommended) and stream the body to disk. Generation stops at a server-side time budget instead of running until your client gives up: if that budget is reached, the response is still a valid PDF containing the most recent sessions, and the cover states how many were omitted.
-   *
-   * <p><b>Scope.</b> The user is resolved inside the application that owns the API key. A key can never export a user of another application — such a user does not exist for it and the endpoint returns <code>404</code>.
-   *
-   * <p><b>Trailing slash.</b> The canonical route ends with a trailing slash (<code>…/generate-pdf/</code>). A request without it is served directly with the same response — there is no <code>301</code> redirect, so no client has to follow redirects and <code>curl</code> does not need <code>-L</code>. Use the slashed URL as in the samples.
-   *
-   * <p>{@code GET /v3/users/{vendor_data}/generate-pdf/}
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-   *
-   * @param vendorData Your unique identifier for the user — a free-form string (NOT a UUID). This is the same value you passed as `vendor_data` when creating the user's sessions, matched exactly as sent. URL-encode it; a value containing `/` cannot be addressed by this route.
-   * @return the response body
+   * @param vendorData the {@code vendor_data}
+   * @return the result
    */
   public BinaryResponse generatePdf(String vendorData) {
     return client.execute(generatePdfRequest(vendorData), RequestOptions.none(), GENERATE_PDF_RESPONSE).data();
   }
 
   /**
-   * Download the full user history PDF report
+   * Asynchronous {@link #generatePdf(String, RequestOptions)}, with the client's options.
    *
-   * <p>Render and download one compliance-ready PDF containing the full verification history of the user identified by <code>vendor_data</code>. It is the same document the Console produces from <b>User detail → Actions → Download PDF</b>, so periodic compliance exports no longer need a person clicking in the Console.
-   *
-   * <p><b>What the report contains.</b> A cover page with the profile summary (name, date of birth, issuing states, approved emails and phones), the latest status of every feature, the session counters and an index of the sessions included — followed by the standard report of every included session, in chronological order (oldest first). Each session report is the same document <code>GET /v3/session/{sessionId}/generate-pdf/</code> returns for that session.
-   *
-   * <p><b>Eligible sessions.</b> Only User Verification (KYC) sessions in <code>Approved</code>, <code>Declined</code>, <code>In Review</code> or <code>Kyc Expired</code> are included; sessions in any other status are skipped. If the user has no session in one of those statuses the endpoint returns <code>403</code> — see below.
-   *
-   * <p><b>Cap.</b> The report is capped at the <b>20 most recent</b> reportable sessions. When a user has more, the newest 20 are included and the cover page states how many older sessions were left out. Use <code>GET /v3/sessions/?vendor_data=…</code> for the complete list as JSON.
-   *
-   * <p><b>Branding.</b> If your application has white-label customization, the cover and every session report are rendered with your logo and privacy-policy URL; otherwise they carry Didit branding. Reports are rendered in English — there is no language parameter.
-   *
-   * <p><b>No caching.</b> Every call re-renders the PDF from the current data, so a report generated after a manual review reflects the reviewer's decision. Two calls for the same user can produce byte-different files — archive the downloaded file if you need an immutable copy.
-   *
-   * <p><b>Latency.</b> Rendering is synchronous and downloads every stored image of every included session, so a user with many media-heavy sessions can take tens of seconds. Use a generous client read timeout (120 s recommended) and stream the body to disk. Generation stops at a server-side time budget instead of running until your client gives up: if that budget is reached, the response is still a valid PDF containing the most recent sessions, and the cover states how many were omitted.
-   *
-   * <p><b>Scope.</b> The user is resolved inside the application that owns the API key. A key can never export a user of another application — such a user does not exist for it and the endpoint returns <code>404</code>.
-   *
-   * <p><b>Trailing slash.</b> The canonical route ends with a trailing slash (<code>…/generate-pdf/</code>). A request without it is served directly with the same response — there is no <code>301</code> redirect, so no client has to follow redirects and <code>curl</code> does not need <code>-L</code>. Use the slashed URL as in the samples.
-   *
-   * <p>{@code GET /v3/users/{vendor_data}/generate-pdf/}
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-   *
-   * @param vendorData Your unique identifier for the user — a free-form string (NOT a UUID). This is the same value you passed as `vendor_data` when creating the user's sessions, matched exactly as sent. URL-encode it; a value containing `/` cannot be addressed by this route.
-   * @return a future completed with the response body
+   * @param vendorData the {@code vendor_data}
+   * @return a future completed with the result
    */
   public CompletableFuture<BinaryResponse> generatePdfAsync(String vendorData) {
     return client.executeAsync(generatePdfRequest(vendorData), RequestOptions.none(), GENERATE_PDF_RESPONSE).thenApply(RawResponse::data);
@@ -489,111 +351,69 @@ public final class UsersResource {
   }
 
   /**
-   * Batch delete users
-   *
-   * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-   *
-   * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-   *
-   * <p>{@code POST /v3/users/delete/}
+   * Asynchronous {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<UsersBatchDeleteResponse> batchDeleteAsync(UsersBatchDeleteParams params, RequestOptions options) {
     return client.executeAsync(batchDeleteRequest(params), options, BATCH_DELETE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Batch delete users
-   *
-   * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-   *
-   * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-   *
-   * <p>{@code POST /v3/users/delete/}
+   * Same as {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public UsersBatchDeleteResponse batchDelete(UsersBatchDeleteParams params) {
     return client.execute(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE).data();
   }
 
   /**
-   * Batch delete users
-   *
-   * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-   *
-   * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-   *
-   * <p>{@code POST /v3/users/delete/}
+   * Asynchronous {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<UsersBatchDeleteResponse> batchDeleteAsync(UsersBatchDeleteParams params) {
     return client.executeAsync(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Batch delete users
+   * Same as {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)}, without parameters.
    *
-   * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-   *
-   * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-   *
-   * <p>{@code POST /v3/users/delete/}
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public UsersBatchDeleteResponse batchDelete(RequestOptions options) {
     return client.execute(batchDeleteRequest(UsersBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE).data();
   }
 
   /**
-   * Batch delete users
+   * Asynchronous {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)}, without parameters.
    *
-   * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-   *
-   * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-   *
-   * <p>{@code POST /v3/users/delete/}
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<UsersBatchDeleteResponse> batchDeleteAsync(RequestOptions options) {
     return client.executeAsync(batchDeleteRequest(UsersBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Batch delete users
+   * Same as {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-   *
-   * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-   *
-   * <p>{@code POST /v3/users/delete/}
-   *
-   * @return the response body
+   * @return the result
    */
   public UsersBatchDeleteResponse batchDelete() {
     return client.execute(batchDeleteRequest(UsersBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE).data();
   }
 
   /**
-   * Batch delete users
+   * Asynchronous {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-   *
-   * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-   *
-   * <p>{@code POST /v3/users/delete/}
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<UsersBatchDeleteResponse> batchDeleteAsync() {
     return client.executeAsync(batchDeleteRequest(UsersBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE).thenApply(RawResponse::data);
@@ -617,49 +437,31 @@ public final class UsersResource {
   }
 
   /**
-   * Enable or disable AML ongoing monitoring for users
-   *
-   * <p>Turns AML ongoing monitoring on or off for the selected users, with the same semantics as the Business Console. Exactly one monitored AML screening is kept per user, so a profile that verified several times is monitored and billed once; disabling turns monitoring off across all of the profile's screenings. Users without any AML screening are screened first (billed as a regular AML screening) when they have the full name, date of birth and country needed; otherwise they are reported as <code>skipped_no_identity_data</code>.
-   *
-   * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
-   *
-   * <p>{@code POST /v3/users/aml-monitoring/}
+   * Asynchronous {@link #setAmlMonitoring(UsersSetAmlMonitoringParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<UsersSetAmlMonitoringResponse> setAmlMonitoringAsync(UsersSetAmlMonitoringParams params, RequestOptions options) {
     return client.executeAsync(setAmlMonitoringRequest(params), options, SET_AML_MONITORING_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Enable or disable AML ongoing monitoring for users
-   *
-   * <p>Turns AML ongoing monitoring on or off for the selected users, with the same semantics as the Business Console. Exactly one monitored AML screening is kept per user, so a profile that verified several times is monitored and billed once; disabling turns monitoring off across all of the profile's screenings. Users without any AML screening are screened first (billed as a regular AML screening) when they have the full name, date of birth and country needed; otherwise they are reported as <code>skipped_no_identity_data</code>.
-   *
-   * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
-   *
-   * <p>{@code POST /v3/users/aml-monitoring/}
+   * Same as {@link #setAmlMonitoring(UsersSetAmlMonitoringParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public UsersSetAmlMonitoringResponse setAmlMonitoring(UsersSetAmlMonitoringParams params) {
     return client.execute(setAmlMonitoringRequest(params), RequestOptions.none(), SET_AML_MONITORING_RESPONSE).data();
   }
 
   /**
-   * Enable or disable AML ongoing monitoring for users
-   *
-   * <p>Turns AML ongoing monitoring on or off for the selected users, with the same semantics as the Business Console. Exactly one monitored AML screening is kept per user, so a profile that verified several times is monitored and billed once; disabling turns monitoring off across all of the profile's screenings. Users without any AML screening are screened first (billed as a regular AML screening) when they have the full name, date of birth and country needed; otherwise they are reported as <code>skipped_no_identity_data</code>.
-   *
-   * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
-   *
-   * <p>{@code POST /v3/users/aml-monitoring/}
+   * Asynchronous {@link #setAmlMonitoring(UsersSetAmlMonitoringParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<UsersSetAmlMonitoringResponse> setAmlMonitoringAsync(UsersSetAmlMonitoringParams params) {
     return client.executeAsync(setAmlMonitoringRequest(params), RequestOptions.none(), SET_AML_MONITORING_RESPONSE).thenApply(RawResponse::data);
@@ -682,46 +484,34 @@ public final class UsersResource {
   }
 
   /**
-   * Update user status
+   * Asynchronous {@link #updateStatus(String, UsersUpdateStatusParams, RequestOptions)}.
    *
-   * <p>Flip only the lifecycle <code>status</code> of a user — <code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code> (NOT session statuses). <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry. Each change is recorded as a <code>STATUS_CHANGED</code> activity on the user.
-   *
-   * <p>{@code PATCH /v3/users/{vendor_data}/update-status/}
-   *
-   * @param vendorData Your unique identifier for the user.
+   * @param vendorData the {@code vendor_data}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<UserDetailItem> updateStatusAsync(String vendorData, UsersUpdateStatusParams params, RequestOptions options) {
     return client.executeAsync(updateStatusRequest(vendorData, params), options, UPDATE_STATUS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update user status
+   * Same as {@link #updateStatus(String, UsersUpdateStatusParams, RequestOptions)}, with the client's options.
    *
-   * <p>Flip only the lifecycle <code>status</code> of a user — <code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code> (NOT session statuses). <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry. Each change is recorded as a <code>STATUS_CHANGED</code> activity on the user.
-   *
-   * <p>{@code PATCH /v3/users/{vendor_data}/update-status/}
-   *
-   * @param vendorData Your unique identifier for the user.
+   * @param vendorData the {@code vendor_data}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public UserDetailItem updateStatus(String vendorData, UsersUpdateStatusParams params) {
     return client.execute(updateStatusRequest(vendorData, params), RequestOptions.none(), UPDATE_STATUS_RESPONSE).data();
   }
 
   /**
-   * Update user status
+   * Asynchronous {@link #updateStatus(String, UsersUpdateStatusParams, RequestOptions)}, with the client's options.
    *
-   * <p>Flip only the lifecycle <code>status</code> of a user — <code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code> (NOT session statuses). <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry. Each change is recorded as a <code>STATUS_CHANGED</code> activity on the user.
-   *
-   * <p>{@code PATCH /v3/users/{vendor_data}/update-status/}
-   *
-   * @param vendorData Your unique identifier for the user.
+   * @param vendorData the {@code vendor_data}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<UserDetailItem> updateStatusAsync(String vendorData, UsersUpdateStatusParams params) {
     return client.executeAsync(updateStatusRequest(vendorData, params), RequestOptions.none(), UPDATE_STATUS_RESPONSE).thenApply(RawResponse::data);
@@ -743,43 +533,31 @@ public final class UsersResource {
   }
 
   /**
-   * Create user
-   *
-   * <p>Pre-create a [user](/entities/users) by <code>vendor_data</code> *without* a verification session. <code>vendor_data</code> must be unique among non-deleted users for the application (exact match; conflicts return 400). Not idempotent.
-   *
-   * <p>{@code POST /v3/users/create/}
+   * Asynchronous {@link #create(UsersCreateParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<UserDetailItem> createAsync(UsersCreateParams params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create user
-   *
-   * <p>Pre-create a [user](/entities/users) by <code>vendor_data</code> *without* a verification session. <code>vendor_data</code> must be unique among non-deleted users for the application (exact match; conflicts return 400). Not idempotent.
-   *
-   * <p>{@code POST /v3/users/create/}
+   * Same as {@link #create(UsersCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public UserDetailItem create(UsersCreateParams params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create user
-   *
-   * <p>Pre-create a [user](/entities/users) by <code>vendor_data</code> *without* a verification session. <code>vendor_data</code> must be unique among non-deleted users for the application (exact match; conflicts return 400). Not idempotent.
-   *
-   * <p>{@code POST /v3/users/create/}
+   * Asynchronous {@link #create(UsersCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<UserDetailItem> createAsync(UsersCreateParams params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -803,49 +581,34 @@ public final class UsersResource {
   }
 
   /**
-   * Upload user face
+   * Asynchronous {@link #uploadFace(String, UsersUploadFaceParams, RequestOptions)}.
    *
-   * <p>Attach a trusted imported face image to an existing User profile. Use this after creating or retrieving a User by <code>vendor_data</code> and reading its <code>didit_internal_id</code>. The uploaded face is stored on the User profile and indexed for duplicate detection and face search. It is not added to a face blocklist.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/vendor-users/by-id/{didit_internal_id}/faces/upload/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param diditInternalId Didit's internal User UUID, returned as `didit_internal_id` by `GET /v3/users/{vendor_data}/` and `POST /v3/users/create/`.
+   * @param diditInternalId the {@code didit_internal_id}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<UsersUploadFaceResponse> uploadFaceAsync(String diditInternalId, UsersUploadFaceParams params, RequestOptions options) {
     return client.executeAsync(uploadFaceRequest(diditInternalId, params), options, UPLOAD_FACE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Upload user face
+   * Same as {@link #uploadFace(String, UsersUploadFaceParams, RequestOptions)}, with the client's options.
    *
-   * <p>Attach a trusted imported face image to an existing User profile. Use this after creating or retrieving a User by <code>vendor_data</code> and reading its <code>didit_internal_id</code>. The uploaded face is stored on the User profile and indexed for duplicate detection and face search. It is not added to a face blocklist.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/vendor-users/by-id/{didit_internal_id}/faces/upload/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param diditInternalId Didit's internal User UUID, returned as `didit_internal_id` by `GET /v3/users/{vendor_data}/` and `POST /v3/users/create/`.
+   * @param diditInternalId the {@code didit_internal_id}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public UsersUploadFaceResponse uploadFace(String diditInternalId, UsersUploadFaceParams params) {
     return client.execute(uploadFaceRequest(diditInternalId, params), RequestOptions.none(), UPLOAD_FACE_RESPONSE).data();
   }
 
   /**
-   * Upload user face
+   * Asynchronous {@link #uploadFace(String, UsersUploadFaceParams, RequestOptions)}, with the client's options.
    *
-   * <p>Attach a trusted imported face image to an existing User profile. Use this after creating or retrieving a User by <code>vendor_data</code> and reading its <code>didit_internal_id</code>. The uploaded face is stored on the User profile and indexed for duplicate detection and face search. It is not added to a face blocklist.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/vendor-users/by-id/{didit_internal_id}/faces/upload/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param diditInternalId Didit's internal User UUID, returned as `didit_internal_id` by `GET /v3/users/{vendor_data}/` and `POST /v3/users/create/`.
+   * @param diditInternalId the {@code didit_internal_id}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<UsersUploadFaceResponse> uploadFaceAsync(String diditInternalId, UsersUploadFaceParams params) {
     return client.executeAsync(uploadFaceRequest(diditInternalId, params), RequestOptions.none(), UPLOAD_FACE_RESPONSE).thenApply(RawResponse::data);
@@ -868,46 +631,31 @@ public final class UsersResource {
   }
 
   /**
-   * Toggle AML ongoing monitoring for users
-   *
-   * <p>Enables or disables AML ongoing monitoring at the user level. Exactly one monitored AML screening is kept per user; users without any AML screening (for example imported users) get one created and screened first, billed as a regular AML screening. Set estimate_only to preview counts and costs without writing. Batches of 20 or fewer resolve inline (200, COMPLETED); larger batches return 202 and run asynchronously.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #setOngoingMonitoring(UsersSetOngoingMonitoringParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<UsersSetOngoingMonitoringResponse> setOngoingMonitoringAsync(UsersSetOngoingMonitoringParams params, RequestOptions options) {
     return client.executeAsync(setOngoingMonitoringRequest(params), options, SET_ONGOING_MONITORING_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Toggle AML ongoing monitoring for users
-   *
-   * <p>Enables or disables AML ongoing monitoring at the user level. Exactly one monitored AML screening is kept per user; users without any AML screening (for example imported users) get one created and screened first, billed as a regular AML screening. Set estimate_only to preview counts and costs without writing. Batches of 20 or fewer resolve inline (200, COMPLETED); larger batches return 202 and run asynchronously.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #setOngoingMonitoring(UsersSetOngoingMonitoringParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public UsersSetOngoingMonitoringResponse setOngoingMonitoring(UsersSetOngoingMonitoringParams params) {
     return client.execute(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE).data();
   }
 
   /**
-   * Toggle AML ongoing monitoring for users
-   *
-   * <p>Enables or disables AML ongoing monitoring at the user level. Exactly one monitored AML screening is kept per user; users without any AML screening (for example imported users) get one created and screened first, billed as a regular AML screening. Set estimate_only to preview counts and costs without writing. Batches of 20 or fewer resolve inline (200, COMPLETED); larger batches return 202 and run asynchronously.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #setOngoingMonitoring(UsersSetOngoingMonitoringParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<UsersSetOngoingMonitoringResponse> setOngoingMonitoringAsync(UsersSetOngoingMonitoringParams params) {
     return client.executeAsync(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE).thenApply(RawResponse::data);
@@ -930,46 +678,31 @@ public final class UsersResource {
   }
 
   /**
-   * Get AML ongoing monitoring job
+   * Asynchronous {@link #retrieveOngoingMonitoringJob(String, RequestOptions)}.
    *
-   * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/{job_id}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param jobId Monitoring job UUID returned by the toggle endpoint.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param jobId the {@code job_id}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<UsersRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
     return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), options, RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get AML ongoing monitoring job
+   * Same as {@link #retrieveOngoingMonitoringJob(String, RequestOptions)}, with the client's options.
    *
-   * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/{job_id}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param jobId Monitoring job UUID returned by the toggle endpoint.
-   * @return the response body
+   * @param jobId the {@code job_id}
+   * @return the result
    */
   public UsersRetrieveOngoingMonitoringJobResponse retrieveOngoingMonitoringJob(String jobId) {
     return client.execute(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE).data();
   }
 
   /**
-   * Get AML ongoing monitoring job
+   * Asynchronous {@link #retrieveOngoingMonitoringJob(String, RequestOptions)}, with the client's options.
    *
-   * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/{job_id}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param jobId Monitoring job UUID returned by the toggle endpoint.
-   * @return a future completed with the response body
+   * @param jobId the {@code job_id}
+   * @return a future completed with the result
    */
   public CompletableFuture<UsersRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJobAsync(String jobId) {
     return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE).thenApply(RawResponse::data);
@@ -992,46 +725,31 @@ public final class UsersResource {
   }
 
   /**
-   * List networks for a user
+   * Asynchronous {@link #listNetworks(String, RequestOptions)}.
    *
-   * <p>List the networks a vendor user belongs to.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/users/{vendor_user_uuid}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param vendorUserUuid Vendor user UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param vendorUserUuid the {@code vendor_user_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<UsersListNetworksResponse> listNetworksAsync(String vendorUserUuid, RequestOptions options) {
     return client.executeAsync(listNetworksRequest(vendorUserUuid), options, LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List networks for a user
+   * Same as {@link #listNetworks(String, RequestOptions)}, with the client's options.
    *
-   * <p>List the networks a vendor user belongs to.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/users/{vendor_user_uuid}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param vendorUserUuid Vendor user UUID.
-   * @return the response body
+   * @param vendorUserUuid the {@code vendor_user_uuid}
+   * @return the result
    */
   public UsersListNetworksResponse listNetworks(String vendorUserUuid) {
     return client.execute(listNetworksRequest(vendorUserUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE).data();
   }
 
   /**
-   * List networks for a user
+   * Asynchronous {@link #listNetworks(String, RequestOptions)}, with the client's options.
    *
-   * <p>List the networks a vendor user belongs to.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/users/{vendor_user_uuid}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param vendorUserUuid Vendor user UUID.
-   * @return a future completed with the response body
+   * @param vendorUserUuid the {@code vendor_user_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<UsersListNetworksResponse> listNetworksAsync(String vendorUserUuid) {
     return client.executeAsync(listNetworksRequest(vendorUserUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
@@ -1158,990 +876,634 @@ public final class UsersResource {
     }
 
     /**
-     * List users
-     *
-     * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/users/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(UsersListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<UserListItem>> list(UsersListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List users
-     *
-     * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/users/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(UsersListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<UserListItem>>> listAsync(UsersListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List users
-     *
-     * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/users/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(UsersListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<UserListItem>> list(UsersListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List users
-     *
-     * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/users/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(UsersListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<UserListItem>>> listAsync(UsersListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List users
+     * {@link #list(UsersListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/users/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<UserListItem>> list(RequestOptions options) {
       return client.execute(listRequest(UsersListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List users
+     * Asynchronous {@link #list(UsersListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/users/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<UserListItem>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(UsersListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List users
+     * {@link #list(UsersListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/users/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<UserListItem>> list() {
       return client.execute(listRequest(UsersListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List users
+     * Asynchronous {@link #list(UsersListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/users/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<UserListItem>>> listAsync() {
       return client.executeAsync(listRequest(UsersListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Get user
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Fetch one [user](/entities/users) by <code>vendor_data</code> (exact match). Adds <code>metadata</code>, <code>comments</code>, and <code>updated_at</code> to the list view, and switches <code>tags</code> to the detailed tag-link shape.
-     *
-     * <p>{@code GET /v3/users/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the user — a free-form string (NOT a UUID). This is the same value you passed as `vendor_data` when creating the session that first introduced this user, matched exactly as sent.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param vendorData the {@code vendor_data}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<UserDetailItem> retrieve(String vendorData, RequestOptions options) {
       return client.execute(retrieveRequest(vendorData), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get user
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Fetch one [user](/entities/users) by <code>vendor_data</code> (exact match). Adds <code>metadata</code>, <code>comments</code>, and <code>updated_at</code> to the list view, and switches <code>tags</code> to the detailed tag-link shape.
-     *
-     * <p>{@code GET /v3/users/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the user — a free-form string (NOT a UUID). This is the same value you passed as `vendor_data` when creating the session that first introduced this user, matched exactly as sent.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param vendorData the {@code vendor_data}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UserDetailItem>> retrieveAsync(String vendorData, RequestOptions options) {
       return client.executeAsync(retrieveRequest(vendorData), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get user
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Fetch one [user](/entities/users) by <code>vendor_data</code> (exact match). Adds <code>metadata</code>, <code>comments</code>, and <code>updated_at</code> to the list view, and switches <code>tags</code> to the detailed tag-link shape.
-     *
-     * <p>{@code GET /v3/users/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the user — a free-form string (NOT a UUID). This is the same value you passed as `vendor_data` when creating the session that first introduced this user, matched exactly as sent.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param vendorData the {@code vendor_data}
+     * @return the result
      */
     public RawResponse<UserDetailItem> retrieve(String vendorData) {
       return client.execute(retrieveRequest(vendorData), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get user
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Fetch one [user](/entities/users) by <code>vendor_data</code> (exact match). Adds <code>metadata</code>, <code>comments</code>, and <code>updated_at</code> to the list view, and switches <code>tags</code> to the detailed tag-link shape.
-     *
-     * <p>{@code GET /v3/users/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the user — a free-form string (NOT a UUID). This is the same value you passed as `vendor_data` when creating the session that first introduced this user, matched exactly as sent.
-     * @return a future completed with the raw response
+     * @param vendorData the {@code vendor_data}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UserDetailItem>> retrieveAsync(String vendorData) {
       return client.executeAsync(retrieveRequest(vendorData), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Update user
+     * {@link #update(String, UsersUpdateParams, RequestOptions)} with the raw response.
      *
-     * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-     *
-     * <p>{@code PATCH /v3/users/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<UserDetailItem> update(String vendorData, UsersUpdateParams params, RequestOptions options) {
       return client.execute(updateRequest(vendorData, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update user
+     * Asynchronous {@link #update(String, UsersUpdateParams, RequestOptions)} with the raw response.
      *
-     * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-     *
-     * <p>{@code PATCH /v3/users/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UserDetailItem>> updateAsync(String vendorData, UsersUpdateParams params, RequestOptions options) {
       return client.executeAsync(updateRequest(vendorData, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update user
+     * {@link #update(String, UsersUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-     *
-     * <p>{@code PATCH /v3/users/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<UserDetailItem> update(String vendorData, UsersUpdateParams params) {
       return client.execute(updateRequest(vendorData, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update user
+     * Asynchronous {@link #update(String, UsersUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-     *
-     * <p>{@code PATCH /v3/users/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UserDetailItem>> updateAsync(String vendorData, UsersUpdateParams params) {
       return client.executeAsync(updateRequest(vendorData, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update user
+     * {@link #update(String, UsersUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-     *
-     * <p>{@code PATCH /v3/users/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param vendorData the {@code vendor_data}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<UserDetailItem> update(String vendorData, RequestOptions options) {
       return client.execute(updateRequest(vendorData, UsersUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update user
+     * Asynchronous {@link #update(String, UsersUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-     *
-     * <p>{@code PATCH /v3/users/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param vendorData the {@code vendor_data}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UserDetailItem>> updateAsync(String vendorData, RequestOptions options) {
       return client.executeAsync(updateRequest(vendorData, UsersUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update user
+     * {@link #update(String, UsersUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-     *
-     * <p>{@code PATCH /v3/users/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param vendorData the {@code vendor_data}
+     * @return the result
      */
     public RawResponse<UserDetailItem> update(String vendorData) {
       return client.execute(updateRequest(vendorData, UsersUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update user
+     * Asynchronous {@link #update(String, UsersUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
-     *
-     * <p>{@code PATCH /v3/users/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
-     * @return a future completed with the raw response
+     * @param vendorData the {@code vendor_data}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UserDetailItem>> updateAsync(String vendorData) {
       return client.executeAsync(updateRequest(vendorData, UsersUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Download the full user history PDF report
+     * {@link #generatePdf(String, RequestOptions)} with the raw response.
      *
-     * <p>Render and download one compliance-ready PDF containing the full verification history of the user identified by <code>vendor_data</code>. It is the same document the Console produces from <b>User detail → Actions → Download PDF</b>, so periodic compliance exports no longer need a person clicking in the Console.
-     *
-     * <p><b>What the report contains.</b> A cover page with the profile summary (name, date of birth, issuing states, approved emails and phones), the latest status of every feature, the session counters and an index of the sessions included — followed by the standard report of every included session, in chronological order (oldest first). Each session report is the same document <code>GET /v3/session/{sessionId}/generate-pdf/</code> returns for that session.
-     *
-     * <p><b>Eligible sessions.</b> Only User Verification (KYC) sessions in <code>Approved</code>, <code>Declined</code>, <code>In Review</code> or <code>Kyc Expired</code> are included; sessions in any other status are skipped. If the user has no session in one of those statuses the endpoint returns <code>403</code> — see below.
-     *
-     * <p><b>Cap.</b> The report is capped at the <b>20 most recent</b> reportable sessions. When a user has more, the newest 20 are included and the cover page states how many older sessions were left out. Use <code>GET /v3/sessions/?vendor_data=…</code> for the complete list as JSON.
-     *
-     * <p><b>Branding.</b> If your application has white-label customization, the cover and every session report are rendered with your logo and privacy-policy URL; otherwise they carry Didit branding. Reports are rendered in English — there is no language parameter.
-     *
-     * <p><b>No caching.</b> Every call re-renders the PDF from the current data, so a report generated after a manual review reflects the reviewer's decision. Two calls for the same user can produce byte-different files — archive the downloaded file if you need an immutable copy.
-     *
-     * <p><b>Latency.</b> Rendering is synchronous and downloads every stored image of every included session, so a user with many media-heavy sessions can take tens of seconds. Use a generous client read timeout (120 s recommended) and stream the body to disk. Generation stops at a server-side time budget instead of running until your client gives up: if that budget is reached, the response is still a valid PDF containing the most recent sessions, and the cover states how many were omitted.
-     *
-     * <p><b>Scope.</b> The user is resolved inside the application that owns the API key. A key can never export a user of another application — such a user does not exist for it and the endpoint returns <code>404</code>.
-     *
-     * <p><b>Trailing slash.</b> The canonical route ends with a trailing slash (<code>…/generate-pdf/</code>). A request without it is served directly with the same response — there is no <code>301</code> redirect, so no client has to follow redirects and <code>curl</code> does not need <code>-L</code>. Use the slashed URL as in the samples.
-     *
-     * <p>{@code GET /v3/users/{vendor_data}/generate-pdf/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-     *
-     * @param vendorData Your unique identifier for the user — a free-form string (NOT a UUID). This is the same value you passed as `vendor_data` when creating the user's sessions, matched exactly as sent. URL-encode it; a value containing `/` cannot be addressed by this route.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param vendorData the {@code vendor_data}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BinaryResponse> generatePdf(String vendorData, RequestOptions options) {
       return client.execute(generatePdfRequest(vendorData), options, GENERATE_PDF_RESPONSE);
     }
 
     /**
-     * Download the full user history PDF report
+     * Asynchronous {@link #generatePdf(String, RequestOptions)} with the raw response.
      *
-     * <p>Render and download one compliance-ready PDF containing the full verification history of the user identified by <code>vendor_data</code>. It is the same document the Console produces from <b>User detail → Actions → Download PDF</b>, so periodic compliance exports no longer need a person clicking in the Console.
-     *
-     * <p><b>What the report contains.</b> A cover page with the profile summary (name, date of birth, issuing states, approved emails and phones), the latest status of every feature, the session counters and an index of the sessions included — followed by the standard report of every included session, in chronological order (oldest first). Each session report is the same document <code>GET /v3/session/{sessionId}/generate-pdf/</code> returns for that session.
-     *
-     * <p><b>Eligible sessions.</b> Only User Verification (KYC) sessions in <code>Approved</code>, <code>Declined</code>, <code>In Review</code> or <code>Kyc Expired</code> are included; sessions in any other status are skipped. If the user has no session in one of those statuses the endpoint returns <code>403</code> — see below.
-     *
-     * <p><b>Cap.</b> The report is capped at the <b>20 most recent</b> reportable sessions. When a user has more, the newest 20 are included and the cover page states how many older sessions were left out. Use <code>GET /v3/sessions/?vendor_data=…</code> for the complete list as JSON.
-     *
-     * <p><b>Branding.</b> If your application has white-label customization, the cover and every session report are rendered with your logo and privacy-policy URL; otherwise they carry Didit branding. Reports are rendered in English — there is no language parameter.
-     *
-     * <p><b>No caching.</b> Every call re-renders the PDF from the current data, so a report generated after a manual review reflects the reviewer's decision. Two calls for the same user can produce byte-different files — archive the downloaded file if you need an immutable copy.
-     *
-     * <p><b>Latency.</b> Rendering is synchronous and downloads every stored image of every included session, so a user with many media-heavy sessions can take tens of seconds. Use a generous client read timeout (120 s recommended) and stream the body to disk. Generation stops at a server-side time budget instead of running until your client gives up: if that budget is reached, the response is still a valid PDF containing the most recent sessions, and the cover states how many were omitted.
-     *
-     * <p><b>Scope.</b> The user is resolved inside the application that owns the API key. A key can never export a user of another application — such a user does not exist for it and the endpoint returns <code>404</code>.
-     *
-     * <p><b>Trailing slash.</b> The canonical route ends with a trailing slash (<code>…/generate-pdf/</code>). A request without it is served directly with the same response — there is no <code>301</code> redirect, so no client has to follow redirects and <code>curl</code> does not need <code>-L</code>. Use the slashed URL as in the samples.
-     *
-     * <p>{@code GET /v3/users/{vendor_data}/generate-pdf/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-     *
-     * @param vendorData Your unique identifier for the user — a free-form string (NOT a UUID). This is the same value you passed as `vendor_data` when creating the user's sessions, matched exactly as sent. URL-encode it; a value containing `/` cannot be addressed by this route.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param vendorData the {@code vendor_data}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BinaryResponse>> generatePdfAsync(String vendorData, RequestOptions options) {
       return client.executeAsync(generatePdfRequest(vendorData), options, GENERATE_PDF_RESPONSE);
     }
 
     /**
-     * Download the full user history PDF report
+     * {@link #generatePdf(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Render and download one compliance-ready PDF containing the full verification history of the user identified by <code>vendor_data</code>. It is the same document the Console produces from <b>User detail → Actions → Download PDF</b>, so periodic compliance exports no longer need a person clicking in the Console.
-     *
-     * <p><b>What the report contains.</b> A cover page with the profile summary (name, date of birth, issuing states, approved emails and phones), the latest status of every feature, the session counters and an index of the sessions included — followed by the standard report of every included session, in chronological order (oldest first). Each session report is the same document <code>GET /v3/session/{sessionId}/generate-pdf/</code> returns for that session.
-     *
-     * <p><b>Eligible sessions.</b> Only User Verification (KYC) sessions in <code>Approved</code>, <code>Declined</code>, <code>In Review</code> or <code>Kyc Expired</code> are included; sessions in any other status are skipped. If the user has no session in one of those statuses the endpoint returns <code>403</code> — see below.
-     *
-     * <p><b>Cap.</b> The report is capped at the <b>20 most recent</b> reportable sessions. When a user has more, the newest 20 are included and the cover page states how many older sessions were left out. Use <code>GET /v3/sessions/?vendor_data=…</code> for the complete list as JSON.
-     *
-     * <p><b>Branding.</b> If your application has white-label customization, the cover and every session report are rendered with your logo and privacy-policy URL; otherwise they carry Didit branding. Reports are rendered in English — there is no language parameter.
-     *
-     * <p><b>No caching.</b> Every call re-renders the PDF from the current data, so a report generated after a manual review reflects the reviewer's decision. Two calls for the same user can produce byte-different files — archive the downloaded file if you need an immutable copy.
-     *
-     * <p><b>Latency.</b> Rendering is synchronous and downloads every stored image of every included session, so a user with many media-heavy sessions can take tens of seconds. Use a generous client read timeout (120 s recommended) and stream the body to disk. Generation stops at a server-side time budget instead of running until your client gives up: if that budget is reached, the response is still a valid PDF containing the most recent sessions, and the cover states how many were omitted.
-     *
-     * <p><b>Scope.</b> The user is resolved inside the application that owns the API key. A key can never export a user of another application — such a user does not exist for it and the endpoint returns <code>404</code>.
-     *
-     * <p><b>Trailing slash.</b> The canonical route ends with a trailing slash (<code>…/generate-pdf/</code>). A request without it is served directly with the same response — there is no <code>301</code> redirect, so no client has to follow redirects and <code>curl</code> does not need <code>-L</code>. Use the slashed URL as in the samples.
-     *
-     * <p>{@code GET /v3/users/{vendor_data}/generate-pdf/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-     *
-     * @param vendorData Your unique identifier for the user — a free-form string (NOT a UUID). This is the same value you passed as `vendor_data` when creating the user's sessions, matched exactly as sent. URL-encode it; a value containing `/` cannot be addressed by this route.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param vendorData the {@code vendor_data}
+     * @return the result
      */
     public RawResponse<BinaryResponse> generatePdf(String vendorData) {
       return client.execute(generatePdfRequest(vendorData), RequestOptions.none(), GENERATE_PDF_RESPONSE);
     }
 
     /**
-     * Download the full user history PDF report
+     * Asynchronous {@link #generatePdf(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Render and download one compliance-ready PDF containing the full verification history of the user identified by <code>vendor_data</code>. It is the same document the Console produces from <b>User detail → Actions → Download PDF</b>, so periodic compliance exports no longer need a person clicking in the Console.
-     *
-     * <p><b>What the report contains.</b> A cover page with the profile summary (name, date of birth, issuing states, approved emails and phones), the latest status of every feature, the session counters and an index of the sessions included — followed by the standard report of every included session, in chronological order (oldest first). Each session report is the same document <code>GET /v3/session/{sessionId}/generate-pdf/</code> returns for that session.
-     *
-     * <p><b>Eligible sessions.</b> Only User Verification (KYC) sessions in <code>Approved</code>, <code>Declined</code>, <code>In Review</code> or <code>Kyc Expired</code> are included; sessions in any other status are skipped. If the user has no session in one of those statuses the endpoint returns <code>403</code> — see below.
-     *
-     * <p><b>Cap.</b> The report is capped at the <b>20 most recent</b> reportable sessions. When a user has more, the newest 20 are included and the cover page states how many older sessions were left out. Use <code>GET /v3/sessions/?vendor_data=…</code> for the complete list as JSON.
-     *
-     * <p><b>Branding.</b> If your application has white-label customization, the cover and every session report are rendered with your logo and privacy-policy URL; otherwise they carry Didit branding. Reports are rendered in English — there is no language parameter.
-     *
-     * <p><b>No caching.</b> Every call re-renders the PDF from the current data, so a report generated after a manual review reflects the reviewer's decision. Two calls for the same user can produce byte-different files — archive the downloaded file if you need an immutable copy.
-     *
-     * <p><b>Latency.</b> Rendering is synchronous and downloads every stored image of every included session, so a user with many media-heavy sessions can take tens of seconds. Use a generous client read timeout (120 s recommended) and stream the body to disk. Generation stops at a server-side time budget instead of running until your client gives up: if that budget is reached, the response is still a valid PDF containing the most recent sessions, and the cover states how many were omitted.
-     *
-     * <p><b>Scope.</b> The user is resolved inside the application that owns the API key. A key can never export a user of another application — such a user does not exist for it and the endpoint returns <code>404</code>.
-     *
-     * <p><b>Trailing slash.</b> The canonical route ends with a trailing slash (<code>…/generate-pdf/</code>). A request without it is served directly with the same response — there is no <code>301</code> redirect, so no client has to follow redirects and <code>curl</code> does not need <code>-L</code>. Use the slashed URL as in the samples.
-     *
-     * <p>{@code GET /v3/users/{vendor_data}/generate-pdf/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-     *
-     * @param vendorData Your unique identifier for the user — a free-form string (NOT a UUID). This is the same value you passed as `vendor_data` when creating the user's sessions, matched exactly as sent. URL-encode it; a value containing `/` cannot be addressed by this route.
-     * @return a future completed with the raw response
+     * @param vendorData the {@code vendor_data}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BinaryResponse>> generatePdfAsync(String vendorData) {
       return client.executeAsync(generatePdfRequest(vendorData), RequestOptions.none(), GENERATE_PDF_RESPONSE);
     }
 
     /**
-     * Batch delete users
-     *
-     * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-     *
-     * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-     *
-     * <p>{@code POST /v3/users/delete/}
+     * {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<UsersBatchDeleteResponse> batchDelete(UsersBatchDeleteParams params, RequestOptions options) {
       return client.execute(batchDeleteRequest(params), options, BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Batch delete users
-     *
-     * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-     *
-     * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-     *
-     * <p>{@code POST /v3/users/delete/}
+     * Asynchronous {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UsersBatchDeleteResponse>> batchDeleteAsync(UsersBatchDeleteParams params, RequestOptions options) {
       return client.executeAsync(batchDeleteRequest(params), options, BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Batch delete users
-     *
-     * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-     *
-     * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-     *
-     * <p>{@code POST /v3/users/delete/}
+     * {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<UsersBatchDeleteResponse> batchDelete(UsersBatchDeleteParams params) {
       return client.execute(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Batch delete users
-     *
-     * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-     *
-     * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-     *
-     * <p>{@code POST /v3/users/delete/}
+     * Asynchronous {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UsersBatchDeleteResponse>> batchDeleteAsync(UsersBatchDeleteParams params) {
       return client.executeAsync(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Batch delete users
+     * {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-     *
-     * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-     *
-     * <p>{@code POST /v3/users/delete/}
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<UsersBatchDeleteResponse> batchDelete(RequestOptions options) {
       return client.execute(batchDeleteRequest(UsersBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Batch delete users
+     * Asynchronous {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-     *
-     * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-     *
-     * <p>{@code POST /v3/users/delete/}
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UsersBatchDeleteResponse>> batchDeleteAsync(RequestOptions options) {
       return client.executeAsync(batchDeleteRequest(UsersBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Batch delete users
+     * {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-     *
-     * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-     *
-     * <p>{@code POST /v3/users/delete/}
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<UsersBatchDeleteResponse> batchDelete() {
       return client.execute(batchDeleteRequest(UsersBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Batch delete users
+     * Asynchronous {@link #batchDelete(UsersBatchDeleteParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
-     *
-     * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
-     *
-     * <p>{@code POST /v3/users/delete/}
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UsersBatchDeleteResponse>> batchDeleteAsync() {
       return client.executeAsync(batchDeleteRequest(UsersBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Enable or disable AML ongoing monitoring for users
-     *
-     * <p>Turns AML ongoing monitoring on or off for the selected users, with the same semantics as the Business Console. Exactly one monitored AML screening is kept per user, so a profile that verified several times is monitored and billed once; disabling turns monitoring off across all of the profile's screenings. Users without any AML screening are screened first (billed as a regular AML screening) when they have the full name, date of birth and country needed; otherwise they are reported as <code>skipped_no_identity_data</code>.
-     *
-     * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
-     *
-     * <p>{@code POST /v3/users/aml-monitoring/}
+     * {@link #setAmlMonitoring(UsersSetAmlMonitoringParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<UsersSetAmlMonitoringResponse> setAmlMonitoring(UsersSetAmlMonitoringParams params, RequestOptions options) {
       return client.execute(setAmlMonitoringRequest(params), options, SET_AML_MONITORING_RESPONSE);
     }
 
     /**
-     * Enable or disable AML ongoing monitoring for users
-     *
-     * <p>Turns AML ongoing monitoring on or off for the selected users, with the same semantics as the Business Console. Exactly one monitored AML screening is kept per user, so a profile that verified several times is monitored and billed once; disabling turns monitoring off across all of the profile's screenings. Users without any AML screening are screened first (billed as a regular AML screening) when they have the full name, date of birth and country needed; otherwise they are reported as <code>skipped_no_identity_data</code>.
-     *
-     * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
-     *
-     * <p>{@code POST /v3/users/aml-monitoring/}
+     * Asynchronous {@link #setAmlMonitoring(UsersSetAmlMonitoringParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UsersSetAmlMonitoringResponse>> setAmlMonitoringAsync(UsersSetAmlMonitoringParams params, RequestOptions options) {
       return client.executeAsync(setAmlMonitoringRequest(params), options, SET_AML_MONITORING_RESPONSE);
     }
 
     /**
-     * Enable or disable AML ongoing monitoring for users
-     *
-     * <p>Turns AML ongoing monitoring on or off for the selected users, with the same semantics as the Business Console. Exactly one monitored AML screening is kept per user, so a profile that verified several times is monitored and billed once; disabling turns monitoring off across all of the profile's screenings. Users without any AML screening are screened first (billed as a regular AML screening) when they have the full name, date of birth and country needed; otherwise they are reported as <code>skipped_no_identity_data</code>.
-     *
-     * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
-     *
-     * <p>{@code POST /v3/users/aml-monitoring/}
+     * {@link #setAmlMonitoring(UsersSetAmlMonitoringParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<UsersSetAmlMonitoringResponse> setAmlMonitoring(UsersSetAmlMonitoringParams params) {
       return client.execute(setAmlMonitoringRequest(params), RequestOptions.none(), SET_AML_MONITORING_RESPONSE);
     }
 
     /**
-     * Enable or disable AML ongoing monitoring for users
-     *
-     * <p>Turns AML ongoing monitoring on or off for the selected users, with the same semantics as the Business Console. Exactly one monitored AML screening is kept per user, so a profile that verified several times is monitored and billed once; disabling turns monitoring off across all of the profile's screenings. Users without any AML screening are screened first (billed as a regular AML screening) when they have the full name, date of birth and country needed; otherwise they are reported as <code>skipped_no_identity_data</code>.
-     *
-     * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
-     *
-     * <p>{@code POST /v3/users/aml-monitoring/}
+     * Asynchronous {@link #setAmlMonitoring(UsersSetAmlMonitoringParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UsersSetAmlMonitoringResponse>> setAmlMonitoringAsync(UsersSetAmlMonitoringParams params) {
       return client.executeAsync(setAmlMonitoringRequest(params), RequestOptions.none(), SET_AML_MONITORING_RESPONSE);
     }
 
     /**
-     * Update user status
+     * {@link #updateStatus(String, UsersUpdateStatusParams, RequestOptions)} with the raw response.
      *
-     * <p>Flip only the lifecycle <code>status</code> of a user — <code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code> (NOT session statuses). <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry. Each change is recorded as a <code>STATUS_CHANGED</code> activity on the user.
-     *
-     * <p>{@code PATCH /v3/users/{vendor_data}/update-status/}
-     *
-     * @param vendorData Your unique identifier for the user.
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<UserDetailItem> updateStatus(String vendorData, UsersUpdateStatusParams params, RequestOptions options) {
       return client.execute(updateStatusRequest(vendorData, params), options, UPDATE_STATUS_RESPONSE);
     }
 
     /**
-     * Update user status
+     * Asynchronous {@link #updateStatus(String, UsersUpdateStatusParams, RequestOptions)} with the raw response.
      *
-     * <p>Flip only the lifecycle <code>status</code> of a user — <code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code> (NOT session statuses). <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry. Each change is recorded as a <code>STATUS_CHANGED</code> activity on the user.
-     *
-     * <p>{@code PATCH /v3/users/{vendor_data}/update-status/}
-     *
-     * @param vendorData Your unique identifier for the user.
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UserDetailItem>> updateStatusAsync(String vendorData, UsersUpdateStatusParams params, RequestOptions options) {
       return client.executeAsync(updateStatusRequest(vendorData, params), options, UPDATE_STATUS_RESPONSE);
     }
 
     /**
-     * Update user status
+     * {@link #updateStatus(String, UsersUpdateStatusParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Flip only the lifecycle <code>status</code> of a user — <code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code> (NOT session statuses). <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry. Each change is recorded as a <code>STATUS_CHANGED</code> activity on the user.
-     *
-     * <p>{@code PATCH /v3/users/{vendor_data}/update-status/}
-     *
-     * @param vendorData Your unique identifier for the user.
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<UserDetailItem> updateStatus(String vendorData, UsersUpdateStatusParams params) {
       return client.execute(updateStatusRequest(vendorData, params), RequestOptions.none(), UPDATE_STATUS_RESPONSE);
     }
 
     /**
-     * Update user status
+     * Asynchronous {@link #updateStatus(String, UsersUpdateStatusParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Flip only the lifecycle <code>status</code> of a user — <code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code> (NOT session statuses). <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry. Each change is recorded as a <code>STATUS_CHANGED</code> activity on the user.
-     *
-     * <p>{@code PATCH /v3/users/{vendor_data}/update-status/}
-     *
-     * @param vendorData Your unique identifier for the user.
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UserDetailItem>> updateStatusAsync(String vendorData, UsersUpdateStatusParams params) {
       return client.executeAsync(updateStatusRequest(vendorData, params), RequestOptions.none(), UPDATE_STATUS_RESPONSE);
     }
 
     /**
-     * Create user
-     *
-     * <p>Pre-create a [user](/entities/users) by <code>vendor_data</code> *without* a verification session. <code>vendor_data</code> must be unique among non-deleted users for the application (exact match; conflicts return 400). Not idempotent.
-     *
-     * <p>{@code POST /v3/users/create/}
+     * {@link #create(UsersCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<UserDetailItem> create(UsersCreateParams params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create user
-     *
-     * <p>Pre-create a [user](/entities/users) by <code>vendor_data</code> *without* a verification session. <code>vendor_data</code> must be unique among non-deleted users for the application (exact match; conflicts return 400). Not idempotent.
-     *
-     * <p>{@code POST /v3/users/create/}
+     * Asynchronous {@link #create(UsersCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UserDetailItem>> createAsync(UsersCreateParams params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create user
-     *
-     * <p>Pre-create a [user](/entities/users) by <code>vendor_data</code> *without* a verification session. <code>vendor_data</code> must be unique among non-deleted users for the application (exact match; conflicts return 400). Not idempotent.
-     *
-     * <p>{@code POST /v3/users/create/}
+     * {@link #create(UsersCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<UserDetailItem> create(UsersCreateParams params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create user
-     *
-     * <p>Pre-create a [user](/entities/users) by <code>vendor_data</code> *without* a verification session. <code>vendor_data</code> must be unique among non-deleted users for the application (exact match; conflicts return 400). Not idempotent.
-     *
-     * <p>{@code POST /v3/users/create/}
+     * Asynchronous {@link #create(UsersCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UserDetailItem>> createAsync(UsersCreateParams params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Upload user face
+     * {@link #uploadFace(String, UsersUploadFaceParams, RequestOptions)} with the raw response.
      *
-     * <p>Attach a trusted imported face image to an existing User profile. Use this after creating or retrieving a User by <code>vendor_data</code> and reading its <code>didit_internal_id</code>. The uploaded face is stored on the User profile and indexed for duplicate detection and face search. It is not added to a face blocklist.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/vendor-users/by-id/{didit_internal_id}/faces/upload/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param diditInternalId Didit's internal User UUID, returned as `didit_internal_id` by `GET /v3/users/{vendor_data}/` and `POST /v3/users/create/`.
+     * @param diditInternalId the {@code didit_internal_id}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<UsersUploadFaceResponse> uploadFace(String diditInternalId, UsersUploadFaceParams params, RequestOptions options) {
       return client.execute(uploadFaceRequest(diditInternalId, params), options, UPLOAD_FACE_RESPONSE);
     }
 
     /**
-     * Upload user face
+     * Asynchronous {@link #uploadFace(String, UsersUploadFaceParams, RequestOptions)} with the raw response.
      *
-     * <p>Attach a trusted imported face image to an existing User profile. Use this after creating or retrieving a User by <code>vendor_data</code> and reading its <code>didit_internal_id</code>. The uploaded face is stored on the User profile and indexed for duplicate detection and face search. It is not added to a face blocklist.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/vendor-users/by-id/{didit_internal_id}/faces/upload/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param diditInternalId Didit's internal User UUID, returned as `didit_internal_id` by `GET /v3/users/{vendor_data}/` and `POST /v3/users/create/`.
+     * @param diditInternalId the {@code didit_internal_id}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UsersUploadFaceResponse>> uploadFaceAsync(String diditInternalId, UsersUploadFaceParams params, RequestOptions options) {
       return client.executeAsync(uploadFaceRequest(diditInternalId, params), options, UPLOAD_FACE_RESPONSE);
     }
 
     /**
-     * Upload user face
+     * {@link #uploadFace(String, UsersUploadFaceParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Attach a trusted imported face image to an existing User profile. Use this after creating or retrieving a User by <code>vendor_data</code> and reading its <code>didit_internal_id</code>. The uploaded face is stored on the User profile and indexed for duplicate detection and face search. It is not added to a face blocklist.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/vendor-users/by-id/{didit_internal_id}/faces/upload/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param diditInternalId Didit's internal User UUID, returned as `didit_internal_id` by `GET /v3/users/{vendor_data}/` and `POST /v3/users/create/`.
+     * @param diditInternalId the {@code didit_internal_id}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<UsersUploadFaceResponse> uploadFace(String diditInternalId, UsersUploadFaceParams params) {
       return client.execute(uploadFaceRequest(diditInternalId, params), RequestOptions.none(), UPLOAD_FACE_RESPONSE);
     }
 
     /**
-     * Upload user face
+     * Asynchronous {@link #uploadFace(String, UsersUploadFaceParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Attach a trusted imported face image to an existing User profile. Use this after creating or retrieving a User by <code>vendor_data</code> and reading its <code>didit_internal_id</code>. The uploaded face is stored on the User profile and indexed for duplicate detection and face search. It is not added to a face blocklist.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/vendor-users/by-id/{didit_internal_id}/faces/upload/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param diditInternalId Didit's internal User UUID, returned as `didit_internal_id` by `GET /v3/users/{vendor_data}/` and `POST /v3/users/create/`.
+     * @param diditInternalId the {@code didit_internal_id}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UsersUploadFaceResponse>> uploadFaceAsync(String diditInternalId, UsersUploadFaceParams params) {
       return client.executeAsync(uploadFaceRequest(diditInternalId, params), RequestOptions.none(), UPLOAD_FACE_RESPONSE);
     }
 
     /**
-     * Toggle AML ongoing monitoring for users
-     *
-     * <p>Enables or disables AML ongoing monitoring at the user level. Exactly one monitored AML screening is kept per user; users without any AML screening (for example imported users) get one created and screened first, billed as a regular AML screening. Set estimate_only to preview counts and costs without writing. Batches of 20 or fewer resolve inline (200, COMPLETED); larger batches return 202 and run asynchronously.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #setOngoingMonitoring(UsersSetOngoingMonitoringParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<UsersSetOngoingMonitoringResponse> setOngoingMonitoring(UsersSetOngoingMonitoringParams params, RequestOptions options) {
       return client.execute(setOngoingMonitoringRequest(params), options, SET_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Toggle AML ongoing monitoring for users
-     *
-     * <p>Enables or disables AML ongoing monitoring at the user level. Exactly one monitored AML screening is kept per user; users without any AML screening (for example imported users) get one created and screened first, billed as a regular AML screening. Set estimate_only to preview counts and costs without writing. Batches of 20 or fewer resolve inline (200, COMPLETED); larger batches return 202 and run asynchronously.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #setOngoingMonitoring(UsersSetOngoingMonitoringParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UsersSetOngoingMonitoringResponse>> setOngoingMonitoringAsync(UsersSetOngoingMonitoringParams params, RequestOptions options) {
       return client.executeAsync(setOngoingMonitoringRequest(params), options, SET_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Toggle AML ongoing monitoring for users
-     *
-     * <p>Enables or disables AML ongoing monitoring at the user level. Exactly one monitored AML screening is kept per user; users without any AML screening (for example imported users) get one created and screened first, billed as a regular AML screening. Set estimate_only to preview counts and costs without writing. Batches of 20 or fewer resolve inline (200, COMPLETED); larger batches return 202 and run asynchronously.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #setOngoingMonitoring(UsersSetOngoingMonitoringParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<UsersSetOngoingMonitoringResponse> setOngoingMonitoring(UsersSetOngoingMonitoringParams params) {
       return client.execute(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Toggle AML ongoing monitoring for users
-     *
-     * <p>Enables or disables AML ongoing monitoring at the user level. Exactly one monitored AML screening is kept per user; users without any AML screening (for example imported users) get one created and screened first, billed as a regular AML screening. Set estimate_only to preview counts and costs without writing. Batches of 20 or fewer resolve inline (200, COMPLETED); larger batches return 202 and run asynchronously.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #setOngoingMonitoring(UsersSetOngoingMonitoringParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UsersSetOngoingMonitoringResponse>> setOngoingMonitoringAsync(UsersSetOngoingMonitoringParams params) {
       return client.executeAsync(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * {@link #retrieveOngoingMonitoringJob(String, RequestOptions)} with the raw response.
      *
-     * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/{job_id}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param jobId Monitoring job UUID returned by the toggle endpoint.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param jobId the {@code job_id}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<UsersRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJob(String jobId, RequestOptions options) {
       return client.execute(retrieveOngoingMonitoringJobRequest(jobId), options, RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * Asynchronous {@link #retrieveOngoingMonitoringJob(String, RequestOptions)} with the raw response.
      *
-     * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/{job_id}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param jobId Monitoring job UUID returned by the toggle endpoint.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param jobId the {@code job_id}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UsersRetrieveOngoingMonitoringJobResponse>> retrieveOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
       return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), options, RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * {@link #retrieveOngoingMonitoringJob(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/{job_id}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param jobId Monitoring job UUID returned by the toggle endpoint.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param jobId the {@code job_id}
+     * @return the result
      */
     public RawResponse<UsersRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJob(String jobId) {
       return client.execute(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * Asynchronous {@link #retrieveOngoingMonitoringJob(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/{job_id}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param jobId Monitoring job UUID returned by the toggle endpoint.
-     * @return a future completed with the raw response
+     * @param jobId the {@code job_id}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UsersRetrieveOngoingMonitoringJobResponse>> retrieveOngoingMonitoringJobAsync(String jobId) {
       return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
     /**
-     * List networks for a user
+     * {@link #listNetworks(String, RequestOptions)} with the raw response.
      *
-     * <p>List the networks a vendor user belongs to.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/users/{vendor_user_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param vendorUserUuid Vendor user UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param vendorUserUuid the {@code vendor_user_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<UsersListNetworksResponse> listNetworks(String vendorUserUuid, RequestOptions options) {
       return client.execute(listNetworksRequest(vendorUserUuid), options, LIST_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a user
+     * Asynchronous {@link #listNetworks(String, RequestOptions)} with the raw response.
      *
-     * <p>List the networks a vendor user belongs to.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/users/{vendor_user_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param vendorUserUuid Vendor user UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param vendorUserUuid the {@code vendor_user_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UsersListNetworksResponse>> listNetworksAsync(String vendorUserUuid, RequestOptions options) {
       return client.executeAsync(listNetworksRequest(vendorUserUuid), options, LIST_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a user
+     * {@link #listNetworks(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the networks a vendor user belongs to.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/users/{vendor_user_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param vendorUserUuid Vendor user UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param vendorUserUuid the {@code vendor_user_uuid}
+     * @return the result
      */
     public RawResponse<UsersListNetworksResponse> listNetworks(String vendorUserUuid) {
       return client.execute(listNetworksRequest(vendorUserUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a user
+     * Asynchronous {@link #listNetworks(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the networks a vendor user belongs to.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/users/{vendor_user_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param vendorUserUuid Vendor user UUID.
-     * @return a future completed with the raw response
+     * @param vendorUserUuid the {@code vendor_user_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<UsersListNetworksResponse>> listNetworksAsync(String vendorUserUuid) {
       return client.executeAsync(listNetworksRequest(vendorUserUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE);

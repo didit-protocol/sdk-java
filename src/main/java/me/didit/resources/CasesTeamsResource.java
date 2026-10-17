@@ -52,111 +52,69 @@ public final class CasesTeamsResource {
   }
 
   /**
-   * List review teams
-   *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(CasesTeamsListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseReviewTeam>> listAsync(CasesTeamsListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List review teams
-   *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(CasesTeamsListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<CaseReviewTeam> list(CasesTeamsListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List review teams
-   *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(CasesTeamsListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseReviewTeam>> listAsync(CasesTeamsListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List review teams
+   * Same as {@link #list(CasesTeamsListParams, RequestOptions)}, without parameters.
    *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<CaseReviewTeam> list(RequestOptions options) {
     return client.execute(listRequest(CasesTeamsListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List review teams
+   * Asynchronous {@link #list(CasesTeamsListParams, RequestOptions)}, without parameters.
    *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseReviewTeam>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(CasesTeamsListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List review teams
+   * Same as {@link #list(CasesTeamsListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<CaseReviewTeam> list() {
     return client.execute(listRequest(CasesTeamsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List review teams
+   * Asynchronous {@link #list(CasesTeamsListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseReviewTeam>> listAsync() {
     return client.executeAsync(listRequest(CasesTeamsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -179,46 +137,31 @@ public final class CasesTeamsResource {
   }
 
   /**
-   * Create review team
-   *
-   * <p>Requires <code>write:cases</code> for the requested application.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #create(CaseReviewTeamCreate, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseReviewTeam> createAsync(CaseReviewTeamCreate params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create review team
-   *
-   * <p>Requires <code>write:cases</code> for the requested application.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #create(CaseReviewTeamCreate, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseReviewTeam create(CaseReviewTeamCreate params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create review team
-   *
-   * <p>Requires <code>write:cases</code> for the requested application.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #create(CaseReviewTeamCreate, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseReviewTeam> createAsync(CaseReviewTeamCreate params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -241,46 +184,31 @@ public final class CasesTeamsResource {
   }
 
   /**
-   * Retrieve review team
-   *
-   * <p>Requires <code>read:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
    * @param recordUuid the {@code record_uuid}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseReviewTeam> retrieveAsync(String recordUuid, RequestOptions options) {
     return client.executeAsync(retrieveRequest(recordUuid), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Retrieve review team
-   *
-   * <p>Requires <code>read:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
-   * @return the response body
+   * @return the result
    */
   public CaseReviewTeam retrieve(String recordUuid) {
     return client.execute(retrieveRequest(recordUuid), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Retrieve review team
-   *
-   * <p>Requires <code>read:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseReviewTeam> retrieveAsync(String recordUuid) {
     return client.executeAsync(retrieveRequest(recordUuid), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -304,49 +232,34 @@ public final class CasesTeamsResource {
   }
 
   /**
-   * Update review team
-   *
-   * <p>Requires <code>write:cases</code> for the requested application.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #update(String, CaseReviewTeamUpdate, RequestOptions)}.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseReviewTeam> updateAsync(String recordUuid, CaseReviewTeamUpdate params, RequestOptions options) {
     return client.executeAsync(updateRequest(recordUuid, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update review team
-   *
-   * <p>Requires <code>write:cases</code> for the requested application.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #update(String, CaseReviewTeamUpdate, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseReviewTeam update(String recordUuid, CaseReviewTeamUpdate params) {
     return client.execute(updateRequest(recordUuid, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update review team
-   *
-   * <p>Requires <code>write:cases</code> for the requested application.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #update(String, CaseReviewTeamUpdate, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseReviewTeam> updateAsync(String recordUuid, CaseReviewTeamUpdate params) {
     return client.executeAsync(updateRequest(recordUuid, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -401,318 +314,210 @@ public final class CasesTeamsResource {
     }
 
     /**
-     * List review teams
-     *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(CasesTeamsListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<CaseReviewTeam>> list(CasesTeamsListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List review teams
-     *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(CasesTeamsListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseReviewTeam>>> listAsync(CasesTeamsListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List review teams
-     *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(CasesTeamsListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<CaseReviewTeam>> list(CasesTeamsListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List review teams
-     *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(CasesTeamsListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseReviewTeam>>> listAsync(CasesTeamsListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List review teams
+     * {@link #list(CasesTeamsListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<CaseReviewTeam>> list(RequestOptions options) {
       return client.execute(listRequest(CasesTeamsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List review teams
+     * Asynchronous {@link #list(CasesTeamsListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseReviewTeam>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(CasesTeamsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List review teams
+     * {@link #list(CasesTeamsListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<CaseReviewTeam>> list() {
       return client.execute(listRequest(CasesTeamsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List review teams
+     * Asynchronous {@link #list(CasesTeamsListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseReviewTeam>>> listAsync() {
       return client.executeAsync(listRequest(CasesTeamsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Create review team
-     *
-     * <p>Requires <code>write:cases</code> for the requested application.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #create(CaseReviewTeamCreate, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseReviewTeam> create(CaseReviewTeamCreate params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create review team
-     *
-     * <p>Requires <code>write:cases</code> for the requested application.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #create(CaseReviewTeamCreate, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseReviewTeam>> createAsync(CaseReviewTeamCreate params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create review team
-     *
-     * <p>Requires <code>write:cases</code> for the requested application.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #create(CaseReviewTeamCreate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseReviewTeam> create(CaseReviewTeamCreate params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create review team
-     *
-     * <p>Requires <code>write:cases</code> for the requested application.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #create(CaseReviewTeamCreate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseReviewTeam>> createAsync(CaseReviewTeamCreate params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Retrieve review team
-     *
-     * <p>Requires <code>read:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseReviewTeam> retrieve(String recordUuid, RequestOptions options) {
       return client.execute(retrieveRequest(recordUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Retrieve review team
-     *
-     * <p>Requires <code>read:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseReviewTeam>> retrieveAsync(String recordUuid, RequestOptions options) {
       return client.executeAsync(retrieveRequest(recordUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Retrieve review team
-     *
-     * <p>Requires <code>read:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseReviewTeam> retrieve(String recordUuid) {
       return client.execute(retrieveRequest(recordUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Retrieve review team
-     *
-     * <p>Requires <code>read:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseReviewTeam>> retrieveAsync(String recordUuid) {
       return client.executeAsync(retrieveRequest(recordUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Update review team
-     *
-     * <p>Requires <code>write:cases</code> for the requested application.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #update(String, CaseReviewTeamUpdate, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseReviewTeam> update(String recordUuid, CaseReviewTeamUpdate params, RequestOptions options) {
       return client.execute(updateRequest(recordUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update review team
-     *
-     * <p>Requires <code>write:cases</code> for the requested application.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #update(String, CaseReviewTeamUpdate, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseReviewTeam>> updateAsync(String recordUuid, CaseReviewTeamUpdate params, RequestOptions options) {
       return client.executeAsync(updateRequest(recordUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update review team
-     *
-     * <p>Requires <code>write:cases</code> for the requested application.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #update(String, CaseReviewTeamUpdate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseReviewTeam> update(String recordUuid, CaseReviewTeamUpdate params) {
       return client.execute(updateRequest(recordUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update review team
-     *
-     * <p>Requires <code>write:cases</code> for the requested application.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #update(String, CaseReviewTeamUpdate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseReviewTeam>> updateAsync(String recordUuid, CaseReviewTeamUpdate params) {
       return client.executeAsync(updateRequest(recordUuid, params), RequestOptions.none(), UPDATE_RESPONSE);

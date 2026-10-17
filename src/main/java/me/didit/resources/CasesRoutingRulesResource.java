@@ -59,90 +59,76 @@ public final class CasesRoutingRulesResource {
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)}.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<RoutingPublicationPolicyRevision>> listHistoryAsync(String recordUuid, CasesRoutingRulesListHistoryParams params, RequestOptions options) {
     return client.executeAsync(listHistoryRequest(recordUuid, params), options, LIST_HISTORY_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<RoutingPublicationPolicyRevision> listHistory(String recordUuid, CasesRoutingRulesListHistoryParams params) {
     return client.execute(listHistoryRequest(recordUuid, params), RequestOptions.none(), LIST_HISTORY_RESPONSE).data();
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<RoutingPublicationPolicyRevision>> listHistoryAsync(String recordUuid, CasesRoutingRulesListHistoryParams params) {
     return client.executeAsync(listHistoryRequest(recordUuid, params), RequestOptions.none(), LIST_HISTORY_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)}, without parameters.
    *
    * @param recordUuid the {@code record_uuid}
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<RoutingPublicationPolicyRevision> listHistory(String recordUuid, RequestOptions options) {
     return client.execute(listHistoryRequest(recordUuid, CasesRoutingRulesListHistoryParams.builder().build()), options, LIST_HISTORY_RESPONSE).data();
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)}, without parameters.
    *
    * @param recordUuid the {@code record_uuid}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<RoutingPublicationPolicyRevision>> listHistoryAsync(String recordUuid, RequestOptions options) {
     return client.executeAsync(listHistoryRequest(recordUuid, CasesRoutingRulesListHistoryParams.builder().build()), options, LIST_HISTORY_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
-   * @return the response body
+   * @return the result
    */
   public Page<RoutingPublicationPolicyRevision> listHistory(String recordUuid) {
     return client.execute(listHistoryRequest(recordUuid, CasesRoutingRulesListHistoryParams.builder().build()), RequestOptions.none(), LIST_HISTORY_RESPONSE).data();
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<RoutingPublicationPolicyRevision>> listHistoryAsync(String recordUuid) {
     return client.executeAsync(listHistoryRequest(recordUuid, CasesRoutingRulesListHistoryParams.builder().build()), RequestOptions.none(), LIST_HISTORY_RESPONSE).thenApply(RawResponse::data);
@@ -165,46 +151,31 @@ public final class CasesRoutingRulesResource {
   }
 
   /**
-   * Retrieve routing rule
-   *
-   * <p>Requires <code>read:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
    * @param recordUuid the {@code record_uuid}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseRoutingRule> retrieveAsync(String recordUuid, RequestOptions options) {
     return client.executeAsync(retrieveRequest(recordUuid), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Retrieve routing rule
-   *
-   * <p>Requires <code>read:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
-   * @return the response body
+   * @return the result
    */
   public CaseRoutingRule retrieve(String recordUuid) {
     return client.execute(retrieveRequest(recordUuid), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Retrieve routing rule
-   *
-   * <p>Requires <code>read:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseRoutingRule> retrieveAsync(String recordUuid) {
     return client.executeAsync(retrieveRequest(recordUuid), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -228,49 +199,34 @@ public final class CasesRoutingRulesResource {
   }
 
   /**
-   * Update routing rule
-   *
-   * <p>Requires <code>write:cases</code> for the requested application.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #update(String, CaseRoutingRuleUpdate, RequestOptions)}.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseRoutingRule> updateAsync(String recordUuid, CaseRoutingRuleUpdate params, RequestOptions options) {
     return client.executeAsync(updateRequest(recordUuid, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update routing rule
-   *
-   * <p>Requires <code>write:cases</code> for the requested application.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #update(String, CaseRoutingRuleUpdate, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseRoutingRule update(String recordUuid, CaseRoutingRuleUpdate params) {
     return client.execute(updateRequest(recordUuid, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update routing rule
-   *
-   * <p>Requires <code>write:cases</code> for the requested application.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #update(String, CaseRoutingRuleUpdate, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseRoutingRule> updateAsync(String recordUuid, CaseRoutingRuleUpdate params) {
     return client.executeAsync(updateRequest(recordUuid, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -294,111 +250,69 @@ public final class CasesRoutingRulesResource {
   }
 
   /**
-   * List routing rules
-   *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(CasesRoutingRulesListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseRoutingRule>> listAsync(CasesRoutingRulesListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List routing rules
-   *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(CasesRoutingRulesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<CaseRoutingRule> list(CasesRoutingRulesListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List routing rules
-   *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(CasesRoutingRulesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseRoutingRule>> listAsync(CasesRoutingRulesListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List routing rules
+   * Same as {@link #list(CasesRoutingRulesListParams, RequestOptions)}, without parameters.
    *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<CaseRoutingRule> list(RequestOptions options) {
     return client.execute(listRequest(CasesRoutingRulesListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List routing rules
+   * Asynchronous {@link #list(CasesRoutingRulesListParams, RequestOptions)}, without parameters.
    *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseRoutingRule>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(CasesRoutingRulesListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List routing rules
+   * Same as {@link #list(CasesRoutingRulesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<CaseRoutingRule> list() {
     return client.execute(listRequest(CasesRoutingRulesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List routing rules
+   * Asynchronous {@link #list(CasesRoutingRulesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseRoutingRule>> listAsync() {
     return client.executeAsync(listRequest(CasesRoutingRulesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -421,46 +335,31 @@ public final class CasesRoutingRulesResource {
   }
 
   /**
-   * Create routing rule
-   *
-   * <p>Requires <code>write:cases</code> for the requested application. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #create(CaseRoutingRuleCreate, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseRoutingRule> createAsync(CaseRoutingRuleCreate params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create routing rule
-   *
-   * <p>Requires <code>write:cases</code> for the requested application. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #create(CaseRoutingRuleCreate, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseRoutingRule create(CaseRoutingRuleCreate params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create routing rule
-   *
-   * <p>Requires <code>write:cases</code> for the requested application. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #create(CaseRoutingRuleCreate, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseRoutingRule> createAsync(CaseRoutingRuleCreate params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -480,37 +379,34 @@ public final class CasesRoutingRulesResource {
   }
 
   /**
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/publish/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #publish(String, RoutingPublicationPolicyDraftPreconditionRequest, RequestOptions)}.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<RoutingPublicationCaseRoutingRule> publishAsync(String recordUuid, RoutingPublicationPolicyDraftPreconditionRequest params, RequestOptions options) {
     return client.executeAsync(publishRequest(recordUuid, params), options, PUBLISH_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/publish/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #publish(String, RoutingPublicationPolicyDraftPreconditionRequest, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public RoutingPublicationCaseRoutingRule publish(String recordUuid, RoutingPublicationPolicyDraftPreconditionRequest params) {
     return client.execute(publishRequest(recordUuid, params), RequestOptions.none(), PUBLISH_RESPONSE).data();
   }
 
   /**
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/publish/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #publish(String, RoutingPublicationPolicyDraftPreconditionRequest, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<RoutingPublicationCaseRoutingRule> publishAsync(String recordUuid, RoutingPublicationPolicyDraftPreconditionRequest params) {
     return client.executeAsync(publishRequest(recordUuid, params), RequestOptions.none(), PUBLISH_RESPONSE).thenApply(RawResponse::data);
@@ -529,34 +425,31 @@ public final class CasesRoutingRulesResource {
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #retrieveDraft(String, RequestOptions)}.
    *
    * @param recordUuid the {@code record_uuid}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<RoutingPublicationPolicyDraftResponse> retrieveDraftAsync(String recordUuid, RequestOptions options) {
     return client.executeAsync(retrieveDraftRequest(recordUuid), options, RETRIEVE_DRAFT_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #retrieveDraft(String, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
-   * @return the response body
+   * @return the result
    */
   public RoutingPublicationPolicyDraftResponse retrieveDraft(String recordUuid) {
     return client.execute(retrieveDraftRequest(recordUuid), RequestOptions.none(), RETRIEVE_DRAFT_RESPONSE).data();
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #retrieveDraft(String, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<RoutingPublicationPolicyDraftResponse> retrieveDraftAsync(String recordUuid) {
     return client.executeAsync(retrieveDraftRequest(recordUuid), RequestOptions.none(), RETRIEVE_DRAFT_RESPONSE).thenApply(RawResponse::data);
@@ -576,37 +469,34 @@ public final class CasesRoutingRulesResource {
   }
 
   /**
-   * <p>{@code PUT /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #saveDraft(String, RoutingPublicationPolicyDraftWriteRequest, RequestOptions)}.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<RoutingPublicationPolicyDraft> saveDraftAsync(String recordUuid, RoutingPublicationPolicyDraftWriteRequest params, RequestOptions options) {
     return client.executeAsync(saveDraftRequest(recordUuid, params), options, SAVE_DRAFT_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code PUT /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #saveDraft(String, RoutingPublicationPolicyDraftWriteRequest, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public RoutingPublicationPolicyDraft saveDraft(String recordUuid, RoutingPublicationPolicyDraftWriteRequest params) {
     return client.execute(saveDraftRequest(recordUuid, params), RequestOptions.none(), SAVE_DRAFT_RESPONSE).data();
   }
 
   /**
-   * <p>{@code PUT /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #saveDraft(String, RoutingPublicationPolicyDraftWriteRequest, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<RoutingPublicationPolicyDraft> saveDraftAsync(String recordUuid, RoutingPublicationPolicyDraftWriteRequest params) {
     return client.executeAsync(saveDraftRequest(recordUuid, params), RequestOptions.none(), SAVE_DRAFT_RESPONSE).thenApply(RawResponse::data);
@@ -625,21 +515,19 @@ public final class CasesRoutingRulesResource {
   }
 
   /**
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #discardDraft(String, RoutingPublicationPolicyDraftPreconditionRequest, RequestOptions)}.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> discardDraftAsync(String recordUuid, RoutingPublicationPolicyDraftPreconditionRequest params, RequestOptions options) {
     return client.executeAsync(discardDraftRequest(recordUuid, params), options, DISCARD_DRAFT_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #discardDraft(String, RoutingPublicationPolicyDraftPreconditionRequest, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
@@ -649,12 +537,11 @@ public final class CasesRoutingRulesResource {
   }
 
   /**
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #discardDraft(String, RoutingPublicationPolicyDraftPreconditionRequest, RequestOptions)}, with the client's options.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> discardDraftAsync(String recordUuid, RoutingPublicationPolicyDraftPreconditionRequest params) {
     return client.executeAsync(discardDraftRequest(recordUuid, params), RequestOptions.none(), DISCARD_DRAFT_RESPONSE).thenAccept(response -> {});
@@ -677,46 +564,31 @@ public final class CasesRoutingRulesResource {
   }
 
   /**
-   * Test case routing
-   *
-   * <p>Requires <code>read:cases</code> for the requested application. Evaluates current rules or a supplied draft against current reviewer access, availability, skills and capacity. It does not save the draft or reserve reviewer capacity.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/preview/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #preview(CaseRoutingPreviewRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseRoutingPreview> previewAsync(CaseRoutingPreviewRequest params, RequestOptions options) {
     return client.executeAsync(previewRequest(params), options, PREVIEW_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Test case routing
-   *
-   * <p>Requires <code>read:cases</code> for the requested application. Evaluates current rules or a supplied draft against current reviewer access, availability, skills and capacity. It does not save the draft or reserve reviewer capacity.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/preview/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #preview(CaseRoutingPreviewRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseRoutingPreview preview(CaseRoutingPreviewRequest params) {
     return client.execute(previewRequest(params), RequestOptions.none(), PREVIEW_RESPONSE).data();
   }
 
   /**
-   * Test case routing
-   *
-   * <p>Requires <code>read:cases</code> for the requested application. Evaluates current rules or a supplied draft against current reviewer access, availability, skills and capacity. It does not save the draft or reserve reviewer capacity.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/preview/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #preview(CaseRoutingPreviewRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseRoutingPreview> previewAsync(CaseRoutingPreviewRequest params) {
     return client.executeAsync(previewRequest(params), RequestOptions.none(), PREVIEW_RESPONSE).thenApply(RawResponse::data);
@@ -834,680 +706,520 @@ public final class CasesRoutingRulesResource {
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<RoutingPublicationPolicyRevision>> listHistory(String recordUuid, CasesRoutingRulesListHistoryParams params, RequestOptions options) {
       return client.execute(listHistoryRequest(recordUuid, params), options, LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<RoutingPublicationPolicyRevision>>> listHistoryAsync(String recordUuid, CasesRoutingRulesListHistoryParams params, RequestOptions options) {
       return client.executeAsync(listHistoryRequest(recordUuid, params), options, LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<RoutingPublicationPolicyRevision>> listHistory(String recordUuid, CasesRoutingRulesListHistoryParams params) {
       return client.execute(listHistoryRequest(recordUuid, params), RequestOptions.none(), LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<RoutingPublicationPolicyRevision>>> listHistoryAsync(String recordUuid, CasesRoutingRulesListHistoryParams params) {
       return client.executeAsync(listHistoryRequest(recordUuid, params), RequestOptions.none(), LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param recordUuid the {@code record_uuid}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<RoutingPublicationPolicyRevision>> listHistory(String recordUuid, RequestOptions options) {
       return client.execute(listHistoryRequest(recordUuid, CasesRoutingRulesListHistoryParams.builder().build()), options, LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param recordUuid the {@code record_uuid}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<RoutingPublicationPolicyRevision>>> listHistoryAsync(String recordUuid, RequestOptions options) {
       return client.executeAsync(listHistoryRequest(recordUuid, CasesRoutingRulesListHistoryParams.builder().build()), options, LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<RoutingPublicationPolicyRevision>> listHistory(String recordUuid) {
       return client.execute(listHistoryRequest(recordUuid, CasesRoutingRulesListHistoryParams.builder().build()), RequestOptions.none(), LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listHistory(String, CasesRoutingRulesListHistoryParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<RoutingPublicationPolicyRevision>>> listHistoryAsync(String recordUuid) {
       return client.executeAsync(listHistoryRequest(recordUuid, CasesRoutingRulesListHistoryParams.builder().build()), RequestOptions.none(), LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * Retrieve routing rule
-     *
-     * <p>Requires <code>read:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseRoutingRule> retrieve(String recordUuid, RequestOptions options) {
       return client.execute(retrieveRequest(recordUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Retrieve routing rule
-     *
-     * <p>Requires <code>read:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseRoutingRule>> retrieveAsync(String recordUuid, RequestOptions options) {
       return client.executeAsync(retrieveRequest(recordUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Retrieve routing rule
-     *
-     * <p>Requires <code>read:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseRoutingRule> retrieve(String recordUuid) {
       return client.execute(retrieveRequest(recordUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Retrieve routing rule
-     *
-     * <p>Requires <code>read:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseRoutingRule>> retrieveAsync(String recordUuid) {
       return client.executeAsync(retrieveRequest(recordUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Update routing rule
-     *
-     * <p>Requires <code>write:cases</code> for the requested application.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #update(String, CaseRoutingRuleUpdate, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseRoutingRule> update(String recordUuid, CaseRoutingRuleUpdate params, RequestOptions options) {
       return client.execute(updateRequest(recordUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update routing rule
-     *
-     * <p>Requires <code>write:cases</code> for the requested application.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #update(String, CaseRoutingRuleUpdate, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseRoutingRule>> updateAsync(String recordUuid, CaseRoutingRuleUpdate params, RequestOptions options) {
       return client.executeAsync(updateRequest(recordUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update routing rule
-     *
-     * <p>Requires <code>write:cases</code> for the requested application.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #update(String, CaseRoutingRuleUpdate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseRoutingRule> update(String recordUuid, CaseRoutingRuleUpdate params) {
       return client.execute(updateRequest(recordUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update routing rule
-     *
-     * <p>Requires <code>write:cases</code> for the requested application.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #update(String, CaseRoutingRuleUpdate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseRoutingRule>> updateAsync(String recordUuid, CaseRoutingRuleUpdate params) {
       return client.executeAsync(updateRequest(recordUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * List routing rules
-     *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(CasesRoutingRulesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<CaseRoutingRule>> list(CasesRoutingRulesListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List routing rules
-     *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(CasesRoutingRulesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseRoutingRule>>> listAsync(CasesRoutingRulesListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List routing rules
-     *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(CasesRoutingRulesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<CaseRoutingRule>> list(CasesRoutingRulesListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List routing rules
-     *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(CasesRoutingRulesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseRoutingRule>>> listAsync(CasesRoutingRulesListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List routing rules
+     * {@link #list(CasesRoutingRulesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<CaseRoutingRule>> list(RequestOptions options) {
       return client.execute(listRequest(CasesRoutingRulesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List routing rules
+     * Asynchronous {@link #list(CasesRoutingRulesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseRoutingRule>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(CasesRoutingRulesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List routing rules
+     * {@link #list(CasesRoutingRulesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<CaseRoutingRule>> list() {
       return client.execute(listRequest(CasesRoutingRulesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List routing rules
+     * Asynchronous {@link #list(CasesRoutingRulesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseRoutingRule>>> listAsync() {
       return client.executeAsync(listRequest(CasesRoutingRulesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Create routing rule
-     *
-     * <p>Requires <code>write:cases</code> for the requested application. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #create(CaseRoutingRuleCreate, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseRoutingRule> create(CaseRoutingRuleCreate params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create routing rule
-     *
-     * <p>Requires <code>write:cases</code> for the requested application. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #create(CaseRoutingRuleCreate, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseRoutingRule>> createAsync(CaseRoutingRuleCreate params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create routing rule
-     *
-     * <p>Requires <code>write:cases</code> for the requested application. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #create(CaseRoutingRuleCreate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseRoutingRule> create(CaseRoutingRuleCreate params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create routing rule
-     *
-     * <p>Requires <code>write:cases</code> for the requested application. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #create(CaseRoutingRuleCreate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseRoutingRule>> createAsync(CaseRoutingRuleCreate params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/publish/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #publish(String, RoutingPublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<RoutingPublicationCaseRoutingRule> publish(String recordUuid, RoutingPublicationPolicyDraftPreconditionRequest params, RequestOptions options) {
       return client.execute(publishRequest(recordUuid, params), options, PUBLISH_RESPONSE);
     }
 
     /**
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/publish/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #publish(String, RoutingPublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RoutingPublicationCaseRoutingRule>> publishAsync(String recordUuid, RoutingPublicationPolicyDraftPreconditionRequest params, RequestOptions options) {
       return client.executeAsync(publishRequest(recordUuid, params), options, PUBLISH_RESPONSE);
     }
 
     /**
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/publish/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #publish(String, RoutingPublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<RoutingPublicationCaseRoutingRule> publish(String recordUuid, RoutingPublicationPolicyDraftPreconditionRequest params) {
       return client.execute(publishRequest(recordUuid, params), RequestOptions.none(), PUBLISH_RESPONSE);
     }
 
     /**
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/publish/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #publish(String, RoutingPublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RoutingPublicationCaseRoutingRule>> publishAsync(String recordUuid, RoutingPublicationPolicyDraftPreconditionRequest params) {
       return client.executeAsync(publishRequest(recordUuid, params), RequestOptions.none(), PUBLISH_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #retrieveDraft(String, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<RoutingPublicationPolicyDraftResponse> retrieveDraft(String recordUuid, RequestOptions options) {
       return client.execute(retrieveDraftRequest(recordUuid), options, RETRIEVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #retrieveDraft(String, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RoutingPublicationPolicyDraftResponse>> retrieveDraftAsync(String recordUuid, RequestOptions options) {
       return client.executeAsync(retrieveDraftRequest(recordUuid), options, RETRIEVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #retrieveDraft(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<RoutingPublicationPolicyDraftResponse> retrieveDraft(String recordUuid) {
       return client.execute(retrieveDraftRequest(recordUuid), RequestOptions.none(), RETRIEVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #retrieveDraft(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RoutingPublicationPolicyDraftResponse>> retrieveDraftAsync(String recordUuid) {
       return client.executeAsync(retrieveDraftRequest(recordUuid), RequestOptions.none(), RETRIEVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code PUT /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #saveDraft(String, RoutingPublicationPolicyDraftWriteRequest, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<RoutingPublicationPolicyDraft> saveDraft(String recordUuid, RoutingPublicationPolicyDraftWriteRequest params, RequestOptions options) {
       return client.execute(saveDraftRequest(recordUuid, params), options, SAVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code PUT /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #saveDraft(String, RoutingPublicationPolicyDraftWriteRequest, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RoutingPublicationPolicyDraft>> saveDraftAsync(String recordUuid, RoutingPublicationPolicyDraftWriteRequest params, RequestOptions options) {
       return client.executeAsync(saveDraftRequest(recordUuid, params), options, SAVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code PUT /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #saveDraft(String, RoutingPublicationPolicyDraftWriteRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<RoutingPublicationPolicyDraft> saveDraft(String recordUuid, RoutingPublicationPolicyDraftWriteRequest params) {
       return client.execute(saveDraftRequest(recordUuid, params), RequestOptions.none(), SAVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code PUT /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #saveDraft(String, RoutingPublicationPolicyDraftWriteRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RoutingPublicationPolicyDraft>> saveDraftAsync(String recordUuid, RoutingPublicationPolicyDraftWriteRequest params) {
       return client.executeAsync(saveDraftRequest(recordUuid, params), RequestOptions.none(), SAVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #discardDraft(String, RoutingPublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<@Nullable Void> discardDraft(String recordUuid, RoutingPublicationPolicyDraftPreconditionRequest params, RequestOptions options) {
       return client.execute(discardDraftRequest(recordUuid, params), options, DISCARD_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #discardDraft(String, RoutingPublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> discardDraftAsync(String recordUuid, RoutingPublicationPolicyDraftPreconditionRequest params, RequestOptions options) {
       return client.executeAsync(discardDraftRequest(recordUuid, params), options, DISCARD_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #discardDraft(String, RoutingPublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<@Nullable Void> discardDraft(String recordUuid, RoutingPublicationPolicyDraftPreconditionRequest params) {
       return client.execute(discardDraftRequest(recordUuid, params), RequestOptions.none(), DISCARD_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/{record_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #discardDraft(String, RoutingPublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param recordUuid the {@code record_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> discardDraftAsync(String recordUuid, RoutingPublicationPolicyDraftPreconditionRequest params) {
       return client.executeAsync(discardDraftRequest(recordUuid, params), RequestOptions.none(), DISCARD_DRAFT_RESPONSE);
     }
 
     /**
-     * Test case routing
-     *
-     * <p>Requires <code>read:cases</code> for the requested application. Evaluates current rules or a supplied draft against current reviewer access, availability, skills and capacity. It does not save the draft or reserve reviewer capacity.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/preview/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #preview(CaseRoutingPreviewRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseRoutingPreview> preview(CaseRoutingPreviewRequest params, RequestOptions options) {
       return client.execute(previewRequest(params), options, PREVIEW_RESPONSE);
     }
 
     /**
-     * Test case routing
-     *
-     * <p>Requires <code>read:cases</code> for the requested application. Evaluates current rules or a supplied draft against current reviewer access, availability, skills and capacity. It does not save the draft or reserve reviewer capacity.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/preview/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #preview(CaseRoutingPreviewRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseRoutingPreview>> previewAsync(CaseRoutingPreviewRequest params, RequestOptions options) {
       return client.executeAsync(previewRequest(params), options, PREVIEW_RESPONSE);
     }
 
     /**
-     * Test case routing
-     *
-     * <p>Requires <code>read:cases</code> for the requested application. Evaluates current rules or a supplied draft against current reviewer access, availability, skills and capacity. It does not save the draft or reserve reviewer capacity.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/preview/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #preview(CaseRoutingPreviewRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseRoutingPreview> preview(CaseRoutingPreviewRequest params) {
       return client.execute(previewRequest(params), RequestOptions.none(), PREVIEW_RESPONSE);
     }
 
     /**
-     * Test case routing
-     *
-     * <p>Requires <code>read:cases</code> for the requested application. Evaluates current rules or a supplied draft against current reviewer access, availability, skills and capacity. It does not save the draft or reserve reviewer capacity.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/routing-rules/preview/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #preview(CaseRoutingPreviewRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseRoutingPreview>> previewAsync(CaseRoutingPreviewRequest params) {
       return client.executeAsync(previewRequest(params), RequestOptions.none(), PREVIEW_RESPONSE);

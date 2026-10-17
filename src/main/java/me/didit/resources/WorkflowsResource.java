@@ -54,104 +54,69 @@ public final class WorkflowsResource {
   }
 
   /**
-   * List workflows
-   *
-   * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-   *
-   * <p>{@code GET /v3/workflows/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(WorkflowsListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<WorkflowListItem>> listAsync(WorkflowsListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List workflows
-   *
-   * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-   *
-   * <p>{@code GET /v3/workflows/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(WorkflowsListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<WorkflowListItem> list(WorkflowsListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List workflows
-   *
-   * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-   *
-   * <p>{@code GET /v3/workflows/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(WorkflowsListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<WorkflowListItem>> listAsync(WorkflowsListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List workflows
+   * Same as {@link #list(WorkflowsListParams, RequestOptions)}, without parameters.
    *
-   * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-   *
-   * <p>{@code GET /v3/workflows/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<WorkflowListItem> list(RequestOptions options) {
     return client.execute(listRequest(WorkflowsListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List workflows
+   * Asynchronous {@link #list(WorkflowsListParams, RequestOptions)}, without parameters.
    *
-   * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-   *
-   * <p>{@code GET /v3/workflows/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<WorkflowListItem>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(WorkflowsListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List workflows
+   * Same as {@link #list(WorkflowsListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-   *
-   * <p>{@code GET /v3/workflows/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<WorkflowListItem> list() {
     return client.execute(listRequest(WorkflowsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List workflows
+   * Asynchronous {@link #list(WorkflowsListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-   *
-   * <p>{@code GET /v3/workflows/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<WorkflowListItem>> listAsync() {
     return client.executeAsync(listRequest(WorkflowsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -173,43 +138,31 @@ public final class WorkflowsResource {
   }
 
   /**
-   * Create workflow
-   *
-   * <p>Create a simple workflow. Send <code>features</code> in execution order (ordering rules apply); defaults to <code>published</code> v1. The body accepts ONLY the fields listed in <code>SimpleWorkflowRequest</code> — any other key (including <code>workflow_type</code>) is rejected with a 400. Not idempotent — each call creates a new workflow. Maximum 50 workflows per application.
-   *
-   * <p>{@code POST /v3/workflows/}
+   * Asynchronous {@link #create(SimpleWorkflowRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Map<String, JsonNode>> createAsync(SimpleWorkflowRequest params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create workflow
-   *
-   * <p>Create a simple workflow. Send <code>features</code> in execution order (ordering rules apply); defaults to <code>published</code> v1. The body accepts ONLY the fields listed in <code>SimpleWorkflowRequest</code> — any other key (including <code>workflow_type</code>) is rejected with a 400. Not idempotent — each call creates a new workflow. Maximum 50 workflows per application.
-   *
-   * <p>{@code POST /v3/workflows/}
+   * Same as {@link #create(SimpleWorkflowRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Map<String, JsonNode> create(SimpleWorkflowRequest params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create workflow
-   *
-   * <p>Create a simple workflow. Send <code>features</code> in execution order (ordering rules apply); defaults to <code>published</code> v1. The body accepts ONLY the fields listed in <code>SimpleWorkflowRequest</code> — any other key (including <code>workflow_type</code>) is rejected with a 400. Not idempotent — each call creates a new workflow. Maximum 50 workflows per application.
-   *
-   * <p>{@code POST /v3/workflows/}
+   * Asynchronous {@link #create(SimpleWorkflowRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Map<String, JsonNode>> createAsync(SimpleWorkflowRequest params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -231,43 +184,31 @@ public final class WorkflowsResource {
   }
 
   /**
-   * Get workflow
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
-   * <p>Fetch full configuration for one workflow version by <code>settings_uuid</code>: feature toggles, thresholds, allowed documents, graph, retry policy, callbacks, and pricing.
-   *
-   * <p>{@code GET /v3/workflows/{settings_uuid}/}
-   *
-   * @param settingsUuid Per-version UUID of the workflow (the `uuid` value returned by the list endpoint). Each version of a workflow has its own `settings_uuid`.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param settingsUuid the {@code settings_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<JsonNode> retrieveAsync(String settingsUuid, RequestOptions options) {
     return client.executeAsync(retrieveRequest(settingsUuid), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get workflow
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Fetch full configuration for one workflow version by <code>settings_uuid</code>: feature toggles, thresholds, allowed documents, graph, retry policy, callbacks, and pricing.
-   *
-   * <p>{@code GET /v3/workflows/{settings_uuid}/}
-   *
-   * @param settingsUuid Per-version UUID of the workflow (the `uuid` value returned by the list endpoint). Each version of a workflow has its own `settings_uuid`.
-   * @return the response body
+   * @param settingsUuid the {@code settings_uuid}
+   * @return the result
    */
   public JsonNode retrieve(String settingsUuid) {
     return client.execute(retrieveRequest(settingsUuid), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get workflow
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Fetch full configuration for one workflow version by <code>settings_uuid</code>: feature toggles, thresholds, allowed documents, graph, retry policy, callbacks, and pricing.
-   *
-   * <p>{@code GET /v3/workflows/{settings_uuid}/}
-   *
-   * @param settingsUuid Per-version UUID of the workflow (the `uuid` value returned by the list endpoint). Each version of a workflow has its own `settings_uuid`.
-   * @return a future completed with the response body
+   * @param settingsUuid the {@code settings_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<JsonNode> retrieveAsync(String settingsUuid) {
     return client.executeAsync(retrieveRequest(settingsUuid), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -290,46 +231,34 @@ public final class WorkflowsResource {
   }
 
   /**
-   * Update workflow
+   * Asynchronous {@link #update(String, SimpleWorkflowUpdateRequest, RequestOptions)}.
    *
-   * <p>Update a workflow. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>uuid</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>workflow_id</code> (new <code>uuid</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>). The body accepts the same strict field whitelist as create — unknown keys are rejected with 400.
-   *
-   * <p>{@code PATCH /v3/workflows/{settings_uuid}/}
-   *
-   * @param settingsUuid Per-version UUID of the workflow to update.
+   * @param settingsUuid the {@code settings_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Map<String, JsonNode>> updateAsync(String settingsUuid, SimpleWorkflowUpdateRequest params, RequestOptions options) {
     return client.executeAsync(updateRequest(settingsUuid, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update workflow
+   * Same as {@link #update(String, SimpleWorkflowUpdateRequest, RequestOptions)}, with the client's options.
    *
-   * <p>Update a workflow. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>uuid</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>workflow_id</code> (new <code>uuid</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>). The body accepts the same strict field whitelist as create — unknown keys are rejected with 400.
-   *
-   * <p>{@code PATCH /v3/workflows/{settings_uuid}/}
-   *
-   * @param settingsUuid Per-version UUID of the workflow to update.
+   * @param settingsUuid the {@code settings_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Map<String, JsonNode> update(String settingsUuid, SimpleWorkflowUpdateRequest params) {
     return client.execute(updateRequest(settingsUuid, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update workflow
+   * Asynchronous {@link #update(String, SimpleWorkflowUpdateRequest, RequestOptions)}, with the client's options.
    *
-   * <p>Update a workflow. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>uuid</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>workflow_id</code> (new <code>uuid</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>). The body accepts the same strict field whitelist as create — unknown keys are rejected with 400.
-   *
-   * <p>{@code PATCH /v3/workflows/{settings_uuid}/}
-   *
-   * @param settingsUuid Per-version UUID of the workflow to update.
+   * @param settingsUuid the {@code settings_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Map<String, JsonNode>> updateAsync(String settingsUuid, SimpleWorkflowUpdateRequest params) {
     return client.executeAsync(updateRequest(settingsUuid, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -350,42 +279,30 @@ public final class WorkflowsResource {
   }
 
   /**
-   * Delete workflow
+   * Asynchronous {@link #delete(String, RequestOptions)}.
    *
-   * <p>Permanently delete one workflow version (no undo). Existing sessions keep their verification results but their workflow reference is cleared; other versions in the same <code>workflow_id</code> group are not deleted.
-   *
-   * <p>{@code DELETE /v3/workflows/{settings_uuid}/}
-   *
-   * @param settingsUuid Per-version UUID of the workflow to delete.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param settingsUuid the {@code settings_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String settingsUuid, RequestOptions options) {
     return client.executeAsync(deleteRequest(settingsUuid), options, DELETE_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * Delete workflow
+   * Same as {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Permanently delete one workflow version (no undo). Existing sessions keep their verification results but their workflow reference is cleared; other versions in the same <code>workflow_id</code> group are not deleted.
-   *
-   * <p>{@code DELETE /v3/workflows/{settings_uuid}/}
-   *
-   * @param settingsUuid Per-version UUID of the workflow to delete.
+   * @param settingsUuid the {@code settings_uuid}
    */
   public void delete(String settingsUuid) {
     client.execute(deleteRequest(settingsUuid), RequestOptions.none(), DELETE_RESPONSE);
   }
 
   /**
-   * Delete workflow
+   * Asynchronous {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Permanently delete one workflow version (no undo). Existing sessions keep their verification results but their workflow reference is cleared; other versions in the same <code>workflow_id</code> group are not deleted.
-   *
-   * <p>{@code DELETE /v3/workflows/{settings_uuid}/}
-   *
-   * @param settingsUuid Per-version UUID of the workflow to delete.
-   * @return a future completed with the response body
+   * @param settingsUuid the {@code settings_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String settingsUuid) {
     return client.executeAsync(deleteRequest(settingsUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
@@ -444,356 +361,252 @@ public final class WorkflowsResource {
     }
 
     /**
-     * List workflows
-     *
-     * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/workflows/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(WorkflowsListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<WorkflowListItem>> list(WorkflowsListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List workflows
-     *
-     * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/workflows/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(WorkflowsListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<WorkflowListItem>>> listAsync(WorkflowsListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List workflows
-     *
-     * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/workflows/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(WorkflowsListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<WorkflowListItem>> list(WorkflowsListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List workflows
-     *
-     * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/workflows/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(WorkflowsListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<WorkflowListItem>>> listAsync(WorkflowsListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List workflows
+     * {@link #list(WorkflowsListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/workflows/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<WorkflowListItem>> list(RequestOptions options) {
       return client.execute(listRequest(WorkflowsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List workflows
+     * Asynchronous {@link #list(WorkflowsListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/workflows/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<WorkflowListItem>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(WorkflowsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List workflows
+     * {@link #list(WorkflowsListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/workflows/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<WorkflowListItem>> list() {
       return client.execute(listRequest(WorkflowsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List workflows
+     * Asynchronous {@link #list(WorkflowsListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List your workflows, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>workflow_id</code> is the stable group ID and new sessions use the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/workflows/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<WorkflowListItem>>> listAsync() {
       return client.executeAsync(listRequest(WorkflowsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Create workflow
-     *
-     * <p>Create a simple workflow. Send <code>features</code> in execution order (ordering rules apply); defaults to <code>published</code> v1. The body accepts ONLY the fields listed in <code>SimpleWorkflowRequest</code> — any other key (including <code>workflow_type</code>) is rejected with a 400. Not idempotent — each call creates a new workflow. Maximum 50 workflows per application.
-     *
-     * <p>{@code POST /v3/workflows/}
+     * {@link #create(SimpleWorkflowRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Map<String, JsonNode>> create(SimpleWorkflowRequest params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create workflow
-     *
-     * <p>Create a simple workflow. Send <code>features</code> in execution order (ordering rules apply); defaults to <code>published</code> v1. The body accepts ONLY the fields listed in <code>SimpleWorkflowRequest</code> — any other key (including <code>workflow_type</code>) is rejected with a 400. Not idempotent — each call creates a new workflow. Maximum 50 workflows per application.
-     *
-     * <p>{@code POST /v3/workflows/}
+     * Asynchronous {@link #create(SimpleWorkflowRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Map<String, JsonNode>>> createAsync(SimpleWorkflowRequest params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create workflow
-     *
-     * <p>Create a simple workflow. Send <code>features</code> in execution order (ordering rules apply); defaults to <code>published</code> v1. The body accepts ONLY the fields listed in <code>SimpleWorkflowRequest</code> — any other key (including <code>workflow_type</code>) is rejected with a 400. Not idempotent — each call creates a new workflow. Maximum 50 workflows per application.
-     *
-     * <p>{@code POST /v3/workflows/}
+     * {@link #create(SimpleWorkflowRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Map<String, JsonNode>> create(SimpleWorkflowRequest params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create workflow
-     *
-     * <p>Create a simple workflow. Send <code>features</code> in execution order (ordering rules apply); defaults to <code>published</code> v1. The body accepts ONLY the fields listed in <code>SimpleWorkflowRequest</code> — any other key (including <code>workflow_type</code>) is rejected with a 400. Not idempotent — each call creates a new workflow. Maximum 50 workflows per application.
-     *
-     * <p>{@code POST /v3/workflows/}
+     * Asynchronous {@link #create(SimpleWorkflowRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Map<String, JsonNode>>> createAsync(SimpleWorkflowRequest params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Get workflow
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Fetch full configuration for one workflow version by <code>settings_uuid</code>: feature toggles, thresholds, allowed documents, graph, retry policy, callbacks, and pricing.
-     *
-     * <p>{@code GET /v3/workflows/{settings_uuid}/}
-     *
-     * @param settingsUuid Per-version UUID of the workflow (the `uuid` value returned by the list endpoint). Each version of a workflow has its own `settings_uuid`.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param settingsUuid the {@code settings_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<JsonNode> retrieve(String settingsUuid, RequestOptions options) {
       return client.execute(retrieveRequest(settingsUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get workflow
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Fetch full configuration for one workflow version by <code>settings_uuid</code>: feature toggles, thresholds, allowed documents, graph, retry policy, callbacks, and pricing.
-     *
-     * <p>{@code GET /v3/workflows/{settings_uuid}/}
-     *
-     * @param settingsUuid Per-version UUID of the workflow (the `uuid` value returned by the list endpoint). Each version of a workflow has its own `settings_uuid`.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param settingsUuid the {@code settings_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<JsonNode>> retrieveAsync(String settingsUuid, RequestOptions options) {
       return client.executeAsync(retrieveRequest(settingsUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get workflow
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Fetch full configuration for one workflow version by <code>settings_uuid</code>: feature toggles, thresholds, allowed documents, graph, retry policy, callbacks, and pricing.
-     *
-     * <p>{@code GET /v3/workflows/{settings_uuid}/}
-     *
-     * @param settingsUuid Per-version UUID of the workflow (the `uuid` value returned by the list endpoint). Each version of a workflow has its own `settings_uuid`.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param settingsUuid the {@code settings_uuid}
+     * @return the result
      */
     public RawResponse<JsonNode> retrieve(String settingsUuid) {
       return client.execute(retrieveRequest(settingsUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get workflow
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Fetch full configuration for one workflow version by <code>settings_uuid</code>: feature toggles, thresholds, allowed documents, graph, retry policy, callbacks, and pricing.
-     *
-     * <p>{@code GET /v3/workflows/{settings_uuid}/}
-     *
-     * @param settingsUuid Per-version UUID of the workflow (the `uuid` value returned by the list endpoint). Each version of a workflow has its own `settings_uuid`.
-     * @return a future completed with the raw response
+     * @param settingsUuid the {@code settings_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<JsonNode>> retrieveAsync(String settingsUuid) {
       return client.executeAsync(retrieveRequest(settingsUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Update workflow
+     * {@link #update(String, SimpleWorkflowUpdateRequest, RequestOptions)} with the raw response.
      *
-     * <p>Update a workflow. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>uuid</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>workflow_id</code> (new <code>uuid</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>). The body accepts the same strict field whitelist as create — unknown keys are rejected with 400.
-     *
-     * <p>{@code PATCH /v3/workflows/{settings_uuid}/}
-     *
-     * @param settingsUuid Per-version UUID of the workflow to update.
+     * @param settingsUuid the {@code settings_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Map<String, JsonNode>> update(String settingsUuid, SimpleWorkflowUpdateRequest params, RequestOptions options) {
       return client.execute(updateRequest(settingsUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update workflow
+     * Asynchronous {@link #update(String, SimpleWorkflowUpdateRequest, RequestOptions)} with the raw response.
      *
-     * <p>Update a workflow. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>uuid</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>workflow_id</code> (new <code>uuid</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>). The body accepts the same strict field whitelist as create — unknown keys are rejected with 400.
-     *
-     * <p>{@code PATCH /v3/workflows/{settings_uuid}/}
-     *
-     * @param settingsUuid Per-version UUID of the workflow to update.
+     * @param settingsUuid the {@code settings_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Map<String, JsonNode>>> updateAsync(String settingsUuid, SimpleWorkflowUpdateRequest params, RequestOptions options) {
       return client.executeAsync(updateRequest(settingsUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update workflow
+     * {@link #update(String, SimpleWorkflowUpdateRequest, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Update a workflow. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>uuid</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>workflow_id</code> (new <code>uuid</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>). The body accepts the same strict field whitelist as create — unknown keys are rejected with 400.
-     *
-     * <p>{@code PATCH /v3/workflows/{settings_uuid}/}
-     *
-     * @param settingsUuid Per-version UUID of the workflow to update.
+     * @param settingsUuid the {@code settings_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Map<String, JsonNode>> update(String settingsUuid, SimpleWorkflowUpdateRequest params) {
       return client.execute(updateRequest(settingsUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update workflow
+     * Asynchronous {@link #update(String, SimpleWorkflowUpdateRequest, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Update a workflow. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>uuid</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>workflow_id</code> (new <code>uuid</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>). The body accepts the same strict field whitelist as create — unknown keys are rejected with 400.
-     *
-     * <p>{@code PATCH /v3/workflows/{settings_uuid}/}
-     *
-     * @param settingsUuid Per-version UUID of the workflow to update.
+     * @param settingsUuid the {@code settings_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Map<String, JsonNode>>> updateAsync(String settingsUuid, SimpleWorkflowUpdateRequest params) {
       return client.executeAsync(updateRequest(settingsUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Delete workflow
+     * {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Permanently delete one workflow version (no undo). Existing sessions keep their verification results but their workflow reference is cleared; other versions in the same <code>workflow_id</code> group are not deleted.
-     *
-     * <p>{@code DELETE /v3/workflows/{settings_uuid}/}
-     *
-     * @param settingsUuid Per-version UUID of the workflow to delete.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param settingsUuid the {@code settings_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String settingsUuid, RequestOptions options) {
       return client.execute(deleteRequest(settingsUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete workflow
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Permanently delete one workflow version (no undo). Existing sessions keep their verification results but their workflow reference is cleared; other versions in the same <code>workflow_id</code> group are not deleted.
-     *
-     * <p>{@code DELETE /v3/workflows/{settings_uuid}/}
-     *
-     * @param settingsUuid Per-version UUID of the workflow to delete.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param settingsUuid the {@code settings_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String settingsUuid, RequestOptions options) {
       return client.executeAsync(deleteRequest(settingsUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete workflow
+     * {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Permanently delete one workflow version (no undo). Existing sessions keep their verification results but their workflow reference is cleared; other versions in the same <code>workflow_id</code> group are not deleted.
-     *
-     * <p>{@code DELETE /v3/workflows/{settings_uuid}/}
-     *
-     * @param settingsUuid Per-version UUID of the workflow to delete.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param settingsUuid the {@code settings_uuid}
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String settingsUuid) {
       return client.execute(deleteRequest(settingsUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Delete workflow
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Permanently delete one workflow version (no undo). Existing sessions keep their verification results but their workflow reference is cleared; other versions in the same <code>workflow_id</code> group are not deleted.
-     *
-     * <p>{@code DELETE /v3/workflows/{settings_uuid}/}
-     *
-     * @param settingsUuid Per-version UUID of the workflow to delete.
-     * @return a future completed with the raw response
+     * @param settingsUuid the {@code settings_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String settingsUuid) {
       return client.executeAsync(deleteRequest(settingsUuid), RequestOptions.none(), DELETE_RESPONSE);

@@ -69,111 +69,69 @@ public final class NetworksResource {
   }
 
   /**
-   * List networks
-   *
-   * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(NetworksListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<NetworkListItem>> listAsync(NetworksListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List networks
-   *
-   * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(NetworksListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<NetworkListItem> list(NetworksListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List networks
-   *
-   * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(NetworksListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<NetworkListItem>> listAsync(NetworksListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List networks
+   * Same as {@link #list(NetworksListParams, RequestOptions)}, without parameters.
    *
-   * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<NetworkListItem> list(RequestOptions options) {
     return client.execute(listRequest(NetworksListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List networks
+   * Asynchronous {@link #list(NetworksListParams, RequestOptions)}, without parameters.
    *
-   * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<NetworkListItem>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(NetworksListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List networks
+   * Same as {@link #list(NetworksListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<NetworkListItem> list() {
     return client.execute(listRequest(NetworksListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List networks
+   * Asynchronous {@link #list(NetworksListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<NetworkListItem>> listAsync() {
     return client.executeAsync(listRequest(NetworksListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -196,46 +154,31 @@ public final class NetworksResource {
   }
 
   /**
-   * Get network
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
-   * <p>Retrieve a single network's full detail, including stats, fraud tags, and risk signals.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworkDetail> retrieveAsync(String networkUuid, RequestOptions options) {
     return client.executeAsync(retrieveRequest(networkUuid), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get network
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve a single network's full detail, including stats, fraud tags, and risk signals.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @return the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return the result
    */
   public NetworkDetail retrieve(String networkUuid) {
     return client.execute(retrieveRequest(networkUuid), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get network
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve a single network's full detail, including stats, fraud tags, and risk signals.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworkDetail> retrieveAsync(String networkUuid) {
     return client.executeAsync(retrieveRequest(networkUuid), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -259,111 +202,76 @@ public final class NetworksResource {
   }
 
   /**
-   * Get network graph
+   * Asynchronous {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)}.
    *
-   * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
+   * @param networkUuid the {@code network_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworkGraph> retrieveGraphAsync(String networkUuid, NetworksRetrieveGraphParams params, RequestOptions options) {
     return client.executeAsync(retrieveGraphRequest(networkUuid, params), options, RETRIEVE_GRAPH_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get network graph
+   * Same as {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
+   * @param networkUuid the {@code network_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public NetworkGraph retrieveGraph(String networkUuid, NetworksRetrieveGraphParams params) {
     return client.execute(retrieveGraphRequest(networkUuid, params), RequestOptions.none(), RETRIEVE_GRAPH_RESPONSE).data();
   }
 
   /**
-   * Get network graph
+   * Asynchronous {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
+   * @param networkUuid the {@code network_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworkGraph> retrieveGraphAsync(String networkUuid, NetworksRetrieveGraphParams params) {
     return client.executeAsync(retrieveGraphRequest(networkUuid, params), RequestOptions.none(), RETRIEVE_GRAPH_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get network graph
+   * Same as {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)}, without parameters.
    *
-   * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param networkUuid the {@code network_uuid}
+   * @param options per-request options
+   * @return the result
    */
   public NetworkGraph retrieveGraph(String networkUuid, RequestOptions options) {
     return client.execute(retrieveGraphRequest(networkUuid, NetworksRetrieveGraphParams.builder().build()), options, RETRIEVE_GRAPH_RESPONSE).data();
   }
 
   /**
-   * Get network graph
+   * Asynchronous {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)}, without parameters.
    *
-   * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworkGraph> retrieveGraphAsync(String networkUuid, RequestOptions options) {
     return client.executeAsync(retrieveGraphRequest(networkUuid, NetworksRetrieveGraphParams.builder().build()), options, RETRIEVE_GRAPH_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get network graph
+   * Same as {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @return the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return the result
    */
   public NetworkGraph retrieveGraph(String networkUuid) {
     return client.execute(retrieveGraphRequest(networkUuid, NetworksRetrieveGraphParams.builder().build()), RequestOptions.none(), RETRIEVE_GRAPH_RESPONSE).data();
   }
 
   /**
-   * Get network graph
+   * Asynchronous {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworkGraph> retrieveGraphAsync(String networkUuid) {
     return client.executeAsync(retrieveGraphRequest(networkUuid, NetworksRetrieveGraphParams.builder().build()), RequestOptions.none(), RETRIEVE_GRAPH_RESPONSE).thenApply(RawResponse::data);
@@ -386,46 +294,31 @@ public final class NetworksResource {
   }
 
   /**
-   * List network members
+   * Asynchronous {@link #listMembers(String, RequestOptions)}.
    *
-   * <p>List the subjects (vendor users, vendor businesses, or transaction parties) that belong to this network.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/members/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworksListMembersResponse> listMembersAsync(String networkUuid, RequestOptions options) {
     return client.executeAsync(listMembersRequest(networkUuid), options, LIST_MEMBERS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List network members
+   * Same as {@link #listMembers(String, RequestOptions)}, with the client's options.
    *
-   * <p>List the subjects (vendor users, vendor businesses, or transaction parties) that belong to this network.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/members/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @return the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return the result
    */
   public NetworksListMembersResponse listMembers(String networkUuid) {
     return client.execute(listMembersRequest(networkUuid), RequestOptions.none(), LIST_MEMBERS_RESPONSE).data();
   }
 
   /**
-   * List network members
+   * Asynchronous {@link #listMembers(String, RequestOptions)}, with the client's options.
    *
-   * <p>List the subjects (vendor users, vendor businesses, or transaction parties) that belong to this network.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/members/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworksListMembersResponse> listMembersAsync(String networkUuid) {
     return client.executeAsync(listMembersRequest(networkUuid), RequestOptions.none(), LIST_MEMBERS_RESPONSE).thenApply(RawResponse::data);
@@ -448,46 +341,31 @@ public final class NetworksResource {
   }
 
   /**
-   * List network signals
+   * Asynchronous {@link #listSignals(String, RequestOptions)}.
    *
-   * <p>List the signals (shared device, IP, face, document number, phone, email, or address values) that link this network's members.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/signals/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworksListSignalsResponse> listSignalsAsync(String networkUuid, RequestOptions options) {
     return client.executeAsync(listSignalsRequest(networkUuid), options, LIST_SIGNALS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List network signals
+   * Same as {@link #listSignals(String, RequestOptions)}, with the client's options.
    *
-   * <p>List the signals (shared device, IP, face, document number, phone, email, or address values) that link this network's members.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/signals/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @return the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return the result
    */
   public NetworksListSignalsResponse listSignals(String networkUuid) {
     return client.execute(listSignalsRequest(networkUuid), RequestOptions.none(), LIST_SIGNALS_RESPONSE).data();
   }
 
   /**
-   * List network signals
+   * Asynchronous {@link #listSignals(String, RequestOptions)}, with the client's options.
    *
-   * <p>List the signals (shared device, IP, face, document number, phone, email, or address values) that link this network's members.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/signals/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworksListSignalsResponse> listSignalsAsync(String networkUuid) {
     return client.executeAsync(listSignalsRequest(networkUuid), RequestOptions.none(), LIST_SIGNALS_RESPONSE).thenApply(RawResponse::data);
@@ -510,46 +388,31 @@ public final class NetworksResource {
   }
 
   /**
-   * Get network timeline
+   * Asynchronous {@link #retrieveTimeline(String, RequestOptions)}.
    *
-   * <p>Chronological events for this network: detection, each signal's observation, and lifecycle status changes.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/timeline/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworksRetrieveTimelineResponse> retrieveTimelineAsync(String networkUuid, RequestOptions options) {
     return client.executeAsync(retrieveTimelineRequest(networkUuid), options, RETRIEVE_TIMELINE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get network timeline
+   * Same as {@link #retrieveTimeline(String, RequestOptions)}, with the client's options.
    *
-   * <p>Chronological events for this network: detection, each signal's observation, and lifecycle status changes.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/timeline/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @return the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return the result
    */
   public NetworksRetrieveTimelineResponse retrieveTimeline(String networkUuid) {
     return client.execute(retrieveTimelineRequest(networkUuid), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE).data();
   }
 
   /**
-   * Get network timeline
+   * Asynchronous {@link #retrieveTimeline(String, RequestOptions)}, with the client's options.
    *
-   * <p>Chronological events for this network: detection, each signal's observation, and lifecycle status changes.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/timeline/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworksRetrieveTimelineResponse> retrieveTimelineAsync(String networkUuid) {
     return client.executeAsync(retrieveTimelineRequest(networkUuid), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE).thenApply(RawResponse::data);
@@ -572,46 +435,31 @@ public final class NetworksResource {
   }
 
   /**
-   * Get network map
+   * Asynchronous {@link #retrieveMap(String, RequestOptions)}.
    *
-   * <p>Geographic points where this network's members' addresses/locations converge, sourced from the sessions, business sessions, and transactions backing its memberships.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/map/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworkMap> retrieveMapAsync(String networkUuid, RequestOptions options) {
     return client.executeAsync(retrieveMapRequest(networkUuid), options, RETRIEVE_MAP_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get network map
+   * Same as {@link #retrieveMap(String, RequestOptions)}, with the client's options.
    *
-   * <p>Geographic points where this network's members' addresses/locations converge, sourced from the sessions, business sessions, and transactions backing its memberships.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/map/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @return the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return the result
    */
   public NetworkMap retrieveMap(String networkUuid) {
     return client.execute(retrieveMapRequest(networkUuid), RequestOptions.none(), RETRIEVE_MAP_RESPONSE).data();
   }
 
   /**
-   * Get network map
+   * Asynchronous {@link #retrieveMap(String, RequestOptions)}, with the client's options.
    *
-   * <p>Geographic points where this network's members' addresses/locations converge, sourced from the sessions, business sessions, and transactions backing its memberships.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/map/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworkMap> retrieveMapAsync(String networkUuid) {
     return client.executeAsync(retrieveMapRequest(networkUuid), RequestOptions.none(), RETRIEVE_MAP_RESPONSE).thenApply(RawResponse::data);
@@ -635,49 +483,31 @@ public final class NetworksResource {
   }
 
   /**
-   * Download a network evidence report
+   * Asynchronous {@link #downloadReport(String, RequestOptions)}.
    *
-   * <p>Download a PDF of the current organization network, its observed account connections, signal references and review status. Requires read:networks. Global intelligence and private analyst notes are not included. Each account and signal list is capped at 500 entries and the report states when it is incomplete. The request does not change network status. Errors are returned as JSON.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/report/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-   *
-   * @param networkUuid Network UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BinaryResponse> downloadReportAsync(String networkUuid, RequestOptions options) {
     return client.executeAsync(downloadReportRequest(networkUuid), options, DOWNLOAD_REPORT_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Download a network evidence report
+   * Same as {@link #downloadReport(String, RequestOptions)}, with the client's options.
    *
-   * <p>Download a PDF of the current organization network, its observed account connections, signal references and review status. Requires read:networks. Global intelligence and private analyst notes are not included. Each account and signal list is capped at 500 entries and the report states when it is incomplete. The request does not change network status. Errors are returned as JSON.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/report/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-   *
-   * @param networkUuid Network UUID.
-   * @return the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return the result
    */
   public BinaryResponse downloadReport(String networkUuid) {
     return client.execute(downloadReportRequest(networkUuid), RequestOptions.none(), DOWNLOAD_REPORT_RESPONSE).data();
   }
 
   /**
-   * Download a network evidence report
+   * Asynchronous {@link #downloadReport(String, RequestOptions)}, with the client's options.
    *
-   * <p>Download a PDF of the current organization network, its observed account connections, signal references and review status. Requires read:networks. Global intelligence and private analyst notes are not included. Each account and signal list is capped at 500 entries and the report states when it is incomplete. The request does not change network status. Errors are returned as JSON.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/report/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-   *
-   * @param networkUuid Network UUID.
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<BinaryResponse> downloadReportAsync(String networkUuid) {
     return client.executeAsync(downloadReportRequest(networkUuid), RequestOptions.none(), DOWNLOAD_REPORT_RESPONSE).thenApply(RawResponse::data);
@@ -768,632 +598,420 @@ public final class NetworksResource {
     }
 
     /**
-     * List networks
-     *
-     * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(NetworksListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<NetworkListItem>> list(NetworksListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List networks
-     *
-     * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(NetworksListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<NetworkListItem>>> listAsync(NetworksListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List networks
-     *
-     * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(NetworksListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<NetworkListItem>> list(NetworksListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List networks
-     *
-     * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(NetworksListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<NetworkListItem>>> listAsync(NetworksListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List networks
+     * {@link #list(NetworksListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<NetworkListItem>> list(RequestOptions options) {
       return client.execute(listRequest(NetworksListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List networks
+     * Asynchronous {@link #list(NetworksListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<NetworkListItem>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(NetworksListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List networks
+     * {@link #list(NetworksListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<NetworkListItem>> list() {
       return client.execute(listRequest(NetworksListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List networks
+     * Asynchronous {@link #list(NetworksListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<NetworkListItem>>> listAsync() {
       return client.executeAsync(listRequest(NetworksListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Get network
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve a single network's full detail, including stats, fraud tags, and risk signals.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<NetworkDetail> retrieve(String networkUuid, RequestOptions options) {
       return client.execute(retrieveRequest(networkUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get network
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve a single network's full detail, including stats, fraud tags, and risk signals.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworkDetail>> retrieveAsync(String networkUuid, RequestOptions options) {
       return client.executeAsync(retrieveRequest(networkUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get network
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve a single network's full detail, including stats, fraud tags, and risk signals.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @return the result
      */
     public RawResponse<NetworkDetail> retrieve(String networkUuid) {
       return client.execute(retrieveRequest(networkUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get network
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve a single network's full detail, including stats, fraud tags, and risk signals.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworkDetail>> retrieveAsync(String networkUuid) {
       return client.executeAsync(retrieveRequest(networkUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get network graph
+     * {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<NetworkGraph> retrieveGraph(String networkUuid, NetworksRetrieveGraphParams params, RequestOptions options) {
       return client.execute(retrieveGraphRequest(networkUuid, params), options, RETRIEVE_GRAPH_RESPONSE);
     }
 
     /**
-     * Get network graph
+     * Asynchronous {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworkGraph>> retrieveGraphAsync(String networkUuid, NetworksRetrieveGraphParams params, RequestOptions options) {
       return client.executeAsync(retrieveGraphRequest(networkUuid, params), options, RETRIEVE_GRAPH_RESPONSE);
     }
 
     /**
-     * Get network graph
+     * {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<NetworkGraph> retrieveGraph(String networkUuid, NetworksRetrieveGraphParams params) {
       return client.execute(retrieveGraphRequest(networkUuid, params), RequestOptions.none(), RETRIEVE_GRAPH_RESPONSE);
     }
 
     /**
-     * Get network graph
+     * Asynchronous {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworkGraph>> retrieveGraphAsync(String networkUuid, NetworksRetrieveGraphParams params) {
       return client.executeAsync(retrieveGraphRequest(networkUuid, params), RequestOptions.none(), RETRIEVE_GRAPH_RESPONSE);
     }
 
     /**
-     * Get network graph
+     * {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<NetworkGraph> retrieveGraph(String networkUuid, RequestOptions options) {
       return client.execute(retrieveGraphRequest(networkUuid, NetworksRetrieveGraphParams.builder().build()), options, RETRIEVE_GRAPH_RESPONSE);
     }
 
     /**
-     * Get network graph
+     * Asynchronous {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworkGraph>> retrieveGraphAsync(String networkUuid, RequestOptions options) {
       return client.executeAsync(retrieveGraphRequest(networkUuid, NetworksRetrieveGraphParams.builder().build()), options, RETRIEVE_GRAPH_RESPONSE);
     }
 
     /**
-     * Get network graph
+     * {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @return the result
      */
     public RawResponse<NetworkGraph> retrieveGraph(String networkUuid) {
       return client.execute(retrieveGraphRequest(networkUuid, NetworksRetrieveGraphParams.builder().build()), RequestOptions.none(), RETRIEVE_GRAPH_RESPONSE);
     }
 
     /**
-     * Get network graph
+     * Asynchronous {@link #retrieveGraph(String, NetworksRetrieveGraphParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Retrieve the network as a graph of subject nodes (vendor users, vendor businesses, transaction parties) and signal nodes (the shared device/IP/face/document/phone/email/address values linking them), with edges representing memberships.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/graph/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworkGraph>> retrieveGraphAsync(String networkUuid) {
       return client.executeAsync(retrieveGraphRequest(networkUuid, NetworksRetrieveGraphParams.builder().build()), RequestOptions.none(), RETRIEVE_GRAPH_RESPONSE);
     }
 
     /**
-     * List network members
+     * {@link #listMembers(String, RequestOptions)} with the raw response.
      *
-     * <p>List the subjects (vendor users, vendor businesses, or transaction parties) that belong to this network.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/members/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<NetworksListMembersResponse> listMembers(String networkUuid, RequestOptions options) {
       return client.execute(listMembersRequest(networkUuid), options, LIST_MEMBERS_RESPONSE);
     }
 
     /**
-     * List network members
+     * Asynchronous {@link #listMembers(String, RequestOptions)} with the raw response.
      *
-     * <p>List the subjects (vendor users, vendor businesses, or transaction parties) that belong to this network.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/members/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworksListMembersResponse>> listMembersAsync(String networkUuid, RequestOptions options) {
       return client.executeAsync(listMembersRequest(networkUuid), options, LIST_MEMBERS_RESPONSE);
     }
 
     /**
-     * List network members
+     * {@link #listMembers(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the subjects (vendor users, vendor businesses, or transaction parties) that belong to this network.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/members/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @return the result
      */
     public RawResponse<NetworksListMembersResponse> listMembers(String networkUuid) {
       return client.execute(listMembersRequest(networkUuid), RequestOptions.none(), LIST_MEMBERS_RESPONSE);
     }
 
     /**
-     * List network members
+     * Asynchronous {@link #listMembers(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the subjects (vendor users, vendor businesses, or transaction parties) that belong to this network.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/members/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworksListMembersResponse>> listMembersAsync(String networkUuid) {
       return client.executeAsync(listMembersRequest(networkUuid), RequestOptions.none(), LIST_MEMBERS_RESPONSE);
     }
 
     /**
-     * List network signals
+     * {@link #listSignals(String, RequestOptions)} with the raw response.
      *
-     * <p>List the signals (shared device, IP, face, document number, phone, email, or address values) that link this network's members.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/signals/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<NetworksListSignalsResponse> listSignals(String networkUuid, RequestOptions options) {
       return client.execute(listSignalsRequest(networkUuid), options, LIST_SIGNALS_RESPONSE);
     }
 
     /**
-     * List network signals
+     * Asynchronous {@link #listSignals(String, RequestOptions)} with the raw response.
      *
-     * <p>List the signals (shared device, IP, face, document number, phone, email, or address values) that link this network's members.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/signals/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworksListSignalsResponse>> listSignalsAsync(String networkUuid, RequestOptions options) {
       return client.executeAsync(listSignalsRequest(networkUuid), options, LIST_SIGNALS_RESPONSE);
     }
 
     /**
-     * List network signals
+     * {@link #listSignals(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the signals (shared device, IP, face, document number, phone, email, or address values) that link this network's members.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/signals/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @return the result
      */
     public RawResponse<NetworksListSignalsResponse> listSignals(String networkUuid) {
       return client.execute(listSignalsRequest(networkUuid), RequestOptions.none(), LIST_SIGNALS_RESPONSE);
     }
 
     /**
-     * List network signals
+     * Asynchronous {@link #listSignals(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the signals (shared device, IP, face, document number, phone, email, or address values) that link this network's members.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/signals/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworksListSignalsResponse>> listSignalsAsync(String networkUuid) {
       return client.executeAsync(listSignalsRequest(networkUuid), RequestOptions.none(), LIST_SIGNALS_RESPONSE);
     }
 
     /**
-     * Get network timeline
+     * {@link #retrieveTimeline(String, RequestOptions)} with the raw response.
      *
-     * <p>Chronological events for this network: detection, each signal's observation, and lifecycle status changes.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/timeline/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<NetworksRetrieveTimelineResponse> retrieveTimeline(String networkUuid, RequestOptions options) {
       return client.execute(retrieveTimelineRequest(networkUuid), options, RETRIEVE_TIMELINE_RESPONSE);
     }
 
     /**
-     * Get network timeline
+     * Asynchronous {@link #retrieveTimeline(String, RequestOptions)} with the raw response.
      *
-     * <p>Chronological events for this network: detection, each signal's observation, and lifecycle status changes.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/timeline/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworksRetrieveTimelineResponse>> retrieveTimelineAsync(String networkUuid, RequestOptions options) {
       return client.executeAsync(retrieveTimelineRequest(networkUuid), options, RETRIEVE_TIMELINE_RESPONSE);
     }
 
     /**
-     * Get network timeline
+     * {@link #retrieveTimeline(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Chronological events for this network: detection, each signal's observation, and lifecycle status changes.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/timeline/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @return the result
      */
     public RawResponse<NetworksRetrieveTimelineResponse> retrieveTimeline(String networkUuid) {
       return client.execute(retrieveTimelineRequest(networkUuid), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE);
     }
 
     /**
-     * Get network timeline
+     * Asynchronous {@link #retrieveTimeline(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Chronological events for this network: detection, each signal's observation, and lifecycle status changes.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/timeline/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworksRetrieveTimelineResponse>> retrieveTimelineAsync(String networkUuid) {
       return client.executeAsync(retrieveTimelineRequest(networkUuid), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE);
     }
 
     /**
-     * Get network map
+     * {@link #retrieveMap(String, RequestOptions)} with the raw response.
      *
-     * <p>Geographic points where this network's members' addresses/locations converge, sourced from the sessions, business sessions, and transactions backing its memberships.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/map/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<NetworkMap> retrieveMap(String networkUuid, RequestOptions options) {
       return client.execute(retrieveMapRequest(networkUuid), options, RETRIEVE_MAP_RESPONSE);
     }
 
     /**
-     * Get network map
+     * Asynchronous {@link #retrieveMap(String, RequestOptions)} with the raw response.
      *
-     * <p>Geographic points where this network's members' addresses/locations converge, sourced from the sessions, business sessions, and transactions backing its memberships.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/map/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworkMap>> retrieveMapAsync(String networkUuid, RequestOptions options) {
       return client.executeAsync(retrieveMapRequest(networkUuid), options, RETRIEVE_MAP_RESPONSE);
     }
 
     /**
-     * Get network map
+     * {@link #retrieveMap(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Geographic points where this network's members' addresses/locations converge, sourced from the sessions, business sessions, and transactions backing its memberships.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/map/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @return the result
      */
     public RawResponse<NetworkMap> retrieveMap(String networkUuid) {
       return client.execute(retrieveMapRequest(networkUuid), RequestOptions.none(), RETRIEVE_MAP_RESPONSE);
     }
 
     /**
-     * Get network map
+     * Asynchronous {@link #retrieveMap(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Geographic points where this network's members' addresses/locations converge, sourced from the sessions, business sessions, and transactions backing its memberships.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/map/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworkMap>> retrieveMapAsync(String networkUuid) {
       return client.executeAsync(retrieveMapRequest(networkUuid), RequestOptions.none(), RETRIEVE_MAP_RESPONSE);
     }
 
     /**
-     * Download a network evidence report
+     * {@link #downloadReport(String, RequestOptions)} with the raw response.
      *
-     * <p>Download a PDF of the current organization network, its observed account connections, signal references and review status. Requires read:networks. Global intelligence and private analyst notes are not included. Each account and signal list is capped at 500 entries and the report states when it is incomplete. The request does not change network status. Errors are returned as JSON.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/report/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BinaryResponse> downloadReport(String networkUuid, RequestOptions options) {
       return client.execute(downloadReportRequest(networkUuid), options, DOWNLOAD_REPORT_RESPONSE);
     }
 
     /**
-     * Download a network evidence report
+     * Asynchronous {@link #downloadReport(String, RequestOptions)} with the raw response.
      *
-     * <p>Download a PDF of the current organization network, its observed account connections, signal references and review status. Requires read:networks. Global intelligence and private analyst notes are not included. Each account and signal list is capped at 500 entries and the report states when it is incomplete. The request does not change network status. Errors are returned as JSON.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/report/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BinaryResponse>> downloadReportAsync(String networkUuid, RequestOptions options) {
       return client.executeAsync(downloadReportRequest(networkUuid), options, DOWNLOAD_REPORT_RESPONSE);
     }
 
     /**
-     * Download a network evidence report
+     * {@link #downloadReport(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Download a PDF of the current organization network, its observed account connections, signal references and review status. Requires read:networks. Global intelligence and private analyst notes are not included. Each account and signal list is capped at 500 entries and the report states when it is incomplete. The request does not change network status. Errors are returned as JSON.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/report/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-     *
-     * @param networkUuid Network UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @return the result
      */
     public RawResponse<BinaryResponse> downloadReport(String networkUuid) {
       return client.execute(downloadReportRequest(networkUuid), RequestOptions.none(), DOWNLOAD_REPORT_RESPONSE);
     }
 
     /**
-     * Download a network evidence report
+     * Asynchronous {@link #downloadReport(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Download a PDF of the current organization network, its observed account connections, signal references and review status. Requires read:networks. Global intelligence and private analyst notes are not included. Each account and signal list is capped at 500 entries and the report states when it is incomplete. The request does not change network status. Errors are returned as JSON.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/report/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-     *
-     * @param networkUuid Network UUID.
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BinaryResponse>> downloadReportAsync(String networkUuid) {
       return client.executeAsync(downloadReportRequest(networkUuid), RequestOptions.none(), DOWNLOAD_REPORT_RESPONSE);

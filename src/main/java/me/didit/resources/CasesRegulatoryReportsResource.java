@@ -52,118 +52,76 @@ public final class CasesRegulatoryReportsResource {
   }
 
   /**
-   * List reports for case
+   * Asynchronous {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)}.
    *
-   * <p>List FIU reports generated for the case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<RegulatoryReportDetail>> listAsync(String caseUuid, CasesRegulatoryReportsListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(caseUuid, params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List reports for case
+   * Same as {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)}, with the client's options.
    *
-   * <p>List FIU reports generated for the case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<RegulatoryReportDetail> list(String caseUuid, CasesRegulatoryReportsListParams params) {
     return client.execute(listRequest(caseUuid, params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List reports for case
+   * Asynchronous {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)}, with the client's options.
    *
-   * <p>List FIU reports generated for the case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<RegulatoryReportDetail>> listAsync(String caseUuid, CasesRegulatoryReportsListParams params) {
     return client.executeAsync(listRequest(caseUuid, params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List reports for case
+   * Same as {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)}, without parameters.
    *
-   * <p>List FIU reports generated for the case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return the result
    */
   public Page<RegulatoryReportDetail> list(String caseUuid, RequestOptions options) {
     return client.execute(listRequest(caseUuid, CasesRegulatoryReportsListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List reports for case
+   * Asynchronous {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)}, without parameters.
    *
-   * <p>List FIU reports generated for the case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<RegulatoryReportDetail>> listAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(listRequest(caseUuid, CasesRegulatoryReportsListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List reports for case
+   * Same as {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List FIU reports generated for the case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param caseUuid Case UUID.
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return the result
    */
   public Page<RegulatoryReportDetail> list(String caseUuid) {
     return client.execute(listRequest(caseUuid, CasesRegulatoryReportsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List reports for case
+   * Asynchronous {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List FIU reports generated for the case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<RegulatoryReportDetail>> listAsync(String caseUuid) {
     return client.executeAsync(listRequest(caseUuid, CasesRegulatoryReportsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -187,111 +145,76 @@ public final class CasesRegulatoryReportsResource {
   }
 
   /**
-   * Create report from case
+   * Asynchronous {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)}.
    *
-   * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportDetail> createAsync(String caseUuid, CasesRegulatoryReportsCreateParams params, RequestOptions options) {
     return client.executeAsync(createRequest(caseUuid, params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create report from case
+   * Same as {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public RegulatoryReportDetail create(String caseUuid, CasesRegulatoryReportsCreateParams params) {
     return client.execute(createRequest(caseUuid, params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create report from case
+   * Asynchronous {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportDetail> createAsync(String caseUuid, CasesRegulatoryReportsCreateParams params) {
     return client.executeAsync(createRequest(caseUuid, params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create report from case
+   * Same as {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)}, without parameters.
    *
-   * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return the result
    */
   public RegulatoryReportDetail create(String caseUuid, RequestOptions options) {
     return client.execute(createRequest(caseUuid, CasesRegulatoryReportsCreateParams.builder().build()), options, CREATE_RESPONSE).data();
   }
 
   /**
-   * Create report from case
+   * Asynchronous {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)}, without parameters.
    *
-   * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportDetail> createAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(createRequest(caseUuid, CasesRegulatoryReportsCreateParams.builder().build()), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create report from case
+   * Same as {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return the result
    */
   public RegulatoryReportDetail create(String caseUuid) {
     return client.execute(createRequest(caseUuid, CasesRegulatoryReportsCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create report from case
+   * Asynchronous {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportDetail> createAsync(String caseUuid) {
     return client.executeAsync(createRequest(caseUuid, CasesRegulatoryReportsCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -328,264 +251,176 @@ public final class CasesRegulatoryReportsResource {
     }
 
     /**
-     * List reports for case
+     * {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)} with the raw response.
      *
-     * <p>List FIU reports generated for the case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<RegulatoryReportDetail>> list(String caseUuid, CasesRegulatoryReportsListParams params, RequestOptions options) {
       return client.execute(listRequest(caseUuid, params), options, LIST_RESPONSE);
     }
 
     /**
-     * List reports for case
+     * Asynchronous {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)} with the raw response.
      *
-     * <p>List FIU reports generated for the case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<RegulatoryReportDetail>>> listAsync(String caseUuid, CasesRegulatoryReportsListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(caseUuid, params), options, LIST_RESPONSE);
     }
 
     /**
-     * List reports for case
+     * {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List FIU reports generated for the case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<RegulatoryReportDetail>> list(String caseUuid, CasesRegulatoryReportsListParams params) {
       return client.execute(listRequest(caseUuid, params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List reports for case
+     * Asynchronous {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List FIU reports generated for the case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<RegulatoryReportDetail>>> listAsync(String caseUuid, CasesRegulatoryReportsListParams params) {
       return client.executeAsync(listRequest(caseUuid, params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List reports for case
+     * {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List FIU reports generated for the case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<RegulatoryReportDetail>> list(String caseUuid, RequestOptions options) {
       return client.execute(listRequest(caseUuid, CasesRegulatoryReportsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List reports for case
+     * Asynchronous {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List FIU reports generated for the case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<RegulatoryReportDetail>>> listAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(listRequest(caseUuid, CasesRegulatoryReportsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List reports for case
+     * {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List FIU reports generated for the case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<Page<RegulatoryReportDetail>> list(String caseUuid) {
       return client.execute(listRequest(caseUuid, CasesRegulatoryReportsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List reports for case
+     * Asynchronous {@link #list(String, CasesRegulatoryReportsListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List FIU reports generated for the case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<RegulatoryReportDetail>>> listAsync(String caseUuid) {
       return client.executeAsync(listRequest(caseUuid, CasesRegulatoryReportsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Create report from case
+     * {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)} with the raw response.
      *
-     * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<RegulatoryReportDetail> create(String caseUuid, CasesRegulatoryReportsCreateParams params, RequestOptions options) {
       return client.execute(createRequest(caseUuid, params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create report from case
+     * Asynchronous {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)} with the raw response.
      *
-     * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportDetail>> createAsync(String caseUuid, CasesRegulatoryReportsCreateParams params, RequestOptions options) {
       return client.executeAsync(createRequest(caseUuid, params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create report from case
+     * {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<RegulatoryReportDetail> create(String caseUuid, CasesRegulatoryReportsCreateParams params) {
       return client.execute(createRequest(caseUuid, params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create report from case
+     * Asynchronous {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportDetail>> createAsync(String caseUuid, CasesRegulatoryReportsCreateParams params) {
       return client.executeAsync(createRequest(caseUuid, params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create report from case
+     * {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<RegulatoryReportDetail> create(String caseUuid, RequestOptions options) {
       return client.execute(createRequest(caseUuid, CasesRegulatoryReportsCreateParams.builder().build()), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create report from case
+     * Asynchronous {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportDetail>> createAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(createRequest(caseUuid, CasesRegulatoryReportsCreateParams.builder().build()), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create report from case
+     * {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<RegulatoryReportDetail> create(String caseUuid) {
       return client.execute(createRequest(caseUuid, CasesRegulatoryReportsCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create report from case
+     * Asynchronous {@link #create(String, CasesRegulatoryReportsCreateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Create a draft FIU report for the case: DRAFT status, auto-populated from the optional template plus the case's subject, linked transactions, and narrative. Validate then finalize to produce the goAML XML and PDF.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportDetail>> createAsync(String caseUuid) {
       return client.executeAsync(createRequest(caseUuid, CasesRegulatoryReportsCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE);

@@ -64,111 +64,69 @@ public final class CasesBlueprintsResource {
   }
 
   /**
-   * List blueprints
-   *
-   * <p>List case blueprints for the application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(CasesBlueprintsListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseBlueprintListItem>> listAsync(CasesBlueprintsListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List blueprints
-   *
-   * <p>List case blueprints for the application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(CasesBlueprintsListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<CaseBlueprintListItem> list(CasesBlueprintsListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List blueprints
-   *
-   * <p>List case blueprints for the application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(CasesBlueprintsListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseBlueprintListItem>> listAsync(CasesBlueprintsListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List blueprints
+   * Same as {@link #list(CasesBlueprintsListParams, RequestOptions)}, without parameters.
    *
-   * <p>List case blueprints for the application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<CaseBlueprintListItem> list(RequestOptions options) {
     return client.execute(listRequest(CasesBlueprintsListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List blueprints
+   * Asynchronous {@link #list(CasesBlueprintsListParams, RequestOptions)}, without parameters.
    *
-   * <p>List case blueprints for the application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseBlueprintListItem>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(CasesBlueprintsListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List blueprints
+   * Same as {@link #list(CasesBlueprintsListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List case blueprints for the application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<CaseBlueprintListItem> list() {
     return client.execute(listRequest(CasesBlueprintsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List blueprints
+   * Asynchronous {@link #list(CasesBlueprintsListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List case blueprints for the application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseBlueprintListItem>> listAsync() {
     return client.executeAsync(listRequest(CasesBlueprintsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -191,46 +149,31 @@ public final class CasesBlueprintsResource {
   }
 
   /**
-   * Create blueprint
-   *
-   * <p>Create a case blueprint: general settings (assignment, escalation, transfer, 4-eyes pairing) plus content_config, the six sections that drive the case page. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #create(CasesBlueprintsCreateParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseBlueprintDetail> createAsync(CasesBlueprintsCreateParams params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create blueprint
-   *
-   * <p>Create a case blueprint: general settings (assignment, escalation, transfer, 4-eyes pairing) plus content_config, the six sections that drive the case page. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #create(CasesBlueprintsCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseBlueprintDetail create(CasesBlueprintsCreateParams params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create blueprint
-   *
-   * <p>Create a case blueprint: general settings (assignment, escalation, transfer, 4-eyes pairing) plus content_config, the six sections that drive the case page. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #create(CasesBlueprintsCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseBlueprintDetail> createAsync(CasesBlueprintsCreateParams params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -253,46 +196,31 @@ public final class CasesBlueprintsResource {
   }
 
   /**
-   * Get blueprint
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
-   * <p>Retrieve a blueprint, including its connected creation sources (AML config, transaction rules, workflow nodes) and which blueprints escalate to it.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param blueprintUuid Blueprint UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param blueprintUuid the {@code blueprint_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseBlueprintDetail> retrieveAsync(String blueprintUuid, RequestOptions options) {
     return client.executeAsync(retrieveRequest(blueprintUuid), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get blueprint
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve a blueprint, including its connected creation sources (AML config, transaction rules, workflow nodes) and which blueprints escalate to it.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param blueprintUuid Blueprint UUID.
-   * @return the response body
+   * @param blueprintUuid the {@code blueprint_uuid}
+   * @return the result
    */
   public CaseBlueprintDetail retrieve(String blueprintUuid) {
     return client.execute(retrieveRequest(blueprintUuid), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get blueprint
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve a blueprint, including its connected creation sources (AML config, transaction rules, workflow nodes) and which blueprints escalate to it.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param blueprintUuid Blueprint UUID.
-   * @return a future completed with the response body
+   * @param blueprintUuid the {@code blueprint_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseBlueprintDetail> retrieveAsync(String blueprintUuid) {
     return client.executeAsync(retrieveRequest(blueprintUuid), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -316,111 +244,76 @@ public final class CasesBlueprintsResource {
   }
 
   /**
-   * Update blueprint
+   * Asynchronous {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)}.
    *
-   * <p>Partially update a blueprint's general settings or content_config.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param blueprintUuid Blueprint UUID.
+   * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseBlueprintDetail> updateAsync(String blueprintUuid, CasesBlueprintsUpdateParams params, RequestOptions options) {
     return client.executeAsync(updateRequest(blueprintUuid, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update blueprint
+   * Same as {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Partially update a blueprint's general settings or content_config.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param blueprintUuid Blueprint UUID.
+   * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseBlueprintDetail update(String blueprintUuid, CasesBlueprintsUpdateParams params) {
     return client.execute(updateRequest(blueprintUuid, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update blueprint
+   * Asynchronous {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Partially update a blueprint's general settings or content_config.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param blueprintUuid Blueprint UUID.
+   * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseBlueprintDetail> updateAsync(String blueprintUuid, CasesBlueprintsUpdateParams params) {
     return client.executeAsync(updateRequest(blueprintUuid, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update blueprint
+   * Same as {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Partially update a blueprint's general settings or content_config.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param blueprintUuid Blueprint UUID.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param blueprintUuid the {@code blueprint_uuid}
+   * @param options per-request options
+   * @return the result
    */
   public CaseBlueprintDetail update(String blueprintUuid, RequestOptions options) {
     return client.execute(updateRequest(blueprintUuid, CasesBlueprintsUpdateParams.builder().build()), options, UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update blueprint
+   * Asynchronous {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Partially update a blueprint's general settings or content_config.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param blueprintUuid Blueprint UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param blueprintUuid the {@code blueprint_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseBlueprintDetail> updateAsync(String blueprintUuid, RequestOptions options) {
     return client.executeAsync(updateRequest(blueprintUuid, CasesBlueprintsUpdateParams.builder().build()), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update blueprint
+   * Same as {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Partially update a blueprint's general settings or content_config.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param blueprintUuid Blueprint UUID.
-   * @return the response body
+   * @param blueprintUuid the {@code blueprint_uuid}
+   * @return the result
    */
   public CaseBlueprintDetail update(String blueprintUuid) {
     return client.execute(updateRequest(blueprintUuid, CasesBlueprintsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update blueprint
+   * Asynchronous {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Partially update a blueprint's general settings or content_config.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param blueprintUuid Blueprint UUID.
-   * @return a future completed with the response body
+   * @param blueprintUuid the {@code blueprint_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseBlueprintDetail> updateAsync(String blueprintUuid) {
     return client.executeAsync(updateRequest(blueprintUuid, CasesBlueprintsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -442,45 +335,30 @@ public final class CasesBlueprintsResource {
   }
 
   /**
-   * Delete blueprint
+   * Asynchronous {@link #delete(String, RequestOptions)}.
    *
-   * <p>Delete a blueprint. Deletion always succeeds and does not touch the blueprint's cases: existing cases keep their blueprint reference and its settings continue to apply to them. A deleted blueprint no longer appears in blueprint lists and can no longer be chosen as a transfer target; if a maker blueprint is deleted while a resolution is pending 4-eyes approval, a rejected resolution leaves the case on the checker blueprint.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param blueprintUuid Blueprint UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param blueprintUuid the {@code blueprint_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String blueprintUuid, RequestOptions options) {
     return client.executeAsync(deleteRequest(blueprintUuid), options, DELETE_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * Delete blueprint
+   * Same as {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Delete a blueprint. Deletion always succeeds and does not touch the blueprint's cases: existing cases keep their blueprint reference and its settings continue to apply to them. A deleted blueprint no longer appears in blueprint lists and can no longer be chosen as a transfer target; if a maker blueprint is deleted while a resolution is pending 4-eyes approval, a rejected resolution leaves the case on the checker blueprint.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param blueprintUuid Blueprint UUID.
+   * @param blueprintUuid the {@code blueprint_uuid}
    */
   public void delete(String blueprintUuid) {
     client.execute(deleteRequest(blueprintUuid), RequestOptions.none(), DELETE_RESPONSE);
   }
 
   /**
-   * Delete blueprint
+   * Asynchronous {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Delete a blueprint. Deletion always succeeds and does not touch the blueprint's cases: existing cases keep their blueprint reference and its settings continue to apply to them. A deleted blueprint no longer appears in blueprint lists and can no longer be chosen as a transfer target; if a maker blueprint is deleted while a resolution is pending 4-eyes approval, a rejected resolution leaves the case on the checker blueprint.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param blueprintUuid Blueprint UUID.
-   * @return a future completed with the response body
+   * @param blueprintUuid the {@code blueprint_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String blueprintUuid) {
     return client.executeAsync(deleteRequest(blueprintUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
@@ -502,43 +380,28 @@ public final class CasesBlueprintsResource {
   }
 
   /**
-   * List blueprint presets
+   * Asynchronous {@link #listPresets(RequestOptions)}.
    *
-   * <p>List the four built-in presets (Screening hit, AML investigation, Suspicious activity, KYC review) with their content_config and whether each is already installed on this application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesBlueprintsListPresetsResponse> listPresetsAsync(RequestOptions options) {
     return client.executeAsync(listPresetsRequest(), options, LIST_PRESETS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List blueprint presets
+   * Same as {@link #listPresets(RequestOptions)}, with the client's options.
    *
-   * <p>List the four built-in presets (Screening hit, AML investigation, Suspicious activity, KYC review) with their content_config and whether each is already installed on this application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @return the response body
+   * @return the result
    */
   public CasesBlueprintsListPresetsResponse listPresets() {
     return client.execute(listPresetsRequest(), RequestOptions.none(), LIST_PRESETS_RESPONSE).data();
   }
 
   /**
-   * List blueprint presets
+   * Asynchronous {@link #listPresets(RequestOptions)}, with the client's options.
    *
-   * <p>List the four built-in presets (Screening hit, AML investigation, Suspicious activity, KYC review) with their content_config and whether each is already installed on this application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesBlueprintsListPresetsResponse> listPresetsAsync() {
     return client.executeAsync(listPresetsRequest(), RequestOptions.none(), LIST_PRESETS_RESPONSE).thenApply(RawResponse::data);
@@ -561,104 +424,69 @@ public final class CasesBlueprintsResource {
   }
 
   /**
-   * Install blueprint presets
-   *
-   * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesBlueprintsInstallPresetsResponse> installPresetsAsync(CasesBlueprintsInstallPresetsParams params, RequestOptions options) {
     return client.executeAsync(installPresetsRequest(params), options, INSTALL_PRESETS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Install blueprint presets
-   *
-   * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CasesBlueprintsInstallPresetsResponse installPresets(CasesBlueprintsInstallPresetsParams params) {
     return client.execute(installPresetsRequest(params), RequestOptions.none(), INSTALL_PRESETS_RESPONSE).data();
   }
 
   /**
-   * Install blueprint presets
-   *
-   * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesBlueprintsInstallPresetsResponse> installPresetsAsync(CasesBlueprintsInstallPresetsParams params) {
     return client.executeAsync(installPresetsRequest(params), RequestOptions.none(), INSTALL_PRESETS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Install blueprint presets
+   * Same as {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)}, without parameters.
    *
-   * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public CasesBlueprintsInstallPresetsResponse installPresets(RequestOptions options) {
     return client.execute(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), options, INSTALL_PRESETS_RESPONSE).data();
   }
 
   /**
-   * Install blueprint presets
+   * Asynchronous {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)}, without parameters.
    *
-   * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesBlueprintsInstallPresetsResponse> installPresetsAsync(RequestOptions options) {
     return client.executeAsync(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), options, INSTALL_PRESETS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Install blueprint presets
+   * Same as {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @return the response body
+   * @return the result
    */
   public CasesBlueprintsInstallPresetsResponse installPresets() {
     return client.execute(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), RequestOptions.none(), INSTALL_PRESETS_RESPONSE).data();
   }
 
   /**
-   * Install blueprint presets
+   * Asynchronous {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesBlueprintsInstallPresetsResponse> installPresetsAsync() {
     return client.executeAsync(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), RequestOptions.none(), INSTALL_PRESETS_RESPONSE).thenApply(RawResponse::data);
@@ -678,37 +506,34 @@ public final class CasesBlueprintsResource {
   }
 
   /**
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/publish/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #publish(String, CasePublicationPolicyDraftPreconditionRequest, RequestOptions)}.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CasePublicationCaseBlueprint> publishAsync(String blueprintUuid, CasePublicationPolicyDraftPreconditionRequest params, RequestOptions options) {
     return client.executeAsync(publishRequest(blueprintUuid, params), options, PUBLISH_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/publish/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #publish(String, CasePublicationPolicyDraftPreconditionRequest, RequestOptions)}, with the client's options.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CasePublicationCaseBlueprint publish(String blueprintUuid, CasePublicationPolicyDraftPreconditionRequest params) {
     return client.execute(publishRequest(blueprintUuid, params), RequestOptions.none(), PUBLISH_RESPONSE).data();
   }
 
   /**
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/publish/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #publish(String, CasePublicationPolicyDraftPreconditionRequest, RequestOptions)}, with the client's options.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CasePublicationCaseBlueprint> publishAsync(String blueprintUuid, CasePublicationPolicyDraftPreconditionRequest params) {
     return client.executeAsync(publishRequest(blueprintUuid, params), RequestOptions.none(), PUBLISH_RESPONSE).thenApply(RawResponse::data);
@@ -727,34 +552,31 @@ public final class CasesBlueprintsResource {
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #retrieveDraft(String, RequestOptions)}.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CasePublicationPolicyDraftResponse> retrieveDraftAsync(String blueprintUuid, RequestOptions options) {
     return client.executeAsync(retrieveDraftRequest(blueprintUuid), options, RETRIEVE_DRAFT_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #retrieveDraft(String, RequestOptions)}, with the client's options.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
-   * @return the response body
+   * @return the result
    */
   public CasePublicationPolicyDraftResponse retrieveDraft(String blueprintUuid) {
     return client.execute(retrieveDraftRequest(blueprintUuid), RequestOptions.none(), RETRIEVE_DRAFT_RESPONSE).data();
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #retrieveDraft(String, RequestOptions)}, with the client's options.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CasePublicationPolicyDraftResponse> retrieveDraftAsync(String blueprintUuid) {
     return client.executeAsync(retrieveDraftRequest(blueprintUuid), RequestOptions.none(), RETRIEVE_DRAFT_RESPONSE).thenApply(RawResponse::data);
@@ -774,37 +596,34 @@ public final class CasesBlueprintsResource {
   }
 
   /**
-   * <p>{@code PUT /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #saveDraft(String, CasePublicationPolicyDraftWriteRequest, RequestOptions)}.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CasePublicationPolicyDraft> saveDraftAsync(String blueprintUuid, CasePublicationPolicyDraftWriteRequest params, RequestOptions options) {
     return client.executeAsync(saveDraftRequest(blueprintUuid, params), options, SAVE_DRAFT_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code PUT /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #saveDraft(String, CasePublicationPolicyDraftWriteRequest, RequestOptions)}, with the client's options.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CasePublicationPolicyDraft saveDraft(String blueprintUuid, CasePublicationPolicyDraftWriteRequest params) {
     return client.execute(saveDraftRequest(blueprintUuid, params), RequestOptions.none(), SAVE_DRAFT_RESPONSE).data();
   }
 
   /**
-   * <p>{@code PUT /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #saveDraft(String, CasePublicationPolicyDraftWriteRequest, RequestOptions)}, with the client's options.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CasePublicationPolicyDraft> saveDraftAsync(String blueprintUuid, CasePublicationPolicyDraftWriteRequest params) {
     return client.executeAsync(saveDraftRequest(blueprintUuid, params), RequestOptions.none(), SAVE_DRAFT_RESPONSE).thenApply(RawResponse::data);
@@ -823,21 +642,19 @@ public final class CasesBlueprintsResource {
   }
 
   /**
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #discardDraft(String, CasePublicationPolicyDraftPreconditionRequest, RequestOptions)}.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> discardDraftAsync(String blueprintUuid, CasePublicationPolicyDraftPreconditionRequest params, RequestOptions options) {
     return client.executeAsync(discardDraftRequest(blueprintUuid, params), options, DISCARD_DRAFT_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #discardDraft(String, CasePublicationPolicyDraftPreconditionRequest, RequestOptions)}, with the client's options.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
@@ -847,12 +664,11 @@ public final class CasesBlueprintsResource {
   }
 
   /**
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #discardDraft(String, CasePublicationPolicyDraftPreconditionRequest, RequestOptions)}, with the client's options.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> discardDraftAsync(String blueprintUuid, CasePublicationPolicyDraftPreconditionRequest params) {
     return client.executeAsync(discardDraftRequest(blueprintUuid, params), RequestOptions.none(), DISCARD_DRAFT_RESPONSE).thenAccept(response -> {});
@@ -873,90 +689,76 @@ public final class CasesBlueprintsResource {
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)}.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CasePublicationPolicyRevision>> listHistoryAsync(String blueprintUuid, CasesBlueprintsListHistoryParams params, RequestOptions options) {
     return client.executeAsync(listHistoryRequest(blueprintUuid, params), options, LIST_HISTORY_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)}, with the client's options.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<CasePublicationPolicyRevision> listHistory(String blueprintUuid, CasesBlueprintsListHistoryParams params) {
     return client.execute(listHistoryRequest(blueprintUuid, params), RequestOptions.none(), LIST_HISTORY_RESPONSE).data();
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)}, with the client's options.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CasePublicationPolicyRevision>> listHistoryAsync(String blueprintUuid, CasesBlueprintsListHistoryParams params) {
     return client.executeAsync(listHistoryRequest(blueprintUuid, params), RequestOptions.none(), LIST_HISTORY_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)}, without parameters.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<CasePublicationPolicyRevision> listHistory(String blueprintUuid, RequestOptions options) {
     return client.execute(listHistoryRequest(blueprintUuid, CasesBlueprintsListHistoryParams.builder().build()), options, LIST_HISTORY_RESPONSE).data();
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)}, without parameters.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CasePublicationPolicyRevision>> listHistoryAsync(String blueprintUuid, RequestOptions options) {
     return client.executeAsync(listHistoryRequest(blueprintUuid, CasesBlueprintsListHistoryParams.builder().build()), options, LIST_HISTORY_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
-   * @return the response body
+   * @return the result
    */
   public Page<CasePublicationPolicyRevision> listHistory(String blueprintUuid) {
     return client.execute(listHistoryRequest(blueprintUuid, CasesBlueprintsListHistoryParams.builder().build()), RequestOptions.none(), LIST_HISTORY_RESPONSE).data();
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param blueprintUuid the {@code blueprint_uuid}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CasePublicationPolicyRevision>> listHistoryAsync(String blueprintUuid) {
     return client.executeAsync(listHistoryRequest(blueprintUuid, CasesBlueprintsListHistoryParams.builder().build()), RequestOptions.none(), LIST_HISTORY_RESPONSE).thenApply(RawResponse::data);
@@ -1091,920 +893,680 @@ public final class CasesBlueprintsResource {
     }
 
     /**
-     * List blueprints
-     *
-     * <p>List case blueprints for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(CasesBlueprintsListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<CaseBlueprintListItem>> list(CasesBlueprintsListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List blueprints
-     *
-     * <p>List case blueprints for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(CasesBlueprintsListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseBlueprintListItem>>> listAsync(CasesBlueprintsListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List blueprints
-     *
-     * <p>List case blueprints for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(CasesBlueprintsListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<CaseBlueprintListItem>> list(CasesBlueprintsListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List blueprints
-     *
-     * <p>List case blueprints for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(CasesBlueprintsListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseBlueprintListItem>>> listAsync(CasesBlueprintsListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List blueprints
+     * {@link #list(CasesBlueprintsListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List case blueprints for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<CaseBlueprintListItem>> list(RequestOptions options) {
       return client.execute(listRequest(CasesBlueprintsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List blueprints
+     * Asynchronous {@link #list(CasesBlueprintsListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List case blueprints for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseBlueprintListItem>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(CasesBlueprintsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List blueprints
+     * {@link #list(CasesBlueprintsListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List case blueprints for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<CaseBlueprintListItem>> list() {
       return client.execute(listRequest(CasesBlueprintsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List blueprints
+     * Asynchronous {@link #list(CasesBlueprintsListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List case blueprints for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseBlueprintListItem>>> listAsync() {
       return client.executeAsync(listRequest(CasesBlueprintsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Create blueprint
-     *
-     * <p>Create a case blueprint: general settings (assignment, escalation, transfer, 4-eyes pairing) plus content_config, the six sections that drive the case page. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #create(CasesBlueprintsCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseBlueprintDetail> create(CasesBlueprintsCreateParams params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create blueprint
-     *
-     * <p>Create a case blueprint: general settings (assignment, escalation, transfer, 4-eyes pairing) plus content_config, the six sections that drive the case page. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #create(CasesBlueprintsCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseBlueprintDetail>> createAsync(CasesBlueprintsCreateParams params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create blueprint
-     *
-     * <p>Create a case blueprint: general settings (assignment, escalation, transfer, 4-eyes pairing) plus content_config, the six sections that drive the case page. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #create(CasesBlueprintsCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseBlueprintDetail> create(CasesBlueprintsCreateParams params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create blueprint
-     *
-     * <p>Create a case blueprint: general settings (assignment, escalation, transfer, 4-eyes pairing) plus content_config, the six sections that drive the case page. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #create(CasesBlueprintsCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseBlueprintDetail>> createAsync(CasesBlueprintsCreateParams params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Get blueprint
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve a blueprint, including its connected creation sources (AML config, transaction rules, workflow nodes) and which blueprints escalate to it.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param blueprintUuid the {@code blueprint_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseBlueprintDetail> retrieve(String blueprintUuid, RequestOptions options) {
       return client.execute(retrieveRequest(blueprintUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get blueprint
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve a blueprint, including its connected creation sources (AML config, transaction rules, workflow nodes) and which blueprints escalate to it.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param blueprintUuid the {@code blueprint_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseBlueprintDetail>> retrieveAsync(String blueprintUuid, RequestOptions options) {
       return client.executeAsync(retrieveRequest(blueprintUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get blueprint
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve a blueprint, including its connected creation sources (AML config, transaction rules, workflow nodes) and which blueprints escalate to it.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param blueprintUuid the {@code blueprint_uuid}
+     * @return the result
      */
     public RawResponse<CaseBlueprintDetail> retrieve(String blueprintUuid) {
       return client.execute(retrieveRequest(blueprintUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get blueprint
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve a blueprint, including its connected creation sources (AML config, transaction rules, workflow nodes) and which blueprints escalate to it.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
-     * @return a future completed with the raw response
+     * @param blueprintUuid the {@code blueprint_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseBlueprintDetail>> retrieveAsync(String blueprintUuid) {
       return client.executeAsync(retrieveRequest(blueprintUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Update blueprint
+     * {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)} with the raw response.
      *
-     * <p>Partially update a blueprint's general settings or content_config.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
+     * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseBlueprintDetail> update(String blueprintUuid, CasesBlueprintsUpdateParams params, RequestOptions options) {
       return client.execute(updateRequest(blueprintUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update blueprint
+     * Asynchronous {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)} with the raw response.
      *
-     * <p>Partially update a blueprint's general settings or content_config.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
+     * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseBlueprintDetail>> updateAsync(String blueprintUuid, CasesBlueprintsUpdateParams params, RequestOptions options) {
       return client.executeAsync(updateRequest(blueprintUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update blueprint
+     * {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Partially update a blueprint's general settings or content_config.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
+     * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseBlueprintDetail> update(String blueprintUuid, CasesBlueprintsUpdateParams params) {
       return client.execute(updateRequest(blueprintUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update blueprint
+     * Asynchronous {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Partially update a blueprint's general settings or content_config.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
+     * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseBlueprintDetail>> updateAsync(String blueprintUuid, CasesBlueprintsUpdateParams params) {
       return client.executeAsync(updateRequest(blueprintUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update blueprint
+     * {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Partially update a blueprint's general settings or content_config.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param blueprintUuid the {@code blueprint_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseBlueprintDetail> update(String blueprintUuid, RequestOptions options) {
       return client.execute(updateRequest(blueprintUuid, CasesBlueprintsUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update blueprint
+     * Asynchronous {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Partially update a blueprint's general settings or content_config.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param blueprintUuid the {@code blueprint_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseBlueprintDetail>> updateAsync(String blueprintUuid, RequestOptions options) {
       return client.executeAsync(updateRequest(blueprintUuid, CasesBlueprintsUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update blueprint
+     * {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Partially update a blueprint's general settings or content_config.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param blueprintUuid the {@code blueprint_uuid}
+     * @return the result
      */
     public RawResponse<CaseBlueprintDetail> update(String blueprintUuid) {
       return client.execute(updateRequest(blueprintUuid, CasesBlueprintsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update blueprint
+     * Asynchronous {@link #update(String, CasesBlueprintsUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Partially update a blueprint's general settings or content_config.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
-     * @return a future completed with the raw response
+     * @param blueprintUuid the {@code blueprint_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseBlueprintDetail>> updateAsync(String blueprintUuid) {
       return client.executeAsync(updateRequest(blueprintUuid, CasesBlueprintsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Delete blueprint
+     * {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Delete a blueprint. Deletion always succeeds and does not touch the blueprint's cases: existing cases keep their blueprint reference and its settings continue to apply to them. A deleted blueprint no longer appears in blueprint lists and can no longer be chosen as a transfer target; if a maker blueprint is deleted while a resolution is pending 4-eyes approval, a rejected resolution leaves the case on the checker blueprint.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param blueprintUuid the {@code blueprint_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String blueprintUuid, RequestOptions options) {
       return client.execute(deleteRequest(blueprintUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete blueprint
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Delete a blueprint. Deletion always succeeds and does not touch the blueprint's cases: existing cases keep their blueprint reference and its settings continue to apply to them. A deleted blueprint no longer appears in blueprint lists and can no longer be chosen as a transfer target; if a maker blueprint is deleted while a resolution is pending 4-eyes approval, a rejected resolution leaves the case on the checker blueprint.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param blueprintUuid the {@code blueprint_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String blueprintUuid, RequestOptions options) {
       return client.executeAsync(deleteRequest(blueprintUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete blueprint
+     * {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Delete a blueprint. Deletion always succeeds and does not touch the blueprint's cases: existing cases keep their blueprint reference and its settings continue to apply to them. A deleted blueprint no longer appears in blueprint lists and can no longer be chosen as a transfer target; if a maker blueprint is deleted while a resolution is pending 4-eyes approval, a rejected resolution leaves the case on the checker blueprint.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param blueprintUuid the {@code blueprint_uuid}
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String blueprintUuid) {
       return client.execute(deleteRequest(blueprintUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Delete blueprint
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Delete a blueprint. Deletion always succeeds and does not touch the blueprint's cases: existing cases keep their blueprint reference and its settings continue to apply to them. A deleted blueprint no longer appears in blueprint lists and can no longer be chosen as a transfer target; if a maker blueprint is deleted while a resolution is pending 4-eyes approval, a rejected resolution leaves the case on the checker blueprint.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param blueprintUuid Blueprint UUID.
-     * @return a future completed with the raw response
+     * @param blueprintUuid the {@code blueprint_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String blueprintUuid) {
       return client.executeAsync(deleteRequest(blueprintUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * List blueprint presets
+     * {@link #listPresets(RequestOptions)} with the raw response.
      *
-     * <p>List the four built-in presets (Screening hit, AML investigation, Suspicious activity, KYC review) with their content_config and whether each is already installed on this application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CasesBlueprintsListPresetsResponse> listPresets(RequestOptions options) {
       return client.execute(listPresetsRequest(), options, LIST_PRESETS_RESPONSE);
     }
 
     /**
-     * List blueprint presets
+     * Asynchronous {@link #listPresets(RequestOptions)} with the raw response.
      *
-     * <p>List the four built-in presets (Screening hit, AML investigation, Suspicious activity, KYC review) with their content_config and whether each is already installed on this application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesBlueprintsListPresetsResponse>> listPresetsAsync(RequestOptions options) {
       return client.executeAsync(listPresetsRequest(), options, LIST_PRESETS_RESPONSE);
     }
 
     /**
-     * List blueprint presets
+     * {@link #listPresets(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the four built-in presets (Screening hit, AML investigation, Suspicious activity, KYC review) with their content_config and whether each is already installed on this application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CasesBlueprintsListPresetsResponse> listPresets() {
       return client.execute(listPresetsRequest(), RequestOptions.none(), LIST_PRESETS_RESPONSE);
     }
 
     /**
-     * List blueprint presets
+     * Asynchronous {@link #listPresets(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the four built-in presets (Screening hit, AML investigation, Suspicious activity, KYC review) with their content_config and whether each is already installed on this application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesBlueprintsListPresetsResponse>> listPresetsAsync() {
       return client.executeAsync(listPresetsRequest(), RequestOptions.none(), LIST_PRESETS_RESPONSE);
     }
 
     /**
-     * Install blueprint presets
-     *
-     * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CasesBlueprintsInstallPresetsResponse> installPresets(CasesBlueprintsInstallPresetsParams params, RequestOptions options) {
       return client.execute(installPresetsRequest(params), options, INSTALL_PRESETS_RESPONSE);
     }
 
     /**
-     * Install blueprint presets
-     *
-     * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesBlueprintsInstallPresetsResponse>> installPresetsAsync(CasesBlueprintsInstallPresetsParams params, RequestOptions options) {
       return client.executeAsync(installPresetsRequest(params), options, INSTALL_PRESETS_RESPONSE);
     }
 
     /**
-     * Install blueprint presets
-     *
-     * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CasesBlueprintsInstallPresetsResponse> installPresets(CasesBlueprintsInstallPresetsParams params) {
       return client.execute(installPresetsRequest(params), RequestOptions.none(), INSTALL_PRESETS_RESPONSE);
     }
 
     /**
-     * Install blueprint presets
-     *
-     * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesBlueprintsInstallPresetsResponse>> installPresetsAsync(CasesBlueprintsInstallPresetsParams params) {
       return client.executeAsync(installPresetsRequest(params), RequestOptions.none(), INSTALL_PRESETS_RESPONSE);
     }
 
     /**
-     * Install blueprint presets
+     * {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CasesBlueprintsInstallPresetsResponse> installPresets(RequestOptions options) {
       return client.execute(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), options, INSTALL_PRESETS_RESPONSE);
     }
 
     /**
-     * Install blueprint presets
+     * Asynchronous {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesBlueprintsInstallPresetsResponse>> installPresetsAsync(RequestOptions options) {
       return client.executeAsync(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), options, INSTALL_PRESETS_RESPONSE);
     }
 
     /**
-     * Install blueprint presets
+     * {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CasesBlueprintsInstallPresetsResponse> installPresets() {
       return client.execute(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), RequestOptions.none(), INSTALL_PRESETS_RESPONSE);
     }
 
     /**
-     * Install blueprint presets
+     * Asynchronous {@link #installPresets(CasesBlueprintsInstallPresetsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Copy one or more presets into the application as editable blueprints. Idempotent per preset_key; omit preset_keys to install every preset not yet installed.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesBlueprintsInstallPresetsResponse>> installPresetsAsync() {
       return client.executeAsync(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), RequestOptions.none(), INSTALL_PRESETS_RESPONSE);
     }
 
     /**
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/publish/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #publish(String, CasePublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CasePublicationCaseBlueprint> publish(String blueprintUuid, CasePublicationPolicyDraftPreconditionRequest params, RequestOptions options) {
       return client.execute(publishRequest(blueprintUuid, params), options, PUBLISH_RESPONSE);
     }
 
     /**
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/publish/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #publish(String, CasePublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasePublicationCaseBlueprint>> publishAsync(String blueprintUuid, CasePublicationPolicyDraftPreconditionRequest params, RequestOptions options) {
       return client.executeAsync(publishRequest(blueprintUuid, params), options, PUBLISH_RESPONSE);
     }
 
     /**
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/publish/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #publish(String, CasePublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CasePublicationCaseBlueprint> publish(String blueprintUuid, CasePublicationPolicyDraftPreconditionRequest params) {
       return client.execute(publishRequest(blueprintUuid, params), RequestOptions.none(), PUBLISH_RESPONSE);
     }
 
     /**
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/publish/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #publish(String, CasePublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasePublicationCaseBlueprint>> publishAsync(String blueprintUuid, CasePublicationPolicyDraftPreconditionRequest params) {
       return client.executeAsync(publishRequest(blueprintUuid, params), RequestOptions.none(), PUBLISH_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #retrieveDraft(String, RequestOptions)} with the raw response.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CasePublicationPolicyDraftResponse> retrieveDraft(String blueprintUuid, RequestOptions options) {
       return client.execute(retrieveDraftRequest(blueprintUuid), options, RETRIEVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #retrieveDraft(String, RequestOptions)} with the raw response.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasePublicationPolicyDraftResponse>> retrieveDraftAsync(String blueprintUuid, RequestOptions options) {
       return client.executeAsync(retrieveDraftRequest(blueprintUuid), options, RETRIEVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #retrieveDraft(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CasePublicationPolicyDraftResponse> retrieveDraft(String blueprintUuid) {
       return client.execute(retrieveDraftRequest(blueprintUuid), RequestOptions.none(), RETRIEVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #retrieveDraft(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasePublicationPolicyDraftResponse>> retrieveDraftAsync(String blueprintUuid) {
       return client.executeAsync(retrieveDraftRequest(blueprintUuid), RequestOptions.none(), RETRIEVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code PUT /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #saveDraft(String, CasePublicationPolicyDraftWriteRequest, RequestOptions)} with the raw response.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CasePublicationPolicyDraft> saveDraft(String blueprintUuid, CasePublicationPolicyDraftWriteRequest params, RequestOptions options) {
       return client.execute(saveDraftRequest(blueprintUuid, params), options, SAVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code PUT /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #saveDraft(String, CasePublicationPolicyDraftWriteRequest, RequestOptions)} with the raw response.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasePublicationPolicyDraft>> saveDraftAsync(String blueprintUuid, CasePublicationPolicyDraftWriteRequest params, RequestOptions options) {
       return client.executeAsync(saveDraftRequest(blueprintUuid, params), options, SAVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code PUT /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #saveDraft(String, CasePublicationPolicyDraftWriteRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CasePublicationPolicyDraft> saveDraft(String blueprintUuid, CasePublicationPolicyDraftWriteRequest params) {
       return client.execute(saveDraftRequest(blueprintUuid, params), RequestOptions.none(), SAVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code PUT /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #saveDraft(String, CasePublicationPolicyDraftWriteRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasePublicationPolicyDraft>> saveDraftAsync(String blueprintUuid, CasePublicationPolicyDraftWriteRequest params) {
       return client.executeAsync(saveDraftRequest(blueprintUuid, params), RequestOptions.none(), SAVE_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #discardDraft(String, CasePublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<@Nullable Void> discardDraft(String blueprintUuid, CasePublicationPolicyDraftPreconditionRequest params, RequestOptions options) {
       return client.execute(discardDraftRequest(blueprintUuid, params), options, DISCARD_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #discardDraft(String, CasePublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> discardDraftAsync(String blueprintUuid, CasePublicationPolicyDraftPreconditionRequest params, RequestOptions options) {
       return client.executeAsync(discardDraftRequest(blueprintUuid, params), options, DISCARD_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #discardDraft(String, CasePublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<@Nullable Void> discardDraft(String blueprintUuid, CasePublicationPolicyDraftPreconditionRequest params) {
       return client.execute(discardDraftRequest(blueprintUuid, params), RequestOptions.none(), DISCARD_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/draft/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #discardDraft(String, CasePublicationPolicyDraftPreconditionRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> discardDraftAsync(String blueprintUuid, CasePublicationPolicyDraftPreconditionRequest params) {
       return client.executeAsync(discardDraftRequest(blueprintUuid, params), RequestOptions.none(), DISCARD_DRAFT_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)} with the raw response.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<CasePublicationPolicyRevision>> listHistory(String blueprintUuid, CasesBlueprintsListHistoryParams params, RequestOptions options) {
       return client.execute(listHistoryRequest(blueprintUuid, params), options, LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)} with the raw response.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CasePublicationPolicyRevision>>> listHistoryAsync(String blueprintUuid, CasesBlueprintsListHistoryParams params, RequestOptions options) {
       return client.executeAsync(listHistoryRequest(blueprintUuid, params), options, LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<CasePublicationPolicyRevision>> listHistory(String blueprintUuid, CasesBlueprintsListHistoryParams params) {
       return client.execute(listHistoryRequest(blueprintUuid, params), RequestOptions.none(), LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CasePublicationPolicyRevision>>> listHistoryAsync(String blueprintUuid, CasesBlueprintsListHistoryParams params) {
       return client.executeAsync(listHistoryRequest(blueprintUuid, params), RequestOptions.none(), LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<CasePublicationPolicyRevision>> listHistory(String blueprintUuid, RequestOptions options) {
       return client.execute(listHistoryRequest(blueprintUuid, CasesBlueprintsListHistoryParams.builder().build()), options, LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CasePublicationPolicyRevision>>> listHistoryAsync(String blueprintUuid, RequestOptions options) {
       return client.executeAsync(listHistoryRequest(blueprintUuid, CasesBlueprintsListHistoryParams.builder().build()), options, LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<CasePublicationPolicyRevision>> listHistory(String blueprintUuid) {
       return client.execute(listHistoryRequest(blueprintUuid, CasesBlueprintsListHistoryParams.builder().build()), RequestOptions.none(), LIST_HISTORY_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/history/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listHistory(String, CasesBlueprintsListHistoryParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param blueprintUuid the {@code blueprint_uuid}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CasePublicationPolicyRevision>>> listHistoryAsync(String blueprintUuid) {
       return client.executeAsync(listHistoryRequest(blueprintUuid, CasesBlueprintsListHistoryParams.builder().build()), RequestOptions.none(), LIST_HISTORY_RESPONSE);

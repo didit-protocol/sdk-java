@@ -380,5 +380,8 @@ final class WebhooksTest {
         VerifiedBy.SIGNATURE,
         Webhooks.verify(body.getBytes(StandardCharsets.UTF_8), signed, SECRET).verifiedBy());
     assertEquals(VerifiedBy.SIGNATURE, Webhooks.verify(body, signed, VerifyOptions.of(SECRET)).verifiedBy());
+    assertEquals(
+        VerifiedBy.SIGNATURE,
+        Webhooks.verify(body.getBytes(StandardCharsets.UTF_8), signed::get, SECRET).verifiedBy());
   }
 }

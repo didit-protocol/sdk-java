@@ -57,118 +57,69 @@ public final class BiometricTemplatesResource {
   }
 
   /**
-   * List retained biometric templates
-   *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-   *
-   * <p>{@code GET /v3/biometric-templates/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(BiometricTemplatesListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<BiometricTemplatesListResponse.Results>> listAsync(BiometricTemplatesListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List retained biometric templates
-   *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-   *
-   * <p>{@code GET /v3/biometric-templates/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(BiometricTemplatesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<BiometricTemplatesListResponse.Results> list(BiometricTemplatesListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List retained biometric templates
-   *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-   *
-   * <p>{@code GET /v3/biometric-templates/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(BiometricTemplatesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<BiometricTemplatesListResponse.Results>> listAsync(BiometricTemplatesListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List retained biometric templates
+   * Same as {@link #list(BiometricTemplatesListParams, RequestOptions)}, without parameters.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-   *
-   * <p>{@code GET /v3/biometric-templates/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<BiometricTemplatesListResponse.Results> list(RequestOptions options) {
     return client.execute(listRequest(BiometricTemplatesListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List retained biometric templates
+   * Asynchronous {@link #list(BiometricTemplatesListParams, RequestOptions)}, without parameters.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-   *
-   * <p>{@code GET /v3/biometric-templates/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<BiometricTemplatesListResponse.Results>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(BiometricTemplatesListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List retained biometric templates
+   * Same as {@link #list(BiometricTemplatesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-   *
-   * <p>{@code GET /v3/biometric-templates/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<BiometricTemplatesListResponse.Results> list() {
     return client.execute(listRequest(BiometricTemplatesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List retained biometric templates
+   * Asynchronous {@link #list(BiometricTemplatesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-   *
-   * <p>{@code GET /v3/biometric-templates/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<BiometricTemplatesListResponse.Results>> listAsync() {
     return client.executeAsync(listRequest(BiometricTemplatesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -192,111 +143,69 @@ public final class BiometricTemplatesResource {
   }
 
   /**
-   * Count retained biometric templates
-   *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-   *
-   * <p>{@code GET /v3/biometric-templates/count/}
+   * Asynchronous {@link #count(BiometricTemplatesCountParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BiometricTemplatesCountResponse> countAsync(BiometricTemplatesCountParams params, RequestOptions options) {
     return client.executeAsync(countRequest(params), options, COUNT_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Count retained biometric templates
-   *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-   *
-   * <p>{@code GET /v3/biometric-templates/count/}
+   * Same as {@link #count(BiometricTemplatesCountParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public BiometricTemplatesCountResponse count(BiometricTemplatesCountParams params) {
     return client.execute(countRequest(params), RequestOptions.none(), COUNT_RESPONSE).data();
   }
 
   /**
-   * Count retained biometric templates
-   *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-   *
-   * <p>{@code GET /v3/biometric-templates/count/}
+   * Asynchronous {@link #count(BiometricTemplatesCountParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BiometricTemplatesCountResponse> countAsync(BiometricTemplatesCountParams params) {
     return client.executeAsync(countRequest(params), RequestOptions.none(), COUNT_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Count retained biometric templates
+   * Same as {@link #count(BiometricTemplatesCountParams, RequestOptions)}, without parameters.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-   *
-   * <p>{@code GET /v3/biometric-templates/count/}
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public BiometricTemplatesCountResponse count(RequestOptions options) {
     return client.execute(countRequest(BiometricTemplatesCountParams.builder().build()), options, COUNT_RESPONSE).data();
   }
 
   /**
-   * Count retained biometric templates
+   * Asynchronous {@link #count(BiometricTemplatesCountParams, RequestOptions)}, without parameters.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-   *
-   * <p>{@code GET /v3/biometric-templates/count/}
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BiometricTemplatesCountResponse> countAsync(RequestOptions options) {
     return client.executeAsync(countRequest(BiometricTemplatesCountParams.builder().build()), options, COUNT_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Count retained biometric templates
+   * Same as {@link #count(BiometricTemplatesCountParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-   *
-   * <p>{@code GET /v3/biometric-templates/count/}
-   *
-   * @return the response body
+   * @return the result
    */
   public BiometricTemplatesCountResponse count() {
     return client.execute(countRequest(BiometricTemplatesCountParams.builder().build()), RequestOptions.none(), COUNT_RESPONSE).data();
   }
 
   /**
-   * Count retained biometric templates
+   * Asynchronous {@link #count(BiometricTemplatesCountParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-   *
-   * <p>{@code GET /v3/biometric-templates/count/}
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BiometricTemplatesCountResponse> countAsync() {
     return client.executeAsync(countRequest(BiometricTemplatesCountParams.builder().build()), RequestOptions.none(), COUNT_RESPONSE).thenApply(RawResponse::data);
@@ -320,49 +229,31 @@ public final class BiometricTemplatesResource {
   }
 
   /**
-   * Get a retained biometric template
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns one template. The response never includes an image, a vector, the deleted session's id, or identity data.
-   *
-   * <p>{@code GET /v3/biometric-templates/{template_uuid}/}
-   *
-   * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param templateUuid the {@code template_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BiometricTemplatesRetrieveResponse> retrieveAsync(String templateUuid, RequestOptions options) {
     return client.executeAsync(retrieveRequest(templateUuid), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get a retained biometric template
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns one template. The response never includes an image, a vector, the deleted session's id, or identity data.
-   *
-   * <p>{@code GET /v3/biometric-templates/{template_uuid}/}
-   *
-   * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
-   * @return the response body
+   * @param templateUuid the {@code template_uuid}
+   * @return the result
    */
   public BiometricTemplatesRetrieveResponse retrieve(String templateUuid) {
     return client.execute(retrieveRequest(templateUuid), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get a retained biometric template
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Returns one template. The response never includes an image, a vector, the deleted session's id, or identity data.
-   *
-   * <p>{@code GET /v3/biometric-templates/{template_uuid}/}
-   *
-   * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
-   * @return a future completed with the response body
+   * @param templateUuid the {@code template_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<BiometricTemplatesRetrieveResponse> retrieveAsync(String templateUuid) {
     return client.executeAsync(retrieveRequest(templateUuid), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -390,61 +281,31 @@ public final class BiometricTemplatesResource {
   }
 
   /**
-   * Purge a retained biometric template
+   * Asynchronous {@link #delete(String, RequestOptions)}.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Purges one template: it is removed from every kind of matching and the stored template is deleted. Irreversible and recorded on the audit trail with the acting principal.
-   *
-   * <p><b>Retry semantics:</b> Didit deletes the stored template first and only then marks the template purged. If a biometric store is unavailable the call returns <code>503</code>, the template moves to <code>status: purge_failed</code> and is already excluded from matching; repeat the same call to finish. Repeating a purge of an already purged template returns <code>already_purged</code>.
-   *
-   * <p>Templates are also purged by <code>POST /v3/users/delete/</code> for the owning User, by any deletion of that User's sessions with <code>deletion_instruction: privacy_erasure</code>, and automatically at <code>expires_at</code>.
-   *
-   * <p>{@code DELETE /v3/biometric-templates/{template_uuid}/}
-   *
-   * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param templateUuid the {@code template_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BiometricTemplatesDeleteResponse> deleteAsync(String templateUuid, RequestOptions options) {
     return client.executeAsync(deleteRequest(templateUuid), options, DELETE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Purge a retained biometric template
+   * Same as {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Purges one template: it is removed from every kind of matching and the stored template is deleted. Irreversible and recorded on the audit trail with the acting principal.
-   *
-   * <p><b>Retry semantics:</b> Didit deletes the stored template first and only then marks the template purged. If a biometric store is unavailable the call returns <code>503</code>, the template moves to <code>status: purge_failed</code> and is already excluded from matching; repeat the same call to finish. Repeating a purge of an already purged template returns <code>already_purged</code>.
-   *
-   * <p>Templates are also purged by <code>POST /v3/users/delete/</code> for the owning User, by any deletion of that User's sessions with <code>deletion_instruction: privacy_erasure</code>, and automatically at <code>expires_at</code>.
-   *
-   * <p>{@code DELETE /v3/biometric-templates/{template_uuid}/}
-   *
-   * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
-   * @return the response body
+   * @param templateUuid the {@code template_uuid}
+   * @return the result
    */
   public BiometricTemplatesDeleteResponse delete(String templateUuid) {
     return client.execute(deleteRequest(templateUuid), RequestOptions.none(), DELETE_RESPONSE).data();
   }
 
   /**
-   * Purge a retained biometric template
+   * Asynchronous {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Purges one template: it is removed from every kind of matching and the stored template is deleted. Irreversible and recorded on the audit trail with the acting principal.
-   *
-   * <p><b>Retry semantics:</b> Didit deletes the stored template first and only then marks the template purged. If a biometric store is unavailable the call returns <code>503</code>, the template moves to <code>status: purge_failed</code> and is already excluded from matching; repeat the same call to finish. Repeating a purge of an already purged template returns <code>already_purged</code>.
-   *
-   * <p>Templates are also purged by <code>POST /v3/users/delete/</code> for the owning User, by any deletion of that User's sessions with <code>deletion_instruction: privacy_erasure</code>, and automatically at <code>expires_at</code>.
-   *
-   * <p>{@code DELETE /v3/biometric-templates/{template_uuid}/}
-   *
-   * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
-   * @return a future completed with the response body
+   * @param templateUuid the {@code template_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<BiometricTemplatesDeleteResponse> deleteAsync(String templateUuid) {
     return client.executeAsync(deleteRequest(templateUuid), RequestOptions.none(), DELETE_RESPONSE).thenApply(RawResponse::data);
@@ -470,125 +331,69 @@ public final class BiometricTemplatesResource {
   }
 
   /**
-   * Bulk purge retained biometric templates
-   *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-   *
-   * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-   *
-   * <p>{@code POST /v3/biometric-templates/delete/}
+   * Asynchronous {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BiometricTemplatesBatchDeleteResponse> batchDeleteAsync(BiometricTemplatesBatchDeleteParams params, RequestOptions options) {
     return client.executeAsync(batchDeleteRequest(params), options, BATCH_DELETE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Bulk purge retained biometric templates
-   *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-   *
-   * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-   *
-   * <p>{@code POST /v3/biometric-templates/delete/}
+   * Same as {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public BiometricTemplatesBatchDeleteResponse batchDelete(BiometricTemplatesBatchDeleteParams params) {
     return client.execute(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE).data();
   }
 
   /**
-   * Bulk purge retained biometric templates
-   *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-   *
-   * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-   *
-   * <p>{@code POST /v3/biometric-templates/delete/}
+   * Asynchronous {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BiometricTemplatesBatchDeleteResponse> batchDeleteAsync(BiometricTemplatesBatchDeleteParams params) {
     return client.executeAsync(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Bulk purge retained biometric templates
+   * Same as {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)}, without parameters.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-   *
-   * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-   *
-   * <p>{@code POST /v3/biometric-templates/delete/}
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public BiometricTemplatesBatchDeleteResponse batchDelete(RequestOptions options) {
     return client.execute(batchDeleteRequest(BiometricTemplatesBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE).data();
   }
 
   /**
-   * Bulk purge retained biometric templates
+   * Asynchronous {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)}, without parameters.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-   *
-   * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-   *
-   * <p>{@code POST /v3/biometric-templates/delete/}
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BiometricTemplatesBatchDeleteResponse> batchDeleteAsync(RequestOptions options) {
     return client.executeAsync(batchDeleteRequest(BiometricTemplatesBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Bulk purge retained biometric templates
+   * Same as {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-   *
-   * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-   *
-   * <p>{@code POST /v3/biometric-templates/delete/}
-   *
-   * @return the response body
+   * @return the result
    */
   public BiometricTemplatesBatchDeleteResponse batchDelete() {
     return client.execute(batchDeleteRequest(BiometricTemplatesBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE).data();
   }
 
   /**
-   * Bulk purge retained biometric templates
+   * Asynchronous {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-   *
-   * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-   *
-   * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-   *
-   * <p>{@code POST /v3/biometric-templates/delete/}
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BiometricTemplatesBatchDeleteResponse> batchDeleteAsync() {
     return client.executeAsync(batchDeleteRequest(BiometricTemplatesBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE).thenApply(RawResponse::data);
@@ -646,556 +451,324 @@ public final class BiometricTemplatesResource {
     }
 
     /**
-     * List retained biometric templates
-     *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-     *
-     * <p>{@code GET /v3/biometric-templates/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(BiometricTemplatesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<BiometricTemplatesListResponse.Results>> list(BiometricTemplatesListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List retained biometric templates
-     *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-     *
-     * <p>{@code GET /v3/biometric-templates/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(BiometricTemplatesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<BiometricTemplatesListResponse.Results>>> listAsync(BiometricTemplatesListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List retained biometric templates
-     *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-     *
-     * <p>{@code GET /v3/biometric-templates/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(BiometricTemplatesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<BiometricTemplatesListResponse.Results>> list(BiometricTemplatesListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List retained biometric templates
-     *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-     *
-     * <p>{@code GET /v3/biometric-templates/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(BiometricTemplatesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<BiometricTemplatesListResponse.Results>>> listAsync(BiometricTemplatesListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List retained biometric templates
+     * {@link #list(BiometricTemplatesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-     *
-     * <p>{@code GET /v3/biometric-templates/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<BiometricTemplatesListResponse.Results>> list(RequestOptions options) {
       return client.execute(listRequest(BiometricTemplatesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List retained biometric templates
+     * Asynchronous {@link #list(BiometricTemplatesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-     *
-     * <p>{@code GET /v3/biometric-templates/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<BiometricTemplatesListResponse.Results>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(BiometricTemplatesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List retained biometric templates
+     * {@link #list(BiometricTemplatesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-     *
-     * <p>{@code GET /v3/biometric-templates/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<BiometricTemplatesListResponse.Results>> list() {
       return client.execute(listRequest(BiometricTemplatesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List retained biometric templates
+     * Asynchronous {@link #list(BiometricTemplatesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns a paginated list of the templates the application currently holds. Purged templates are not listed.
-     *
-     * <p>{@code GET /v3/biometric-templates/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<BiometricTemplatesListResponse.Results>>> listAsync() {
       return client.executeAsync(listRequest(BiometricTemplatesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Count retained biometric templates
-     *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-     *
-     * <p>{@code GET /v3/biometric-templates/count/}
+     * {@link #count(BiometricTemplatesCountParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BiometricTemplatesCountResponse> count(BiometricTemplatesCountParams params, RequestOptions options) {
       return client.execute(countRequest(params), options, COUNT_RESPONSE);
     }
 
     /**
-     * Count retained biometric templates
-     *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-     *
-     * <p>{@code GET /v3/biometric-templates/count/}
+     * Asynchronous {@link #count(BiometricTemplatesCountParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BiometricTemplatesCountResponse>> countAsync(BiometricTemplatesCountParams params, RequestOptions options) {
       return client.executeAsync(countRequest(params), options, COUNT_RESPONSE);
     }
 
     /**
-     * Count retained biometric templates
-     *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-     *
-     * <p>{@code GET /v3/biometric-templates/count/}
+     * {@link #count(BiometricTemplatesCountParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BiometricTemplatesCountResponse> count(BiometricTemplatesCountParams params) {
       return client.execute(countRequest(params), RequestOptions.none(), COUNT_RESPONSE);
     }
 
     /**
-     * Count retained biometric templates
-     *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-     *
-     * <p>{@code GET /v3/biometric-templates/count/}
+     * Asynchronous {@link #count(BiometricTemplatesCountParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BiometricTemplatesCountResponse>> countAsync(BiometricTemplatesCountParams params) {
       return client.executeAsync(countRequest(params), RequestOptions.none(), COUNT_RESPONSE);
     }
 
     /**
-     * Count retained biometric templates
+     * {@link #count(BiometricTemplatesCountParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-     *
-     * <p>{@code GET /v3/biometric-templates/count/}
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BiometricTemplatesCountResponse> count(RequestOptions options) {
       return client.execute(countRequest(BiometricTemplatesCountParams.builder().build()), options, COUNT_RESPONSE);
     }
 
     /**
-     * Count retained biometric templates
+     * Asynchronous {@link #count(BiometricTemplatesCountParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-     *
-     * <p>{@code GET /v3/biometric-templates/count/}
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BiometricTemplatesCountResponse>> countAsync(RequestOptions options) {
       return client.executeAsync(countRequest(BiometricTemplatesCountParams.builder().build()), options, COUNT_RESPONSE);
     }
 
     /**
-     * Count retained biometric templates
+     * {@link #count(BiometricTemplatesCountParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-     *
-     * <p>{@code GET /v3/biometric-templates/count/}
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BiometricTemplatesCountResponse> count() {
       return client.execute(countRequest(BiometricTemplatesCountParams.builder().build()), RequestOptions.none(), COUNT_RESPONSE);
     }
 
     /**
-     * Count retained biometric templates
+     * Asynchronous {@link #count(BiometricTemplatesCountParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns the number of templates matching the same filters as the list endpoint. Use it to check what a filtered bulk purge with <code>delete_all: true</code> would touch.
-     *
-     * <p>{@code GET /v3/biometric-templates/count/}
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BiometricTemplatesCountResponse>> countAsync() {
       return client.executeAsync(countRequest(BiometricTemplatesCountParams.builder().build()), RequestOptions.none(), COUNT_RESPONSE);
     }
 
     /**
-     * Get a retained biometric template
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns one template. The response never includes an image, a vector, the deleted session's id, or identity data.
-     *
-     * <p>{@code GET /v3/biometric-templates/{template_uuid}/}
-     *
-     * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param templateUuid the {@code template_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BiometricTemplatesRetrieveResponse> retrieve(String templateUuid, RequestOptions options) {
       return client.execute(retrieveRequest(templateUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get a retained biometric template
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns one template. The response never includes an image, a vector, the deleted session's id, or identity data.
-     *
-     * <p>{@code GET /v3/biometric-templates/{template_uuid}/}
-     *
-     * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param templateUuid the {@code template_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BiometricTemplatesRetrieveResponse>> retrieveAsync(String templateUuid, RequestOptions options) {
       return client.executeAsync(retrieveRequest(templateUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get a retained biometric template
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns one template. The response never includes an image, a vector, the deleted session's id, or identity data.
-     *
-     * <p>{@code GET /v3/biometric-templates/{template_uuid}/}
-     *
-     * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param templateUuid the {@code template_uuid}
+     * @return the result
      */
     public RawResponse<BiometricTemplatesRetrieveResponse> retrieve(String templateUuid) {
       return client.execute(retrieveRequest(templateUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get a retained biometric template
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Returns one template. The response never includes an image, a vector, the deleted session's id, or identity data.
-     *
-     * <p>{@code GET /v3/biometric-templates/{template_uuid}/}
-     *
-     * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
-     * @return a future completed with the raw response
+     * @param templateUuid the {@code template_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BiometricTemplatesRetrieveResponse>> retrieveAsync(String templateUuid) {
       return client.executeAsync(retrieveRequest(templateUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Purge a retained biometric template
+     * {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Purges one template: it is removed from every kind of matching and the stored template is deleted. Irreversible and recorded on the audit trail with the acting principal.
-     *
-     * <p><b>Retry semantics:</b> Didit deletes the stored template first and only then marks the template purged. If a biometric store is unavailable the call returns <code>503</code>, the template moves to <code>status: purge_failed</code> and is already excluded from matching; repeat the same call to finish. Repeating a purge of an already purged template returns <code>already_purged</code>.
-     *
-     * <p>Templates are also purged by <code>POST /v3/users/delete/</code> for the owning User, by any deletion of that User's sessions with <code>deletion_instruction: privacy_erasure</code>, and automatically at <code>expires_at</code>.
-     *
-     * <p>{@code DELETE /v3/biometric-templates/{template_uuid}/}
-     *
-     * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param templateUuid the {@code template_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BiometricTemplatesDeleteResponse> delete(String templateUuid, RequestOptions options) {
       return client.execute(deleteRequest(templateUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Purge a retained biometric template
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Purges one template: it is removed from every kind of matching and the stored template is deleted. Irreversible and recorded on the audit trail with the acting principal.
-     *
-     * <p><b>Retry semantics:</b> Didit deletes the stored template first and only then marks the template purged. If a biometric store is unavailable the call returns <code>503</code>, the template moves to <code>status: purge_failed</code> and is already excluded from matching; repeat the same call to finish. Repeating a purge of an already purged template returns <code>already_purged</code>.
-     *
-     * <p>Templates are also purged by <code>POST /v3/users/delete/</code> for the owning User, by any deletion of that User's sessions with <code>deletion_instruction: privacy_erasure</code>, and automatically at <code>expires_at</code>.
-     *
-     * <p>{@code DELETE /v3/biometric-templates/{template_uuid}/}
-     *
-     * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param templateUuid the {@code template_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BiometricTemplatesDeleteResponse>> deleteAsync(String templateUuid, RequestOptions options) {
       return client.executeAsync(deleteRequest(templateUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Purge a retained biometric template
+     * {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Purges one template: it is removed from every kind of matching and the stored template is deleted. Irreversible and recorded on the audit trail with the acting principal.
-     *
-     * <p><b>Retry semantics:</b> Didit deletes the stored template first and only then marks the template purged. If a biometric store is unavailable the call returns <code>503</code>, the template moves to <code>status: purge_failed</code> and is already excluded from matching; repeat the same call to finish. Repeating a purge of an already purged template returns <code>already_purged</code>.
-     *
-     * <p>Templates are also purged by <code>POST /v3/users/delete/</code> for the owning User, by any deletion of that User's sessions with <code>deletion_instruction: privacy_erasure</code>, and automatically at <code>expires_at</code>.
-     *
-     * <p>{@code DELETE /v3/biometric-templates/{template_uuid}/}
-     *
-     * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param templateUuid the {@code template_uuid}
+     * @return the result
      */
     public RawResponse<BiometricTemplatesDeleteResponse> delete(String templateUuid) {
       return client.execute(deleteRequest(templateUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Purge a retained biometric template
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Purges one template: it is removed from every kind of matching and the stored template is deleted. Irreversible and recorded on the audit trail with the acting principal.
-     *
-     * <p><b>Retry semantics:</b> Didit deletes the stored template first and only then marks the template purged. If a biometric store is unavailable the call returns <code>503</code>, the template moves to <code>status: purge_failed</code> and is already excluded from matching; repeat the same call to finish. Repeating a purge of an already purged template returns <code>already_purged</code>.
-     *
-     * <p>Templates are also purged by <code>POST /v3/users/delete/</code> for the owning User, by any deletion of that User's sessions with <code>deletion_instruction: privacy_erasure</code>, and automatically at <code>expires_at</code>.
-     *
-     * <p>{@code DELETE /v3/biometric-templates/{template_uuid}/}
-     *
-     * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
-     * @return a future completed with the raw response
+     * @param templateUuid the {@code template_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BiometricTemplatesDeleteResponse>> deleteAsync(String templateUuid) {
       return client.executeAsync(deleteRequest(templateUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Bulk purge retained biometric templates
-     *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-     *
-     * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-     *
-     * <p>{@code POST /v3/biometric-templates/delete/}
+     * {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BiometricTemplatesBatchDeleteResponse> batchDelete(BiometricTemplatesBatchDeleteParams params, RequestOptions options) {
       return client.execute(batchDeleteRequest(params), options, BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Bulk purge retained biometric templates
-     *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-     *
-     * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-     *
-     * <p>{@code POST /v3/biometric-templates/delete/}
+     * Asynchronous {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BiometricTemplatesBatchDeleteResponse>> batchDeleteAsync(BiometricTemplatesBatchDeleteParams params, RequestOptions options) {
       return client.executeAsync(batchDeleteRequest(params), options, BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Bulk purge retained biometric templates
-     *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-     *
-     * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-     *
-     * <p>{@code POST /v3/biometric-templates/delete/}
+     * {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BiometricTemplatesBatchDeleteResponse> batchDelete(BiometricTemplatesBatchDeleteParams params) {
       return client.execute(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Bulk purge retained biometric templates
-     *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-     *
-     * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-     *
-     * <p>{@code POST /v3/biometric-templates/delete/}
+     * Asynchronous {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BiometricTemplatesBatchDeleteResponse>> batchDeleteAsync(BiometricTemplatesBatchDeleteParams params) {
       return client.executeAsync(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Bulk purge retained biometric templates
+     * {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-     *
-     * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-     *
-     * <p>{@code POST /v3/biometric-templates/delete/}
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BiometricTemplatesBatchDeleteResponse> batchDelete(RequestOptions options) {
       return client.execute(batchDeleteRequest(BiometricTemplatesBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Bulk purge retained biometric templates
+     * Asynchronous {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-     *
-     * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-     *
-     * <p>{@code POST /v3/biometric-templates/delete/}
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BiometricTemplatesBatchDeleteResponse>> batchDeleteAsync(RequestOptions options) {
       return client.executeAsync(batchDeleteRequest(BiometricTemplatesBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Bulk purge retained biometric templates
+     * {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-     *
-     * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-     *
-     * <p>{@code POST /v3/biometric-templates/delete/}
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BiometricTemplatesBatchDeleteResponse> batchDelete() {
       return client.execute(batchDeleteRequest(BiometricTemplatesBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Bulk purge retained biometric templates
+     * Asynchronous {@link #batchDelete(BiometricTemplatesBatchDeleteParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>An opted-in application keeps one separately managed, image-free face biometric template anchored to the User when a session is deleted (see <code>DELETE /v3/session/{sessionId}/delete/</code>). Templates are biometric data with a finite <code>expires_at</code>; they never contain images, session data, or identity fields, and they are purged on User deletion, privacy erasure, expiry, or an explicit purge. These endpoints accept application API keys (<code>x-api-key</code>) only; Business Console user tokens are rejected with <code>403</code>.
-     *
-     * <p>Purges many templates in one call, by explicit id list or with <code>delete_all: true</code> optionally narrowed by the same filters as the list endpoint. Templates are purged one by one and each result reports <code>purged</code> or <code>already_purged</code>. If a biometric store is unavailable the call returns <code>503</code> at the first failing template: templates purged earlier in the request stay purged, the failing one moves to <code>purge_failed</code> (already excluded from matching), and repeating the request finishes the job.
-     *
-     * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
-     *
-     * <p>{@code POST /v3/biometric-templates/delete/}
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BiometricTemplatesBatchDeleteResponse>> batchDeleteAsync() {
       return client.executeAsync(batchDeleteRequest(BiometricTemplatesBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE);

@@ -61,85 +61,31 @@ public final class AgeEstimationResource {
   }
 
   /**
-   * Age Estimation (face age + passive liveness)
-   *
-   * <p>Estimate a person's age from a single face photo and run a passive liveness check in the same call — returns the model-predicted <code>age_estimation</code> (in years), a liveness <code>score</code> (0–100), and an <code>Approved</code>/<code>Declined</code> <code>status</code>. The age is <b>model-predicted from the face, not verified against a document</b> — use it for age gates and low-friction checks, not as legal proof of age.
-   *
-   * <p><b>How it works.</b> The image is analyzed for faces (set <code>rotate_image=true</code> if captures may be sideways or upside down); each detected face gets an estimated age, and the largest face in the frame drives <code>age_estimation</code>. In parallel, a passive liveness model scores whether the photo shows a live person (no user challenge required) and detects presentation attacks (photos of photos, screens, masks). Submit one clear, front-facing, well-lit face per image for best results.
-   *
-   * <p><b>Decision logic.</b> Any warning declines: <code>status</code> is <code>Approved</code> only when the <code>warnings</code> array is empty. A liveness <code>score</code> at or below <code>face_liveness_score_decline_threshold</code> (default <code>30</code>) adds <code>LOW_LIVENESS_SCORE</code>; a detected attack adds <code>LIVENESS_FACE_ATTACK</code>; no face found by the liveness model adds <code>NO_FACE_DETECTED</code>; no estimable face age adds <code>AGE_NOT_DETECTED</code> (<code>age_estimation</code> is <code>null</code>); an estimated age below <code>age_estimation_decline_threshold</code> (default <code>18</code>) adds <code>AGE_BELOW_MINIMUM</code>. Borderline ages near your threshold deserve a fallback to document-based verification — the model's error grows for faces close to the limit.
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one Age Estimation API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-   *
-   * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code> (the result is exposed there in <code>liveness_checks[]</code>, with <code>features: ["AGE_ESTIMATION"]</code>), the face crop and reference image are stored, the face embedding is added to your application's face index (used by face search and duplicate detection), and a <code>status.updated</code> webhook is emitted. When <code>false</code>, nothing is stored and <code>request_id</code> is a one-off correlation UUID that cannot be looked up later.
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload (<code>age_estimation: 30</code>, no warnings), no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/age-estimation/}
+   * Asynchronous {@link #estimate(AgeEstimationEstimateParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<AgeEstimationEstimateResponse> estimateAsync(AgeEstimationEstimateParams params, RequestOptions options) {
     return client.executeAsync(estimateRequest(params), options, ESTIMATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Age Estimation (face age + passive liveness)
-   *
-   * <p>Estimate a person's age from a single face photo and run a passive liveness check in the same call — returns the model-predicted <code>age_estimation</code> (in years), a liveness <code>score</code> (0–100), and an <code>Approved</code>/<code>Declined</code> <code>status</code>. The age is <b>model-predicted from the face, not verified against a document</b> — use it for age gates and low-friction checks, not as legal proof of age.
-   *
-   * <p><b>How it works.</b> The image is analyzed for faces (set <code>rotate_image=true</code> if captures may be sideways or upside down); each detected face gets an estimated age, and the largest face in the frame drives <code>age_estimation</code>. In parallel, a passive liveness model scores whether the photo shows a live person (no user challenge required) and detects presentation attacks (photos of photos, screens, masks). Submit one clear, front-facing, well-lit face per image for best results.
-   *
-   * <p><b>Decision logic.</b> Any warning declines: <code>status</code> is <code>Approved</code> only when the <code>warnings</code> array is empty. A liveness <code>score</code> at or below <code>face_liveness_score_decline_threshold</code> (default <code>30</code>) adds <code>LOW_LIVENESS_SCORE</code>; a detected attack adds <code>LIVENESS_FACE_ATTACK</code>; no face found by the liveness model adds <code>NO_FACE_DETECTED</code>; no estimable face age adds <code>AGE_NOT_DETECTED</code> (<code>age_estimation</code> is <code>null</code>); an estimated age below <code>age_estimation_decline_threshold</code> (default <code>18</code>) adds <code>AGE_BELOW_MINIMUM</code>. Borderline ages near your threshold deserve a fallback to document-based verification — the model's error grows for faces close to the limit.
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one Age Estimation API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-   *
-   * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code> (the result is exposed there in <code>liveness_checks[]</code>, with <code>features: ["AGE_ESTIMATION"]</code>), the face crop and reference image are stored, the face embedding is added to your application's face index (used by face search and duplicate detection), and a <code>status.updated</code> webhook is emitted. When <code>false</code>, nothing is stored and <code>request_id</code> is a one-off correlation UUID that cannot be looked up later.
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload (<code>age_estimation: 30</code>, no warnings), no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/age-estimation/}
+   * Same as {@link #estimate(AgeEstimationEstimateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public AgeEstimationEstimateResponse estimate(AgeEstimationEstimateParams params) {
     return client.execute(estimateRequest(params), RequestOptions.none(), ESTIMATE_RESPONSE).data();
   }
 
   /**
-   * Age Estimation (face age + passive liveness)
-   *
-   * <p>Estimate a person's age from a single face photo and run a passive liveness check in the same call — returns the model-predicted <code>age_estimation</code> (in years), a liveness <code>score</code> (0–100), and an <code>Approved</code>/<code>Declined</code> <code>status</code>. The age is <b>model-predicted from the face, not verified against a document</b> — use it for age gates and low-friction checks, not as legal proof of age.
-   *
-   * <p><b>How it works.</b> The image is analyzed for faces (set <code>rotate_image=true</code> if captures may be sideways or upside down); each detected face gets an estimated age, and the largest face in the frame drives <code>age_estimation</code>. In parallel, a passive liveness model scores whether the photo shows a live person (no user challenge required) and detects presentation attacks (photos of photos, screens, masks). Submit one clear, front-facing, well-lit face per image for best results.
-   *
-   * <p><b>Decision logic.</b> Any warning declines: <code>status</code> is <code>Approved</code> only when the <code>warnings</code> array is empty. A liveness <code>score</code> at or below <code>face_liveness_score_decline_threshold</code> (default <code>30</code>) adds <code>LOW_LIVENESS_SCORE</code>; a detected attack adds <code>LIVENESS_FACE_ATTACK</code>; no face found by the liveness model adds <code>NO_FACE_DETECTED</code>; no estimable face age adds <code>AGE_NOT_DETECTED</code> (<code>age_estimation</code> is <code>null</code>); an estimated age below <code>age_estimation_decline_threshold</code> (default <code>18</code>) adds <code>AGE_BELOW_MINIMUM</code>. Borderline ages near your threshold deserve a fallback to document-based verification — the model's error grows for faces close to the limit.
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one Age Estimation API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-   *
-   * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code> (the result is exposed there in <code>liveness_checks[]</code>, with <code>features: ["AGE_ESTIMATION"]</code>), the face crop and reference image are stored, the face embedding is added to your application's face index (used by face search and duplicate detection), and a <code>status.updated</code> webhook is emitted. When <code>false</code>, nothing is stored and <code>request_id</code> is a one-off correlation UUID that cannot be looked up later.
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload (<code>age_estimation: 30</code>, no warnings), no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/age-estimation/}
+   * Asynchronous {@link #estimate(AgeEstimationEstimateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<AgeEstimationEstimateResponse> estimateAsync(AgeEstimationEstimateParams params) {
     return client.executeAsync(estimateRequest(params), RequestOptions.none(), ESTIMATE_RESPONSE).thenApply(RawResponse::data);
@@ -163,114 +109,42 @@ public final class AgeEstimationResource {
     }
 
     /**
-     * Age Estimation (face age + passive liveness)
-     *
-     * <p>Estimate a person's age from a single face photo and run a passive liveness check in the same call — returns the model-predicted <code>age_estimation</code> (in years), a liveness <code>score</code> (0–100), and an <code>Approved</code>/<code>Declined</code> <code>status</code>. The age is <b>model-predicted from the face, not verified against a document</b> — use it for age gates and low-friction checks, not as legal proof of age.
-     *
-     * <p><b>How it works.</b> The image is analyzed for faces (set <code>rotate_image=true</code> if captures may be sideways or upside down); each detected face gets an estimated age, and the largest face in the frame drives <code>age_estimation</code>. In parallel, a passive liveness model scores whether the photo shows a live person (no user challenge required) and detects presentation attacks (photos of photos, screens, masks). Submit one clear, front-facing, well-lit face per image for best results.
-     *
-     * <p><b>Decision logic.</b> Any warning declines: <code>status</code> is <code>Approved</code> only when the <code>warnings</code> array is empty. A liveness <code>score</code> at or below <code>face_liveness_score_decline_threshold</code> (default <code>30</code>) adds <code>LOW_LIVENESS_SCORE</code>; a detected attack adds <code>LIVENESS_FACE_ATTACK</code>; no face found by the liveness model adds <code>NO_FACE_DETECTED</code>; no estimable face age adds <code>AGE_NOT_DETECTED</code> (<code>age_estimation</code> is <code>null</code>); an estimated age below <code>age_estimation_decline_threshold</code> (default <code>18</code>) adds <code>AGE_BELOW_MINIMUM</code>. Borderline ages near your threshold deserve a fallback to document-based verification — the model's error grows for faces close to the limit.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Age Estimation API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-     *
-     * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code> (the result is exposed there in <code>liveness_checks[]</code>, with <code>features: ["AGE_ESTIMATION"]</code>), the face crop and reference image are stored, the face embedding is added to your application's face index (used by face search and duplicate detection), and a <code>status.updated</code> webhook is emitted. When <code>false</code>, nothing is stored and <code>request_id</code> is a one-off correlation UUID that cannot be looked up later.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload (<code>age_estimation: 30</code>, no warnings), no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/age-estimation/}
+     * {@link #estimate(AgeEstimationEstimateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<AgeEstimationEstimateResponse> estimate(AgeEstimationEstimateParams params, RequestOptions options) {
       return client.execute(estimateRequest(params), options, ESTIMATE_RESPONSE);
     }
 
     /**
-     * Age Estimation (face age + passive liveness)
-     *
-     * <p>Estimate a person's age from a single face photo and run a passive liveness check in the same call — returns the model-predicted <code>age_estimation</code> (in years), a liveness <code>score</code> (0–100), and an <code>Approved</code>/<code>Declined</code> <code>status</code>. The age is <b>model-predicted from the face, not verified against a document</b> — use it for age gates and low-friction checks, not as legal proof of age.
-     *
-     * <p><b>How it works.</b> The image is analyzed for faces (set <code>rotate_image=true</code> if captures may be sideways or upside down); each detected face gets an estimated age, and the largest face in the frame drives <code>age_estimation</code>. In parallel, a passive liveness model scores whether the photo shows a live person (no user challenge required) and detects presentation attacks (photos of photos, screens, masks). Submit one clear, front-facing, well-lit face per image for best results.
-     *
-     * <p><b>Decision logic.</b> Any warning declines: <code>status</code> is <code>Approved</code> only when the <code>warnings</code> array is empty. A liveness <code>score</code> at or below <code>face_liveness_score_decline_threshold</code> (default <code>30</code>) adds <code>LOW_LIVENESS_SCORE</code>; a detected attack adds <code>LIVENESS_FACE_ATTACK</code>; no face found by the liveness model adds <code>NO_FACE_DETECTED</code>; no estimable face age adds <code>AGE_NOT_DETECTED</code> (<code>age_estimation</code> is <code>null</code>); an estimated age below <code>age_estimation_decline_threshold</code> (default <code>18</code>) adds <code>AGE_BELOW_MINIMUM</code>. Borderline ages near your threshold deserve a fallback to document-based verification — the model's error grows for faces close to the limit.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Age Estimation API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-     *
-     * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code> (the result is exposed there in <code>liveness_checks[]</code>, with <code>features: ["AGE_ESTIMATION"]</code>), the face crop and reference image are stored, the face embedding is added to your application's face index (used by face search and duplicate detection), and a <code>status.updated</code> webhook is emitted. When <code>false</code>, nothing is stored and <code>request_id</code> is a one-off correlation UUID that cannot be looked up later.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload (<code>age_estimation: 30</code>, no warnings), no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/age-estimation/}
+     * Asynchronous {@link #estimate(AgeEstimationEstimateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<AgeEstimationEstimateResponse>> estimateAsync(AgeEstimationEstimateParams params, RequestOptions options) {
       return client.executeAsync(estimateRequest(params), options, ESTIMATE_RESPONSE);
     }
 
     /**
-     * Age Estimation (face age + passive liveness)
-     *
-     * <p>Estimate a person's age from a single face photo and run a passive liveness check in the same call — returns the model-predicted <code>age_estimation</code> (in years), a liveness <code>score</code> (0–100), and an <code>Approved</code>/<code>Declined</code> <code>status</code>. The age is <b>model-predicted from the face, not verified against a document</b> — use it for age gates and low-friction checks, not as legal proof of age.
-     *
-     * <p><b>How it works.</b> The image is analyzed for faces (set <code>rotate_image=true</code> if captures may be sideways or upside down); each detected face gets an estimated age, and the largest face in the frame drives <code>age_estimation</code>. In parallel, a passive liveness model scores whether the photo shows a live person (no user challenge required) and detects presentation attacks (photos of photos, screens, masks). Submit one clear, front-facing, well-lit face per image for best results.
-     *
-     * <p><b>Decision logic.</b> Any warning declines: <code>status</code> is <code>Approved</code> only when the <code>warnings</code> array is empty. A liveness <code>score</code> at or below <code>face_liveness_score_decline_threshold</code> (default <code>30</code>) adds <code>LOW_LIVENESS_SCORE</code>; a detected attack adds <code>LIVENESS_FACE_ATTACK</code>; no face found by the liveness model adds <code>NO_FACE_DETECTED</code>; no estimable face age adds <code>AGE_NOT_DETECTED</code> (<code>age_estimation</code> is <code>null</code>); an estimated age below <code>age_estimation_decline_threshold</code> (default <code>18</code>) adds <code>AGE_BELOW_MINIMUM</code>. Borderline ages near your threshold deserve a fallback to document-based verification — the model's error grows for faces close to the limit.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Age Estimation API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-     *
-     * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code> (the result is exposed there in <code>liveness_checks[]</code>, with <code>features: ["AGE_ESTIMATION"]</code>), the face crop and reference image are stored, the face embedding is added to your application's face index (used by face search and duplicate detection), and a <code>status.updated</code> webhook is emitted. When <code>false</code>, nothing is stored and <code>request_id</code> is a one-off correlation UUID that cannot be looked up later.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload (<code>age_estimation: 30</code>, no warnings), no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/age-estimation/}
+     * {@link #estimate(AgeEstimationEstimateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<AgeEstimationEstimateResponse> estimate(AgeEstimationEstimateParams params) {
       return client.execute(estimateRequest(params), RequestOptions.none(), ESTIMATE_RESPONSE);
     }
 
     /**
-     * Age Estimation (face age + passive liveness)
-     *
-     * <p>Estimate a person's age from a single face photo and run a passive liveness check in the same call — returns the model-predicted <code>age_estimation</code> (in years), a liveness <code>score</code> (0–100), and an <code>Approved</code>/<code>Declined</code> <code>status</code>. The age is <b>model-predicted from the face, not verified against a document</b> — use it for age gates and low-friction checks, not as legal proof of age.
-     *
-     * <p><b>How it works.</b> The image is analyzed for faces (set <code>rotate_image=true</code> if captures may be sideways or upside down); each detected face gets an estimated age, and the largest face in the frame drives <code>age_estimation</code>. In parallel, a passive liveness model scores whether the photo shows a live person (no user challenge required) and detects presentation attacks (photos of photos, screens, masks). Submit one clear, front-facing, well-lit face per image for best results.
-     *
-     * <p><b>Decision logic.</b> Any warning declines: <code>status</code> is <code>Approved</code> only when the <code>warnings</code> array is empty. A liveness <code>score</code> at or below <code>face_liveness_score_decline_threshold</code> (default <code>30</code>) adds <code>LOW_LIVENESS_SCORE</code>; a detected attack adds <code>LIVENESS_FACE_ATTACK</code>; no face found by the liveness model adds <code>NO_FACE_DETECTED</code>; no estimable face age adds <code>AGE_NOT_DETECTED</code> (<code>age_estimation</code> is <code>null</code>); an estimated age below <code>age_estimation_decline_threshold</code> (default <code>18</code>) adds <code>AGE_BELOW_MINIMUM</code>. Borderline ages near your threshold deserve a fallback to document-based verification — the model's error grows for faces close to the limit.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Age Estimation API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-     *
-     * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code> (the result is exposed there in <code>liveness_checks[]</code>, with <code>features: ["AGE_ESTIMATION"]</code>), the face crop and reference image are stored, the face embedding is added to your application's face index (used by face search and duplicate detection), and a <code>status.updated</code> webhook is emitted. When <code>false</code>, nothing is stored and <code>request_id</code> is a one-off correlation UUID that cannot be looked up later.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload (<code>age_estimation: 30</code>, no warnings), no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/age-estimation/}
+     * Asynchronous {@link #estimate(AgeEstimationEstimateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<AgeEstimationEstimateResponse>> estimateAsync(AgeEstimationEstimateParams params) {
       return client.executeAsync(estimateRequest(params), RequestOptions.none(), ESTIMATE_RESPONSE);

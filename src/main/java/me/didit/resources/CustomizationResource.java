@@ -46,40 +46,28 @@ public final class CustomizationResource {
   }
 
   /**
-   * Get branding customization
+   * Asynchronous {@link #retrieve(RequestOptions)}.
    *
-   * <p>Returns the white-label branding for the application resolved from the API key: colors, fonts, border radii, logo URLs and UI/UX options. Custom domain and white-label email settings are managed only in the Business Console and are not part of this response.
-   *
-   * <p>{@code GET /v3/customization/}
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BrandingCustomization> retrieveAsync(RequestOptions options) {
     return client.executeAsync(retrieveRequest(), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get branding customization
+   * Same as {@link #retrieve(RequestOptions)}, with the client's options.
    *
-   * <p>Returns the white-label branding for the application resolved from the API key: colors, fonts, border radii, logo URLs and UI/UX options. Custom domain and white-label email settings are managed only in the Business Console and are not part of this response.
-   *
-   * <p>{@code GET /v3/customization/}
-   *
-   * @return the response body
+   * @return the result
    */
   public BrandingCustomization retrieve() {
     return client.execute(retrieveRequest(), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get branding customization
+   * Asynchronous {@link #retrieve(RequestOptions)}, with the client's options.
    *
-   * <p>Returns the white-label branding for the application resolved from the API key: colors, fonts, border radii, logo URLs and UI/UX options. Custom domain and white-label email settings are managed only in the Business Console and are not part of this response.
-   *
-   * <p>{@code GET /v3/customization/}
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BrandingCustomization> retrieveAsync() {
     return client.executeAsync(retrieveRequest(), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -101,97 +89,69 @@ public final class CustomizationResource {
   }
 
   /**
-   * Update branding customization
-   *
-   * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-   *
-   * <p>{@code PATCH /v3/customization/}
+   * Asynchronous {@link #update(CustomizationUpdateParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BrandingCustomization> updateAsync(CustomizationUpdateParams params, RequestOptions options) {
     return client.executeAsync(updateRequest(params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update branding customization
-   *
-   * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-   *
-   * <p>{@code PATCH /v3/customization/}
+   * Same as {@link #update(CustomizationUpdateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public BrandingCustomization update(CustomizationUpdateParams params) {
     return client.execute(updateRequest(params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update branding customization
-   *
-   * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-   *
-   * <p>{@code PATCH /v3/customization/}
+   * Asynchronous {@link #update(CustomizationUpdateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BrandingCustomization> updateAsync(CustomizationUpdateParams params) {
     return client.executeAsync(updateRequest(params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update branding customization
+   * Same as {@link #update(CustomizationUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-   *
-   * <p>{@code PATCH /v3/customization/}
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public BrandingCustomization update(RequestOptions options) {
     return client.execute(updateRequest(CustomizationUpdateParams.builder().build()), options, UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update branding customization
+   * Asynchronous {@link #update(CustomizationUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-   *
-   * <p>{@code PATCH /v3/customization/}
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BrandingCustomization> updateAsync(RequestOptions options) {
     return client.executeAsync(updateRequest(CustomizationUpdateParams.builder().build()), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update branding customization
+   * Same as {@link #update(CustomizationUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-   *
-   * <p>{@code PATCH /v3/customization/}
-   *
-   * @return the response body
+   * @return the result
    */
   public BrandingCustomization update() {
     return client.execute(updateRequest(CustomizationUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update branding customization
+   * Asynchronous {@link #update(CustomizationUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-   *
-   * <p>{@code PATCH /v3/customization/}
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BrandingCustomization> updateAsync() {
     return client.executeAsync(updateRequest(CustomizationUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -222,166 +182,118 @@ public final class CustomizationResource {
     }
 
     /**
-     * Get branding customization
+     * {@link #retrieve(RequestOptions)} with the raw response.
      *
-     * <p>Returns the white-label branding for the application resolved from the API key: colors, fonts, border radii, logo URLs and UI/UX options. Custom domain and white-label email settings are managed only in the Business Console and are not part of this response.
-     *
-     * <p>{@code GET /v3/customization/}
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BrandingCustomization> retrieve(RequestOptions options) {
       return client.execute(retrieveRequest(), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get branding customization
+     * Asynchronous {@link #retrieve(RequestOptions)} with the raw response.
      *
-     * <p>Returns the white-label branding for the application resolved from the API key: colors, fonts, border radii, logo URLs and UI/UX options. Custom domain and white-label email settings are managed only in the Business Console and are not part of this response.
-     *
-     * <p>{@code GET /v3/customization/}
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BrandingCustomization>> retrieveAsync(RequestOptions options) {
       return client.executeAsync(retrieveRequest(), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get branding customization
+     * {@link #retrieve(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Returns the white-label branding for the application resolved from the API key: colors, fonts, border radii, logo URLs and UI/UX options. Custom domain and white-label email settings are managed only in the Business Console and are not part of this response.
-     *
-     * <p>{@code GET /v3/customization/}
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BrandingCustomization> retrieve() {
       return client.execute(retrieveRequest(), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get branding customization
+     * Asynchronous {@link #retrieve(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Returns the white-label branding for the application resolved from the API key: colors, fonts, border radii, logo URLs and UI/UX options. Custom domain and white-label email settings are managed only in the Business Console and are not part of this response.
-     *
-     * <p>{@code GET /v3/customization/}
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BrandingCustomization>> retrieveAsync() {
       return client.executeAsync(retrieveRequest(), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Update branding customization
-     *
-     * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-     *
-     * <p>{@code PATCH /v3/customization/}
+     * {@link #update(CustomizationUpdateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BrandingCustomization> update(CustomizationUpdateParams params, RequestOptions options) {
       return client.execute(updateRequest(params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update branding customization
-     *
-     * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-     *
-     * <p>{@code PATCH /v3/customization/}
+     * Asynchronous {@link #update(CustomizationUpdateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BrandingCustomization>> updateAsync(CustomizationUpdateParams params, RequestOptions options) {
       return client.executeAsync(updateRequest(params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update branding customization
-     *
-     * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-     *
-     * <p>{@code PATCH /v3/customization/}
+     * {@link #update(CustomizationUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BrandingCustomization> update(CustomizationUpdateParams params) {
       return client.execute(updateRequest(params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update branding customization
-     *
-     * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-     *
-     * <p>{@code PATCH /v3/customization/}
+     * Asynchronous {@link #update(CustomizationUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BrandingCustomization>> updateAsync(CustomizationUpdateParams params) {
       return client.executeAsync(updateRequest(params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update branding customization
+     * {@link #update(CustomizationUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-     *
-     * <p>{@code PATCH /v3/customization/}
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BrandingCustomization> update(RequestOptions options) {
       return client.execute(updateRequest(CustomizationUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update branding customization
+     * Asynchronous {@link #update(CustomizationUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-     *
-     * <p>{@code PATCH /v3/customization/}
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BrandingCustomization>> updateAsync(RequestOptions options) {
       return client.executeAsync(updateRequest(CustomizationUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update branding customization
+     * {@link #update(CustomizationUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-     *
-     * <p>{@code PATCH /v3/customization/}
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BrandingCustomization> update() {
       return client.execute(updateRequest(CustomizationUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update branding customization
+     * Asynchronous {@link #update(CustomizationUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
-     *
-     * <p>{@code PATCH /v3/customization/}
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BrandingCustomization>> updateAsync() {
       return client.executeAsync(updateRequest(CustomizationUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);

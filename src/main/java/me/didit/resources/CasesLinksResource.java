@@ -50,46 +50,31 @@ public final class CasesLinksResource {
   }
 
   /**
-   * List case links
+   * Asynchronous {@link #list(String, RequestOptions)}.
    *
-   * <p>List sessions, business sessions, and transactions attached to the case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<List<CaseLink>> listAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(listRequest(caseUuid), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List case links
+   * Same as {@link #list(String, RequestOptions)}, with the client's options.
    *
-   * <p>List sessions, business sessions, and transactions attached to the case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return the result
    */
   public List<CaseLink> list(String caseUuid) {
     return client.execute(listRequest(caseUuid), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List case links
+   * Asynchronous {@link #list(String, RequestOptions)}, with the client's options.
    *
-   * <p>List sessions, business sessions, and transactions attached to the case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<List<CaseLink>> listAsync(String caseUuid) {
     return client.executeAsync(listRequest(caseUuid), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -113,49 +98,34 @@ public final class CasesLinksResource {
   }
 
   /**
-   * Add case link
+   * Asynchronous {@link #create(String, CasesLinksCreateParams, RequestOptions)}.
    *
-   * <p>Attach a session, business session, or transaction to the case. Rejected with 400 if the entity belongs to a different subject than the case.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseLink> createAsync(String caseUuid, CasesLinksCreateParams params, RequestOptions options) {
     return client.executeAsync(createRequest(caseUuid, params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Add case link
+   * Same as {@link #create(String, CasesLinksCreateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Attach a session, business session, or transaction to the case. Rejected with 400 if the entity belongs to a different subject than the case.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseLink create(String caseUuid, CasesLinksCreateParams params) {
     return client.execute(createRequest(caseUuid, params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Add case link
+   * Asynchronous {@link #create(String, CasesLinksCreateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Attach a session, business session, or transaction to the case. Rejected with 400 if the entity belongs to a different subject than the case.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseLink> createAsync(String caseUuid, CasesLinksCreateParams params) {
     return client.executeAsync(createRequest(caseUuid, params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -178,48 +148,33 @@ public final class CasesLinksResource {
   }
 
   /**
-   * Remove case link
+   * Asynchronous {@link #delete(String, String, RequestOptions)}.
    *
-   * <p>Detach a linked session, business session, or transaction from the case.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/{link_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param linkUuid Link UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param linkUuid the {@code link_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String caseUuid, String linkUuid, RequestOptions options) {
     return client.executeAsync(deleteRequest(caseUuid, linkUuid), options, DELETE_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * Remove case link
+   * Same as {@link #delete(String, String, RequestOptions)}, with the client's options.
    *
-   * <p>Detach a linked session, business session, or transaction from the case.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/{link_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param linkUuid Link UUID.
+   * @param caseUuid the {@code case_uuid}
+   * @param linkUuid the {@code link_uuid}
    */
   public void delete(String caseUuid, String linkUuid) {
     client.execute(deleteRequest(caseUuid, linkUuid), RequestOptions.none(), DELETE_RESPONSE);
   }
 
   /**
-   * Remove case link
+   * Asynchronous {@link #delete(String, String, RequestOptions)}, with the client's options.
    *
-   * <p>Detach a linked session, business session, or transaction from the case.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/{link_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param linkUuid Link UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param linkUuid the {@code link_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String caseUuid, String linkUuid) {
     return client.executeAsync(deleteRequest(caseUuid, linkUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
@@ -264,194 +219,134 @@ public final class CasesLinksResource {
     }
 
     /**
-     * List case links
+     * {@link #list(String, RequestOptions)} with the raw response.
      *
-     * <p>List sessions, business sessions, and transactions attached to the case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<List<CaseLink>> list(String caseUuid, RequestOptions options) {
       return client.execute(listRequest(caseUuid), options, LIST_RESPONSE);
     }
 
     /**
-     * List case links
+     * Asynchronous {@link #list(String, RequestOptions)} with the raw response.
      *
-     * <p>List sessions, business sessions, and transactions attached to the case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<List<CaseLink>>> listAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(listRequest(caseUuid), options, LIST_RESPONSE);
     }
 
     /**
-     * List case links
+     * {@link #list(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List sessions, business sessions, and transactions attached to the case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<List<CaseLink>> list(String caseUuid) {
       return client.execute(listRequest(caseUuid), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List case links
+     * Asynchronous {@link #list(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List sessions, business sessions, and transactions attached to the case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<List<CaseLink>>> listAsync(String caseUuid) {
       return client.executeAsync(listRequest(caseUuid), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Add case link
+     * {@link #create(String, CasesLinksCreateParams, RequestOptions)} with the raw response.
      *
-     * <p>Attach a session, business session, or transaction to the case. Rejected with 400 if the entity belongs to a different subject than the case.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseLink> create(String caseUuid, CasesLinksCreateParams params, RequestOptions options) {
       return client.execute(createRequest(caseUuid, params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Add case link
+     * Asynchronous {@link #create(String, CasesLinksCreateParams, RequestOptions)} with the raw response.
      *
-     * <p>Attach a session, business session, or transaction to the case. Rejected with 400 if the entity belongs to a different subject than the case.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseLink>> createAsync(String caseUuid, CasesLinksCreateParams params, RequestOptions options) {
       return client.executeAsync(createRequest(caseUuid, params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Add case link
+     * {@link #create(String, CasesLinksCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Attach a session, business session, or transaction to the case. Rejected with 400 if the entity belongs to a different subject than the case.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseLink> create(String caseUuid, CasesLinksCreateParams params) {
       return client.execute(createRequest(caseUuid, params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Add case link
+     * Asynchronous {@link #create(String, CasesLinksCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Attach a session, business session, or transaction to the case. Rejected with 400 if the entity belongs to a different subject than the case.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseLink>> createAsync(String caseUuid, CasesLinksCreateParams params) {
       return client.executeAsync(createRequest(caseUuid, params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Remove case link
+     * {@link #delete(String, String, RequestOptions)} with the raw response.
      *
-     * <p>Detach a linked session, business session, or transaction from the case.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/{link_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param linkUuid Link UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param linkUuid the {@code link_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String caseUuid, String linkUuid, RequestOptions options) {
       return client.execute(deleteRequest(caseUuid, linkUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Remove case link
+     * Asynchronous {@link #delete(String, String, RequestOptions)} with the raw response.
      *
-     * <p>Detach a linked session, business session, or transaction from the case.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/{link_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param linkUuid Link UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param linkUuid the {@code link_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String caseUuid, String linkUuid, RequestOptions options) {
       return client.executeAsync(deleteRequest(caseUuid, linkUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Remove case link
+     * {@link #delete(String, String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Detach a linked session, business session, or transaction from the case.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/{link_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param linkUuid Link UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param linkUuid the {@code link_uuid}
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String caseUuid, String linkUuid) {
       return client.execute(deleteRequest(caseUuid, linkUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Remove case link
+     * Asynchronous {@link #delete(String, String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Detach a linked session, business session, or transaction from the case.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/{link_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param linkUuid Link UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param linkUuid the {@code link_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String caseUuid, String linkUuid) {
       return client.executeAsync(deleteRequest(caseUuid, linkUuid), RequestOptions.none(), DELETE_RESPONSE);

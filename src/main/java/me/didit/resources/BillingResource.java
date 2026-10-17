@@ -47,40 +47,28 @@ public final class BillingResource {
   }
 
   /**
-   * Get credit balance
+   * Asynchronous {@link #retrieveBalance(RequestOptions)}.
    *
-   * <p>Get current pre-paid credit balance in USD (organization-wide) plus auto-refill config. Amounts are decimal strings — parse with a decimal library.
-   *
-   * <p>{@code GET /v3/billing/balance/}
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BillingRetrieveBalanceResponse> retrieveBalanceAsync(RequestOptions options) {
     return client.executeAsync(retrieveBalanceRequest(), options, RETRIEVE_BALANCE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get credit balance
+   * Same as {@link #retrieveBalance(RequestOptions)}, with the client's options.
    *
-   * <p>Get current pre-paid credit balance in USD (organization-wide) plus auto-refill config. Amounts are decimal strings — parse with a decimal library.
-   *
-   * <p>{@code GET /v3/billing/balance/}
-   *
-   * @return the response body
+   * @return the result
    */
   public BillingRetrieveBalanceResponse retrieveBalance() {
     return client.execute(retrieveBalanceRequest(), RequestOptions.none(), RETRIEVE_BALANCE_RESPONSE).data();
   }
 
   /**
-   * Get credit balance
+   * Asynchronous {@link #retrieveBalance(RequestOptions)}, with the client's options.
    *
-   * <p>Get current pre-paid credit balance in USD (organization-wide) plus auto-refill config. Amounts are decimal strings — parse with a decimal library.
-   *
-   * <p>{@code GET /v3/billing/balance/}
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BillingRetrieveBalanceResponse> retrieveBalanceAsync() {
     return client.executeAsync(retrieveBalanceRequest(), RequestOptions.none(), RETRIEVE_BALANCE_RESPONSE).thenApply(RawResponse::data);
@@ -102,43 +90,31 @@ public final class BillingResource {
   }
 
   /**
-   * Top up credits
-   *
-   * <p>Add credits via a hosted Stripe Checkout session (<b>$50 minimum</b>); not available on annual plans. Redirect the customer to the returned <code>checkout_session_url</code>.
-   *
-   * <p>{@code POST /v3/billing/top-up/}
+   * Asynchronous {@link #topUp(BillingTopUpParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BillingTopUpResponse> topUpAsync(BillingTopUpParams params, RequestOptions options) {
     return client.executeAsync(topUpRequest(params), options, TOP_UP_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Top up credits
-   *
-   * <p>Add credits via a hosted Stripe Checkout session (<b>$50 minimum</b>); not available on annual plans. Redirect the customer to the returned <code>checkout_session_url</code>.
-   *
-   * <p>{@code POST /v3/billing/top-up/}
+   * Same as {@link #topUp(BillingTopUpParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public BillingTopUpResponse topUp(BillingTopUpParams params) {
     return client.execute(topUpRequest(params), RequestOptions.none(), TOP_UP_RESPONSE).data();
   }
 
   /**
-   * Top up credits
-   *
-   * <p>Add credits via a hosted Stripe Checkout session (<b>$50 minimum</b>); not available on annual plans. Redirect the customer to the returned <code>checkout_session_url</code>.
-   *
-   * <p>{@code POST /v3/billing/top-up/}
+   * Asynchronous {@link #topUp(BillingTopUpParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BillingTopUpResponse> topUpAsync(BillingTopUpParams params) {
     return client.executeAsync(topUpRequest(params), RequestOptions.none(), TOP_UP_RESPONSE).thenApply(RawResponse::data);
@@ -169,112 +145,80 @@ public final class BillingResource {
     }
 
     /**
-     * Get credit balance
+     * {@link #retrieveBalance(RequestOptions)} with the raw response.
      *
-     * <p>Get current pre-paid credit balance in USD (organization-wide) plus auto-refill config. Amounts are decimal strings — parse with a decimal library.
-     *
-     * <p>{@code GET /v3/billing/balance/}
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BillingRetrieveBalanceResponse> retrieveBalance(RequestOptions options) {
       return client.execute(retrieveBalanceRequest(), options, RETRIEVE_BALANCE_RESPONSE);
     }
 
     /**
-     * Get credit balance
+     * Asynchronous {@link #retrieveBalance(RequestOptions)} with the raw response.
      *
-     * <p>Get current pre-paid credit balance in USD (organization-wide) plus auto-refill config. Amounts are decimal strings — parse with a decimal library.
-     *
-     * <p>{@code GET /v3/billing/balance/}
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BillingRetrieveBalanceResponse>> retrieveBalanceAsync(RequestOptions options) {
       return client.executeAsync(retrieveBalanceRequest(), options, RETRIEVE_BALANCE_RESPONSE);
     }
 
     /**
-     * Get credit balance
+     * {@link #retrieveBalance(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Get current pre-paid credit balance in USD (organization-wide) plus auto-refill config. Amounts are decimal strings — parse with a decimal library.
-     *
-     * <p>{@code GET /v3/billing/balance/}
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BillingRetrieveBalanceResponse> retrieveBalance() {
       return client.execute(retrieveBalanceRequest(), RequestOptions.none(), RETRIEVE_BALANCE_RESPONSE);
     }
 
     /**
-     * Get credit balance
+     * Asynchronous {@link #retrieveBalance(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Get current pre-paid credit balance in USD (organization-wide) plus auto-refill config. Amounts are decimal strings — parse with a decimal library.
-     *
-     * <p>{@code GET /v3/billing/balance/}
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BillingRetrieveBalanceResponse>> retrieveBalanceAsync() {
       return client.executeAsync(retrieveBalanceRequest(), RequestOptions.none(), RETRIEVE_BALANCE_RESPONSE);
     }
 
     /**
-     * Top up credits
-     *
-     * <p>Add credits via a hosted Stripe Checkout session (<b>$50 minimum</b>); not available on annual plans. Redirect the customer to the returned <code>checkout_session_url</code>.
-     *
-     * <p>{@code POST /v3/billing/top-up/}
+     * {@link #topUp(BillingTopUpParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BillingTopUpResponse> topUp(BillingTopUpParams params, RequestOptions options) {
       return client.execute(topUpRequest(params), options, TOP_UP_RESPONSE);
     }
 
     /**
-     * Top up credits
-     *
-     * <p>Add credits via a hosted Stripe Checkout session (<b>$50 minimum</b>); not available on annual plans. Redirect the customer to the returned <code>checkout_session_url</code>.
-     *
-     * <p>{@code POST /v3/billing/top-up/}
+     * Asynchronous {@link #topUp(BillingTopUpParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BillingTopUpResponse>> topUpAsync(BillingTopUpParams params, RequestOptions options) {
       return client.executeAsync(topUpRequest(params), options, TOP_UP_RESPONSE);
     }
 
     /**
-     * Top up credits
-     *
-     * <p>Add credits via a hosted Stripe Checkout session (<b>$50 minimum</b>); not available on annual plans. Redirect the customer to the returned <code>checkout_session_url</code>.
-     *
-     * <p>{@code POST /v3/billing/top-up/}
+     * {@link #topUp(BillingTopUpParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BillingTopUpResponse> topUp(BillingTopUpParams params) {
       return client.execute(topUpRequest(params), RequestOptions.none(), TOP_UP_RESPONSE);
     }
 
     /**
-     * Top up credits
-     *
-     * <p>Add credits via a hosted Stripe Checkout session (<b>$50 minimum</b>); not available on annual plans. Redirect the customer to the returned <code>checkout_session_url</code>.
-     *
-     * <p>{@code POST /v3/billing/top-up/}
+     * Asynchronous {@link #topUp(BillingTopUpParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BillingTopUpResponse>> topUpAsync(BillingTopUpParams params) {
       return client.executeAsync(topUpRequest(params), RequestOptions.none(), TOP_UP_RESPONSE);

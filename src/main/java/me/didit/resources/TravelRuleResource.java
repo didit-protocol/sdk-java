@@ -64,40 +64,28 @@ public final class TravelRuleResource {
   }
 
   /**
-   * Get Travel Rule settings
+   * Asynchronous {@link #retrieveSettings(RequestOptions)}.
    *
-   * <p>Read the application's Travel Rule settings and VASP profile. Auto-creates a default (disabled) settings row and an empty profile on first read.
-   *
-   * <p>{@code GET /v3/travel-rule/settings/}
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TravelRuleSettingsDetail> retrieveSettingsAsync(RequestOptions options) {
     return client.executeAsync(retrieveSettingsRequest(), options, RETRIEVE_SETTINGS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get Travel Rule settings
+   * Same as {@link #retrieveSettings(RequestOptions)}, with the client's options.
    *
-   * <p>Read the application's Travel Rule settings and VASP profile. Auto-creates a default (disabled) settings row and an empty profile on first read.
-   *
-   * <p>{@code GET /v3/travel-rule/settings/}
-   *
-   * @return the response body
+   * @return the result
    */
   public TravelRuleSettingsDetail retrieveSettings() {
     return client.execute(retrieveSettingsRequest(), RequestOptions.none(), RETRIEVE_SETTINGS_RESPONSE).data();
   }
 
   /**
-   * Get Travel Rule settings
+   * Asynchronous {@link #retrieveSettings(RequestOptions)}, with the client's options.
    *
-   * <p>Read the application's Travel Rule settings and VASP profile. Auto-creates a default (disabled) settings row and an empty profile on first read.
-   *
-   * <p>{@code GET /v3/travel-rule/settings/}
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<TravelRuleSettingsDetail> retrieveSettingsAsync() {
     return client.executeAsync(retrieveSettingsRequest(), RequestOptions.none(), RETRIEVE_SETTINGS_RESPONSE).thenApply(RawResponse::data);
@@ -119,43 +107,31 @@ public final class TravelRuleResource {
   }
 
   /**
-   * Update Travel Rule settings
-   *
-   * <p>Upsert the application's Travel Rule settings and VASP profile. Partial update — only send the fields you want to change. Setting <code>is_enabled: true</code> requires a non-blank <code>legal_name</code> (already stored or included in the same request), otherwise returns 400.
-   *
-   * <p>{@code PUT /v3/travel-rule/settings/}
+   * Asynchronous {@link #updateSettings(TravelRuleSettingsUpdate, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TravelRuleSettingsDetail> updateSettingsAsync(TravelRuleSettingsUpdate params, RequestOptions options) {
     return client.executeAsync(updateSettingsRequest(params), options, UPDATE_SETTINGS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update Travel Rule settings
-   *
-   * <p>Upsert the application's Travel Rule settings and VASP profile. Partial update — only send the fields you want to change. Setting <code>is_enabled: true</code> requires a non-blank <code>legal_name</code> (already stored or included in the same request), otherwise returns 400.
-   *
-   * <p>{@code PUT /v3/travel-rule/settings/}
+   * Same as {@link #updateSettings(TravelRuleSettingsUpdate, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public TravelRuleSettingsDetail updateSettings(TravelRuleSettingsUpdate params) {
     return client.execute(updateSettingsRequest(params), RequestOptions.none(), UPDATE_SETTINGS_RESPONSE).data();
   }
 
   /**
-   * Update Travel Rule settings
-   *
-   * <p>Upsert the application's Travel Rule settings and VASP profile. Partial update — only send the fields you want to change. Setting <code>is_enabled: true</code> requires a non-blank <code>legal_name</code> (already stored or included in the same request), otherwise returns 400.
-   *
-   * <p>{@code PUT /v3/travel-rule/settings/}
+   * Asynchronous {@link #updateSettings(TravelRuleSettingsUpdate, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<TravelRuleSettingsDetail> updateSettingsAsync(TravelRuleSettingsUpdate params) {
     return client.executeAsync(updateSettingsRequest(params), RequestOptions.none(), UPDATE_SETTINGS_RESPONSE).thenApply(RawResponse::data);
@@ -178,104 +154,69 @@ public final class TravelRuleResource {
   }
 
   /**
-   * Search the VASP directory
-   *
-   * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-   *
-   * <p>{@code GET /v3/travel-rule/vasps/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<VaspDirectoryEntry>> listVaspsAsync(TravelRuleListVaspsParams params, RequestOptions options) {
     return client.executeAsync(listVaspsRequest(params), options, LIST_VASPS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Search the VASP directory
-   *
-   * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-   *
-   * <p>{@code GET /v3/travel-rule/vasps/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<VaspDirectoryEntry> listVasps(TravelRuleListVaspsParams params) {
     return client.execute(listVaspsRequest(params), RequestOptions.none(), LIST_VASPS_RESPONSE).data();
   }
 
   /**
-   * Search the VASP directory
-   *
-   * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-   *
-   * <p>{@code GET /v3/travel-rule/vasps/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<VaspDirectoryEntry>> listVaspsAsync(TravelRuleListVaspsParams params) {
     return client.executeAsync(listVaspsRequest(params), RequestOptions.none(), LIST_VASPS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Search the VASP directory
+   * Same as {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)}, without parameters.
    *
-   * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-   *
-   * <p>{@code GET /v3/travel-rule/vasps/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<VaspDirectoryEntry> listVasps(RequestOptions options) {
     return client.execute(listVaspsRequest(TravelRuleListVaspsParams.builder().build()), options, LIST_VASPS_RESPONSE).data();
   }
 
   /**
-   * Search the VASP directory
+   * Asynchronous {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)}, without parameters.
    *
-   * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-   *
-   * <p>{@code GET /v3/travel-rule/vasps/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<VaspDirectoryEntry>> listVaspsAsync(RequestOptions options) {
     return client.executeAsync(listVaspsRequest(TravelRuleListVaspsParams.builder().build()), options, LIST_VASPS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Search the VASP directory
+   * Same as {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-   *
-   * <p>{@code GET /v3/travel-rule/vasps/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<VaspDirectoryEntry> listVasps() {
     return client.execute(listVaspsRequest(TravelRuleListVaspsParams.builder().build()), RequestOptions.none(), LIST_VASPS_RESPONSE).data();
   }
 
   /**
-   * Search the VASP directory
+   * Asynchronous {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-   *
-   * <p>{@code GET /v3/travel-rule/vasps/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<VaspDirectoryEntry>> listVaspsAsync() {
     return client.executeAsync(listVaspsRequest(TravelRuleListVaspsParams.builder().build()), RequestOptions.none(), LIST_VASPS_RESPONSE).thenApply(RawResponse::data);
@@ -297,43 +238,31 @@ public final class TravelRuleResource {
   }
 
   /**
-   * Register an after-deposit (sunrise) inbound transfer
-   *
-   * <p>Register Travel Rule data for a crypto deposit that already settled on-chain before any exchange took place. Creates an inbound travelRule transaction (or reuses an unclaimed deposit) and resolves the transfer against your wallet address book. A transaction.created webhook fires for newly-created transactions.
-   *
-   * <p>{@code POST /v3/travel-rule/inbound/}
+   * Asynchronous {@link #registerInbound(TravelRuleInboundRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TravelRuleInboundResponse> registerInboundAsync(TravelRuleInboundRequest params, RequestOptions options) {
     return client.executeAsync(registerInboundRequest(params), options, REGISTER_INBOUND_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Register an after-deposit (sunrise) inbound transfer
-   *
-   * <p>Register Travel Rule data for a crypto deposit that already settled on-chain before any exchange took place. Creates an inbound travelRule transaction (or reuses an unclaimed deposit) and resolves the transfer against your wallet address book. A transaction.created webhook fires for newly-created transactions.
-   *
-   * <p>{@code POST /v3/travel-rule/inbound/}
+   * Same as {@link #registerInbound(TravelRuleInboundRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public TravelRuleInboundResponse registerInbound(TravelRuleInboundRequest params) {
     return client.execute(registerInboundRequest(params), RequestOptions.none(), REGISTER_INBOUND_RESPONSE).data();
   }
 
   /**
-   * Register an after-deposit (sunrise) inbound transfer
-   *
-   * <p>Register Travel Rule data for a crypto deposit that already settled on-chain before any exchange took place. Creates an inbound travelRule transaction (or reuses an unclaimed deposit) and resolves the transfer against your wallet address book. A transaction.created webhook fires for newly-created transactions.
-   *
-   * <p>{@code POST /v3/travel-rule/inbound/}
+   * Asynchronous {@link #registerInbound(TravelRuleInboundRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<TravelRuleInboundResponse> registerInboundAsync(TravelRuleInboundRequest params) {
     return client.executeAsync(registerInboundRequest(params), RequestOptions.none(), REGISTER_INBOUND_RESPONSE).thenApply(RawResponse::data);
@@ -355,43 +284,31 @@ public final class TravelRuleResource {
   }
 
   /**
-   * Mint a wallet-ownership widget session
-   *
-   * <p>Mint a hosted wallet-ownership widget URL/token. Send the customer to the returned url to prove control of a wallet (message signing, Satoshi test, screenshot, or self-declaration). The widget is web-only in this release - open the url in the system browser or a custom tab, never inside a mobile SDK webview.
-   *
-   * <p>{@code POST /v3/travel-rule/widget-session/}
+   * Asynchronous {@link #createWidgetSession(TravelRuleWidgetSessionCreate, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TravelRuleWidgetSessionResponse> createWidgetSessionAsync(TravelRuleWidgetSessionCreate params, RequestOptions options) {
     return client.executeAsync(createWidgetSessionRequest(params), options, CREATE_WIDGET_SESSION_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Mint a wallet-ownership widget session
-   *
-   * <p>Mint a hosted wallet-ownership widget URL/token. Send the customer to the returned url to prove control of a wallet (message signing, Satoshi test, screenshot, or self-declaration). The widget is web-only in this release - open the url in the system browser or a custom tab, never inside a mobile SDK webview.
-   *
-   * <p>{@code POST /v3/travel-rule/widget-session/}
+   * Same as {@link #createWidgetSession(TravelRuleWidgetSessionCreate, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public TravelRuleWidgetSessionResponse createWidgetSession(TravelRuleWidgetSessionCreate params) {
     return client.execute(createWidgetSessionRequest(params), RequestOptions.none(), CREATE_WIDGET_SESSION_RESPONSE).data();
   }
 
   /**
-   * Mint a wallet-ownership widget session
-   *
-   * <p>Mint a hosted wallet-ownership widget URL/token. Send the customer to the returned url to prove control of a wallet (message signing, Satoshi test, screenshot, or self-declaration). The widget is web-only in this release - open the url in the system browser or a custom tab, never inside a mobile SDK webview.
-   *
-   * <p>{@code POST /v3/travel-rule/widget-session/}
+   * Asynchronous {@link #createWidgetSession(TravelRuleWidgetSessionCreate, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<TravelRuleWidgetSessionResponse> createWidgetSessionAsync(TravelRuleWidgetSessionCreate params) {
     return client.executeAsync(createWidgetSessionRequest(params), RequestOptions.none(), CREATE_WIDGET_SESSION_RESPONSE).thenApply(RawResponse::data);
@@ -449,348 +366,244 @@ public final class TravelRuleResource {
     }
 
     /**
-     * Get Travel Rule settings
+     * {@link #retrieveSettings(RequestOptions)} with the raw response.
      *
-     * <p>Read the application's Travel Rule settings and VASP profile. Auto-creates a default (disabled) settings row and an empty profile on first read.
-     *
-     * <p>{@code GET /v3/travel-rule/settings/}
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TravelRuleSettingsDetail> retrieveSettings(RequestOptions options) {
       return client.execute(retrieveSettingsRequest(), options, RETRIEVE_SETTINGS_RESPONSE);
     }
 
     /**
-     * Get Travel Rule settings
+     * Asynchronous {@link #retrieveSettings(RequestOptions)} with the raw response.
      *
-     * <p>Read the application's Travel Rule settings and VASP profile. Auto-creates a default (disabled) settings row and an empty profile on first read.
-     *
-     * <p>{@code GET /v3/travel-rule/settings/}
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TravelRuleSettingsDetail>> retrieveSettingsAsync(RequestOptions options) {
       return client.executeAsync(retrieveSettingsRequest(), options, RETRIEVE_SETTINGS_RESPONSE);
     }
 
     /**
-     * Get Travel Rule settings
+     * {@link #retrieveSettings(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Read the application's Travel Rule settings and VASP profile. Auto-creates a default (disabled) settings row and an empty profile on first read.
-     *
-     * <p>{@code GET /v3/travel-rule/settings/}
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<TravelRuleSettingsDetail> retrieveSettings() {
       return client.execute(retrieveSettingsRequest(), RequestOptions.none(), RETRIEVE_SETTINGS_RESPONSE);
     }
 
     /**
-     * Get Travel Rule settings
+     * Asynchronous {@link #retrieveSettings(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Read the application's Travel Rule settings and VASP profile. Auto-creates a default (disabled) settings row and an empty profile on first read.
-     *
-     * <p>{@code GET /v3/travel-rule/settings/}
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TravelRuleSettingsDetail>> retrieveSettingsAsync() {
       return client.executeAsync(retrieveSettingsRequest(), RequestOptions.none(), RETRIEVE_SETTINGS_RESPONSE);
     }
 
     /**
-     * Update Travel Rule settings
-     *
-     * <p>Upsert the application's Travel Rule settings and VASP profile. Partial update — only send the fields you want to change. Setting <code>is_enabled: true</code> requires a non-blank <code>legal_name</code> (already stored or included in the same request), otherwise returns 400.
-     *
-     * <p>{@code PUT /v3/travel-rule/settings/}
+     * {@link #updateSettings(TravelRuleSettingsUpdate, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TravelRuleSettingsDetail> updateSettings(TravelRuleSettingsUpdate params, RequestOptions options) {
       return client.execute(updateSettingsRequest(params), options, UPDATE_SETTINGS_RESPONSE);
     }
 
     /**
-     * Update Travel Rule settings
-     *
-     * <p>Upsert the application's Travel Rule settings and VASP profile. Partial update — only send the fields you want to change. Setting <code>is_enabled: true</code> requires a non-blank <code>legal_name</code> (already stored or included in the same request), otherwise returns 400.
-     *
-     * <p>{@code PUT /v3/travel-rule/settings/}
+     * Asynchronous {@link #updateSettings(TravelRuleSettingsUpdate, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TravelRuleSettingsDetail>> updateSettingsAsync(TravelRuleSettingsUpdate params, RequestOptions options) {
       return client.executeAsync(updateSettingsRequest(params), options, UPDATE_SETTINGS_RESPONSE);
     }
 
     /**
-     * Update Travel Rule settings
-     *
-     * <p>Upsert the application's Travel Rule settings and VASP profile. Partial update — only send the fields you want to change. Setting <code>is_enabled: true</code> requires a non-blank <code>legal_name</code> (already stored or included in the same request), otherwise returns 400.
-     *
-     * <p>{@code PUT /v3/travel-rule/settings/}
+     * {@link #updateSettings(TravelRuleSettingsUpdate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<TravelRuleSettingsDetail> updateSettings(TravelRuleSettingsUpdate params) {
       return client.execute(updateSettingsRequest(params), RequestOptions.none(), UPDATE_SETTINGS_RESPONSE);
     }
 
     /**
-     * Update Travel Rule settings
-     *
-     * <p>Upsert the application's Travel Rule settings and VASP profile. Partial update — only send the fields you want to change. Setting <code>is_enabled: true</code> requires a non-blank <code>legal_name</code> (already stored or included in the same request), otherwise returns 400.
-     *
-     * <p>{@code PUT /v3/travel-rule/settings/}
+     * Asynchronous {@link #updateSettings(TravelRuleSettingsUpdate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TravelRuleSettingsDetail>> updateSettingsAsync(TravelRuleSettingsUpdate params) {
       return client.executeAsync(updateSettingsRequest(params), RequestOptions.none(), UPDATE_SETTINGS_RESPONSE);
     }
 
     /**
-     * Search the VASP directory
-     *
-     * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-     *
-     * <p>{@code GET /v3/travel-rule/vasps/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<VaspDirectoryEntry>> listVasps(TravelRuleListVaspsParams params, RequestOptions options) {
       return client.execute(listVaspsRequest(params), options, LIST_VASPS_RESPONSE);
     }
 
     /**
-     * Search the VASP directory
-     *
-     * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-     *
-     * <p>{@code GET /v3/travel-rule/vasps/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<VaspDirectoryEntry>>> listVaspsAsync(TravelRuleListVaspsParams params, RequestOptions options) {
       return client.executeAsync(listVaspsRequest(params), options, LIST_VASPS_RESPONSE);
     }
 
     /**
-     * Search the VASP directory
-     *
-     * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-     *
-     * <p>{@code GET /v3/travel-rule/vasps/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<VaspDirectoryEntry>> listVasps(TravelRuleListVaspsParams params) {
       return client.execute(listVaspsRequest(params), RequestOptions.none(), LIST_VASPS_RESPONSE);
     }
 
     /**
-     * Search the VASP directory
-     *
-     * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-     *
-     * <p>{@code GET /v3/travel-rule/vasps/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<VaspDirectoryEntry>>> listVaspsAsync(TravelRuleListVaspsParams params) {
       return client.executeAsync(listVaspsRequest(params), RequestOptions.none(), LIST_VASPS_RESPONSE);
     }
 
     /**
-     * Search the VASP directory
+     * {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-     *
-     * <p>{@code GET /v3/travel-rule/vasps/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<VaspDirectoryEntry>> listVasps(RequestOptions options) {
       return client.execute(listVaspsRequest(TravelRuleListVaspsParams.builder().build()), options, LIST_VASPS_RESPONSE);
     }
 
     /**
-     * Search the VASP directory
+     * Asynchronous {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-     *
-     * <p>{@code GET /v3/travel-rule/vasps/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<VaspDirectoryEntry>>> listVaspsAsync(RequestOptions options) {
       return client.executeAsync(listVaspsRequest(TravelRuleListVaspsParams.builder().build()), options, LIST_VASPS_RESPONSE);
     }
 
     /**
-     * Search the VASP directory
+     * {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-     *
-     * <p>{@code GET /v3/travel-rule/vasps/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<VaspDirectoryEntry>> listVasps() {
       return client.execute(listVaspsRequest(TravelRuleListVaspsParams.builder().build()), RequestOptions.none(), LIST_VASPS_RESPONSE);
     }
 
     /**
-     * Search the VASP directory
+     * Asynchronous {@link #listVasps(TravelRuleListVaspsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Paginated search across discoverable Didit customers with Travel Rule enabled, plus VASPs catalogued in the internal counterparty registry. Excludes your own application's profile.
-     *
-     * <p>{@code GET /v3/travel-rule/vasps/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<VaspDirectoryEntry>>> listVaspsAsync() {
       return client.executeAsync(listVaspsRequest(TravelRuleListVaspsParams.builder().build()), RequestOptions.none(), LIST_VASPS_RESPONSE);
     }
 
     /**
-     * Register an after-deposit (sunrise) inbound transfer
-     *
-     * <p>Register Travel Rule data for a crypto deposit that already settled on-chain before any exchange took place. Creates an inbound travelRule transaction (or reuses an unclaimed deposit) and resolves the transfer against your wallet address book. A transaction.created webhook fires for newly-created transactions.
-     *
-     * <p>{@code POST /v3/travel-rule/inbound/}
+     * {@link #registerInbound(TravelRuleInboundRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TravelRuleInboundResponse> registerInbound(TravelRuleInboundRequest params, RequestOptions options) {
       return client.execute(registerInboundRequest(params), options, REGISTER_INBOUND_RESPONSE);
     }
 
     /**
-     * Register an after-deposit (sunrise) inbound transfer
-     *
-     * <p>Register Travel Rule data for a crypto deposit that already settled on-chain before any exchange took place. Creates an inbound travelRule transaction (or reuses an unclaimed deposit) and resolves the transfer against your wallet address book. A transaction.created webhook fires for newly-created transactions.
-     *
-     * <p>{@code POST /v3/travel-rule/inbound/}
+     * Asynchronous {@link #registerInbound(TravelRuleInboundRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TravelRuleInboundResponse>> registerInboundAsync(TravelRuleInboundRequest params, RequestOptions options) {
       return client.executeAsync(registerInboundRequest(params), options, REGISTER_INBOUND_RESPONSE);
     }
 
     /**
-     * Register an after-deposit (sunrise) inbound transfer
-     *
-     * <p>Register Travel Rule data for a crypto deposit that already settled on-chain before any exchange took place. Creates an inbound travelRule transaction (or reuses an unclaimed deposit) and resolves the transfer against your wallet address book. A transaction.created webhook fires for newly-created transactions.
-     *
-     * <p>{@code POST /v3/travel-rule/inbound/}
+     * {@link #registerInbound(TravelRuleInboundRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<TravelRuleInboundResponse> registerInbound(TravelRuleInboundRequest params) {
       return client.execute(registerInboundRequest(params), RequestOptions.none(), REGISTER_INBOUND_RESPONSE);
     }
 
     /**
-     * Register an after-deposit (sunrise) inbound transfer
-     *
-     * <p>Register Travel Rule data for a crypto deposit that already settled on-chain before any exchange took place. Creates an inbound travelRule transaction (or reuses an unclaimed deposit) and resolves the transfer against your wallet address book. A transaction.created webhook fires for newly-created transactions.
-     *
-     * <p>{@code POST /v3/travel-rule/inbound/}
+     * Asynchronous {@link #registerInbound(TravelRuleInboundRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TravelRuleInboundResponse>> registerInboundAsync(TravelRuleInboundRequest params) {
       return client.executeAsync(registerInboundRequest(params), RequestOptions.none(), REGISTER_INBOUND_RESPONSE);
     }
 
     /**
-     * Mint a wallet-ownership widget session
-     *
-     * <p>Mint a hosted wallet-ownership widget URL/token. Send the customer to the returned url to prove control of a wallet (message signing, Satoshi test, screenshot, or self-declaration). The widget is web-only in this release - open the url in the system browser or a custom tab, never inside a mobile SDK webview.
-     *
-     * <p>{@code POST /v3/travel-rule/widget-session/}
+     * {@link #createWidgetSession(TravelRuleWidgetSessionCreate, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TravelRuleWidgetSessionResponse> createWidgetSession(TravelRuleWidgetSessionCreate params, RequestOptions options) {
       return client.execute(createWidgetSessionRequest(params), options, CREATE_WIDGET_SESSION_RESPONSE);
     }
 
     /**
-     * Mint a wallet-ownership widget session
-     *
-     * <p>Mint a hosted wallet-ownership widget URL/token. Send the customer to the returned url to prove control of a wallet (message signing, Satoshi test, screenshot, or self-declaration). The widget is web-only in this release - open the url in the system browser or a custom tab, never inside a mobile SDK webview.
-     *
-     * <p>{@code POST /v3/travel-rule/widget-session/}
+     * Asynchronous {@link #createWidgetSession(TravelRuleWidgetSessionCreate, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TravelRuleWidgetSessionResponse>> createWidgetSessionAsync(TravelRuleWidgetSessionCreate params, RequestOptions options) {
       return client.executeAsync(createWidgetSessionRequest(params), options, CREATE_WIDGET_SESSION_RESPONSE);
     }
 
     /**
-     * Mint a wallet-ownership widget session
-     *
-     * <p>Mint a hosted wallet-ownership widget URL/token. Send the customer to the returned url to prove control of a wallet (message signing, Satoshi test, screenshot, or self-declaration). The widget is web-only in this release - open the url in the system browser or a custom tab, never inside a mobile SDK webview.
-     *
-     * <p>{@code POST /v3/travel-rule/widget-session/}
+     * {@link #createWidgetSession(TravelRuleWidgetSessionCreate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<TravelRuleWidgetSessionResponse> createWidgetSession(TravelRuleWidgetSessionCreate params) {
       return client.execute(createWidgetSessionRequest(params), RequestOptions.none(), CREATE_WIDGET_SESSION_RESPONSE);
     }
 
     /**
-     * Mint a wallet-ownership widget session
-     *
-     * <p>Mint a hosted wallet-ownership widget URL/token. Send the customer to the returned url to prove control of a wallet (message signing, Satoshi test, screenshot, or self-declaration). The widget is web-only in this release - open the url in the system browser or a custom tab, never inside a mobile SDK webview.
-     *
-     * <p>{@code POST /v3/travel-rule/widget-session/}
+     * Asynchronous {@link #createWidgetSession(TravelRuleWidgetSessionCreate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TravelRuleWidgetSessionResponse>> createWidgetSessionAsync(TravelRuleWidgetSessionCreate params) {
       return client.executeAsync(createWidgetSessionRequest(params), RequestOptions.none(), CREATE_WIDGET_SESSION_RESPONSE);

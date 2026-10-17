@@ -49,43 +49,31 @@ public final class AccountApplicationsResource {
   }
 
   /**
-   * List the organization's applications
+   * Asynchronous {@link #list(String, RequestOptions)}.
    *
-   * <p>List every application in the organization. Use this to discover <code>app_id</code> values when recovering credentials from a new machine — follow with <code>GET /organizations/me/{org_id}/applications/{app_id}/</code> for the API key. Requires an owner or admin Bearer token.
-   *
-   * <p>{@code GET /organizations/me/{org_id}/applications/}
-   *
-   * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param orgId the {@code org_id}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<JsonNode> listAsync(String orgId, RequestOptions options) {
     return client.executeAsync(listRequest(orgId), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List the organization's applications
+   * Same as {@link #list(String, RequestOptions)}, with the client's options.
    *
-   * <p>List every application in the organization. Use this to discover <code>app_id</code> values when recovering credentials from a new machine — follow with <code>GET /organizations/me/{org_id}/applications/{app_id}/</code> for the API key. Requires an owner or admin Bearer token.
-   *
-   * <p>{@code GET /organizations/me/{org_id}/applications/}
-   *
-   * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-   * @return the response body
+   * @param orgId the {@code org_id}
+   * @return the result
    */
   public JsonNode list(String orgId) {
     return client.execute(listRequest(orgId), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List the organization's applications
+   * Asynchronous {@link #list(String, RequestOptions)}, with the client's options.
    *
-   * <p>List every application in the organization. Use this to discover <code>app_id</code> values when recovering credentials from a new machine — follow with <code>GET /organizations/me/{org_id}/applications/{app_id}/</code> for the API key. Requires an owner or admin Bearer token.
-   *
-   * <p>{@code GET /organizations/me/{org_id}/applications/}
-   *
-   * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-   * @return a future completed with the response body
+   * @param orgId the {@code org_id}
+   * @return a future completed with the result
    */
   public CompletableFuture<JsonNode> listAsync(String orgId) {
     return client.executeAsync(listRequest(orgId), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -108,104 +96,76 @@ public final class AccountApplicationsResource {
   }
 
   /**
-   * Create Application
+   * Asynchronous {@link #create(String, ApplicationCreateRequest, RequestOptions)}.
    *
-   * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-   *
-   * <p>{@code POST /organizations/me/{org_id}/applications/}
-   *
-   * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
+   * @param orgId the {@code org_id}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Application> createAsync(String orgId, ApplicationCreateRequest params, RequestOptions options) {
     return client.executeAsync(createRequest(orgId, params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create Application
+   * Same as {@link #create(String, ApplicationCreateRequest, RequestOptions)}, with the client's options.
    *
-   * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-   *
-   * <p>{@code POST /organizations/me/{org_id}/applications/}
-   *
-   * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
+   * @param orgId the {@code org_id}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Application create(String orgId, ApplicationCreateRequest params) {
     return client.execute(createRequest(orgId, params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create Application
+   * Asynchronous {@link #create(String, ApplicationCreateRequest, RequestOptions)}, with the client's options.
    *
-   * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-   *
-   * <p>{@code POST /organizations/me/{org_id}/applications/}
-   *
-   * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
+   * @param orgId the {@code org_id}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Application> createAsync(String orgId, ApplicationCreateRequest params) {
     return client.executeAsync(createRequest(orgId, params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create Application
+   * Same as {@link #create(String, ApplicationCreateRequest, RequestOptions)}, without parameters.
    *
-   * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-   *
-   * <p>{@code POST /organizations/me/{org_id}/applications/}
-   *
-   * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param orgId the {@code org_id}
+   * @param options per-request options
+   * @return the result
    */
   public Application create(String orgId, RequestOptions options) {
     return client.execute(createRequest(orgId, ApplicationCreateRequest.builder().build()), options, CREATE_RESPONSE).data();
   }
 
   /**
-   * Create Application
+   * Asynchronous {@link #create(String, ApplicationCreateRequest, RequestOptions)}, without parameters.
    *
-   * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-   *
-   * <p>{@code POST /organizations/me/{org_id}/applications/}
-   *
-   * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param orgId the {@code org_id}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Application> createAsync(String orgId, RequestOptions options) {
     return client.executeAsync(createRequest(orgId, ApplicationCreateRequest.builder().build()), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create Application
+   * Same as {@link #create(String, ApplicationCreateRequest, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-   *
-   * <p>{@code POST /organizations/me/{org_id}/applications/}
-   *
-   * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-   * @return the response body
+   * @param orgId the {@code org_id}
+   * @return the result
    */
   public Application create(String orgId) {
     return client.execute(createRequest(orgId, ApplicationCreateRequest.builder().build()), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create Application
+   * Asynchronous {@link #create(String, ApplicationCreateRequest, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-   *
-   * <p>{@code POST /organizations/me/{org_id}/applications/}
-   *
-   * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-   * @return a future completed with the response body
+   * @param orgId the {@code org_id}
+   * @return a future completed with the result
    */
   public CompletableFuture<Application> createAsync(String orgId) {
     return client.executeAsync(createRequest(orgId, ApplicationCreateRequest.builder().build()), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -228,46 +188,34 @@ public final class AccountApplicationsResource {
   }
 
   /**
-   * Get Application Credentials
+   * Asynchronous {@link #retrieve(String, String, RequestOptions)}.
    *
-   * <p>Read one application's full record including <code>client_id</code> and <code>api_key</code>. Use this to recover a lost <code>api_key</code>.
-   *
-   * <p>{@code GET /organizations/me/{org_id}/applications/{app_id}/}
-   *
-   * @param orgId UUID of the organization that owns the application.
-   * @param appId UUID of the application whose credentials you want to read.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param orgId the {@code org_id}
+   * @param appId the {@code app_id}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Application> retrieveAsync(String orgId, String appId, RequestOptions options) {
     return client.executeAsync(retrieveRequest(orgId, appId), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get Application Credentials
+   * Same as {@link #retrieve(String, String, RequestOptions)}, with the client's options.
    *
-   * <p>Read one application's full record including <code>client_id</code> and <code>api_key</code>. Use this to recover a lost <code>api_key</code>.
-   *
-   * <p>{@code GET /organizations/me/{org_id}/applications/{app_id}/}
-   *
-   * @param orgId UUID of the organization that owns the application.
-   * @param appId UUID of the application whose credentials you want to read.
-   * @return the response body
+   * @param orgId the {@code org_id}
+   * @param appId the {@code app_id}
+   * @return the result
    */
   public Application retrieve(String orgId, String appId) {
     return client.execute(retrieveRequest(orgId, appId), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get Application Credentials
+   * Asynchronous {@link #retrieve(String, String, RequestOptions)}, with the client's options.
    *
-   * <p>Read one application's full record including <code>client_id</code> and <code>api_key</code>. Use this to recover a lost <code>api_key</code>.
-   *
-   * <p>{@code GET /organizations/me/{org_id}/applications/{app_id}/}
-   *
-   * @param orgId UUID of the organization that owns the application.
-   * @param appId UUID of the application whose credentials you want to read.
-   * @return a future completed with the response body
+   * @param orgId the {@code org_id}
+   * @param appId the {@code app_id}
+   * @return a future completed with the result
    */
   public CompletableFuture<Application> retrieveAsync(String orgId, String appId) {
     return client.executeAsync(retrieveRequest(orgId, appId), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -291,49 +239,37 @@ public final class AccountApplicationsResource {
   }
 
   /**
-   * Update Application
+   * Asynchronous {@link #update(String, String, ApplicationUpdateRequest, RequestOptions)}.
    *
-   * <p>Update application metadata (name, URLs, redirect URIs). <code>api_key</code> and <code>client_id</code> are never rotated. Requires owner/admin JWT.
-   *
-   * <p>{@code PATCH /organizations/me/{org_id}/applications/{app_id}/}
-   *
-   * @param orgId UUID of the organization that owns the application.
-   * @param appId UUID of the application to update.
+   * @param orgId the {@code org_id}
+   * @param appId the {@code app_id}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Application> updateAsync(String orgId, String appId, ApplicationUpdateRequest params, RequestOptions options) {
     return client.executeAsync(updateRequest(orgId, appId, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update Application
+   * Same as {@link #update(String, String, ApplicationUpdateRequest, RequestOptions)}, with the client's options.
    *
-   * <p>Update application metadata (name, URLs, redirect URIs). <code>api_key</code> and <code>client_id</code> are never rotated. Requires owner/admin JWT.
-   *
-   * <p>{@code PATCH /organizations/me/{org_id}/applications/{app_id}/}
-   *
-   * @param orgId UUID of the organization that owns the application.
-   * @param appId UUID of the application to update.
+   * @param orgId the {@code org_id}
+   * @param appId the {@code app_id}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Application update(String orgId, String appId, ApplicationUpdateRequest params) {
     return client.execute(updateRequest(orgId, appId, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update Application
+   * Asynchronous {@link #update(String, String, ApplicationUpdateRequest, RequestOptions)}, with the client's options.
    *
-   * <p>Update application metadata (name, URLs, redirect URIs). <code>api_key</code> and <code>client_id</code> are never rotated. Requires owner/admin JWT.
-   *
-   * <p>{@code PATCH /organizations/me/{org_id}/applications/{app_id}/}
-   *
-   * @param orgId UUID of the organization that owns the application.
-   * @param appId UUID of the application to update.
+   * @param orgId the {@code org_id}
+   * @param appId the {@code app_id}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Application> updateAsync(String orgId, String appId, ApplicationUpdateRequest params) {
     return client.executeAsync(updateRequest(orgId, appId, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -394,306 +330,226 @@ public final class AccountApplicationsResource {
     }
 
     /**
-     * List the organization's applications
+     * {@link #list(String, RequestOptions)} with the raw response.
      *
-     * <p>List every application in the organization. Use this to discover <code>app_id</code> values when recovering credentials from a new machine — follow with <code>GET /organizations/me/{org_id}/applications/{app_id}/</code> for the API key. Requires an owner or admin Bearer token.
-     *
-     * <p>{@code GET /organizations/me/{org_id}/applications/}
-     *
-     * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param orgId the {@code org_id}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<JsonNode> list(String orgId, RequestOptions options) {
       return client.execute(listRequest(orgId), options, LIST_RESPONSE);
     }
 
     /**
-     * List the organization's applications
+     * Asynchronous {@link #list(String, RequestOptions)} with the raw response.
      *
-     * <p>List every application in the organization. Use this to discover <code>app_id</code> values when recovering credentials from a new machine — follow with <code>GET /organizations/me/{org_id}/applications/{app_id}/</code> for the API key. Requires an owner or admin Bearer token.
-     *
-     * <p>{@code GET /organizations/me/{org_id}/applications/}
-     *
-     * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param orgId the {@code org_id}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<JsonNode>> listAsync(String orgId, RequestOptions options) {
       return client.executeAsync(listRequest(orgId), options, LIST_RESPONSE);
     }
 
     /**
-     * List the organization's applications
+     * {@link #list(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List every application in the organization. Use this to discover <code>app_id</code> values when recovering credentials from a new machine — follow with <code>GET /organizations/me/{org_id}/applications/{app_id}/</code> for the API key. Requires an owner or admin Bearer token.
-     *
-     * <p>{@code GET /organizations/me/{org_id}/applications/}
-     *
-     * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param orgId the {@code org_id}
+     * @return the result
      */
     public RawResponse<JsonNode> list(String orgId) {
       return client.execute(listRequest(orgId), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List the organization's applications
+     * Asynchronous {@link #list(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List every application in the organization. Use this to discover <code>app_id</code> values when recovering credentials from a new machine — follow with <code>GET /organizations/me/{org_id}/applications/{app_id}/</code> for the API key. Requires an owner or admin Bearer token.
-     *
-     * <p>{@code GET /organizations/me/{org_id}/applications/}
-     *
-     * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-     * @return a future completed with the raw response
+     * @param orgId the {@code org_id}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<JsonNode>> listAsync(String orgId) {
       return client.executeAsync(listRequest(orgId), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Create Application
+     * {@link #create(String, ApplicationCreateRequest, RequestOptions)} with the raw response.
      *
-     * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-     *
-     * <p>{@code POST /organizations/me/{org_id}/applications/}
-     *
-     * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
+     * @param orgId the {@code org_id}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Application> create(String orgId, ApplicationCreateRequest params, RequestOptions options) {
       return client.execute(createRequest(orgId, params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create Application
+     * Asynchronous {@link #create(String, ApplicationCreateRequest, RequestOptions)} with the raw response.
      *
-     * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-     *
-     * <p>{@code POST /organizations/me/{org_id}/applications/}
-     *
-     * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
+     * @param orgId the {@code org_id}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Application>> createAsync(String orgId, ApplicationCreateRequest params, RequestOptions options) {
       return client.executeAsync(createRequest(orgId, params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create Application
+     * {@link #create(String, ApplicationCreateRequest, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-     *
-     * <p>{@code POST /organizations/me/{org_id}/applications/}
-     *
-     * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
+     * @param orgId the {@code org_id}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Application> create(String orgId, ApplicationCreateRequest params) {
       return client.execute(createRequest(orgId, params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create Application
+     * Asynchronous {@link #create(String, ApplicationCreateRequest, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-     *
-     * <p>{@code POST /organizations/me/{org_id}/applications/}
-     *
-     * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
+     * @param orgId the {@code org_id}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Application>> createAsync(String orgId, ApplicationCreateRequest params) {
       return client.executeAsync(createRequest(orgId, params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create Application
+     * {@link #create(String, ApplicationCreateRequest, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-     *
-     * <p>{@code POST /organizations/me/{org_id}/applications/}
-     *
-     * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param orgId the {@code org_id}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Application> create(String orgId, RequestOptions options) {
       return client.execute(createRequest(orgId, ApplicationCreateRequest.builder().build()), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create Application
+     * Asynchronous {@link #create(String, ApplicationCreateRequest, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-     *
-     * <p>{@code POST /organizations/me/{org_id}/applications/}
-     *
-     * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param orgId the {@code org_id}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Application>> createAsync(String orgId, RequestOptions options) {
       return client.executeAsync(createRequest(orgId, ApplicationCreateRequest.builder().build()), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create Application
+     * {@link #create(String, ApplicationCreateRequest, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-     *
-     * <p>{@code POST /organizations/me/{org_id}/applications/}
-     *
-     * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param orgId the {@code org_id}
+     * @return the result
      */
     public RawResponse<Application> create(String orgId) {
       return client.execute(createRequest(orgId, ApplicationCreateRequest.builder().build()), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create Application
+     * Asynchronous {@link #create(String, ApplicationCreateRequest, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
-     *
-     * <p>{@code POST /organizations/me/{org_id}/applications/}
-     *
-     * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
-     * @return a future completed with the raw response
+     * @param orgId the {@code org_id}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Application>> createAsync(String orgId) {
       return client.executeAsync(createRequest(orgId, ApplicationCreateRequest.builder().build()), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Get Application Credentials
+     * {@link #retrieve(String, String, RequestOptions)} with the raw response.
      *
-     * <p>Read one application's full record including <code>client_id</code> and <code>api_key</code>. Use this to recover a lost <code>api_key</code>.
-     *
-     * <p>{@code GET /organizations/me/{org_id}/applications/{app_id}/}
-     *
-     * @param orgId UUID of the organization that owns the application.
-     * @param appId UUID of the application whose credentials you want to read.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param orgId the {@code org_id}
+     * @param appId the {@code app_id}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Application> retrieve(String orgId, String appId, RequestOptions options) {
       return client.execute(retrieveRequest(orgId, appId), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get Application Credentials
+     * Asynchronous {@link #retrieve(String, String, RequestOptions)} with the raw response.
      *
-     * <p>Read one application's full record including <code>client_id</code> and <code>api_key</code>. Use this to recover a lost <code>api_key</code>.
-     *
-     * <p>{@code GET /organizations/me/{org_id}/applications/{app_id}/}
-     *
-     * @param orgId UUID of the organization that owns the application.
-     * @param appId UUID of the application whose credentials you want to read.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param orgId the {@code org_id}
+     * @param appId the {@code app_id}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Application>> retrieveAsync(String orgId, String appId, RequestOptions options) {
       return client.executeAsync(retrieveRequest(orgId, appId), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get Application Credentials
+     * {@link #retrieve(String, String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Read one application's full record including <code>client_id</code> and <code>api_key</code>. Use this to recover a lost <code>api_key</code>.
-     *
-     * <p>{@code GET /organizations/me/{org_id}/applications/{app_id}/}
-     *
-     * @param orgId UUID of the organization that owns the application.
-     * @param appId UUID of the application whose credentials you want to read.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param orgId the {@code org_id}
+     * @param appId the {@code app_id}
+     * @return the result
      */
     public RawResponse<Application> retrieve(String orgId, String appId) {
       return client.execute(retrieveRequest(orgId, appId), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get Application Credentials
+     * Asynchronous {@link #retrieve(String, String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Read one application's full record including <code>client_id</code> and <code>api_key</code>. Use this to recover a lost <code>api_key</code>.
-     *
-     * <p>{@code GET /organizations/me/{org_id}/applications/{app_id}/}
-     *
-     * @param orgId UUID of the organization that owns the application.
-     * @param appId UUID of the application whose credentials you want to read.
-     * @return a future completed with the raw response
+     * @param orgId the {@code org_id}
+     * @param appId the {@code app_id}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Application>> retrieveAsync(String orgId, String appId) {
       return client.executeAsync(retrieveRequest(orgId, appId), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Update Application
+     * {@link #update(String, String, ApplicationUpdateRequest, RequestOptions)} with the raw response.
      *
-     * <p>Update application metadata (name, URLs, redirect URIs). <code>api_key</code> and <code>client_id</code> are never rotated. Requires owner/admin JWT.
-     *
-     * <p>{@code PATCH /organizations/me/{org_id}/applications/{app_id}/}
-     *
-     * @param orgId UUID of the organization that owns the application.
-     * @param appId UUID of the application to update.
+     * @param orgId the {@code org_id}
+     * @param appId the {@code app_id}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Application> update(String orgId, String appId, ApplicationUpdateRequest params, RequestOptions options) {
       return client.execute(updateRequest(orgId, appId, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update Application
+     * Asynchronous {@link #update(String, String, ApplicationUpdateRequest, RequestOptions)} with the raw response.
      *
-     * <p>Update application metadata (name, URLs, redirect URIs). <code>api_key</code> and <code>client_id</code> are never rotated. Requires owner/admin JWT.
-     *
-     * <p>{@code PATCH /organizations/me/{org_id}/applications/{app_id}/}
-     *
-     * @param orgId UUID of the organization that owns the application.
-     * @param appId UUID of the application to update.
+     * @param orgId the {@code org_id}
+     * @param appId the {@code app_id}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Application>> updateAsync(String orgId, String appId, ApplicationUpdateRequest params, RequestOptions options) {
       return client.executeAsync(updateRequest(orgId, appId, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update Application
+     * {@link #update(String, String, ApplicationUpdateRequest, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Update application metadata (name, URLs, redirect URIs). <code>api_key</code> and <code>client_id</code> are never rotated. Requires owner/admin JWT.
-     *
-     * <p>{@code PATCH /organizations/me/{org_id}/applications/{app_id}/}
-     *
-     * @param orgId UUID of the organization that owns the application.
-     * @param appId UUID of the application to update.
+     * @param orgId the {@code org_id}
+     * @param appId the {@code app_id}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Application> update(String orgId, String appId, ApplicationUpdateRequest params) {
       return client.execute(updateRequest(orgId, appId, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update Application
+     * Asynchronous {@link #update(String, String, ApplicationUpdateRequest, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Update application metadata (name, URLs, redirect URIs). <code>api_key</code> and <code>client_id</code> are never rotated. Requires owner/admin JWT.
-     *
-     * <p>{@code PATCH /organizations/me/{org_id}/applications/{app_id}/}
-     *
-     * @param orgId UUID of the organization that owns the application.
-     * @param appId UUID of the application to update.
+     * @param orgId the {@code org_id}
+     * @param appId the {@code app_id}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Application>> updateAsync(String orgId, String appId, ApplicationUpdateRequest params) {
       return client.executeAsync(updateRequest(orgId, appId, params), RequestOptions.none(), UPDATE_RESPONSE);

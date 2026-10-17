@@ -48,43 +48,31 @@ public final class FraudChecksResource {
   }
 
   /**
-   * Retrieve a Fraud Check
-   *
-   * <p>Fetch a previously created check by its <code>check_id</code>.
-   *
-   * <p>{@code GET /v3/fraud/checks/{check_id}/}
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
    * @param checkId the {@code check_id}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<FraudCheckResponse> retrieveAsync(String checkId, RequestOptions options) {
     return client.executeAsync(retrieveRequest(checkId), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Retrieve a Fraud Check
-   *
-   * <p>Fetch a previously created check by its <code>check_id</code>.
-   *
-   * <p>{@code GET /v3/fraud/checks/{check_id}/}
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
    * @param checkId the {@code check_id}
-   * @return the response body
+   * @return the result
    */
   public FraudCheckResponse retrieve(String checkId) {
     return client.execute(retrieveRequest(checkId), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Retrieve a Fraud Check
-   *
-   * <p>Fetch a previously created check by its <code>check_id</code>.
-   *
-   * <p>{@code GET /v3/fraud/checks/{check_id}/}
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
    * @param checkId the {@code check_id}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<FraudCheckResponse> retrieveAsync(String checkId) {
     return client.executeAsync(retrieveRequest(checkId), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -108,49 +96,31 @@ public final class FraudChecksResource {
   }
 
   /**
-   * Run a Fraud Check
-   *
-   * <p>Submit one or more typed identifiers and receive normalization, fresh enrichment, authoritative validation where the country and identifier type are covered, independent risk dimensions and a recommendation in one response.
-   *
-   * <p>These profiles support identifier checks. Selfie-based identity binding (<code>biometric_identity</code>) requires profile version <code>2026-09-14.2</code> and a Brazilian CPF; it runs only with the user's consent and when your organization is entitled to it. Earlier versions report it as <code>not_available_in_profile_version</code>. Modules that cannot run are reported as skipped with a deterministic reason; a source that could not answer is never reported as an identity mismatch.
-   *
-   * <p>{@code POST /v3/fraud/checks/}
+   * Asynchronous {@link #create(FraudCheckRequestRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<FraudCheckResponse> createAsync(FraudCheckRequestRequest params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Run a Fraud Check
-   *
-   * <p>Submit one or more typed identifiers and receive normalization, fresh enrichment, authoritative validation where the country and identifier type are covered, independent risk dimensions and a recommendation in one response.
-   *
-   * <p>These profiles support identifier checks. Selfie-based identity binding (<code>biometric_identity</code>) requires profile version <code>2026-09-14.2</code> and a Brazilian CPF; it runs only with the user's consent and when your organization is entitled to it. Earlier versions report it as <code>not_available_in_profile_version</code>. Modules that cannot run are reported as skipped with a deterministic reason; a source that could not answer is never reported as an identity mismatch.
-   *
-   * <p>{@code POST /v3/fraud/checks/}
+   * Same as {@link #create(FraudCheckRequestRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public FraudCheckResponse create(FraudCheckRequestRequest params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Run a Fraud Check
-   *
-   * <p>Submit one or more typed identifiers and receive normalization, fresh enrichment, authoritative validation where the country and identifier type are covered, independent risk dimensions and a recommendation in one response.
-   *
-   * <p>These profiles support identifier checks. Selfie-based identity binding (<code>biometric_identity</code>) requires profile version <code>2026-09-14.2</code> and a Brazilian CPF; it runs only with the user's consent and when your organization is entitled to it. Earlier versions report it as <code>not_available_in_profile_version</code>. Modules that cannot run are reported as skipped with a deterministic reason; a source that could not answer is never reported as an identity mismatch.
-   *
-   * <p>{@code POST /v3/fraud/checks/}
+   * Asynchronous {@link #create(FraudCheckRequestRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<FraudCheckResponse> createAsync(FraudCheckRequestRequest params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -172,43 +142,31 @@ public final class FraudChecksResource {
   }
 
   /**
-   * Plan a Fraud Check
-   *
-   * <p>Validate selected checks and estimate their price without executing, creating a session or billing.
-   *
-   * <p>{@code POST /v3/fraud/checks/plan/}
+   * Asynchronous {@link #plan(FraudCheckRequestRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<FraudCheckPlan> planAsync(FraudCheckRequestRequest params, RequestOptions options) {
     return client.executeAsync(planRequest(params), options, PLAN_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Plan a Fraud Check
-   *
-   * <p>Validate selected checks and estimate their price without executing, creating a session or billing.
-   *
-   * <p>{@code POST /v3/fraud/checks/plan/}
+   * Same as {@link #plan(FraudCheckRequestRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public FraudCheckPlan plan(FraudCheckRequestRequest params) {
     return client.execute(planRequest(params), RequestOptions.none(), PLAN_RESPONSE).data();
   }
 
   /**
-   * Plan a Fraud Check
-   *
-   * <p>Validate selected checks and estimate their price without executing, creating a session or billing.
-   *
-   * <p>{@code POST /v3/fraud/checks/plan/}
+   * Asynchronous {@link #plan(FraudCheckRequestRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<FraudCheckPlan> planAsync(FraudCheckRequestRequest params) {
     return client.executeAsync(planRequest(params), RequestOptions.none(), PLAN_RESPONSE).thenApply(RawResponse::data);
@@ -249,182 +207,126 @@ public final class FraudChecksResource {
     }
 
     /**
-     * Retrieve a Fraud Check
-     *
-     * <p>Fetch a previously created check by its <code>check_id</code>.
-     *
-     * <p>{@code GET /v3/fraud/checks/{check_id}/}
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
      * @param checkId the {@code check_id}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<FraudCheckResponse> retrieve(String checkId, RequestOptions options) {
       return client.execute(retrieveRequest(checkId), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Retrieve a Fraud Check
-     *
-     * <p>Fetch a previously created check by its <code>check_id</code>.
-     *
-     * <p>{@code GET /v3/fraud/checks/{check_id}/}
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
      * @param checkId the {@code check_id}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<FraudCheckResponse>> retrieveAsync(String checkId, RequestOptions options) {
       return client.executeAsync(retrieveRequest(checkId), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Retrieve a Fraud Check
-     *
-     * <p>Fetch a previously created check by its <code>check_id</code>.
-     *
-     * <p>{@code GET /v3/fraud/checks/{check_id}/}
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param checkId the {@code check_id}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<FraudCheckResponse> retrieve(String checkId) {
       return client.execute(retrieveRequest(checkId), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Retrieve a Fraud Check
-     *
-     * <p>Fetch a previously created check by its <code>check_id</code>.
-     *
-     * <p>{@code GET /v3/fraud/checks/{check_id}/}
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param checkId the {@code check_id}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<FraudCheckResponse>> retrieveAsync(String checkId) {
       return client.executeAsync(retrieveRequest(checkId), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Run a Fraud Check
-     *
-     * <p>Submit one or more typed identifiers and receive normalization, fresh enrichment, authoritative validation where the country and identifier type are covered, independent risk dimensions and a recommendation in one response.
-     *
-     * <p>These profiles support identifier checks. Selfie-based identity binding (<code>biometric_identity</code>) requires profile version <code>2026-09-14.2</code> and a Brazilian CPF; it runs only with the user's consent and when your organization is entitled to it. Earlier versions report it as <code>not_available_in_profile_version</code>. Modules that cannot run are reported as skipped with a deterministic reason; a source that could not answer is never reported as an identity mismatch.
-     *
-     * <p>{@code POST /v3/fraud/checks/}
+     * {@link #create(FraudCheckRequestRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<FraudCheckResponse> create(FraudCheckRequestRequest params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Run a Fraud Check
-     *
-     * <p>Submit one or more typed identifiers and receive normalization, fresh enrichment, authoritative validation where the country and identifier type are covered, independent risk dimensions and a recommendation in one response.
-     *
-     * <p>These profiles support identifier checks. Selfie-based identity binding (<code>biometric_identity</code>) requires profile version <code>2026-09-14.2</code> and a Brazilian CPF; it runs only with the user's consent and when your organization is entitled to it. Earlier versions report it as <code>not_available_in_profile_version</code>. Modules that cannot run are reported as skipped with a deterministic reason; a source that could not answer is never reported as an identity mismatch.
-     *
-     * <p>{@code POST /v3/fraud/checks/}
+     * Asynchronous {@link #create(FraudCheckRequestRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<FraudCheckResponse>> createAsync(FraudCheckRequestRequest params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Run a Fraud Check
-     *
-     * <p>Submit one or more typed identifiers and receive normalization, fresh enrichment, authoritative validation where the country and identifier type are covered, independent risk dimensions and a recommendation in one response.
-     *
-     * <p>These profiles support identifier checks. Selfie-based identity binding (<code>biometric_identity</code>) requires profile version <code>2026-09-14.2</code> and a Brazilian CPF; it runs only with the user's consent and when your organization is entitled to it. Earlier versions report it as <code>not_available_in_profile_version</code>. Modules that cannot run are reported as skipped with a deterministic reason; a source that could not answer is never reported as an identity mismatch.
-     *
-     * <p>{@code POST /v3/fraud/checks/}
+     * {@link #create(FraudCheckRequestRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<FraudCheckResponse> create(FraudCheckRequestRequest params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Run a Fraud Check
-     *
-     * <p>Submit one or more typed identifiers and receive normalization, fresh enrichment, authoritative validation where the country and identifier type are covered, independent risk dimensions and a recommendation in one response.
-     *
-     * <p>These profiles support identifier checks. Selfie-based identity binding (<code>biometric_identity</code>) requires profile version <code>2026-09-14.2</code> and a Brazilian CPF; it runs only with the user's consent and when your organization is entitled to it. Earlier versions report it as <code>not_available_in_profile_version</code>. Modules that cannot run are reported as skipped with a deterministic reason; a source that could not answer is never reported as an identity mismatch.
-     *
-     * <p>{@code POST /v3/fraud/checks/}
+     * Asynchronous {@link #create(FraudCheckRequestRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<FraudCheckResponse>> createAsync(FraudCheckRequestRequest params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Plan a Fraud Check
-     *
-     * <p>Validate selected checks and estimate their price without executing, creating a session or billing.
-     *
-     * <p>{@code POST /v3/fraud/checks/plan/}
+     * {@link #plan(FraudCheckRequestRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<FraudCheckPlan> plan(FraudCheckRequestRequest params, RequestOptions options) {
       return client.execute(planRequest(params), options, PLAN_RESPONSE);
     }
 
     /**
-     * Plan a Fraud Check
-     *
-     * <p>Validate selected checks and estimate their price without executing, creating a session or billing.
-     *
-     * <p>{@code POST /v3/fraud/checks/plan/}
+     * Asynchronous {@link #plan(FraudCheckRequestRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<FraudCheckPlan>> planAsync(FraudCheckRequestRequest params, RequestOptions options) {
       return client.executeAsync(planRequest(params), options, PLAN_RESPONSE);
     }
 
     /**
-     * Plan a Fraud Check
-     *
-     * <p>Validate selected checks and estimate their price without executing, creating a session or billing.
-     *
-     * <p>{@code POST /v3/fraud/checks/plan/}
+     * {@link #plan(FraudCheckRequestRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<FraudCheckPlan> plan(FraudCheckRequestRequest params) {
       return client.execute(planRequest(params), RequestOptions.none(), PLAN_RESPONSE);
     }
 
     /**
-     * Plan a Fraud Check
-     *
-     * <p>Validate selected checks and estimate their price without executing, creating a session or billing.
-     *
-     * <p>{@code POST /v3/fraud/checks/plan/}
+     * Asynchronous {@link #plan(FraudCheckRequestRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<FraudCheckPlan>> planAsync(FraudCheckRequestRequest params) {
       return client.executeAsync(planRequest(params), RequestOptions.none(), PLAN_RESPONSE);

@@ -49,46 +49,34 @@ public final class TransactionsTravelRuleResource {
   }
 
   /**
-   * Finish, cancel, or resend a Travel Rule transfer
+   * Asynchronous {@link #updateTransfer(String, TravelRuleTransferPatchRequest, RequestOptions)}.
    *
-   * <p>Provide <code>payment_txn_id</code> to report the on-chain hash and move an outbound COMPLETED transfer to FINISHED (its INTERNAL-rail counterpart also moves to FINISHED), <code>{"action": "cancel"}</code> to cancel a non-terminal transfer, or <code>{"action": "resend"}</code> to re-run routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA (improve the counterparty data first, e.g. add a travel_address to the destination wallet entry).
-   *
-   * <p>{@code PATCH /v3/transactions/{transaction_id}/travel-rule/}
-   *
-   * @param transactionId Didit-stable transaction UUID that owns the transfer.
+   * @param transactionId the {@code transaction_id}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TravelRuleTransferDetail> updateTransferAsync(String transactionId, TravelRuleTransferPatchRequest params, RequestOptions options) {
     return client.executeAsync(updateTransferRequest(transactionId, params), options, UPDATE_TRANSFER_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Finish, cancel, or resend a Travel Rule transfer
+   * Same as {@link #updateTransfer(String, TravelRuleTransferPatchRequest, RequestOptions)}, with the client's options.
    *
-   * <p>Provide <code>payment_txn_id</code> to report the on-chain hash and move an outbound COMPLETED transfer to FINISHED (its INTERNAL-rail counterpart also moves to FINISHED), <code>{"action": "cancel"}</code> to cancel a non-terminal transfer, or <code>{"action": "resend"}</code> to re-run routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA (improve the counterparty data first, e.g. add a travel_address to the destination wallet entry).
-   *
-   * <p>{@code PATCH /v3/transactions/{transaction_id}/travel-rule/}
-   *
-   * @param transactionId Didit-stable transaction UUID that owns the transfer.
+   * @param transactionId the {@code transaction_id}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public TravelRuleTransferDetail updateTransfer(String transactionId, TravelRuleTransferPatchRequest params) {
     return client.execute(updateTransferRequest(transactionId, params), RequestOptions.none(), UPDATE_TRANSFER_RESPONSE).data();
   }
 
   /**
-   * Finish, cancel, or resend a Travel Rule transfer
+   * Asynchronous {@link #updateTransfer(String, TravelRuleTransferPatchRequest, RequestOptions)}, with the client's options.
    *
-   * <p>Provide <code>payment_txn_id</code> to report the on-chain hash and move an outbound COMPLETED transfer to FINISHED (its INTERNAL-rail counterpart also moves to FINISHED), <code>{"action": "cancel"}</code> to cancel a non-terminal transfer, or <code>{"action": "resend"}</code> to re-run routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA (improve the counterparty data first, e.g. add a travel_address to the destination wallet entry).
-   *
-   * <p>{@code PATCH /v3/transactions/{transaction_id}/travel-rule/}
-   *
-   * @param transactionId Didit-stable transaction UUID that owns the transfer.
+   * @param transactionId the {@code transaction_id}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<TravelRuleTransferDetail> updateTransferAsync(String transactionId, TravelRuleTransferPatchRequest params) {
     return client.executeAsync(updateTransferRequest(transactionId, params), RequestOptions.none(), UPDATE_TRANSFER_RESPONSE).thenApply(RawResponse::data);
@@ -111,46 +99,34 @@ public final class TransactionsTravelRuleResource {
   }
 
   /**
-   * Confirm or deny wallet ownership
+   * Asynchronous {@link #confirmOwnership(String, TravelRuleOwnershipConfirmRequest, RequestOptions)}.
    *
-   * <p>Called by the beneficiary's application when its INTERNAL-rail transfer is UNCONFIRMED_OWNERSHIP. Confirming marks the matching wallet address book entry as ownership-verified and runs the beneficiary name match on both sides of the transfer; denying declines both sides.
-   *
-   * <p>{@code POST /v3/transactions/{transaction_id}/travel-rule/ownership/}
-   *
-   * @param transactionId Didit-stable transaction UUID that owns the transfer (the beneficiary side's transaction).
+   * @param transactionId the {@code transaction_id}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TravelRuleTransferDetail> confirmOwnershipAsync(String transactionId, TravelRuleOwnershipConfirmRequest params, RequestOptions options) {
     return client.executeAsync(confirmOwnershipRequest(transactionId, params), options, CONFIRM_OWNERSHIP_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Confirm or deny wallet ownership
+   * Same as {@link #confirmOwnership(String, TravelRuleOwnershipConfirmRequest, RequestOptions)}, with the client's options.
    *
-   * <p>Called by the beneficiary's application when its INTERNAL-rail transfer is UNCONFIRMED_OWNERSHIP. Confirming marks the matching wallet address book entry as ownership-verified and runs the beneficiary name match on both sides of the transfer; denying declines both sides.
-   *
-   * <p>{@code POST /v3/transactions/{transaction_id}/travel-rule/ownership/}
-   *
-   * @param transactionId Didit-stable transaction UUID that owns the transfer (the beneficiary side's transaction).
+   * @param transactionId the {@code transaction_id}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public TravelRuleTransferDetail confirmOwnership(String transactionId, TravelRuleOwnershipConfirmRequest params) {
     return client.execute(confirmOwnershipRequest(transactionId, params), RequestOptions.none(), CONFIRM_OWNERSHIP_RESPONSE).data();
   }
 
   /**
-   * Confirm or deny wallet ownership
+   * Asynchronous {@link #confirmOwnership(String, TravelRuleOwnershipConfirmRequest, RequestOptions)}, with the client's options.
    *
-   * <p>Called by the beneficiary's application when its INTERNAL-rail transfer is UNCONFIRMED_OWNERSHIP. Confirming marks the matching wallet address book entry as ownership-verified and runs the beneficiary name match on both sides of the transfer; denying declines both sides.
-   *
-   * <p>{@code POST /v3/transactions/{transaction_id}/travel-rule/ownership/}
-   *
-   * @param transactionId Didit-stable transaction UUID that owns the transfer (the beneficiary side's transaction).
+   * @param transactionId the {@code transaction_id}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<TravelRuleTransferDetail> confirmOwnershipAsync(String transactionId, TravelRuleOwnershipConfirmRequest params) {
     return client.executeAsync(confirmOwnershipRequest(transactionId, params), RequestOptions.none(), CONFIRM_OWNERSHIP_RESPONSE).thenApply(RawResponse::data);
@@ -185,124 +161,92 @@ public final class TransactionsTravelRuleResource {
     }
 
     /**
-     * Finish, cancel, or resend a Travel Rule transfer
+     * {@link #updateTransfer(String, TravelRuleTransferPatchRequest, RequestOptions)} with the raw response.
      *
-     * <p>Provide <code>payment_txn_id</code> to report the on-chain hash and move an outbound COMPLETED transfer to FINISHED (its INTERNAL-rail counterpart also moves to FINISHED), <code>{"action": "cancel"}</code> to cancel a non-terminal transfer, or <code>{"action": "resend"}</code> to re-run routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA (improve the counterparty data first, e.g. add a travel_address to the destination wallet entry).
-     *
-     * <p>{@code PATCH /v3/transactions/{transaction_id}/travel-rule/}
-     *
-     * @param transactionId Didit-stable transaction UUID that owns the transfer.
+     * @param transactionId the {@code transaction_id}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TravelRuleTransferDetail> updateTransfer(String transactionId, TravelRuleTransferPatchRequest params, RequestOptions options) {
       return client.execute(updateTransferRequest(transactionId, params), options, UPDATE_TRANSFER_RESPONSE);
     }
 
     /**
-     * Finish, cancel, or resend a Travel Rule transfer
+     * Asynchronous {@link #updateTransfer(String, TravelRuleTransferPatchRequest, RequestOptions)} with the raw response.
      *
-     * <p>Provide <code>payment_txn_id</code> to report the on-chain hash and move an outbound COMPLETED transfer to FINISHED (its INTERNAL-rail counterpart also moves to FINISHED), <code>{"action": "cancel"}</code> to cancel a non-terminal transfer, or <code>{"action": "resend"}</code> to re-run routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA (improve the counterparty data first, e.g. add a travel_address to the destination wallet entry).
-     *
-     * <p>{@code PATCH /v3/transactions/{transaction_id}/travel-rule/}
-     *
-     * @param transactionId Didit-stable transaction UUID that owns the transfer.
+     * @param transactionId the {@code transaction_id}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TravelRuleTransferDetail>> updateTransferAsync(String transactionId, TravelRuleTransferPatchRequest params, RequestOptions options) {
       return client.executeAsync(updateTransferRequest(transactionId, params), options, UPDATE_TRANSFER_RESPONSE);
     }
 
     /**
-     * Finish, cancel, or resend a Travel Rule transfer
+     * {@link #updateTransfer(String, TravelRuleTransferPatchRequest, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Provide <code>payment_txn_id</code> to report the on-chain hash and move an outbound COMPLETED transfer to FINISHED (its INTERNAL-rail counterpart also moves to FINISHED), <code>{"action": "cancel"}</code> to cancel a non-terminal transfer, or <code>{"action": "resend"}</code> to re-run routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA (improve the counterparty data first, e.g. add a travel_address to the destination wallet entry).
-     *
-     * <p>{@code PATCH /v3/transactions/{transaction_id}/travel-rule/}
-     *
-     * @param transactionId Didit-stable transaction UUID that owns the transfer.
+     * @param transactionId the {@code transaction_id}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<TravelRuleTransferDetail> updateTransfer(String transactionId, TravelRuleTransferPatchRequest params) {
       return client.execute(updateTransferRequest(transactionId, params), RequestOptions.none(), UPDATE_TRANSFER_RESPONSE);
     }
 
     /**
-     * Finish, cancel, or resend a Travel Rule transfer
+     * Asynchronous {@link #updateTransfer(String, TravelRuleTransferPatchRequest, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Provide <code>payment_txn_id</code> to report the on-chain hash and move an outbound COMPLETED transfer to FINISHED (its INTERNAL-rail counterpart also moves to FINISHED), <code>{"action": "cancel"}</code> to cancel a non-terminal transfer, or <code>{"action": "resend"}</code> to re-run routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA (improve the counterparty data first, e.g. add a travel_address to the destination wallet entry).
-     *
-     * <p>{@code PATCH /v3/transactions/{transaction_id}/travel-rule/}
-     *
-     * @param transactionId Didit-stable transaction UUID that owns the transfer.
+     * @param transactionId the {@code transaction_id}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TravelRuleTransferDetail>> updateTransferAsync(String transactionId, TravelRuleTransferPatchRequest params) {
       return client.executeAsync(updateTransferRequest(transactionId, params), RequestOptions.none(), UPDATE_TRANSFER_RESPONSE);
     }
 
     /**
-     * Confirm or deny wallet ownership
+     * {@link #confirmOwnership(String, TravelRuleOwnershipConfirmRequest, RequestOptions)} with the raw response.
      *
-     * <p>Called by the beneficiary's application when its INTERNAL-rail transfer is UNCONFIRMED_OWNERSHIP. Confirming marks the matching wallet address book entry as ownership-verified and runs the beneficiary name match on both sides of the transfer; denying declines both sides.
-     *
-     * <p>{@code POST /v3/transactions/{transaction_id}/travel-rule/ownership/}
-     *
-     * @param transactionId Didit-stable transaction UUID that owns the transfer (the beneficiary side's transaction).
+     * @param transactionId the {@code transaction_id}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TravelRuleTransferDetail> confirmOwnership(String transactionId, TravelRuleOwnershipConfirmRequest params, RequestOptions options) {
       return client.execute(confirmOwnershipRequest(transactionId, params), options, CONFIRM_OWNERSHIP_RESPONSE);
     }
 
     /**
-     * Confirm or deny wallet ownership
+     * Asynchronous {@link #confirmOwnership(String, TravelRuleOwnershipConfirmRequest, RequestOptions)} with the raw response.
      *
-     * <p>Called by the beneficiary's application when its INTERNAL-rail transfer is UNCONFIRMED_OWNERSHIP. Confirming marks the matching wallet address book entry as ownership-verified and runs the beneficiary name match on both sides of the transfer; denying declines both sides.
-     *
-     * <p>{@code POST /v3/transactions/{transaction_id}/travel-rule/ownership/}
-     *
-     * @param transactionId Didit-stable transaction UUID that owns the transfer (the beneficiary side's transaction).
+     * @param transactionId the {@code transaction_id}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TravelRuleTransferDetail>> confirmOwnershipAsync(String transactionId, TravelRuleOwnershipConfirmRequest params, RequestOptions options) {
       return client.executeAsync(confirmOwnershipRequest(transactionId, params), options, CONFIRM_OWNERSHIP_RESPONSE);
     }
 
     /**
-     * Confirm or deny wallet ownership
+     * {@link #confirmOwnership(String, TravelRuleOwnershipConfirmRequest, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Called by the beneficiary's application when its INTERNAL-rail transfer is UNCONFIRMED_OWNERSHIP. Confirming marks the matching wallet address book entry as ownership-verified and runs the beneficiary name match on both sides of the transfer; denying declines both sides.
-     *
-     * <p>{@code POST /v3/transactions/{transaction_id}/travel-rule/ownership/}
-     *
-     * @param transactionId Didit-stable transaction UUID that owns the transfer (the beneficiary side's transaction).
+     * @param transactionId the {@code transaction_id}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<TravelRuleTransferDetail> confirmOwnership(String transactionId, TravelRuleOwnershipConfirmRequest params) {
       return client.execute(confirmOwnershipRequest(transactionId, params), RequestOptions.none(), CONFIRM_OWNERSHIP_RESPONSE);
     }
 
     /**
-     * Confirm or deny wallet ownership
+     * Asynchronous {@link #confirmOwnership(String, TravelRuleOwnershipConfirmRequest, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Called by the beneficiary's application when its INTERNAL-rail transfer is UNCONFIRMED_OWNERSHIP. Confirming marks the matching wallet address book entry as ownership-verified and runs the beneficiary name match on both sides of the transfer; denying declines both sides.
-     *
-     * <p>{@code POST /v3/transactions/{transaction_id}/travel-rule/ownership/}
-     *
-     * @param transactionId Didit-stable transaction UUID that owns the transfer (the beneficiary side's transaction).
+     * @param transactionId the {@code transaction_id}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TravelRuleTransferDetail>> confirmOwnershipAsync(String transactionId, TravelRuleOwnershipConfirmRequest params) {
       return client.executeAsync(confirmOwnershipRequest(transactionId, params), RequestOptions.none(), CONFIRM_OWNERSHIP_RESPONSE);

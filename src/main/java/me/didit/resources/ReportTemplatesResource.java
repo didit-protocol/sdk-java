@@ -53,111 +53,69 @@ public final class ReportTemplatesResource {
   }
 
   /**
-   * List report templates
-   *
-   * <p>List FIU report templates for the application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(ReportTemplatesListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<ReportTemplateDetail>> listAsync(ReportTemplatesListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List report templates
-   *
-   * <p>List FIU report templates for the application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(ReportTemplatesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<ReportTemplateDetail> list(ReportTemplatesListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List report templates
-   *
-   * <p>List FIU report templates for the application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(ReportTemplatesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<ReportTemplateDetail>> listAsync(ReportTemplatesListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List report templates
+   * Same as {@link #list(ReportTemplatesListParams, RequestOptions)}, without parameters.
    *
-   * <p>List FIU report templates for the application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<ReportTemplateDetail> list(RequestOptions options) {
     return client.execute(listRequest(ReportTemplatesListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List report templates
+   * Asynchronous {@link #list(ReportTemplatesListParams, RequestOptions)}, without parameters.
    *
-   * <p>List FIU report templates for the application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<ReportTemplateDetail>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(ReportTemplatesListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List report templates
+   * Same as {@link #list(ReportTemplatesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List FIU report templates for the application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<ReportTemplateDetail> list() {
     return client.execute(listRequest(ReportTemplatesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List report templates
+   * Asynchronous {@link #list(ReportTemplatesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List FIU report templates for the application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<ReportTemplateDetail>> listAsync() {
     return client.executeAsync(listRequest(ReportTemplatesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -180,46 +138,31 @@ public final class ReportTemplatesResource {
   }
 
   /**
-   * Create report template
-   *
-   * <p>Create a reusable per-jurisdiction, per-report-type goAML header template. Rejected with 400 if any of the template-level obligatory fields (rentity_id, submission_code, currency_code_local) is missing from field_config; an invalid template cannot be saved or used to create a report. Per-filing header fields (action, submission_date, transactions) are enforced at report validate/finalize time instead.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #create(ReportTemplatesCreateParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<ReportTemplateDetail> createAsync(ReportTemplatesCreateParams params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create report template
-   *
-   * <p>Create a reusable per-jurisdiction, per-report-type goAML header template. Rejected with 400 if any of the template-level obligatory fields (rentity_id, submission_code, currency_code_local) is missing from field_config; an invalid template cannot be saved or used to create a report. Per-filing header fields (action, submission_date, transactions) are enforced at report validate/finalize time instead.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #create(ReportTemplatesCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public ReportTemplateDetail create(ReportTemplatesCreateParams params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create report template
-   *
-   * <p>Create a reusable per-jurisdiction, per-report-type goAML header template. Rejected with 400 if any of the template-level obligatory fields (rentity_id, submission_code, currency_code_local) is missing from field_config; an invalid template cannot be saved or used to create a report. Per-filing header fields (action, submission_date, transactions) are enforced at report validate/finalize time instead.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #create(ReportTemplatesCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<ReportTemplateDetail> createAsync(ReportTemplatesCreateParams params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -242,46 +185,31 @@ public final class ReportTemplatesResource {
   }
 
   /**
-   * Get report template
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
-   * <p>Retrieve a report template.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param templateUuid Report template UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param templateUuid the {@code template_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<ReportTemplateDetail> retrieveAsync(String templateUuid, RequestOptions options) {
     return client.executeAsync(retrieveRequest(templateUuid), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get report template
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve a report template.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param templateUuid Report template UUID.
-   * @return the response body
+   * @param templateUuid the {@code template_uuid}
+   * @return the result
    */
   public ReportTemplateDetail retrieve(String templateUuid) {
     return client.execute(retrieveRequest(templateUuid), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get report template
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve a report template.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param templateUuid Report template UUID.
-   * @return a future completed with the response body
+   * @param templateUuid the {@code template_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<ReportTemplateDetail> retrieveAsync(String templateUuid) {
     return client.executeAsync(retrieveRequest(templateUuid), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -305,111 +233,76 @@ public final class ReportTemplatesResource {
   }
 
   /**
-   * Update report template
+   * Asynchronous {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)}.
    *
-   * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param templateUuid Report template UUID.
+   * @param templateUuid the {@code template_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<ReportTemplateDetail> updateAsync(String templateUuid, ReportTemplatesUpdateParams params, RequestOptions options) {
     return client.executeAsync(updateRequest(templateUuid, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update report template
+   * Same as {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param templateUuid Report template UUID.
+   * @param templateUuid the {@code template_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public ReportTemplateDetail update(String templateUuid, ReportTemplatesUpdateParams params) {
     return client.execute(updateRequest(templateUuid, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update report template
+   * Asynchronous {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param templateUuid Report template UUID.
+   * @param templateUuid the {@code template_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<ReportTemplateDetail> updateAsync(String templateUuid, ReportTemplatesUpdateParams params) {
     return client.executeAsync(updateRequest(templateUuid, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update report template
+   * Same as {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param templateUuid Report template UUID.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param templateUuid the {@code template_uuid}
+   * @param options per-request options
+   * @return the result
    */
   public ReportTemplateDetail update(String templateUuid, RequestOptions options) {
     return client.execute(updateRequest(templateUuid, ReportTemplatesUpdateParams.builder().build()), options, UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update report template
+   * Asynchronous {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param templateUuid Report template UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param templateUuid the {@code template_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<ReportTemplateDetail> updateAsync(String templateUuid, RequestOptions options) {
     return client.executeAsync(updateRequest(templateUuid, ReportTemplatesUpdateParams.builder().build()), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update report template
+   * Same as {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param templateUuid Report template UUID.
-   * @return the response body
+   * @param templateUuid the {@code template_uuid}
+   * @return the result
    */
   public ReportTemplateDetail update(String templateUuid) {
     return client.execute(updateRequest(templateUuid, ReportTemplatesUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update report template
+   * Asynchronous {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param templateUuid Report template UUID.
-   * @return a future completed with the response body
+   * @param templateUuid the {@code template_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<ReportTemplateDetail> updateAsync(String templateUuid) {
     return client.executeAsync(updateRequest(templateUuid, ReportTemplatesUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -431,45 +324,30 @@ public final class ReportTemplatesResource {
   }
 
   /**
-   * Delete report template
+   * Asynchronous {@link #delete(String, RequestOptions)}.
    *
-   * <p>Delete a report template. Reports already created from it are unaffected.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param templateUuid Report template UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param templateUuid the {@code template_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String templateUuid, RequestOptions options) {
     return client.executeAsync(deleteRequest(templateUuid), options, DELETE_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * Delete report template
+   * Same as {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Delete a report template. Reports already created from it are unaffected.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param templateUuid Report template UUID.
+   * @param templateUuid the {@code template_uuid}
    */
   public void delete(String templateUuid) {
     client.execute(deleteRequest(templateUuid), RequestOptions.none(), DELETE_RESPONSE);
   }
 
   /**
-   * Delete report template
+   * Asynchronous {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Delete a report template. Reports already created from it are unaffected.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param templateUuid Report template UUID.
-   * @return a future completed with the response body
+   * @param templateUuid the {@code template_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String templateUuid) {
     return client.executeAsync(deleteRequest(templateUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
@@ -533,442 +411,294 @@ public final class ReportTemplatesResource {
     }
 
     /**
-     * List report templates
-     *
-     * <p>List FIU report templates for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(ReportTemplatesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<ReportTemplateDetail>> list(ReportTemplatesListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List report templates
-     *
-     * <p>List FIU report templates for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(ReportTemplatesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<ReportTemplateDetail>>> listAsync(ReportTemplatesListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List report templates
-     *
-     * <p>List FIU report templates for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(ReportTemplatesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<ReportTemplateDetail>> list(ReportTemplatesListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List report templates
-     *
-     * <p>List FIU report templates for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(ReportTemplatesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<ReportTemplateDetail>>> listAsync(ReportTemplatesListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List report templates
+     * {@link #list(ReportTemplatesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List FIU report templates for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<ReportTemplateDetail>> list(RequestOptions options) {
       return client.execute(listRequest(ReportTemplatesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List report templates
+     * Asynchronous {@link #list(ReportTemplatesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List FIU report templates for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<ReportTemplateDetail>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(ReportTemplatesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List report templates
+     * {@link #list(ReportTemplatesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List FIU report templates for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<ReportTemplateDetail>> list() {
       return client.execute(listRequest(ReportTemplatesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List report templates
+     * Asynchronous {@link #list(ReportTemplatesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List FIU report templates for the application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<ReportTemplateDetail>>> listAsync() {
       return client.executeAsync(listRequest(ReportTemplatesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Create report template
-     *
-     * <p>Create a reusable per-jurisdiction, per-report-type goAML header template. Rejected with 400 if any of the template-level obligatory fields (rentity_id, submission_code, currency_code_local) is missing from field_config; an invalid template cannot be saved or used to create a report. Per-filing header fields (action, submission_date, transactions) are enforced at report validate/finalize time instead.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #create(ReportTemplatesCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<ReportTemplateDetail> create(ReportTemplatesCreateParams params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create report template
-     *
-     * <p>Create a reusable per-jurisdiction, per-report-type goAML header template. Rejected with 400 if any of the template-level obligatory fields (rentity_id, submission_code, currency_code_local) is missing from field_config; an invalid template cannot be saved or used to create a report. Per-filing header fields (action, submission_date, transactions) are enforced at report validate/finalize time instead.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #create(ReportTemplatesCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<ReportTemplateDetail>> createAsync(ReportTemplatesCreateParams params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create report template
-     *
-     * <p>Create a reusable per-jurisdiction, per-report-type goAML header template. Rejected with 400 if any of the template-level obligatory fields (rentity_id, submission_code, currency_code_local) is missing from field_config; an invalid template cannot be saved or used to create a report. Per-filing header fields (action, submission_date, transactions) are enforced at report validate/finalize time instead.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #create(ReportTemplatesCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<ReportTemplateDetail> create(ReportTemplatesCreateParams params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create report template
-     *
-     * <p>Create a reusable per-jurisdiction, per-report-type goAML header template. Rejected with 400 if any of the template-level obligatory fields (rentity_id, submission_code, currency_code_local) is missing from field_config; an invalid template cannot be saved or used to create a report. Per-filing header fields (action, submission_date, transactions) are enforced at report validate/finalize time instead.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/report-templates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #create(ReportTemplatesCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<ReportTemplateDetail>> createAsync(ReportTemplatesCreateParams params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Get report template
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve a report template.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param templateUuid the {@code template_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<ReportTemplateDetail> retrieve(String templateUuid, RequestOptions options) {
       return client.execute(retrieveRequest(templateUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get report template
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve a report template.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param templateUuid the {@code template_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<ReportTemplateDetail>> retrieveAsync(String templateUuid, RequestOptions options) {
       return client.executeAsync(retrieveRequest(templateUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get report template
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve a report template.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param templateUuid the {@code template_uuid}
+     * @return the result
      */
     public RawResponse<ReportTemplateDetail> retrieve(String templateUuid) {
       return client.execute(retrieveRequest(templateUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get report template
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve a report template.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
-     * @return a future completed with the raw response
+     * @param templateUuid the {@code template_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<ReportTemplateDetail>> retrieveAsync(String templateUuid) {
       return client.executeAsync(retrieveRequest(templateUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Update report template
+     * {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)} with the raw response.
      *
-     * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
+     * @param templateUuid the {@code template_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<ReportTemplateDetail> update(String templateUuid, ReportTemplatesUpdateParams params, RequestOptions options) {
       return client.execute(updateRequest(templateUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update report template
+     * Asynchronous {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)} with the raw response.
      *
-     * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
+     * @param templateUuid the {@code template_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<ReportTemplateDetail>> updateAsync(String templateUuid, ReportTemplatesUpdateParams params, RequestOptions options) {
       return client.executeAsync(updateRequest(templateUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update report template
+     * {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
+     * @param templateUuid the {@code template_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<ReportTemplateDetail> update(String templateUuid, ReportTemplatesUpdateParams params) {
       return client.execute(updateRequest(templateUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update report template
+     * Asynchronous {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
+     * @param templateUuid the {@code template_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<ReportTemplateDetail>> updateAsync(String templateUuid, ReportTemplatesUpdateParams params) {
       return client.executeAsync(updateRequest(templateUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update report template
+     * {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param templateUuid the {@code template_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<ReportTemplateDetail> update(String templateUuid, RequestOptions options) {
       return client.execute(updateRequest(templateUuid, ReportTemplatesUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update report template
+     * Asynchronous {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param templateUuid the {@code template_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<ReportTemplateDetail>> updateAsync(String templateUuid, RequestOptions options) {
       return client.executeAsync(updateRequest(templateUuid, ReportTemplatesUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update report template
+     * {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param templateUuid the {@code template_uuid}
+     * @return the result
      */
     public RawResponse<ReportTemplateDetail> update(String templateUuid) {
       return client.execute(updateRequest(templateUuid, ReportTemplatesUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update report template
+     * Asynchronous {@link #update(String, ReportTemplatesUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Partially update a report template. Re-validates obligatory goAML fields on save.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
-     * @return a future completed with the raw response
+     * @param templateUuid the {@code template_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<ReportTemplateDetail>> updateAsync(String templateUuid) {
       return client.executeAsync(updateRequest(templateUuid, ReportTemplatesUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Delete report template
+     * {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Delete a report template. Reports already created from it are unaffected.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param templateUuid the {@code template_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String templateUuid, RequestOptions options) {
       return client.execute(deleteRequest(templateUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete report template
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Delete a report template. Reports already created from it are unaffected.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param templateUuid the {@code template_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String templateUuid, RequestOptions options) {
       return client.executeAsync(deleteRequest(templateUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete report template
+     * {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Delete a report template. Reports already created from it are unaffected.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param templateUuid the {@code template_uuid}
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String templateUuid) {
       return client.execute(deleteRequest(templateUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Delete report template
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Delete a report template. Reports already created from it are unaffected.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/report-templates/{template_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param templateUuid Report template UUID.
-     * @return a future completed with the raw response
+     * @param templateUuid the {@code template_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String templateUuid) {
       return client.executeAsync(deleteRequest(templateUuid), RequestOptions.none(), DELETE_RESPONSE);

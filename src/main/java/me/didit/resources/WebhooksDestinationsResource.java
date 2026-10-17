@@ -52,40 +52,28 @@ public final class WebhooksDestinationsResource {
   }
 
   /**
-   * List webhook destinations
+   * Asynchronous {@link #list(RequestOptions)}.
    *
-   * <p>List all webhook destinations (unpaginated array, oldest first). Each row includes URL, subscribed events, and delivery health metrics. The signing secret is NOT included in the list — fetch a single destination (<code>GET /v3/webhook/destinations/{destination_uuid}/</code>) to read <code>secret_shared_key</code>.
-   *
-   * <p>{@code GET /v3/webhook/destinations/}
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<List<WebhooksDestinationsListResponse>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List webhook destinations
+   * Same as {@link #list(RequestOptions)}, with the client's options.
    *
-   * <p>List all webhook destinations (unpaginated array, oldest first). Each row includes URL, subscribed events, and delivery health metrics. The signing secret is NOT included in the list — fetch a single destination (<code>GET /v3/webhook/destinations/{destination_uuid}/</code>) to read <code>secret_shared_key</code>.
-   *
-   * <p>{@code GET /v3/webhook/destinations/}
-   *
-   * @return the response body
+   * @return the result
    */
   public List<WebhooksDestinationsListResponse> list() {
     return client.execute(listRequest(), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List webhook destinations
+   * Asynchronous {@link #list(RequestOptions)}, with the client's options.
    *
-   * <p>List all webhook destinations (unpaginated array, oldest first). Each row includes URL, subscribed events, and delivery health metrics. The signing secret is NOT included in the list — fetch a single destination (<code>GET /v3/webhook/destinations/{destination_uuid}/</code>) to read <code>secret_shared_key</code>.
-   *
-   * <p>{@code GET /v3/webhook/destinations/}
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<List<WebhooksDestinationsListResponse>> listAsync() {
     return client.executeAsync(listRequest(), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -107,43 +95,31 @@ public final class WebhooksDestinationsResource {
   }
 
   /**
-   * Create webhook destination
-   *
-   * <p>Create a webhook destination. The response includes the auto-generated <code>secret_shared_key</code> HMAC signing secret (also readable later via <code>GET /v3/webhook/destinations/{destination_uuid}/</code>). Always send <code>subscribed_events</code> with at least one event (no wildcards): an explicit empty list is rejected with 400, and omitting the field creates a destination subscribed to nothing, which never receives a webhook. The <code>(application, url)</code> pair must be unique among non-deleted destinations.
-   *
-   * <p>{@code POST /v3/webhook/destinations/}
+   * Asynchronous {@link #create(WebhooksDestinationsCreateParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<WebhooksDestinationsCreateResponse> createAsync(WebhooksDestinationsCreateParams params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create webhook destination
-   *
-   * <p>Create a webhook destination. The response includes the auto-generated <code>secret_shared_key</code> HMAC signing secret (also readable later via <code>GET /v3/webhook/destinations/{destination_uuid}/</code>). Always send <code>subscribed_events</code> with at least one event (no wildcards): an explicit empty list is rejected with 400, and omitting the field creates a destination subscribed to nothing, which never receives a webhook. The <code>(application, url)</code> pair must be unique among non-deleted destinations.
-   *
-   * <p>{@code POST /v3/webhook/destinations/}
+   * Same as {@link #create(WebhooksDestinationsCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public WebhooksDestinationsCreateResponse create(WebhooksDestinationsCreateParams params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create webhook destination
-   *
-   * <p>Create a webhook destination. The response includes the auto-generated <code>secret_shared_key</code> HMAC signing secret (also readable later via <code>GET /v3/webhook/destinations/{destination_uuid}/</code>). Always send <code>subscribed_events</code> with at least one event (no wildcards): an explicit empty list is rejected with 400, and omitting the field creates a destination subscribed to nothing, which never receives a webhook. The <code>(application, url)</code> pair must be unique among non-deleted destinations.
-   *
-   * <p>{@code POST /v3/webhook/destinations/}
+   * Asynchronous {@link #create(WebhooksDestinationsCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<WebhooksDestinationsCreateResponse> createAsync(WebhooksDestinationsCreateParams params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -165,43 +141,31 @@ public final class WebhooksDestinationsResource {
   }
 
   /**
-   * Get webhook destination
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
-   * <p>Retrieve one webhook destination with its <code>secret_shared_key</code> signing secret and delivery health summary. API-key callers always receive the secret in full; Console users without <code>read:webhooks</code> see an empty string.
-   *
-   * <p>{@code GET /v3/webhook/destinations/{destination_uuid}/}
-   *
-   * @param destinationUuid UUID of the destination (the `uuid` returned from create / list).
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param destinationUuid the {@code destination_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<WebhooksDestinationsRetrieveResponse> retrieveAsync(String destinationUuid, RequestOptions options) {
     return client.executeAsync(retrieveRequest(destinationUuid), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get webhook destination
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve one webhook destination with its <code>secret_shared_key</code> signing secret and delivery health summary. API-key callers always receive the secret in full; Console users without <code>read:webhooks</code> see an empty string.
-   *
-   * <p>{@code GET /v3/webhook/destinations/{destination_uuid}/}
-   *
-   * @param destinationUuid UUID of the destination (the `uuid` returned from create / list).
-   * @return the response body
+   * @param destinationUuid the {@code destination_uuid}
+   * @return the result
    */
   public WebhooksDestinationsRetrieveResponse retrieve(String destinationUuid) {
     return client.execute(retrieveRequest(destinationUuid), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get webhook destination
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve one webhook destination with its <code>secret_shared_key</code> signing secret and delivery health summary. API-key callers always receive the secret in full; Console users without <code>read:webhooks</code> see an empty string.
-   *
-   * <p>{@code GET /v3/webhook/destinations/{destination_uuid}/}
-   *
-   * @param destinationUuid UUID of the destination (the `uuid` returned from create / list).
-   * @return a future completed with the response body
+   * @param destinationUuid the {@code destination_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<WebhooksDestinationsRetrieveResponse> retrieveAsync(String destinationUuid) {
     return client.executeAsync(retrieveRequest(destinationUuid), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -224,104 +188,76 @@ public final class WebhooksDestinationsResource {
   }
 
   /**
-   * Update webhook destination
+   * Asynchronous {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)}.
    *
-   * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-   *
-   * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-   *
-   * @param destinationUuid UUID of the destination to update.
+   * @param destinationUuid the {@code destination_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<WebhooksDestinationsUpdateResponse> updateAsync(String destinationUuid, WebhooksDestinationsUpdateParams params, RequestOptions options) {
     return client.executeAsync(updateRequest(destinationUuid, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update webhook destination
+   * Same as {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-   *
-   * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-   *
-   * @param destinationUuid UUID of the destination to update.
+   * @param destinationUuid the {@code destination_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public WebhooksDestinationsUpdateResponse update(String destinationUuid, WebhooksDestinationsUpdateParams params) {
     return client.execute(updateRequest(destinationUuid, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update webhook destination
+   * Asynchronous {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-   *
-   * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-   *
-   * @param destinationUuid UUID of the destination to update.
+   * @param destinationUuid the {@code destination_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<WebhooksDestinationsUpdateResponse> updateAsync(String destinationUuid, WebhooksDestinationsUpdateParams params) {
     return client.executeAsync(updateRequest(destinationUuid, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update webhook destination
+   * Same as {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-   *
-   * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-   *
-   * @param destinationUuid UUID of the destination to update.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param destinationUuid the {@code destination_uuid}
+   * @param options per-request options
+   * @return the result
    */
   public WebhooksDestinationsUpdateResponse update(String destinationUuid, RequestOptions options) {
     return client.execute(updateRequest(destinationUuid, WebhooksDestinationsUpdateParams.builder().build()), options, UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update webhook destination
+   * Asynchronous {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-   *
-   * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-   *
-   * @param destinationUuid UUID of the destination to update.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param destinationUuid the {@code destination_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<WebhooksDestinationsUpdateResponse> updateAsync(String destinationUuid, RequestOptions options) {
     return client.executeAsync(updateRequest(destinationUuid, WebhooksDestinationsUpdateParams.builder().build()), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update webhook destination
+   * Same as {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-   *
-   * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-   *
-   * @param destinationUuid UUID of the destination to update.
-   * @return the response body
+   * @param destinationUuid the {@code destination_uuid}
+   * @return the result
    */
   public WebhooksDestinationsUpdateResponse update(String destinationUuid) {
     return client.execute(updateRequest(destinationUuid, WebhooksDestinationsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update webhook destination
+   * Asynchronous {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-   *
-   * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-   *
-   * @param destinationUuid UUID of the destination to update.
-   * @return a future completed with the response body
+   * @param destinationUuid the {@code destination_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<WebhooksDestinationsUpdateResponse> updateAsync(String destinationUuid) {
     return client.executeAsync(updateRequest(destinationUuid, WebhooksDestinationsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -342,42 +278,30 @@ public final class WebhooksDestinationsResource {
   }
 
   /**
-   * Delete webhook destination
+   * Asynchronous {@link #delete(String, RequestOptions)}.
    *
-   * <p>Delete a webhook destination. Future events stop being pushed to its URL. Past delivery records are not affected and stay queryable from the Business Console, so deleting a destination is not a way to remove your delivery history. Calling again returns 404.
-   *
-   * <p>{@code DELETE /v3/webhook/destinations/{destination_uuid}/}
-   *
-   * @param destinationUuid UUID of the destination to delete.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param destinationUuid the {@code destination_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String destinationUuid, RequestOptions options) {
     return client.executeAsync(deleteRequest(destinationUuid), options, DELETE_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * Delete webhook destination
+   * Same as {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Delete a webhook destination. Future events stop being pushed to its URL. Past delivery records are not affected and stay queryable from the Business Console, so deleting a destination is not a way to remove your delivery history. Calling again returns 404.
-   *
-   * <p>{@code DELETE /v3/webhook/destinations/{destination_uuid}/}
-   *
-   * @param destinationUuid UUID of the destination to delete.
+   * @param destinationUuid the {@code destination_uuid}
    */
   public void delete(String destinationUuid) {
     client.execute(deleteRequest(destinationUuid), RequestOptions.none(), DELETE_RESPONSE);
   }
 
   /**
-   * Delete webhook destination
+   * Asynchronous {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Delete a webhook destination. Future events stop being pushed to its URL. Past delivery records are not affected and stay queryable from the Business Console, so deleting a destination is not a way to remove your delivery history. Calling again returns 404.
-   *
-   * <p>{@code DELETE /v3/webhook/destinations/{destination_uuid}/}
-   *
-   * @param destinationUuid UUID of the destination to delete.
-   * @return a future completed with the response body
+   * @param destinationUuid the {@code destination_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String destinationUuid) {
     return client.executeAsync(deleteRequest(destinationUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
@@ -434,348 +358,252 @@ public final class WebhooksDestinationsResource {
     }
 
     /**
-     * List webhook destinations
+     * {@link #list(RequestOptions)} with the raw response.
      *
-     * <p>List all webhook destinations (unpaginated array, oldest first). Each row includes URL, subscribed events, and delivery health metrics. The signing secret is NOT included in the list — fetch a single destination (<code>GET /v3/webhook/destinations/{destination_uuid}/</code>) to read <code>secret_shared_key</code>.
-     *
-     * <p>{@code GET /v3/webhook/destinations/}
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<List<WebhooksDestinationsListResponse>> list(RequestOptions options) {
       return client.execute(listRequest(), options, LIST_RESPONSE);
     }
 
     /**
-     * List webhook destinations
+     * Asynchronous {@link #list(RequestOptions)} with the raw response.
      *
-     * <p>List all webhook destinations (unpaginated array, oldest first). Each row includes URL, subscribed events, and delivery health metrics. The signing secret is NOT included in the list — fetch a single destination (<code>GET /v3/webhook/destinations/{destination_uuid}/</code>) to read <code>secret_shared_key</code>.
-     *
-     * <p>{@code GET /v3/webhook/destinations/}
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<List<WebhooksDestinationsListResponse>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(), options, LIST_RESPONSE);
     }
 
     /**
-     * List webhook destinations
+     * {@link #list(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List all webhook destinations (unpaginated array, oldest first). Each row includes URL, subscribed events, and delivery health metrics. The signing secret is NOT included in the list — fetch a single destination (<code>GET /v3/webhook/destinations/{destination_uuid}/</code>) to read <code>secret_shared_key</code>.
-     *
-     * <p>{@code GET /v3/webhook/destinations/}
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<List<WebhooksDestinationsListResponse>> list() {
       return client.execute(listRequest(), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List webhook destinations
+     * Asynchronous {@link #list(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List all webhook destinations (unpaginated array, oldest first). Each row includes URL, subscribed events, and delivery health metrics. The signing secret is NOT included in the list — fetch a single destination (<code>GET /v3/webhook/destinations/{destination_uuid}/</code>) to read <code>secret_shared_key</code>.
-     *
-     * <p>{@code GET /v3/webhook/destinations/}
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<List<WebhooksDestinationsListResponse>>> listAsync() {
       return client.executeAsync(listRequest(), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Create webhook destination
-     *
-     * <p>Create a webhook destination. The response includes the auto-generated <code>secret_shared_key</code> HMAC signing secret (also readable later via <code>GET /v3/webhook/destinations/{destination_uuid}/</code>). Always send <code>subscribed_events</code> with at least one event (no wildcards): an explicit empty list is rejected with 400, and omitting the field creates a destination subscribed to nothing, which never receives a webhook. The <code>(application, url)</code> pair must be unique among non-deleted destinations.
-     *
-     * <p>{@code POST /v3/webhook/destinations/}
+     * {@link #create(WebhooksDestinationsCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<WebhooksDestinationsCreateResponse> create(WebhooksDestinationsCreateParams params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create webhook destination
-     *
-     * <p>Create a webhook destination. The response includes the auto-generated <code>secret_shared_key</code> HMAC signing secret (also readable later via <code>GET /v3/webhook/destinations/{destination_uuid}/</code>). Always send <code>subscribed_events</code> with at least one event (no wildcards): an explicit empty list is rejected with 400, and omitting the field creates a destination subscribed to nothing, which never receives a webhook. The <code>(application, url)</code> pair must be unique among non-deleted destinations.
-     *
-     * <p>{@code POST /v3/webhook/destinations/}
+     * Asynchronous {@link #create(WebhooksDestinationsCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<WebhooksDestinationsCreateResponse>> createAsync(WebhooksDestinationsCreateParams params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create webhook destination
-     *
-     * <p>Create a webhook destination. The response includes the auto-generated <code>secret_shared_key</code> HMAC signing secret (also readable later via <code>GET /v3/webhook/destinations/{destination_uuid}/</code>). Always send <code>subscribed_events</code> with at least one event (no wildcards): an explicit empty list is rejected with 400, and omitting the field creates a destination subscribed to nothing, which never receives a webhook. The <code>(application, url)</code> pair must be unique among non-deleted destinations.
-     *
-     * <p>{@code POST /v3/webhook/destinations/}
+     * {@link #create(WebhooksDestinationsCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<WebhooksDestinationsCreateResponse> create(WebhooksDestinationsCreateParams params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create webhook destination
-     *
-     * <p>Create a webhook destination. The response includes the auto-generated <code>secret_shared_key</code> HMAC signing secret (also readable later via <code>GET /v3/webhook/destinations/{destination_uuid}/</code>). Always send <code>subscribed_events</code> with at least one event (no wildcards): an explicit empty list is rejected with 400, and omitting the field creates a destination subscribed to nothing, which never receives a webhook. The <code>(application, url)</code> pair must be unique among non-deleted destinations.
-     *
-     * <p>{@code POST /v3/webhook/destinations/}
+     * Asynchronous {@link #create(WebhooksDestinationsCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<WebhooksDestinationsCreateResponse>> createAsync(WebhooksDestinationsCreateParams params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Get webhook destination
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve one webhook destination with its <code>secret_shared_key</code> signing secret and delivery health summary. API-key callers always receive the secret in full; Console users without <code>read:webhooks</code> see an empty string.
-     *
-     * <p>{@code GET /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination (the `uuid` returned from create / list).
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param destinationUuid the {@code destination_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<WebhooksDestinationsRetrieveResponse> retrieve(String destinationUuid, RequestOptions options) {
       return client.execute(retrieveRequest(destinationUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get webhook destination
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve one webhook destination with its <code>secret_shared_key</code> signing secret and delivery health summary. API-key callers always receive the secret in full; Console users without <code>read:webhooks</code> see an empty string.
-     *
-     * <p>{@code GET /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination (the `uuid` returned from create / list).
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param destinationUuid the {@code destination_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<WebhooksDestinationsRetrieveResponse>> retrieveAsync(String destinationUuid, RequestOptions options) {
       return client.executeAsync(retrieveRequest(destinationUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get webhook destination
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve one webhook destination with its <code>secret_shared_key</code> signing secret and delivery health summary. API-key callers always receive the secret in full; Console users without <code>read:webhooks</code> see an empty string.
-     *
-     * <p>{@code GET /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination (the `uuid` returned from create / list).
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param destinationUuid the {@code destination_uuid}
+     * @return the result
      */
     public RawResponse<WebhooksDestinationsRetrieveResponse> retrieve(String destinationUuid) {
       return client.execute(retrieveRequest(destinationUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get webhook destination
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve one webhook destination with its <code>secret_shared_key</code> signing secret and delivery health summary. API-key callers always receive the secret in full; Console users without <code>read:webhooks</code> see an empty string.
-     *
-     * <p>{@code GET /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination (the `uuid` returned from create / list).
-     * @return a future completed with the raw response
+     * @param destinationUuid the {@code destination_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<WebhooksDestinationsRetrieveResponse>> retrieveAsync(String destinationUuid) {
       return client.executeAsync(retrieveRequest(destinationUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Update webhook destination
+     * {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)} with the raw response.
      *
-     * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-     *
-     * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination to update.
+     * @param destinationUuid the {@code destination_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<WebhooksDestinationsUpdateResponse> update(String destinationUuid, WebhooksDestinationsUpdateParams params, RequestOptions options) {
       return client.execute(updateRequest(destinationUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update webhook destination
+     * Asynchronous {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)} with the raw response.
      *
-     * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-     *
-     * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination to update.
+     * @param destinationUuid the {@code destination_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<WebhooksDestinationsUpdateResponse>> updateAsync(String destinationUuid, WebhooksDestinationsUpdateParams params, RequestOptions options) {
       return client.executeAsync(updateRequest(destinationUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update webhook destination
+     * {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-     *
-     * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination to update.
+     * @param destinationUuid the {@code destination_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<WebhooksDestinationsUpdateResponse> update(String destinationUuid, WebhooksDestinationsUpdateParams params) {
       return client.execute(updateRequest(destinationUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update webhook destination
+     * Asynchronous {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-     *
-     * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination to update.
+     * @param destinationUuid the {@code destination_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<WebhooksDestinationsUpdateResponse>> updateAsync(String destinationUuid, WebhooksDestinationsUpdateParams params) {
       return client.executeAsync(updateRequest(destinationUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update webhook destination
+     * {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-     *
-     * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination to update.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param destinationUuid the {@code destination_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<WebhooksDestinationsUpdateResponse> update(String destinationUuid, RequestOptions options) {
       return client.execute(updateRequest(destinationUuid, WebhooksDestinationsUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update webhook destination
+     * Asynchronous {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-     *
-     * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination to update.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param destinationUuid the {@code destination_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<WebhooksDestinationsUpdateResponse>> updateAsync(String destinationUuid, RequestOptions options) {
       return client.executeAsync(updateRequest(destinationUuid, WebhooksDestinationsUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update webhook destination
+     * {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-     *
-     * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination to update.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param destinationUuid the {@code destination_uuid}
+     * @return the result
      */
     public RawResponse<WebhooksDestinationsUpdateResponse> update(String destinationUuid) {
       return client.execute(updateRequest(destinationUuid, WebhooksDestinationsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update webhook destination
+     * Asynchronous {@link #update(String, WebhooksDestinationsUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
-     *
-     * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination to update.
-     * @return a future completed with the raw response
+     * @param destinationUuid the {@code destination_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<WebhooksDestinationsUpdateResponse>> updateAsync(String destinationUuid) {
       return client.executeAsync(updateRequest(destinationUuid, WebhooksDestinationsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Delete webhook destination
+     * {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Delete a webhook destination. Future events stop being pushed to its URL. Past delivery records are not affected and stay queryable from the Business Console, so deleting a destination is not a way to remove your delivery history. Calling again returns 404.
-     *
-     * <p>{@code DELETE /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination to delete.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param destinationUuid the {@code destination_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String destinationUuid, RequestOptions options) {
       return client.execute(deleteRequest(destinationUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete webhook destination
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Delete a webhook destination. Future events stop being pushed to its URL. Past delivery records are not affected and stay queryable from the Business Console, so deleting a destination is not a way to remove your delivery history. Calling again returns 404.
-     *
-     * <p>{@code DELETE /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination to delete.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param destinationUuid the {@code destination_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String destinationUuid, RequestOptions options) {
       return client.executeAsync(deleteRequest(destinationUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete webhook destination
+     * {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Delete a webhook destination. Future events stop being pushed to its URL. Past delivery records are not affected and stay queryable from the Business Console, so deleting a destination is not a way to remove your delivery history. Calling again returns 404.
-     *
-     * <p>{@code DELETE /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination to delete.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param destinationUuid the {@code destination_uuid}
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String destinationUuid) {
       return client.execute(deleteRequest(destinationUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Delete webhook destination
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Delete a webhook destination. Future events stop being pushed to its URL. Past delivery records are not affected and stay queryable from the Business Console, so deleting a destination is not a way to remove your delivery history. Calling again returns 404.
-     *
-     * <p>{@code DELETE /v3/webhook/destinations/{destination_uuid}/}
-     *
-     * @param destinationUuid UUID of the destination to delete.
-     * @return a future completed with the raw response
+     * @param destinationUuid the {@code destination_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String destinationUuid) {
       return client.executeAsync(deleteRequest(destinationUuid), RequestOptions.none(), DELETE_RESPONSE);

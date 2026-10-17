@@ -67,103 +67,31 @@ public final class PassiveLivenessResource {
   }
 
   /**
-   * Passive Liveness
-   *
-   * <p>Detect presentation attacks — printed photos, screen replays, masks, deepfakes — from a single face image. No video, motion, or user interaction required.
-   *
-   * <p><b>How it works.</b> The image is analyzed by a biometric model; the largest detected face is evaluated and a liveness <code>score</code> (0–100) is computed. <code>status</code> is <code>Declined</code> when any <code>error</code>-severity warning fires:
-   * - <code>NO_FACE_DETECTED</code> — the liveness model found no face,
-   * - <code>LOW_LIVENESS_SCORE</code> — score at or below <code>face_liveness_score_decline_threshold</code> (default <code>30</code>),
-   * - <code>LIVENESS_FACE_ATTACK</code> — the model detected a presentation attack,
-   * - <code>FACE_IN_BLOCKLIST</code> / <code>POSSIBLE_FACE_IN_BLOCKLIST</code> — the face matches an entry on your face blocklist.
-   *
-   * <p><code>MULTIPLE_FACES_DETECTED</code> is a <code>warning</code>-severity signal (does not decline), and <code>DUPLICATED_FACE</code> / <code>POSSIBLE_DUPLICATED_FACE</code> are <code>information</code>-severity signals that the same face already appeared in another approved session (they never decline). <code>face_quality</code> and <code>face_luminance</code> (0–100, nullable) describe capture quality.
-   *
-   * <p><b>Blocklist and duplicate screening.</b> Runs on <b>every</b> call — with or without <code>save_api_request</code> — by matching the detected face against your application's face search index. Prior faces with the same <code>vendor_data</code> are excluded from the entire index search — so re-running liveness for the same user does not trigger <code>DUPLICATED_FACE</code>, and a blocklisted face originating from a session with the caller's own <code>vendor_data</code> is also NOT flagged (<code>FACE_IN_BLOCKLIST</code> screening is bypassed for same-<code>vendor_data</code> faces).
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one Passive Liveness API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
-   *
-   * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook), the reference image and face crop are stored, and the detected face is <b>enrolled into your face search index</b> so later Face Search calls and duplicate checks can match it. When <code>false</code>, the call is one-shot: nothing is stored and the face is not enrolled (blocklist/duplicate screening still runs).
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/passive-liveness/}
+   * Asynchronous {@link #check(PassiveLivenessCheckParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<PassiveLivenessCheckResponse> checkAsync(PassiveLivenessCheckParams params, RequestOptions options) {
     return client.executeAsync(checkRequest(params), options, CHECK_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Passive Liveness
-   *
-   * <p>Detect presentation attacks — printed photos, screen replays, masks, deepfakes — from a single face image. No video, motion, or user interaction required.
-   *
-   * <p><b>How it works.</b> The image is analyzed by a biometric model; the largest detected face is evaluated and a liveness <code>score</code> (0–100) is computed. <code>status</code> is <code>Declined</code> when any <code>error</code>-severity warning fires:
-   * - <code>NO_FACE_DETECTED</code> — the liveness model found no face,
-   * - <code>LOW_LIVENESS_SCORE</code> — score at or below <code>face_liveness_score_decline_threshold</code> (default <code>30</code>),
-   * - <code>LIVENESS_FACE_ATTACK</code> — the model detected a presentation attack,
-   * - <code>FACE_IN_BLOCKLIST</code> / <code>POSSIBLE_FACE_IN_BLOCKLIST</code> — the face matches an entry on your face blocklist.
-   *
-   * <p><code>MULTIPLE_FACES_DETECTED</code> is a <code>warning</code>-severity signal (does not decline), and <code>DUPLICATED_FACE</code> / <code>POSSIBLE_DUPLICATED_FACE</code> are <code>information</code>-severity signals that the same face already appeared in another approved session (they never decline). <code>face_quality</code> and <code>face_luminance</code> (0–100, nullable) describe capture quality.
-   *
-   * <p><b>Blocklist and duplicate screening.</b> Runs on <b>every</b> call — with or without <code>save_api_request</code> — by matching the detected face against your application's face search index. Prior faces with the same <code>vendor_data</code> are excluded from the entire index search — so re-running liveness for the same user does not trigger <code>DUPLICATED_FACE</code>, and a blocklisted face originating from a session with the caller's own <code>vendor_data</code> is also NOT flagged (<code>FACE_IN_BLOCKLIST</code> screening is bypassed for same-<code>vendor_data</code> faces).
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one Passive Liveness API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
-   *
-   * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook), the reference image and face crop are stored, and the detected face is <b>enrolled into your face search index</b> so later Face Search calls and duplicate checks can match it. When <code>false</code>, the call is one-shot: nothing is stored and the face is not enrolled (blocklist/duplicate screening still runs).
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/passive-liveness/}
+   * Same as {@link #check(PassiveLivenessCheckParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public PassiveLivenessCheckResponse check(PassiveLivenessCheckParams params) {
     return client.execute(checkRequest(params), RequestOptions.none(), CHECK_RESPONSE).data();
   }
 
   /**
-   * Passive Liveness
-   *
-   * <p>Detect presentation attacks — printed photos, screen replays, masks, deepfakes — from a single face image. No video, motion, or user interaction required.
-   *
-   * <p><b>How it works.</b> The image is analyzed by a biometric model; the largest detected face is evaluated and a liveness <code>score</code> (0–100) is computed. <code>status</code> is <code>Declined</code> when any <code>error</code>-severity warning fires:
-   * - <code>NO_FACE_DETECTED</code> — the liveness model found no face,
-   * - <code>LOW_LIVENESS_SCORE</code> — score at or below <code>face_liveness_score_decline_threshold</code> (default <code>30</code>),
-   * - <code>LIVENESS_FACE_ATTACK</code> — the model detected a presentation attack,
-   * - <code>FACE_IN_BLOCKLIST</code> / <code>POSSIBLE_FACE_IN_BLOCKLIST</code> — the face matches an entry on your face blocklist.
-   *
-   * <p><code>MULTIPLE_FACES_DETECTED</code> is a <code>warning</code>-severity signal (does not decline), and <code>DUPLICATED_FACE</code> / <code>POSSIBLE_DUPLICATED_FACE</code> are <code>information</code>-severity signals that the same face already appeared in another approved session (they never decline). <code>face_quality</code> and <code>face_luminance</code> (0–100, nullable) describe capture quality.
-   *
-   * <p><b>Blocklist and duplicate screening.</b> Runs on <b>every</b> call — with or without <code>save_api_request</code> — by matching the detected face against your application's face search index. Prior faces with the same <code>vendor_data</code> are excluded from the entire index search — so re-running liveness for the same user does not trigger <code>DUPLICATED_FACE</code>, and a blocklisted face originating from a session with the caller's own <code>vendor_data</code> is also NOT flagged (<code>FACE_IN_BLOCKLIST</code> screening is bypassed for same-<code>vendor_data</code> faces).
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one Passive Liveness API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
-   *
-   * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook), the reference image and face crop are stored, and the detected face is <b>enrolled into your face search index</b> so later Face Search calls and duplicate checks can match it. When <code>false</code>, the call is one-shot: nothing is stored and the face is not enrolled (blocklist/duplicate screening still runs).
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/passive-liveness/}
+   * Asynchronous {@link #check(PassiveLivenessCheckParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<PassiveLivenessCheckResponse> checkAsync(PassiveLivenessCheckParams params) {
     return client.executeAsync(checkRequest(params), RequestOptions.none(), CHECK_RESPONSE).thenApply(RawResponse::data);
@@ -187,138 +115,42 @@ public final class PassiveLivenessResource {
     }
 
     /**
-     * Passive Liveness
-     *
-     * <p>Detect presentation attacks — printed photos, screen replays, masks, deepfakes — from a single face image. No video, motion, or user interaction required.
-     *
-     * <p><b>How it works.</b> The image is analyzed by a biometric model; the largest detected face is evaluated and a liveness <code>score</code> (0–100) is computed. <code>status</code> is <code>Declined</code> when any <code>error</code>-severity warning fires:
-     * - <code>NO_FACE_DETECTED</code> — the liveness model found no face,
-     * - <code>LOW_LIVENESS_SCORE</code> — score at or below <code>face_liveness_score_decline_threshold</code> (default <code>30</code>),
-     * - <code>LIVENESS_FACE_ATTACK</code> — the model detected a presentation attack,
-     * - <code>FACE_IN_BLOCKLIST</code> / <code>POSSIBLE_FACE_IN_BLOCKLIST</code> — the face matches an entry on your face blocklist.
-     *
-     * <p><code>MULTIPLE_FACES_DETECTED</code> is a <code>warning</code>-severity signal (does not decline), and <code>DUPLICATED_FACE</code> / <code>POSSIBLE_DUPLICATED_FACE</code> are <code>information</code>-severity signals that the same face already appeared in another approved session (they never decline). <code>face_quality</code> and <code>face_luminance</code> (0–100, nullable) describe capture quality.
-     *
-     * <p><b>Blocklist and duplicate screening.</b> Runs on <b>every</b> call — with or without <code>save_api_request</code> — by matching the detected face against your application's face search index. Prior faces with the same <code>vendor_data</code> are excluded from the entire index search — so re-running liveness for the same user does not trigger <code>DUPLICATED_FACE</code>, and a blocklisted face originating from a session with the caller's own <code>vendor_data</code> is also NOT flagged (<code>FACE_IN_BLOCKLIST</code> screening is bypassed for same-<code>vendor_data</code> faces).
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Passive Liveness API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
-     *
-     * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook), the reference image and face crop are stored, and the detected face is <b>enrolled into your face search index</b> so later Face Search calls and duplicate checks can match it. When <code>false</code>, the call is one-shot: nothing is stored and the face is not enrolled (blocklist/duplicate screening still runs).
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/passive-liveness/}
+     * {@link #check(PassiveLivenessCheckParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<PassiveLivenessCheckResponse> check(PassiveLivenessCheckParams params, RequestOptions options) {
       return client.execute(checkRequest(params), options, CHECK_RESPONSE);
     }
 
     /**
-     * Passive Liveness
-     *
-     * <p>Detect presentation attacks — printed photos, screen replays, masks, deepfakes — from a single face image. No video, motion, or user interaction required.
-     *
-     * <p><b>How it works.</b> The image is analyzed by a biometric model; the largest detected face is evaluated and a liveness <code>score</code> (0–100) is computed. <code>status</code> is <code>Declined</code> when any <code>error</code>-severity warning fires:
-     * - <code>NO_FACE_DETECTED</code> — the liveness model found no face,
-     * - <code>LOW_LIVENESS_SCORE</code> — score at or below <code>face_liveness_score_decline_threshold</code> (default <code>30</code>),
-     * - <code>LIVENESS_FACE_ATTACK</code> — the model detected a presentation attack,
-     * - <code>FACE_IN_BLOCKLIST</code> / <code>POSSIBLE_FACE_IN_BLOCKLIST</code> — the face matches an entry on your face blocklist.
-     *
-     * <p><code>MULTIPLE_FACES_DETECTED</code> is a <code>warning</code>-severity signal (does not decline), and <code>DUPLICATED_FACE</code> / <code>POSSIBLE_DUPLICATED_FACE</code> are <code>information</code>-severity signals that the same face already appeared in another approved session (they never decline). <code>face_quality</code> and <code>face_luminance</code> (0–100, nullable) describe capture quality.
-     *
-     * <p><b>Blocklist and duplicate screening.</b> Runs on <b>every</b> call — with or without <code>save_api_request</code> — by matching the detected face against your application's face search index. Prior faces with the same <code>vendor_data</code> are excluded from the entire index search — so re-running liveness for the same user does not trigger <code>DUPLICATED_FACE</code>, and a blocklisted face originating from a session with the caller's own <code>vendor_data</code> is also NOT flagged (<code>FACE_IN_BLOCKLIST</code> screening is bypassed for same-<code>vendor_data</code> faces).
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Passive Liveness API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
-     *
-     * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook), the reference image and face crop are stored, and the detected face is <b>enrolled into your face search index</b> so later Face Search calls and duplicate checks can match it. When <code>false</code>, the call is one-shot: nothing is stored and the face is not enrolled (blocklist/duplicate screening still runs).
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/passive-liveness/}
+     * Asynchronous {@link #check(PassiveLivenessCheckParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<PassiveLivenessCheckResponse>> checkAsync(PassiveLivenessCheckParams params, RequestOptions options) {
       return client.executeAsync(checkRequest(params), options, CHECK_RESPONSE);
     }
 
     /**
-     * Passive Liveness
-     *
-     * <p>Detect presentation attacks — printed photos, screen replays, masks, deepfakes — from a single face image. No video, motion, or user interaction required.
-     *
-     * <p><b>How it works.</b> The image is analyzed by a biometric model; the largest detected face is evaluated and a liveness <code>score</code> (0–100) is computed. <code>status</code> is <code>Declined</code> when any <code>error</code>-severity warning fires:
-     * - <code>NO_FACE_DETECTED</code> — the liveness model found no face,
-     * - <code>LOW_LIVENESS_SCORE</code> — score at or below <code>face_liveness_score_decline_threshold</code> (default <code>30</code>),
-     * - <code>LIVENESS_FACE_ATTACK</code> — the model detected a presentation attack,
-     * - <code>FACE_IN_BLOCKLIST</code> / <code>POSSIBLE_FACE_IN_BLOCKLIST</code> — the face matches an entry on your face blocklist.
-     *
-     * <p><code>MULTIPLE_FACES_DETECTED</code> is a <code>warning</code>-severity signal (does not decline), and <code>DUPLICATED_FACE</code> / <code>POSSIBLE_DUPLICATED_FACE</code> are <code>information</code>-severity signals that the same face already appeared in another approved session (they never decline). <code>face_quality</code> and <code>face_luminance</code> (0–100, nullable) describe capture quality.
-     *
-     * <p><b>Blocklist and duplicate screening.</b> Runs on <b>every</b> call — with or without <code>save_api_request</code> — by matching the detected face against your application's face search index. Prior faces with the same <code>vendor_data</code> are excluded from the entire index search — so re-running liveness for the same user does not trigger <code>DUPLICATED_FACE</code>, and a blocklisted face originating from a session with the caller's own <code>vendor_data</code> is also NOT flagged (<code>FACE_IN_BLOCKLIST</code> screening is bypassed for same-<code>vendor_data</code> faces).
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Passive Liveness API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
-     *
-     * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook), the reference image and face crop are stored, and the detected face is <b>enrolled into your face search index</b> so later Face Search calls and duplicate checks can match it. When <code>false</code>, the call is one-shot: nothing is stored and the face is not enrolled (blocklist/duplicate screening still runs).
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/passive-liveness/}
+     * {@link #check(PassiveLivenessCheckParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<PassiveLivenessCheckResponse> check(PassiveLivenessCheckParams params) {
       return client.execute(checkRequest(params), RequestOptions.none(), CHECK_RESPONSE);
     }
 
     /**
-     * Passive Liveness
-     *
-     * <p>Detect presentation attacks — printed photos, screen replays, masks, deepfakes — from a single face image. No video, motion, or user interaction required.
-     *
-     * <p><b>How it works.</b> The image is analyzed by a biometric model; the largest detected face is evaluated and a liveness <code>score</code> (0–100) is computed. <code>status</code> is <code>Declined</code> when any <code>error</code>-severity warning fires:
-     * - <code>NO_FACE_DETECTED</code> — the liveness model found no face,
-     * - <code>LOW_LIVENESS_SCORE</code> — score at or below <code>face_liveness_score_decline_threshold</code> (default <code>30</code>),
-     * - <code>LIVENESS_FACE_ATTACK</code> — the model detected a presentation attack,
-     * - <code>FACE_IN_BLOCKLIST</code> / <code>POSSIBLE_FACE_IN_BLOCKLIST</code> — the face matches an entry on your face blocklist.
-     *
-     * <p><code>MULTIPLE_FACES_DETECTED</code> is a <code>warning</code>-severity signal (does not decline), and <code>DUPLICATED_FACE</code> / <code>POSSIBLE_DUPLICATED_FACE</code> are <code>information</code>-severity signals that the same face already appeared in another approved session (they never decline). <code>face_quality</code> and <code>face_luminance</code> (0–100, nullable) describe capture quality.
-     *
-     * <p><b>Blocklist and duplicate screening.</b> Runs on <b>every</b> call — with or without <code>save_api_request</code> — by matching the detected face against your application's face search index. Prior faces with the same <code>vendor_data</code> are excluded from the entire index search — so re-running liveness for the same user does not trigger <code>DUPLICATED_FACE</code>, and a blocklisted face originating from a session with the caller's own <code>vendor_data</code> is also NOT flagged (<code>FACE_IN_BLOCKLIST</code> screening is bypassed for same-<code>vendor_data</code> faces).
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Passive Liveness API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
-     *
-     * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook), the reference image and face crop are stored, and the detected face is <b>enrolled into your face search index</b> so later Face Search calls and duplicate checks can match it. When <code>false</code>, the call is one-shot: nothing is stored and the face is not enrolled (blocklist/duplicate screening still runs).
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/passive-liveness/}
+     * Asynchronous {@link #check(PassiveLivenessCheckParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<PassiveLivenessCheckResponse>> checkAsync(PassiveLivenessCheckParams params) {
       return client.executeAsync(checkRequest(params), RequestOptions.none(), CHECK_RESPONSE);

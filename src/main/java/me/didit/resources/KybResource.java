@@ -65,79 +65,31 @@ public final class KybResource {
   }
 
   /**
-   * KYB registry company search (standalone)
-   *
-   * <p>Search official company registries for candidate companies by name and/or registration number. This is step 1 of the two-step registry flow: <b>search</b> returns lightweight candidates, then <code>POST /v3/kyb/select/</code> retrieves the full profile of one candidate.
-   *
-   * <p><b>Search billing.</b> Successful searches using a paid company-data source cost USD 0.50 per request, regardless of candidate count. Empty results, failures and results served only by other sources are not charged. The applicable price is reserved before searching; insufficient balance returns 403 with code <code>insufficient_credits</code>. Contract rates apply where agreed, and an unconfigured contract search rate returns 403. Sandbox searches are free. Repeating a successful search can incur another charge; callback delivery does not add a charge. Profile retrieval is billed separately. This search fee also applies to v2. Candidates always come back with <code>fetch_status: "pending"</code>: the full company data is only fetched (and billed) on select.
-   *
-   * <p>**<code>kyb_response_id</code> is ephemeral.** It is a per-search handle, not a stable company id. Select promptly after searching and re-search to get a fresh handle instead of storing it.
-   *
-   * <p><b>Two modes.</b>
-   * - *Synchronous (default):* the API polls the registry until the search resolves and returns the final candidate list (<code>search_resolved: true</code>).
-   * - *Asynchronous:* pass <code>webhook_url</code> and the API returns immediately — usually with <code>search_status: "pending"</code> and an empty candidate list — then POSTs a <code>kyb.registry_search.resolved</code> callback to your URL when the registry finishes. The callback body is <code>{"event_id", "event_type": "kyb.registry_search.resolved", "request_id", "vendor_data", "metadata", "search_status", "search_resolved", "kyb_registry", "timestamp", "created_at"}</code> — note <code>timestamp</code> and <code>created_at</code> in the callback are epoch integers, unlike this endpoint's ISO <code>created_at</code> — and is sent <b>unsigned</b> (header <code>X-Didit-Unsigned-Callback: true</code>, no <code>X-Signature</code>).
-   *
-   * <p><b>Country codes.</b> ISO 3166-1 alpha-2 (<code>GB</code>, <code>DE</code>), plus <code>XX-YY</code> subdivision codes where registries are regional — e.g. <code>US-CA</code> for California.
-   *
-   * <p><b>Sandbox.</b> Keys from sandbox applications return one static candidate without contacting any registry.
-   *
-   * <p>{@code POST /v3/kyb/search/}
+   * Asynchronous {@link #search(KybSearchParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<KybSearchResponse> searchAsync(KybSearchParams params, RequestOptions options) {
     return client.executeAsync(searchRequest(params), options, SEARCH_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * KYB registry company search (standalone)
-   *
-   * <p>Search official company registries for candidate companies by name and/or registration number. This is step 1 of the two-step registry flow: <b>search</b> returns lightweight candidates, then <code>POST /v3/kyb/select/</code> retrieves the full profile of one candidate.
-   *
-   * <p><b>Search billing.</b> Successful searches using a paid company-data source cost USD 0.50 per request, regardless of candidate count. Empty results, failures and results served only by other sources are not charged. The applicable price is reserved before searching; insufficient balance returns 403 with code <code>insufficient_credits</code>. Contract rates apply where agreed, and an unconfigured contract search rate returns 403. Sandbox searches are free. Repeating a successful search can incur another charge; callback delivery does not add a charge. Profile retrieval is billed separately. This search fee also applies to v2. Candidates always come back with <code>fetch_status: "pending"</code>: the full company data is only fetched (and billed) on select.
-   *
-   * <p>**<code>kyb_response_id</code> is ephemeral.** It is a per-search handle, not a stable company id. Select promptly after searching and re-search to get a fresh handle instead of storing it.
-   *
-   * <p><b>Two modes.</b>
-   * - *Synchronous (default):* the API polls the registry until the search resolves and returns the final candidate list (<code>search_resolved: true</code>).
-   * - *Asynchronous:* pass <code>webhook_url</code> and the API returns immediately — usually with <code>search_status: "pending"</code> and an empty candidate list — then POSTs a <code>kyb.registry_search.resolved</code> callback to your URL when the registry finishes. The callback body is <code>{"event_id", "event_type": "kyb.registry_search.resolved", "request_id", "vendor_data", "metadata", "search_status", "search_resolved", "kyb_registry", "timestamp", "created_at"}</code> — note <code>timestamp</code> and <code>created_at</code> in the callback are epoch integers, unlike this endpoint's ISO <code>created_at</code> — and is sent <b>unsigned</b> (header <code>X-Didit-Unsigned-Callback: true</code>, no <code>X-Signature</code>).
-   *
-   * <p><b>Country codes.</b> ISO 3166-1 alpha-2 (<code>GB</code>, <code>DE</code>), plus <code>XX-YY</code> subdivision codes where registries are regional — e.g. <code>US-CA</code> for California.
-   *
-   * <p><b>Sandbox.</b> Keys from sandbox applications return one static candidate without contacting any registry.
-   *
-   * <p>{@code POST /v3/kyb/search/}
+   * Same as {@link #search(KybSearchParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public KybSearchResponse search(KybSearchParams params) {
     return client.execute(searchRequest(params), RequestOptions.none(), SEARCH_RESPONSE).data();
   }
 
   /**
-   * KYB registry company search (standalone)
-   *
-   * <p>Search official company registries for candidate companies by name and/or registration number. This is step 1 of the two-step registry flow: <b>search</b> returns lightweight candidates, then <code>POST /v3/kyb/select/</code> retrieves the full profile of one candidate.
-   *
-   * <p><b>Search billing.</b> Successful searches using a paid company-data source cost USD 0.50 per request, regardless of candidate count. Empty results, failures and results served only by other sources are not charged. The applicable price is reserved before searching; insufficient balance returns 403 with code <code>insufficient_credits</code>. Contract rates apply where agreed, and an unconfigured contract search rate returns 403. Sandbox searches are free. Repeating a successful search can incur another charge; callback delivery does not add a charge. Profile retrieval is billed separately. This search fee also applies to v2. Candidates always come back with <code>fetch_status: "pending"</code>: the full company data is only fetched (and billed) on select.
-   *
-   * <p>**<code>kyb_response_id</code> is ephemeral.** It is a per-search handle, not a stable company id. Select promptly after searching and re-search to get a fresh handle instead of storing it.
-   *
-   * <p><b>Two modes.</b>
-   * - *Synchronous (default):* the API polls the registry until the search resolves and returns the final candidate list (<code>search_resolved: true</code>).
-   * - *Asynchronous:* pass <code>webhook_url</code> and the API returns immediately — usually with <code>search_status: "pending"</code> and an empty candidate list — then POSTs a <code>kyb.registry_search.resolved</code> callback to your URL when the registry finishes. The callback body is <code>{"event_id", "event_type": "kyb.registry_search.resolved", "request_id", "vendor_data", "metadata", "search_status", "search_resolved", "kyb_registry", "timestamp", "created_at"}</code> — note <code>timestamp</code> and <code>created_at</code> in the callback are epoch integers, unlike this endpoint's ISO <code>created_at</code> — and is sent <b>unsigned</b> (header <code>X-Didit-Unsigned-Callback: true</code>, no <code>X-Signature</code>).
-   *
-   * <p><b>Country codes.</b> ISO 3166-1 alpha-2 (<code>GB</code>, <code>DE</code>), plus <code>XX-YY</code> subdivision codes where registries are regional — e.g. <code>US-CA</code> for California.
-   *
-   * <p><b>Sandbox.</b> Keys from sandbox applications return one static candidate without contacting any registry.
-   *
-   * <p>{@code POST /v3/kyb/search/}
+   * Asynchronous {@link #search(KybSearchParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<KybSearchResponse> searchAsync(KybSearchParams params) {
     return client.executeAsync(searchRequest(params), RequestOptions.none(), SEARCH_RESPONSE).thenApply(RawResponse::data);
@@ -165,61 +117,31 @@ public final class KybResource {
   }
 
   /**
-   * KYB registry company select — Lite tier (standalone)
-   *
-   * <p>Retrieve the <b>Lite</b> registry profile of one candidate returned by <code>POST /v3/kyb/search/</code> — company details, registered address, identifiers, status, activity and the officers, plus the raw registry payload. Shareholders and ultimate beneficial owners are sold by <code>POST /v3/kyb/shareholders/</code> and <code>POST /v3/kyb/ubo/</code>.
-   *
-   * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The handle is ephemeral and scoped to that search — select promptly, and re-search for a fresh handle rather than storing it.
-   *
-   * <p><b>Billing.</b> Each select is billed at the country's Lite price (any search fee is separate); see [KYB registry pricing](/getting-started/kyb-registry-pricing). The balance is checked before any registry call (<code>403</code> when short) and the charge is recorded against the created business session.
-   *
-   * <p><b>Persistence is mandatory.</b> Every select creates a business session (its id is the <code>request_id</code>) so billing and retrieval can be tracked; it appears in the console. <code>save_api_request</code> is accepted for symmetry but must be <code>true</code> (the default) — sending <code>false</code> returns <code>400</code>.
-   *
-   * <p>{@code POST /v3/kyb/select/}
+   * Asynchronous {@link #select(KybSelectParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<KybSelectResponse> selectAsync(KybSelectParams params, RequestOptions options) {
     return client.executeAsync(selectRequest(params), options, SELECT_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * KYB registry company select — Lite tier (standalone)
-   *
-   * <p>Retrieve the <b>Lite</b> registry profile of one candidate returned by <code>POST /v3/kyb/search/</code> — company details, registered address, identifiers, status, activity and the officers, plus the raw registry payload. Shareholders and ultimate beneficial owners are sold by <code>POST /v3/kyb/shareholders/</code> and <code>POST /v3/kyb/ubo/</code>.
-   *
-   * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The handle is ephemeral and scoped to that search — select promptly, and re-search for a fresh handle rather than storing it.
-   *
-   * <p><b>Billing.</b> Each select is billed at the country's Lite price (any search fee is separate); see [KYB registry pricing](/getting-started/kyb-registry-pricing). The balance is checked before any registry call (<code>403</code> when short) and the charge is recorded against the created business session.
-   *
-   * <p><b>Persistence is mandatory.</b> Every select creates a business session (its id is the <code>request_id</code>) so billing and retrieval can be tracked; it appears in the console. <code>save_api_request</code> is accepted for symmetry but must be <code>true</code> (the default) — sending <code>false</code> returns <code>400</code>.
-   *
-   * <p>{@code POST /v3/kyb/select/}
+   * Same as {@link #select(KybSelectParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public KybSelectResponse select(KybSelectParams params) {
     return client.execute(selectRequest(params), RequestOptions.none(), SELECT_RESPONSE).data();
   }
 
   /**
-   * KYB registry company select — Lite tier (standalone)
-   *
-   * <p>Retrieve the <b>Lite</b> registry profile of one candidate returned by <code>POST /v3/kyb/search/</code> — company details, registered address, identifiers, status, activity and the officers, plus the raw registry payload. Shareholders and ultimate beneficial owners are sold by <code>POST /v3/kyb/shareholders/</code> and <code>POST /v3/kyb/ubo/</code>.
-   *
-   * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The handle is ephemeral and scoped to that search — select promptly, and re-search for a fresh handle rather than storing it.
-   *
-   * <p><b>Billing.</b> Each select is billed at the country's Lite price (any search fee is separate); see [KYB registry pricing](/getting-started/kyb-registry-pricing). The balance is checked before any registry call (<code>403</code> when short) and the charge is recorded against the created business session.
-   *
-   * <p><b>Persistence is mandatory.</b> Every select creates a business session (its id is the <code>request_id</code>) so billing and retrieval can be tracked; it appears in the console. <code>save_api_request</code> is accepted for symmetry but must be <code>true</code> (the default) — sending <code>false</code> returns <code>400</code>.
-   *
-   * <p>{@code POST /v3/kyb/select/}
+   * Asynchronous {@link #select(KybSelectParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<KybSelectResponse> selectAsync(KybSelectParams params) {
     return client.executeAsync(selectRequest(params), RequestOptions.none(), SELECT_RESPONSE).thenApply(RawResponse::data);
@@ -249,67 +171,31 @@ public final class KybResource {
   }
 
   /**
-   * KYB registry company with shareholders (standalone)
-   *
-   * <p>Retrieve the Lite profile <b>plus the direct shareholders</b> (natural persons and corporate entities, with their ownership bands) of one candidate returned by <code>POST /v3/kyb/search/</code>.
-   *
-   * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
-   *
-   * <p><b>Billing.</b> Billed at the country's Shareholders price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). When the registry holds no shareholder record for the company (or the country offers no ownership data at all) the Lite profile is delivered and billed instead: read <code>registry_tier_delivered</code> and <code>registry_ownership_status</code>. The balance is checked against the Shareholders price before any registry call (<code>403</code> when short).
-   *
-   * <p><b>Availability.</b> v3 only. Every call creates a business session (its id is the <code>request_id</code>).
-   *
-   * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
-   *
-   * <p>{@code POST /v3/kyb/shareholders/}
+   * Asynchronous {@link #listShareholders(KybListShareholdersParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<KybListShareholdersResponse> listShareholdersAsync(KybListShareholdersParams params, RequestOptions options) {
     return client.executeAsync(listShareholdersRequest(params), options, LIST_SHAREHOLDERS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * KYB registry company with shareholders (standalone)
-   *
-   * <p>Retrieve the Lite profile <b>plus the direct shareholders</b> (natural persons and corporate entities, with their ownership bands) of one candidate returned by <code>POST /v3/kyb/search/</code>.
-   *
-   * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
-   *
-   * <p><b>Billing.</b> Billed at the country's Shareholders price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). When the registry holds no shareholder record for the company (or the country offers no ownership data at all) the Lite profile is delivered and billed instead: read <code>registry_tier_delivered</code> and <code>registry_ownership_status</code>. The balance is checked against the Shareholders price before any registry call (<code>403</code> when short).
-   *
-   * <p><b>Availability.</b> v3 only. Every call creates a business session (its id is the <code>request_id</code>).
-   *
-   * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
-   *
-   * <p>{@code POST /v3/kyb/shareholders/}
+   * Same as {@link #listShareholders(KybListShareholdersParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public KybListShareholdersResponse listShareholders(KybListShareholdersParams params) {
     return client.execute(listShareholdersRequest(params), RequestOptions.none(), LIST_SHAREHOLDERS_RESPONSE).data();
   }
 
   /**
-   * KYB registry company with shareholders (standalone)
-   *
-   * <p>Retrieve the Lite profile <b>plus the direct shareholders</b> (natural persons and corporate entities, with their ownership bands) of one candidate returned by <code>POST /v3/kyb/search/</code>.
-   *
-   * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
-   *
-   * <p><b>Billing.</b> Billed at the country's Shareholders price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). When the registry holds no shareholder record for the company (or the country offers no ownership data at all) the Lite profile is delivered and billed instead: read <code>registry_tier_delivered</code> and <code>registry_ownership_status</code>. The balance is checked against the Shareholders price before any registry call (<code>403</code> when short).
-   *
-   * <p><b>Availability.</b> v3 only. Every call creates a business session (its id is the <code>request_id</code>).
-   *
-   * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
-   *
-   * <p>{@code POST /v3/kyb/shareholders/}
+   * Asynchronous {@link #listShareholders(KybListShareholdersParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<KybListShareholdersResponse> listShareholdersAsync(KybListShareholdersParams params) {
     return client.executeAsync(listShareholdersRequest(params), RequestOptions.none(), LIST_SHAREHOLDERS_RESPONSE).thenApply(RawResponse::data);
@@ -339,67 +225,31 @@ public final class KybResource {
   }
 
   /**
-   * KYB registry company with ultimate beneficial owners (standalone)
-   *
-   * <p>Retrieve the Lite profile, the direct shareholders <b>and the ultimate beneficial owners</b> resolved through the ownership chain (<code>registry_data.ubo_resolution</code> carries the corporate parent chain) of one candidate returned by <code>POST /v3/kyb/search/</code>.
-   *
-   * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
-   *
-   * <p><b>Billing.</b> Billed at the country's UBO price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). The tier delivered is the highest the country and the registry can serve: Shareholders when the resolved report names no natural person as a beneficial owner, Lite when there is no ownership record at all; <code>registry_tier_delivered</code> names what was billed. The balance is checked against the UBO price before any registry call (<code>403</code> when short).
-   *
-   * <p><b>Availability.</b> v3 only. Every call creates a business session (its id is the <code>request_id</code>).
-   *
-   * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
-   *
-   * <p>{@code POST /v3/kyb/ubo/}
+   * Asynchronous {@link #listUbos(KybListUbosParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<KybListUbosResponse> listUbosAsync(KybListUbosParams params, RequestOptions options) {
     return client.executeAsync(listUbosRequest(params), options, LIST_UBOS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * KYB registry company with ultimate beneficial owners (standalone)
-   *
-   * <p>Retrieve the Lite profile, the direct shareholders <b>and the ultimate beneficial owners</b> resolved through the ownership chain (<code>registry_data.ubo_resolution</code> carries the corporate parent chain) of one candidate returned by <code>POST /v3/kyb/search/</code>.
-   *
-   * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
-   *
-   * <p><b>Billing.</b> Billed at the country's UBO price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). The tier delivered is the highest the country and the registry can serve: Shareholders when the resolved report names no natural person as a beneficial owner, Lite when there is no ownership record at all; <code>registry_tier_delivered</code> names what was billed. The balance is checked against the UBO price before any registry call (<code>403</code> when short).
-   *
-   * <p><b>Availability.</b> v3 only. Every call creates a business session (its id is the <code>request_id</code>).
-   *
-   * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
-   *
-   * <p>{@code POST /v3/kyb/ubo/}
+   * Same as {@link #listUbos(KybListUbosParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public KybListUbosResponse listUbos(KybListUbosParams params) {
     return client.execute(listUbosRequest(params), RequestOptions.none(), LIST_UBOS_RESPONSE).data();
   }
 
   /**
-   * KYB registry company with ultimate beneficial owners (standalone)
-   *
-   * <p>Retrieve the Lite profile, the direct shareholders <b>and the ultimate beneficial owners</b> resolved through the ownership chain (<code>registry_data.ubo_resolution</code> carries the corporate parent chain) of one candidate returned by <code>POST /v3/kyb/search/</code>.
-   *
-   * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
-   *
-   * <p><b>Billing.</b> Billed at the country's UBO price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). The tier delivered is the highest the country and the registry can serve: Shareholders when the resolved report names no natural person as a beneficial owner, Lite when there is no ownership record at all; <code>registry_tier_delivered</code> names what was billed. The balance is checked against the UBO price before any registry call (<code>403</code> when short).
-   *
-   * <p><b>Availability.</b> v3 only. Every call creates a business session (its id is the <code>request_id</code>).
-   *
-   * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
-   *
-   * <p>{@code POST /v3/kyb/ubo/}
+   * Asynchronous {@link #listUbos(KybListUbosParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<KybListUbosResponse> listUbosAsync(KybListUbosParams params) {
     return client.executeAsync(listUbosRequest(params), RequestOptions.none(), LIST_UBOS_RESPONSE).thenApply(RawResponse::data);
@@ -450,368 +300,168 @@ public final class KybResource {
     }
 
     /**
-     * KYB registry company search (standalone)
-     *
-     * <p>Search official company registries for candidate companies by name and/or registration number. This is step 1 of the two-step registry flow: <b>search</b> returns lightweight candidates, then <code>POST /v3/kyb/select/</code> retrieves the full profile of one candidate.
-     *
-     * <p><b>Search billing.</b> Successful searches using a paid company-data source cost USD 0.50 per request, regardless of candidate count. Empty results, failures and results served only by other sources are not charged. The applicable price is reserved before searching; insufficient balance returns 403 with code <code>insufficient_credits</code>. Contract rates apply where agreed, and an unconfigured contract search rate returns 403. Sandbox searches are free. Repeating a successful search can incur another charge; callback delivery does not add a charge. Profile retrieval is billed separately. This search fee also applies to v2. Candidates always come back with <code>fetch_status: "pending"</code>: the full company data is only fetched (and billed) on select.
-     *
-     * <p>**<code>kyb_response_id</code> is ephemeral.** It is a per-search handle, not a stable company id. Select promptly after searching and re-search to get a fresh handle instead of storing it.
-     *
-     * <p><b>Two modes.</b>
-     * - *Synchronous (default):* the API polls the registry until the search resolves and returns the final candidate list (<code>search_resolved: true</code>).
-     * - *Asynchronous:* pass <code>webhook_url</code> and the API returns immediately — usually with <code>search_status: "pending"</code> and an empty candidate list — then POSTs a <code>kyb.registry_search.resolved</code> callback to your URL when the registry finishes. The callback body is <code>{"event_id", "event_type": "kyb.registry_search.resolved", "request_id", "vendor_data", "metadata", "search_status", "search_resolved", "kyb_registry", "timestamp", "created_at"}</code> — note <code>timestamp</code> and <code>created_at</code> in the callback are epoch integers, unlike this endpoint's ISO <code>created_at</code> — and is sent <b>unsigned</b> (header <code>X-Didit-Unsigned-Callback: true</code>, no <code>X-Signature</code>).
-     *
-     * <p><b>Country codes.</b> ISO 3166-1 alpha-2 (<code>GB</code>, <code>DE</code>), plus <code>XX-YY</code> subdivision codes where registries are regional — e.g. <code>US-CA</code> for California.
-     *
-     * <p><b>Sandbox.</b> Keys from sandbox applications return one static candidate without contacting any registry.
-     *
-     * <p>{@code POST /v3/kyb/search/}
+     * {@link #search(KybSearchParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<KybSearchResponse> search(KybSearchParams params, RequestOptions options) {
       return client.execute(searchRequest(params), options, SEARCH_RESPONSE);
     }
 
     /**
-     * KYB registry company search (standalone)
-     *
-     * <p>Search official company registries for candidate companies by name and/or registration number. This is step 1 of the two-step registry flow: <b>search</b> returns lightweight candidates, then <code>POST /v3/kyb/select/</code> retrieves the full profile of one candidate.
-     *
-     * <p><b>Search billing.</b> Successful searches using a paid company-data source cost USD 0.50 per request, regardless of candidate count. Empty results, failures and results served only by other sources are not charged. The applicable price is reserved before searching; insufficient balance returns 403 with code <code>insufficient_credits</code>. Contract rates apply where agreed, and an unconfigured contract search rate returns 403. Sandbox searches are free. Repeating a successful search can incur another charge; callback delivery does not add a charge. Profile retrieval is billed separately. This search fee also applies to v2. Candidates always come back with <code>fetch_status: "pending"</code>: the full company data is only fetched (and billed) on select.
-     *
-     * <p>**<code>kyb_response_id</code> is ephemeral.** It is a per-search handle, not a stable company id. Select promptly after searching and re-search to get a fresh handle instead of storing it.
-     *
-     * <p><b>Two modes.</b>
-     * - *Synchronous (default):* the API polls the registry until the search resolves and returns the final candidate list (<code>search_resolved: true</code>).
-     * - *Asynchronous:* pass <code>webhook_url</code> and the API returns immediately — usually with <code>search_status: "pending"</code> and an empty candidate list — then POSTs a <code>kyb.registry_search.resolved</code> callback to your URL when the registry finishes. The callback body is <code>{"event_id", "event_type": "kyb.registry_search.resolved", "request_id", "vendor_data", "metadata", "search_status", "search_resolved", "kyb_registry", "timestamp", "created_at"}</code> — note <code>timestamp</code> and <code>created_at</code> in the callback are epoch integers, unlike this endpoint's ISO <code>created_at</code> — and is sent <b>unsigned</b> (header <code>X-Didit-Unsigned-Callback: true</code>, no <code>X-Signature</code>).
-     *
-     * <p><b>Country codes.</b> ISO 3166-1 alpha-2 (<code>GB</code>, <code>DE</code>), plus <code>XX-YY</code> subdivision codes where registries are regional — e.g. <code>US-CA</code> for California.
-     *
-     * <p><b>Sandbox.</b> Keys from sandbox applications return one static candidate without contacting any registry.
-     *
-     * <p>{@code POST /v3/kyb/search/}
+     * Asynchronous {@link #search(KybSearchParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<KybSearchResponse>> searchAsync(KybSearchParams params, RequestOptions options) {
       return client.executeAsync(searchRequest(params), options, SEARCH_RESPONSE);
     }
 
     /**
-     * KYB registry company search (standalone)
-     *
-     * <p>Search official company registries for candidate companies by name and/or registration number. This is step 1 of the two-step registry flow: <b>search</b> returns lightweight candidates, then <code>POST /v3/kyb/select/</code> retrieves the full profile of one candidate.
-     *
-     * <p><b>Search billing.</b> Successful searches using a paid company-data source cost USD 0.50 per request, regardless of candidate count. Empty results, failures and results served only by other sources are not charged. The applicable price is reserved before searching; insufficient balance returns 403 with code <code>insufficient_credits</code>. Contract rates apply where agreed, and an unconfigured contract search rate returns 403. Sandbox searches are free. Repeating a successful search can incur another charge; callback delivery does not add a charge. Profile retrieval is billed separately. This search fee also applies to v2. Candidates always come back with <code>fetch_status: "pending"</code>: the full company data is only fetched (and billed) on select.
-     *
-     * <p>**<code>kyb_response_id</code> is ephemeral.** It is a per-search handle, not a stable company id. Select promptly after searching and re-search to get a fresh handle instead of storing it.
-     *
-     * <p><b>Two modes.</b>
-     * - *Synchronous (default):* the API polls the registry until the search resolves and returns the final candidate list (<code>search_resolved: true</code>).
-     * - *Asynchronous:* pass <code>webhook_url</code> and the API returns immediately — usually with <code>search_status: "pending"</code> and an empty candidate list — then POSTs a <code>kyb.registry_search.resolved</code> callback to your URL when the registry finishes. The callback body is <code>{"event_id", "event_type": "kyb.registry_search.resolved", "request_id", "vendor_data", "metadata", "search_status", "search_resolved", "kyb_registry", "timestamp", "created_at"}</code> — note <code>timestamp</code> and <code>created_at</code> in the callback are epoch integers, unlike this endpoint's ISO <code>created_at</code> — and is sent <b>unsigned</b> (header <code>X-Didit-Unsigned-Callback: true</code>, no <code>X-Signature</code>).
-     *
-     * <p><b>Country codes.</b> ISO 3166-1 alpha-2 (<code>GB</code>, <code>DE</code>), plus <code>XX-YY</code> subdivision codes where registries are regional — e.g. <code>US-CA</code> for California.
-     *
-     * <p><b>Sandbox.</b> Keys from sandbox applications return one static candidate without contacting any registry.
-     *
-     * <p>{@code POST /v3/kyb/search/}
+     * {@link #search(KybSearchParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<KybSearchResponse> search(KybSearchParams params) {
       return client.execute(searchRequest(params), RequestOptions.none(), SEARCH_RESPONSE);
     }
 
     /**
-     * KYB registry company search (standalone)
-     *
-     * <p>Search official company registries for candidate companies by name and/or registration number. This is step 1 of the two-step registry flow: <b>search</b> returns lightweight candidates, then <code>POST /v3/kyb/select/</code> retrieves the full profile of one candidate.
-     *
-     * <p><b>Search billing.</b> Successful searches using a paid company-data source cost USD 0.50 per request, regardless of candidate count. Empty results, failures and results served only by other sources are not charged. The applicable price is reserved before searching; insufficient balance returns 403 with code <code>insufficient_credits</code>. Contract rates apply where agreed, and an unconfigured contract search rate returns 403. Sandbox searches are free. Repeating a successful search can incur another charge; callback delivery does not add a charge. Profile retrieval is billed separately. This search fee also applies to v2. Candidates always come back with <code>fetch_status: "pending"</code>: the full company data is only fetched (and billed) on select.
-     *
-     * <p>**<code>kyb_response_id</code> is ephemeral.** It is a per-search handle, not a stable company id. Select promptly after searching and re-search to get a fresh handle instead of storing it.
-     *
-     * <p><b>Two modes.</b>
-     * - *Synchronous (default):* the API polls the registry until the search resolves and returns the final candidate list (<code>search_resolved: true</code>).
-     * - *Asynchronous:* pass <code>webhook_url</code> and the API returns immediately — usually with <code>search_status: "pending"</code> and an empty candidate list — then POSTs a <code>kyb.registry_search.resolved</code> callback to your URL when the registry finishes. The callback body is <code>{"event_id", "event_type": "kyb.registry_search.resolved", "request_id", "vendor_data", "metadata", "search_status", "search_resolved", "kyb_registry", "timestamp", "created_at"}</code> — note <code>timestamp</code> and <code>created_at</code> in the callback are epoch integers, unlike this endpoint's ISO <code>created_at</code> — and is sent <b>unsigned</b> (header <code>X-Didit-Unsigned-Callback: true</code>, no <code>X-Signature</code>).
-     *
-     * <p><b>Country codes.</b> ISO 3166-1 alpha-2 (<code>GB</code>, <code>DE</code>), plus <code>XX-YY</code> subdivision codes where registries are regional — e.g. <code>US-CA</code> for California.
-     *
-     * <p><b>Sandbox.</b> Keys from sandbox applications return one static candidate without contacting any registry.
-     *
-     * <p>{@code POST /v3/kyb/search/}
+     * Asynchronous {@link #search(KybSearchParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<KybSearchResponse>> searchAsync(KybSearchParams params) {
       return client.executeAsync(searchRequest(params), RequestOptions.none(), SEARCH_RESPONSE);
     }
 
     /**
-     * KYB registry company select — Lite tier (standalone)
-     *
-     * <p>Retrieve the <b>Lite</b> registry profile of one candidate returned by <code>POST /v3/kyb/search/</code> — company details, registered address, identifiers, status, activity and the officers, plus the raw registry payload. Shareholders and ultimate beneficial owners are sold by <code>POST /v3/kyb/shareholders/</code> and <code>POST /v3/kyb/ubo/</code>.
-     *
-     * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The handle is ephemeral and scoped to that search — select promptly, and re-search for a fresh handle rather than storing it.
-     *
-     * <p><b>Billing.</b> Each select is billed at the country's Lite price (any search fee is separate); see [KYB registry pricing](/getting-started/kyb-registry-pricing). The balance is checked before any registry call (<code>403</code> when short) and the charge is recorded against the created business session.
-     *
-     * <p><b>Persistence is mandatory.</b> Every select creates a business session (its id is the <code>request_id</code>) so billing and retrieval can be tracked; it appears in the console. <code>save_api_request</code> is accepted for symmetry but must be <code>true</code> (the default) — sending <code>false</code> returns <code>400</code>.
-     *
-     * <p>{@code POST /v3/kyb/select/}
+     * {@link #select(KybSelectParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<KybSelectResponse> select(KybSelectParams params, RequestOptions options) {
       return client.execute(selectRequest(params), options, SELECT_RESPONSE);
     }
 
     /**
-     * KYB registry company select — Lite tier (standalone)
-     *
-     * <p>Retrieve the <b>Lite</b> registry profile of one candidate returned by <code>POST /v3/kyb/search/</code> — company details, registered address, identifiers, status, activity and the officers, plus the raw registry payload. Shareholders and ultimate beneficial owners are sold by <code>POST /v3/kyb/shareholders/</code> and <code>POST /v3/kyb/ubo/</code>.
-     *
-     * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The handle is ephemeral and scoped to that search — select promptly, and re-search for a fresh handle rather than storing it.
-     *
-     * <p><b>Billing.</b> Each select is billed at the country's Lite price (any search fee is separate); see [KYB registry pricing](/getting-started/kyb-registry-pricing). The balance is checked before any registry call (<code>403</code> when short) and the charge is recorded against the created business session.
-     *
-     * <p><b>Persistence is mandatory.</b> Every select creates a business session (its id is the <code>request_id</code>) so billing and retrieval can be tracked; it appears in the console. <code>save_api_request</code> is accepted for symmetry but must be <code>true</code> (the default) — sending <code>false</code> returns <code>400</code>.
-     *
-     * <p>{@code POST /v3/kyb/select/}
+     * Asynchronous {@link #select(KybSelectParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<KybSelectResponse>> selectAsync(KybSelectParams params, RequestOptions options) {
       return client.executeAsync(selectRequest(params), options, SELECT_RESPONSE);
     }
 
     /**
-     * KYB registry company select — Lite tier (standalone)
-     *
-     * <p>Retrieve the <b>Lite</b> registry profile of one candidate returned by <code>POST /v3/kyb/search/</code> — company details, registered address, identifiers, status, activity and the officers, plus the raw registry payload. Shareholders and ultimate beneficial owners are sold by <code>POST /v3/kyb/shareholders/</code> and <code>POST /v3/kyb/ubo/</code>.
-     *
-     * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The handle is ephemeral and scoped to that search — select promptly, and re-search for a fresh handle rather than storing it.
-     *
-     * <p><b>Billing.</b> Each select is billed at the country's Lite price (any search fee is separate); see [KYB registry pricing](/getting-started/kyb-registry-pricing). The balance is checked before any registry call (<code>403</code> when short) and the charge is recorded against the created business session.
-     *
-     * <p><b>Persistence is mandatory.</b> Every select creates a business session (its id is the <code>request_id</code>) so billing and retrieval can be tracked; it appears in the console. <code>save_api_request</code> is accepted for symmetry but must be <code>true</code> (the default) — sending <code>false</code> returns <code>400</code>.
-     *
-     * <p>{@code POST /v3/kyb/select/}
+     * {@link #select(KybSelectParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<KybSelectResponse> select(KybSelectParams params) {
       return client.execute(selectRequest(params), RequestOptions.none(), SELECT_RESPONSE);
     }
 
     /**
-     * KYB registry company select — Lite tier (standalone)
-     *
-     * <p>Retrieve the <b>Lite</b> registry profile of one candidate returned by <code>POST /v3/kyb/search/</code> — company details, registered address, identifiers, status, activity and the officers, plus the raw registry payload. Shareholders and ultimate beneficial owners are sold by <code>POST /v3/kyb/shareholders/</code> and <code>POST /v3/kyb/ubo/</code>.
-     *
-     * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The handle is ephemeral and scoped to that search — select promptly, and re-search for a fresh handle rather than storing it.
-     *
-     * <p><b>Billing.</b> Each select is billed at the country's Lite price (any search fee is separate); see [KYB registry pricing](/getting-started/kyb-registry-pricing). The balance is checked before any registry call (<code>403</code> when short) and the charge is recorded against the created business session.
-     *
-     * <p><b>Persistence is mandatory.</b> Every select creates a business session (its id is the <code>request_id</code>) so billing and retrieval can be tracked; it appears in the console. <code>save_api_request</code> is accepted for symmetry but must be <code>true</code> (the default) — sending <code>false</code> returns <code>400</code>.
-     *
-     * <p>{@code POST /v3/kyb/select/}
+     * Asynchronous {@link #select(KybSelectParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<KybSelectResponse>> selectAsync(KybSelectParams params) {
       return client.executeAsync(selectRequest(params), RequestOptions.none(), SELECT_RESPONSE);
     }
 
     /**
-     * KYB registry company with shareholders (standalone)
-     *
-     * <p>Retrieve the Lite profile <b>plus the direct shareholders</b> (natural persons and corporate entities, with their ownership bands) of one candidate returned by <code>POST /v3/kyb/search/</code>.
-     *
-     * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
-     *
-     * <p><b>Billing.</b> Billed at the country's Shareholders price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). When the registry holds no shareholder record for the company (or the country offers no ownership data at all) the Lite profile is delivered and billed instead: read <code>registry_tier_delivered</code> and <code>registry_ownership_status</code>. The balance is checked against the Shareholders price before any registry call (<code>403</code> when short).
-     *
-     * <p><b>Availability.</b> v3 only. Every call creates a business session (its id is the <code>request_id</code>).
-     *
-     * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
-     *
-     * <p>{@code POST /v3/kyb/shareholders/}
+     * {@link #listShareholders(KybListShareholdersParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<KybListShareholdersResponse> listShareholders(KybListShareholdersParams params, RequestOptions options) {
       return client.execute(listShareholdersRequest(params), options, LIST_SHAREHOLDERS_RESPONSE);
     }
 
     /**
-     * KYB registry company with shareholders (standalone)
-     *
-     * <p>Retrieve the Lite profile <b>plus the direct shareholders</b> (natural persons and corporate entities, with their ownership bands) of one candidate returned by <code>POST /v3/kyb/search/</code>.
-     *
-     * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
-     *
-     * <p><b>Billing.</b> Billed at the country's Shareholders price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). When the registry holds no shareholder record for the company (or the country offers no ownership data at all) the Lite profile is delivered and billed instead: read <code>registry_tier_delivered</code> and <code>registry_ownership_status</code>. The balance is checked against the Shareholders price before any registry call (<code>403</code> when short).
-     *
-     * <p><b>Availability.</b> v3 only. Every call creates a business session (its id is the <code>request_id</code>).
-     *
-     * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
-     *
-     * <p>{@code POST /v3/kyb/shareholders/}
+     * Asynchronous {@link #listShareholders(KybListShareholdersParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<KybListShareholdersResponse>> listShareholdersAsync(KybListShareholdersParams params, RequestOptions options) {
       return client.executeAsync(listShareholdersRequest(params), options, LIST_SHAREHOLDERS_RESPONSE);
     }
 
     /**
-     * KYB registry company with shareholders (standalone)
-     *
-     * <p>Retrieve the Lite profile <b>plus the direct shareholders</b> (natural persons and corporate entities, with their ownership bands) of one candidate returned by <code>POST /v3/kyb/search/</code>.
-     *
-     * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
-     *
-     * <p><b>Billing.</b> Billed at the country's Shareholders price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). When the registry holds no shareholder record for the company (or the country offers no ownership data at all) the Lite profile is delivered and billed instead: read <code>registry_tier_delivered</code> and <code>registry_ownership_status</code>. The balance is checked against the Shareholders price before any registry call (<code>403</code> when short).
-     *
-     * <p><b>Availability.</b> v3 only. Every call creates a business session (its id is the <code>request_id</code>).
-     *
-     * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
-     *
-     * <p>{@code POST /v3/kyb/shareholders/}
+     * {@link #listShareholders(KybListShareholdersParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<KybListShareholdersResponse> listShareholders(KybListShareholdersParams params) {
       return client.execute(listShareholdersRequest(params), RequestOptions.none(), LIST_SHAREHOLDERS_RESPONSE);
     }
 
     /**
-     * KYB registry company with shareholders (standalone)
-     *
-     * <p>Retrieve the Lite profile <b>plus the direct shareholders</b> (natural persons and corporate entities, with their ownership bands) of one candidate returned by <code>POST /v3/kyb/search/</code>.
-     *
-     * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
-     *
-     * <p><b>Billing.</b> Billed at the country's Shareholders price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). When the registry holds no shareholder record for the company (or the country offers no ownership data at all) the Lite profile is delivered and billed instead: read <code>registry_tier_delivered</code> and <code>registry_ownership_status</code>. The balance is checked against the Shareholders price before any registry call (<code>403</code> when short).
-     *
-     * <p><b>Availability.</b> v3 only. Every call creates a business session (its id is the <code>request_id</code>).
-     *
-     * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
-     *
-     * <p>{@code POST /v3/kyb/shareholders/}
+     * Asynchronous {@link #listShareholders(KybListShareholdersParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<KybListShareholdersResponse>> listShareholdersAsync(KybListShareholdersParams params) {
       return client.executeAsync(listShareholdersRequest(params), RequestOptions.none(), LIST_SHAREHOLDERS_RESPONSE);
     }
 
     /**
-     * KYB registry company with ultimate beneficial owners (standalone)
-     *
-     * <p>Retrieve the Lite profile, the direct shareholders <b>and the ultimate beneficial owners</b> resolved through the ownership chain (<code>registry_data.ubo_resolution</code> carries the corporate parent chain) of one candidate returned by <code>POST /v3/kyb/search/</code>.
-     *
-     * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
-     *
-     * <p><b>Billing.</b> Billed at the country's UBO price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). The tier delivered is the highest the country and the registry can serve: Shareholders when the resolved report names no natural person as a beneficial owner, Lite when there is no ownership record at all; <code>registry_tier_delivered</code> names what was billed. The balance is checked against the UBO price before any registry call (<code>403</code> when short).
-     *
-     * <p><b>Availability.</b> v3 only. Every call creates a business session (its id is the <code>request_id</code>).
-     *
-     * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
-     *
-     * <p>{@code POST /v3/kyb/ubo/}
+     * {@link #listUbos(KybListUbosParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<KybListUbosResponse> listUbos(KybListUbosParams params, RequestOptions options) {
       return client.execute(listUbosRequest(params), options, LIST_UBOS_RESPONSE);
     }
 
     /**
-     * KYB registry company with ultimate beneficial owners (standalone)
-     *
-     * <p>Retrieve the Lite profile, the direct shareholders <b>and the ultimate beneficial owners</b> resolved through the ownership chain (<code>registry_data.ubo_resolution</code> carries the corporate parent chain) of one candidate returned by <code>POST /v3/kyb/search/</code>.
-     *
-     * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
-     *
-     * <p><b>Billing.</b> Billed at the country's UBO price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). The tier delivered is the highest the country and the registry can serve: Shareholders when the resolved report names no natural person as a beneficial owner, Lite when there is no ownership record at all; <code>registry_tier_delivered</code> names what was billed. The balance is checked against the UBO price before any registry call (<code>403</code> when short).
-     *
-     * <p><b>Availability.</b> v3 only. Every call creates a business session (its id is the <code>request_id</code>).
-     *
-     * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
-     *
-     * <p>{@code POST /v3/kyb/ubo/}
+     * Asynchronous {@link #listUbos(KybListUbosParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<KybListUbosResponse>> listUbosAsync(KybListUbosParams params, RequestOptions options) {
       return client.executeAsync(listUbosRequest(params), options, LIST_UBOS_RESPONSE);
     }
 
     /**
-     * KYB registry company with ultimate beneficial owners (standalone)
-     *
-     * <p>Retrieve the Lite profile, the direct shareholders <b>and the ultimate beneficial owners</b> resolved through the ownership chain (<code>registry_data.ubo_resolution</code> carries the corporate parent chain) of one candidate returned by <code>POST /v3/kyb/search/</code>.
-     *
-     * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
-     *
-     * <p><b>Billing.</b> Billed at the country's UBO price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). The tier delivered is the highest the country and the registry can serve: Shareholders when the resolved report names no natural person as a beneficial owner, Lite when there is no ownership record at all; <code>registry_tier_delivered</code> names what was billed. The balance is checked against the UBO price before any registry call (<code>403</code> when short).
-     *
-     * <p><b>Availability.</b> v3 only. Every call creates a business session (its id is the <code>request_id</code>).
-     *
-     * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
-     *
-     * <p>{@code POST /v3/kyb/ubo/}
+     * {@link #listUbos(KybListUbosParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<KybListUbosResponse> listUbos(KybListUbosParams params) {
       return client.execute(listUbosRequest(params), RequestOptions.none(), LIST_UBOS_RESPONSE);
     }
 
     /**
-     * KYB registry company with ultimate beneficial owners (standalone)
-     *
-     * <p>Retrieve the Lite profile, the direct shareholders <b>and the ultimate beneficial owners</b> resolved through the ownership chain (<code>registry_data.ubo_resolution</code> carries the corporate parent chain) of one candidate returned by <code>POST /v3/kyb/search/</code>.
-     *
-     * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
-     *
-     * <p><b>Billing.</b> Billed at the country's UBO price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). The tier delivered is the highest the country and the registry can serve: Shareholders when the resolved report names no natural person as a beneficial owner, Lite when there is no ownership record at all; <code>registry_tier_delivered</code> names what was billed. The balance is checked against the UBO price before any registry call (<code>403</code> when short).
-     *
-     * <p><b>Availability.</b> v3 only. Every call creates a business session (its id is the <code>request_id</code>).
-     *
-     * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
-     *
-     * <p>{@code POST /v3/kyb/ubo/}
+     * Asynchronous {@link #listUbos(KybListUbosParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<KybListUbosResponse>> listUbosAsync(KybListUbosParams params) {
       return client.executeAsync(listUbosRequest(params), RequestOptions.none(), LIST_UBOS_RESPONSE);

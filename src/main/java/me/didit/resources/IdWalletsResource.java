@@ -71,40 +71,28 @@ public final class IdWalletsResource {
   }
 
   /**
-   * List Digital ID wallets
+   * Asynchronous {@link #list(RequestOptions)}.
    *
-   * <p>Every Digital ID wallet with its start endpoint, countries, required fields and whether this application can start it in this environment now. Listed does not mean live.
-   *
-   * <p>{@code GET /v3/id-verification/wallets/}
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletCatalogResponse> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List Digital ID wallets
+   * Same as {@link #list(RequestOptions)}, with the client's options.
    *
-   * <p>Every Digital ID wallet with its start endpoint, countries, required fields and whether this application can start it in this environment now. Listed does not mean live.
-   *
-   * <p>{@code GET /v3/id-verification/wallets/}
-   *
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletCatalogResponse list() {
     return client.execute(listRequest(), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List Digital ID wallets
+   * Asynchronous {@link #list(RequestOptions)}, with the client's options.
    *
-   * <p>Every Digital ID wallet with its start endpoint, countries, required fields and whether this application can start it in this environment now. Listed does not mean live.
-   *
-   * <p>{@code GET /v3/id-verification/wallets/}
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletCatalogResponse> listAsync() {
     return client.executeAsync(listRequest(), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -126,43 +114,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Get a wallet verification
+   * Asynchronous {@link #retrieveVerification(String, RequestOptions)}.
    *
-   * <p>Status and result of a wallet verification: the normalized identity and the wallet's own attributes once verified, the error code once declined, the next action while pending. A verification past expires_at is decided timeout.
-   *
-   * <p>{@code GET /v3/id-verification/wallets/verifications/{request_id}/}
-   *
-   * @param requestId The request_id the start endpoint returned.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param requestId the {@code request_id}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> retrieveVerificationAsync(String requestId, RequestOptions options) {
     return client.executeAsync(retrieveVerificationRequest(requestId), options, RETRIEVE_VERIFICATION_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get a wallet verification
+   * Same as {@link #retrieveVerification(String, RequestOptions)}, with the client's options.
    *
-   * <p>Status and result of a wallet verification: the normalized identity and the wallet's own attributes once verified, the error code once declined, the next action while pending. A verification past expires_at is decided timeout.
-   *
-   * <p>{@code GET /v3/id-verification/wallets/verifications/{request_id}/}
-   *
-   * @param requestId The request_id the start endpoint returned.
-   * @return the response body
+   * @param requestId the {@code request_id}
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse retrieveVerification(String requestId) {
     return client.execute(retrieveVerificationRequest(requestId), RequestOptions.none(), RETRIEVE_VERIFICATION_RESPONSE).data();
   }
 
   /**
-   * Get a wallet verification
+   * Asynchronous {@link #retrieveVerification(String, RequestOptions)}, with the client's options.
    *
-   * <p>Status and result of a wallet verification: the normalized identity and the wallet's own attributes once verified, the error code once declined, the next action while pending. A verification past expires_at is decided timeout.
-   *
-   * <p>{@code GET /v3/id-verification/wallets/verifications/{request_id}/}
-   *
-   * @param requestId The request_id the start endpoint returned.
-   * @return a future completed with the response body
+   * @param requestId the {@code request_id}
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> retrieveVerificationAsync(String requestId) {
     return client.executeAsync(retrieveVerificationRequest(requestId), RequestOptions.none(), RETRIEVE_VERIFICATION_RESPONSE).thenApply(RawResponse::data);
@@ -184,43 +160,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Poll a wallet verification
+   * Asynchronous {@link #pollVerification(String, RequestOptions)}.
    *
-   * <p>Smart-ID and Mobile-ID: ask the provider whether the user confirmed, refused or let the prompt lapse, and verify the signed identity when they confirmed. Redirect wallets complete through the user's browser, so for them this only reads the verification back. Answers the verification as it is afterwards.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/poll/}
-   *
-   * @param requestId The request_id the start endpoint returned.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param requestId the {@code request_id}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> pollVerificationAsync(String requestId, RequestOptions options) {
     return client.executeAsync(pollVerificationRequest(requestId), options, POLL_VERIFICATION_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Poll a wallet verification
+   * Same as {@link #pollVerification(String, RequestOptions)}, with the client's options.
    *
-   * <p>Smart-ID and Mobile-ID: ask the provider whether the user confirmed, refused or let the prompt lapse, and verify the signed identity when they confirmed. Redirect wallets complete through the user's browser, so for them this only reads the verification back. Answers the verification as it is afterwards.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/poll/}
-   *
-   * @param requestId The request_id the start endpoint returned.
-   * @return the response body
+   * @param requestId the {@code request_id}
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse pollVerification(String requestId) {
     return client.execute(pollVerificationRequest(requestId), RequestOptions.none(), POLL_VERIFICATION_RESPONSE).data();
   }
 
   /**
-   * Poll a wallet verification
+   * Asynchronous {@link #pollVerification(String, RequestOptions)}, with the client's options.
    *
-   * <p>Smart-ID and Mobile-ID: ask the provider whether the user confirmed, refused or let the prompt lapse, and verify the signed identity when they confirmed. Redirect wallets complete through the user's browser, so for them this only reads the verification back. Answers the verification as it is afterwards.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/poll/}
-   *
-   * @param requestId The request_id the start endpoint returned.
-   * @return a future completed with the response body
+   * @param requestId the {@code request_id}
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> pollVerificationAsync(String requestId) {
     return client.executeAsync(pollVerificationRequest(requestId), RequestOptions.none(), POLL_VERIFICATION_RESPONSE).thenApply(RawResponse::data);
@@ -242,43 +206,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Cancel a wallet verification
+   * Asynchronous {@link #cancelVerification(String, RequestOptions)}.
    *
-   * <p>Withdraw a pending verification: it is declined as cancelled and never billed. A decided one is returned unchanged. Smart-ID and Mobile-ID: a cancel that arrives while a poll is checking the sign-in waits a few seconds for that poll, then declines it, or returns it verified if the user had already confirmed. A verification the user is completing right now cannot be cancelled (409 verification_in_progress with Retry-After): retry after that many seconds to read its outcome.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/cancel/}
-   *
-   * @param requestId The request_id the start endpoint returned.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param requestId the {@code request_id}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> cancelVerificationAsync(String requestId, RequestOptions options) {
     return client.executeAsync(cancelVerificationRequest(requestId), options, CANCEL_VERIFICATION_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Cancel a wallet verification
+   * Same as {@link #cancelVerification(String, RequestOptions)}, with the client's options.
    *
-   * <p>Withdraw a pending verification: it is declined as cancelled and never billed. A decided one is returned unchanged. Smart-ID and Mobile-ID: a cancel that arrives while a poll is checking the sign-in waits a few seconds for that poll, then declines it, or returns it verified if the user had already confirmed. A verification the user is completing right now cannot be cancelled (409 verification_in_progress with Retry-After): retry after that many seconds to read its outcome.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/cancel/}
-   *
-   * @param requestId The request_id the start endpoint returned.
-   * @return the response body
+   * @param requestId the {@code request_id}
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse cancelVerification(String requestId) {
     return client.execute(cancelVerificationRequest(requestId), RequestOptions.none(), CANCEL_VERIFICATION_RESPONSE).data();
   }
 
   /**
-   * Cancel a wallet verification
+   * Asynchronous {@link #cancelVerification(String, RequestOptions)}, with the client's options.
    *
-   * <p>Withdraw a pending verification: it is declined as cancelled and never billed. A decided one is returned unchanged. Smart-ID and Mobile-ID: a cancel that arrives while a poll is checking the sign-in waits a few seconds for that poll, then declines it, or returns it verified if the user had already confirmed. A verification the user is completing right now cannot be cancelled (409 verification_in_progress with Retry-After): retry after that many seconds to read its outcome.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/cancel/}
-   *
-   * @param requestId The request_id the start endpoint returned.
-   * @return a future completed with the response body
+   * @param requestId the {@code request_id}
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> cancelVerificationAsync(String requestId) {
     return client.executeAsync(cancelVerificationRequest(requestId), RequestOptions.none(), CANCEL_VERIFICATION_RESPONSE).thenApply(RawResponse::data);
@@ -301,46 +253,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start MitID verification
-   *
-   * <p>Start a MitID sign-in (Danish Agency for Digital Government; DNK) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/mitid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startMitid(DigitalIdWalletApiMitidWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startMitidAsync(DigitalIdWalletApiMitidWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startMitidRequest(params), options, START_MITID_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start MitID verification
-   *
-   * <p>Start a MitID sign-in (Danish Agency for Digital Government; DNK) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/mitid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startMitid(DigitalIdWalletApiMitidWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startMitid(DigitalIdWalletApiMitidWalletVerificationStartRequest params) {
     return client.execute(startMitidRequest(params), RequestOptions.none(), START_MITID_RESPONSE).data();
   }
 
   /**
-   * Start MitID verification
-   *
-   * <p>Start a MitID sign-in (Danish Agency for Digital Government; DNK) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/mitid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startMitid(DigitalIdWalletApiMitidWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startMitidAsync(DigitalIdWalletApiMitidWalletVerificationStartRequest params) {
     return client.executeAsync(startMitidRequest(params), RequestOptions.none(), START_MITID_RESPONSE).thenApply(RawResponse::data);
@@ -363,46 +300,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start BankID (SWE) verification
-   *
-   * <p>Start a BankID (SWE) sign-in (Finansiell ID-Teknik / bank consortium; SWE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/bankid-se/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startBankidSe(DigitalIdWalletApiBankidSeWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startBankidSeAsync(DigitalIdWalletApiBankidSeWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startBankidSeRequest(params), options, START_BANKID_SE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start BankID (SWE) verification
-   *
-   * <p>Start a BankID (SWE) sign-in (Finansiell ID-Teknik / bank consortium; SWE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/bankid-se/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startBankidSe(DigitalIdWalletApiBankidSeWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startBankidSe(DigitalIdWalletApiBankidSeWalletVerificationStartRequest params) {
     return client.execute(startBankidSeRequest(params), RequestOptions.none(), START_BANKID_SE_RESPONSE).data();
   }
 
   /**
-   * Start BankID (SWE) verification
-   *
-   * <p>Start a BankID (SWE) sign-in (Finansiell ID-Teknik / bank consortium; SWE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/bankid-se/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startBankidSe(DigitalIdWalletApiBankidSeWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startBankidSeAsync(DigitalIdWalletApiBankidSeWalletVerificationStartRequest params) {
     return client.executeAsync(startBankidSeRequest(params), RequestOptions.none(), START_BANKID_SE_RESPONSE).thenApply(RawResponse::data);
@@ -425,46 +347,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start BankID (NOR) verification
-   *
-   * <p>Start a BankID (NOR) sign-in (BankID BankAxept AS; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/bankid-no/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startBankidNo(DigitalIdWalletApiBankidNoWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startBankidNoAsync(DigitalIdWalletApiBankidNoWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startBankidNoRequest(params), options, START_BANKID_NO_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start BankID (NOR) verification
-   *
-   * <p>Start a BankID (NOR) sign-in (BankID BankAxept AS; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/bankid-no/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startBankidNo(DigitalIdWalletApiBankidNoWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startBankidNo(DigitalIdWalletApiBankidNoWalletVerificationStartRequest params) {
     return client.execute(startBankidNoRequest(params), RequestOptions.none(), START_BANKID_NO_RESPONSE).data();
   }
 
   /**
-   * Start BankID (NOR) verification
-   *
-   * <p>Start a BankID (NOR) sign-in (BankID BankAxept AS; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/bankid-no/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startBankidNo(DigitalIdWalletApiBankidNoWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startBankidNoAsync(DigitalIdWalletApiBankidNoWalletVerificationStartRequest params) {
     return client.executeAsync(startBankidNoRequest(params), RequestOptions.none(), START_BANKID_NO_RESPONSE).thenApply(RawResponse::data);
@@ -487,46 +394,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start Vipps verification
-   *
-   * <p>Start a Vipps sign-in (Vipps MobilePay / BankID NO; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/vipps/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startVipps(DigitalIdWalletApiVippsWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startVippsAsync(DigitalIdWalletApiVippsWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startVippsRequest(params), options, START_VIPPS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start Vipps verification
-   *
-   * <p>Start a Vipps sign-in (Vipps MobilePay / BankID NO; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/vipps/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startVipps(DigitalIdWalletApiVippsWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startVipps(DigitalIdWalletApiVippsWalletVerificationStartRequest params) {
     return client.execute(startVippsRequest(params), RequestOptions.none(), START_VIPPS_RESPONSE).data();
   }
 
   /**
-   * Start Vipps verification
-   *
-   * <p>Start a Vipps sign-in (Vipps MobilePay / BankID NO; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/vipps/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startVipps(DigitalIdWalletApiVippsWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startVippsAsync(DigitalIdWalletApiVippsWalletVerificationStartRequest params) {
     return client.executeAsync(startVippsRequest(params), RequestOptions.none(), START_VIPPS_RESPONSE).thenApply(RawResponse::data);
@@ -549,46 +441,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start Buypass ID verification
-   *
-   * <p>Start a Buypass ID sign-in (Buypass AS; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/buypass/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startBuypass(DigitalIdWalletApiBuypassWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startBuypassAsync(DigitalIdWalletApiBuypassWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startBuypassRequest(params), options, START_BUYPASS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start Buypass ID verification
-   *
-   * <p>Start a Buypass ID sign-in (Buypass AS; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/buypass/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startBuypass(DigitalIdWalletApiBuypassWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startBuypass(DigitalIdWalletApiBuypassWalletVerificationStartRequest params) {
     return client.execute(startBuypassRequest(params), RequestOptions.none(), START_BUYPASS_RESPONSE).data();
   }
 
   /**
-   * Start Buypass ID verification
-   *
-   * <p>Start a Buypass ID sign-in (Buypass AS; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/buypass/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startBuypass(DigitalIdWalletApiBuypassWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startBuypassAsync(DigitalIdWalletApiBuypassWalletVerificationStartRequest params) {
     return client.executeAsync(startBuypassRequest(params), RequestOptions.none(), START_BUYPASS_RESPONSE).thenApply(RawResponse::data);
@@ -611,46 +488,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start itsme verification
-   *
-   * <p>Start a itsme sign-in (Belgian Mobile ID; BEL, LUX, NLD) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/itsme/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startItsme(DigitalIdWalletApiItsmeWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startItsmeAsync(DigitalIdWalletApiItsmeWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startItsmeRequest(params), options, START_ITSME_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start itsme verification
-   *
-   * <p>Start a itsme sign-in (Belgian Mobile ID; BEL, LUX, NLD) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/itsme/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startItsme(DigitalIdWalletApiItsmeWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startItsme(DigitalIdWalletApiItsmeWalletVerificationStartRequest params) {
     return client.execute(startItsmeRequest(params), RequestOptions.none(), START_ITSME_RESPONSE).data();
   }
 
   /**
-   * Start itsme verification
-   *
-   * <p>Start a itsme sign-in (Belgian Mobile ID; BEL, LUX, NLD) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/itsme/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startItsme(DigitalIdWalletApiItsmeWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startItsmeAsync(DigitalIdWalletApiItsmeWalletVerificationStartRequest params) {
     return client.executeAsync(startItsmeRequest(params), RequestOptions.none(), START_ITSME_RESPONSE).thenApply(RawResponse::data);
@@ -673,46 +535,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start iDIN verification
-   *
-   * <p>Start a iDIN sign-in (Dutch banks (Currence iDIN); NLD) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/idin/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startIdin(DigitalIdWalletApiIdinWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startIdinAsync(DigitalIdWalletApiIdinWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startIdinRequest(params), options, START_IDIN_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start iDIN verification
-   *
-   * <p>Start a iDIN sign-in (Dutch banks (Currence iDIN); NLD) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/idin/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startIdin(DigitalIdWalletApiIdinWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startIdin(DigitalIdWalletApiIdinWalletVerificationStartRequest params) {
     return client.execute(startIdinRequest(params), RequestOptions.none(), START_IDIN_RESPONSE).data();
   }
 
   /**
-   * Start iDIN verification
-   *
-   * <p>Start a iDIN sign-in (Dutch banks (Currence iDIN); NLD) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/idin/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startIdin(DigitalIdWalletApiIdinWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startIdinAsync(DigitalIdWalletApiIdinWalletVerificationStartRequest params) {
     return client.executeAsync(startIdinRequest(params), RequestOptions.none(), START_IDIN_RESPONSE).thenApply(RawResponse::data);
@@ -735,46 +582,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start Finnish Trust Network verification
-   *
-   * <p>Start a Finnish Trust Network sign-in (Finnish banks and mobile operators (FTN); FIN) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/ftn/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startFtn(DigitalIdWalletApiFtnWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startFtnAsync(DigitalIdWalletApiFtnWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startFtnRequest(params), options, START_FTN_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start Finnish Trust Network verification
-   *
-   * <p>Start a Finnish Trust Network sign-in (Finnish banks and mobile operators (FTN); FIN) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/ftn/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startFtn(DigitalIdWalletApiFtnWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startFtn(DigitalIdWalletApiFtnWalletVerificationStartRequest params) {
     return client.execute(startFtnRequest(params), RequestOptions.none(), START_FTN_RESPONSE).data();
   }
 
   /**
-   * Start Finnish Trust Network verification
-   *
-   * <p>Start a Finnish Trust Network sign-in (Finnish banks and mobile operators (FTN); FIN) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/ftn/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startFtn(DigitalIdWalletApiFtnWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startFtnAsync(DigitalIdWalletApiFtnWalletVerificationStartRequest params) {
     return client.executeAsync(startFtnRequest(params), RequestOptions.none(), START_FTN_RESPONSE).thenApply(RawResponse::data);
@@ -797,46 +629,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start Personalausweis verification
-   *
-   * <p>Start a Personalausweis sign-in (Bundesministerium des Innern (eID); DEU) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/personalausweis/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startPersonalausweis(DigitalIdWalletApiPersonalausweisWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startPersonalausweisAsync(DigitalIdWalletApiPersonalausweisWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startPersonalausweisRequest(params), options, START_PERSONALAUSWEIS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start Personalausweis verification
-   *
-   * <p>Start a Personalausweis sign-in (Bundesministerium des Innern (eID); DEU) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/personalausweis/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startPersonalausweis(DigitalIdWalletApiPersonalausweisWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startPersonalausweis(DigitalIdWalletApiPersonalausweisWalletVerificationStartRequest params) {
     return client.execute(startPersonalausweisRequest(params), RequestOptions.none(), START_PERSONALAUSWEIS_RESPONSE).data();
   }
 
   /**
-   * Start Personalausweis verification
-   *
-   * <p>Start a Personalausweis sign-in (Bundesministerium des Innern (eID); DEU) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/personalausweis/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startPersonalausweis(DigitalIdWalletApiPersonalausweisWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startPersonalausweisAsync(DigitalIdWalletApiPersonalausweisWalletVerificationStartRequest params) {
     return client.executeAsync(startPersonalausweisRequest(params), RequestOptions.none(), START_PERSONALAUSWEIS_RESPONSE).thenApply(RawResponse::data);
@@ -859,46 +676,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start Freja eID verification
-   *
-   * <p>Start a Freja eID sign-in (Freja eID Group; SWE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/frejaid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startFrejaid(DigitalIdWalletApiFrejaidWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startFrejaidAsync(DigitalIdWalletApiFrejaidWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startFrejaidRequest(params), options, START_FREJAID_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start Freja eID verification
-   *
-   * <p>Start a Freja eID sign-in (Freja eID Group; SWE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/frejaid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startFrejaid(DigitalIdWalletApiFrejaidWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startFrejaid(DigitalIdWalletApiFrejaidWalletVerificationStartRequest params) {
     return client.execute(startFrejaidRequest(params), RequestOptions.none(), START_FREJAID_RESPONSE).data();
   }
 
   /**
-   * Start Freja eID verification
-   *
-   * <p>Start a Freja eID sign-in (Freja eID Group; SWE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/frejaid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startFrejaid(DigitalIdWalletApiFrejaidWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startFrejaidAsync(DigitalIdWalletApiFrejaidWalletVerificationStartRequest params) {
     return client.executeAsync(startFrejaidRequest(params), RequestOptions.none(), START_FREJAID_RESPONSE).thenApply(RawResponse::data);
@@ -921,46 +723,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start UAE PASS verification
-   *
-   * <p>Start a UAE PASS sign-in (UAE Digital Government Authority; ARE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/uae-pass/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startUaePass(DigitalIdWalletApiUaePassWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startUaePassAsync(DigitalIdWalletApiUaePassWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startUaePassRequest(params), options, START_UAE_PASS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start UAE PASS verification
-   *
-   * <p>Start a UAE PASS sign-in (UAE Digital Government Authority; ARE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/uae-pass/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startUaePass(DigitalIdWalletApiUaePassWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startUaePass(DigitalIdWalletApiUaePassWalletVerificationStartRequest params) {
     return client.execute(startUaePassRequest(params), RequestOptions.none(), START_UAE_PASS_RESPONSE).data();
   }
 
   /**
-   * Start UAE PASS verification
-   *
-   * <p>Start a UAE PASS sign-in (UAE Digital Government Authority; ARE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/uae-pass/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startUaePass(DigitalIdWalletApiUaePassWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startUaePassAsync(DigitalIdWalletApiUaePassWalletVerificationStartRequest params) {
     return client.executeAsync(startUaePassRequest(params), RequestOptions.none(), START_UAE_PASS_RESPONSE).thenApply(RawResponse::data);
@@ -983,46 +770,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start gov.br verification
-   *
-   * <p>Start a gov.br sign-in (Governo Federal do Brasil; BRA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/govbr/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startGovbr(DigitalIdWalletApiGovbrWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startGovbrAsync(DigitalIdWalletApiGovbrWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startGovbrRequest(params), options, START_GOVBR_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start gov.br verification
-   *
-   * <p>Start a gov.br sign-in (Governo Federal do Brasil; BRA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/govbr/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startGovbr(DigitalIdWalletApiGovbrWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startGovbr(DigitalIdWalletApiGovbrWalletVerificationStartRequest params) {
     return client.execute(startGovbrRequest(params), RequestOptions.none(), START_GOVBR_RESPONSE).data();
   }
 
   /**
-   * Start gov.br verification
-   *
-   * <p>Start a gov.br sign-in (Governo Federal do Brasil; BRA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/govbr/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startGovbr(DigitalIdWalletApiGovbrWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startGovbrAsync(DigitalIdWalletApiGovbrWalletVerificationStartRequest params) {
     return client.executeAsync(startGovbrRequest(params), RequestOptions.none(), START_GOVBR_RESPONSE).thenApply(RawResponse::data);
@@ -1045,46 +817,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start OneID verification
-   *
-   * <p>Start a OneID sign-in (OneID (UK bank-verified identity); GBR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/oneid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startOneid(DigitalIdWalletApiOneidWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startOneidAsync(DigitalIdWalletApiOneidWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startOneidRequest(params), options, START_ONEID_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start OneID verification
-   *
-   * <p>Start a OneID sign-in (OneID (UK bank-verified identity); GBR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/oneid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startOneid(DigitalIdWalletApiOneidWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startOneid(DigitalIdWalletApiOneidWalletVerificationStartRequest params) {
     return client.execute(startOneidRequest(params), RequestOptions.none(), START_ONEID_RESPONSE).data();
   }
 
   /**
-   * Start OneID verification
-   *
-   * <p>Start a OneID sign-in (OneID (UK bank-verified identity); GBR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/oneid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startOneid(DigitalIdWalletApiOneidWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startOneidAsync(DigitalIdWalletApiOneidWalletVerificationStartRequest params) {
     return client.executeAsync(startOneidRequest(params), RequestOptions.none(), START_ONEID_RESPONSE).thenApply(RawResponse::data);
@@ -1107,46 +864,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start GOV.UK Wallet verification
-   *
-   * <p>Start a GOV.UK Wallet sign-in (UK Government Digital Service; GBR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/govuk-wallet/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startGovukWallet(DigitalIdWalletApiGovukWalletWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startGovukWalletAsync(DigitalIdWalletApiGovukWalletWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startGovukWalletRequest(params), options, START_GOVUK_WALLET_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start GOV.UK Wallet verification
-   *
-   * <p>Start a GOV.UK Wallet sign-in (UK Government Digital Service; GBR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/govuk-wallet/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startGovukWallet(DigitalIdWalletApiGovukWalletWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startGovukWallet(DigitalIdWalletApiGovukWalletWalletVerificationStartRequest params) {
     return client.execute(startGovukWalletRequest(params), RequestOptions.none(), START_GOVUK_WALLET_RESPONSE).data();
   }
 
   /**
-   * Start GOV.UK Wallet verification
-   *
-   * <p>Start a GOV.UK Wallet sign-in (UK Government Digital Service; GBR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/govuk-wallet/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startGovukWallet(DigitalIdWalletApiGovukWalletWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startGovukWalletAsync(DigitalIdWalletApiGovukWalletWalletVerificationStartRequest params) {
     return client.executeAsync(startGovukWalletRequest(params), RequestOptions.none(), START_GOVUK_WALLET_RESPONSE).thenApply(RawResponse::data);
@@ -1169,46 +911,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start Smart-ID verification
-   *
-   * <p>Start a Smart-ID sign-in (SK ID Solutions; EST, LVA, LTU, BEL) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=confirm_in_app with the comparison code to show the user; the user confirms it and enters their PIN in the app (never collect the PIN). Poll POST /v3/id-verification/wallets/verifications/{request_id}/poll/ every poll_interval_seconds, or rely on the webhook: Didit polls in the background too. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/smart-id/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startSmartId(DigitalIdWalletApiSmartIdWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startSmartIdAsync(DigitalIdWalletApiSmartIdWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startSmartIdRequest(params), options, START_SMART_ID_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start Smart-ID verification
-   *
-   * <p>Start a Smart-ID sign-in (SK ID Solutions; EST, LVA, LTU, BEL) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=confirm_in_app with the comparison code to show the user; the user confirms it and enters their PIN in the app (never collect the PIN). Poll POST /v3/id-verification/wallets/verifications/{request_id}/poll/ every poll_interval_seconds, or rely on the webhook: Didit polls in the background too. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/smart-id/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startSmartId(DigitalIdWalletApiSmartIdWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startSmartId(DigitalIdWalletApiSmartIdWalletVerificationStartRequest params) {
     return client.execute(startSmartIdRequest(params), RequestOptions.none(), START_SMART_ID_RESPONSE).data();
   }
 
   /**
-   * Start Smart-ID verification
-   *
-   * <p>Start a Smart-ID sign-in (SK ID Solutions; EST, LVA, LTU, BEL) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=confirm_in_app with the comparison code to show the user; the user confirms it and enters their PIN in the app (never collect the PIN). Poll POST /v3/id-verification/wallets/verifications/{request_id}/poll/ every poll_interval_seconds, or rely on the webhook: Didit polls in the background too. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/smart-id/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startSmartId(DigitalIdWalletApiSmartIdWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startSmartIdAsync(DigitalIdWalletApiSmartIdWalletVerificationStartRequest params) {
     return client.executeAsync(startSmartIdRequest(params), RequestOptions.none(), START_SMART_ID_RESPONSE).thenApply(RawResponse::data);
@@ -1231,46 +958,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start Mobile-ID verification
-   *
-   * <p>Start a Mobile-ID sign-in (SK ID Solutions with the national mobile operators; EST, LTU) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=confirm_in_app with the comparison code to show the user; the user confirms it and enters their PIN in the app (never collect the PIN). Poll POST /v3/id-verification/wallets/verifications/{request_id}/poll/ every poll_interval_seconds, or rely on the webhook: Didit polls in the background too. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/mobile-id/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startMobileId(DigitalIdWalletApiMobileIdWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startMobileIdAsync(DigitalIdWalletApiMobileIdWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startMobileIdRequest(params), options, START_MOBILE_ID_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start Mobile-ID verification
-   *
-   * <p>Start a Mobile-ID sign-in (SK ID Solutions with the national mobile operators; EST, LTU) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=confirm_in_app with the comparison code to show the user; the user confirms it and enters their PIN in the app (never collect the PIN). Poll POST /v3/id-verification/wallets/verifications/{request_id}/poll/ every poll_interval_seconds, or rely on the webhook: Didit polls in the background too. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/mobile-id/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startMobileId(DigitalIdWalletApiMobileIdWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startMobileId(DigitalIdWalletApiMobileIdWalletVerificationStartRequest params) {
     return client.execute(startMobileIdRequest(params), RequestOptions.none(), START_MOBILE_ID_RESPONSE).data();
   }
 
   /**
-   * Start Mobile-ID verification
-   *
-   * <p>Start a Mobile-ID sign-in (SK ID Solutions with the national mobile operators; EST, LTU) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=confirm_in_app with the comparison code to show the user; the user confirms it and enters their PIN in the app (never collect the PIN). Poll POST /v3/id-verification/wallets/verifications/{request_id}/poll/ every poll_interval_seconds, or rely on the webhook: Didit polls in the background too. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/mobile-id/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startMobileId(DigitalIdWalletApiMobileIdWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startMobileIdAsync(DigitalIdWalletApiMobileIdWalletVerificationStartRequest params) {
     return client.executeAsync(startMobileIdRequest(params), RequestOptions.none(), START_MOBILE_ID_RESPONSE).thenApply(RawResponse::data);
@@ -1293,46 +1005,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start Estonian ID-card verification
-   *
-   * <p>Start a Estonian ID-card sign-in (Police and Border Guard Board (Estonia); EST) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/idcard-ee/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startIdcardEe(DigitalIdWalletApiIdcardEeWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startIdcardEeAsync(DigitalIdWalletApiIdcardEeWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startIdcardEeRequest(params), options, START_IDCARD_EE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start Estonian ID-card verification
-   *
-   * <p>Start a Estonian ID-card sign-in (Police and Border Guard Board (Estonia); EST) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/idcard-ee/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startIdcardEe(DigitalIdWalletApiIdcardEeWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startIdcardEe(DigitalIdWalletApiIdcardEeWalletVerificationStartRequest params) {
     return client.execute(startIdcardEeRequest(params), RequestOptions.none(), START_IDCARD_EE_RESPONSE).data();
   }
 
   /**
-   * Start Estonian ID-card verification
-   *
-   * <p>Start a Estonian ID-card sign-in (Police and Border Guard Board (Estonia); EST) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/idcard-ee/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startIdcardEe(DigitalIdWalletApiIdcardEeWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startIdcardEeAsync(DigitalIdWalletApiIdcardEeWalletVerificationStartRequest params) {
     return client.executeAsync(startIdcardEeRequest(params), RequestOptions.none(), START_IDCARD_EE_RESPONSE).thenApply(RawResponse::data);
@@ -1355,46 +1052,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start eParaksts mobile verification
-   *
-   * <p>Start a eParaksts mobile sign-in (LVRTC (Latvian State Radio and Television Centre); LVA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/eparaksts-mobile/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startEparakstsMobile(DigitalIdWalletApiEparakstsMobileWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startEparakstsMobileAsync(DigitalIdWalletApiEparakstsMobileWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startEparakstsMobileRequest(params), options, START_EPARAKSTS_MOBILE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start eParaksts mobile verification
-   *
-   * <p>Start a eParaksts mobile sign-in (LVRTC (Latvian State Radio and Television Centre); LVA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/eparaksts-mobile/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startEparakstsMobile(DigitalIdWalletApiEparakstsMobileWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startEparakstsMobile(DigitalIdWalletApiEparakstsMobileWalletVerificationStartRequest params) {
     return client.execute(startEparakstsMobileRequest(params), RequestOptions.none(), START_EPARAKSTS_MOBILE_RESPONSE).data();
   }
 
   /**
-   * Start eParaksts mobile verification
-   *
-   * <p>Start a eParaksts mobile sign-in (LVRTC (Latvian State Radio and Television Centre); LVA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/eparaksts-mobile/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startEparakstsMobile(DigitalIdWalletApiEparakstsMobileWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startEparakstsMobileAsync(DigitalIdWalletApiEparakstsMobileWalletVerificationStartRequest params) {
     return client.executeAsync(startEparakstsMobileRequest(params), RequestOptions.none(), START_EPARAKSTS_MOBILE_RESPONSE).thenApply(RawResponse::data);
@@ -1417,46 +1099,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start Bank iD verification
-   *
-   * <p>Start a Bank iD sign-in (Bankovní identita, a.s.; CZE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/bankid-cz/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startBankidCz(DigitalIdWalletApiBankidCzWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startBankidCzAsync(DigitalIdWalletApiBankidCzWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startBankidCzRequest(params), options, START_BANKID_CZ_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start Bank iD verification
-   *
-   * <p>Start a Bank iD sign-in (Bankovní identita, a.s.; CZE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/bankid-cz/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startBankidCz(DigitalIdWalletApiBankidCzWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startBankidCz(DigitalIdWalletApiBankidCzWalletVerificationStartRequest params) {
     return client.execute(startBankidCzRequest(params), RequestOptions.none(), START_BANKID_CZ_RESPONSE).data();
   }
 
   /**
-   * Start Bank iD verification
-   *
-   * <p>Start a Bank iD sign-in (Bankovní identita, a.s.; CZE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/bankid-cz/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startBankidCz(DigitalIdWalletApiBankidCzWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startBankidCzAsync(DigitalIdWalletApiBankidCzWalletVerificationStartRequest params) {
     return client.executeAsync(startBankidCzRequest(params), RequestOptions.none(), START_BANKID_CZ_RESPONSE).thenApply(RawResponse::data);
@@ -1479,46 +1146,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start MojeID verification
-   *
-   * <p>Start a MojeID sign-in (CZ.NIC; CZE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/mojeid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startMojeid(DigitalIdWalletApiMojeidWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startMojeidAsync(DigitalIdWalletApiMojeidWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startMojeidRequest(params), options, START_MOJEID_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start MojeID verification
-   *
-   * <p>Start a MojeID sign-in (CZ.NIC; CZE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/mojeid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startMojeid(DigitalIdWalletApiMojeidWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startMojeid(DigitalIdWalletApiMojeidWalletVerificationStartRequest params) {
     return client.execute(startMojeidRequest(params), RequestOptions.none(), START_MOJEID_RESPONSE).data();
   }
 
   /**
-   * Start MojeID verification
-   *
-   * <p>Start a MojeID sign-in (CZ.NIC; CZE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/mojeid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startMojeid(DigitalIdWalletApiMojeidWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startMojeidAsync(DigitalIdWalletApiMojeidWalletVerificationStartRequest params) {
     return client.executeAsync(startMojeidRequest(params), RequestOptions.none(), START_MOJEID_RESPONSE).thenApply(RawResponse::data);
@@ -1541,46 +1193,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start Diia verification
-   *
-   * <p>Start a Diia sign-in (Ministry of Digital Transformation of Ukraine; UKR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/diia/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startDiia(DigitalIdWalletApiDiiaWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startDiiaAsync(DigitalIdWalletApiDiiaWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startDiiaRequest(params), options, START_DIIA_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start Diia verification
-   *
-   * <p>Start a Diia sign-in (Ministry of Digital Transformation of Ukraine; UKR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/diia/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startDiia(DigitalIdWalletApiDiiaWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startDiia(DigitalIdWalletApiDiiaWalletVerificationStartRequest params) {
     return client.execute(startDiiaRequest(params), RequestOptions.none(), START_DIIA_RESPONSE).data();
   }
 
   /**
-   * Start Diia verification
-   *
-   * <p>Start a Diia sign-in (Ministry of Digital Transformation of Ukraine; UKR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/diia/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startDiia(DigitalIdWalletApiDiiaWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startDiiaAsync(DigitalIdWalletApiDiiaWalletVerificationStartRequest params) {
     return client.executeAsync(startDiiaRequest(params), RequestOptions.none(), START_DIIA_RESPONSE).thenApply(RawResponse::data);
@@ -1603,46 +1240,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start FranceConnect verification
-   *
-   * <p>Start a FranceConnect sign-in (DINUM (French state); FRA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/franceconnect/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startFranceconnect(DigitalIdWalletApiFranceconnectWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startFranceconnectAsync(DigitalIdWalletApiFranceconnectWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startFranceconnectRequest(params), options, START_FRANCECONNECT_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start FranceConnect verification
-   *
-   * <p>Start a FranceConnect sign-in (DINUM (French state); FRA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/franceconnect/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startFranceconnect(DigitalIdWalletApiFranceconnectWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startFranceconnect(DigitalIdWalletApiFranceconnectWalletVerificationStartRequest params) {
     return client.execute(startFranceconnectRequest(params), RequestOptions.none(), START_FRANCECONNECT_RESPONSE).data();
   }
 
   /**
-   * Start FranceConnect verification
-   *
-   * <p>Start a FranceConnect sign-in (DINUM (French state); FRA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/franceconnect/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startFranceconnect(DigitalIdWalletApiFranceconnectWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startFranceconnectAsync(DigitalIdWalletApiFranceconnectWalletVerificationStartRequest params) {
     return client.executeAsync(startFranceconnectRequest(params), RequestOptions.none(), START_FRANCECONNECT_RESPONSE).thenApply(RawResponse::data);
@@ -1665,46 +1287,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start Auðkenni verification
-   *
-   * <p>Start a Auðkenni sign-in (Auðkenni (Icelandic electronic ID); ISL) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/audkenni/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startAudkenni(DigitalIdWalletApiAudkenniWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startAudkenniAsync(DigitalIdWalletApiAudkenniWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startAudkenniRequest(params), options, START_AUDKENNI_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start Auðkenni verification
-   *
-   * <p>Start a Auðkenni sign-in (Auðkenni (Icelandic electronic ID); ISL) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/audkenni/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startAudkenni(DigitalIdWalletApiAudkenniWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startAudkenni(DigitalIdWalletApiAudkenniWalletVerificationStartRequest params) {
     return client.execute(startAudkenniRequest(params), RequestOptions.none(), START_AUDKENNI_RESPONSE).data();
   }
 
   /**
-   * Start Auðkenni verification
-   *
-   * <p>Start a Auðkenni sign-in (Auðkenni (Icelandic electronic ID); ISL) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/audkenni/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startAudkenni(DigitalIdWalletApiAudkenniWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startAudkenniAsync(DigitalIdWalletApiAudkenniWalletVerificationStartRequest params) {
     return client.executeAsync(startAudkenniRequest(params), RequestOptions.none(), START_AUDKENNI_RESPONSE).thenApply(RawResponse::data);
@@ -1727,46 +1334,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start ConnectID verification
-   *
-   * <p>Start a ConnectID sign-in (Australian Payments Plus; AUS) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/connectid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startConnectid(DigitalIdWalletApiConnectidWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startConnectidAsync(DigitalIdWalletApiConnectidWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startConnectidRequest(params), options, START_CONNECTID_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start ConnectID verification
-   *
-   * <p>Start a ConnectID sign-in (Australian Payments Plus; AUS) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/connectid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startConnectid(DigitalIdWalletApiConnectidWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startConnectid(DigitalIdWalletApiConnectidWalletVerificationStartRequest params) {
     return client.execute(startConnectidRequest(params), RequestOptions.none(), START_CONNECTID_RESPONSE).data();
   }
 
   /**
-   * Start ConnectID verification
-   *
-   * <p>Start a ConnectID sign-in (Australian Payments Plus; AUS) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/connectid/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startConnectid(DigitalIdWalletApiConnectidWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startConnectidAsync(DigitalIdWalletApiConnectidWalletVerificationStartRequest params) {
     return client.executeAsync(startConnectidRequest(params), RequestOptions.none(), START_CONNECTID_RESPONSE).thenApply(RawResponse::data);
@@ -1789,46 +1381,31 @@ public final class IdWalletsResource {
   }
 
   /**
-   * Start EUDI Wallet verification
-   *
-   * <p>Start a EUDI Wallet sign-in (The user's own member state; the issuer differs per country; AUT, BEL, BGR, HRV, CYP, CZE, DNK, EST, FIN, FRA, DEU, GRC, HUN, IRL, ITA, LVA, LTU, LUX, MLT, NLD, POL, PRT, ROU, SVK, SVN, ESP, SWE, ISL, LIE, NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/eudi/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startEudi(DigitalIdWalletApiEudiWalletVerificationStartRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startEudiAsync(DigitalIdWalletApiEudiWalletVerificationStartRequest params, RequestOptions options) {
     return client.executeAsync(startEudiRequest(params), options, START_EUDI_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Start EUDI Wallet verification
-   *
-   * <p>Start a EUDI Wallet sign-in (The user's own member state; the issuer differs per country; AUT, BEL, BGR, HRV, CYP, CZE, DNK, EST, FIN, FRA, DEU, GRC, HUN, IRL, ITA, LVA, LTU, LUX, MLT, NLD, POL, PRT, ROU, SVK, SVN, ESP, SWE, ISL, LIE, NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/eudi/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Same as {@link #startEudi(DigitalIdWalletApiEudiWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public DigitalIdWalletApiWalletVerificationResponse startEudi(DigitalIdWalletApiEudiWalletVerificationStartRequest params) {
     return client.execute(startEudiRequest(params), RequestOptions.none(), START_EUDI_RESPONSE).data();
   }
 
   /**
-   * Start EUDI Wallet verification
-   *
-   * <p>Start a EUDI Wallet sign-in (The user's own member state; the issuer differs per country; AUT, BEL, BGR, HRV, CYP, CZE, DNK, EST, FIN, FRA, DEU, GRC, HUN, IRL, ITA, LVA, LTU, LUX, MLT, NLD, POL, PRT, ROU, SVK, SVN, ESP, SWE, ISL, LIE, NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-   *
-   * <p>{@code POST /v3/id-verification/wallets/eudi/}
-   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   * Asynchronous {@link #startEudi(DigitalIdWalletApiEudiWalletVerificationStartRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startEudiAsync(DigitalIdWalletApiEudiWalletVerificationStartRequest params) {
     return client.executeAsync(startEudiRequest(params), RequestOptions.none(), START_EUDI_RESPONSE).thenApply(RawResponse::data);
@@ -2099,1778 +1676,1214 @@ public final class IdWalletsResource {
     }
 
     /**
-     * List Digital ID wallets
+     * {@link #list(RequestOptions)} with the raw response.
      *
-     * <p>Every Digital ID wallet with its start endpoint, countries, required fields and whether this application can start it in this environment now. Listed does not mean live.
-     *
-     * <p>{@code GET /v3/id-verification/wallets/}
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletCatalogResponse> list(RequestOptions options) {
       return client.execute(listRequest(), options, LIST_RESPONSE);
     }
 
     /**
-     * List Digital ID wallets
+     * Asynchronous {@link #list(RequestOptions)} with the raw response.
      *
-     * <p>Every Digital ID wallet with its start endpoint, countries, required fields and whether this application can start it in this environment now. Listed does not mean live.
-     *
-     * <p>{@code GET /v3/id-verification/wallets/}
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletCatalogResponse>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(), options, LIST_RESPONSE);
     }
 
     /**
-     * List Digital ID wallets
+     * {@link #list(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Every Digital ID wallet with its start endpoint, countries, required fields and whether this application can start it in this environment now. Listed does not mean live.
-     *
-     * <p>{@code GET /v3/id-verification/wallets/}
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletCatalogResponse> list() {
       return client.execute(listRequest(), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List Digital ID wallets
+     * Asynchronous {@link #list(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Every Digital ID wallet with its start endpoint, countries, required fields and whether this application can start it in this environment now. Listed does not mean live.
-     *
-     * <p>{@code GET /v3/id-verification/wallets/}
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletCatalogResponse>> listAsync() {
       return client.executeAsync(listRequest(), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Get a wallet verification
+     * {@link #retrieveVerification(String, RequestOptions)} with the raw response.
      *
-     * <p>Status and result of a wallet verification: the normalized identity and the wallet's own attributes once verified, the error code once declined, the next action while pending. A verification past expires_at is decided timeout.
-     *
-     * <p>{@code GET /v3/id-verification/wallets/verifications/{request_id}/}
-     *
-     * @param requestId The request_id the start endpoint returned.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param requestId the {@code request_id}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> retrieveVerification(String requestId, RequestOptions options) {
       return client.execute(retrieveVerificationRequest(requestId), options, RETRIEVE_VERIFICATION_RESPONSE);
     }
 
     /**
-     * Get a wallet verification
+     * Asynchronous {@link #retrieveVerification(String, RequestOptions)} with the raw response.
      *
-     * <p>Status and result of a wallet verification: the normalized identity and the wallet's own attributes once verified, the error code once declined, the next action while pending. A verification past expires_at is decided timeout.
-     *
-     * <p>{@code GET /v3/id-verification/wallets/verifications/{request_id}/}
-     *
-     * @param requestId The request_id the start endpoint returned.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param requestId the {@code request_id}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> retrieveVerificationAsync(String requestId, RequestOptions options) {
       return client.executeAsync(retrieveVerificationRequest(requestId), options, RETRIEVE_VERIFICATION_RESPONSE);
     }
 
     /**
-     * Get a wallet verification
+     * {@link #retrieveVerification(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Status and result of a wallet verification: the normalized identity and the wallet's own attributes once verified, the error code once declined, the next action while pending. A verification past expires_at is decided timeout.
-     *
-     * <p>{@code GET /v3/id-verification/wallets/verifications/{request_id}/}
-     *
-     * @param requestId The request_id the start endpoint returned.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param requestId the {@code request_id}
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> retrieveVerification(String requestId) {
       return client.execute(retrieveVerificationRequest(requestId), RequestOptions.none(), RETRIEVE_VERIFICATION_RESPONSE);
     }
 
     /**
-     * Get a wallet verification
+     * Asynchronous {@link #retrieveVerification(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Status and result of a wallet verification: the normalized identity and the wallet's own attributes once verified, the error code once declined, the next action while pending. A verification past expires_at is decided timeout.
-     *
-     * <p>{@code GET /v3/id-verification/wallets/verifications/{request_id}/}
-     *
-     * @param requestId The request_id the start endpoint returned.
-     * @return a future completed with the raw response
+     * @param requestId the {@code request_id}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> retrieveVerificationAsync(String requestId) {
       return client.executeAsync(retrieveVerificationRequest(requestId), RequestOptions.none(), RETRIEVE_VERIFICATION_RESPONSE);
     }
 
     /**
-     * Poll a wallet verification
+     * {@link #pollVerification(String, RequestOptions)} with the raw response.
      *
-     * <p>Smart-ID and Mobile-ID: ask the provider whether the user confirmed, refused or let the prompt lapse, and verify the signed identity when they confirmed. Redirect wallets complete through the user's browser, so for them this only reads the verification back. Answers the verification as it is afterwards.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/poll/}
-     *
-     * @param requestId The request_id the start endpoint returned.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param requestId the {@code request_id}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> pollVerification(String requestId, RequestOptions options) {
       return client.execute(pollVerificationRequest(requestId), options, POLL_VERIFICATION_RESPONSE);
     }
 
     /**
-     * Poll a wallet verification
+     * Asynchronous {@link #pollVerification(String, RequestOptions)} with the raw response.
      *
-     * <p>Smart-ID and Mobile-ID: ask the provider whether the user confirmed, refused or let the prompt lapse, and verify the signed identity when they confirmed. Redirect wallets complete through the user's browser, so for them this only reads the verification back. Answers the verification as it is afterwards.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/poll/}
-     *
-     * @param requestId The request_id the start endpoint returned.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param requestId the {@code request_id}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> pollVerificationAsync(String requestId, RequestOptions options) {
       return client.executeAsync(pollVerificationRequest(requestId), options, POLL_VERIFICATION_RESPONSE);
     }
 
     /**
-     * Poll a wallet verification
+     * {@link #pollVerification(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Smart-ID and Mobile-ID: ask the provider whether the user confirmed, refused or let the prompt lapse, and verify the signed identity when they confirmed. Redirect wallets complete through the user's browser, so for them this only reads the verification back. Answers the verification as it is afterwards.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/poll/}
-     *
-     * @param requestId The request_id the start endpoint returned.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param requestId the {@code request_id}
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> pollVerification(String requestId) {
       return client.execute(pollVerificationRequest(requestId), RequestOptions.none(), POLL_VERIFICATION_RESPONSE);
     }
 
     /**
-     * Poll a wallet verification
+     * Asynchronous {@link #pollVerification(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Smart-ID and Mobile-ID: ask the provider whether the user confirmed, refused or let the prompt lapse, and verify the signed identity when they confirmed. Redirect wallets complete through the user's browser, so for them this only reads the verification back. Answers the verification as it is afterwards.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/poll/}
-     *
-     * @param requestId The request_id the start endpoint returned.
-     * @return a future completed with the raw response
+     * @param requestId the {@code request_id}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> pollVerificationAsync(String requestId) {
       return client.executeAsync(pollVerificationRequest(requestId), RequestOptions.none(), POLL_VERIFICATION_RESPONSE);
     }
 
     /**
-     * Cancel a wallet verification
+     * {@link #cancelVerification(String, RequestOptions)} with the raw response.
      *
-     * <p>Withdraw a pending verification: it is declined as cancelled and never billed. A decided one is returned unchanged. Smart-ID and Mobile-ID: a cancel that arrives while a poll is checking the sign-in waits a few seconds for that poll, then declines it, or returns it verified if the user had already confirmed. A verification the user is completing right now cannot be cancelled (409 verification_in_progress with Retry-After): retry after that many seconds to read its outcome.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/cancel/}
-     *
-     * @param requestId The request_id the start endpoint returned.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param requestId the {@code request_id}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> cancelVerification(String requestId, RequestOptions options) {
       return client.execute(cancelVerificationRequest(requestId), options, CANCEL_VERIFICATION_RESPONSE);
     }
 
     /**
-     * Cancel a wallet verification
+     * Asynchronous {@link #cancelVerification(String, RequestOptions)} with the raw response.
      *
-     * <p>Withdraw a pending verification: it is declined as cancelled and never billed. A decided one is returned unchanged. Smart-ID and Mobile-ID: a cancel that arrives while a poll is checking the sign-in waits a few seconds for that poll, then declines it, or returns it verified if the user had already confirmed. A verification the user is completing right now cannot be cancelled (409 verification_in_progress with Retry-After): retry after that many seconds to read its outcome.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/cancel/}
-     *
-     * @param requestId The request_id the start endpoint returned.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param requestId the {@code request_id}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> cancelVerificationAsync(String requestId, RequestOptions options) {
       return client.executeAsync(cancelVerificationRequest(requestId), options, CANCEL_VERIFICATION_RESPONSE);
     }
 
     /**
-     * Cancel a wallet verification
+     * {@link #cancelVerification(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Withdraw a pending verification: it is declined as cancelled and never billed. A decided one is returned unchanged. Smart-ID and Mobile-ID: a cancel that arrives while a poll is checking the sign-in waits a few seconds for that poll, then declines it, or returns it verified if the user had already confirmed. A verification the user is completing right now cannot be cancelled (409 verification_in_progress with Retry-After): retry after that many seconds to read its outcome.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/cancel/}
-     *
-     * @param requestId The request_id the start endpoint returned.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param requestId the {@code request_id}
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> cancelVerification(String requestId) {
       return client.execute(cancelVerificationRequest(requestId), RequestOptions.none(), CANCEL_VERIFICATION_RESPONSE);
     }
 
     /**
-     * Cancel a wallet verification
+     * Asynchronous {@link #cancelVerification(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Withdraw a pending verification: it is declined as cancelled and never billed. A decided one is returned unchanged. Smart-ID and Mobile-ID: a cancel that arrives while a poll is checking the sign-in waits a few seconds for that poll, then declines it, or returns it verified if the user had already confirmed. A verification the user is completing right now cannot be cancelled (409 verification_in_progress with Retry-After): retry after that many seconds to read its outcome.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/cancel/}
-     *
-     * @param requestId The request_id the start endpoint returned.
-     * @return a future completed with the raw response
+     * @param requestId the {@code request_id}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> cancelVerificationAsync(String requestId) {
       return client.executeAsync(cancelVerificationRequest(requestId), RequestOptions.none(), CANCEL_VERIFICATION_RESPONSE);
     }
 
     /**
-     * Start MitID verification
-     *
-     * <p>Start a MitID sign-in (Danish Agency for Digital Government; DNK) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/mitid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startMitid(DigitalIdWalletApiMitidWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startMitid(DigitalIdWalletApiMitidWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startMitidRequest(params), options, START_MITID_RESPONSE);
     }
 
     /**
-     * Start MitID verification
-     *
-     * <p>Start a MitID sign-in (Danish Agency for Digital Government; DNK) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/mitid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startMitid(DigitalIdWalletApiMitidWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startMitidAsync(DigitalIdWalletApiMitidWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startMitidRequest(params), options, START_MITID_RESPONSE);
     }
 
     /**
-     * Start MitID verification
-     *
-     * <p>Start a MitID sign-in (Danish Agency for Digital Government; DNK) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/mitid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startMitid(DigitalIdWalletApiMitidWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startMitid(DigitalIdWalletApiMitidWalletVerificationStartRequest params) {
       return client.execute(startMitidRequest(params), RequestOptions.none(), START_MITID_RESPONSE);
     }
 
     /**
-     * Start MitID verification
-     *
-     * <p>Start a MitID sign-in (Danish Agency for Digital Government; DNK) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/mitid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startMitid(DigitalIdWalletApiMitidWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startMitidAsync(DigitalIdWalletApiMitidWalletVerificationStartRequest params) {
       return client.executeAsync(startMitidRequest(params), RequestOptions.none(), START_MITID_RESPONSE);
     }
 
     /**
-     * Start BankID (SWE) verification
-     *
-     * <p>Start a BankID (SWE) sign-in (Finansiell ID-Teknik / bank consortium; SWE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/bankid-se/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startBankidSe(DigitalIdWalletApiBankidSeWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startBankidSe(DigitalIdWalletApiBankidSeWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startBankidSeRequest(params), options, START_BANKID_SE_RESPONSE);
     }
 
     /**
-     * Start BankID (SWE) verification
-     *
-     * <p>Start a BankID (SWE) sign-in (Finansiell ID-Teknik / bank consortium; SWE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/bankid-se/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startBankidSe(DigitalIdWalletApiBankidSeWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startBankidSeAsync(DigitalIdWalletApiBankidSeWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startBankidSeRequest(params), options, START_BANKID_SE_RESPONSE);
     }
 
     /**
-     * Start BankID (SWE) verification
-     *
-     * <p>Start a BankID (SWE) sign-in (Finansiell ID-Teknik / bank consortium; SWE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/bankid-se/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startBankidSe(DigitalIdWalletApiBankidSeWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startBankidSe(DigitalIdWalletApiBankidSeWalletVerificationStartRequest params) {
       return client.execute(startBankidSeRequest(params), RequestOptions.none(), START_BANKID_SE_RESPONSE);
     }
 
     /**
-     * Start BankID (SWE) verification
-     *
-     * <p>Start a BankID (SWE) sign-in (Finansiell ID-Teknik / bank consortium; SWE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/bankid-se/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startBankidSe(DigitalIdWalletApiBankidSeWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startBankidSeAsync(DigitalIdWalletApiBankidSeWalletVerificationStartRequest params) {
       return client.executeAsync(startBankidSeRequest(params), RequestOptions.none(), START_BANKID_SE_RESPONSE);
     }
 
     /**
-     * Start BankID (NOR) verification
-     *
-     * <p>Start a BankID (NOR) sign-in (BankID BankAxept AS; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/bankid-no/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startBankidNo(DigitalIdWalletApiBankidNoWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startBankidNo(DigitalIdWalletApiBankidNoWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startBankidNoRequest(params), options, START_BANKID_NO_RESPONSE);
     }
 
     /**
-     * Start BankID (NOR) verification
-     *
-     * <p>Start a BankID (NOR) sign-in (BankID BankAxept AS; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/bankid-no/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startBankidNo(DigitalIdWalletApiBankidNoWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startBankidNoAsync(DigitalIdWalletApiBankidNoWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startBankidNoRequest(params), options, START_BANKID_NO_RESPONSE);
     }
 
     /**
-     * Start BankID (NOR) verification
-     *
-     * <p>Start a BankID (NOR) sign-in (BankID BankAxept AS; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/bankid-no/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startBankidNo(DigitalIdWalletApiBankidNoWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startBankidNo(DigitalIdWalletApiBankidNoWalletVerificationStartRequest params) {
       return client.execute(startBankidNoRequest(params), RequestOptions.none(), START_BANKID_NO_RESPONSE);
     }
 
     /**
-     * Start BankID (NOR) verification
-     *
-     * <p>Start a BankID (NOR) sign-in (BankID BankAxept AS; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/bankid-no/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startBankidNo(DigitalIdWalletApiBankidNoWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startBankidNoAsync(DigitalIdWalletApiBankidNoWalletVerificationStartRequest params) {
       return client.executeAsync(startBankidNoRequest(params), RequestOptions.none(), START_BANKID_NO_RESPONSE);
     }
 
     /**
-     * Start Vipps verification
-     *
-     * <p>Start a Vipps sign-in (Vipps MobilePay / BankID NO; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/vipps/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startVipps(DigitalIdWalletApiVippsWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startVipps(DigitalIdWalletApiVippsWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startVippsRequest(params), options, START_VIPPS_RESPONSE);
     }
 
     /**
-     * Start Vipps verification
-     *
-     * <p>Start a Vipps sign-in (Vipps MobilePay / BankID NO; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/vipps/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startVipps(DigitalIdWalletApiVippsWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startVippsAsync(DigitalIdWalletApiVippsWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startVippsRequest(params), options, START_VIPPS_RESPONSE);
     }
 
     /**
-     * Start Vipps verification
-     *
-     * <p>Start a Vipps sign-in (Vipps MobilePay / BankID NO; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/vipps/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startVipps(DigitalIdWalletApiVippsWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startVipps(DigitalIdWalletApiVippsWalletVerificationStartRequest params) {
       return client.execute(startVippsRequest(params), RequestOptions.none(), START_VIPPS_RESPONSE);
     }
 
     /**
-     * Start Vipps verification
-     *
-     * <p>Start a Vipps sign-in (Vipps MobilePay / BankID NO; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/vipps/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startVipps(DigitalIdWalletApiVippsWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startVippsAsync(DigitalIdWalletApiVippsWalletVerificationStartRequest params) {
       return client.executeAsync(startVippsRequest(params), RequestOptions.none(), START_VIPPS_RESPONSE);
     }
 
     /**
-     * Start Buypass ID verification
-     *
-     * <p>Start a Buypass ID sign-in (Buypass AS; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/buypass/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startBuypass(DigitalIdWalletApiBuypassWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startBuypass(DigitalIdWalletApiBuypassWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startBuypassRequest(params), options, START_BUYPASS_RESPONSE);
     }
 
     /**
-     * Start Buypass ID verification
-     *
-     * <p>Start a Buypass ID sign-in (Buypass AS; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/buypass/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startBuypass(DigitalIdWalletApiBuypassWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startBuypassAsync(DigitalIdWalletApiBuypassWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startBuypassRequest(params), options, START_BUYPASS_RESPONSE);
     }
 
     /**
-     * Start Buypass ID verification
-     *
-     * <p>Start a Buypass ID sign-in (Buypass AS; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/buypass/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startBuypass(DigitalIdWalletApiBuypassWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startBuypass(DigitalIdWalletApiBuypassWalletVerificationStartRequest params) {
       return client.execute(startBuypassRequest(params), RequestOptions.none(), START_BUYPASS_RESPONSE);
     }
 
     /**
-     * Start Buypass ID verification
-     *
-     * <p>Start a Buypass ID sign-in (Buypass AS; NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/buypass/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startBuypass(DigitalIdWalletApiBuypassWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startBuypassAsync(DigitalIdWalletApiBuypassWalletVerificationStartRequest params) {
       return client.executeAsync(startBuypassRequest(params), RequestOptions.none(), START_BUYPASS_RESPONSE);
     }
 
     /**
-     * Start itsme verification
-     *
-     * <p>Start a itsme sign-in (Belgian Mobile ID; BEL, LUX, NLD) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/itsme/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startItsme(DigitalIdWalletApiItsmeWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startItsme(DigitalIdWalletApiItsmeWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startItsmeRequest(params), options, START_ITSME_RESPONSE);
     }
 
     /**
-     * Start itsme verification
-     *
-     * <p>Start a itsme sign-in (Belgian Mobile ID; BEL, LUX, NLD) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/itsme/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startItsme(DigitalIdWalletApiItsmeWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startItsmeAsync(DigitalIdWalletApiItsmeWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startItsmeRequest(params), options, START_ITSME_RESPONSE);
     }
 
     /**
-     * Start itsme verification
-     *
-     * <p>Start a itsme sign-in (Belgian Mobile ID; BEL, LUX, NLD) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/itsme/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startItsme(DigitalIdWalletApiItsmeWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startItsme(DigitalIdWalletApiItsmeWalletVerificationStartRequest params) {
       return client.execute(startItsmeRequest(params), RequestOptions.none(), START_ITSME_RESPONSE);
     }
 
     /**
-     * Start itsme verification
-     *
-     * <p>Start a itsme sign-in (Belgian Mobile ID; BEL, LUX, NLD) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/itsme/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startItsme(DigitalIdWalletApiItsmeWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startItsmeAsync(DigitalIdWalletApiItsmeWalletVerificationStartRequest params) {
       return client.executeAsync(startItsmeRequest(params), RequestOptions.none(), START_ITSME_RESPONSE);
     }
 
     /**
-     * Start iDIN verification
-     *
-     * <p>Start a iDIN sign-in (Dutch banks (Currence iDIN); NLD) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/idin/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startIdin(DigitalIdWalletApiIdinWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startIdin(DigitalIdWalletApiIdinWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startIdinRequest(params), options, START_IDIN_RESPONSE);
     }
 
     /**
-     * Start iDIN verification
-     *
-     * <p>Start a iDIN sign-in (Dutch banks (Currence iDIN); NLD) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/idin/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startIdin(DigitalIdWalletApiIdinWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startIdinAsync(DigitalIdWalletApiIdinWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startIdinRequest(params), options, START_IDIN_RESPONSE);
     }
 
     /**
-     * Start iDIN verification
-     *
-     * <p>Start a iDIN sign-in (Dutch banks (Currence iDIN); NLD) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/idin/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startIdin(DigitalIdWalletApiIdinWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startIdin(DigitalIdWalletApiIdinWalletVerificationStartRequest params) {
       return client.execute(startIdinRequest(params), RequestOptions.none(), START_IDIN_RESPONSE);
     }
 
     /**
-     * Start iDIN verification
-     *
-     * <p>Start a iDIN sign-in (Dutch banks (Currence iDIN); NLD) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/idin/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startIdin(DigitalIdWalletApiIdinWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startIdinAsync(DigitalIdWalletApiIdinWalletVerificationStartRequest params) {
       return client.executeAsync(startIdinRequest(params), RequestOptions.none(), START_IDIN_RESPONSE);
     }
 
     /**
-     * Start Finnish Trust Network verification
-     *
-     * <p>Start a Finnish Trust Network sign-in (Finnish banks and mobile operators (FTN); FIN) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/ftn/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startFtn(DigitalIdWalletApiFtnWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startFtn(DigitalIdWalletApiFtnWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startFtnRequest(params), options, START_FTN_RESPONSE);
     }
 
     /**
-     * Start Finnish Trust Network verification
-     *
-     * <p>Start a Finnish Trust Network sign-in (Finnish banks and mobile operators (FTN); FIN) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/ftn/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startFtn(DigitalIdWalletApiFtnWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startFtnAsync(DigitalIdWalletApiFtnWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startFtnRequest(params), options, START_FTN_RESPONSE);
     }
 
     /**
-     * Start Finnish Trust Network verification
-     *
-     * <p>Start a Finnish Trust Network sign-in (Finnish banks and mobile operators (FTN); FIN) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/ftn/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startFtn(DigitalIdWalletApiFtnWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startFtn(DigitalIdWalletApiFtnWalletVerificationStartRequest params) {
       return client.execute(startFtnRequest(params), RequestOptions.none(), START_FTN_RESPONSE);
     }
 
     /**
-     * Start Finnish Trust Network verification
-     *
-     * <p>Start a Finnish Trust Network sign-in (Finnish banks and mobile operators (FTN); FIN) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/ftn/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startFtn(DigitalIdWalletApiFtnWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startFtnAsync(DigitalIdWalletApiFtnWalletVerificationStartRequest params) {
       return client.executeAsync(startFtnRequest(params), RequestOptions.none(), START_FTN_RESPONSE);
     }
 
     /**
-     * Start Personalausweis verification
-     *
-     * <p>Start a Personalausweis sign-in (Bundesministerium des Innern (eID); DEU) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/personalausweis/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startPersonalausweis(DigitalIdWalletApiPersonalausweisWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startPersonalausweis(DigitalIdWalletApiPersonalausweisWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startPersonalausweisRequest(params), options, START_PERSONALAUSWEIS_RESPONSE);
     }
 
     /**
-     * Start Personalausweis verification
-     *
-     * <p>Start a Personalausweis sign-in (Bundesministerium des Innern (eID); DEU) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/personalausweis/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startPersonalausweis(DigitalIdWalletApiPersonalausweisWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startPersonalausweisAsync(DigitalIdWalletApiPersonalausweisWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startPersonalausweisRequest(params), options, START_PERSONALAUSWEIS_RESPONSE);
     }
 
     /**
-     * Start Personalausweis verification
-     *
-     * <p>Start a Personalausweis sign-in (Bundesministerium des Innern (eID); DEU) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/personalausweis/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startPersonalausweis(DigitalIdWalletApiPersonalausweisWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startPersonalausweis(DigitalIdWalletApiPersonalausweisWalletVerificationStartRequest params) {
       return client.execute(startPersonalausweisRequest(params), RequestOptions.none(), START_PERSONALAUSWEIS_RESPONSE);
     }
 
     /**
-     * Start Personalausweis verification
-     *
-     * <p>Start a Personalausweis sign-in (Bundesministerium des Innern (eID); DEU) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/personalausweis/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startPersonalausweis(DigitalIdWalletApiPersonalausweisWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startPersonalausweisAsync(DigitalIdWalletApiPersonalausweisWalletVerificationStartRequest params) {
       return client.executeAsync(startPersonalausweisRequest(params), RequestOptions.none(), START_PERSONALAUSWEIS_RESPONSE);
     }
 
     /**
-     * Start Freja eID verification
-     *
-     * <p>Start a Freja eID sign-in (Freja eID Group; SWE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/frejaid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startFrejaid(DigitalIdWalletApiFrejaidWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startFrejaid(DigitalIdWalletApiFrejaidWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startFrejaidRequest(params), options, START_FREJAID_RESPONSE);
     }
 
     /**
-     * Start Freja eID verification
-     *
-     * <p>Start a Freja eID sign-in (Freja eID Group; SWE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/frejaid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startFrejaid(DigitalIdWalletApiFrejaidWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startFrejaidAsync(DigitalIdWalletApiFrejaidWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startFrejaidRequest(params), options, START_FREJAID_RESPONSE);
     }
 
     /**
-     * Start Freja eID verification
-     *
-     * <p>Start a Freja eID sign-in (Freja eID Group; SWE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/frejaid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startFrejaid(DigitalIdWalletApiFrejaidWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startFrejaid(DigitalIdWalletApiFrejaidWalletVerificationStartRequest params) {
       return client.execute(startFrejaidRequest(params), RequestOptions.none(), START_FREJAID_RESPONSE);
     }
 
     /**
-     * Start Freja eID verification
-     *
-     * <p>Start a Freja eID sign-in (Freja eID Group; SWE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/frejaid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startFrejaid(DigitalIdWalletApiFrejaidWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startFrejaidAsync(DigitalIdWalletApiFrejaidWalletVerificationStartRequest params) {
       return client.executeAsync(startFrejaidRequest(params), RequestOptions.none(), START_FREJAID_RESPONSE);
     }
 
     /**
-     * Start UAE PASS verification
-     *
-     * <p>Start a UAE PASS sign-in (UAE Digital Government Authority; ARE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/uae-pass/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startUaePass(DigitalIdWalletApiUaePassWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startUaePass(DigitalIdWalletApiUaePassWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startUaePassRequest(params), options, START_UAE_PASS_RESPONSE);
     }
 
     /**
-     * Start UAE PASS verification
-     *
-     * <p>Start a UAE PASS sign-in (UAE Digital Government Authority; ARE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/uae-pass/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startUaePass(DigitalIdWalletApiUaePassWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startUaePassAsync(DigitalIdWalletApiUaePassWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startUaePassRequest(params), options, START_UAE_PASS_RESPONSE);
     }
 
     /**
-     * Start UAE PASS verification
-     *
-     * <p>Start a UAE PASS sign-in (UAE Digital Government Authority; ARE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/uae-pass/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startUaePass(DigitalIdWalletApiUaePassWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startUaePass(DigitalIdWalletApiUaePassWalletVerificationStartRequest params) {
       return client.execute(startUaePassRequest(params), RequestOptions.none(), START_UAE_PASS_RESPONSE);
     }
 
     /**
-     * Start UAE PASS verification
-     *
-     * <p>Start a UAE PASS sign-in (UAE Digital Government Authority; ARE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/uae-pass/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startUaePass(DigitalIdWalletApiUaePassWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startUaePassAsync(DigitalIdWalletApiUaePassWalletVerificationStartRequest params) {
       return client.executeAsync(startUaePassRequest(params), RequestOptions.none(), START_UAE_PASS_RESPONSE);
     }
 
     /**
-     * Start gov.br verification
-     *
-     * <p>Start a gov.br sign-in (Governo Federal do Brasil; BRA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/govbr/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startGovbr(DigitalIdWalletApiGovbrWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startGovbr(DigitalIdWalletApiGovbrWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startGovbrRequest(params), options, START_GOVBR_RESPONSE);
     }
 
     /**
-     * Start gov.br verification
-     *
-     * <p>Start a gov.br sign-in (Governo Federal do Brasil; BRA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/govbr/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startGovbr(DigitalIdWalletApiGovbrWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startGovbrAsync(DigitalIdWalletApiGovbrWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startGovbrRequest(params), options, START_GOVBR_RESPONSE);
     }
 
     /**
-     * Start gov.br verification
-     *
-     * <p>Start a gov.br sign-in (Governo Federal do Brasil; BRA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/govbr/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startGovbr(DigitalIdWalletApiGovbrWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startGovbr(DigitalIdWalletApiGovbrWalletVerificationStartRequest params) {
       return client.execute(startGovbrRequest(params), RequestOptions.none(), START_GOVBR_RESPONSE);
     }
 
     /**
-     * Start gov.br verification
-     *
-     * <p>Start a gov.br sign-in (Governo Federal do Brasil; BRA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/govbr/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startGovbr(DigitalIdWalletApiGovbrWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startGovbrAsync(DigitalIdWalletApiGovbrWalletVerificationStartRequest params) {
       return client.executeAsync(startGovbrRequest(params), RequestOptions.none(), START_GOVBR_RESPONSE);
     }
 
     /**
-     * Start OneID verification
-     *
-     * <p>Start a OneID sign-in (OneID (UK bank-verified identity); GBR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/oneid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startOneid(DigitalIdWalletApiOneidWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startOneid(DigitalIdWalletApiOneidWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startOneidRequest(params), options, START_ONEID_RESPONSE);
     }
 
     /**
-     * Start OneID verification
-     *
-     * <p>Start a OneID sign-in (OneID (UK bank-verified identity); GBR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/oneid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startOneid(DigitalIdWalletApiOneidWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startOneidAsync(DigitalIdWalletApiOneidWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startOneidRequest(params), options, START_ONEID_RESPONSE);
     }
 
     /**
-     * Start OneID verification
-     *
-     * <p>Start a OneID sign-in (OneID (UK bank-verified identity); GBR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/oneid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startOneid(DigitalIdWalletApiOneidWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startOneid(DigitalIdWalletApiOneidWalletVerificationStartRequest params) {
       return client.execute(startOneidRequest(params), RequestOptions.none(), START_ONEID_RESPONSE);
     }
 
     /**
-     * Start OneID verification
-     *
-     * <p>Start a OneID sign-in (OneID (UK bank-verified identity); GBR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/oneid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startOneid(DigitalIdWalletApiOneidWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startOneidAsync(DigitalIdWalletApiOneidWalletVerificationStartRequest params) {
       return client.executeAsync(startOneidRequest(params), RequestOptions.none(), START_ONEID_RESPONSE);
     }
 
     /**
-     * Start GOV.UK Wallet verification
-     *
-     * <p>Start a GOV.UK Wallet sign-in (UK Government Digital Service; GBR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/govuk-wallet/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startGovukWallet(DigitalIdWalletApiGovukWalletWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startGovukWallet(DigitalIdWalletApiGovukWalletWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startGovukWalletRequest(params), options, START_GOVUK_WALLET_RESPONSE);
     }
 
     /**
-     * Start GOV.UK Wallet verification
-     *
-     * <p>Start a GOV.UK Wallet sign-in (UK Government Digital Service; GBR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/govuk-wallet/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startGovukWallet(DigitalIdWalletApiGovukWalletWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startGovukWalletAsync(DigitalIdWalletApiGovukWalletWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startGovukWalletRequest(params), options, START_GOVUK_WALLET_RESPONSE);
     }
 
     /**
-     * Start GOV.UK Wallet verification
-     *
-     * <p>Start a GOV.UK Wallet sign-in (UK Government Digital Service; GBR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/govuk-wallet/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startGovukWallet(DigitalIdWalletApiGovukWalletWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startGovukWallet(DigitalIdWalletApiGovukWalletWalletVerificationStartRequest params) {
       return client.execute(startGovukWalletRequest(params), RequestOptions.none(), START_GOVUK_WALLET_RESPONSE);
     }
 
     /**
-     * Start GOV.UK Wallet verification
-     *
-     * <p>Start a GOV.UK Wallet sign-in (UK Government Digital Service; GBR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/govuk-wallet/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startGovukWallet(DigitalIdWalletApiGovukWalletWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startGovukWalletAsync(DigitalIdWalletApiGovukWalletWalletVerificationStartRequest params) {
       return client.executeAsync(startGovukWalletRequest(params), RequestOptions.none(), START_GOVUK_WALLET_RESPONSE);
     }
 
     /**
-     * Start Smart-ID verification
-     *
-     * <p>Start a Smart-ID sign-in (SK ID Solutions; EST, LVA, LTU, BEL) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=confirm_in_app with the comparison code to show the user; the user confirms it and enters their PIN in the app (never collect the PIN). Poll POST /v3/id-verification/wallets/verifications/{request_id}/poll/ every poll_interval_seconds, or rely on the webhook: Didit polls in the background too. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/smart-id/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startSmartId(DigitalIdWalletApiSmartIdWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startSmartId(DigitalIdWalletApiSmartIdWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startSmartIdRequest(params), options, START_SMART_ID_RESPONSE);
     }
 
     /**
-     * Start Smart-ID verification
-     *
-     * <p>Start a Smart-ID sign-in (SK ID Solutions; EST, LVA, LTU, BEL) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=confirm_in_app with the comparison code to show the user; the user confirms it and enters their PIN in the app (never collect the PIN). Poll POST /v3/id-verification/wallets/verifications/{request_id}/poll/ every poll_interval_seconds, or rely on the webhook: Didit polls in the background too. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/smart-id/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startSmartId(DigitalIdWalletApiSmartIdWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startSmartIdAsync(DigitalIdWalletApiSmartIdWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startSmartIdRequest(params), options, START_SMART_ID_RESPONSE);
     }
 
     /**
-     * Start Smart-ID verification
-     *
-     * <p>Start a Smart-ID sign-in (SK ID Solutions; EST, LVA, LTU, BEL) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=confirm_in_app with the comparison code to show the user; the user confirms it and enters their PIN in the app (never collect the PIN). Poll POST /v3/id-verification/wallets/verifications/{request_id}/poll/ every poll_interval_seconds, or rely on the webhook: Didit polls in the background too. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/smart-id/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startSmartId(DigitalIdWalletApiSmartIdWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startSmartId(DigitalIdWalletApiSmartIdWalletVerificationStartRequest params) {
       return client.execute(startSmartIdRequest(params), RequestOptions.none(), START_SMART_ID_RESPONSE);
     }
 
     /**
-     * Start Smart-ID verification
-     *
-     * <p>Start a Smart-ID sign-in (SK ID Solutions; EST, LVA, LTU, BEL) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=confirm_in_app with the comparison code to show the user; the user confirms it and enters their PIN in the app (never collect the PIN). Poll POST /v3/id-verification/wallets/verifications/{request_id}/poll/ every poll_interval_seconds, or rely on the webhook: Didit polls in the background too. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/smart-id/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startSmartId(DigitalIdWalletApiSmartIdWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startSmartIdAsync(DigitalIdWalletApiSmartIdWalletVerificationStartRequest params) {
       return client.executeAsync(startSmartIdRequest(params), RequestOptions.none(), START_SMART_ID_RESPONSE);
     }
 
     /**
-     * Start Mobile-ID verification
-     *
-     * <p>Start a Mobile-ID sign-in (SK ID Solutions with the national mobile operators; EST, LTU) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=confirm_in_app with the comparison code to show the user; the user confirms it and enters their PIN in the app (never collect the PIN). Poll POST /v3/id-verification/wallets/verifications/{request_id}/poll/ every poll_interval_seconds, or rely on the webhook: Didit polls in the background too. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/mobile-id/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startMobileId(DigitalIdWalletApiMobileIdWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startMobileId(DigitalIdWalletApiMobileIdWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startMobileIdRequest(params), options, START_MOBILE_ID_RESPONSE);
     }
 
     /**
-     * Start Mobile-ID verification
-     *
-     * <p>Start a Mobile-ID sign-in (SK ID Solutions with the national mobile operators; EST, LTU) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=confirm_in_app with the comparison code to show the user; the user confirms it and enters their PIN in the app (never collect the PIN). Poll POST /v3/id-verification/wallets/verifications/{request_id}/poll/ every poll_interval_seconds, or rely on the webhook: Didit polls in the background too. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/mobile-id/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startMobileId(DigitalIdWalletApiMobileIdWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startMobileIdAsync(DigitalIdWalletApiMobileIdWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startMobileIdRequest(params), options, START_MOBILE_ID_RESPONSE);
     }
 
     /**
-     * Start Mobile-ID verification
-     *
-     * <p>Start a Mobile-ID sign-in (SK ID Solutions with the national mobile operators; EST, LTU) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=confirm_in_app with the comparison code to show the user; the user confirms it and enters their PIN in the app (never collect the PIN). Poll POST /v3/id-verification/wallets/verifications/{request_id}/poll/ every poll_interval_seconds, or rely on the webhook: Didit polls in the background too. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/mobile-id/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startMobileId(DigitalIdWalletApiMobileIdWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startMobileId(DigitalIdWalletApiMobileIdWalletVerificationStartRequest params) {
       return client.execute(startMobileIdRequest(params), RequestOptions.none(), START_MOBILE_ID_RESPONSE);
     }
 
     /**
-     * Start Mobile-ID verification
-     *
-     * <p>Start a Mobile-ID sign-in (SK ID Solutions with the national mobile operators; EST, LTU) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=confirm_in_app with the comparison code to show the user; the user confirms it and enters their PIN in the app (never collect the PIN). Poll POST /v3/id-verification/wallets/verifications/{request_id}/poll/ every poll_interval_seconds, or rely on the webhook: Didit polls in the background too. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/mobile-id/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startMobileId(DigitalIdWalletApiMobileIdWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startMobileIdAsync(DigitalIdWalletApiMobileIdWalletVerificationStartRequest params) {
       return client.executeAsync(startMobileIdRequest(params), RequestOptions.none(), START_MOBILE_ID_RESPONSE);
     }
 
     /**
-     * Start Estonian ID-card verification
-     *
-     * <p>Start a Estonian ID-card sign-in (Police and Border Guard Board (Estonia); EST) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/idcard-ee/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startIdcardEe(DigitalIdWalletApiIdcardEeWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startIdcardEe(DigitalIdWalletApiIdcardEeWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startIdcardEeRequest(params), options, START_IDCARD_EE_RESPONSE);
     }
 
     /**
-     * Start Estonian ID-card verification
-     *
-     * <p>Start a Estonian ID-card sign-in (Police and Border Guard Board (Estonia); EST) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/idcard-ee/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startIdcardEe(DigitalIdWalletApiIdcardEeWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startIdcardEeAsync(DigitalIdWalletApiIdcardEeWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startIdcardEeRequest(params), options, START_IDCARD_EE_RESPONSE);
     }
 
     /**
-     * Start Estonian ID-card verification
-     *
-     * <p>Start a Estonian ID-card sign-in (Police and Border Guard Board (Estonia); EST) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/idcard-ee/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startIdcardEe(DigitalIdWalletApiIdcardEeWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startIdcardEe(DigitalIdWalletApiIdcardEeWalletVerificationStartRequest params) {
       return client.execute(startIdcardEeRequest(params), RequestOptions.none(), START_IDCARD_EE_RESPONSE);
     }
 
     /**
-     * Start Estonian ID-card verification
-     *
-     * <p>Start a Estonian ID-card sign-in (Police and Border Guard Board (Estonia); EST) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/idcard-ee/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startIdcardEe(DigitalIdWalletApiIdcardEeWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startIdcardEeAsync(DigitalIdWalletApiIdcardEeWalletVerificationStartRequest params) {
       return client.executeAsync(startIdcardEeRequest(params), RequestOptions.none(), START_IDCARD_EE_RESPONSE);
     }
 
     /**
-     * Start eParaksts mobile verification
-     *
-     * <p>Start a eParaksts mobile sign-in (LVRTC (Latvian State Radio and Television Centre); LVA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/eparaksts-mobile/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startEparakstsMobile(DigitalIdWalletApiEparakstsMobileWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startEparakstsMobile(DigitalIdWalletApiEparakstsMobileWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startEparakstsMobileRequest(params), options, START_EPARAKSTS_MOBILE_RESPONSE);
     }
 
     /**
-     * Start eParaksts mobile verification
-     *
-     * <p>Start a eParaksts mobile sign-in (LVRTC (Latvian State Radio and Television Centre); LVA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/eparaksts-mobile/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startEparakstsMobile(DigitalIdWalletApiEparakstsMobileWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startEparakstsMobileAsync(DigitalIdWalletApiEparakstsMobileWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startEparakstsMobileRequest(params), options, START_EPARAKSTS_MOBILE_RESPONSE);
     }
 
     /**
-     * Start eParaksts mobile verification
-     *
-     * <p>Start a eParaksts mobile sign-in (LVRTC (Latvian State Radio and Television Centre); LVA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/eparaksts-mobile/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startEparakstsMobile(DigitalIdWalletApiEparakstsMobileWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startEparakstsMobile(DigitalIdWalletApiEparakstsMobileWalletVerificationStartRequest params) {
       return client.execute(startEparakstsMobileRequest(params), RequestOptions.none(), START_EPARAKSTS_MOBILE_RESPONSE);
     }
 
     /**
-     * Start eParaksts mobile verification
-     *
-     * <p>Start a eParaksts mobile sign-in (LVRTC (Latvian State Radio and Television Centre); LVA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/eparaksts-mobile/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startEparakstsMobile(DigitalIdWalletApiEparakstsMobileWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startEparakstsMobileAsync(DigitalIdWalletApiEparakstsMobileWalletVerificationStartRequest params) {
       return client.executeAsync(startEparakstsMobileRequest(params), RequestOptions.none(), START_EPARAKSTS_MOBILE_RESPONSE);
     }
 
     /**
-     * Start Bank iD verification
-     *
-     * <p>Start a Bank iD sign-in (Bankovní identita, a.s.; CZE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/bankid-cz/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startBankidCz(DigitalIdWalletApiBankidCzWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startBankidCz(DigitalIdWalletApiBankidCzWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startBankidCzRequest(params), options, START_BANKID_CZ_RESPONSE);
     }
 
     /**
-     * Start Bank iD verification
-     *
-     * <p>Start a Bank iD sign-in (Bankovní identita, a.s.; CZE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/bankid-cz/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startBankidCz(DigitalIdWalletApiBankidCzWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startBankidCzAsync(DigitalIdWalletApiBankidCzWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startBankidCzRequest(params), options, START_BANKID_CZ_RESPONSE);
     }
 
     /**
-     * Start Bank iD verification
-     *
-     * <p>Start a Bank iD sign-in (Bankovní identita, a.s.; CZE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/bankid-cz/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startBankidCz(DigitalIdWalletApiBankidCzWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startBankidCz(DigitalIdWalletApiBankidCzWalletVerificationStartRequest params) {
       return client.execute(startBankidCzRequest(params), RequestOptions.none(), START_BANKID_CZ_RESPONSE);
     }
 
     /**
-     * Start Bank iD verification
-     *
-     * <p>Start a Bank iD sign-in (Bankovní identita, a.s.; CZE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/bankid-cz/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startBankidCz(DigitalIdWalletApiBankidCzWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startBankidCzAsync(DigitalIdWalletApiBankidCzWalletVerificationStartRequest params) {
       return client.executeAsync(startBankidCzRequest(params), RequestOptions.none(), START_BANKID_CZ_RESPONSE);
     }
 
     /**
-     * Start MojeID verification
-     *
-     * <p>Start a MojeID sign-in (CZ.NIC; CZE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/mojeid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startMojeid(DigitalIdWalletApiMojeidWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startMojeid(DigitalIdWalletApiMojeidWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startMojeidRequest(params), options, START_MOJEID_RESPONSE);
     }
 
     /**
-     * Start MojeID verification
-     *
-     * <p>Start a MojeID sign-in (CZ.NIC; CZE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/mojeid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startMojeid(DigitalIdWalletApiMojeidWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startMojeidAsync(DigitalIdWalletApiMojeidWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startMojeidRequest(params), options, START_MOJEID_RESPONSE);
     }
 
     /**
-     * Start MojeID verification
-     *
-     * <p>Start a MojeID sign-in (CZ.NIC; CZE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/mojeid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startMojeid(DigitalIdWalletApiMojeidWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startMojeid(DigitalIdWalletApiMojeidWalletVerificationStartRequest params) {
       return client.execute(startMojeidRequest(params), RequestOptions.none(), START_MOJEID_RESPONSE);
     }
 
     /**
-     * Start MojeID verification
-     *
-     * <p>Start a MojeID sign-in (CZ.NIC; CZE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/mojeid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startMojeid(DigitalIdWalletApiMojeidWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startMojeidAsync(DigitalIdWalletApiMojeidWalletVerificationStartRequest params) {
       return client.executeAsync(startMojeidRequest(params), RequestOptions.none(), START_MOJEID_RESPONSE);
     }
 
     /**
-     * Start Diia verification
-     *
-     * <p>Start a Diia sign-in (Ministry of Digital Transformation of Ukraine; UKR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/diia/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startDiia(DigitalIdWalletApiDiiaWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startDiia(DigitalIdWalletApiDiiaWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startDiiaRequest(params), options, START_DIIA_RESPONSE);
     }
 
     /**
-     * Start Diia verification
-     *
-     * <p>Start a Diia sign-in (Ministry of Digital Transformation of Ukraine; UKR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/diia/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startDiia(DigitalIdWalletApiDiiaWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startDiiaAsync(DigitalIdWalletApiDiiaWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startDiiaRequest(params), options, START_DIIA_RESPONSE);
     }
 
     /**
-     * Start Diia verification
-     *
-     * <p>Start a Diia sign-in (Ministry of Digital Transformation of Ukraine; UKR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/diia/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startDiia(DigitalIdWalletApiDiiaWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startDiia(DigitalIdWalletApiDiiaWalletVerificationStartRequest params) {
       return client.execute(startDiiaRequest(params), RequestOptions.none(), START_DIIA_RESPONSE);
     }
 
     /**
-     * Start Diia verification
-     *
-     * <p>Start a Diia sign-in (Ministry of Digital Transformation of Ukraine; UKR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/diia/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startDiia(DigitalIdWalletApiDiiaWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startDiiaAsync(DigitalIdWalletApiDiiaWalletVerificationStartRequest params) {
       return client.executeAsync(startDiiaRequest(params), RequestOptions.none(), START_DIIA_RESPONSE);
     }
 
     /**
-     * Start FranceConnect verification
-     *
-     * <p>Start a FranceConnect sign-in (DINUM (French state); FRA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/franceconnect/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startFranceconnect(DigitalIdWalletApiFranceconnectWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startFranceconnect(DigitalIdWalletApiFranceconnectWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startFranceconnectRequest(params), options, START_FRANCECONNECT_RESPONSE);
     }
 
     /**
-     * Start FranceConnect verification
-     *
-     * <p>Start a FranceConnect sign-in (DINUM (French state); FRA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/franceconnect/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startFranceconnect(DigitalIdWalletApiFranceconnectWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startFranceconnectAsync(DigitalIdWalletApiFranceconnectWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startFranceconnectRequest(params), options, START_FRANCECONNECT_RESPONSE);
     }
 
     /**
-     * Start FranceConnect verification
-     *
-     * <p>Start a FranceConnect sign-in (DINUM (French state); FRA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/franceconnect/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startFranceconnect(DigitalIdWalletApiFranceconnectWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startFranceconnect(DigitalIdWalletApiFranceconnectWalletVerificationStartRequest params) {
       return client.execute(startFranceconnectRequest(params), RequestOptions.none(), START_FRANCECONNECT_RESPONSE);
     }
 
     /**
-     * Start FranceConnect verification
-     *
-     * <p>Start a FranceConnect sign-in (DINUM (French state); FRA) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/franceconnect/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startFranceconnect(DigitalIdWalletApiFranceconnectWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startFranceconnectAsync(DigitalIdWalletApiFranceconnectWalletVerificationStartRequest params) {
       return client.executeAsync(startFranceconnectRequest(params), RequestOptions.none(), START_FRANCECONNECT_RESPONSE);
     }
 
     /**
-     * Start Auðkenni verification
-     *
-     * <p>Start a Auðkenni sign-in (Auðkenni (Icelandic electronic ID); ISL) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/audkenni/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startAudkenni(DigitalIdWalletApiAudkenniWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startAudkenni(DigitalIdWalletApiAudkenniWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startAudkenniRequest(params), options, START_AUDKENNI_RESPONSE);
     }
 
     /**
-     * Start Auðkenni verification
-     *
-     * <p>Start a Auðkenni sign-in (Auðkenni (Icelandic electronic ID); ISL) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/audkenni/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startAudkenni(DigitalIdWalletApiAudkenniWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startAudkenniAsync(DigitalIdWalletApiAudkenniWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startAudkenniRequest(params), options, START_AUDKENNI_RESPONSE);
     }
 
     /**
-     * Start Auðkenni verification
-     *
-     * <p>Start a Auðkenni sign-in (Auðkenni (Icelandic electronic ID); ISL) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/audkenni/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startAudkenni(DigitalIdWalletApiAudkenniWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startAudkenni(DigitalIdWalletApiAudkenniWalletVerificationStartRequest params) {
       return client.execute(startAudkenniRequest(params), RequestOptions.none(), START_AUDKENNI_RESPONSE);
     }
 
     /**
-     * Start Auðkenni verification
-     *
-     * <p>Start a Auðkenni sign-in (Auðkenni (Icelandic electronic ID); ISL) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/audkenni/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startAudkenni(DigitalIdWalletApiAudkenniWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startAudkenniAsync(DigitalIdWalletApiAudkenniWalletVerificationStartRequest params) {
       return client.executeAsync(startAudkenniRequest(params), RequestOptions.none(), START_AUDKENNI_RESPONSE);
     }
 
     /**
-     * Start ConnectID verification
-     *
-     * <p>Start a ConnectID sign-in (Australian Payments Plus; AUS) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/connectid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startConnectid(DigitalIdWalletApiConnectidWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startConnectid(DigitalIdWalletApiConnectidWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startConnectidRequest(params), options, START_CONNECTID_RESPONSE);
     }
 
     /**
-     * Start ConnectID verification
-     *
-     * <p>Start a ConnectID sign-in (Australian Payments Plus; AUS) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/connectid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startConnectid(DigitalIdWalletApiConnectidWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startConnectidAsync(DigitalIdWalletApiConnectidWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startConnectidRequest(params), options, START_CONNECTID_RESPONSE);
     }
 
     /**
-     * Start ConnectID verification
-     *
-     * <p>Start a ConnectID sign-in (Australian Payments Plus; AUS) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/connectid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startConnectid(DigitalIdWalletApiConnectidWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startConnectid(DigitalIdWalletApiConnectidWalletVerificationStartRequest params) {
       return client.execute(startConnectidRequest(params), RequestOptions.none(), START_CONNECTID_RESPONSE);
     }
 
     /**
-     * Start ConnectID verification
-     *
-     * <p>Start a ConnectID sign-in (Australian Payments Plus; AUS) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/connectid/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startConnectid(DigitalIdWalletApiConnectidWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startConnectidAsync(DigitalIdWalletApiConnectidWalletVerificationStartRequest params) {
       return client.executeAsync(startConnectidRequest(params), RequestOptions.none(), START_CONNECTID_RESPONSE);
     }
 
     /**
-     * Start EUDI Wallet verification
-     *
-     * <p>Start a EUDI Wallet sign-in (The user's own member state; the issuer differs per country; AUT, BEL, BGR, HRV, CYP, CZE, DNK, EST, FIN, FRA, DEU, GRC, HUN, IRL, ITA, LVA, LTU, LUX, MLT, NLD, POL, PRT, ROU, SVK, SVN, ESP, SWE, ISL, LIE, NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/eudi/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startEudi(DigitalIdWalletApiEudiWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startEudi(DigitalIdWalletApiEudiWalletVerificationStartRequest params, RequestOptions options) {
       return client.execute(startEudiRequest(params), options, START_EUDI_RESPONSE);
     }
 
     /**
-     * Start EUDI Wallet verification
-     *
-     * <p>Start a EUDI Wallet sign-in (The user's own member state; the issuer differs per country; AUT, BEL, BGR, HRV, CYP, CZE, DNK, EST, FIN, FRA, DEU, GRC, HUN, IRL, ITA, LVA, LTU, LUX, MLT, NLD, POL, PRT, ROU, SVK, SVN, ESP, SWE, ISL, LIE, NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/eudi/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startEudi(DigitalIdWalletApiEudiWalletVerificationStartRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startEudiAsync(DigitalIdWalletApiEudiWalletVerificationStartRequest params, RequestOptions options) {
       return client.executeAsync(startEudiRequest(params), options, START_EUDI_RESPONSE);
     }
 
     /**
-     * Start EUDI Wallet verification
-     *
-     * <p>Start a EUDI Wallet sign-in (The user's own member state; the issuer differs per country; AUT, BEL, BGR, HRV, CYP, CZE, DNK, EST, FIN, FRA, DEU, GRC, HUN, IRL, ITA, LVA, LTU, LUX, MLT, NLD, POL, PRT, ROU, SVK, SVN, ESP, SWE, ISL, LIE, NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/eudi/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * {@link #startEudi(DigitalIdWalletApiEudiWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startEudi(DigitalIdWalletApiEudiWalletVerificationStartRequest params) {
       return client.execute(startEudiRequest(params), RequestOptions.none(), START_EUDI_RESPONSE);
     }
 
     /**
-     * Start EUDI Wallet verification
-     *
-     * <p>Start a EUDI Wallet sign-in (The user's own member state; the issuer differs per country; AUT, BEL, BGR, HRV, CYP, CZE, DNK, EST, FIN, FRA, DEU, GRC, HUN, IRL, ITA, LVA, LTU, LUX, MLT, NLD, POL, PRT, ROU, SVK, SVN, ESP, SWE, ISL, LIE, NOR) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
-     *
-     * <p>{@code POST /v3/id-verification/wallets/eudi/}
-     * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+     * Asynchronous {@link #startEudi(DigitalIdWalletApiEudiWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startEudiAsync(DigitalIdWalletApiEudiWalletVerificationStartRequest params) {
       return client.executeAsync(startEudiRequest(params), RequestOptions.none(), START_EUDI_RESPONSE);

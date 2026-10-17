@@ -143,6 +143,22 @@ public final class Webhooks {
   }
 
   /**
+   * Verifies a delivery with one secret, reading headers through a function such as {@code
+   * request::getHeader} (Servlet) or {@code headers::getFirst} (Spring).
+   *
+   * @param rawBody the request body exactly as received
+   * @param headers returns a header's value by name, or {@code null}
+   * @param secret the endpoint's webhook secret
+   * @return the typed event
+   * @throws WebhookVerificationException when the delivery is not authentic or not fresh
+   * @throws ConfigurationException when the secret is empty
+   */
+  public static WebhookEvent verify(
+      byte[] rawBody, Function<String, @Nullable String> headers, String secret) {
+    return verify(rawBody, headers, VerifyOptions.of(secret));
+  }
+
+  /**
    * Verifies a delivery, reading headers through a function such as {@code request::getHeader}.
    *
    * @param rawBody the request body exactly as received

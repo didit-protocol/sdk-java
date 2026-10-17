@@ -56,111 +56,69 @@ public final class RegulatoryReportsResource {
   }
 
   /**
-   * List reports
-   *
-   * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(RegulatoryReportsListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<RegulatoryReportDetail>> listAsync(RegulatoryReportsListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List reports
-   *
-   * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(RegulatoryReportsListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<RegulatoryReportDetail> list(RegulatoryReportsListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List reports
-   *
-   * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(RegulatoryReportsListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<RegulatoryReportDetail>> listAsync(RegulatoryReportsListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List reports
+   * Same as {@link #list(RegulatoryReportsListParams, RequestOptions)}, without parameters.
    *
-   * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<RegulatoryReportDetail> list(RequestOptions options) {
     return client.execute(listRequest(RegulatoryReportsListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List reports
+   * Asynchronous {@link #list(RegulatoryReportsListParams, RequestOptions)}, without parameters.
    *
-   * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<RegulatoryReportDetail>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(RegulatoryReportsListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List reports
+   * Same as {@link #list(RegulatoryReportsListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<RegulatoryReportDetail> list() {
     return client.execute(listRequest(RegulatoryReportsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List reports
+   * Asynchronous {@link #list(RegulatoryReportsListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<RegulatoryReportDetail>> listAsync() {
     return client.executeAsync(listRequest(RegulatoryReportsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -183,46 +141,31 @@ public final class RegulatoryReportsResource {
   }
 
   /**
-   * Create standalone report
-   *
-   * <p>Create a draft FIU report from the standalone Reports page: both case and template are required (unlike the case-scoped create, which can omit template).
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #create(RegulatoryReportsCreateParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportDetail> createAsync(RegulatoryReportsCreateParams params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create standalone report
-   *
-   * <p>Create a draft FIU report from the standalone Reports page: both case and template are required (unlike the case-scoped create, which can omit template).
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #create(RegulatoryReportsCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public RegulatoryReportDetail create(RegulatoryReportsCreateParams params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create standalone report
-   *
-   * <p>Create a draft FIU report from the standalone Reports page: both case and template are required (unlike the case-scoped create, which can omit template).
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #create(RegulatoryReportsCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportDetail> createAsync(RegulatoryReportsCreateParams params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -245,46 +188,31 @@ public final class RegulatoryReportsResource {
   }
 
   /**
-   * Get report
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
-   * <p>Retrieve a regulatory report.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param reportUuid the {@code report_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportDetail> retrieveAsync(String reportUuid, RequestOptions options) {
     return client.executeAsync(retrieveRequest(reportUuid), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get report
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve a regulatory report.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @return the response body
+   * @param reportUuid the {@code report_uuid}
+   * @return the result
    */
   public RegulatoryReportDetail retrieve(String reportUuid) {
     return client.execute(retrieveRequest(reportUuid), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get report
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve a regulatory report.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @return a future completed with the response body
+   * @param reportUuid the {@code report_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportDetail> retrieveAsync(String reportUuid) {
     return client.executeAsync(retrieveRequest(reportUuid), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -308,111 +236,76 @@ public final class RegulatoryReportsResource {
   }
 
   /**
-   * Update report
+   * Asynchronous {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)}.
    *
-   * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
+   * @param reportUuid the {@code report_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportDetail> updateAsync(String reportUuid, RegulatoryReportsUpdateParams params, RequestOptions options) {
     return client.executeAsync(updateRequest(reportUuid, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update report
+   * Same as {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
+   * @param reportUuid the {@code report_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public RegulatoryReportDetail update(String reportUuid, RegulatoryReportsUpdateParams params) {
     return client.execute(updateRequest(reportUuid, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update report
+   * Asynchronous {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
+   * @param reportUuid the {@code report_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportDetail> updateAsync(String reportUuid, RegulatoryReportsUpdateParams params) {
     return client.executeAsync(updateRequest(reportUuid, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update report
+   * Same as {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param reportUuid the {@code report_uuid}
+   * @param options per-request options
+   * @return the result
    */
   public RegulatoryReportDetail update(String reportUuid, RequestOptions options) {
     return client.execute(updateRequest(reportUuid, RegulatoryReportsUpdateParams.builder().build()), options, UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update report
+   * Asynchronous {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param reportUuid the {@code report_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportDetail> updateAsync(String reportUuid, RequestOptions options) {
     return client.executeAsync(updateRequest(reportUuid, RegulatoryReportsUpdateParams.builder().build()), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update report
+   * Same as {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @return the response body
+   * @param reportUuid the {@code report_uuid}
+   * @return the result
    */
   public RegulatoryReportDetail update(String reportUuid) {
     return client.execute(updateRequest(reportUuid, RegulatoryReportsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update report
+   * Asynchronous {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @return a future completed with the response body
+   * @param reportUuid the {@code report_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportDetail> updateAsync(String reportUuid) {
     return client.executeAsync(updateRequest(reportUuid, RegulatoryReportsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -434,45 +327,30 @@ public final class RegulatoryReportsResource {
   }
 
   /**
-   * Delete report
+   * Asynchronous {@link #delete(String, RequestOptions)}.
    *
-   * <p>Delete a draft or validated report. Finalized reports cannot be deleted (409).
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param reportUuid the {@code report_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String reportUuid, RequestOptions options) {
     return client.executeAsync(deleteRequest(reportUuid), options, DELETE_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * Delete report
+   * Same as {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Delete a draft or validated report. Finalized reports cannot be deleted (409).
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
+   * @param reportUuid the {@code report_uuid}
    */
   public void delete(String reportUuid) {
     client.execute(deleteRequest(reportUuid), RequestOptions.none(), DELETE_RESPONSE);
   }
 
   /**
-   * Delete report
+   * Asynchronous {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Delete a draft or validated report. Finalized reports cannot be deleted (409).
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @return a future completed with the response body
+   * @param reportUuid the {@code report_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String reportUuid) {
     return client.executeAsync(deleteRequest(reportUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
@@ -495,46 +373,31 @@ public final class RegulatoryReportsResource {
   }
 
   /**
-   * Validate report
+   * Asynchronous {@link #validate_(String, RequestOptions)}.
    *
-   * <p>Check the report against the obligatory goAML header fields (reporting entity ID, submission code, local currency, action taken, submission date), plus at least one attached transaction and a 2-letter jurisdiction, without generating any files. Also stores the result on the report: validation_errors and validated_at are updated, and a non-finalized report's status moves to VALIDATED (no errors) or back to DRAFT (errors).
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/validate/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param reportUuid the {@code report_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportsValidateResponse> validate_Async(String reportUuid, RequestOptions options) {
     return client.executeAsync(validate_Request(reportUuid), options, VALIDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Validate report
+   * Same as {@link #validate_(String, RequestOptions)}, with the client's options.
    *
-   * <p>Check the report against the obligatory goAML header fields (reporting entity ID, submission code, local currency, action taken, submission date), plus at least one attached transaction and a 2-letter jurisdiction, without generating any files. Also stores the result on the report: validation_errors and validated_at are updated, and a non-finalized report's status moves to VALIDATED (no errors) or back to DRAFT (errors).
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/validate/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @return the response body
+   * @param reportUuid the {@code report_uuid}
+   * @return the result
    */
   public RegulatoryReportsValidateResponse validate_(String reportUuid) {
     return client.execute(validate_Request(reportUuid), RequestOptions.none(), VALIDATE_RESPONSE).data();
   }
 
   /**
-   * Validate report
+   * Asynchronous {@link #validate_(String, RequestOptions)}, with the client's options.
    *
-   * <p>Check the report against the obligatory goAML header fields (reporting entity ID, submission code, local currency, action taken, submission date), plus at least one attached transaction and a 2-letter jurisdiction, without generating any files. Also stores the result on the report: validation_errors and validated_at are updated, and a non-finalized report's status moves to VALIDATED (no errors) or back to DRAFT (errors).
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/validate/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @return a future completed with the response body
+   * @param reportUuid the {@code report_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportsValidateResponse> validate_Async(String reportUuid) {
     return client.executeAsync(validate_Request(reportUuid), RequestOptions.none(), VALIDATE_RESPONSE).thenApply(RawResponse::data);
@@ -557,46 +420,31 @@ public final class RegulatoryReportsResource {
   }
 
   /**
-   * Finalize report
+   * Asynchronous {@link #finalize_(String, RequestOptions)}.
    *
-   * <p>Re-validate, then render the goAML XML and PDF and upload both to S3. On SAR/STR/TFR reports, this also moves the case's transaction alerts from Pending SAR to SAR filed.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/finalize/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param reportUuid the {@code report_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportDetail> finalize_Async(String reportUuid, RequestOptions options) {
     return client.executeAsync(finalize_Request(reportUuid), options, FINALIZE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Finalize report
+   * Same as {@link #finalize_(String, RequestOptions)}, with the client's options.
    *
-   * <p>Re-validate, then render the goAML XML and PDF and upload both to S3. On SAR/STR/TFR reports, this also moves the case's transaction alerts from Pending SAR to SAR filed.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/finalize/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @return the response body
+   * @param reportUuid the {@code report_uuid}
+   * @return the result
    */
   public RegulatoryReportDetail finalize_(String reportUuid) {
     return client.execute(finalize_Request(reportUuid), RequestOptions.none(), FINALIZE_RESPONSE).data();
   }
 
   /**
-   * Finalize report
+   * Asynchronous {@link #finalize_(String, RequestOptions)}, with the client's options.
    *
-   * <p>Re-validate, then render the goAML XML and PDF and upload both to S3. On SAR/STR/TFR reports, this also moves the case's transaction alerts from Pending SAR to SAR filed.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/finalize/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @return a future completed with the response body
+   * @param reportUuid the {@code report_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportDetail> finalize_Async(String reportUuid) {
     return client.executeAsync(finalize_Request(reportUuid), RequestOptions.none(), FINALIZE_RESPONSE).thenApply(RawResponse::data);
@@ -620,111 +468,76 @@ public final class RegulatoryReportsResource {
   }
 
   /**
-   * Get report download URL
+   * Asynchronous {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)}.
    *
-   * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
+   * @param reportUuid the {@code report_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportsRetrieveDownloadUrlResponse> retrieveDownloadUrlAsync(String reportUuid, RegulatoryReportsRetrieveDownloadUrlParams params, RequestOptions options) {
     return client.executeAsync(retrieveDownloadUrlRequest(reportUuid, params), options, RETRIEVE_DOWNLOAD_URL_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get report download URL
+   * Same as {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)}, with the client's options.
    *
-   * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
+   * @param reportUuid the {@code report_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public RegulatoryReportsRetrieveDownloadUrlResponse retrieveDownloadUrl(String reportUuid, RegulatoryReportsRetrieveDownloadUrlParams params) {
     return client.execute(retrieveDownloadUrlRequest(reportUuid, params), RequestOptions.none(), RETRIEVE_DOWNLOAD_URL_RESPONSE).data();
   }
 
   /**
-   * Get report download URL
+   * Asynchronous {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)}, with the client's options.
    *
-   * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
+   * @param reportUuid the {@code report_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportsRetrieveDownloadUrlResponse> retrieveDownloadUrlAsync(String reportUuid, RegulatoryReportsRetrieveDownloadUrlParams params) {
     return client.executeAsync(retrieveDownloadUrlRequest(reportUuid, params), RequestOptions.none(), RETRIEVE_DOWNLOAD_URL_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get report download URL
+   * Same as {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)}, without parameters.
    *
-   * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param reportUuid the {@code report_uuid}
+   * @param options per-request options
+   * @return the result
    */
   public RegulatoryReportsRetrieveDownloadUrlResponse retrieveDownloadUrl(String reportUuid, RequestOptions options) {
     return client.execute(retrieveDownloadUrlRequest(reportUuid, RegulatoryReportsRetrieveDownloadUrlParams.builder().build()), options, RETRIEVE_DOWNLOAD_URL_RESPONSE).data();
   }
 
   /**
-   * Get report download URL
+   * Asynchronous {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)}, without parameters.
    *
-   * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param reportUuid the {@code report_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportsRetrieveDownloadUrlResponse> retrieveDownloadUrlAsync(String reportUuid, RequestOptions options) {
     return client.executeAsync(retrieveDownloadUrlRequest(reportUuid, RegulatoryReportsRetrieveDownloadUrlParams.builder().build()), options, RETRIEVE_DOWNLOAD_URL_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get report download URL
+   * Same as {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @return the response body
+   * @param reportUuid the {@code report_uuid}
+   * @return the result
    */
   public RegulatoryReportsRetrieveDownloadUrlResponse retrieveDownloadUrl(String reportUuid) {
     return client.execute(retrieveDownloadUrlRequest(reportUuid, RegulatoryReportsRetrieveDownloadUrlParams.builder().build()), RequestOptions.none(), RETRIEVE_DOWNLOAD_URL_RESPONSE).data();
   }
 
   /**
-   * Get report download URL
+   * Asynchronous {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param reportUuid Report UUID.
-   * @return a future completed with the response body
+   * @param reportUuid the {@code report_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<RegulatoryReportsRetrieveDownloadUrlResponse> retrieveDownloadUrlAsync(String reportUuid) {
     return client.executeAsync(retrieveDownloadUrlRequest(reportUuid, RegulatoryReportsRetrieveDownloadUrlParams.builder().build()), RequestOptions.none(), RETRIEVE_DOWNLOAD_URL_RESPONSE).thenApply(RawResponse::data);
@@ -817,694 +630,466 @@ public final class RegulatoryReportsResource {
     }
 
     /**
-     * List reports
-     *
-     * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(RegulatoryReportsListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<RegulatoryReportDetail>> list(RegulatoryReportsListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List reports
-     *
-     * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(RegulatoryReportsListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<RegulatoryReportDetail>>> listAsync(RegulatoryReportsListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List reports
-     *
-     * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(RegulatoryReportsListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<RegulatoryReportDetail>> list(RegulatoryReportsListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List reports
-     *
-     * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(RegulatoryReportsListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<RegulatoryReportDetail>>> listAsync(RegulatoryReportsListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List reports
+     * {@link #list(RegulatoryReportsListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<RegulatoryReportDetail>> list(RequestOptions options) {
       return client.execute(listRequest(RegulatoryReportsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List reports
+     * Asynchronous {@link #list(RegulatoryReportsListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<RegulatoryReportDetail>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(RegulatoryReportsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List reports
+     * {@link #list(RegulatoryReportsListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<RegulatoryReportDetail>> list() {
       return client.execute(listRequest(RegulatoryReportsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List reports
+     * Asynchronous {@link #list(RegulatoryReportsListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Application-wide FIU report list, optionally filtered by status, report_type, or case.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<RegulatoryReportDetail>>> listAsync() {
       return client.executeAsync(listRequest(RegulatoryReportsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Create standalone report
-     *
-     * <p>Create a draft FIU report from the standalone Reports page: both case and template are required (unlike the case-scoped create, which can omit template).
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #create(RegulatoryReportsCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<RegulatoryReportDetail> create(RegulatoryReportsCreateParams params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create standalone report
-     *
-     * <p>Create a draft FIU report from the standalone Reports page: both case and template are required (unlike the case-scoped create, which can omit template).
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #create(RegulatoryReportsCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportDetail>> createAsync(RegulatoryReportsCreateParams params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create standalone report
-     *
-     * <p>Create a draft FIU report from the standalone Reports page: both case and template are required (unlike the case-scoped create, which can omit template).
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #create(RegulatoryReportsCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<RegulatoryReportDetail> create(RegulatoryReportsCreateParams params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create standalone report
-     *
-     * <p>Create a draft FIU report from the standalone Reports page: both case and template are required (unlike the case-scoped create, which can omit template).
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #create(RegulatoryReportsCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportDetail>> createAsync(RegulatoryReportsCreateParams params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Get report
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve a regulatory report.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param reportUuid the {@code report_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<RegulatoryReportDetail> retrieve(String reportUuid, RequestOptions options) {
       return client.execute(retrieveRequest(reportUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get report
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve a regulatory report.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param reportUuid the {@code report_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportDetail>> retrieveAsync(String reportUuid, RequestOptions options) {
       return client.executeAsync(retrieveRequest(reportUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get report
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve a regulatory report.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param reportUuid the {@code report_uuid}
+     * @return the result
      */
     public RawResponse<RegulatoryReportDetail> retrieve(String reportUuid) {
       return client.execute(retrieveRequest(reportUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get report
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve a regulatory report.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @return a future completed with the raw response
+     * @param reportUuid the {@code report_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportDetail>> retrieveAsync(String reportUuid) {
       return client.executeAsync(retrieveRequest(reportUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Update report
+     * {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)} with the raw response.
      *
-     * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
+     * @param reportUuid the {@code report_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<RegulatoryReportDetail> update(String reportUuid, RegulatoryReportsUpdateParams params, RequestOptions options) {
       return client.execute(updateRequest(reportUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update report
+     * Asynchronous {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)} with the raw response.
      *
-     * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
+     * @param reportUuid the {@code report_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportDetail>> updateAsync(String reportUuid, RegulatoryReportsUpdateParams params, RequestOptions options) {
       return client.executeAsync(updateRequest(reportUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update report
+     * {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
+     * @param reportUuid the {@code report_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<RegulatoryReportDetail> update(String reportUuid, RegulatoryReportsUpdateParams params) {
       return client.execute(updateRequest(reportUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update report
+     * Asynchronous {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
+     * @param reportUuid the {@code report_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportDetail>> updateAsync(String reportUuid, RegulatoryReportsUpdateParams params) {
       return client.executeAsync(updateRequest(reportUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update report
+     * {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param reportUuid the {@code report_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<RegulatoryReportDetail> update(String reportUuid, RequestOptions options) {
       return client.execute(updateRequest(reportUuid, RegulatoryReportsUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update report
+     * Asynchronous {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param reportUuid the {@code report_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportDetail>> updateAsync(String reportUuid, RequestOptions options) {
       return client.executeAsync(updateRequest(reportUuid, RegulatoryReportsUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update report
+     * {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param reportUuid the {@code report_uuid}
+     * @return the result
      */
     public RawResponse<RegulatoryReportDetail> update(String reportUuid) {
       return client.execute(updateRequest(reportUuid, RegulatoryReportsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update report
+     * Asynchronous {@link #update(String, RegulatoryReportsUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @return a future completed with the raw response
+     * @param reportUuid the {@code report_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportDetail>> updateAsync(String reportUuid) {
       return client.executeAsync(updateRequest(reportUuid, RegulatoryReportsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Delete report
+     * {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Delete a draft or validated report. Finalized reports cannot be deleted (409).
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param reportUuid the {@code report_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String reportUuid, RequestOptions options) {
       return client.execute(deleteRequest(reportUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete report
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Delete a draft or validated report. Finalized reports cannot be deleted (409).
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param reportUuid the {@code report_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String reportUuid, RequestOptions options) {
       return client.executeAsync(deleteRequest(reportUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete report
+     * {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Delete a draft or validated report. Finalized reports cannot be deleted (409).
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param reportUuid the {@code report_uuid}
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String reportUuid) {
       return client.execute(deleteRequest(reportUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Delete report
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Delete a draft or validated report. Finalized reports cannot be deleted (409).
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @return a future completed with the raw response
+     * @param reportUuid the {@code report_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String reportUuid) {
       return client.executeAsync(deleteRequest(reportUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Validate report
+     * {@link #validate_(String, RequestOptions)} with the raw response.
      *
-     * <p>Check the report against the obligatory goAML header fields (reporting entity ID, submission code, local currency, action taken, submission date), plus at least one attached transaction and a 2-letter jurisdiction, without generating any files. Also stores the result on the report: validation_errors and validated_at are updated, and a non-finalized report's status moves to VALIDATED (no errors) or back to DRAFT (errors).
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/validate/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param reportUuid the {@code report_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<RegulatoryReportsValidateResponse> validate_(String reportUuid, RequestOptions options) {
       return client.execute(validate_Request(reportUuid), options, VALIDATE_RESPONSE);
     }
 
     /**
-     * Validate report
+     * Asynchronous {@link #validate_(String, RequestOptions)} with the raw response.
      *
-     * <p>Check the report against the obligatory goAML header fields (reporting entity ID, submission code, local currency, action taken, submission date), plus at least one attached transaction and a 2-letter jurisdiction, without generating any files. Also stores the result on the report: validation_errors and validated_at are updated, and a non-finalized report's status moves to VALIDATED (no errors) or back to DRAFT (errors).
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/validate/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param reportUuid the {@code report_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportsValidateResponse>> validate_Async(String reportUuid, RequestOptions options) {
       return client.executeAsync(validate_Request(reportUuid), options, VALIDATE_RESPONSE);
     }
 
     /**
-     * Validate report
+     * {@link #validate_(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Check the report against the obligatory goAML header fields (reporting entity ID, submission code, local currency, action taken, submission date), plus at least one attached transaction and a 2-letter jurisdiction, without generating any files. Also stores the result on the report: validation_errors and validated_at are updated, and a non-finalized report's status moves to VALIDATED (no errors) or back to DRAFT (errors).
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/validate/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param reportUuid the {@code report_uuid}
+     * @return the result
      */
     public RawResponse<RegulatoryReportsValidateResponse> validate_(String reportUuid) {
       return client.execute(validate_Request(reportUuid), RequestOptions.none(), VALIDATE_RESPONSE);
     }
 
     /**
-     * Validate report
+     * Asynchronous {@link #validate_(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Check the report against the obligatory goAML header fields (reporting entity ID, submission code, local currency, action taken, submission date), plus at least one attached transaction and a 2-letter jurisdiction, without generating any files. Also stores the result on the report: validation_errors and validated_at are updated, and a non-finalized report's status moves to VALIDATED (no errors) or back to DRAFT (errors).
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/validate/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @return a future completed with the raw response
+     * @param reportUuid the {@code report_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportsValidateResponse>> validate_Async(String reportUuid) {
       return client.executeAsync(validate_Request(reportUuid), RequestOptions.none(), VALIDATE_RESPONSE);
     }
 
     /**
-     * Finalize report
+     * {@link #finalize_(String, RequestOptions)} with the raw response.
      *
-     * <p>Re-validate, then render the goAML XML and PDF and upload both to S3. On SAR/STR/TFR reports, this also moves the case's transaction alerts from Pending SAR to SAR filed.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/finalize/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param reportUuid the {@code report_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<RegulatoryReportDetail> finalize_(String reportUuid, RequestOptions options) {
       return client.execute(finalize_Request(reportUuid), options, FINALIZE_RESPONSE);
     }
 
     /**
-     * Finalize report
+     * Asynchronous {@link #finalize_(String, RequestOptions)} with the raw response.
      *
-     * <p>Re-validate, then render the goAML XML and PDF and upload both to S3. On SAR/STR/TFR reports, this also moves the case's transaction alerts from Pending SAR to SAR filed.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/finalize/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param reportUuid the {@code report_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportDetail>> finalize_Async(String reportUuid, RequestOptions options) {
       return client.executeAsync(finalize_Request(reportUuid), options, FINALIZE_RESPONSE);
     }
 
     /**
-     * Finalize report
+     * {@link #finalize_(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Re-validate, then render the goAML XML and PDF and upload both to S3. On SAR/STR/TFR reports, this also moves the case's transaction alerts from Pending SAR to SAR filed.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/finalize/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param reportUuid the {@code report_uuid}
+     * @return the result
      */
     public RawResponse<RegulatoryReportDetail> finalize_(String reportUuid) {
       return client.execute(finalize_Request(reportUuid), RequestOptions.none(), FINALIZE_RESPONSE);
     }
 
     /**
-     * Finalize report
+     * Asynchronous {@link #finalize_(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Re-validate, then render the goAML XML and PDF and upload both to S3. On SAR/STR/TFR reports, this also moves the case's transaction alerts from Pending SAR to SAR filed.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/finalize/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @return a future completed with the raw response
+     * @param reportUuid the {@code report_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportDetail>> finalize_Async(String reportUuid) {
       return client.executeAsync(finalize_Request(reportUuid), RequestOptions.none(), FINALIZE_RESPONSE);
     }
 
     /**
-     * Get report download URL
+     * {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)} with the raw response.
      *
-     * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
+     * @param reportUuid the {@code report_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<RegulatoryReportsRetrieveDownloadUrlResponse> retrieveDownloadUrl(String reportUuid, RegulatoryReportsRetrieveDownloadUrlParams params, RequestOptions options) {
       return client.execute(retrieveDownloadUrlRequest(reportUuid, params), options, RETRIEVE_DOWNLOAD_URL_RESPONSE);
     }
 
     /**
-     * Get report download URL
+     * Asynchronous {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)} with the raw response.
      *
-     * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
+     * @param reportUuid the {@code report_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportsRetrieveDownloadUrlResponse>> retrieveDownloadUrlAsync(String reportUuid, RegulatoryReportsRetrieveDownloadUrlParams params, RequestOptions options) {
       return client.executeAsync(retrieveDownloadUrlRequest(reportUuid, params), options, RETRIEVE_DOWNLOAD_URL_RESPONSE);
     }
 
     /**
-     * Get report download URL
+     * {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
+     * @param reportUuid the {@code report_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<RegulatoryReportsRetrieveDownloadUrlResponse> retrieveDownloadUrl(String reportUuid, RegulatoryReportsRetrieveDownloadUrlParams params) {
       return client.execute(retrieveDownloadUrlRequest(reportUuid, params), RequestOptions.none(), RETRIEVE_DOWNLOAD_URL_RESPONSE);
     }
 
     /**
-     * Get report download URL
+     * Asynchronous {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
+     * @param reportUuid the {@code report_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportsRetrieveDownloadUrlResponse>> retrieveDownloadUrlAsync(String reportUuid, RegulatoryReportsRetrieveDownloadUrlParams params) {
       return client.executeAsync(retrieveDownloadUrlRequest(reportUuid, params), RequestOptions.none(), RETRIEVE_DOWNLOAD_URL_RESPONSE);
     }
 
     /**
-     * Get report download URL
+     * {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param reportUuid the {@code report_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<RegulatoryReportsRetrieveDownloadUrlResponse> retrieveDownloadUrl(String reportUuid, RequestOptions options) {
       return client.execute(retrieveDownloadUrlRequest(reportUuid, RegulatoryReportsRetrieveDownloadUrlParams.builder().build()), options, RETRIEVE_DOWNLOAD_URL_RESPONSE);
     }
 
     /**
-     * Get report download URL
+     * Asynchronous {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param reportUuid the {@code report_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportsRetrieveDownloadUrlResponse>> retrieveDownloadUrlAsync(String reportUuid, RequestOptions options) {
       return client.executeAsync(retrieveDownloadUrlRequest(reportUuid, RegulatoryReportsRetrieveDownloadUrlParams.builder().build()), options, RETRIEVE_DOWNLOAD_URL_RESPONSE);
     }
 
     /**
-     * Get report download URL
+     * {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param reportUuid the {@code report_uuid}
+     * @return the result
      */
     public RawResponse<RegulatoryReportsRetrieveDownloadUrlResponse> retrieveDownloadUrl(String reportUuid) {
       return client.execute(retrieveDownloadUrlRequest(reportUuid, RegulatoryReportsRetrieveDownloadUrlParams.builder().build()), RequestOptions.none(), RETRIEVE_DOWNLOAD_URL_RESPONSE);
     }
 
     /**
-     * Get report download URL
+     * Asynchronous {@link #retrieveDownloadUrl(String, RegulatoryReportsRetrieveDownloadUrlParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param reportUuid Report UUID.
-     * @return a future completed with the raw response
+     * @param reportUuid the {@code report_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegulatoryReportsRetrieveDownloadUrlResponse>> retrieveDownloadUrlAsync(String reportUuid) {
       return client.executeAsync(retrieveDownloadUrlRequest(reportUuid, RegulatoryReportsRetrieveDownloadUrlParams.builder().build()), RequestOptions.none(), RETRIEVE_DOWNLOAD_URL_RESPONSE);

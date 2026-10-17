@@ -56,139 +56,76 @@ public final class SessionsReviewsResource {
   }
 
   /**
-   * List session reviews and activity log
+   * Asynchronous {@link #list(String, SessionsReviewsListParams, RequestOptions)}.
    *
-   * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-   *
-   * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-   *
-   * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-   *
-   * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
+   * @param sessionId the {@code session_id}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<ReviewItem>> listAsync(String sessionId, SessionsReviewsListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(sessionId, params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List session reviews and activity log
+   * Same as {@link #list(String, SessionsReviewsListParams, RequestOptions)}, with the client's options.
    *
-   * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-   *
-   * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-   *
-   * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-   *
-   * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
+   * @param sessionId the {@code session_id}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<ReviewItem> list(String sessionId, SessionsReviewsListParams params) {
     return client.execute(listRequest(sessionId, params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List session reviews and activity log
+   * Asynchronous {@link #list(String, SessionsReviewsListParams, RequestOptions)}, with the client's options.
    *
-   * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-   *
-   * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-   *
-   * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-   *
-   * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
+   * @param sessionId the {@code session_id}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<ReviewItem>> listAsync(String sessionId, SessionsReviewsListParams params) {
     return client.executeAsync(listRequest(sessionId, params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List session reviews and activity log
+   * Same as {@link #list(String, SessionsReviewsListParams, RequestOptions)}, without parameters.
    *
-   * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-   *
-   * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-   *
-   * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-   *
-   * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param sessionId the {@code session_id}
+   * @param options per-request options
+   * @return the result
    */
   public Page<ReviewItem> list(String sessionId, RequestOptions options) {
     return client.execute(listRequest(sessionId, SessionsReviewsListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List session reviews and activity log
+   * Asynchronous {@link #list(String, SessionsReviewsListParams, RequestOptions)}, without parameters.
    *
-   * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-   *
-   * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-   *
-   * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-   *
-   * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param sessionId the {@code session_id}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<ReviewItem>> listAsync(String sessionId, RequestOptions options) {
     return client.executeAsync(listRequest(sessionId, SessionsReviewsListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List session reviews and activity log
+   * Same as {@link #list(String, SessionsReviewsListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-   *
-   * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-   *
-   * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-   *
-   * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-   * @return the response body
+   * @param sessionId the {@code session_id}
+   * @return the result
    */
   public Page<ReviewItem> list(String sessionId) {
     return client.execute(listRequest(sessionId, SessionsReviewsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List session reviews and activity log
+   * Asynchronous {@link #list(String, SessionsReviewsListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-   *
-   * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-   *
-   * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-   *
-   * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-   * @return a future completed with the response body
+   * @param sessionId the {@code session_id}
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<ReviewItem>> listAsync(String sessionId) {
     return client.executeAsync(listRequest(sessionId, SessionsReviewsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -215,132 +152,76 @@ public final class SessionsReviewsResource {
   }
 
   /**
-   * Add a review note to a session's audit trail
+   * Asynchronous {@link #create(String, SessionsReviewsCreateParams, RequestOptions)}.
    *
-   * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-   *
-   * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-   *
-   * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-   *
-   * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-   *
-   * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
+   * @param sessionId the {@code session_id}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<SessionsReviewsCreateResponse> createAsync(String sessionId, SessionsReviewsCreateParams params, RequestOptions options) {
     return client.executeAsync(createRequest(sessionId, params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Add a review note to a session's audit trail
+   * Same as {@link #create(String, SessionsReviewsCreateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-   *
-   * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-   *
-   * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-   *
-   * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-   *
-   * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
+   * @param sessionId the {@code session_id}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public SessionsReviewsCreateResponse create(String sessionId, SessionsReviewsCreateParams params) {
     return client.execute(createRequest(sessionId, params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Add a review note to a session's audit trail
+   * Asynchronous {@link #create(String, SessionsReviewsCreateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-   *
-   * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-   *
-   * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-   *
-   * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-   *
-   * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
+   * @param sessionId the {@code session_id}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<SessionsReviewsCreateResponse> createAsync(String sessionId, SessionsReviewsCreateParams params) {
     return client.executeAsync(createRequest(sessionId, params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Add a review note to a session's audit trail
+   * Same as {@link #create(String, SessionsReviewsCreateParams, RequestOptions)}, without parameters.
    *
-   * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-   *
-   * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-   *
-   * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-   *
-   * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-   *
-   * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param sessionId the {@code session_id}
+   * @param options per-request options
+   * @return the result
    */
   public SessionsReviewsCreateResponse create(String sessionId, RequestOptions options) {
     return client.execute(createRequest(sessionId, SessionsReviewsCreateParams.builder().build()), options, CREATE_RESPONSE).data();
   }
 
   /**
-   * Add a review note to a session's audit trail
+   * Asynchronous {@link #create(String, SessionsReviewsCreateParams, RequestOptions)}, without parameters.
    *
-   * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-   *
-   * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-   *
-   * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-   *
-   * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-   *
-   * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param sessionId the {@code session_id}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<SessionsReviewsCreateResponse> createAsync(String sessionId, RequestOptions options) {
     return client.executeAsync(createRequest(sessionId, SessionsReviewsCreateParams.builder().build()), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Add a review note to a session's audit trail
+   * Same as {@link #create(String, SessionsReviewsCreateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-   *
-   * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-   *
-   * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-   *
-   * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-   *
-   * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-   * @return the response body
+   * @param sessionId the {@code session_id}
+   * @return the result
    */
   public SessionsReviewsCreateResponse create(String sessionId) {
     return client.execute(createRequest(sessionId, SessionsReviewsCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Add a review note to a session's audit trail
+   * Asynchronous {@link #create(String, SessionsReviewsCreateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-   *
-   * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-   *
-   * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-   *
-   * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-   *
-   * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-   * @return a future completed with the response body
+   * @param sessionId the {@code session_id}
+   * @return a future completed with the result
    */
   public CompletableFuture<SessionsReviewsCreateResponse> createAsync(String sessionId) {
     return client.executeAsync(createRequest(sessionId, SessionsReviewsCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -375,312 +256,176 @@ public final class SessionsReviewsResource {
     }
 
     /**
-     * List session reviews and activity log
+     * {@link #list(String, SessionsReviewsListParams, RequestOptions)} with the raw response.
      *
-     * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-     *
-     * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-     *
-     * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-     *
-     * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
+     * @param sessionId the {@code session_id}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<ReviewItem>> list(String sessionId, SessionsReviewsListParams params, RequestOptions options) {
       return client.execute(listRequest(sessionId, params), options, LIST_RESPONSE);
     }
 
     /**
-     * List session reviews and activity log
+     * Asynchronous {@link #list(String, SessionsReviewsListParams, RequestOptions)} with the raw response.
      *
-     * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-     *
-     * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-     *
-     * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-     *
-     * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
+     * @param sessionId the {@code session_id}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<ReviewItem>>> listAsync(String sessionId, SessionsReviewsListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(sessionId, params), options, LIST_RESPONSE);
     }
 
     /**
-     * List session reviews and activity log
+     * {@link #list(String, SessionsReviewsListParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-     *
-     * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-     *
-     * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-     *
-     * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
+     * @param sessionId the {@code session_id}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<ReviewItem>> list(String sessionId, SessionsReviewsListParams params) {
       return client.execute(listRequest(sessionId, params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List session reviews and activity log
+     * Asynchronous {@link #list(String, SessionsReviewsListParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-     *
-     * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-     *
-     * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-     *
-     * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
+     * @param sessionId the {@code session_id}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<ReviewItem>>> listAsync(String sessionId, SessionsReviewsListParams params) {
       return client.executeAsync(listRequest(sessionId, params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List session reviews and activity log
+     * {@link #list(String, SessionsReviewsListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-     *
-     * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-     *
-     * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-     *
-     * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param sessionId the {@code session_id}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<ReviewItem>> list(String sessionId, RequestOptions options) {
       return client.execute(listRequest(sessionId, SessionsReviewsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List session reviews and activity log
+     * Asynchronous {@link #list(String, SessionsReviewsListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-     *
-     * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-     *
-     * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-     *
-     * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param sessionId the {@code session_id}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<ReviewItem>>> listAsync(String sessionId, RequestOptions options) {
       return client.executeAsync(listRequest(sessionId, SessionsReviewsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List session reviews and activity log
+     * {@link #list(String, SessionsReviewsListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-     *
-     * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-     *
-     * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-     *
-     * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param sessionId the {@code session_id}
+     * @return the result
      */
     public RawResponse<Page<ReviewItem>> list(String sessionId) {
       return client.execute(listRequest(sessionId, SessionsReviewsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List session reviews and activity log
+     * Asynchronous {@link #list(String, SessionsReviewsListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Return the audit trail / activity feed for a User Verification (KYC) session, newest first, in a paginated envelope (<code>count</code> / <code>next</code> / <code>previous</code> / <code>results</code>, 50 entries per page by default).
-     *
-     * <p>Feed entries are written by every actor that touches the session: manual decisions made through <code>PATCH /v3/session/{session_id}/update-status/</code> (which records <code>previous_status</code> → <code>new_status</code>), Console reviewer activity (comments with <code>&#64;email</code> mentions, KYC/POA data edits, file uploads/removals, tag changes, detail-page views), AML ongoing-monitoring matches, and notes appended via <code>POST</code> on this same path. Reading this feed is the API-side equivalent of the <b>Activity</b> panel in the Didit Console session view.
-     *
-     * <p>Only User Verification (KYC) sessions are addressable here; Business Verification (KYB) session IDs return <code>404</code>.
-     *
-     * <p>{@code GET /v3/sessions/{session_id}/reviews/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-     * @return a future completed with the raw response
+     * @param sessionId the {@code session_id}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<ReviewItem>>> listAsync(String sessionId) {
       return client.executeAsync(listRequest(sessionId, SessionsReviewsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Add a review note to a session's audit trail
+     * {@link #create(String, SessionsReviewsCreateParams, RequestOptions)} with the raw response.
      *
-     * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-     *
-     * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-     *
-     * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-     *
-     * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
+     * @param sessionId the {@code session_id}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<SessionsReviewsCreateResponse> create(String sessionId, SessionsReviewsCreateParams params, RequestOptions options) {
       return client.execute(createRequest(sessionId, params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Add a review note to a session's audit trail
+     * Asynchronous {@link #create(String, SessionsReviewsCreateParams, RequestOptions)} with the raw response.
      *
-     * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-     *
-     * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-     *
-     * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-     *
-     * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
+     * @param sessionId the {@code session_id}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<SessionsReviewsCreateResponse>> createAsync(String sessionId, SessionsReviewsCreateParams params, RequestOptions options) {
       return client.executeAsync(createRequest(sessionId, params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Add a review note to a session's audit trail
+     * {@link #create(String, SessionsReviewsCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-     *
-     * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-     *
-     * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-     *
-     * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
+     * @param sessionId the {@code session_id}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<SessionsReviewsCreateResponse> create(String sessionId, SessionsReviewsCreateParams params) {
       return client.execute(createRequest(sessionId, params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Add a review note to a session's audit trail
+     * Asynchronous {@link #create(String, SessionsReviewsCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-     *
-     * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-     *
-     * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-     *
-     * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
+     * @param sessionId the {@code session_id}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<SessionsReviewsCreateResponse>> createAsync(String sessionId, SessionsReviewsCreateParams params) {
       return client.executeAsync(createRequest(sessionId, params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Add a review note to a session's audit trail
+     * {@link #create(String, SessionsReviewsCreateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-     *
-     * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-     *
-     * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-     *
-     * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param sessionId the {@code session_id}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<SessionsReviewsCreateResponse> create(String sessionId, RequestOptions options) {
       return client.execute(createRequest(sessionId, SessionsReviewsCreateParams.builder().build()), options, CREATE_RESPONSE);
     }
 
     /**
-     * Add a review note to a session's audit trail
+     * Asynchronous {@link #create(String, SessionsReviewsCreateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-     *
-     * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-     *
-     * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-     *
-     * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param sessionId the {@code session_id}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<SessionsReviewsCreateResponse>> createAsync(String sessionId, RequestOptions options) {
       return client.executeAsync(createRequest(sessionId, SessionsReviewsCreateParams.builder().build()), options, CREATE_RESPONSE);
     }
 
     /**
-     * Add a review note to a session's audit trail
+     * {@link #create(String, SessionsReviewsCreateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-     *
-     * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-     *
-     * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-     *
-     * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param sessionId the {@code session_id}
+     * @return the result
      */
     public RawResponse<SessionsReviewsCreateResponse> create(String sessionId) {
       return client.execute(createRequest(sessionId, SessionsReviewsCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Add a review note to a session's audit trail
+     * Asynchronous {@link #create(String, SessionsReviewsCreateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Append a note to a User Verification (KYC) session's review / activity feed. <b>This endpoint only records an entry — it never changes the session.</b> The session's <code>status</code> is left untouched, no status-transition validation runs, and no webhook fires. To actually approve, decline, or re-open a session (which also writes a fully-attributed <code>STATUS_UPDATED</code> entry to this feed), use <code>PATCH /v3/session/{session_id}/update-status/</code> instead.
-     *
-     * <p>Both body fields are optional and an empty JSON object is accepted. <code>new_status</code> is stored purely as a label on the entry and accepts any of the ten session status values (case-sensitive). <code>&#64;email</code> mentions inside <code>comment</code> are stored as plain text only — they trigger no notifications on this endpoint, and the entry's <code>mentioned_emails</code> stays empty.
-     *
-     * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
-     *
-     * <p>{@code POST /v3/sessions/{session_id}/reviews/}
-     *
-     * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
-     * @return a future completed with the raw response
+     * @param sessionId the {@code session_id}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<SessionsReviewsCreateResponse>> createAsync(String sessionId) {
       return client.executeAsync(createRequest(sessionId, SessionsReviewsCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE);

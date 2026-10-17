@@ -61,85 +61,31 @@ public final class IdVerificationResource {
   }
 
   /**
-   * ID Verification (document OCR + fraud checks)
-   *
-   * <p>OCR an identity document and run document fraud checks in one call — returns the extracted holder fields, the parsed MRZ, an <code>Approved</code>/<code>Declined</code> <code>status</code>, and a <code>warnings</code> list explaining every issue found. Supports 14,000+ document types from 220+ countries and territories.
-   *
-   * <p><b>How it works.</b> Send the document's <code>front_image</code> (required) and, for two-sided documents, the <code>back_image</code>. Upload uncropped photos with all four corners of the document visible — the service detects, aligns, and crops the document itself, so do not pre-crop. The document is classified automatically (you never declare the country or document type), the visual zone is read with OCR, and the MRZ and any barcodes are decoded. Cross-checks then validate dates, number formats, and MRZ check digits, and compare the visual zone against the MRZ. With <code>perform_document_liveness=true</code>, the images are additionally screened for screen replays, printed copies, and portrait manipulation.
-   *
-   * <p><b>Decision logic.</b> <code>status</code> is <code>Approved</code> unless at least one warning resolves to a decline. Fraud and hard-failure risks always decline: <code>DOCUMENT_EXPIRED</code>, <code>SCREEN_CAPTURE_DETECTED</code>, <code>PRINTED_COPY_DETECTED</code>, <code>PORTRAIT_MANIPULATION_DETECTED</code>, <code>PUBLIC_DOCUMENT_IMAGE_DETECTED</code>, plus extraction failures (<code>NAME_NOT_DETECTED</code>, <code>DATE_OF_BIRTH_NOT_DETECTED</code>, <code>DOCUMENT_NUMBER_NOT_DETECTED</code>). (<code>PORTRAIT_IMAGE_NOT_DETECTED</code>, <code>COULD_NOT_DETECT_DOCUMENT_TYPE</code>, <code>INVALID_DATE</code>, and <code>MRZ_NOT_DETECTED</code> exist in workflow sessions but are never produced by this standalone endpoint.) Three risk groups are configurable per request via <code>invalid_mrz_action</code>, <code>inconsistent_data_action</code>, and <code>expiration_date_not_detected_action</code> (<code>DECLINE</code> or <code>NO_ACTION</code>). All other warnings (e.g. <code>POSSIBLE_DUPLICATED_USER</code>) are informational and never decline on their own. A document that cannot be processed at all returns <code>400</code> with <code>{"error": "COULD_NOT_RECOGNIZE_DOCUMENT"}</code>; a readable but problematic document returns <code>200</code> with <code>status: "Declined"</code> — always inspect <code>id_verification.status</code> and <code>id_verification.warnings</code>, not just the HTTP code.
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one ID Verification API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-   *
-   * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, the cropped document/portrait images are stored and returned as short-lived media URLs (<code>https://&lt;media-host&gt;/ocr/...</code>), and a <code>status.updated</code> webhook is emitted to your configured webhook endpoints. When <code>false</code>, nothing is stored, <code>request_id</code> is a one-off correlation UUID, and <code>portrait_image</code>/<code>front_image</code>/<code>back_image</code> are returned inline as base64-encoded JPEG strings.
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload (a fictional "Sandbox User" USA identity card), no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/id-verification/}
+   * Asynchronous {@link #verify(IdVerificationVerifyParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<IdVerificationVerifyResponse> verifyAsync(IdVerificationVerifyParams params, RequestOptions options) {
     return client.executeAsync(verifyRequest(params), options, VERIFY_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * ID Verification (document OCR + fraud checks)
-   *
-   * <p>OCR an identity document and run document fraud checks in one call — returns the extracted holder fields, the parsed MRZ, an <code>Approved</code>/<code>Declined</code> <code>status</code>, and a <code>warnings</code> list explaining every issue found. Supports 14,000+ document types from 220+ countries and territories.
-   *
-   * <p><b>How it works.</b> Send the document's <code>front_image</code> (required) and, for two-sided documents, the <code>back_image</code>. Upload uncropped photos with all four corners of the document visible — the service detects, aligns, and crops the document itself, so do not pre-crop. The document is classified automatically (you never declare the country or document type), the visual zone is read with OCR, and the MRZ and any barcodes are decoded. Cross-checks then validate dates, number formats, and MRZ check digits, and compare the visual zone against the MRZ. With <code>perform_document_liveness=true</code>, the images are additionally screened for screen replays, printed copies, and portrait manipulation.
-   *
-   * <p><b>Decision logic.</b> <code>status</code> is <code>Approved</code> unless at least one warning resolves to a decline. Fraud and hard-failure risks always decline: <code>DOCUMENT_EXPIRED</code>, <code>SCREEN_CAPTURE_DETECTED</code>, <code>PRINTED_COPY_DETECTED</code>, <code>PORTRAIT_MANIPULATION_DETECTED</code>, <code>PUBLIC_DOCUMENT_IMAGE_DETECTED</code>, plus extraction failures (<code>NAME_NOT_DETECTED</code>, <code>DATE_OF_BIRTH_NOT_DETECTED</code>, <code>DOCUMENT_NUMBER_NOT_DETECTED</code>). (<code>PORTRAIT_IMAGE_NOT_DETECTED</code>, <code>COULD_NOT_DETECT_DOCUMENT_TYPE</code>, <code>INVALID_DATE</code>, and <code>MRZ_NOT_DETECTED</code> exist in workflow sessions but are never produced by this standalone endpoint.) Three risk groups are configurable per request via <code>invalid_mrz_action</code>, <code>inconsistent_data_action</code>, and <code>expiration_date_not_detected_action</code> (<code>DECLINE</code> or <code>NO_ACTION</code>). All other warnings (e.g. <code>POSSIBLE_DUPLICATED_USER</code>) are informational and never decline on their own. A document that cannot be processed at all returns <code>400</code> with <code>{"error": "COULD_NOT_RECOGNIZE_DOCUMENT"}</code>; a readable but problematic document returns <code>200</code> with <code>status: "Declined"</code> — always inspect <code>id_verification.status</code> and <code>id_verification.warnings</code>, not just the HTTP code.
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one ID Verification API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-   *
-   * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, the cropped document/portrait images are stored and returned as short-lived media URLs (<code>https://&lt;media-host&gt;/ocr/...</code>), and a <code>status.updated</code> webhook is emitted to your configured webhook endpoints. When <code>false</code>, nothing is stored, <code>request_id</code> is a one-off correlation UUID, and <code>portrait_image</code>/<code>front_image</code>/<code>back_image</code> are returned inline as base64-encoded JPEG strings.
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload (a fictional "Sandbox User" USA identity card), no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/id-verification/}
+   * Same as {@link #verify(IdVerificationVerifyParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public IdVerificationVerifyResponse verify(IdVerificationVerifyParams params) {
     return client.execute(verifyRequest(params), RequestOptions.none(), VERIFY_RESPONSE).data();
   }
 
   /**
-   * ID Verification (document OCR + fraud checks)
-   *
-   * <p>OCR an identity document and run document fraud checks in one call — returns the extracted holder fields, the parsed MRZ, an <code>Approved</code>/<code>Declined</code> <code>status</code>, and a <code>warnings</code> list explaining every issue found. Supports 14,000+ document types from 220+ countries and territories.
-   *
-   * <p><b>How it works.</b> Send the document's <code>front_image</code> (required) and, for two-sided documents, the <code>back_image</code>. Upload uncropped photos with all four corners of the document visible — the service detects, aligns, and crops the document itself, so do not pre-crop. The document is classified automatically (you never declare the country or document type), the visual zone is read with OCR, and the MRZ and any barcodes are decoded. Cross-checks then validate dates, number formats, and MRZ check digits, and compare the visual zone against the MRZ. With <code>perform_document_liveness=true</code>, the images are additionally screened for screen replays, printed copies, and portrait manipulation.
-   *
-   * <p><b>Decision logic.</b> <code>status</code> is <code>Approved</code> unless at least one warning resolves to a decline. Fraud and hard-failure risks always decline: <code>DOCUMENT_EXPIRED</code>, <code>SCREEN_CAPTURE_DETECTED</code>, <code>PRINTED_COPY_DETECTED</code>, <code>PORTRAIT_MANIPULATION_DETECTED</code>, <code>PUBLIC_DOCUMENT_IMAGE_DETECTED</code>, plus extraction failures (<code>NAME_NOT_DETECTED</code>, <code>DATE_OF_BIRTH_NOT_DETECTED</code>, <code>DOCUMENT_NUMBER_NOT_DETECTED</code>). (<code>PORTRAIT_IMAGE_NOT_DETECTED</code>, <code>COULD_NOT_DETECT_DOCUMENT_TYPE</code>, <code>INVALID_DATE</code>, and <code>MRZ_NOT_DETECTED</code> exist in workflow sessions but are never produced by this standalone endpoint.) Three risk groups are configurable per request via <code>invalid_mrz_action</code>, <code>inconsistent_data_action</code>, and <code>expiration_date_not_detected_action</code> (<code>DECLINE</code> or <code>NO_ACTION</code>). All other warnings (e.g. <code>POSSIBLE_DUPLICATED_USER</code>) are informational and never decline on their own. A document that cannot be processed at all returns <code>400</code> with <code>{"error": "COULD_NOT_RECOGNIZE_DOCUMENT"}</code>; a readable but problematic document returns <code>200</code> with <code>status: "Declined"</code> — always inspect <code>id_verification.status</code> and <code>id_verification.warnings</code>, not just the HTTP code.
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one ID Verification API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-   *
-   * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, the cropped document/portrait images are stored and returned as short-lived media URLs (<code>https://&lt;media-host&gt;/ocr/...</code>), and a <code>status.updated</code> webhook is emitted to your configured webhook endpoints. When <code>false</code>, nothing is stored, <code>request_id</code> is a one-off correlation UUID, and <code>portrait_image</code>/<code>front_image</code>/<code>back_image</code> are returned inline as base64-encoded JPEG strings.
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload (a fictional "Sandbox User" USA identity card), no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/id-verification/}
+   * Asynchronous {@link #verify(IdVerificationVerifyParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<IdVerificationVerifyResponse> verifyAsync(IdVerificationVerifyParams params) {
     return client.executeAsync(verifyRequest(params), RequestOptions.none(), VERIFY_RESPONSE).thenApply(RawResponse::data);
@@ -163,114 +109,42 @@ public final class IdVerificationResource {
     }
 
     /**
-     * ID Verification (document OCR + fraud checks)
-     *
-     * <p>OCR an identity document and run document fraud checks in one call — returns the extracted holder fields, the parsed MRZ, an <code>Approved</code>/<code>Declined</code> <code>status</code>, and a <code>warnings</code> list explaining every issue found. Supports 14,000+ document types from 220+ countries and territories.
-     *
-     * <p><b>How it works.</b> Send the document's <code>front_image</code> (required) and, for two-sided documents, the <code>back_image</code>. Upload uncropped photos with all four corners of the document visible — the service detects, aligns, and crops the document itself, so do not pre-crop. The document is classified automatically (you never declare the country or document type), the visual zone is read with OCR, and the MRZ and any barcodes are decoded. Cross-checks then validate dates, number formats, and MRZ check digits, and compare the visual zone against the MRZ. With <code>perform_document_liveness=true</code>, the images are additionally screened for screen replays, printed copies, and portrait manipulation.
-     *
-     * <p><b>Decision logic.</b> <code>status</code> is <code>Approved</code> unless at least one warning resolves to a decline. Fraud and hard-failure risks always decline: <code>DOCUMENT_EXPIRED</code>, <code>SCREEN_CAPTURE_DETECTED</code>, <code>PRINTED_COPY_DETECTED</code>, <code>PORTRAIT_MANIPULATION_DETECTED</code>, <code>PUBLIC_DOCUMENT_IMAGE_DETECTED</code>, plus extraction failures (<code>NAME_NOT_DETECTED</code>, <code>DATE_OF_BIRTH_NOT_DETECTED</code>, <code>DOCUMENT_NUMBER_NOT_DETECTED</code>). (<code>PORTRAIT_IMAGE_NOT_DETECTED</code>, <code>COULD_NOT_DETECT_DOCUMENT_TYPE</code>, <code>INVALID_DATE</code>, and <code>MRZ_NOT_DETECTED</code> exist in workflow sessions but are never produced by this standalone endpoint.) Three risk groups are configurable per request via <code>invalid_mrz_action</code>, <code>inconsistent_data_action</code>, and <code>expiration_date_not_detected_action</code> (<code>DECLINE</code> or <code>NO_ACTION</code>). All other warnings (e.g. <code>POSSIBLE_DUPLICATED_USER</code>) are informational and never decline on their own. A document that cannot be processed at all returns <code>400</code> with <code>{"error": "COULD_NOT_RECOGNIZE_DOCUMENT"}</code>; a readable but problematic document returns <code>200</code> with <code>status: "Declined"</code> — always inspect <code>id_verification.status</code> and <code>id_verification.warnings</code>, not just the HTTP code.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one ID Verification API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-     *
-     * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, the cropped document/portrait images are stored and returned as short-lived media URLs (<code>https://&lt;media-host&gt;/ocr/...</code>), and a <code>status.updated</code> webhook is emitted to your configured webhook endpoints. When <code>false</code>, nothing is stored, <code>request_id</code> is a one-off correlation UUID, and <code>portrait_image</code>/<code>front_image</code>/<code>back_image</code> are returned inline as base64-encoded JPEG strings.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload (a fictional "Sandbox User" USA identity card), no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/id-verification/}
+     * {@link #verify(IdVerificationVerifyParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<IdVerificationVerifyResponse> verify(IdVerificationVerifyParams params, RequestOptions options) {
       return client.execute(verifyRequest(params), options, VERIFY_RESPONSE);
     }
 
     /**
-     * ID Verification (document OCR + fraud checks)
-     *
-     * <p>OCR an identity document and run document fraud checks in one call — returns the extracted holder fields, the parsed MRZ, an <code>Approved</code>/<code>Declined</code> <code>status</code>, and a <code>warnings</code> list explaining every issue found. Supports 14,000+ document types from 220+ countries and territories.
-     *
-     * <p><b>How it works.</b> Send the document's <code>front_image</code> (required) and, for two-sided documents, the <code>back_image</code>. Upload uncropped photos with all four corners of the document visible — the service detects, aligns, and crops the document itself, so do not pre-crop. The document is classified automatically (you never declare the country or document type), the visual zone is read with OCR, and the MRZ and any barcodes are decoded. Cross-checks then validate dates, number formats, and MRZ check digits, and compare the visual zone against the MRZ. With <code>perform_document_liveness=true</code>, the images are additionally screened for screen replays, printed copies, and portrait manipulation.
-     *
-     * <p><b>Decision logic.</b> <code>status</code> is <code>Approved</code> unless at least one warning resolves to a decline. Fraud and hard-failure risks always decline: <code>DOCUMENT_EXPIRED</code>, <code>SCREEN_CAPTURE_DETECTED</code>, <code>PRINTED_COPY_DETECTED</code>, <code>PORTRAIT_MANIPULATION_DETECTED</code>, <code>PUBLIC_DOCUMENT_IMAGE_DETECTED</code>, plus extraction failures (<code>NAME_NOT_DETECTED</code>, <code>DATE_OF_BIRTH_NOT_DETECTED</code>, <code>DOCUMENT_NUMBER_NOT_DETECTED</code>). (<code>PORTRAIT_IMAGE_NOT_DETECTED</code>, <code>COULD_NOT_DETECT_DOCUMENT_TYPE</code>, <code>INVALID_DATE</code>, and <code>MRZ_NOT_DETECTED</code> exist in workflow sessions but are never produced by this standalone endpoint.) Three risk groups are configurable per request via <code>invalid_mrz_action</code>, <code>inconsistent_data_action</code>, and <code>expiration_date_not_detected_action</code> (<code>DECLINE</code> or <code>NO_ACTION</code>). All other warnings (e.g. <code>POSSIBLE_DUPLICATED_USER</code>) are informational and never decline on their own. A document that cannot be processed at all returns <code>400</code> with <code>{"error": "COULD_NOT_RECOGNIZE_DOCUMENT"}</code>; a readable but problematic document returns <code>200</code> with <code>status: "Declined"</code> — always inspect <code>id_verification.status</code> and <code>id_verification.warnings</code>, not just the HTTP code.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one ID Verification API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-     *
-     * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, the cropped document/portrait images are stored and returned as short-lived media URLs (<code>https://&lt;media-host&gt;/ocr/...</code>), and a <code>status.updated</code> webhook is emitted to your configured webhook endpoints. When <code>false</code>, nothing is stored, <code>request_id</code> is a one-off correlation UUID, and <code>portrait_image</code>/<code>front_image</code>/<code>back_image</code> are returned inline as base64-encoded JPEG strings.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload (a fictional "Sandbox User" USA identity card), no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/id-verification/}
+     * Asynchronous {@link #verify(IdVerificationVerifyParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<IdVerificationVerifyResponse>> verifyAsync(IdVerificationVerifyParams params, RequestOptions options) {
       return client.executeAsync(verifyRequest(params), options, VERIFY_RESPONSE);
     }
 
     /**
-     * ID Verification (document OCR + fraud checks)
-     *
-     * <p>OCR an identity document and run document fraud checks in one call — returns the extracted holder fields, the parsed MRZ, an <code>Approved</code>/<code>Declined</code> <code>status</code>, and a <code>warnings</code> list explaining every issue found. Supports 14,000+ document types from 220+ countries and territories.
-     *
-     * <p><b>How it works.</b> Send the document's <code>front_image</code> (required) and, for two-sided documents, the <code>back_image</code>. Upload uncropped photos with all four corners of the document visible — the service detects, aligns, and crops the document itself, so do not pre-crop. The document is classified automatically (you never declare the country or document type), the visual zone is read with OCR, and the MRZ and any barcodes are decoded. Cross-checks then validate dates, number formats, and MRZ check digits, and compare the visual zone against the MRZ. With <code>perform_document_liveness=true</code>, the images are additionally screened for screen replays, printed copies, and portrait manipulation.
-     *
-     * <p><b>Decision logic.</b> <code>status</code> is <code>Approved</code> unless at least one warning resolves to a decline. Fraud and hard-failure risks always decline: <code>DOCUMENT_EXPIRED</code>, <code>SCREEN_CAPTURE_DETECTED</code>, <code>PRINTED_COPY_DETECTED</code>, <code>PORTRAIT_MANIPULATION_DETECTED</code>, <code>PUBLIC_DOCUMENT_IMAGE_DETECTED</code>, plus extraction failures (<code>NAME_NOT_DETECTED</code>, <code>DATE_OF_BIRTH_NOT_DETECTED</code>, <code>DOCUMENT_NUMBER_NOT_DETECTED</code>). (<code>PORTRAIT_IMAGE_NOT_DETECTED</code>, <code>COULD_NOT_DETECT_DOCUMENT_TYPE</code>, <code>INVALID_DATE</code>, and <code>MRZ_NOT_DETECTED</code> exist in workflow sessions but are never produced by this standalone endpoint.) Three risk groups are configurable per request via <code>invalid_mrz_action</code>, <code>inconsistent_data_action</code>, and <code>expiration_date_not_detected_action</code> (<code>DECLINE</code> or <code>NO_ACTION</code>). All other warnings (e.g. <code>POSSIBLE_DUPLICATED_USER</code>) are informational and never decline on their own. A document that cannot be processed at all returns <code>400</code> with <code>{"error": "COULD_NOT_RECOGNIZE_DOCUMENT"}</code>; a readable but problematic document returns <code>200</code> with <code>status: "Declined"</code> — always inspect <code>id_verification.status</code> and <code>id_verification.warnings</code>, not just the HTTP code.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one ID Verification API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-     *
-     * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, the cropped document/portrait images are stored and returned as short-lived media URLs (<code>https://&lt;media-host&gt;/ocr/...</code>), and a <code>status.updated</code> webhook is emitted to your configured webhook endpoints. When <code>false</code>, nothing is stored, <code>request_id</code> is a one-off correlation UUID, and <code>portrait_image</code>/<code>front_image</code>/<code>back_image</code> are returned inline as base64-encoded JPEG strings.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload (a fictional "Sandbox User" USA identity card), no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/id-verification/}
+     * {@link #verify(IdVerificationVerifyParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<IdVerificationVerifyResponse> verify(IdVerificationVerifyParams params) {
       return client.execute(verifyRequest(params), RequestOptions.none(), VERIFY_RESPONSE);
     }
 
     /**
-     * ID Verification (document OCR + fraud checks)
-     *
-     * <p>OCR an identity document and run document fraud checks in one call — returns the extracted holder fields, the parsed MRZ, an <code>Approved</code>/<code>Declined</code> <code>status</code>, and a <code>warnings</code> list explaining every issue found. Supports 14,000+ document types from 220+ countries and territories.
-     *
-     * <p><b>How it works.</b> Send the document's <code>front_image</code> (required) and, for two-sided documents, the <code>back_image</code>. Upload uncropped photos with all four corners of the document visible — the service detects, aligns, and crops the document itself, so do not pre-crop. The document is classified automatically (you never declare the country or document type), the visual zone is read with OCR, and the MRZ and any barcodes are decoded. Cross-checks then validate dates, number formats, and MRZ check digits, and compare the visual zone against the MRZ. With <code>perform_document_liveness=true</code>, the images are additionally screened for screen replays, printed copies, and portrait manipulation.
-     *
-     * <p><b>Decision logic.</b> <code>status</code> is <code>Approved</code> unless at least one warning resolves to a decline. Fraud and hard-failure risks always decline: <code>DOCUMENT_EXPIRED</code>, <code>SCREEN_CAPTURE_DETECTED</code>, <code>PRINTED_COPY_DETECTED</code>, <code>PORTRAIT_MANIPULATION_DETECTED</code>, <code>PUBLIC_DOCUMENT_IMAGE_DETECTED</code>, plus extraction failures (<code>NAME_NOT_DETECTED</code>, <code>DATE_OF_BIRTH_NOT_DETECTED</code>, <code>DOCUMENT_NUMBER_NOT_DETECTED</code>). (<code>PORTRAIT_IMAGE_NOT_DETECTED</code>, <code>COULD_NOT_DETECT_DOCUMENT_TYPE</code>, <code>INVALID_DATE</code>, and <code>MRZ_NOT_DETECTED</code> exist in workflow sessions but are never produced by this standalone endpoint.) Three risk groups are configurable per request via <code>invalid_mrz_action</code>, <code>inconsistent_data_action</code>, and <code>expiration_date_not_detected_action</code> (<code>DECLINE</code> or <code>NO_ACTION</code>). All other warnings (e.g. <code>POSSIBLE_DUPLICATED_USER</code>) are informational and never decline on their own. A document that cannot be processed at all returns <code>400</code> with <code>{"error": "COULD_NOT_RECOGNIZE_DOCUMENT"}</code>; a readable but problematic document returns <code>200</code> with <code>status: "Declined"</code> — always inspect <code>id_verification.status</code> and <code>id_verification.warnings</code>, not just the HTTP code.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one ID Verification API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-     *
-     * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, the cropped document/portrait images are stored and returned as short-lived media URLs (<code>https://&lt;media-host&gt;/ocr/...</code>), and a <code>status.updated</code> webhook is emitted to your configured webhook endpoints. When <code>false</code>, nothing is stored, <code>request_id</code> is a one-off correlation UUID, and <code>portrait_image</code>/<code>front_image</code>/<code>back_image</code> are returned inline as base64-encoded JPEG strings.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload (a fictional "Sandbox User" USA identity card), no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/id-verification/}
+     * Asynchronous {@link #verify(IdVerificationVerifyParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<IdVerificationVerifyResponse>> verifyAsync(IdVerificationVerifyParams params) {
       return client.executeAsync(verifyRequest(params), RequestOptions.none(), VERIFY_RESPONSE);

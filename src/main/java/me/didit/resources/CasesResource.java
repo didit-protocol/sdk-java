@@ -166,111 +166,69 @@ public final class CasesResource {
   }
 
   /**
-   * List cases
-   *
-   * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(CasesListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseListItem>> listAsync(CasesListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List cases
-   *
-   * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(CasesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<CaseListItem> list(CasesListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List cases
-   *
-   * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(CasesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseListItem>> listAsync(CasesListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List cases
+   * Same as {@link #list(CasesListParams, RequestOptions)}, without parameters.
    *
-   * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<CaseListItem> list(RequestOptions options) {
     return client.execute(listRequest(CasesListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List cases
+   * Asynchronous {@link #list(CasesListParams, RequestOptions)}, without parameters.
    *
-   * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseListItem>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(CasesListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List cases
+   * Same as {@link #list(CasesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<CaseListItem> list() {
     return client.execute(listRequest(CasesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List cases
+   * Asynchronous {@link #list(CasesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseListItem>> listAsync() {
     return client.executeAsync(listRequest(CasesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -293,46 +251,31 @@ public final class CasesResource {
   }
 
   /**
-   * Create case
-   *
-   * <p>Create a case anchored to exactly one subject (a user or a business), directly or by deriving the subject from an attached session/transaction link. Source is always <code>MANUAL</code> for API-created cases.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #create(CasesCreateParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> createAsync(CasesCreateParams params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create case
-   *
-   * <p>Create a case anchored to exactly one subject (a user or a business), directly or by deriving the subject from an attached session/transaction link. Source is always <code>MANUAL</code> for API-created cases.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #create(CasesCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseDetail create(CasesCreateParams params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create case
-   *
-   * <p>Create a case anchored to exactly one subject (a user or a business), directly or by deriving the subject from an attached session/transaction link. Source is always <code>MANUAL</code> for API-created cases.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #create(CasesCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> createAsync(CasesCreateParams params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -355,46 +298,31 @@ public final class CasesResource {
   }
 
   /**
-   * Get case
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
-   * <p>Retrieve a case with its subject, blueprint, notes, events, links, and checklist.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> retrieveAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(retrieveRequest(caseUuid), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get case
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve a case with its subject, blueprint, notes, events, links, and checklist.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return the result
    */
   public CaseDetail retrieve(String caseUuid) {
     return client.execute(retrieveRequest(caseUuid), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get case
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve a case with its subject, blueprint, notes, events, links, and checklist.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> retrieveAsync(String caseUuid) {
     return client.executeAsync(retrieveRequest(caseUuid), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -418,111 +346,76 @@ public final class CasesResource {
   }
 
   /**
-   * Update case
+   * Asynchronous {@link #update(String, CasesUpdateParams, RequestOptions)}.
    *
-   * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> updateAsync(String caseUuid, CasesUpdateParams params, RequestOptions options) {
     return client.executeAsync(updateRequest(caseUuid, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update case
+   * Same as {@link #update(String, CasesUpdateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseDetail update(String caseUuid, CasesUpdateParams params) {
     return client.execute(updateRequest(caseUuid, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update case
+   * Asynchronous {@link #update(String, CasesUpdateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> updateAsync(String caseUuid, CasesUpdateParams params) {
     return client.executeAsync(updateRequest(caseUuid, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update case
+   * Same as {@link #update(String, CasesUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return the result
    */
   public CaseDetail update(String caseUuid, RequestOptions options) {
     return client.execute(updateRequest(caseUuid, CasesUpdateParams.builder().build()), options, UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update case
+   * Asynchronous {@link #update(String, CasesUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> updateAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(updateRequest(caseUuid, CasesUpdateParams.builder().build()), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update case
+   * Same as {@link #update(String, CasesUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return the result
    */
   public CaseDetail update(String caseUuid) {
     return client.execute(updateRequest(caseUuid, CasesUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update case
+   * Asynchronous {@link #update(String, CasesUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> updateAsync(String caseUuid) {
     return client.executeAsync(updateRequest(caseUuid, CasesUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -544,45 +437,30 @@ public final class CasesResource {
   }
 
   /**
-   * Delete case
+   * Asynchronous {@link #delete(String, RequestOptions)}.
    *
-   * <p>Delete a case. There is no undelete endpoint.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(deleteRequest(caseUuid), options, DELETE_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * Delete case
+   * Same as {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Delete a case. There is no undelete endpoint.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    */
   public void delete(String caseUuid) {
     client.execute(deleteRequest(caseUuid), RequestOptions.none(), DELETE_RESPONSE);
   }
 
   /**
-   * Delete case
+   * Asynchronous {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Delete a case. There is no undelete endpoint.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String caseUuid) {
     return client.executeAsync(deleteRequest(caseUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
@@ -606,49 +484,34 @@ public final class CasesResource {
   }
 
   /**
-   * Assign or unassign case
+   * Asynchronous {@link #assign(String, CasesAssignParams, RequestOptions)}.
    *
-   * <p>Assign the case to a user, or unassign it by sending assignee_user_id: null. assignee_email/assignee_name auto-provision a User row when the assignee does not exist yet.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/assign/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> assignAsync(String caseUuid, CasesAssignParams params, RequestOptions options) {
     return client.executeAsync(assignRequest(caseUuid, params), options, ASSIGN_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Assign or unassign case
+   * Same as {@link #assign(String, CasesAssignParams, RequestOptions)}, with the client's options.
    *
-   * <p>Assign the case to a user, or unassign it by sending assignee_user_id: null. assignee_email/assignee_name auto-provision a User row when the assignee does not exist yet.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/assign/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseDetail assign(String caseUuid, CasesAssignParams params) {
     return client.execute(assignRequest(caseUuid, params), RequestOptions.none(), ASSIGN_RESPONSE).data();
   }
 
   /**
-   * Assign or unassign case
+   * Asynchronous {@link #assign(String, CasesAssignParams, RequestOptions)}, with the client's options.
    *
-   * <p>Assign the case to a user, or unassign it by sending assignee_user_id: null. assignee_email/assignee_name auto-provision a User row when the assignee does not exist yet.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/assign/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> assignAsync(String caseUuid, CasesAssignParams params) {
     return client.executeAsync(assignRequest(caseUuid, params), RequestOptions.none(), ASSIGN_RESPONSE).thenApply(RawResponse::data);
@@ -672,49 +535,34 @@ public final class CasesResource {
   }
 
   /**
-   * Resolve case
+   * Asynchronous {@link #resolve(String, CasesResolveParams, RequestOptions)}.
    *
-   * <p>Resolve the case as false_positive or valid_threat. Blocked with 400 if the blueprint's checklist is not optional and items remain incomplete, or if the blueprint requires a resolution note and none is given. When the case's blueprint has a four_eyes_checker_blueprint configured, the resolution is staged (case.pending_resolution) and the case moves to the checker blueprint instead of resolving immediately; a different user must call approve or reject-approval.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/resolve/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> resolveAsync(String caseUuid, CasesResolveParams params, RequestOptions options) {
     return client.executeAsync(resolveRequest(caseUuid, params), options, RESOLVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Resolve case
+   * Same as {@link #resolve(String, CasesResolveParams, RequestOptions)}, with the client's options.
    *
-   * <p>Resolve the case as false_positive or valid_threat. Blocked with 400 if the blueprint's checklist is not optional and items remain incomplete, or if the blueprint requires a resolution note and none is given. When the case's blueprint has a four_eyes_checker_blueprint configured, the resolution is staged (case.pending_resolution) and the case moves to the checker blueprint instead of resolving immediately; a different user must call approve or reject-approval.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/resolve/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseDetail resolve(String caseUuid, CasesResolveParams params) {
     return client.execute(resolveRequest(caseUuid, params), RequestOptions.none(), RESOLVE_RESPONSE).data();
   }
 
   /**
-   * Resolve case
+   * Asynchronous {@link #resolve(String, CasesResolveParams, RequestOptions)}, with the client's options.
    *
-   * <p>Resolve the case as false_positive or valid_threat. Blocked with 400 if the blueprint's checklist is not optional and items remain incomplete, or if the blueprint requires a resolution note and none is given. When the case's blueprint has a four_eyes_checker_blueprint configured, the resolution is staged (case.pending_resolution) and the case moves to the checker blueprint instead of resolving immediately; a different user must call approve or reject-approval.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/resolve/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> resolveAsync(String caseUuid, CasesResolveParams params) {
     return client.executeAsync(resolveRequest(caseUuid, params), RequestOptions.none(), RESOLVE_RESPONSE).thenApply(RawResponse::data);
@@ -737,46 +585,31 @@ public final class CasesResource {
   }
 
   /**
-   * Reopen case
+   * Asynchronous {@link #reopen(String, RequestOptions)}.
    *
-   * <p>Move an awaiting-user or resolved case back to open, clearing resolution, resolution_notes, resolved_at, and resolved_by_email.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reopen/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> reopenAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(reopenRequest(caseUuid), options, REOPEN_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Reopen case
+   * Same as {@link #reopen(String, RequestOptions)}, with the client's options.
    *
-   * <p>Move an awaiting-user or resolved case back to open, clearing resolution, resolution_notes, resolved_at, and resolved_by_email.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reopen/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return the result
    */
   public CaseDetail reopen(String caseUuid) {
     return client.execute(reopenRequest(caseUuid), RequestOptions.none(), REOPEN_RESPONSE).data();
   }
 
   /**
-   * Reopen case
+   * Asynchronous {@link #reopen(String, RequestOptions)}, with the client's options.
    *
-   * <p>Move an awaiting-user or resolved case back to open, clearing resolution, resolution_notes, resolved_at, and resolved_by_email.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reopen/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> reopenAsync(String caseUuid) {
     return client.executeAsync(reopenRequest(caseUuid), RequestOptions.none(), REOPEN_RESPONSE).thenApply(RawResponse::data);
@@ -799,46 +632,31 @@ public final class CasesResource {
   }
 
   /**
-   * Request info (awaiting user)
+   * Asynchronous {@link #requestInfo(String, RequestOptions)}.
    *
-   * <p>Move an open case to awaiting_user while more information is collected from the verified user. Fails with 400 if a resolution is currently pending 4-eyes approval.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/request-info/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> requestInfoAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(requestInfoRequest(caseUuid), options, REQUEST_INFO_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Request info (awaiting user)
+   * Same as {@link #requestInfo(String, RequestOptions)}, with the client's options.
    *
-   * <p>Move an open case to awaiting_user while more information is collected from the verified user. Fails with 400 if a resolution is currently pending 4-eyes approval.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/request-info/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return the result
    */
   public CaseDetail requestInfo(String caseUuid) {
     return client.execute(requestInfoRequest(caseUuid), RequestOptions.none(), REQUEST_INFO_RESPONSE).data();
   }
 
   /**
-   * Request info (awaiting user)
+   * Asynchronous {@link #requestInfo(String, RequestOptions)}, with the client's options.
    *
-   * <p>Move an open case to awaiting_user while more information is collected from the verified user. Fails with 400 if a resolution is currently pending 4-eyes approval.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/request-info/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> requestInfoAsync(String caseUuid) {
     return client.executeAsync(requestInfoRequest(caseUuid), RequestOptions.none(), REQUEST_INFO_RESPONSE).thenApply(RawResponse::data);
@@ -861,46 +679,31 @@ public final class CasesResource {
   }
 
   /**
-   * Escalate case
+   * Asynchronous {@link #escalate(String, RequestOptions)}.
    *
-   * <p>Move the case to its blueprint's configured escalation_blueprint. Requires the current blueprint to have escalation_enabled and an escalation_blueprint set, otherwise 400.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/escalate/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> escalateAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(escalateRequest(caseUuid), options, ESCALATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Escalate case
+   * Same as {@link #escalate(String, RequestOptions)}, with the client's options.
    *
-   * <p>Move the case to its blueprint's configured escalation_blueprint. Requires the current blueprint to have escalation_enabled and an escalation_blueprint set, otherwise 400.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/escalate/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return the result
    */
   public CaseDetail escalate(String caseUuid) {
     return client.execute(escalateRequest(caseUuid), RequestOptions.none(), ESCALATE_RESPONSE).data();
   }
 
   /**
-   * Escalate case
+   * Asynchronous {@link #escalate(String, RequestOptions)}, with the client's options.
    *
-   * <p>Move the case to its blueprint's configured escalation_blueprint. Requires the current blueprint to have escalation_enabled and an escalation_blueprint set, otherwise 400.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/escalate/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> escalateAsync(String caseUuid) {
     return client.executeAsync(escalateRequest(caseUuid), RequestOptions.none(), ESCALATE_RESPONSE).thenApply(RawResponse::data);
@@ -924,49 +727,34 @@ public final class CasesResource {
   }
 
   /**
-   * Transfer case
+   * Asynchronous {@link #transfer(String, CasesTransferParams, RequestOptions)}.
    *
-   * <p>Move the case to a different, active blueprint of the same application. Requires the current blueprint to have transfer_enabled, otherwise 400.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/transfer/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> transferAsync(String caseUuid, CasesTransferParams params, RequestOptions options) {
     return client.executeAsync(transferRequest(caseUuid, params), options, TRANSFER_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Transfer case
+   * Same as {@link #transfer(String, CasesTransferParams, RequestOptions)}, with the client's options.
    *
-   * <p>Move the case to a different, active blueprint of the same application. Requires the current blueprint to have transfer_enabled, otherwise 400.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/transfer/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseDetail transfer(String caseUuid, CasesTransferParams params) {
     return client.execute(transferRequest(caseUuid, params), RequestOptions.none(), TRANSFER_RESPONSE).data();
   }
 
   /**
-   * Transfer case
+   * Asynchronous {@link #transfer(String, CasesTransferParams, RequestOptions)}, with the client's options.
    *
-   * <p>Move the case to a different, active blueprint of the same application. Requires the current blueprint to have transfer_enabled, otherwise 400.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/transfer/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> transferAsync(String caseUuid, CasesTransferParams params) {
     return client.executeAsync(transferRequest(caseUuid, params), RequestOptions.none(), TRANSFER_RESPONSE).thenApply(RawResponse::data);
@@ -989,46 +777,31 @@ public final class CasesResource {
   }
 
   /**
-   * Approve staged resolution (4-eyes)
+   * Asynchronous {@link #approveResolution(String, RequestOptions)}.
    *
-   * <p>Apply a resolution staged by resolve on a maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/approve/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> approveResolutionAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(approveResolutionRequest(caseUuid), options, APPROVE_RESOLUTION_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Approve staged resolution (4-eyes)
+   * Same as {@link #approveResolution(String, RequestOptions)}, with the client's options.
    *
-   * <p>Apply a resolution staged by resolve on a maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/approve/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return the result
    */
   public CaseDetail approveResolution(String caseUuid) {
     return client.execute(approveResolutionRequest(caseUuid), RequestOptions.none(), APPROVE_RESOLUTION_RESPONSE).data();
   }
 
   /**
-   * Approve staged resolution (4-eyes)
+   * Asynchronous {@link #approveResolution(String, RequestOptions)}, with the client's options.
    *
-   * <p>Apply a resolution staged by resolve on a maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/approve/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> approveResolutionAsync(String caseUuid) {
     return client.executeAsync(approveResolutionRequest(caseUuid), RequestOptions.none(), APPROVE_RESOLUTION_RESPONSE).thenApply(RawResponse::data);
@@ -1052,111 +825,76 @@ public final class CasesResource {
   }
 
   /**
-   * Reject staged resolution (4-eyes)
+   * Asynchronous {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)}.
    *
-   * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> rejectResolutionAsync(String caseUuid, CasesRejectResolutionParams params, RequestOptions options) {
     return client.executeAsync(rejectResolutionRequest(caseUuid, params), options, REJECT_RESOLUTION_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Reject staged resolution (4-eyes)
+   * Same as {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)}, with the client's options.
    *
-   * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseDetail rejectResolution(String caseUuid, CasesRejectResolutionParams params) {
     return client.execute(rejectResolutionRequest(caseUuid, params), RequestOptions.none(), REJECT_RESOLUTION_RESPONSE).data();
   }
 
   /**
-   * Reject staged resolution (4-eyes)
+   * Asynchronous {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)}, with the client's options.
    *
-   * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> rejectResolutionAsync(String caseUuid, CasesRejectResolutionParams params) {
     return client.executeAsync(rejectResolutionRequest(caseUuid, params), RequestOptions.none(), REJECT_RESOLUTION_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Reject staged resolution (4-eyes)
+   * Same as {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)}, without parameters.
    *
-   * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return the result
    */
   public CaseDetail rejectResolution(String caseUuid, RequestOptions options) {
     return client.execute(rejectResolutionRequest(caseUuid, CasesRejectResolutionParams.builder().build()), options, REJECT_RESOLUTION_RESPONSE).data();
   }
 
   /**
-   * Reject staged resolution (4-eyes)
+   * Asynchronous {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)}, without parameters.
    *
-   * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> rejectResolutionAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(rejectResolutionRequest(caseUuid, CasesRejectResolutionParams.builder().build()), options, REJECT_RESOLUTION_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Reject staged resolution (4-eyes)
+   * Same as {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return the result
    */
   public CaseDetail rejectResolution(String caseUuid) {
     return client.execute(rejectResolutionRequest(caseUuid, CasesRejectResolutionParams.builder().build()), RequestOptions.none(), REJECT_RESOLUTION_RESPONSE).data();
   }
 
   /**
-   * Reject staged resolution (4-eyes)
+   * Asynchronous {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDetail> rejectResolutionAsync(String caseUuid) {
     return client.executeAsync(rejectResolutionRequest(caseUuid, CasesRejectResolutionParams.builder().build()), RequestOptions.none(), REJECT_RESOLUTION_RESPONSE).thenApply(RawResponse::data);
@@ -1178,43 +916,34 @@ public final class CasesResource {
   }
 
   /**
-   * Apply one explicit action to the case subject. Supply a unique client_reference to obtain an action receipt and make retries idempotent. Reusing that reference with a different payload returns 409. With a reference, inspect receipt.status even when HTTP status is 200: FAILED means no action was applied. Repeating a failed request does not execute it again unless retry is true. Omitting client_reference preserves the legacy response.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/entity-actions/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #applyEntityAction(String, CaseActionCaseEntityActionRequest, RequestOptions)}.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseActionCaseEntityActionResult> applyEntityActionAsync(String caseUuid, CaseActionCaseEntityActionRequest params, RequestOptions options) {
     return client.executeAsync(applyEntityActionRequest(caseUuid, params), options, APPLY_ENTITY_ACTION_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Apply one explicit action to the case subject. Supply a unique client_reference to obtain an action receipt and make retries idempotent. Reusing that reference with a different payload returns 409. With a reference, inspect receipt.status even when HTTP status is 200: FAILED means no action was applied. Repeating a failed request does not execute it again unless retry is true. Omitting client_reference preserves the legacy response.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/entity-actions/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #applyEntityAction(String, CaseActionCaseEntityActionRequest, RequestOptions)}, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseActionCaseEntityActionResult applyEntityAction(String caseUuid, CaseActionCaseEntityActionRequest params) {
     return client.execute(applyEntityActionRequest(caseUuid, params), RequestOptions.none(), APPLY_ENTITY_ACTION_RESPONSE).data();
   }
 
   /**
-   * Apply one explicit action to the case subject. Supply a unique client_reference to obtain an action receipt and make retries idempotent. Reusing that reference with a different payload returns 409. With a reference, inspect receipt.status even when HTTP status is 200: FAILED means no action was applied. Repeating a failed request does not execute it again unless retry is true. Omitting client_reference preserves the legacy response.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/entity-actions/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #applyEntityAction(String, CaseActionCaseEntityActionRequest, RequestOptions)}, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseActionCaseEntityActionResult> applyEntityActionAsync(String caseUuid, CaseActionCaseEntityActionRequest params) {
     return client.executeAsync(applyEntityActionRequest(caseUuid, params), RequestOptions.none(), APPLY_ENTITY_ACTION_RESPONSE).thenApply(RawResponse::data);
@@ -1237,46 +966,31 @@ public final class CasesResource {
   }
 
   /**
-   * Print case (PDF)
+   * Asynchronous {@link #print(String, RequestOptions)}.
    *
-   * <p>Render the full case (summary, subject, checklist state, notes, attached sessions/transactions, events, FIU report list) as a PDF and return a presigned download URL.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/print/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesPrintResponse> printAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(printRequest(caseUuid), options, PRINT_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Print case (PDF)
+   * Same as {@link #print(String, RequestOptions)}, with the client's options.
    *
-   * <p>Render the full case (summary, subject, checklist state, notes, attached sessions/transactions, events, FIU report list) as a PDF and return a presigned download URL.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/print/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return the result
    */
   public CasesPrintResponse print(String caseUuid) {
     return client.execute(printRequest(caseUuid), RequestOptions.none(), PRINT_RESPONSE).data();
   }
 
   /**
-   * Print case (PDF)
+   * Asynchronous {@link #print(String, RequestOptions)}, with the client's options.
    *
-   * <p>Render the full case (summary, subject, checklist state, notes, attached sessions/transactions, events, FIU report list) as a PDF and return a presigned download URL.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/print/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesPrintResponse> printAsync(String caseUuid) {
     return client.executeAsync(printRequest(caseUuid), RequestOptions.none(), PRINT_RESPONSE).thenApply(RawResponse::data);
@@ -1301,118 +1015,76 @@ public final class CasesResource {
   }
 
   /**
-   * List case events
+   * Asynchronous {@link #listEvents(String, CasesListEventsParams, RequestOptions)}.
    *
-   * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseEvent>> listEventsAsync(String caseUuid, CasesListEventsParams params, RequestOptions options) {
     return client.executeAsync(listEventsRequest(caseUuid, params), options, LIST_EVENTS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List case events
+   * Same as {@link #listEvents(String, CasesListEventsParams, RequestOptions)}, with the client's options.
    *
-   * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<CaseEvent> listEvents(String caseUuid, CasesListEventsParams params) {
     return client.execute(listEventsRequest(caseUuid, params), RequestOptions.none(), LIST_EVENTS_RESPONSE).data();
   }
 
   /**
-   * List case events
+   * Asynchronous {@link #listEvents(String, CasesListEventsParams, RequestOptions)}, with the client's options.
    *
-   * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseEvent>> listEventsAsync(String caseUuid, CasesListEventsParams params) {
     return client.executeAsync(listEventsRequest(caseUuid, params), RequestOptions.none(), LIST_EVENTS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List case events
+   * Same as {@link #listEvents(String, CasesListEventsParams, RequestOptions)}, without parameters.
    *
-   * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return the result
    */
   public Page<CaseEvent> listEvents(String caseUuid, RequestOptions options) {
     return client.execute(listEventsRequest(caseUuid, CasesListEventsParams.builder().build()), options, LIST_EVENTS_RESPONSE).data();
   }
 
   /**
-   * List case events
+   * Asynchronous {@link #listEvents(String, CasesListEventsParams, RequestOptions)}, without parameters.
    *
-   * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseEvent>> listEventsAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(listEventsRequest(caseUuid, CasesListEventsParams.builder().build()), options, LIST_EVENTS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List case events
+   * Same as {@link #listEvents(String, CasesListEventsParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param caseUuid Case UUID.
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return the result
    */
   public Page<CaseEvent> listEvents(String caseUuid) {
     return client.execute(listEventsRequest(caseUuid, CasesListEventsParams.builder().build()), RequestOptions.none(), LIST_EVENTS_RESPONSE).data();
   }
 
   /**
-   * List case events
+   * Asynchronous {@link #listEvents(String, CasesListEventsParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseEvent>> listEventsAsync(String caseUuid) {
     return client.executeAsync(listEventsRequest(caseUuid, CasesListEventsParams.builder().build()), RequestOptions.none(), LIST_EVENTS_RESPONSE).thenApply(RawResponse::data);
@@ -1435,46 +1107,31 @@ public final class CasesResource {
   }
 
   /**
-   * List case AML hits
+   * Asynchronous {@link #listAmlHits(String, RequestOptions)}.
    *
-   * <p>List AML screening hits for the case's subject. Same shape as the hits returned by POST /v3/aml/.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/aml/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<List<Map<String, JsonNode>>> listAmlHitsAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(listAmlHitsRequest(caseUuid), options, LIST_AML_HITS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List case AML hits
+   * Same as {@link #listAmlHits(String, RequestOptions)}, with the client's options.
    *
-   * <p>List AML screening hits for the case's subject. Same shape as the hits returned by POST /v3/aml/.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/aml/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return the result
    */
   public List<Map<String, JsonNode>> listAmlHits(String caseUuid) {
     return client.execute(listAmlHitsRequest(caseUuid), RequestOptions.none(), LIST_AML_HITS_RESPONSE).data();
   }
 
   /**
-   * List case AML hits
+   * Asynchronous {@link #listAmlHits(String, RequestOptions)}, with the client's options.
    *
-   * <p>List AML screening hits for the case's subject. Same shape as the hits returned by POST /v3/aml/.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/aml/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<List<Map<String, JsonNode>>> listAmlHitsAsync(String caseUuid) {
     return client.executeAsync(listAmlHitsRequest(caseUuid), RequestOptions.none(), LIST_AML_HITS_RESPONSE).thenApply(RawResponse::data);
@@ -1497,104 +1154,69 @@ public final class CasesResource {
   }
 
   /**
-   * Case analytics
-   *
-   * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesRetrieveStatisticsResponse> retrieveStatisticsAsync(CasesRetrieveStatisticsParams params, RequestOptions options) {
     return client.executeAsync(retrieveStatisticsRequest(params), options, RETRIEVE_STATISTICS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Case analytics
-   *
-   * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CasesRetrieveStatisticsResponse retrieveStatistics(CasesRetrieveStatisticsParams params) {
     return client.execute(retrieveStatisticsRequest(params), RequestOptions.none(), RETRIEVE_STATISTICS_RESPONSE).data();
   }
 
   /**
-   * Case analytics
-   *
-   * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesRetrieveStatisticsResponse> retrieveStatisticsAsync(CasesRetrieveStatisticsParams params) {
     return client.executeAsync(retrieveStatisticsRequest(params), RequestOptions.none(), RETRIEVE_STATISTICS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Case analytics
+   * Same as {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)}, without parameters.
    *
-   * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public CasesRetrieveStatisticsResponse retrieveStatistics(RequestOptions options) {
     return client.execute(retrieveStatisticsRequest(CasesRetrieveStatisticsParams.builder().build()), options, RETRIEVE_STATISTICS_RESPONSE).data();
   }
 
   /**
-   * Case analytics
+   * Asynchronous {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)}, without parameters.
    *
-   * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesRetrieveStatisticsResponse> retrieveStatisticsAsync(RequestOptions options) {
     return client.executeAsync(retrieveStatisticsRequest(CasesRetrieveStatisticsParams.builder().build()), options, RETRIEVE_STATISTICS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Case analytics
+   * Same as {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @return the response body
+   * @return the result
    */
   public CasesRetrieveStatisticsResponse retrieveStatistics() {
     return client.execute(retrieveStatisticsRequest(CasesRetrieveStatisticsParams.builder().build()), RequestOptions.none(), RETRIEVE_STATISTICS_RESPONSE).data();
   }
 
   /**
-   * Case analytics
+   * Asynchronous {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesRetrieveStatisticsResponse> retrieveStatisticsAsync() {
     return client.executeAsync(retrieveStatisticsRequest(CasesRetrieveStatisticsParams.builder().build()), RequestOptions.none(), RETRIEVE_STATISTICS_RESPONSE).thenApply(RawResponse::data);
@@ -1617,46 +1239,31 @@ public final class CasesResource {
   }
 
   /**
-   * Bulk update case status
-   *
-   * <p>Apply the same status transition to several cases in one call: OPEN reopens, AWAITING_USER requests info, RESOLVED resolves (resolution required). Each case is evaluated independently; gate failures (incomplete checklist, missing required note) are reported per case without aborting the batch.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/status/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #bulkUpdateStatus(CasesBulkUpdateStatusParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesBulkUpdateStatusResponse> bulkUpdateStatusAsync(CasesBulkUpdateStatusParams params, RequestOptions options) {
     return client.executeAsync(bulkUpdateStatusRequest(params), options, BULK_UPDATE_STATUS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Bulk update case status
-   *
-   * <p>Apply the same status transition to several cases in one call: OPEN reopens, AWAITING_USER requests info, RESOLVED resolves (resolution required). Each case is evaluated independently; gate failures (incomplete checklist, missing required note) are reported per case without aborting the batch.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/status/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #bulkUpdateStatus(CasesBulkUpdateStatusParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CasesBulkUpdateStatusResponse bulkUpdateStatus(CasesBulkUpdateStatusParams params) {
     return client.execute(bulkUpdateStatusRequest(params), RequestOptions.none(), BULK_UPDATE_STATUS_RESPONSE).data();
   }
 
   /**
-   * Bulk update case status
-   *
-   * <p>Apply the same status transition to several cases in one call: OPEN reopens, AWAITING_USER requests info, RESOLVED resolves (resolution required). Each case is evaluated independently; gate failures (incomplete checklist, missing required note) are reported per case without aborting the batch.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/status/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #bulkUpdateStatus(CasesBulkUpdateStatusParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesBulkUpdateStatusResponse> bulkUpdateStatusAsync(CasesBulkUpdateStatusParams params) {
     return client.executeAsync(bulkUpdateStatusRequest(params), RequestOptions.none(), BULK_UPDATE_STATUS_RESPONSE).thenApply(RawResponse::data);
@@ -1679,46 +1286,31 @@ public final class CasesResource {
   }
 
   /**
-   * Bulk assign cases
-   *
-   * <p>Assign (or unassign, with assignee_user_id: null) several cases at once. All cases must share the same blueprint; mismatches are reported per case without aborting the batch.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/assign/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #bulkAssign(CasesBulkAssignParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesBulkAssignResponse> bulkAssignAsync(CasesBulkAssignParams params, RequestOptions options) {
     return client.executeAsync(bulkAssignRequest(params), options, BULK_ASSIGN_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Bulk assign cases
-   *
-   * <p>Assign (or unassign, with assignee_user_id: null) several cases at once. All cases must share the same blueprint; mismatches are reported per case without aborting the batch.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/assign/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #bulkAssign(CasesBulkAssignParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CasesBulkAssignResponse bulkAssign(CasesBulkAssignParams params) {
     return client.execute(bulkAssignRequest(params), RequestOptions.none(), BULK_ASSIGN_RESPONSE).data();
   }
 
   /**
-   * Bulk assign cases
-   *
-   * <p>Assign (or unassign, with assignee_user_id: null) several cases at once. All cases must share the same blueprint; mismatches are reported per case without aborting the batch.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/assign/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #bulkAssign(CasesBulkAssignParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesBulkAssignResponse> bulkAssignAsync(CasesBulkAssignParams params) {
     return client.executeAsync(bulkAssignRequest(params), RequestOptions.none(), BULK_ASSIGN_RESPONSE).thenApply(RawResponse::data);
@@ -1740,97 +1332,76 @@ public final class CasesResource {
   }
 
   /**
-   * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)}.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseActionCaseActionReceiptPage> listActionReceiptsAsync(String caseUuid, CasesListActionReceiptsParams params, RequestOptions options) {
     return client.executeAsync(listActionReceiptsRequest(caseUuid, params), options, LIST_ACTION_RECEIPTS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)}, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseActionCaseActionReceiptPage listActionReceipts(String caseUuid, CasesListActionReceiptsParams params) {
     return client.execute(listActionReceiptsRequest(caseUuid, params), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE).data();
   }
 
   /**
-   * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)}, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseActionCaseActionReceiptPage> listActionReceiptsAsync(String caseUuid, CasesListActionReceiptsParams params) {
     return client.executeAsync(listActionReceiptsRequest(caseUuid, params), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)}, without parameters.
    *
    * @param caseUuid the {@code case_uuid}
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public CaseActionCaseActionReceiptPage listActionReceipts(String caseUuid, RequestOptions options) {
     return client.execute(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), options, LIST_ACTION_RECEIPTS_RESPONSE).data();
   }
 
   /**
-   * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)}, without parameters.
    *
    * @param caseUuid the {@code case_uuid}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseActionCaseActionReceiptPage> listActionReceiptsAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), options, LIST_ACTION_RECEIPTS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
-   * @return the response body
+   * @return the result
    */
   public CaseActionCaseActionReceiptPage listActionReceipts(String caseUuid) {
     return client.execute(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE).data();
   }
 
   /**
-   * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseActionCaseActionReceiptPage> listActionReceiptsAsync(String caseUuid) {
     return client.executeAsync(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE).thenApply(RawResponse::data);
@@ -1852,43 +1423,34 @@ public final class CasesResource {
   }
 
   /**
-   * Retry only this failed subject action using its saved inputs. Current write permission is checked. Applied actions return their receipt without executing again. Case closure is independent.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/{receipt_uuid}/retry/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #retryActionReceipt(String, String, RequestOptions)}.
    *
    * @param caseUuid the {@code case_uuid}
    * @param receiptUuid the {@code receipt_uuid}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseActionCaseActionReceipt> retryActionReceiptAsync(String caseUuid, String receiptUuid, RequestOptions options) {
     return client.executeAsync(retryActionReceiptRequest(caseUuid, receiptUuid), options, RETRY_ACTION_RECEIPT_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Retry only this failed subject action using its saved inputs. Current write permission is checked. Applied actions return their receipt without executing again. Case closure is independent.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/{receipt_uuid}/retry/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #retryActionReceipt(String, String, RequestOptions)}, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param receiptUuid the {@code receipt_uuid}
-   * @return the response body
+   * @return the result
    */
   public CaseActionCaseActionReceipt retryActionReceipt(String caseUuid, String receiptUuid) {
     return client.execute(retryActionReceiptRequest(caseUuid, receiptUuid), RequestOptions.none(), RETRY_ACTION_RECEIPT_RESPONSE).data();
   }
 
   /**
-   * Retry only this failed subject action using its saved inputs. Current write permission is checked. Applied actions return their receipt without executing again. Case closure is independent.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/{receipt_uuid}/retry/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #retryActionReceipt(String, String, RequestOptions)}, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param receiptUuid the {@code receipt_uuid}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseActionCaseActionReceipt> retryActionReceiptAsync(String caseUuid, String receiptUuid) {
     return client.executeAsync(retryActionReceiptRequest(caseUuid, receiptUuid), RequestOptions.none(), RETRY_ACTION_RECEIPT_RESPONSE).thenApply(RawResponse::data);
@@ -1909,90 +1471,69 @@ public final class CasesResource {
   }
 
   /**
-   * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDuplicateCaseDuplicatePage> findDuplicatesAsync(CaseDuplicateCaseDuplicateQueryRequest params, RequestOptions options) {
     return client.executeAsync(findDuplicatesRequest(params), options, FIND_DUPLICATES_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseDuplicateCaseDuplicatePage findDuplicates(CaseDuplicateCaseDuplicateQueryRequest params) {
     return client.execute(findDuplicatesRequest(params), RequestOptions.none(), FIND_DUPLICATES_RESPONSE).data();
   }
 
   /**
-   * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDuplicateCaseDuplicatePage> findDuplicatesAsync(CaseDuplicateCaseDuplicateQueryRequest params) {
     return client.executeAsync(findDuplicatesRequest(params), RequestOptions.none(), FIND_DUPLICATES_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
+   * Same as {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)}, without parameters.
    *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public CaseDuplicateCaseDuplicatePage findDuplicates(RequestOptions options) {
     return client.execute(findDuplicatesRequest(CaseDuplicateCaseDuplicateQueryRequest.builder().build()), options, FIND_DUPLICATES_RESPONSE).data();
   }
 
   /**
-   * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
+   * Asynchronous {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)}, without parameters.
    *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDuplicateCaseDuplicatePage> findDuplicatesAsync(RequestOptions options) {
     return client.executeAsync(findDuplicatesRequest(CaseDuplicateCaseDuplicateQueryRequest.builder().build()), options, FIND_DUPLICATES_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
+   * Same as {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @return the response body
+   * @return the result
    */
   public CaseDuplicateCaseDuplicatePage findDuplicates() {
     return client.execute(findDuplicatesRequest(CaseDuplicateCaseDuplicateQueryRequest.builder().build()), RequestOptions.none(), FIND_DUPLICATES_RESPONSE).data();
   }
 
   /**
-   * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
+   * Asynchronous {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseDuplicateCaseDuplicatePage> findDuplicatesAsync() {
     return client.executeAsync(findDuplicatesRequest(CaseDuplicateCaseDuplicateQueryRequest.builder().build()), RequestOptions.none(), FIND_DUPLICATES_RESPONSE).thenApply(RawResponse::data);
@@ -2014,43 +1555,28 @@ public final class CasesResource {
   }
 
   /**
-   * List eligible case reviewers
+   * Asynchronous {@link #listReviewers(RequestOptions)}.
    *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/reviewers/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesListReviewersResponse> listReviewersAsync(RequestOptions options) {
     return client.executeAsync(listReviewersRequest(), options, LIST_REVIEWERS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List eligible case reviewers
+   * Same as {@link #listReviewers(RequestOptions)}, with the client's options.
    *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/reviewers/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @return the response body
+   * @return the result
    */
   public CasesListReviewersResponse listReviewers() {
     return client.execute(listReviewersRequest(), RequestOptions.none(), LIST_REVIEWERS_RESPONSE).data();
   }
 
   /**
-   * List eligible case reviewers
+   * Asynchronous {@link #listReviewers(RequestOptions)}, with the client's options.
    *
-   * <p>Requires <code>list:cases</code> for the requested application.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/reviewers/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesListReviewersResponse> listReviewersAsync() {
     return client.executeAsync(listReviewersRequest(), RequestOptions.none(), LIST_REVIEWERS_RESPONSE).thenApply(RawResponse::data);
@@ -2303,1910 +1829,1322 @@ public final class CasesResource {
     }
 
     /**
-     * List cases
-     *
-     * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(CasesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<CaseListItem>> list(CasesListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List cases
-     *
-     * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(CasesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseListItem>>> listAsync(CasesListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List cases
-     *
-     * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(CasesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<CaseListItem>> list(CasesListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List cases
-     *
-     * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(CasesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseListItem>>> listAsync(CasesListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List cases
+     * {@link #list(CasesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<CaseListItem>> list(RequestOptions options) {
       return client.execute(listRequest(CasesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List cases
+     * Asynchronous {@link #list(CasesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseListItem>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(CasesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List cases
+     * {@link #list(CasesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<CaseListItem>> list() {
       return client.execute(listRequest(CasesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List cases
+     * Asynchronous {@link #list(CasesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List cases for the application, newest first. Supports filtering, search, and sorting; see query parameters. Paginated with <code>limit</code>/<code>offset</code>.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseListItem>>> listAsync() {
       return client.executeAsync(listRequest(CasesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Create case
-     *
-     * <p>Create a case anchored to exactly one subject (a user or a business), directly or by deriving the subject from an attached session/transaction link. Source is always <code>MANUAL</code> for API-created cases.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #create(CasesCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDetail> create(CasesCreateParams params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create case
-     *
-     * <p>Create a case anchored to exactly one subject (a user or a business), directly or by deriving the subject from an attached session/transaction link. Source is always <code>MANUAL</code> for API-created cases.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #create(CasesCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> createAsync(CasesCreateParams params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create case
-     *
-     * <p>Create a case anchored to exactly one subject (a user or a business), directly or by deriving the subject from an attached session/transaction link. Source is always <code>MANUAL</code> for API-created cases.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #create(CasesCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseDetail> create(CasesCreateParams params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create case
-     *
-     * <p>Create a case anchored to exactly one subject (a user or a business), directly or by deriving the subject from an attached session/transaction link. Source is always <code>MANUAL</code> for API-created cases.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #create(CasesCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> createAsync(CasesCreateParams params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Get case
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve a case with its subject, blueprint, notes, events, links, and checklist.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDetail> retrieve(String caseUuid, RequestOptions options) {
       return client.execute(retrieveRequest(caseUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get case
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve a case with its subject, blueprint, notes, events, links, and checklist.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> retrieveAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(retrieveRequest(caseUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get case
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve a case with its subject, blueprint, notes, events, links, and checklist.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<CaseDetail> retrieve(String caseUuid) {
       return client.execute(retrieveRequest(caseUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get case
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve a case with its subject, blueprint, notes, events, links, and checklist.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> retrieveAsync(String caseUuid) {
       return client.executeAsync(retrieveRequest(caseUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Update case
+     * {@link #update(String, CasesUpdateParams, RequestOptions)} with the raw response.
      *
-     * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDetail> update(String caseUuid, CasesUpdateParams params, RequestOptions options) {
       return client.execute(updateRequest(caseUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update case
+     * Asynchronous {@link #update(String, CasesUpdateParams, RequestOptions)} with the raw response.
      *
-     * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> updateAsync(String caseUuid, CasesUpdateParams params, RequestOptions options) {
       return client.executeAsync(updateRequest(caseUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update case
+     * {@link #update(String, CasesUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseDetail> update(String caseUuid, CasesUpdateParams params) {
       return client.execute(updateRequest(caseUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update case
+     * Asynchronous {@link #update(String, CasesUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> updateAsync(String caseUuid, CasesUpdateParams params) {
       return client.executeAsync(updateRequest(caseUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update case
+     * {@link #update(String, CasesUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDetail> update(String caseUuid, RequestOptions options) {
       return client.execute(updateRequest(caseUuid, CasesUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update case
+     * Asynchronous {@link #update(String, CasesUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> updateAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(updateRequest(caseUuid, CasesUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update case
+     * {@link #update(String, CasesUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<CaseDetail> update(String caseUuid) {
       return client.execute(updateRequest(caseUuid, CasesUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update case
+     * Asynchronous {@link #update(String, CasesUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Update the case's title, priority, due date, or tags. Logs PRIORITY_CHANGED/DUE_DATE_CHANGED/TAG_ADDED/TAG_REMOVED events as applicable.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> updateAsync(String caseUuid) {
       return client.executeAsync(updateRequest(caseUuid, CasesUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Delete case
+     * {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Delete a case. There is no undelete endpoint.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String caseUuid, RequestOptions options) {
       return client.execute(deleteRequest(caseUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete case
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Delete a case. There is no undelete endpoint.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(deleteRequest(caseUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete case
+     * {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Delete a case. There is no undelete endpoint.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String caseUuid) {
       return client.execute(deleteRequest(caseUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Delete case
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Delete a case. There is no undelete endpoint.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String caseUuid) {
       return client.executeAsync(deleteRequest(caseUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Assign or unassign case
+     * {@link #assign(String, CasesAssignParams, RequestOptions)} with the raw response.
      *
-     * <p>Assign the case to a user, or unassign it by sending assignee_user_id: null. assignee_email/assignee_name auto-provision a User row when the assignee does not exist yet.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/assign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDetail> assign(String caseUuid, CasesAssignParams params, RequestOptions options) {
       return client.execute(assignRequest(caseUuid, params), options, ASSIGN_RESPONSE);
     }
 
     /**
-     * Assign or unassign case
+     * Asynchronous {@link #assign(String, CasesAssignParams, RequestOptions)} with the raw response.
      *
-     * <p>Assign the case to a user, or unassign it by sending assignee_user_id: null. assignee_email/assignee_name auto-provision a User row when the assignee does not exist yet.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/assign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> assignAsync(String caseUuid, CasesAssignParams params, RequestOptions options) {
       return client.executeAsync(assignRequest(caseUuid, params), options, ASSIGN_RESPONSE);
     }
 
     /**
-     * Assign or unassign case
+     * {@link #assign(String, CasesAssignParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Assign the case to a user, or unassign it by sending assignee_user_id: null. assignee_email/assignee_name auto-provision a User row when the assignee does not exist yet.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/assign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseDetail> assign(String caseUuid, CasesAssignParams params) {
       return client.execute(assignRequest(caseUuid, params), RequestOptions.none(), ASSIGN_RESPONSE);
     }
 
     /**
-     * Assign or unassign case
+     * Asynchronous {@link #assign(String, CasesAssignParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Assign the case to a user, or unassign it by sending assignee_user_id: null. assignee_email/assignee_name auto-provision a User row when the assignee does not exist yet.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/assign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> assignAsync(String caseUuid, CasesAssignParams params) {
       return client.executeAsync(assignRequest(caseUuid, params), RequestOptions.none(), ASSIGN_RESPONSE);
     }
 
     /**
-     * Resolve case
+     * {@link #resolve(String, CasesResolveParams, RequestOptions)} with the raw response.
      *
-     * <p>Resolve the case as false_positive or valid_threat. Blocked with 400 if the blueprint's checklist is not optional and items remain incomplete, or if the blueprint requires a resolution note and none is given. When the case's blueprint has a four_eyes_checker_blueprint configured, the resolution is staged (case.pending_resolution) and the case moves to the checker blueprint instead of resolving immediately; a different user must call approve or reject-approval.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/resolve/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDetail> resolve(String caseUuid, CasesResolveParams params, RequestOptions options) {
       return client.execute(resolveRequest(caseUuid, params), options, RESOLVE_RESPONSE);
     }
 
     /**
-     * Resolve case
+     * Asynchronous {@link #resolve(String, CasesResolveParams, RequestOptions)} with the raw response.
      *
-     * <p>Resolve the case as false_positive or valid_threat. Blocked with 400 if the blueprint's checklist is not optional and items remain incomplete, or if the blueprint requires a resolution note and none is given. When the case's blueprint has a four_eyes_checker_blueprint configured, the resolution is staged (case.pending_resolution) and the case moves to the checker blueprint instead of resolving immediately; a different user must call approve or reject-approval.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/resolve/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> resolveAsync(String caseUuid, CasesResolveParams params, RequestOptions options) {
       return client.executeAsync(resolveRequest(caseUuid, params), options, RESOLVE_RESPONSE);
     }
 
     /**
-     * Resolve case
+     * {@link #resolve(String, CasesResolveParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Resolve the case as false_positive or valid_threat. Blocked with 400 if the blueprint's checklist is not optional and items remain incomplete, or if the blueprint requires a resolution note and none is given. When the case's blueprint has a four_eyes_checker_blueprint configured, the resolution is staged (case.pending_resolution) and the case moves to the checker blueprint instead of resolving immediately; a different user must call approve or reject-approval.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/resolve/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseDetail> resolve(String caseUuid, CasesResolveParams params) {
       return client.execute(resolveRequest(caseUuid, params), RequestOptions.none(), RESOLVE_RESPONSE);
     }
 
     /**
-     * Resolve case
+     * Asynchronous {@link #resolve(String, CasesResolveParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Resolve the case as false_positive or valid_threat. Blocked with 400 if the blueprint's checklist is not optional and items remain incomplete, or if the blueprint requires a resolution note and none is given. When the case's blueprint has a four_eyes_checker_blueprint configured, the resolution is staged (case.pending_resolution) and the case moves to the checker blueprint instead of resolving immediately; a different user must call approve or reject-approval.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/resolve/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> resolveAsync(String caseUuid, CasesResolveParams params) {
       return client.executeAsync(resolveRequest(caseUuid, params), RequestOptions.none(), RESOLVE_RESPONSE);
     }
 
     /**
-     * Reopen case
+     * {@link #reopen(String, RequestOptions)} with the raw response.
      *
-     * <p>Move an awaiting-user or resolved case back to open, clearing resolution, resolution_notes, resolved_at, and resolved_by_email.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reopen/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDetail> reopen(String caseUuid, RequestOptions options) {
       return client.execute(reopenRequest(caseUuid), options, REOPEN_RESPONSE);
     }
 
     /**
-     * Reopen case
+     * Asynchronous {@link #reopen(String, RequestOptions)} with the raw response.
      *
-     * <p>Move an awaiting-user or resolved case back to open, clearing resolution, resolution_notes, resolved_at, and resolved_by_email.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reopen/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> reopenAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(reopenRequest(caseUuid), options, REOPEN_RESPONSE);
     }
 
     /**
-     * Reopen case
+     * {@link #reopen(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Move an awaiting-user or resolved case back to open, clearing resolution, resolution_notes, resolved_at, and resolved_by_email.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reopen/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<CaseDetail> reopen(String caseUuid) {
       return client.execute(reopenRequest(caseUuid), RequestOptions.none(), REOPEN_RESPONSE);
     }
 
     /**
-     * Reopen case
+     * Asynchronous {@link #reopen(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Move an awaiting-user or resolved case back to open, clearing resolution, resolution_notes, resolved_at, and resolved_by_email.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reopen/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> reopenAsync(String caseUuid) {
       return client.executeAsync(reopenRequest(caseUuid), RequestOptions.none(), REOPEN_RESPONSE);
     }
 
     /**
-     * Request info (awaiting user)
+     * {@link #requestInfo(String, RequestOptions)} with the raw response.
      *
-     * <p>Move an open case to awaiting_user while more information is collected from the verified user. Fails with 400 if a resolution is currently pending 4-eyes approval.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/request-info/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDetail> requestInfo(String caseUuid, RequestOptions options) {
       return client.execute(requestInfoRequest(caseUuid), options, REQUEST_INFO_RESPONSE);
     }
 
     /**
-     * Request info (awaiting user)
+     * Asynchronous {@link #requestInfo(String, RequestOptions)} with the raw response.
      *
-     * <p>Move an open case to awaiting_user while more information is collected from the verified user. Fails with 400 if a resolution is currently pending 4-eyes approval.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/request-info/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> requestInfoAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(requestInfoRequest(caseUuid), options, REQUEST_INFO_RESPONSE);
     }
 
     /**
-     * Request info (awaiting user)
+     * {@link #requestInfo(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Move an open case to awaiting_user while more information is collected from the verified user. Fails with 400 if a resolution is currently pending 4-eyes approval.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/request-info/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<CaseDetail> requestInfo(String caseUuid) {
       return client.execute(requestInfoRequest(caseUuid), RequestOptions.none(), REQUEST_INFO_RESPONSE);
     }
 
     /**
-     * Request info (awaiting user)
+     * Asynchronous {@link #requestInfo(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Move an open case to awaiting_user while more information is collected from the verified user. Fails with 400 if a resolution is currently pending 4-eyes approval.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/request-info/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> requestInfoAsync(String caseUuid) {
       return client.executeAsync(requestInfoRequest(caseUuid), RequestOptions.none(), REQUEST_INFO_RESPONSE);
     }
 
     /**
-     * Escalate case
+     * {@link #escalate(String, RequestOptions)} with the raw response.
      *
-     * <p>Move the case to its blueprint's configured escalation_blueprint. Requires the current blueprint to have escalation_enabled and an escalation_blueprint set, otherwise 400.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/escalate/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDetail> escalate(String caseUuid, RequestOptions options) {
       return client.execute(escalateRequest(caseUuid), options, ESCALATE_RESPONSE);
     }
 
     /**
-     * Escalate case
+     * Asynchronous {@link #escalate(String, RequestOptions)} with the raw response.
      *
-     * <p>Move the case to its blueprint's configured escalation_blueprint. Requires the current blueprint to have escalation_enabled and an escalation_blueprint set, otherwise 400.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/escalate/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> escalateAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(escalateRequest(caseUuid), options, ESCALATE_RESPONSE);
     }
 
     /**
-     * Escalate case
+     * {@link #escalate(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Move the case to its blueprint's configured escalation_blueprint. Requires the current blueprint to have escalation_enabled and an escalation_blueprint set, otherwise 400.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/escalate/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<CaseDetail> escalate(String caseUuid) {
       return client.execute(escalateRequest(caseUuid), RequestOptions.none(), ESCALATE_RESPONSE);
     }
 
     /**
-     * Escalate case
+     * Asynchronous {@link #escalate(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Move the case to its blueprint's configured escalation_blueprint. Requires the current blueprint to have escalation_enabled and an escalation_blueprint set, otherwise 400.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/escalate/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> escalateAsync(String caseUuid) {
       return client.executeAsync(escalateRequest(caseUuid), RequestOptions.none(), ESCALATE_RESPONSE);
     }
 
     /**
-     * Transfer case
+     * {@link #transfer(String, CasesTransferParams, RequestOptions)} with the raw response.
      *
-     * <p>Move the case to a different, active blueprint of the same application. Requires the current blueprint to have transfer_enabled, otherwise 400.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/transfer/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDetail> transfer(String caseUuid, CasesTransferParams params, RequestOptions options) {
       return client.execute(transferRequest(caseUuid, params), options, TRANSFER_RESPONSE);
     }
 
     /**
-     * Transfer case
+     * Asynchronous {@link #transfer(String, CasesTransferParams, RequestOptions)} with the raw response.
      *
-     * <p>Move the case to a different, active blueprint of the same application. Requires the current blueprint to have transfer_enabled, otherwise 400.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/transfer/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> transferAsync(String caseUuid, CasesTransferParams params, RequestOptions options) {
       return client.executeAsync(transferRequest(caseUuid, params), options, TRANSFER_RESPONSE);
     }
 
     /**
-     * Transfer case
+     * {@link #transfer(String, CasesTransferParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Move the case to a different, active blueprint of the same application. Requires the current blueprint to have transfer_enabled, otherwise 400.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/transfer/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseDetail> transfer(String caseUuid, CasesTransferParams params) {
       return client.execute(transferRequest(caseUuid, params), RequestOptions.none(), TRANSFER_RESPONSE);
     }
 
     /**
-     * Transfer case
+     * Asynchronous {@link #transfer(String, CasesTransferParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Move the case to a different, active blueprint of the same application. Requires the current blueprint to have transfer_enabled, otherwise 400.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/transfer/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> transferAsync(String caseUuid, CasesTransferParams params) {
       return client.executeAsync(transferRequest(caseUuid, params), RequestOptions.none(), TRANSFER_RESPONSE);
     }
 
     /**
-     * Approve staged resolution (4-eyes)
+     * {@link #approveResolution(String, RequestOptions)} with the raw response.
      *
-     * <p>Apply a resolution staged by resolve on a maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/approve/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDetail> approveResolution(String caseUuid, RequestOptions options) {
       return client.execute(approveResolutionRequest(caseUuid), options, APPROVE_RESOLUTION_RESPONSE);
     }
 
     /**
-     * Approve staged resolution (4-eyes)
+     * Asynchronous {@link #approveResolution(String, RequestOptions)} with the raw response.
      *
-     * <p>Apply a resolution staged by resolve on a maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/approve/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> approveResolutionAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(approveResolutionRequest(caseUuid), options, APPROVE_RESOLUTION_RESPONSE);
     }
 
     /**
-     * Approve staged resolution (4-eyes)
+     * {@link #approveResolution(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Apply a resolution staged by resolve on a maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/approve/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<CaseDetail> approveResolution(String caseUuid) {
       return client.execute(approveResolutionRequest(caseUuid), RequestOptions.none(), APPROVE_RESOLUTION_RESPONSE);
     }
 
     /**
-     * Approve staged resolution (4-eyes)
+     * Asynchronous {@link #approveResolution(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Apply a resolution staged by resolve on a maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/approve/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> approveResolutionAsync(String caseUuid) {
       return client.executeAsync(approveResolutionRequest(caseUuid), RequestOptions.none(), APPROVE_RESOLUTION_RESPONSE);
     }
 
     /**
-     * Reject staged resolution (4-eyes)
+     * {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)} with the raw response.
      *
-     * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDetail> rejectResolution(String caseUuid, CasesRejectResolutionParams params, RequestOptions options) {
       return client.execute(rejectResolutionRequest(caseUuid, params), options, REJECT_RESOLUTION_RESPONSE);
     }
 
     /**
-     * Reject staged resolution (4-eyes)
+     * Asynchronous {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)} with the raw response.
      *
-     * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> rejectResolutionAsync(String caseUuid, CasesRejectResolutionParams params, RequestOptions options) {
       return client.executeAsync(rejectResolutionRequest(caseUuid, params), options, REJECT_RESOLUTION_RESPONSE);
     }
 
     /**
-     * Reject staged resolution (4-eyes)
+     * {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseDetail> rejectResolution(String caseUuid, CasesRejectResolutionParams params) {
       return client.execute(rejectResolutionRequest(caseUuid, params), RequestOptions.none(), REJECT_RESOLUTION_RESPONSE);
     }
 
     /**
-     * Reject staged resolution (4-eyes)
+     * Asynchronous {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> rejectResolutionAsync(String caseUuid, CasesRejectResolutionParams params) {
       return client.executeAsync(rejectResolutionRequest(caseUuid, params), RequestOptions.none(), REJECT_RESOLUTION_RESPONSE);
     }
 
     /**
-     * Reject staged resolution (4-eyes)
+     * {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDetail> rejectResolution(String caseUuid, RequestOptions options) {
       return client.execute(rejectResolutionRequest(caseUuid, CasesRejectResolutionParams.builder().build()), options, REJECT_RESOLUTION_RESPONSE);
     }
 
     /**
-     * Reject staged resolution (4-eyes)
+     * Asynchronous {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> rejectResolutionAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(rejectResolutionRequest(caseUuid, CasesRejectResolutionParams.builder().build()), options, REJECT_RESOLUTION_RESPONSE);
     }
 
     /**
-     * Reject staged resolution (4-eyes)
+     * {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<CaseDetail> rejectResolution(String caseUuid) {
       return client.execute(rejectResolutionRequest(caseUuid, CasesRejectResolutionParams.builder().build()), RequestOptions.none(), REJECT_RESOLUTION_RESPONSE);
     }
 
     /**
-     * Reject staged resolution (4-eyes)
+     * Asynchronous {@link #rejectResolution(String, CasesRejectResolutionParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Reject a resolution staged by resolve and return the case to its maker blueprint. The caller must be a different user than the one who submitted it, otherwise 403.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDetail>> rejectResolutionAsync(String caseUuid) {
       return client.executeAsync(rejectResolutionRequest(caseUuid, CasesRejectResolutionParams.builder().build()), RequestOptions.none(), REJECT_RESOLUTION_RESPONSE);
     }
 
     /**
-     * Apply one explicit action to the case subject. Supply a unique client_reference to obtain an action receipt and make retries idempotent. Reusing that reference with a different payload returns 409. With a reference, inspect receipt.status even when HTTP status is 200: FAILED means no action was applied. Repeating a failed request does not execute it again unless retry is true. Omitting client_reference preserves the legacy response.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/entity-actions/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #applyEntityAction(String, CaseActionCaseEntityActionRequest, RequestOptions)} with the raw response.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseActionCaseEntityActionResult> applyEntityAction(String caseUuid, CaseActionCaseEntityActionRequest params, RequestOptions options) {
       return client.execute(applyEntityActionRequest(caseUuid, params), options, APPLY_ENTITY_ACTION_RESPONSE);
     }
 
     /**
-     * Apply one explicit action to the case subject. Supply a unique client_reference to obtain an action receipt and make retries idempotent. Reusing that reference with a different payload returns 409. With a reference, inspect receipt.status even when HTTP status is 200: FAILED means no action was applied. Repeating a failed request does not execute it again unless retry is true. Omitting client_reference preserves the legacy response.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/entity-actions/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #applyEntityAction(String, CaseActionCaseEntityActionRequest, RequestOptions)} with the raw response.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseActionCaseEntityActionResult>> applyEntityActionAsync(String caseUuid, CaseActionCaseEntityActionRequest params, RequestOptions options) {
       return client.executeAsync(applyEntityActionRequest(caseUuid, params), options, APPLY_ENTITY_ACTION_RESPONSE);
     }
 
     /**
-     * Apply one explicit action to the case subject. Supply a unique client_reference to obtain an action receipt and make retries idempotent. Reusing that reference with a different payload returns 409. With a reference, inspect receipt.status even when HTTP status is 200: FAILED means no action was applied. Repeating a failed request does not execute it again unless retry is true. Omitting client_reference preserves the legacy response.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/entity-actions/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #applyEntityAction(String, CaseActionCaseEntityActionRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseActionCaseEntityActionResult> applyEntityAction(String caseUuid, CaseActionCaseEntityActionRequest params) {
       return client.execute(applyEntityActionRequest(caseUuid, params), RequestOptions.none(), APPLY_ENTITY_ACTION_RESPONSE);
     }
 
     /**
-     * Apply one explicit action to the case subject. Supply a unique client_reference to obtain an action receipt and make retries idempotent. Reusing that reference with a different payload returns 409. With a reference, inspect receipt.status even when HTTP status is 200: FAILED means no action was applied. Repeating a failed request does not execute it again unless retry is true. Omitting client_reference preserves the legacy response.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/entity-actions/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #applyEntityAction(String, CaseActionCaseEntityActionRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseActionCaseEntityActionResult>> applyEntityActionAsync(String caseUuid, CaseActionCaseEntityActionRequest params) {
       return client.executeAsync(applyEntityActionRequest(caseUuid, params), RequestOptions.none(), APPLY_ENTITY_ACTION_RESPONSE);
     }
 
     /**
-     * Print case (PDF)
+     * {@link #print(String, RequestOptions)} with the raw response.
      *
-     * <p>Render the full case (summary, subject, checklist state, notes, attached sessions/transactions, events, FIU report list) as a PDF and return a presigned download URL.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/print/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CasesPrintResponse> print(String caseUuid, RequestOptions options) {
       return client.execute(printRequest(caseUuid), options, PRINT_RESPONSE);
     }
 
     /**
-     * Print case (PDF)
+     * Asynchronous {@link #print(String, RequestOptions)} with the raw response.
      *
-     * <p>Render the full case (summary, subject, checklist state, notes, attached sessions/transactions, events, FIU report list) as a PDF and return a presigned download URL.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/print/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesPrintResponse>> printAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(printRequest(caseUuid), options, PRINT_RESPONSE);
     }
 
     /**
-     * Print case (PDF)
+     * {@link #print(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Render the full case (summary, subject, checklist state, notes, attached sessions/transactions, events, FIU report list) as a PDF and return a presigned download URL.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/print/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<CasesPrintResponse> print(String caseUuid) {
       return client.execute(printRequest(caseUuid), RequestOptions.none(), PRINT_RESPONSE);
     }
 
     /**
-     * Print case (PDF)
+     * Asynchronous {@link #print(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Render the full case (summary, subject, checklist state, notes, attached sessions/transactions, events, FIU report list) as a PDF and return a presigned download URL.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/print/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesPrintResponse>> printAsync(String caseUuid) {
       return client.executeAsync(printRequest(caseUuid), RequestOptions.none(), PRINT_RESPONSE);
     }
 
     /**
-     * List case events
+     * {@link #listEvents(String, CasesListEventsParams, RequestOptions)} with the raw response.
      *
-     * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<CaseEvent>> listEvents(String caseUuid, CasesListEventsParams params, RequestOptions options) {
       return client.execute(listEventsRequest(caseUuid, params), options, LIST_EVENTS_RESPONSE);
     }
 
     /**
-     * List case events
+     * Asynchronous {@link #listEvents(String, CasesListEventsParams, RequestOptions)} with the raw response.
      *
-     * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseEvent>>> listEventsAsync(String caseUuid, CasesListEventsParams params, RequestOptions options) {
       return client.executeAsync(listEventsRequest(caseUuid, params), options, LIST_EVENTS_RESPONSE);
     }
 
     /**
-     * List case events
+     * {@link #listEvents(String, CasesListEventsParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<CaseEvent>> listEvents(String caseUuid, CasesListEventsParams params) {
       return client.execute(listEventsRequest(caseUuid, params), RequestOptions.none(), LIST_EVENTS_RESPONSE);
     }
 
     /**
-     * List case events
+     * Asynchronous {@link #listEvents(String, CasesListEventsParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseEvent>>> listEventsAsync(String caseUuid, CasesListEventsParams params) {
       return client.executeAsync(listEventsRequest(caseUuid, params), RequestOptions.none(), LIST_EVENTS_RESPONSE);
     }
 
     /**
-     * List case events
+     * {@link #listEvents(String, CasesListEventsParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<CaseEvent>> listEvents(String caseUuid, RequestOptions options) {
       return client.execute(listEventsRequest(caseUuid, CasesListEventsParams.builder().build()), options, LIST_EVENTS_RESPONSE);
     }
 
     /**
-     * List case events
+     * Asynchronous {@link #listEvents(String, CasesListEventsParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseEvent>>> listEventsAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(listEventsRequest(caseUuid, CasesListEventsParams.builder().build()), options, LIST_EVENTS_RESPONSE);
     }
 
     /**
-     * List case events
+     * {@link #listEvents(String, CasesListEventsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<Page<CaseEvent>> listEvents(String caseUuid) {
       return client.execute(listEventsRequest(caseUuid, CasesListEventsParams.builder().build()), RequestOptions.none(), LIST_EVENTS_RESPONSE);
     }
 
     /**
-     * List case events
+     * Asynchronous {@link #listEvents(String, CasesListEventsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Read-only audit timeline of the case (created, status changes, assignment, resolution, escalation, transfers, tag/priority/due-date changes, entity actions, and more).
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/events/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseEvent>>> listEventsAsync(String caseUuid) {
       return client.executeAsync(listEventsRequest(caseUuid, CasesListEventsParams.builder().build()), RequestOptions.none(), LIST_EVENTS_RESPONSE);
     }
 
     /**
-     * List case AML hits
+     * {@link #listAmlHits(String, RequestOptions)} with the raw response.
      *
-     * <p>List AML screening hits for the case's subject. Same shape as the hits returned by POST /v3/aml/.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/aml/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<List<Map<String, JsonNode>>> listAmlHits(String caseUuid, RequestOptions options) {
       return client.execute(listAmlHitsRequest(caseUuid), options, LIST_AML_HITS_RESPONSE);
     }
 
     /**
-     * List case AML hits
+     * Asynchronous {@link #listAmlHits(String, RequestOptions)} with the raw response.
      *
-     * <p>List AML screening hits for the case's subject. Same shape as the hits returned by POST /v3/aml/.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/aml/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<List<Map<String, JsonNode>>>> listAmlHitsAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(listAmlHitsRequest(caseUuid), options, LIST_AML_HITS_RESPONSE);
     }
 
     /**
-     * List case AML hits
+     * {@link #listAmlHits(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List AML screening hits for the case's subject. Same shape as the hits returned by POST /v3/aml/.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/aml/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<List<Map<String, JsonNode>>> listAmlHits(String caseUuid) {
       return client.execute(listAmlHitsRequest(caseUuid), RequestOptions.none(), LIST_AML_HITS_RESPONSE);
     }
 
     /**
-     * List case AML hits
+     * Asynchronous {@link #listAmlHits(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List AML screening hits for the case's subject. Same shape as the hits returned by POST /v3/aml/.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/aml/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<List<Map<String, JsonNode>>>> listAmlHitsAsync(String caseUuid) {
       return client.executeAsync(listAmlHitsRequest(caseUuid), RequestOptions.none(), LIST_AML_HITS_RESPONSE);
     }
 
     /**
-     * Case analytics
-     *
-     * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CasesRetrieveStatisticsResponse> retrieveStatistics(CasesRetrieveStatisticsParams params, RequestOptions options) {
       return client.execute(retrieveStatisticsRequest(params), options, RETRIEVE_STATISTICS_RESPONSE);
     }
 
     /**
-     * Case analytics
-     *
-     * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesRetrieveStatisticsResponse>> retrieveStatisticsAsync(CasesRetrieveStatisticsParams params, RequestOptions options) {
       return client.executeAsync(retrieveStatisticsRequest(params), options, RETRIEVE_STATISTICS_RESPONSE);
     }
 
     /**
-     * Case analytics
-     *
-     * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CasesRetrieveStatisticsResponse> retrieveStatistics(CasesRetrieveStatisticsParams params) {
       return client.execute(retrieveStatisticsRequest(params), RequestOptions.none(), RETRIEVE_STATISTICS_RESPONSE);
     }
 
     /**
-     * Case analytics
-     *
-     * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesRetrieveStatisticsResponse>> retrieveStatisticsAsync(CasesRetrieveStatisticsParams params) {
       return client.executeAsync(retrieveStatisticsRequest(params), RequestOptions.none(), RETRIEVE_STATISTICS_RESPONSE);
     }
 
     /**
-     * Case analytics
+     * {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CasesRetrieveStatisticsResponse> retrieveStatistics(RequestOptions options) {
       return client.execute(retrieveStatisticsRequest(CasesRetrieveStatisticsParams.builder().build()), options, RETRIEVE_STATISTICS_RESPONSE);
     }
 
     /**
-     * Case analytics
+     * Asynchronous {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesRetrieveStatisticsResponse>> retrieveStatisticsAsync(RequestOptions options) {
       return client.executeAsync(retrieveStatisticsRequest(CasesRetrieveStatisticsParams.builder().build()), options, RETRIEVE_STATISTICS_RESPONSE);
     }
 
     /**
-     * Case analytics
+     * {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CasesRetrieveStatisticsResponse> retrieveStatistics() {
       return client.execute(retrieveStatisticsRequest(CasesRetrieveStatisticsParams.builder().build()), RequestOptions.none(), RETRIEVE_STATISTICS_RESPONSE);
     }
 
     /**
-     * Case analytics
+     * Asynchronous {@link #retrieveStatistics(CasesRetrieveStatisticsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Aggregate case analytics for the date range (defaults to the last 30 days; max 731 days). Charts, tables, totals, assignment events, and current queue counts use the same application-scoped filters. Filters use current case values. Dates apply to each metric event, so older cases assigned or resolved during the period remain included. Queue depth is independent of the date range. Invalid filters return 400; an unknown blueprint or assignee returns an empty result.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/statistics/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesRetrieveStatisticsResponse>> retrieveStatisticsAsync() {
       return client.executeAsync(retrieveStatisticsRequest(CasesRetrieveStatisticsParams.builder().build()), RequestOptions.none(), RETRIEVE_STATISTICS_RESPONSE);
     }
 
     /**
-     * Bulk update case status
-     *
-     * <p>Apply the same status transition to several cases in one call: OPEN reopens, AWAITING_USER requests info, RESOLVED resolves (resolution required). Each case is evaluated independently; gate failures (incomplete checklist, missing required note) are reported per case without aborting the batch.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/status/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #bulkUpdateStatus(CasesBulkUpdateStatusParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CasesBulkUpdateStatusResponse> bulkUpdateStatus(CasesBulkUpdateStatusParams params, RequestOptions options) {
       return client.execute(bulkUpdateStatusRequest(params), options, BULK_UPDATE_STATUS_RESPONSE);
     }
 
     /**
-     * Bulk update case status
-     *
-     * <p>Apply the same status transition to several cases in one call: OPEN reopens, AWAITING_USER requests info, RESOLVED resolves (resolution required). Each case is evaluated independently; gate failures (incomplete checklist, missing required note) are reported per case without aborting the batch.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/status/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #bulkUpdateStatus(CasesBulkUpdateStatusParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesBulkUpdateStatusResponse>> bulkUpdateStatusAsync(CasesBulkUpdateStatusParams params, RequestOptions options) {
       return client.executeAsync(bulkUpdateStatusRequest(params), options, BULK_UPDATE_STATUS_RESPONSE);
     }
 
     /**
-     * Bulk update case status
-     *
-     * <p>Apply the same status transition to several cases in one call: OPEN reopens, AWAITING_USER requests info, RESOLVED resolves (resolution required). Each case is evaluated independently; gate failures (incomplete checklist, missing required note) are reported per case without aborting the batch.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/status/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #bulkUpdateStatus(CasesBulkUpdateStatusParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CasesBulkUpdateStatusResponse> bulkUpdateStatus(CasesBulkUpdateStatusParams params) {
       return client.execute(bulkUpdateStatusRequest(params), RequestOptions.none(), BULK_UPDATE_STATUS_RESPONSE);
     }
 
     /**
-     * Bulk update case status
-     *
-     * <p>Apply the same status transition to several cases in one call: OPEN reopens, AWAITING_USER requests info, RESOLVED resolves (resolution required). Each case is evaluated independently; gate failures (incomplete checklist, missing required note) are reported per case without aborting the batch.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/status/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #bulkUpdateStatus(CasesBulkUpdateStatusParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesBulkUpdateStatusResponse>> bulkUpdateStatusAsync(CasesBulkUpdateStatusParams params) {
       return client.executeAsync(bulkUpdateStatusRequest(params), RequestOptions.none(), BULK_UPDATE_STATUS_RESPONSE);
     }
 
     /**
-     * Bulk assign cases
-     *
-     * <p>Assign (or unassign, with assignee_user_id: null) several cases at once. All cases must share the same blueprint; mismatches are reported per case without aborting the batch.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/assign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #bulkAssign(CasesBulkAssignParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CasesBulkAssignResponse> bulkAssign(CasesBulkAssignParams params, RequestOptions options) {
       return client.execute(bulkAssignRequest(params), options, BULK_ASSIGN_RESPONSE);
     }
 
     /**
-     * Bulk assign cases
-     *
-     * <p>Assign (or unassign, with assignee_user_id: null) several cases at once. All cases must share the same blueprint; mismatches are reported per case without aborting the batch.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/assign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #bulkAssign(CasesBulkAssignParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesBulkAssignResponse>> bulkAssignAsync(CasesBulkAssignParams params, RequestOptions options) {
       return client.executeAsync(bulkAssignRequest(params), options, BULK_ASSIGN_RESPONSE);
     }
 
     /**
-     * Bulk assign cases
-     *
-     * <p>Assign (or unassign, with assignee_user_id: null) several cases at once. All cases must share the same blueprint; mismatches are reported per case without aborting the batch.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/assign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #bulkAssign(CasesBulkAssignParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CasesBulkAssignResponse> bulkAssign(CasesBulkAssignParams params) {
       return client.execute(bulkAssignRequest(params), RequestOptions.none(), BULK_ASSIGN_RESPONSE);
     }
 
     /**
-     * Bulk assign cases
-     *
-     * <p>Assign (or unassign, with assignee_user_id: null) several cases at once. All cases must share the same blueprint; mismatches are reported per case without aborting the batch.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/assign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #bulkAssign(CasesBulkAssignParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesBulkAssignResponse>> bulkAssignAsync(CasesBulkAssignParams params) {
       return client.executeAsync(bulkAssignRequest(params), RequestOptions.none(), BULK_ASSIGN_RESPONSE);
     }
 
     /**
-     * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)} with the raw response.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseActionCaseActionReceiptPage> listActionReceipts(String caseUuid, CasesListActionReceiptsParams params, RequestOptions options) {
       return client.execute(listActionReceiptsRequest(caseUuid, params), options, LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
     /**
-     * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)} with the raw response.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseActionCaseActionReceiptPage>> listActionReceiptsAsync(String caseUuid, CasesListActionReceiptsParams params, RequestOptions options) {
       return client.executeAsync(listActionReceiptsRequest(caseUuid, params), options, LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
     /**
-     * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseActionCaseActionReceiptPage> listActionReceipts(String caseUuid, CasesListActionReceiptsParams params) {
       return client.execute(listActionReceiptsRequest(caseUuid, params), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
     /**
-     * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseActionCaseActionReceiptPage>> listActionReceiptsAsync(String caseUuid, CasesListActionReceiptsParams params) {
       return client.executeAsync(listActionReceiptsRequest(caseUuid, params), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
     /**
-     * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param caseUuid the {@code case_uuid}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseActionCaseActionReceiptPage> listActionReceipts(String caseUuid, RequestOptions options) {
       return client.execute(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), options, LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
     /**
-     * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param caseUuid the {@code case_uuid}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseActionCaseActionReceiptPage>> listActionReceiptsAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), options, LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
     /**
-     * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseActionCaseActionReceiptPage> listActionReceipts(String caseUuid) {
       return client.execute(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
     /**
-     * List subject-action receipts, newest first, with at most 20 results per page. Use next_offset for the next page. Input note text is not exposed in the history.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #listActionReceipts(String, CasesListActionReceiptsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseActionCaseActionReceiptPage>> listActionReceiptsAsync(String caseUuid) {
       return client.executeAsync(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
     /**
-     * Retry only this failed subject action using its saved inputs. Current write permission is checked. Applied actions return their receipt without executing again. Case closure is independent.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/{receipt_uuid}/retry/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #retryActionReceipt(String, String, RequestOptions)} with the raw response.
      *
      * @param caseUuid the {@code case_uuid}
      * @param receiptUuid the {@code receipt_uuid}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseActionCaseActionReceipt> retryActionReceipt(String caseUuid, String receiptUuid, RequestOptions options) {
       return client.execute(retryActionReceiptRequest(caseUuid, receiptUuid), options, RETRY_ACTION_RECEIPT_RESPONSE);
     }
 
     /**
-     * Retry only this failed subject action using its saved inputs. Current write permission is checked. Applied actions return their receipt without executing again. Case closure is independent.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/{receipt_uuid}/retry/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #retryActionReceipt(String, String, RequestOptions)} with the raw response.
      *
      * @param caseUuid the {@code case_uuid}
      * @param receiptUuid the {@code receipt_uuid}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseActionCaseActionReceipt>> retryActionReceiptAsync(String caseUuid, String receiptUuid, RequestOptions options) {
       return client.executeAsync(retryActionReceiptRequest(caseUuid, receiptUuid), options, RETRY_ACTION_RECEIPT_RESPONSE);
     }
 
     /**
-     * Retry only this failed subject action using its saved inputs. Current write permission is checked. Applied actions return their receipt without executing again. Case closure is independent.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/{receipt_uuid}/retry/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #retryActionReceipt(String, String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param receiptUuid the {@code receipt_uuid}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseActionCaseActionReceipt> retryActionReceipt(String caseUuid, String receiptUuid) {
       return client.execute(retryActionReceiptRequest(caseUuid, receiptUuid), RequestOptions.none(), RETRY_ACTION_RECEIPT_RESPONSE);
     }
 
     /**
-     * Retry only this failed subject action using its saved inputs. Current write permission is checked. Applied actions return their receipt without executing again. Case closure is independent.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/{receipt_uuid}/retry/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #retryActionReceipt(String, String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param receiptUuid the {@code receipt_uuid}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseActionCaseActionReceipt>> retryActionReceiptAsync(String caseUuid, String receiptUuid) {
       return client.executeAsync(retryActionReceiptRequest(caseUuid, receiptUuid), RequestOptions.none(), RETRY_ACTION_RECEIPT_RESPONSE);
     }
 
     /**
-     * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDuplicateCaseDuplicatePage> findDuplicates(CaseDuplicateCaseDuplicateQueryRequest params, RequestOptions options) {
       return client.execute(findDuplicatesRequest(params), options, FIND_DUPLICATES_RESPONSE);
     }
 
     /**
-     * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDuplicateCaseDuplicatePage>> findDuplicatesAsync(CaseDuplicateCaseDuplicateQueryRequest params, RequestOptions options) {
       return client.executeAsync(findDuplicatesRequest(params), options, FIND_DUPLICATES_RESPONSE);
     }
 
     /**
-     * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseDuplicateCaseDuplicatePage> findDuplicates(CaseDuplicateCaseDuplicateQueryRequest params) {
       return client.execute(findDuplicatesRequest(params), RequestOptions.none(), FIND_DUPLICATES_RESPONSE);
     }
 
     /**
-     * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDuplicateCaseDuplicatePage>> findDuplicatesAsync(CaseDuplicateCaseDuplicateQueryRequest params) {
       return client.executeAsync(findDuplicatesRequest(params), RequestOptions.none(), FIND_DUPLICATES_RESPONSE);
     }
 
     /**
-     * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
+     * {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseDuplicateCaseDuplicatePage> findDuplicates(RequestOptions options) {
       return client.execute(findDuplicatesRequest(CaseDuplicateCaseDuplicateQueryRequest.builder().build()), options, FIND_DUPLICATES_RESPONSE);
     }
 
     /**
-     * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
+     * Asynchronous {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDuplicateCaseDuplicatePage>> findDuplicatesAsync(RequestOptions options) {
       return client.executeAsync(findDuplicatesRequest(CaseDuplicateCaseDuplicateQueryRequest.builder().build()), options, FIND_DUPLICATES_RESPONSE);
     }
 
     /**
-     * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
+     * {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseDuplicateCaseDuplicatePage> findDuplicates() {
       return client.execute(findDuplicatesRequest(CaseDuplicateCaseDuplicateQueryRequest.builder().build()), RequestOptions.none(), FIND_DUPLICATES_RESPONSE);
     }
 
     /**
-     * Review existing cases for a subject or owned source record before manual case creation. Both open and resolved investigations are returned. Each page contains at most 20 cases; use next_offset to request another page.
+     * Asynchronous {@link #findDuplicates(CaseDuplicateCaseDuplicateQueryRequest, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseDuplicateCaseDuplicatePage>> findDuplicatesAsync() {
       return client.executeAsync(findDuplicatesRequest(CaseDuplicateCaseDuplicateQueryRequest.builder().build()), RequestOptions.none(), FIND_DUPLICATES_RESPONSE);
     }
 
     /**
-     * List eligible case reviewers
+     * {@link #listReviewers(RequestOptions)} with the raw response.
      *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/reviewers/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CasesListReviewersResponse> listReviewers(RequestOptions options) {
       return client.execute(listReviewersRequest(), options, LIST_REVIEWERS_RESPONSE);
     }
 
     /**
-     * List eligible case reviewers
+     * Asynchronous {@link #listReviewers(RequestOptions)} with the raw response.
      *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/reviewers/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesListReviewersResponse>> listReviewersAsync(RequestOptions options) {
       return client.executeAsync(listReviewersRequest(), options, LIST_REVIEWERS_RESPONSE);
     }
 
     /**
-     * List eligible case reviewers
+     * {@link #listReviewers(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/reviewers/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CasesListReviewersResponse> listReviewers() {
       return client.execute(listReviewersRequest(), RequestOptions.none(), LIST_REVIEWERS_RESPONSE);
     }
 
     /**
-     * List eligible case reviewers
+     * Asynchronous {@link #listReviewers(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Requires <code>list:cases</code> for the requested application.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/reviewers/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesListReviewersResponse>> listReviewersAsync() {
       return client.executeAsync(listReviewersRequest(), RequestOptions.none(), LIST_REVIEWERS_RESPONSE);

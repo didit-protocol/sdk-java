@@ -54,90 +54,76 @@ public final class CasesNotesResource {
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(String, CasesNotesListParams, RequestOptions)}.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseCollaborationCaseNote>> listAsync(String caseUuid, CasesNotesListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(caseUuid, params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(String, CasesNotesListParams, RequestOptions)}, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<CaseCollaborationCaseNote> list(String caseUuid, CasesNotesListParams params) {
     return client.execute(listRequest(caseUuid, params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(String, CasesNotesListParams, RequestOptions)}, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseCollaborationCaseNote>> listAsync(String caseUuid, CasesNotesListParams params) {
     return client.executeAsync(listRequest(caseUuid, params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(String, CasesNotesListParams, RequestOptions)}, without parameters.
    *
    * @param caseUuid the {@code case_uuid}
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<CaseCollaborationCaseNote> list(String caseUuid, RequestOptions options) {
     return client.execute(listRequest(caseUuid, CasesNotesListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(String, CasesNotesListParams, RequestOptions)}, without parameters.
    *
    * @param caseUuid the {@code case_uuid}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseCollaborationCaseNote>> listAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(listRequest(caseUuid, CasesNotesListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(String, CasesNotesListParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
-   * @return the response body
+   * @return the result
    */
   public Page<CaseCollaborationCaseNote> list(String caseUuid) {
     return client.execute(listRequest(caseUuid, CasesNotesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(String, CasesNotesListParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<CaseCollaborationCaseNote>> listAsync(String caseUuid) {
     return client.executeAsync(listRequest(caseUuid, CasesNotesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -159,43 +145,34 @@ public final class CasesNotesResource {
   }
 
   /**
-   * Add a case-scoped note. An optional client_reference makes an unchanged retry return the same note without duplicate activity or notifications. reply_to must identify a live note in this case. The response includes a bounded parent excerpt without copying that excerpt into the saved reply.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #create(String, CaseCollaborationCaseNoteCreateRequest, RequestOptions)}.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseCollaborationCaseNote> createAsync(String caseUuid, CaseCollaborationCaseNoteCreateRequest params, RequestOptions options) {
     return client.executeAsync(createRequest(caseUuid, params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Add a case-scoped note. An optional client_reference makes an unchanged retry return the same note without duplicate activity or notifications. reply_to must identify a live note in this case. The response includes a bounded parent excerpt without copying that excerpt into the saved reply.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #create(String, CaseCollaborationCaseNoteCreateRequest, RequestOptions)}, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseCollaborationCaseNote create(String caseUuid, CaseCollaborationCaseNoteCreateRequest params) {
     return client.execute(createRequest(caseUuid, params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Add a case-scoped note. An optional client_reference makes an unchanged retry return the same note without duplicate activity or notifications. reply_to must identify a live note in this case. The response includes a bounded parent excerpt without copying that excerpt into the saved reply.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #create(String, CaseCollaborationCaseNoteCreateRequest, RequestOptions)}, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseCollaborationCaseNote> createAsync(String caseUuid, CaseCollaborationCaseNoteCreateRequest params) {
     return client.executeAsync(createRequest(caseUuid, params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -218,104 +195,83 @@ public final class CasesNotesResource {
   }
 
   /**
-   * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)}.
    *
    * @param caseUuid the {@code case_uuid}
    * @param noteUuid the {@code note_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseCollaborationCaseNote> updateAsync(String caseUuid, String noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest params, RequestOptions options) {
     return client.executeAsync(updateRequest(caseUuid, noteUuid, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)}, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param noteUuid the {@code note_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseCollaborationCaseNote update(String caseUuid, String noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest params) {
     return client.execute(updateRequest(caseUuid, noteUuid, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)}, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param noteUuid the {@code note_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseCollaborationCaseNote> updateAsync(String caseUuid, String noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest params) {
     return client.executeAsync(updateRequest(caseUuid, noteUuid, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)}, without parameters.
    *
    * @param caseUuid the {@code case_uuid}
    * @param noteUuid the {@code note_uuid}
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public CaseCollaborationCaseNote update(String caseUuid, String noteUuid, RequestOptions options) {
     return client.execute(updateRequest(caseUuid, noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest.builder().build()), options, UPDATE_RESPONSE).data();
   }
 
   /**
-   * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)}, without parameters.
    *
    * @param caseUuid the {@code case_uuid}
    * @param noteUuid the {@code note_uuid}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseCollaborationCaseNote> updateAsync(String caseUuid, String noteUuid, RequestOptions options) {
     return client.executeAsync(updateRequest(caseUuid, noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest.builder().build()), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)}, without parameters, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param noteUuid the {@code note_uuid}
-   * @return the response body
+   * @return the result
    */
   public CaseCollaborationCaseNote update(String caseUuid, String noteUuid) {
     return client.execute(updateRequest(caseUuid, noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)}, without parameters, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param noteUuid the {@code note_uuid}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseCollaborationCaseNote> updateAsync(String caseUuid, String noteUuid) {
     return client.executeAsync(updateRequest(caseUuid, noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -334,21 +290,19 @@ public final class CasesNotesResource {
   }
 
   /**
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #delete(String, String, RequestOptions)}.
    *
    * @param caseUuid the {@code case_uuid}
    * @param noteUuid the {@code note_uuid}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String caseUuid, String noteUuid, RequestOptions options) {
     return client.executeAsync(deleteRequest(caseUuid, noteUuid), options, DELETE_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #delete(String, String, RequestOptions)}, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param noteUuid the {@code note_uuid}
@@ -358,12 +312,11 @@ public final class CasesNotesResource {
   }
 
   /**
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #delete(String, String, RequestOptions)}, with the client's options.
    *
    * @param caseUuid the {@code case_uuid}
    * @param noteUuid the {@code note_uuid}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String caseUuid, String noteUuid) {
     return client.executeAsync(deleteRequest(caseUuid, noteUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
@@ -387,49 +340,34 @@ public final class CasesNotesResource {
   }
 
   /**
-   * Get note attachment URL
+   * Asynchronous {@link #retrieveAttachmentUrl(String, CasesNotesRetrieveAttachmentUrlParams, RequestOptions)}.
    *
-   * <p>Mint a fresh presigned download URL for an attachment already stored on one of the case's notes.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesNotesRetrieveAttachmentUrlResponse> retrieveAttachmentUrlAsync(String caseUuid, CasesNotesRetrieveAttachmentUrlParams params, RequestOptions options) {
     return client.executeAsync(retrieveAttachmentUrlRequest(caseUuid, params), options, RETRIEVE_ATTACHMENT_URL_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get note attachment URL
+   * Same as {@link #retrieveAttachmentUrl(String, CasesNotesRetrieveAttachmentUrlParams, RequestOptions)}, with the client's options.
    *
-   * <p>Mint a fresh presigned download URL for an attachment already stored on one of the case's notes.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CasesNotesRetrieveAttachmentUrlResponse retrieveAttachmentUrl(String caseUuid, CasesNotesRetrieveAttachmentUrlParams params) {
     return client.execute(retrieveAttachmentUrlRequest(caseUuid, params), RequestOptions.none(), RETRIEVE_ATTACHMENT_URL_RESPONSE).data();
   }
 
   /**
-   * Get note attachment URL
+   * Asynchronous {@link #retrieveAttachmentUrl(String, CasesNotesRetrieveAttachmentUrlParams, RequestOptions)}, with the client's options.
    *
-   * <p>Mint a fresh presigned download URL for an attachment already stored on one of the case's notes.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesNotesRetrieveAttachmentUrlResponse> retrieveAttachmentUrlAsync(String caseUuid, CasesNotesRetrieveAttachmentUrlParams params) {
     return client.executeAsync(retrieveAttachmentUrlRequest(caseUuid, params), RequestOptions.none(), RETRIEVE_ATTACHMENT_URL_RESPONSE).thenApply(RawResponse::data);
@@ -453,49 +391,34 @@ public final class CasesNotesResource {
   }
 
   /**
-   * Upload note attachment
+   * Asynchronous {@link #createAttachmentUpload(String, CasesNotesCreateAttachmentUploadParams, RequestOptions)}.
    *
-   * <p>Upload a file (JPEG, PNG, WebP, PDF, plain text, or CSV; max 5 MB) to attach to a note. Returns the s3_key to pass in the note's attachments array.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesNotesCreateAttachmentUploadResponse> createAttachmentUploadAsync(String caseUuid, CasesNotesCreateAttachmentUploadParams params, RequestOptions options) {
     return client.executeAsync(createAttachmentUploadRequest(caseUuid, params), options, CREATE_ATTACHMENT_UPLOAD_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Upload note attachment
+   * Same as {@link #createAttachmentUpload(String, CasesNotesCreateAttachmentUploadParams, RequestOptions)}, with the client's options.
    *
-   * <p>Upload a file (JPEG, PNG, WebP, PDF, plain text, or CSV; max 5 MB) to attach to a note. Returns the s3_key to pass in the note's attachments array.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CasesNotesCreateAttachmentUploadResponse createAttachmentUpload(String caseUuid, CasesNotesCreateAttachmentUploadParams params) {
     return client.execute(createAttachmentUploadRequest(caseUuid, params), RequestOptions.none(), CREATE_ATTACHMENT_UPLOAD_RESPONSE).data();
   }
 
   /**
-   * Upload note attachment
+   * Asynchronous {@link #createAttachmentUpload(String, CasesNotesCreateAttachmentUploadParams, RequestOptions)}, with the client's options.
    *
-   * <p>Upload a file (JPEG, PNG, WebP, PDF, plain text, or CSV; max 5 MB) to attach to a note. Returns the s3_key to pass in the note's attachments array.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
+   * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CasesNotesCreateAttachmentUploadResponse> createAttachmentUploadAsync(String caseUuid, CasesNotesCreateAttachmentUploadParams params) {
     return client.executeAsync(createAttachmentUploadRequest(caseUuid, params), RequestOptions.none(), CREATE_ATTACHMENT_UPLOAD_RESPONSE).thenApply(RawResponse::data);
@@ -576,464 +499,368 @@ public final class CasesNotesResource {
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(String, CasesNotesListParams, RequestOptions)} with the raw response.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<CaseCollaborationCaseNote>> list(String caseUuid, CasesNotesListParams params, RequestOptions options) {
       return client.execute(listRequest(caseUuid, params), options, LIST_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(String, CasesNotesListParams, RequestOptions)} with the raw response.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseCollaborationCaseNote>>> listAsync(String caseUuid, CasesNotesListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(caseUuid, params), options, LIST_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(String, CasesNotesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<CaseCollaborationCaseNote>> list(String caseUuid, CasesNotesListParams params) {
       return client.execute(listRequest(caseUuid, params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(String, CasesNotesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseCollaborationCaseNote>>> listAsync(String caseUuid, CasesNotesListParams params) {
       return client.executeAsync(listRequest(caseUuid, params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(String, CasesNotesListParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param caseUuid the {@code case_uuid}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<CaseCollaborationCaseNote>> list(String caseUuid, RequestOptions options) {
       return client.execute(listRequest(caseUuid, CasesNotesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(String, CasesNotesListParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param caseUuid the {@code case_uuid}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseCollaborationCaseNote>>> listAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(listRequest(caseUuid, CasesNotesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(String, CasesNotesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<CaseCollaborationCaseNote>> list(String caseUuid) {
       return client.execute(listRequest(caseUuid, CasesNotesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(String, CasesNotesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<CaseCollaborationCaseNote>>> listAsync(String caseUuid) {
       return client.executeAsync(listRequest(caseUuid, CasesNotesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Add a case-scoped note. An optional client_reference makes an unchanged retry return the same note without duplicate activity or notifications. reply_to must identify a live note in this case. The response includes a bounded parent excerpt without copying that excerpt into the saved reply.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #create(String, CaseCollaborationCaseNoteCreateRequest, RequestOptions)} with the raw response.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseCollaborationCaseNote> create(String caseUuid, CaseCollaborationCaseNoteCreateRequest params, RequestOptions options) {
       return client.execute(createRequest(caseUuid, params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Add a case-scoped note. An optional client_reference makes an unchanged retry return the same note without duplicate activity or notifications. reply_to must identify a live note in this case. The response includes a bounded parent excerpt without copying that excerpt into the saved reply.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #create(String, CaseCollaborationCaseNoteCreateRequest, RequestOptions)} with the raw response.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseCollaborationCaseNote>> createAsync(String caseUuid, CaseCollaborationCaseNoteCreateRequest params, RequestOptions options) {
       return client.executeAsync(createRequest(caseUuid, params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Add a case-scoped note. An optional client_reference makes an unchanged retry return the same note without duplicate activity or notifications. reply_to must identify a live note in this case. The response includes a bounded parent excerpt without copying that excerpt into the saved reply.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #create(String, CaseCollaborationCaseNoteCreateRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseCollaborationCaseNote> create(String caseUuid, CaseCollaborationCaseNoteCreateRequest params) {
       return client.execute(createRequest(caseUuid, params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Add a case-scoped note. An optional client_reference makes an unchanged retry return the same note without duplicate activity or notifications. reply_to must identify a live note in this case. The response includes a bounded parent excerpt without copying that excerpt into the saved reply.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #create(String, CaseCollaborationCaseNoteCreateRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseCollaborationCaseNote>> createAsync(String caseUuid, CaseCollaborationCaseNoteCreateRequest params) {
       return client.executeAsync(createRequest(caseUuid, params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)} with the raw response.
      *
      * @param caseUuid the {@code case_uuid}
      * @param noteUuid the {@code note_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseCollaborationCaseNote> update(String caseUuid, String noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest params, RequestOptions options) {
       return client.execute(updateRequest(caseUuid, noteUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)} with the raw response.
      *
      * @param caseUuid the {@code case_uuid}
      * @param noteUuid the {@code note_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseCollaborationCaseNote>> updateAsync(String caseUuid, String noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest params, RequestOptions options) {
       return client.executeAsync(updateRequest(caseUuid, noteUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param noteUuid the {@code note_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseCollaborationCaseNote> update(String caseUuid, String noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest params) {
       return client.execute(updateRequest(caseUuid, noteUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param noteUuid the {@code note_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseCollaborationCaseNote>> updateAsync(String caseUuid, String noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest params) {
       return client.executeAsync(updateRequest(caseUuid, noteUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)} with the raw response, without parameters.
      *
      * @param caseUuid the {@code case_uuid}
      * @param noteUuid the {@code note_uuid}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseCollaborationCaseNote> update(String caseUuid, String noteUuid, RequestOptions options) {
       return client.execute(updateRequest(caseUuid, noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)} with the raw response, without parameters.
      *
      * @param caseUuid the {@code case_uuid}
      * @param noteUuid the {@code note_uuid}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseCollaborationCaseNote>> updateAsync(String caseUuid, String noteUuid, RequestOptions options) {
       return client.executeAsync(updateRequest(caseUuid, noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param noteUuid the {@code note_uuid}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseCollaborationCaseNote> update(String caseUuid, String noteUuid) {
       return client.execute(updateRequest(caseUuid, noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Pin or unpin an existing note. Pinned notes appear first. Pin changes are recorded in case activity and do not change evidence or source decisions.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #update(String, String, CaseCollaborationPatchedCaseNoteUpdateRequest, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param noteUuid the {@code note_uuid}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseCollaborationCaseNote>> updateAsync(String caseUuid, String noteUuid) {
       return client.executeAsync(updateRequest(caseUuid, noteUuid, CaseCollaborationPatchedCaseNoteUpdateRequest.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #delete(String, String, RequestOptions)} with the raw response.
      *
      * @param caseUuid the {@code case_uuid}
      * @param noteUuid the {@code note_uuid}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String caseUuid, String noteUuid, RequestOptions options) {
       return client.execute(deleteRequest(caseUuid, noteUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #delete(String, String, RequestOptions)} with the raw response.
      *
      * @param caseUuid the {@code case_uuid}
      * @param noteUuid the {@code note_uuid}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String caseUuid, String noteUuid, RequestOptions options) {
       return client.executeAsync(deleteRequest(caseUuid, noteUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #delete(String, String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param noteUuid the {@code note_uuid}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String caseUuid, String noteUuid) {
       return client.execute(deleteRequest(caseUuid, noteUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #delete(String, String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param caseUuid the {@code case_uuid}
      * @param noteUuid the {@code note_uuid}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String caseUuid, String noteUuid) {
       return client.executeAsync(deleteRequest(caseUuid, noteUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Get note attachment URL
+     * {@link #retrieveAttachmentUrl(String, CasesNotesRetrieveAttachmentUrlParams, RequestOptions)} with the raw response.
      *
-     * <p>Mint a fresh presigned download URL for an attachment already stored on one of the case's notes.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CasesNotesRetrieveAttachmentUrlResponse> retrieveAttachmentUrl(String caseUuid, CasesNotesRetrieveAttachmentUrlParams params, RequestOptions options) {
       return client.execute(retrieveAttachmentUrlRequest(caseUuid, params), options, RETRIEVE_ATTACHMENT_URL_RESPONSE);
     }
 
     /**
-     * Get note attachment URL
+     * Asynchronous {@link #retrieveAttachmentUrl(String, CasesNotesRetrieveAttachmentUrlParams, RequestOptions)} with the raw response.
      *
-     * <p>Mint a fresh presigned download URL for an attachment already stored on one of the case's notes.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesNotesRetrieveAttachmentUrlResponse>> retrieveAttachmentUrlAsync(String caseUuid, CasesNotesRetrieveAttachmentUrlParams params, RequestOptions options) {
       return client.executeAsync(retrieveAttachmentUrlRequest(caseUuid, params), options, RETRIEVE_ATTACHMENT_URL_RESPONSE);
     }
 
     /**
-     * Get note attachment URL
+     * {@link #retrieveAttachmentUrl(String, CasesNotesRetrieveAttachmentUrlParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Mint a fresh presigned download URL for an attachment already stored on one of the case's notes.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CasesNotesRetrieveAttachmentUrlResponse> retrieveAttachmentUrl(String caseUuid, CasesNotesRetrieveAttachmentUrlParams params) {
       return client.execute(retrieveAttachmentUrlRequest(caseUuid, params), RequestOptions.none(), RETRIEVE_ATTACHMENT_URL_RESPONSE);
     }
 
     /**
-     * Get note attachment URL
+     * Asynchronous {@link #retrieveAttachmentUrl(String, CasesNotesRetrieveAttachmentUrlParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Mint a fresh presigned download URL for an attachment already stored on one of the case's notes.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesNotesRetrieveAttachmentUrlResponse>> retrieveAttachmentUrlAsync(String caseUuid, CasesNotesRetrieveAttachmentUrlParams params) {
       return client.executeAsync(retrieveAttachmentUrlRequest(caseUuid, params), RequestOptions.none(), RETRIEVE_ATTACHMENT_URL_RESPONSE);
     }
 
     /**
-     * Upload note attachment
+     * {@link #createAttachmentUpload(String, CasesNotesCreateAttachmentUploadParams, RequestOptions)} with the raw response.
      *
-     * <p>Upload a file (JPEG, PNG, WebP, PDF, plain text, or CSV; max 5 MB) to attach to a note. Returns the s3_key to pass in the note's attachments array.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CasesNotesCreateAttachmentUploadResponse> createAttachmentUpload(String caseUuid, CasesNotesCreateAttachmentUploadParams params, RequestOptions options) {
       return client.execute(createAttachmentUploadRequest(caseUuid, params), options, CREATE_ATTACHMENT_UPLOAD_RESPONSE);
     }
 
     /**
-     * Upload note attachment
+     * Asynchronous {@link #createAttachmentUpload(String, CasesNotesCreateAttachmentUploadParams, RequestOptions)} with the raw response.
      *
-     * <p>Upload a file (JPEG, PNG, WebP, PDF, plain text, or CSV; max 5 MB) to attach to a note. Returns the s3_key to pass in the note's attachments array.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesNotesCreateAttachmentUploadResponse>> createAttachmentUploadAsync(String caseUuid, CasesNotesCreateAttachmentUploadParams params, RequestOptions options) {
       return client.executeAsync(createAttachmentUploadRequest(caseUuid, params), options, CREATE_ATTACHMENT_UPLOAD_RESPONSE);
     }
 
     /**
-     * Upload note attachment
+     * {@link #createAttachmentUpload(String, CasesNotesCreateAttachmentUploadParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Upload a file (JPEG, PNG, WebP, PDF, plain text, or CSV; max 5 MB) to attach to a note. Returns the s3_key to pass in the note's attachments array.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CasesNotesCreateAttachmentUploadResponse> createAttachmentUpload(String caseUuid, CasesNotesCreateAttachmentUploadParams params) {
       return client.execute(createAttachmentUploadRequest(caseUuid, params), RequestOptions.none(), CREATE_ATTACHMENT_UPLOAD_RESPONSE);
     }
 
     /**
-     * Upload note attachment
+     * Asynchronous {@link #createAttachmentUpload(String, CasesNotesCreateAttachmentUploadParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Upload a file (JPEG, PNG, WebP, PDF, plain text, or CSV; max 5 MB) to attach to a note. Returns the s3_key to pass in the note's attachments array.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
+     * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CasesNotesCreateAttachmentUploadResponse>> createAttachmentUploadAsync(String caseUuid, CasesNotesCreateAttachmentUploadParams params) {
       return client.executeAsync(createAttachmentUploadRequest(caseUuid, params), RequestOptions.none(), CREATE_ATTACHMENT_UPLOAD_RESPONSE);

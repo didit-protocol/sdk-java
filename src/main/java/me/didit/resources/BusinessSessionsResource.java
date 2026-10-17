@@ -47,46 +47,31 @@ public final class BusinessSessionsResource {
   }
 
   /**
-   * List networks for a business session
+   * Asynchronous {@link #listNetworks(String, RequestOptions)}.
    *
-   * <p>List the networks the business session's vendor business belongs to.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/business-sessions/{business_session_id}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param businessSessionId Business session UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param businessSessionId the {@code business_session_id}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessSessionsListNetworksResponse> listNetworksAsync(String businessSessionId, RequestOptions options) {
     return client.executeAsync(listNetworksRequest(businessSessionId), options, LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List networks for a business session
+   * Same as {@link #listNetworks(String, RequestOptions)}, with the client's options.
    *
-   * <p>List the networks the business session's vendor business belongs to.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/business-sessions/{business_session_id}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param businessSessionId Business session UUID.
-   * @return the response body
+   * @param businessSessionId the {@code business_session_id}
+   * @return the result
    */
   public BusinessSessionsListNetworksResponse listNetworks(String businessSessionId) {
     return client.execute(listNetworksRequest(businessSessionId), RequestOptions.none(), LIST_NETWORKS_RESPONSE).data();
   }
 
   /**
-   * List networks for a business session
+   * Asynchronous {@link #listNetworks(String, RequestOptions)}, with the client's options.
    *
-   * <p>List the networks the business session's vendor business belongs to.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/business-sessions/{business_session_id}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param businessSessionId Business session UUID.
-   * @return a future completed with the response body
+   * @param businessSessionId the {@code business_session_id}
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessSessionsListNetworksResponse> listNetworksAsync(String businessSessionId) {
     return client.executeAsync(listNetworksRequest(businessSessionId), RequestOptions.none(), LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
@@ -110,62 +95,42 @@ public final class BusinessSessionsResource {
     }
 
     /**
-     * List networks for a business session
+     * {@link #listNetworks(String, RequestOptions)} with the raw response.
      *
-     * <p>List the networks the business session's vendor business belongs to.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/business-sessions/{business_session_id}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param businessSessionId Business session UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param businessSessionId the {@code business_session_id}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessSessionsListNetworksResponse> listNetworks(String businessSessionId, RequestOptions options) {
       return client.execute(listNetworksRequest(businessSessionId), options, LIST_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a business session
+     * Asynchronous {@link #listNetworks(String, RequestOptions)} with the raw response.
      *
-     * <p>List the networks the business session's vendor business belongs to.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/business-sessions/{business_session_id}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param businessSessionId Business session UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param businessSessionId the {@code business_session_id}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessSessionsListNetworksResponse>> listNetworksAsync(String businessSessionId, RequestOptions options) {
       return client.executeAsync(listNetworksRequest(businessSessionId), options, LIST_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a business session
+     * {@link #listNetworks(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the networks the business session's vendor business belongs to.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/business-sessions/{business_session_id}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param businessSessionId Business session UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param businessSessionId the {@code business_session_id}
+     * @return the result
      */
     public RawResponse<BusinessSessionsListNetworksResponse> listNetworks(String businessSessionId) {
       return client.execute(listNetworksRequest(businessSessionId), RequestOptions.none(), LIST_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a business session
+     * Asynchronous {@link #listNetworks(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the networks the business session's vendor business belongs to.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/business-sessions/{business_session_id}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param businessSessionId Business session UUID.
-     * @return a future completed with the raw response
+     * @param businessSessionId the {@code business_session_id}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessSessionsListNetworksResponse>> listNetworksAsync(String businessSessionId) {
       return client.executeAsync(listNetworksRequest(businessSessionId), RequestOptions.none(), LIST_NETWORKS_RESPONSE);

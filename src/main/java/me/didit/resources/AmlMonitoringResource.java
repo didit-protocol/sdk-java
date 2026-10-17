@@ -46,43 +46,31 @@ public final class AmlMonitoringResource {
   }
 
   /**
-   * Get AML ongoing monitoring job
+   * Asynchronous {@link #retrieveJob(String, RequestOptions)}.
    *
-   * <p>Status, outcome counters and per-record results of a monitoring toggle job started from <code>POST /v3/users/aml-monitoring/</code> or <code>POST /v3/businesses/aml-monitoring/</code>. Poll every couple of seconds while <code>status</code> is <code>PENDING</code> or <code>PROCESSING</code>; <code>results</code> is complete once it is <code>COMPLETED</code>.
-   *
-   * <p>{@code GET /v3/aml-monitoring/jobs/{job_id}/}
-   *
-   * @param jobId The `job_id` returned by the toggle endpoint.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param jobId the {@code job_id}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<AmlMonitoringRetrieveJobResponse> retrieveJobAsync(String jobId, RequestOptions options) {
     return client.executeAsync(retrieveJobRequest(jobId), options, RETRIEVE_JOB_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get AML ongoing monitoring job
+   * Same as {@link #retrieveJob(String, RequestOptions)}, with the client's options.
    *
-   * <p>Status, outcome counters and per-record results of a monitoring toggle job started from <code>POST /v3/users/aml-monitoring/</code> or <code>POST /v3/businesses/aml-monitoring/</code>. Poll every couple of seconds while <code>status</code> is <code>PENDING</code> or <code>PROCESSING</code>; <code>results</code> is complete once it is <code>COMPLETED</code>.
-   *
-   * <p>{@code GET /v3/aml-monitoring/jobs/{job_id}/}
-   *
-   * @param jobId The `job_id` returned by the toggle endpoint.
-   * @return the response body
+   * @param jobId the {@code job_id}
+   * @return the result
    */
   public AmlMonitoringRetrieveJobResponse retrieveJob(String jobId) {
     return client.execute(retrieveJobRequest(jobId), RequestOptions.none(), RETRIEVE_JOB_RESPONSE).data();
   }
 
   /**
-   * Get AML ongoing monitoring job
+   * Asynchronous {@link #retrieveJob(String, RequestOptions)}, with the client's options.
    *
-   * <p>Status, outcome counters and per-record results of a monitoring toggle job started from <code>POST /v3/users/aml-monitoring/</code> or <code>POST /v3/businesses/aml-monitoring/</code>. Poll every couple of seconds while <code>status</code> is <code>PENDING</code> or <code>PROCESSING</code>; <code>results</code> is complete once it is <code>COMPLETED</code>.
-   *
-   * <p>{@code GET /v3/aml-monitoring/jobs/{job_id}/}
-   *
-   * @param jobId The `job_id` returned by the toggle endpoint.
-   * @return a future completed with the response body
+   * @param jobId the {@code job_id}
+   * @return a future completed with the result
    */
   public CompletableFuture<AmlMonitoringRetrieveJobResponse> retrieveJobAsync(String jobId) {
     return client.executeAsync(retrieveJobRequest(jobId), RequestOptions.none(), RETRIEVE_JOB_RESPONSE).thenApply(RawResponse::data);
@@ -105,58 +93,42 @@ public final class AmlMonitoringResource {
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * {@link #retrieveJob(String, RequestOptions)} with the raw response.
      *
-     * <p>Status, outcome counters and per-record results of a monitoring toggle job started from <code>POST /v3/users/aml-monitoring/</code> or <code>POST /v3/businesses/aml-monitoring/</code>. Poll every couple of seconds while <code>status</code> is <code>PENDING</code> or <code>PROCESSING</code>; <code>results</code> is complete once it is <code>COMPLETED</code>.
-     *
-     * <p>{@code GET /v3/aml-monitoring/jobs/{job_id}/}
-     *
-     * @param jobId The `job_id` returned by the toggle endpoint.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param jobId the {@code job_id}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<AmlMonitoringRetrieveJobResponse> retrieveJob(String jobId, RequestOptions options) {
       return client.execute(retrieveJobRequest(jobId), options, RETRIEVE_JOB_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * Asynchronous {@link #retrieveJob(String, RequestOptions)} with the raw response.
      *
-     * <p>Status, outcome counters and per-record results of a monitoring toggle job started from <code>POST /v3/users/aml-monitoring/</code> or <code>POST /v3/businesses/aml-monitoring/</code>. Poll every couple of seconds while <code>status</code> is <code>PENDING</code> or <code>PROCESSING</code>; <code>results</code> is complete once it is <code>COMPLETED</code>.
-     *
-     * <p>{@code GET /v3/aml-monitoring/jobs/{job_id}/}
-     *
-     * @param jobId The `job_id` returned by the toggle endpoint.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param jobId the {@code job_id}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<AmlMonitoringRetrieveJobResponse>> retrieveJobAsync(String jobId, RequestOptions options) {
       return client.executeAsync(retrieveJobRequest(jobId), options, RETRIEVE_JOB_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * {@link #retrieveJob(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Status, outcome counters and per-record results of a monitoring toggle job started from <code>POST /v3/users/aml-monitoring/</code> or <code>POST /v3/businesses/aml-monitoring/</code>. Poll every couple of seconds while <code>status</code> is <code>PENDING</code> or <code>PROCESSING</code>; <code>results</code> is complete once it is <code>COMPLETED</code>.
-     *
-     * <p>{@code GET /v3/aml-monitoring/jobs/{job_id}/}
-     *
-     * @param jobId The `job_id` returned by the toggle endpoint.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param jobId the {@code job_id}
+     * @return the result
      */
     public RawResponse<AmlMonitoringRetrieveJobResponse> retrieveJob(String jobId) {
       return client.execute(retrieveJobRequest(jobId), RequestOptions.none(), RETRIEVE_JOB_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * Asynchronous {@link #retrieveJob(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Status, outcome counters and per-record results of a monitoring toggle job started from <code>POST /v3/users/aml-monitoring/</code> or <code>POST /v3/businesses/aml-monitoring/</code>. Poll every couple of seconds while <code>status</code> is <code>PENDING</code> or <code>PROCESSING</code>; <code>results</code> is complete once it is <code>COMPLETED</code>.
-     *
-     * <p>{@code GET /v3/aml-monitoring/jobs/{job_id}/}
-     *
-     * @param jobId The `job_id` returned by the toggle endpoint.
-     * @return a future completed with the raw response
+     * @param jobId the {@code job_id}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<AmlMonitoringRetrieveJobResponse>> retrieveJobAsync(String jobId) {
       return client.executeAsync(retrieveJobRequest(jobId), RequestOptions.none(), RETRIEVE_JOB_RESPONSE);

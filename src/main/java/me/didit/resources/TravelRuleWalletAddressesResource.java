@@ -52,104 +52,69 @@ public final class TravelRuleWalletAddressesResource {
   }
 
   /**
-   * List wallet address book entries
-   *
-   * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-   *
-   * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<WalletAddressEntry>> listAsync(TravelRuleWalletAddressesListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List wallet address book entries
-   *
-   * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-   *
-   * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<WalletAddressEntry> list(TravelRuleWalletAddressesListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List wallet address book entries
-   *
-   * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-   *
-   * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<WalletAddressEntry>> listAsync(TravelRuleWalletAddressesListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List wallet address book entries
+   * Same as {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)}, without parameters.
    *
-   * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-   *
-   * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<WalletAddressEntry> list(RequestOptions options) {
     return client.execute(listRequest(TravelRuleWalletAddressesListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List wallet address book entries
+   * Asynchronous {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)}, without parameters.
    *
-   * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-   *
-   * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<WalletAddressEntry>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(TravelRuleWalletAddressesListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List wallet address book entries
+   * Same as {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-   *
-   * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<WalletAddressEntry> list() {
     return client.execute(listRequest(TravelRuleWalletAddressesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List wallet address book entries
+   * Asynchronous {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-   *
-   * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<WalletAddressEntry>> listAsync() {
     return client.executeAsync(listRequest(TravelRuleWalletAddressesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -171,43 +136,31 @@ public final class TravelRuleWalletAddressesResource {
   }
 
   /**
-   * Register a wallet address
-   *
-   * <p>Add an entry to your Travel Rule wallet address book so inbound INTERNAL-rail transfers can resolve against it.
-   *
-   * <p>{@code POST /v3/travel-rule/wallet-addresses/}
+   * Asynchronous {@link #create(WalletAddressEntryCreate, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<WalletAddressEntry> createAsync(WalletAddressEntryCreate params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Register a wallet address
-   *
-   * <p>Add an entry to your Travel Rule wallet address book so inbound INTERNAL-rail transfers can resolve against it.
-   *
-   * <p>{@code POST /v3/travel-rule/wallet-addresses/}
+   * Same as {@link #create(WalletAddressEntryCreate, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public WalletAddressEntry create(WalletAddressEntryCreate params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Register a wallet address
-   *
-   * <p>Add an entry to your Travel Rule wallet address book so inbound INTERNAL-rail transfers can resolve against it.
-   *
-   * <p>{@code POST /v3/travel-rule/wallet-addresses/}
+   * Asynchronous {@link #create(WalletAddressEntryCreate, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<WalletAddressEntry> createAsync(WalletAddressEntryCreate params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -230,46 +183,34 @@ public final class TravelRuleWalletAddressesResource {
   }
 
   /**
-   * Update wallet address holder metadata
-   *
-   * <p>Partial update of holder_name, holder_vendor_data, entity_type, and travel_address. Setting travel_address attaches a TRP routing address to the entry; invalid values are rejected with 400. The response echoes only these four fields.
-   *
-   * <p>{@code PATCH /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+   * Asynchronous {@link #update(String, WalletAddressEntryUpdate, RequestOptions)}.
    *
    * @param entryUuid the {@code entry_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<WalletAddressEntryUpdate> updateAsync(String entryUuid, WalletAddressEntryUpdate params, RequestOptions options) {
     return client.executeAsync(updateRequest(entryUuid, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update wallet address holder metadata
-   *
-   * <p>Partial update of holder_name, holder_vendor_data, entity_type, and travel_address. Setting travel_address attaches a TRP routing address to the entry; invalid values are rejected with 400. The response echoes only these four fields.
-   *
-   * <p>{@code PATCH /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+   * Same as {@link #update(String, WalletAddressEntryUpdate, RequestOptions)}, with the client's options.
    *
    * @param entryUuid the {@code entry_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public WalletAddressEntryUpdate update(String entryUuid, WalletAddressEntryUpdate params) {
     return client.execute(updateRequest(entryUuid, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update wallet address holder metadata
-   *
-   * <p>Partial update of holder_name, holder_vendor_data, entity_type, and travel_address. Setting travel_address attaches a TRP routing address to the entry; invalid values are rejected with 400. The response echoes only these four fields.
-   *
-   * <p>{@code PATCH /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+   * Asynchronous {@link #update(String, WalletAddressEntryUpdate, RequestOptions)}, with the client's options.
    *
    * @param entryUuid the {@code entry_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<WalletAddressEntryUpdate> updateAsync(String entryUuid, WalletAddressEntryUpdate params) {
     return client.executeAsync(updateRequest(entryUuid, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -290,26 +231,18 @@ public final class TravelRuleWalletAddressesResource {
   }
 
   /**
-   * Delete a wallet address
-   *
-   * <p>Deletes the entry. It stops matching new transfers immediately and the address is freed up for re-registration.
-   *
-   * <p>{@code DELETE /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+   * Asynchronous {@link #delete(String, RequestOptions)}.
    *
    * @param entryUuid the {@code entry_uuid}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String entryUuid, RequestOptions options) {
     return client.executeAsync(deleteRequest(entryUuid), options, DELETE_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * Delete a wallet address
-   *
-   * <p>Deletes the entry. It stops matching new transfers immediately and the address is freed up for re-registration.
-   *
-   * <p>{@code DELETE /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+   * Same as {@link #delete(String, RequestOptions)}, with the client's options.
    *
    * @param entryUuid the {@code entry_uuid}
    */
@@ -318,14 +251,10 @@ public final class TravelRuleWalletAddressesResource {
   }
 
   /**
-   * Delete a wallet address
-   *
-   * <p>Deletes the entry. It stops matching new transfers immediately and the address is freed up for re-registration.
-   *
-   * <p>{@code DELETE /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+   * Asynchronous {@link #delete(String, RequestOptions)}, with the client's options.
    *
    * @param entryUuid the {@code entry_uuid}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String entryUuid) {
     return client.executeAsync(deleteRequest(entryUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
@@ -376,298 +305,210 @@ public final class TravelRuleWalletAddressesResource {
     }
 
     /**
-     * List wallet address book entries
-     *
-     * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-     *
-     * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<WalletAddressEntry>> list(TravelRuleWalletAddressesListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List wallet address book entries
-     *
-     * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-     *
-     * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<WalletAddressEntry>>> listAsync(TravelRuleWalletAddressesListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List wallet address book entries
-     *
-     * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-     *
-     * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<WalletAddressEntry>> list(TravelRuleWalletAddressesListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List wallet address book entries
-     *
-     * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-     *
-     * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<WalletAddressEntry>>> listAsync(TravelRuleWalletAddressesListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List wallet address book entries
+     * {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-     *
-     * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<WalletAddressEntry>> list(RequestOptions options) {
       return client.execute(listRequest(TravelRuleWalletAddressesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List wallet address book entries
+     * Asynchronous {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-     *
-     * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<WalletAddressEntry>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(TravelRuleWalletAddressesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List wallet address book entries
+     * {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-     *
-     * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<WalletAddressEntry>> list() {
       return client.execute(listRequest(TravelRuleWalletAddressesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List wallet address book entries
+     * Asynchronous {@link #list(TravelRuleWalletAddressesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Paginated list of your application's Travel Rule wallet address book, newest first.
-     *
-     * <p>{@code GET /v3/travel-rule/wallet-addresses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<WalletAddressEntry>>> listAsync() {
       return client.executeAsync(listRequest(TravelRuleWalletAddressesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Register a wallet address
-     *
-     * <p>Add an entry to your Travel Rule wallet address book so inbound INTERNAL-rail transfers can resolve against it.
-     *
-     * <p>{@code POST /v3/travel-rule/wallet-addresses/}
+     * {@link #create(WalletAddressEntryCreate, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<WalletAddressEntry> create(WalletAddressEntryCreate params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Register a wallet address
-     *
-     * <p>Add an entry to your Travel Rule wallet address book so inbound INTERNAL-rail transfers can resolve against it.
-     *
-     * <p>{@code POST /v3/travel-rule/wallet-addresses/}
+     * Asynchronous {@link #create(WalletAddressEntryCreate, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<WalletAddressEntry>> createAsync(WalletAddressEntryCreate params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Register a wallet address
-     *
-     * <p>Add an entry to your Travel Rule wallet address book so inbound INTERNAL-rail transfers can resolve against it.
-     *
-     * <p>{@code POST /v3/travel-rule/wallet-addresses/}
+     * {@link #create(WalletAddressEntryCreate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<WalletAddressEntry> create(WalletAddressEntryCreate params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Register a wallet address
-     *
-     * <p>Add an entry to your Travel Rule wallet address book so inbound INTERNAL-rail transfers can resolve against it.
-     *
-     * <p>{@code POST /v3/travel-rule/wallet-addresses/}
+     * Asynchronous {@link #create(WalletAddressEntryCreate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<WalletAddressEntry>> createAsync(WalletAddressEntryCreate params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Update wallet address holder metadata
-     *
-     * <p>Partial update of holder_name, holder_vendor_data, entity_type, and travel_address. Setting travel_address attaches a TRP routing address to the entry; invalid values are rejected with 400. The response echoes only these four fields.
-     *
-     * <p>{@code PATCH /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+     * {@link #update(String, WalletAddressEntryUpdate, RequestOptions)} with the raw response.
      *
      * @param entryUuid the {@code entry_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<WalletAddressEntryUpdate> update(String entryUuid, WalletAddressEntryUpdate params, RequestOptions options) {
       return client.execute(updateRequest(entryUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update wallet address holder metadata
-     *
-     * <p>Partial update of holder_name, holder_vendor_data, entity_type, and travel_address. Setting travel_address attaches a TRP routing address to the entry; invalid values are rejected with 400. The response echoes only these four fields.
-     *
-     * <p>{@code PATCH /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+     * Asynchronous {@link #update(String, WalletAddressEntryUpdate, RequestOptions)} with the raw response.
      *
      * @param entryUuid the {@code entry_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<WalletAddressEntryUpdate>> updateAsync(String entryUuid, WalletAddressEntryUpdate params, RequestOptions options) {
       return client.executeAsync(updateRequest(entryUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update wallet address holder metadata
-     *
-     * <p>Partial update of holder_name, holder_vendor_data, entity_type, and travel_address. Setting travel_address attaches a TRP routing address to the entry; invalid values are rejected with 400. The response echoes only these four fields.
-     *
-     * <p>{@code PATCH /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+     * {@link #update(String, WalletAddressEntryUpdate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param entryUuid the {@code entry_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<WalletAddressEntryUpdate> update(String entryUuid, WalletAddressEntryUpdate params) {
       return client.execute(updateRequest(entryUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update wallet address holder metadata
-     *
-     * <p>Partial update of holder_name, holder_vendor_data, entity_type, and travel_address. Setting travel_address attaches a TRP routing address to the entry; invalid values are rejected with 400. The response echoes only these four fields.
-     *
-     * <p>{@code PATCH /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+     * Asynchronous {@link #update(String, WalletAddressEntryUpdate, RequestOptions)} with the raw response, with the client's options.
      *
      * @param entryUuid the {@code entry_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<WalletAddressEntryUpdate>> updateAsync(String entryUuid, WalletAddressEntryUpdate params) {
       return client.executeAsync(updateRequest(entryUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Delete a wallet address
-     *
-     * <p>Deletes the entry. It stops matching new transfers immediately and the address is freed up for re-registration.
-     *
-     * <p>{@code DELETE /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+     * {@link #delete(String, RequestOptions)} with the raw response.
      *
      * @param entryUuid the {@code entry_uuid}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String entryUuid, RequestOptions options) {
       return client.execute(deleteRequest(entryUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete a wallet address
-     *
-     * <p>Deletes the entry. It stops matching new transfers immediately and the address is freed up for re-registration.
-     *
-     * <p>{@code DELETE /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response.
      *
      * @param entryUuid the {@code entry_uuid}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String entryUuid, RequestOptions options) {
       return client.executeAsync(deleteRequest(entryUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete a wallet address
-     *
-     * <p>Deletes the entry. It stops matching new transfers immediately and the address is freed up for re-registration.
-     *
-     * <p>{@code DELETE /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+     * {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param entryUuid the {@code entry_uuid}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String entryUuid) {
       return client.execute(deleteRequest(entryUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Delete a wallet address
-     *
-     * <p>Deletes the entry. It stops matching new transfers immediately and the address is freed up for re-registration.
-     *
-     * <p>{@code DELETE /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param entryUuid the {@code entry_uuid}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String entryUuid) {
       return client.executeAsync(deleteRequest(entryUuid), RequestOptions.none(), DELETE_RESPONSE);

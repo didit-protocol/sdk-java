@@ -562,7 +562,7 @@ def emit_types(model: Model) -> dict[str, str]:
 # -- resources --------------------------------------------------------------------
 
 
-@dataclass
+@dataclass(frozen=True)
 class Signature:
     """One overload of an operation method."""
 
@@ -637,7 +637,48 @@ def constant_name(java_method: str) -> str:
     return names.constant(java_method) + "_RESPONSE"
 
 
+def link_target(om: OpModel, sig: Signature, ptype: str | None, async_: bool) -> str:
+    args = ["String"] * len(om.path_params)
+    if sig.with_params and ptype is not None:
+        args.append(ptype.split("<", 1)[0])
+    if sig.with_options:
+        args.append("RequestOptions")
+    return f"#{om.java_method}{'Async' if async_ else ''}({', '.join(args)})"
+
+
+def short_doc(om: OpModel, sig: Signature, ctx: Ctx, variant: str, ptype: str | None, full: Signature) -> str:
+    """A short Javadoc for an overload: it points at the fully documented one."""
+    target = link_target(om, full, ptype, False)
+    head = {
+        "sync": f"Same as {{@link {target}}}",
+        "async": f"Asynchronous {{@link {target}}}",
+        "raw": f"{{@link {target}}} with the raw response",
+        "raw_async": f"Asynchronous {{@link {target}}} with the raw response",
+    }[variant]
+    if not sig.with_params and full.with_params:
+        head += ", without parameters"
+    if not sig.with_options:
+        head += ", with the client's options"
+    lines = [head + "."]
+    lines.append("")
+    for pp in om.path_params:
+        lines.append(f"@param {pp.java_name} the {{@code {pp.json_name}}}")
+    if sig.with_params:
+        lines.append("@param params the request parameters")
+    if sig.with_options:
+        lines.append("@param options per-request options")
+    data, _ = result_type(om, ctx)
+    if variant != "sync" or data != "void":
+        lines.append("@return " + ("a future completed with the result" if "async" in variant else "the result"))
+    if om.op.deprecated:
+        lines += ["", "@deprecated The API removed this operation."]
+    return javadoc.block(lines, "  " if variant in ("sync", "async") else "    ")
+
+
 def op_doc(om: OpModel, sig: Signature, ctx: Ctx, variant: str, ptype: str | None) -> str:
+    full = signatures(om)[0]
+    if variant != "sync" or sig != full:
+        return short_doc(om, sig, ctx, variant, ptype, full)
     lines = javadoc.render(om.summary or "")
     desc = javadoc.render(om.description) if om.description and om.description != om.summary else []
     if desc:

@@ -52,97 +52,69 @@ public final class SessionsImportsResource {
   }
 
   /**
-   * Create a verification import job
-   *
-   * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-   *
-   * <p>{@code POST /v3/session/imports/}
+   * Asynchronous {@link #create(SessionsImportsCreateParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<SessionImportJob> createAsync(SessionsImportsCreateParams params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create a verification import job
-   *
-   * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-   *
-   * <p>{@code POST /v3/session/imports/}
+   * Same as {@link #create(SessionsImportsCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public SessionImportJob create(SessionsImportsCreateParams params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create a verification import job
-   *
-   * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-   *
-   * <p>{@code POST /v3/session/imports/}
+   * Asynchronous {@link #create(SessionsImportsCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<SessionImportJob> createAsync(SessionsImportsCreateParams params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create a verification import job
+   * Same as {@link #create(SessionsImportsCreateParams, RequestOptions)}, without parameters.
    *
-   * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-   *
-   * <p>{@code POST /v3/session/imports/}
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public SessionImportJob create(RequestOptions options) {
     return client.execute(createRequest(SessionsImportsCreateParams.builder().build()), options, CREATE_RESPONSE).data();
   }
 
   /**
-   * Create a verification import job
+   * Asynchronous {@link #create(SessionsImportsCreateParams, RequestOptions)}, without parameters.
    *
-   * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-   *
-   * <p>{@code POST /v3/session/imports/}
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<SessionImportJob> createAsync(RequestOptions options) {
     return client.executeAsync(createRequest(SessionsImportsCreateParams.builder().build()), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create a verification import job
+   * Same as {@link #create(SessionsImportsCreateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-   *
-   * <p>{@code POST /v3/session/imports/}
-   *
-   * @return the response body
+   * @return the result
    */
   public SessionImportJob create() {
     return client.execute(createRequest(SessionsImportsCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create a verification import job
+   * Asynchronous {@link #create(SessionsImportsCreateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-   *
-   * <p>{@code POST /v3/session/imports/}
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<SessionImportJob> createAsync() {
     return client.executeAsync(createRequest(SessionsImportsCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -165,104 +137,69 @@ public final class SessionsImportsResource {
   }
 
   /**
-   * Download verification import template
-   *
-   * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-   *
-   * <p>{@code GET /v3/session/imports/template/}
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+   * Asynchronous {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BinaryResponse> retrieveTemplateAsync(SessionsImportsRetrieveTemplateParams params, RequestOptions options) {
     return client.executeAsync(retrieveTemplateRequest(params), options, RETRIEVE_TEMPLATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Download verification import template
-   *
-   * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-   *
-   * <p>{@code GET /v3/session/imports/template/}
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+   * Same as {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public BinaryResponse retrieveTemplate(SessionsImportsRetrieveTemplateParams params) {
     return client.execute(retrieveTemplateRequest(params), RequestOptions.none(), RETRIEVE_TEMPLATE_RESPONSE).data();
   }
 
   /**
-   * Download verification import template
-   *
-   * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-   *
-   * <p>{@code GET /v3/session/imports/template/}
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+   * Asynchronous {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BinaryResponse> retrieveTemplateAsync(SessionsImportsRetrieveTemplateParams params) {
     return client.executeAsync(retrieveTemplateRequest(params), RequestOptions.none(), RETRIEVE_TEMPLATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Download verification import template
+   * Same as {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)}, without parameters.
    *
-   * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-   *
-   * <p>{@code GET /v3/session/imports/template/}
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public BinaryResponse retrieveTemplate(RequestOptions options) {
     return client.execute(retrieveTemplateRequest(SessionsImportsRetrieveTemplateParams.builder().build()), options, RETRIEVE_TEMPLATE_RESPONSE).data();
   }
 
   /**
-   * Download verification import template
+   * Asynchronous {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)}, without parameters.
    *
-   * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-   *
-   * <p>{@code GET /v3/session/imports/template/}
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BinaryResponse> retrieveTemplateAsync(RequestOptions options) {
     return client.executeAsync(retrieveTemplateRequest(SessionsImportsRetrieveTemplateParams.builder().build()), options, RETRIEVE_TEMPLATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Download verification import template
+   * Same as {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-   *
-   * <p>{@code GET /v3/session/imports/template/}
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-   *
-   * @return the response body
+   * @return the result
    */
   public BinaryResponse retrieveTemplate() {
     return client.execute(retrieveTemplateRequest(SessionsImportsRetrieveTemplateParams.builder().build()), RequestOptions.none(), RETRIEVE_TEMPLATE_RESPONSE).data();
   }
 
   /**
-   * Download verification import template
+   * Asynchronous {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-   *
-   * <p>{@code GET /v3/session/imports/template/}
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BinaryResponse> retrieveTemplateAsync() {
     return client.executeAsync(retrieveTemplateRequest(SessionsImportsRetrieveTemplateParams.builder().build()), RequestOptions.none(), RETRIEVE_TEMPLATE_RESPONSE).thenApply(RawResponse::data);
@@ -284,43 +221,31 @@ public final class SessionsImportsResource {
   }
 
   /**
-   * Retrieve a verification import job
-   *
-   * <p>Retrieve import progress counters and terminal status for one job. Poll until <code>status</code> is <code>COMPLETED</code> or <code>FAILED</code>; <code>failed_count</code> &gt; 0 means some rows were rejected — list them via the errors endpoint.
-   *
-   * <p>{@code GET /v3/session/imports/{importId}/}
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
    * @param importId the {@code importId}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<SessionImportJob> retrieveAsync(String importId, RequestOptions options) {
     return client.executeAsync(retrieveRequest(importId), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Retrieve a verification import job
-   *
-   * <p>Retrieve import progress counters and terminal status for one job. Poll until <code>status</code> is <code>COMPLETED</code> or <code>FAILED</code>; <code>failed_count</code> &gt; 0 means some rows were rejected — list them via the errors endpoint.
-   *
-   * <p>{@code GET /v3/session/imports/{importId}/}
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
    * @param importId the {@code importId}
-   * @return the response body
+   * @return the result
    */
   public SessionImportJob retrieve(String importId) {
     return client.execute(retrieveRequest(importId), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Retrieve a verification import job
-   *
-   * <p>Retrieve import progress counters and terminal status for one job. Poll until <code>status</code> is <code>COMPLETED</code> or <code>FAILED</code>; <code>failed_count</code> &gt; 0 means some rows were rejected — list them via the errors endpoint.
-   *
-   * <p>{@code GET /v3/session/imports/{importId}/}
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
    * @param importId the {@code importId}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<SessionImportJob> retrieveAsync(String importId) {
     return client.executeAsync(retrieveRequest(importId), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -344,111 +269,76 @@ public final class SessionsImportsResource {
   }
 
   /**
-   * List verification import row errors
-   *
-   * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-   *
-   * <p>{@code GET /v3/session/imports/{importId}/errors/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)}.
    *
    * @param importId the {@code importId}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<SessionImportError>> listErrorsAsync(String importId, SessionsImportsListErrorsParams params, RequestOptions options) {
     return client.executeAsync(listErrorsRequest(importId, params), options, LIST_ERRORS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List verification import row errors
-   *
-   * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-   *
-   * <p>{@code GET /v3/session/imports/{importId}/errors/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)}, with the client's options.
    *
    * @param importId the {@code importId}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<SessionImportError> listErrors(String importId, SessionsImportsListErrorsParams params) {
     return client.execute(listErrorsRequest(importId, params), RequestOptions.none(), LIST_ERRORS_RESPONSE).data();
   }
 
   /**
-   * List verification import row errors
-   *
-   * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-   *
-   * <p>{@code GET /v3/session/imports/{importId}/errors/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)}, with the client's options.
    *
    * @param importId the {@code importId}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<SessionImportError>> listErrorsAsync(String importId, SessionsImportsListErrorsParams params) {
     return client.executeAsync(listErrorsRequest(importId, params), RequestOptions.none(), LIST_ERRORS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List verification import row errors
-   *
-   * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-   *
-   * <p>{@code GET /v3/session/imports/{importId}/errors/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)}, without parameters.
    *
    * @param importId the {@code importId}
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<SessionImportError> listErrors(String importId, RequestOptions options) {
     return client.execute(listErrorsRequest(importId, SessionsImportsListErrorsParams.builder().build()), options, LIST_ERRORS_RESPONSE).data();
   }
 
   /**
-   * List verification import row errors
-   *
-   * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-   *
-   * <p>{@code GET /v3/session/imports/{importId}/errors/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)}, without parameters.
    *
    * @param importId the {@code importId}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<SessionImportError>> listErrorsAsync(String importId, RequestOptions options) {
     return client.executeAsync(listErrorsRequest(importId, SessionsImportsListErrorsParams.builder().build()), options, LIST_ERRORS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List verification import row errors
-   *
-   * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-   *
-   * <p>{@code GET /v3/session/imports/{importId}/errors/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param importId the {@code importId}
-   * @return the response body
+   * @return the result
    */
   public Page<SessionImportError> listErrors(String importId) {
     return client.execute(listErrorsRequest(importId, SessionsImportsListErrorsParams.builder().build()), RequestOptions.none(), LIST_ERRORS_RESPONSE).data();
   }
 
   /**
-   * List verification import row errors
-   *
-   * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-   *
-   * <p>{@code GET /v3/session/imports/{importId}/errors/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param importId the {@code importId}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<SessionImportError>> listErrorsAsync(String importId) {
     return client.executeAsync(listErrorsRequest(importId, SessionsImportsListErrorsParams.builder().build()), RequestOptions.none(), LIST_ERRORS_RESPONSE).thenApply(RawResponse::data);
@@ -500,418 +390,290 @@ public final class SessionsImportsResource {
     }
 
     /**
-     * Create a verification import job
-     *
-     * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-     *
-     * <p>{@code POST /v3/session/imports/}
+     * {@link #create(SessionsImportsCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<SessionImportJob> create(SessionsImportsCreateParams params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create a verification import job
-     *
-     * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-     *
-     * <p>{@code POST /v3/session/imports/}
+     * Asynchronous {@link #create(SessionsImportsCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<SessionImportJob>> createAsync(SessionsImportsCreateParams params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create a verification import job
-     *
-     * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-     *
-     * <p>{@code POST /v3/session/imports/}
+     * {@link #create(SessionsImportsCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<SessionImportJob> create(SessionsImportsCreateParams params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create a verification import job
-     *
-     * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-     *
-     * <p>{@code POST /v3/session/imports/}
+     * Asynchronous {@link #create(SessionsImportsCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<SessionImportJob>> createAsync(SessionsImportsCreateParams params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create a verification import job
+     * {@link #create(SessionsImportsCreateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-     *
-     * <p>{@code POST /v3/session/imports/}
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<SessionImportJob> create(RequestOptions options) {
       return client.execute(createRequest(SessionsImportsCreateParams.builder().build()), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create a verification import job
+     * Asynchronous {@link #create(SessionsImportsCreateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-     *
-     * <p>{@code POST /v3/session/imports/}
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<SessionImportJob>> createAsync(RequestOptions options) {
       return client.executeAsync(createRequest(SessionsImportsCreateParams.builder().build()), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create a verification import job
+     * {@link #create(SessionsImportsCreateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-     *
-     * <p>{@code POST /v3/session/imports/}
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<SessionImportJob> create() {
       return client.execute(createRequest(SessionsImportsCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create a verification import job
+     * Asynchronous {@link #create(SessionsImportsCreateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
-     *
-     * <p>{@code POST /v3/session/imports/}
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<SessionImportJob>> createAsync() {
       return client.executeAsync(createRequest(SessionsImportsCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Download verification import template
-     *
-     * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-     *
-     * <p>{@code GET /v3/session/imports/template/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+     * {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BinaryResponse> retrieveTemplate(SessionsImportsRetrieveTemplateParams params, RequestOptions options) {
       return client.execute(retrieveTemplateRequest(params), options, RETRIEVE_TEMPLATE_RESPONSE);
     }
 
     /**
-     * Download verification import template
-     *
-     * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-     *
-     * <p>{@code GET /v3/session/imports/template/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+     * Asynchronous {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BinaryResponse>> retrieveTemplateAsync(SessionsImportsRetrieveTemplateParams params, RequestOptions options) {
       return client.executeAsync(retrieveTemplateRequest(params), options, RETRIEVE_TEMPLATE_RESPONSE);
     }
 
     /**
-     * Download verification import template
-     *
-     * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-     *
-     * <p>{@code GET /v3/session/imports/template/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+     * {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BinaryResponse> retrieveTemplate(SessionsImportsRetrieveTemplateParams params) {
       return client.execute(retrieveTemplateRequest(params), RequestOptions.none(), RETRIEVE_TEMPLATE_RESPONSE);
     }
 
     /**
-     * Download verification import template
-     *
-     * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-     *
-     * <p>{@code GET /v3/session/imports/template/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+     * Asynchronous {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BinaryResponse>> retrieveTemplateAsync(SessionsImportsRetrieveTemplateParams params) {
       return client.executeAsync(retrieveTemplateRequest(params), RequestOptions.none(), RETRIEVE_TEMPLATE_RESPONSE);
     }
 
     /**
-     * Download verification import template
+     * {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-     *
-     * <p>{@code GET /v3/session/imports/template/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BinaryResponse> retrieveTemplate(RequestOptions options) {
       return client.execute(retrieveTemplateRequest(SessionsImportsRetrieveTemplateParams.builder().build()), options, RETRIEVE_TEMPLATE_RESPONSE);
     }
 
     /**
-     * Download verification import template
+     * Asynchronous {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-     *
-     * <p>{@code GET /v3/session/imports/template/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BinaryResponse>> retrieveTemplateAsync(RequestOptions options) {
       return client.executeAsync(retrieveTemplateRequest(SessionsImportsRetrieveTemplateParams.builder().build()), options, RETRIEVE_TEMPLATE_RESPONSE);
     }
 
     /**
-     * Download verification import template
+     * {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-     *
-     * <p>{@code GET /v3/session/imports/template/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BinaryResponse> retrieveTemplate() {
       return client.execute(retrieveTemplateRequest(SessionsImportsRetrieveTemplateParams.builder().build()), RequestOptions.none(), RETRIEVE_TEMPLATE_RESPONSE);
     }
 
     /**
-     * Download verification import template
+     * Asynchronous {@link #retrieveTemplate(SessionsImportsRetrieveTemplateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Download the canonical CSV header for verification imports. The column set is determined by <code>import_type</code>. The first column of session templates is the idempotency key <code>external_id</code>.
-     *
-     * <p>{@code GET /v3/session/imports/template/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BinaryResponse>> retrieveTemplateAsync() {
       return client.executeAsync(retrieveTemplateRequest(SessionsImportsRetrieveTemplateParams.builder().build()), RequestOptions.none(), RETRIEVE_TEMPLATE_RESPONSE);
     }
 
     /**
-     * Retrieve a verification import job
-     *
-     * <p>Retrieve import progress counters and terminal status for one job. Poll until <code>status</code> is <code>COMPLETED</code> or <code>FAILED</code>; <code>failed_count</code> &gt; 0 means some rows were rejected — list them via the errors endpoint.
-     *
-     * <p>{@code GET /v3/session/imports/{importId}/}
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
      * @param importId the {@code importId}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<SessionImportJob> retrieve(String importId, RequestOptions options) {
       return client.execute(retrieveRequest(importId), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Retrieve a verification import job
-     *
-     * <p>Retrieve import progress counters and terminal status for one job. Poll until <code>status</code> is <code>COMPLETED</code> or <code>FAILED</code>; <code>failed_count</code> &gt; 0 means some rows were rejected — list them via the errors endpoint.
-     *
-     * <p>{@code GET /v3/session/imports/{importId}/}
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
      * @param importId the {@code importId}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<SessionImportJob>> retrieveAsync(String importId, RequestOptions options) {
       return client.executeAsync(retrieveRequest(importId), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Retrieve a verification import job
-     *
-     * <p>Retrieve import progress counters and terminal status for one job. Poll until <code>status</code> is <code>COMPLETED</code> or <code>FAILED</code>; <code>failed_count</code> &gt; 0 means some rows were rejected — list them via the errors endpoint.
-     *
-     * <p>{@code GET /v3/session/imports/{importId}/}
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param importId the {@code importId}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<SessionImportJob> retrieve(String importId) {
       return client.execute(retrieveRequest(importId), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Retrieve a verification import job
-     *
-     * <p>Retrieve import progress counters and terminal status for one job. Poll until <code>status</code> is <code>COMPLETED</code> or <code>FAILED</code>; <code>failed_count</code> &gt; 0 means some rows were rejected — list them via the errors endpoint.
-     *
-     * <p>{@code GET /v3/session/imports/{importId}/}
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param importId the {@code importId}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<SessionImportJob>> retrieveAsync(String importId) {
       return client.executeAsync(retrieveRequest(importId), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * List verification import row errors
-     *
-     * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-     *
-     * <p>{@code GET /v3/session/imports/{importId}/errors/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)} with the raw response.
      *
      * @param importId the {@code importId}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<SessionImportError>> listErrors(String importId, SessionsImportsListErrorsParams params, RequestOptions options) {
       return client.execute(listErrorsRequest(importId, params), options, LIST_ERRORS_RESPONSE);
     }
 
     /**
-     * List verification import row errors
-     *
-     * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-     *
-     * <p>{@code GET /v3/session/imports/{importId}/errors/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)} with the raw response.
      *
      * @param importId the {@code importId}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<SessionImportError>>> listErrorsAsync(String importId, SessionsImportsListErrorsParams params, RequestOptions options) {
       return client.executeAsync(listErrorsRequest(importId, params), options, LIST_ERRORS_RESPONSE);
     }
 
     /**
-     * List verification import row errors
-     *
-     * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-     *
-     * <p>{@code GET /v3/session/imports/{importId}/errors/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param importId the {@code importId}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<SessionImportError>> listErrors(String importId, SessionsImportsListErrorsParams params) {
       return client.execute(listErrorsRequest(importId, params), RequestOptions.none(), LIST_ERRORS_RESPONSE);
     }
 
     /**
-     * List verification import row errors
-     *
-     * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-     *
-     * <p>{@code GET /v3/session/imports/{importId}/errors/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param importId the {@code importId}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<SessionImportError>>> listErrorsAsync(String importId, SessionsImportsListErrorsParams params) {
       return client.executeAsync(listErrorsRequest(importId, params), RequestOptions.none(), LIST_ERRORS_RESPONSE);
     }
 
     /**
-     * List verification import row errors
-     *
-     * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-     *
-     * <p>{@code GET /v3/session/imports/{importId}/errors/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param importId the {@code importId}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<SessionImportError>> listErrors(String importId, RequestOptions options) {
       return client.execute(listErrorsRequest(importId, SessionsImportsListErrorsParams.builder().build()), options, LIST_ERRORS_RESPONSE);
     }
 
     /**
-     * List verification import row errors
-     *
-     * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-     *
-     * <p>{@code GET /v3/session/imports/{importId}/errors/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param importId the {@code importId}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<SessionImportError>>> listErrorsAsync(String importId, RequestOptions options) {
       return client.executeAsync(listErrorsRequest(importId, SessionsImportsListErrorsParams.builder().build()), options, LIST_ERRORS_RESPONSE);
     }
 
     /**
-     * List verification import row errors
-     *
-     * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-     *
-     * <p>{@code GET /v3/session/imports/{importId}/errors/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param importId the {@code importId}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<SessionImportError>> listErrors(String importId) {
       return client.execute(listErrorsRequest(importId, SessionsImportsListErrorsParams.builder().build()), RequestOptions.none(), LIST_ERRORS_RESPONSE);
     }
 
     /**
-     * List verification import row errors
-     *
-     * <p>List row-level errors for a verification import job, ordered by <code>row_number</code>. Use this endpoint to produce a corrected retry file containing only failed rows.
-     *
-     * <p>{@code GET /v3/session/imports/{importId}/errors/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listErrors(String, SessionsImportsListErrorsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param importId the {@code importId}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<SessionImportError>>> listErrorsAsync(String importId) {
       return client.executeAsync(listErrorsRequest(importId, SessionsImportsListErrorsParams.builder().build()), RequestOptions.none(), LIST_ERRORS_RESPONSE);

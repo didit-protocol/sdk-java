@@ -64,94 +64,31 @@ public final class FaceSearchResource {
   }
 
   /**
-   * Face Search
-   *
-   * <p>Search a face image (1:N) against your application's face search index — faces enrolled from verification sessions, saved standalone API calls, direct user-profile face uploads, and your block/allow lists — and get back ranked similarity matches plus blocklist and duplicate warnings.
-   *
-   * <p><b>How it works.</b> The largest detected face in <code>user_image</code> is embedded and searched against the index, scoped to your application. Up to <b>5 matches</b> above the similarity floor are returned in <code>matches</code>, each with <code>similarity_percentage</code>, the originating session (<code>session_id</code>, <code>session_number</code>, <code>status</code>, <code>vendor_data</code>), <code>user_details</code> extracted during that session's document verification, <code>is_blocklisted</code> / <code>is_allowlisted</code> flags, and a <code>source</code> discriminator (<code>session</code>, <code>imported</code>, or <code>list_entry</code>).
-   *
-   * <p>- <code>search_type=most_similar</code> (default) ranks every enrolled face by similarity — use it for deduplication and fraud-ring investigation.
-   * - <code>search_type=blocklisted_or_approved</code> restricts candidates to blocklisted faces, allowlisted faces, faces from approved sessions, and imported user-profile faces, ranking blocklisted entries first — use it when the primary goal is blocklist screening.
-   *
-   * <p><code>status</code> is <code>Declined</code> only when a <code>FACE_IN_BLOCKLIST</code> or <code>POSSIBLE_FACE_IN_BLOCKLIST</code> warning fires; <code>DUPLICATED_FACE</code> / <code>POSSIBLE_DUPLICATED_FACE</code> (<code>information</code>) and <code>MULTIPLE_FACES_DETECTED</code> (<code>warning</code>) never decline. Unlike Passive Liveness, this endpoint does <b>not</b> exclude prior sessions with the same <code>vendor_data</code> from matching. A passive-liveness analysis also runs internally and is stored with the persisted session, but its result is not part of this response.
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one Face Search API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
-   *
-   * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook) and the searched face is enrolled into your face search index. Faces enrolled by Face Search calls are excluded from future Face Search results, so repeated searches never match each other. When <code>false</code>, the call is one-shot: nothing is stored, the face is not enrolled, and <code>match_image_url</code> values are internal storage paths rather than downloadable URLs.
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/face-search/}
+   * Asynchronous {@link #search(FaceSearchSearchParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<FaceSearchSearchResponse> searchAsync(FaceSearchSearchParams params, RequestOptions options) {
     return client.executeAsync(searchRequest(params), options, SEARCH_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Face Search
-   *
-   * <p>Search a face image (1:N) against your application's face search index — faces enrolled from verification sessions, saved standalone API calls, direct user-profile face uploads, and your block/allow lists — and get back ranked similarity matches plus blocklist and duplicate warnings.
-   *
-   * <p><b>How it works.</b> The largest detected face in <code>user_image</code> is embedded and searched against the index, scoped to your application. Up to <b>5 matches</b> above the similarity floor are returned in <code>matches</code>, each with <code>similarity_percentage</code>, the originating session (<code>session_id</code>, <code>session_number</code>, <code>status</code>, <code>vendor_data</code>), <code>user_details</code> extracted during that session's document verification, <code>is_blocklisted</code> / <code>is_allowlisted</code> flags, and a <code>source</code> discriminator (<code>session</code>, <code>imported</code>, or <code>list_entry</code>).
-   *
-   * <p>- <code>search_type=most_similar</code> (default) ranks every enrolled face by similarity — use it for deduplication and fraud-ring investigation.
-   * - <code>search_type=blocklisted_or_approved</code> restricts candidates to blocklisted faces, allowlisted faces, faces from approved sessions, and imported user-profile faces, ranking blocklisted entries first — use it when the primary goal is blocklist screening.
-   *
-   * <p><code>status</code> is <code>Declined</code> only when a <code>FACE_IN_BLOCKLIST</code> or <code>POSSIBLE_FACE_IN_BLOCKLIST</code> warning fires; <code>DUPLICATED_FACE</code> / <code>POSSIBLE_DUPLICATED_FACE</code> (<code>information</code>) and <code>MULTIPLE_FACES_DETECTED</code> (<code>warning</code>) never decline. Unlike Passive Liveness, this endpoint does <b>not</b> exclude prior sessions with the same <code>vendor_data</code> from matching. A passive-liveness analysis also runs internally and is stored with the persisted session, but its result is not part of this response.
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one Face Search API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
-   *
-   * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook) and the searched face is enrolled into your face search index. Faces enrolled by Face Search calls are excluded from future Face Search results, so repeated searches never match each other. When <code>false</code>, the call is one-shot: nothing is stored, the face is not enrolled, and <code>match_image_url</code> values are internal storage paths rather than downloadable URLs.
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/face-search/}
+   * Same as {@link #search(FaceSearchSearchParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public FaceSearchSearchResponse search(FaceSearchSearchParams params) {
     return client.execute(searchRequest(params), RequestOptions.none(), SEARCH_RESPONSE).data();
   }
 
   /**
-   * Face Search
-   *
-   * <p>Search a face image (1:N) against your application's face search index — faces enrolled from verification sessions, saved standalone API calls, direct user-profile face uploads, and your block/allow lists — and get back ranked similarity matches plus blocklist and duplicate warnings.
-   *
-   * <p><b>How it works.</b> The largest detected face in <code>user_image</code> is embedded and searched against the index, scoped to your application. Up to <b>5 matches</b> above the similarity floor are returned in <code>matches</code>, each with <code>similarity_percentage</code>, the originating session (<code>session_id</code>, <code>session_number</code>, <code>status</code>, <code>vendor_data</code>), <code>user_details</code> extracted during that session's document verification, <code>is_blocklisted</code> / <code>is_allowlisted</code> flags, and a <code>source</code> discriminator (<code>session</code>, <code>imported</code>, or <code>list_entry</code>).
-   *
-   * <p>- <code>search_type=most_similar</code> (default) ranks every enrolled face by similarity — use it for deduplication and fraud-ring investigation.
-   * - <code>search_type=blocklisted_or_approved</code> restricts candidates to blocklisted faces, allowlisted faces, faces from approved sessions, and imported user-profile faces, ranking blocklisted entries first — use it when the primary goal is blocklist screening.
-   *
-   * <p><code>status</code> is <code>Declined</code> only when a <code>FACE_IN_BLOCKLIST</code> or <code>POSSIBLE_FACE_IN_BLOCKLIST</code> warning fires; <code>DUPLICATED_FACE</code> / <code>POSSIBLE_DUPLICATED_FACE</code> (<code>information</code>) and <code>MULTIPLE_FACES_DETECTED</code> (<code>warning</code>) never decline. Unlike Passive Liveness, this endpoint does <b>not</b> exclude prior sessions with the same <code>vendor_data</code> from matching. A passive-liveness analysis also runs internally and is stored with the persisted session, but its result is not part of this response.
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one Face Search API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
-   *
-   * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook) and the searched face is enrolled into your face search index. Faces enrolled by Face Search calls are excluded from future Face Search results, so repeated searches never match each other. When <code>false</code>, the call is one-shot: nothing is stored, the face is not enrolled, and <code>match_image_url</code> values are internal storage paths rather than downloadable URLs.
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/face-search/}
+   * Asynchronous {@link #search(FaceSearchSearchParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<FaceSearchSearchResponse> searchAsync(FaceSearchSearchParams params) {
     return client.executeAsync(searchRequest(params), RequestOptions.none(), SEARCH_RESPONSE).thenApply(RawResponse::data);
@@ -175,126 +112,42 @@ public final class FaceSearchResource {
     }
 
     /**
-     * Face Search
-     *
-     * <p>Search a face image (1:N) against your application's face search index — faces enrolled from verification sessions, saved standalone API calls, direct user-profile face uploads, and your block/allow lists — and get back ranked similarity matches plus blocklist and duplicate warnings.
-     *
-     * <p><b>How it works.</b> The largest detected face in <code>user_image</code> is embedded and searched against the index, scoped to your application. Up to <b>5 matches</b> above the similarity floor are returned in <code>matches</code>, each with <code>similarity_percentage</code>, the originating session (<code>session_id</code>, <code>session_number</code>, <code>status</code>, <code>vendor_data</code>), <code>user_details</code> extracted during that session's document verification, <code>is_blocklisted</code> / <code>is_allowlisted</code> flags, and a <code>source</code> discriminator (<code>session</code>, <code>imported</code>, or <code>list_entry</code>).
-     *
-     * <p>- <code>search_type=most_similar</code> (default) ranks every enrolled face by similarity — use it for deduplication and fraud-ring investigation.
-     * - <code>search_type=blocklisted_or_approved</code> restricts candidates to blocklisted faces, allowlisted faces, faces from approved sessions, and imported user-profile faces, ranking blocklisted entries first — use it when the primary goal is blocklist screening.
-     *
-     * <p><code>status</code> is <code>Declined</code> only when a <code>FACE_IN_BLOCKLIST</code> or <code>POSSIBLE_FACE_IN_BLOCKLIST</code> warning fires; <code>DUPLICATED_FACE</code> / <code>POSSIBLE_DUPLICATED_FACE</code> (<code>information</code>) and <code>MULTIPLE_FACES_DETECTED</code> (<code>warning</code>) never decline. Unlike Passive Liveness, this endpoint does <b>not</b> exclude prior sessions with the same <code>vendor_data</code> from matching. A passive-liveness analysis also runs internally and is stored with the persisted session, but its result is not part of this response.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Face Search API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
-     *
-     * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook) and the searched face is enrolled into your face search index. Faces enrolled by Face Search calls are excluded from future Face Search results, so repeated searches never match each other. When <code>false</code>, the call is one-shot: nothing is stored, the face is not enrolled, and <code>match_image_url</code> values are internal storage paths rather than downloadable URLs.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/face-search/}
+     * {@link #search(FaceSearchSearchParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<FaceSearchSearchResponse> search(FaceSearchSearchParams params, RequestOptions options) {
       return client.execute(searchRequest(params), options, SEARCH_RESPONSE);
     }
 
     /**
-     * Face Search
-     *
-     * <p>Search a face image (1:N) against your application's face search index — faces enrolled from verification sessions, saved standalone API calls, direct user-profile face uploads, and your block/allow lists — and get back ranked similarity matches plus blocklist and duplicate warnings.
-     *
-     * <p><b>How it works.</b> The largest detected face in <code>user_image</code> is embedded and searched against the index, scoped to your application. Up to <b>5 matches</b> above the similarity floor are returned in <code>matches</code>, each with <code>similarity_percentage</code>, the originating session (<code>session_id</code>, <code>session_number</code>, <code>status</code>, <code>vendor_data</code>), <code>user_details</code> extracted during that session's document verification, <code>is_blocklisted</code> / <code>is_allowlisted</code> flags, and a <code>source</code> discriminator (<code>session</code>, <code>imported</code>, or <code>list_entry</code>).
-     *
-     * <p>- <code>search_type=most_similar</code> (default) ranks every enrolled face by similarity — use it for deduplication and fraud-ring investigation.
-     * - <code>search_type=blocklisted_or_approved</code> restricts candidates to blocklisted faces, allowlisted faces, faces from approved sessions, and imported user-profile faces, ranking blocklisted entries first — use it when the primary goal is blocklist screening.
-     *
-     * <p><code>status</code> is <code>Declined</code> only when a <code>FACE_IN_BLOCKLIST</code> or <code>POSSIBLE_FACE_IN_BLOCKLIST</code> warning fires; <code>DUPLICATED_FACE</code> / <code>POSSIBLE_DUPLICATED_FACE</code> (<code>information</code>) and <code>MULTIPLE_FACES_DETECTED</code> (<code>warning</code>) never decline. Unlike Passive Liveness, this endpoint does <b>not</b> exclude prior sessions with the same <code>vendor_data</code> from matching. A passive-liveness analysis also runs internally and is stored with the persisted session, but its result is not part of this response.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Face Search API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
-     *
-     * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook) and the searched face is enrolled into your face search index. Faces enrolled by Face Search calls are excluded from future Face Search results, so repeated searches never match each other. When <code>false</code>, the call is one-shot: nothing is stored, the face is not enrolled, and <code>match_image_url</code> values are internal storage paths rather than downloadable URLs.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/face-search/}
+     * Asynchronous {@link #search(FaceSearchSearchParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<FaceSearchSearchResponse>> searchAsync(FaceSearchSearchParams params, RequestOptions options) {
       return client.executeAsync(searchRequest(params), options, SEARCH_RESPONSE);
     }
 
     /**
-     * Face Search
-     *
-     * <p>Search a face image (1:N) against your application's face search index — faces enrolled from verification sessions, saved standalone API calls, direct user-profile face uploads, and your block/allow lists — and get back ranked similarity matches plus blocklist and duplicate warnings.
-     *
-     * <p><b>How it works.</b> The largest detected face in <code>user_image</code> is embedded and searched against the index, scoped to your application. Up to <b>5 matches</b> above the similarity floor are returned in <code>matches</code>, each with <code>similarity_percentage</code>, the originating session (<code>session_id</code>, <code>session_number</code>, <code>status</code>, <code>vendor_data</code>), <code>user_details</code> extracted during that session's document verification, <code>is_blocklisted</code> / <code>is_allowlisted</code> flags, and a <code>source</code> discriminator (<code>session</code>, <code>imported</code>, or <code>list_entry</code>).
-     *
-     * <p>- <code>search_type=most_similar</code> (default) ranks every enrolled face by similarity — use it for deduplication and fraud-ring investigation.
-     * - <code>search_type=blocklisted_or_approved</code> restricts candidates to blocklisted faces, allowlisted faces, faces from approved sessions, and imported user-profile faces, ranking blocklisted entries first — use it when the primary goal is blocklist screening.
-     *
-     * <p><code>status</code> is <code>Declined</code> only when a <code>FACE_IN_BLOCKLIST</code> or <code>POSSIBLE_FACE_IN_BLOCKLIST</code> warning fires; <code>DUPLICATED_FACE</code> / <code>POSSIBLE_DUPLICATED_FACE</code> (<code>information</code>) and <code>MULTIPLE_FACES_DETECTED</code> (<code>warning</code>) never decline. Unlike Passive Liveness, this endpoint does <b>not</b> exclude prior sessions with the same <code>vendor_data</code> from matching. A passive-liveness analysis also runs internally and is stored with the persisted session, but its result is not part of this response.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Face Search API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
-     *
-     * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook) and the searched face is enrolled into your face search index. Faces enrolled by Face Search calls are excluded from future Face Search results, so repeated searches never match each other. When <code>false</code>, the call is one-shot: nothing is stored, the face is not enrolled, and <code>match_image_url</code> values are internal storage paths rather than downloadable URLs.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/face-search/}
+     * {@link #search(FaceSearchSearchParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<FaceSearchSearchResponse> search(FaceSearchSearchParams params) {
       return client.execute(searchRequest(params), RequestOptions.none(), SEARCH_RESPONSE);
     }
 
     /**
-     * Face Search
-     *
-     * <p>Search a face image (1:N) against your application's face search index — faces enrolled from verification sessions, saved standalone API calls, direct user-profile face uploads, and your block/allow lists — and get back ranked similarity matches plus blocklist and duplicate warnings.
-     *
-     * <p><b>How it works.</b> The largest detected face in <code>user_image</code> is embedded and searched against the index, scoped to your application. Up to <b>5 matches</b> above the similarity floor are returned in <code>matches</code>, each with <code>similarity_percentage</code>, the originating session (<code>session_id</code>, <code>session_number</code>, <code>status</code>, <code>vendor_data</code>), <code>user_details</code> extracted during that session's document verification, <code>is_blocklisted</code> / <code>is_allowlisted</code> flags, and a <code>source</code> discriminator (<code>session</code>, <code>imported</code>, or <code>list_entry</code>).
-     *
-     * <p>- <code>search_type=most_similar</code> (default) ranks every enrolled face by similarity — use it for deduplication and fraud-ring investigation.
-     * - <code>search_type=blocklisted_or_approved</code> restricts candidates to blocklisted faces, allowlisted faces, faces from approved sessions, and imported user-profile faces, ranking blocklisted entries first — use it when the primary goal is blocklist screening.
-     *
-     * <p><code>status</code> is <code>Declined</code> only when a <code>FACE_IN_BLOCKLIST</code> or <code>POSSIBLE_FACE_IN_BLOCKLIST</code> warning fires; <code>DUPLICATED_FACE</code> / <code>POSSIBLE_DUPLICATED_FACE</code> (<code>information</code>) and <code>MULTIPLE_FACES_DETECTED</code> (<code>warning</code>) never decline. Unlike Passive Liveness, this endpoint does <b>not</b> exclude prior sessions with the same <code>vendor_data</code> from matching. A passive-liveness analysis also runs internally and is stored with the persisted session, but its result is not part of this response.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Face Search API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
-     *
-     * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook) and the searched face is enrolled into your face search index. Faces enrolled by Face Search calls are excluded from future Face Search results, so repeated searches never match each other. When <code>false</code>, the call is one-shot: nothing is stored, the face is not enrolled, and <code>match_image_url</code> values are internal storage paths rather than downloadable URLs.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/face-search/}
+     * Asynchronous {@link #search(FaceSearchSearchParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<FaceSearchSearchResponse>> searchAsync(FaceSearchSearchParams params) {
       return client.executeAsync(searchRequest(params), RequestOptions.none(), SEARCH_RESPONSE);

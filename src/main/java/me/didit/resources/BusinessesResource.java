@@ -64,104 +64,69 @@ public final class BusinessesResource {
   }
 
   /**
-   * List businesses
-   *
-   * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-   *
-   * <p>{@code GET /v3/businesses/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(BusinessesListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<BusinessListItem>> listAsync(BusinessesListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List businesses
-   *
-   * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-   *
-   * <p>{@code GET /v3/businesses/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(BusinessesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<BusinessListItem> list(BusinessesListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List businesses
-   *
-   * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-   *
-   * <p>{@code GET /v3/businesses/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(BusinessesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<BusinessListItem>> listAsync(BusinessesListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List businesses
+   * Same as {@link #list(BusinessesListParams, RequestOptions)}, without parameters.
    *
-   * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-   *
-   * <p>{@code GET /v3/businesses/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<BusinessListItem> list(RequestOptions options) {
     return client.execute(listRequest(BusinessesListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List businesses
+   * Asynchronous {@link #list(BusinessesListParams, RequestOptions)}, without parameters.
    *
-   * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-   *
-   * <p>{@code GET /v3/businesses/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<BusinessListItem>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(BusinessesListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List businesses
+   * Same as {@link #list(BusinessesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-   *
-   * <p>{@code GET /v3/businesses/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<BusinessListItem> list() {
     return client.execute(listRequest(BusinessesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List businesses
+   * Asynchronous {@link #list(BusinessesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-   *
-   * <p>{@code GET /v3/businesses/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<BusinessListItem>> listAsync() {
     return client.executeAsync(listRequest(BusinessesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -183,43 +148,31 @@ public final class BusinessesResource {
   }
 
   /**
-   * Get business
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
-   * <p>Fetch one [business](/entities/businesses) by <code>vendor_data</code> (exact match). Adds <code>metadata</code> and <code>updated_at</code> to the list view. Deleted businesses return 404.
-   *
-   * <p>{@code GET /v3/businesses/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the business — a free-form string (NOT a UUID), matched exactly as sent.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param vendorData the {@code vendor_data}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessDetailItem> retrieveAsync(String vendorData, RequestOptions options) {
     return client.executeAsync(retrieveRequest(vendorData), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get business
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Fetch one [business](/entities/businesses) by <code>vendor_data</code> (exact match). Adds <code>metadata</code> and <code>updated_at</code> to the list view. Deleted businesses return 404.
-   *
-   * <p>{@code GET /v3/businesses/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the business — a free-form string (NOT a UUID), matched exactly as sent.
-   * @return the response body
+   * @param vendorData the {@code vendor_data}
+   * @return the result
    */
   public BusinessDetailItem retrieve(String vendorData) {
     return client.execute(retrieveRequest(vendorData), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get business
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Fetch one [business](/entities/businesses) by <code>vendor_data</code> (exact match). Adds <code>metadata</code> and <code>updated_at</code> to the list view. Deleted businesses return 404.
-   *
-   * <p>{@code GET /v3/businesses/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the business — a free-form string (NOT a UUID), matched exactly as sent.
-   * @return a future completed with the response body
+   * @param vendorData the {@code vendor_data}
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessDetailItem> retrieveAsync(String vendorData) {
     return client.executeAsync(retrieveRequest(vendorData), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -242,104 +195,76 @@ public final class BusinessesResource {
   }
 
   /**
-   * Update business
+   * Asynchronous {@link #update(String, BusinessesUpdateParams, RequestOptions)}.
    *
-   * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-   *
-   * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
+   * @param vendorData the {@code vendor_data}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessDetailItem> updateAsync(String vendorData, BusinessesUpdateParams params, RequestOptions options) {
     return client.executeAsync(updateRequest(vendorData, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update business
+   * Same as {@link #update(String, BusinessesUpdateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-   *
-   * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
+   * @param vendorData the {@code vendor_data}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public BusinessDetailItem update(String vendorData, BusinessesUpdateParams params) {
     return client.execute(updateRequest(vendorData, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update business
+   * Asynchronous {@link #update(String, BusinessesUpdateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-   *
-   * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
+   * @param vendorData the {@code vendor_data}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessDetailItem> updateAsync(String vendorData, BusinessesUpdateParams params) {
     return client.executeAsync(updateRequest(vendorData, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update business
+   * Same as {@link #update(String, BusinessesUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-   *
-   * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param vendorData the {@code vendor_data}
+   * @param options per-request options
+   * @return the result
    */
   public BusinessDetailItem update(String vendorData, RequestOptions options) {
     return client.execute(updateRequest(vendorData, BusinessesUpdateParams.builder().build()), options, UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update business
+   * Asynchronous {@link #update(String, BusinessesUpdateParams, RequestOptions)}, without parameters.
    *
-   * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-   *
-   * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param vendorData the {@code vendor_data}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessDetailItem> updateAsync(String vendorData, RequestOptions options) {
     return client.executeAsync(updateRequest(vendorData, BusinessesUpdateParams.builder().build()), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update business
+   * Same as {@link #update(String, BusinessesUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-   *
-   * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
-   * @return the response body
+   * @param vendorData the {@code vendor_data}
+   * @return the result
    */
   public BusinessDetailItem update(String vendorData) {
     return client.execute(updateRequest(vendorData, BusinessesUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update business
+   * Asynchronous {@link #update(String, BusinessesUpdateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-   *
-   * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-   *
-   * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
-   * @return a future completed with the response body
+   * @param vendorData the {@code vendor_data}
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessDetailItem> updateAsync(String vendorData) {
     return client.executeAsync(updateRequest(vendorData, BusinessesUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -362,46 +287,34 @@ public final class BusinessesResource {
   }
 
   /**
-   * Update business status
+   * Asynchronous {@link #updateStatus(String, BusinessesUpdateStatusParams, RequestOptions)}.
    *
-   * <p>Flip only the lifecycle <code>status</code> of a business — VendorBusinessStatusChoices (<code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code>, NOT session statuses). <code>BLOCKED</code> adds <code>vendor_data</code> to the system blocklist.
-   *
-   * <p>{@code PATCH /v3/businesses/{vendor_data}/update-status/}
-   *
-   * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
+   * @param vendorData the {@code vendor_data}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessDetailItem> updateStatusAsync(String vendorData, BusinessesUpdateStatusParams params, RequestOptions options) {
     return client.executeAsync(updateStatusRequest(vendorData, params), options, UPDATE_STATUS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update business status
+   * Same as {@link #updateStatus(String, BusinessesUpdateStatusParams, RequestOptions)}, with the client's options.
    *
-   * <p>Flip only the lifecycle <code>status</code> of a business — VendorBusinessStatusChoices (<code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code>, NOT session statuses). <code>BLOCKED</code> adds <code>vendor_data</code> to the system blocklist.
-   *
-   * <p>{@code PATCH /v3/businesses/{vendor_data}/update-status/}
-   *
-   * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
+   * @param vendorData the {@code vendor_data}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public BusinessDetailItem updateStatus(String vendorData, BusinessesUpdateStatusParams params) {
     return client.execute(updateStatusRequest(vendorData, params), RequestOptions.none(), UPDATE_STATUS_RESPONSE).data();
   }
 
   /**
-   * Update business status
+   * Asynchronous {@link #updateStatus(String, BusinessesUpdateStatusParams, RequestOptions)}, with the client's options.
    *
-   * <p>Flip only the lifecycle <code>status</code> of a business — VendorBusinessStatusChoices (<code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code>, NOT session statuses). <code>BLOCKED</code> adds <code>vendor_data</code> to the system blocklist.
-   *
-   * <p>{@code PATCH /v3/businesses/{vendor_data}/update-status/}
-   *
-   * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
+   * @param vendorData the {@code vendor_data}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessDetailItem> updateStatusAsync(String vendorData, BusinessesUpdateStatusParams params) {
     return client.executeAsync(updateStatusRequest(vendorData, params), RequestOptions.none(), UPDATE_STATUS_RESPONSE).thenApply(RawResponse::data);
@@ -423,97 +336,69 @@ public final class BusinessesResource {
   }
 
   /**
-   * Batch delete businesses
-   *
-   * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-   *
-   * <p>{@code POST /v3/businesses/delete/}
+   * Asynchronous {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesBatchDeleteResponse> batchDeleteAsync(BusinessesBatchDeleteParams params, RequestOptions options) {
     return client.executeAsync(batchDeleteRequest(params), options, BATCH_DELETE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Batch delete businesses
-   *
-   * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-   *
-   * <p>{@code POST /v3/businesses/delete/}
+   * Same as {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public BusinessesBatchDeleteResponse batchDelete(BusinessesBatchDeleteParams params) {
     return client.execute(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE).data();
   }
 
   /**
-   * Batch delete businesses
-   *
-   * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-   *
-   * <p>{@code POST /v3/businesses/delete/}
+   * Asynchronous {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesBatchDeleteResponse> batchDeleteAsync(BusinessesBatchDeleteParams params) {
     return client.executeAsync(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Batch delete businesses
+   * Same as {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)}, without parameters.
    *
-   * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-   *
-   * <p>{@code POST /v3/businesses/delete/}
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public BusinessesBatchDeleteResponse batchDelete(RequestOptions options) {
     return client.execute(batchDeleteRequest(BusinessesBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE).data();
   }
 
   /**
-   * Batch delete businesses
+   * Asynchronous {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)}, without parameters.
    *
-   * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-   *
-   * <p>{@code POST /v3/businesses/delete/}
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesBatchDeleteResponse> batchDeleteAsync(RequestOptions options) {
     return client.executeAsync(batchDeleteRequest(BusinessesBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Batch delete businesses
+   * Same as {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-   *
-   * <p>{@code POST /v3/businesses/delete/}
-   *
-   * @return the response body
+   * @return the result
    */
   public BusinessesBatchDeleteResponse batchDelete() {
     return client.execute(batchDeleteRequest(BusinessesBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE).data();
   }
 
   /**
-   * Batch delete businesses
+   * Asynchronous {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-   *
-   * <p>{@code POST /v3/businesses/delete/}
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesBatchDeleteResponse> batchDeleteAsync() {
     return client.executeAsync(batchDeleteRequest(BusinessesBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE).thenApply(RawResponse::data);
@@ -537,49 +422,31 @@ public final class BusinessesResource {
   }
 
   /**
-   * Enable or disable AML ongoing monitoring for businesses
-   *
-   * <p>Turns AML ongoing monitoring on or off for the selected businesses, with the same semantics as the Business Console. Exactly one monitored AML screening is kept per business, so a profile that verified several times is monitored and billed once; disabling turns monitoring off across all of the profile's screenings. Businesses without any AML screening are screened first (billed as a regular AML screening) when they have the legal or display name needed; otherwise they are reported as <code>skipped_no_identity_data</code>.
-   *
-   * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
-   *
-   * <p>{@code POST /v3/businesses/aml-monitoring/}
+   * Asynchronous {@link #setAmlMonitoring(BusinessesSetAmlMonitoringParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesSetAmlMonitoringResponse> setAmlMonitoringAsync(BusinessesSetAmlMonitoringParams params, RequestOptions options) {
     return client.executeAsync(setAmlMonitoringRequest(params), options, SET_AML_MONITORING_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Enable or disable AML ongoing monitoring for businesses
-   *
-   * <p>Turns AML ongoing monitoring on or off for the selected businesses, with the same semantics as the Business Console. Exactly one monitored AML screening is kept per business, so a profile that verified several times is monitored and billed once; disabling turns monitoring off across all of the profile's screenings. Businesses without any AML screening are screened first (billed as a regular AML screening) when they have the legal or display name needed; otherwise they are reported as <code>skipped_no_identity_data</code>.
-   *
-   * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
-   *
-   * <p>{@code POST /v3/businesses/aml-monitoring/}
+   * Same as {@link #setAmlMonitoring(BusinessesSetAmlMonitoringParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public BusinessesSetAmlMonitoringResponse setAmlMonitoring(BusinessesSetAmlMonitoringParams params) {
     return client.execute(setAmlMonitoringRequest(params), RequestOptions.none(), SET_AML_MONITORING_RESPONSE).data();
   }
 
   /**
-   * Enable or disable AML ongoing monitoring for businesses
-   *
-   * <p>Turns AML ongoing monitoring on or off for the selected businesses, with the same semantics as the Business Console. Exactly one monitored AML screening is kept per business, so a profile that verified several times is monitored and billed once; disabling turns monitoring off across all of the profile's screenings. Businesses without any AML screening are screened first (billed as a regular AML screening) when they have the legal or display name needed; otherwise they are reported as <code>skipped_no_identity_data</code>.
-   *
-   * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
-   *
-   * <p>{@code POST /v3/businesses/aml-monitoring/}
+   * Asynchronous {@link #setAmlMonitoring(BusinessesSetAmlMonitoringParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesSetAmlMonitoringResponse> setAmlMonitoringAsync(BusinessesSetAmlMonitoringParams params) {
     return client.executeAsync(setAmlMonitoringRequest(params), RequestOptions.none(), SET_AML_MONITORING_RESPONSE).thenApply(RawResponse::data);
@@ -601,97 +468,69 @@ public final class BusinessesResource {
   }
 
   /**
-   * Create business
-   *
-   * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-   *
-   * <p>{@code POST /v3/businesses/create/}
+   * Asynchronous {@link #create(BusinessesCreateParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessDetailItem> createAsync(BusinessesCreateParams params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create business
-   *
-   * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-   *
-   * <p>{@code POST /v3/businesses/create/}
+   * Same as {@link #create(BusinessesCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public BusinessDetailItem create(BusinessesCreateParams params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create business
-   *
-   * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-   *
-   * <p>{@code POST /v3/businesses/create/}
+   * Asynchronous {@link #create(BusinessesCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessDetailItem> createAsync(BusinessesCreateParams params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create business
+   * Same as {@link #create(BusinessesCreateParams, RequestOptions)}, without parameters.
    *
-   * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-   *
-   * <p>{@code POST /v3/businesses/create/}
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public BusinessDetailItem create(RequestOptions options) {
     return client.execute(createRequest(BusinessesCreateParams.builder().build()), options, CREATE_RESPONSE).data();
   }
 
   /**
-   * Create business
+   * Asynchronous {@link #create(BusinessesCreateParams, RequestOptions)}, without parameters.
    *
-   * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-   *
-   * <p>{@code POST /v3/businesses/create/}
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessDetailItem> createAsync(RequestOptions options) {
     return client.executeAsync(createRequest(BusinessesCreateParams.builder().build()), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create business
+   * Same as {@link #create(BusinessesCreateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-   *
-   * <p>{@code POST /v3/businesses/create/}
-   *
-   * @return the response body
+   * @return the result
    */
   public BusinessDetailItem create() {
     return client.execute(createRequest(BusinessesCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create business
+   * Asynchronous {@link #create(BusinessesCreateParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-   *
-   * <p>{@code POST /v3/businesses/create/}
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessDetailItem> createAsync() {
     return client.executeAsync(createRequest(BusinessesCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -714,46 +553,31 @@ public final class BusinessesResource {
   }
 
   /**
-   * Toggle AML ongoing monitoring for businesses
-   *
-   * <p>Business-level equivalent of the user toggle: one monitored AML screening per business, with businesses lacking any AML screening screened first (company entity). Same estimate_only, inline fast-path and async job contract.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #setOngoingMonitoring(BusinessesSetOngoingMonitoringParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesSetOngoingMonitoringResponse> setOngoingMonitoringAsync(BusinessesSetOngoingMonitoringParams params, RequestOptions options) {
     return client.executeAsync(setOngoingMonitoringRequest(params), options, SET_ONGOING_MONITORING_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Toggle AML ongoing monitoring for businesses
-   *
-   * <p>Business-level equivalent of the user toggle: one monitored AML screening per business, with businesses lacking any AML screening screened first (company entity). Same estimate_only, inline fast-path and async job contract.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #setOngoingMonitoring(BusinessesSetOngoingMonitoringParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public BusinessesSetOngoingMonitoringResponse setOngoingMonitoring(BusinessesSetOngoingMonitoringParams params) {
     return client.execute(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE).data();
   }
 
   /**
-   * Toggle AML ongoing monitoring for businesses
-   *
-   * <p>Business-level equivalent of the user toggle: one monitored AML screening per business, with businesses lacking any AML screening screened first (company entity). Same estimate_only, inline fast-path and async job contract.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #setOngoingMonitoring(BusinessesSetOngoingMonitoringParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesSetOngoingMonitoringResponse> setOngoingMonitoringAsync(BusinessesSetOngoingMonitoringParams params) {
     return client.executeAsync(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE).thenApply(RawResponse::data);
@@ -776,46 +600,31 @@ public final class BusinessesResource {
   }
 
   /**
-   * Get AML ongoing monitoring job
+   * Asynchronous {@link #retrieveOngoingMonitoringJob(String, RequestOptions)}.
    *
-   * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/{job_id}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param jobId Monitoring job UUID returned by the toggle endpoint.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param jobId the {@code job_id}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
     return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), options, RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get AML ongoing monitoring job
+   * Same as {@link #retrieveOngoingMonitoringJob(String, RequestOptions)}, with the client's options.
    *
-   * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/{job_id}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param jobId Monitoring job UUID returned by the toggle endpoint.
-   * @return the response body
+   * @param jobId the {@code job_id}
+   * @return the result
    */
   public BusinessesRetrieveOngoingMonitoringJobResponse retrieveOngoingMonitoringJob(String jobId) {
     return client.execute(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE).data();
   }
 
   /**
-   * Get AML ongoing monitoring job
+   * Asynchronous {@link #retrieveOngoingMonitoringJob(String, RequestOptions)}, with the client's options.
    *
-   * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/{job_id}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param jobId Monitoring job UUID returned by the toggle endpoint.
-   * @return a future completed with the response body
+   * @param jobId the {@code job_id}
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJobAsync(String jobId) {
     return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE).thenApply(RawResponse::data);
@@ -838,46 +647,31 @@ public final class BusinessesResource {
   }
 
   /**
-   * Toggle AML ongoing monitoring for business sessions
-   *
-   * <p>Session-level toggle for KYB verifications, addressed by session number. Sessions without an AML screening get one created and attached to the session itself. Same estimate_only, inline fast-path and async job contract as the user-level endpoints. Replaces the legacy synchronous behavior that skipped sessions without an AML screening.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #setSessionOngoingMonitoring(BusinessesSetSessionOngoingMonitoringParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesSetSessionOngoingMonitoringResponse> setSessionOngoingMonitoringAsync(BusinessesSetSessionOngoingMonitoringParams params, RequestOptions options) {
     return client.executeAsync(setSessionOngoingMonitoringRequest(params), options, SET_SESSION_ONGOING_MONITORING_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Toggle AML ongoing monitoring for business sessions
-   *
-   * <p>Session-level toggle for KYB verifications, addressed by session number. Sessions without an AML screening get one created and attached to the session itself. Same estimate_only, inline fast-path and async job contract as the user-level endpoints. Replaces the legacy synchronous behavior that skipped sessions without an AML screening.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Same as {@link #setSessionOngoingMonitoring(BusinessesSetSessionOngoingMonitoringParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public BusinessesSetSessionOngoingMonitoringResponse setSessionOngoingMonitoring(BusinessesSetSessionOngoingMonitoringParams params) {
     return client.execute(setSessionOngoingMonitoringRequest(params), RequestOptions.none(), SET_SESSION_ONGOING_MONITORING_RESPONSE).data();
   }
 
   /**
-   * Toggle AML ongoing monitoring for business sessions
-   *
-   * <p>Session-level toggle for KYB verifications, addressed by session number. Sessions without an AML screening get one created and attached to the session itself. Same estimate_only, inline fast-path and async job contract as the user-level endpoints. Replaces the legacy synchronous behavior that skipped sessions without an AML screening.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/}
-   * <p>Application scoped: the organization and application ids come from the client options.
+   * Asynchronous {@link #setSessionOngoingMonitoring(BusinessesSetSessionOngoingMonitoringParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesSetSessionOngoingMonitoringResponse> setSessionOngoingMonitoringAsync(BusinessesSetSessionOngoingMonitoringParams params) {
     return client.executeAsync(setSessionOngoingMonitoringRequest(params), RequestOptions.none(), SET_SESSION_ONGOING_MONITORING_RESPONSE).thenApply(RawResponse::data);
@@ -900,46 +694,31 @@ public final class BusinessesResource {
   }
 
   /**
-   * Get AML ongoing monitoring job
+   * Asynchronous {@link #retrieveSessionOngoingMonitoringJob(String, RequestOptions)}.
    *
-   * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/{job_id}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param jobId Monitoring job UUID returned by the toggle endpoint.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param jobId the {@code job_id}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesRetrieveSessionOngoingMonitoringJobResponse> retrieveSessionOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
     return client.executeAsync(retrieveSessionOngoingMonitoringJobRequest(jobId), options, RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get AML ongoing monitoring job
+   * Same as {@link #retrieveSessionOngoingMonitoringJob(String, RequestOptions)}, with the client's options.
    *
-   * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/{job_id}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param jobId Monitoring job UUID returned by the toggle endpoint.
-   * @return the response body
+   * @param jobId the {@code job_id}
+   * @return the result
    */
   public BusinessesRetrieveSessionOngoingMonitoringJobResponse retrieveSessionOngoingMonitoringJob(String jobId) {
     return client.execute(retrieveSessionOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE).data();
   }
 
   /**
-   * Get AML ongoing monitoring job
+   * Asynchronous {@link #retrieveSessionOngoingMonitoringJob(String, RequestOptions)}, with the client's options.
    *
-   * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/{job_id}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param jobId Monitoring job UUID returned by the toggle endpoint.
-   * @return a future completed with the response body
+   * @param jobId the {@code job_id}
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesRetrieveSessionOngoingMonitoringJobResponse> retrieveSessionOngoingMonitoringJobAsync(String jobId) {
     return client.executeAsync(retrieveSessionOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE).thenApply(RawResponse::data);
@@ -962,46 +741,31 @@ public final class BusinessesResource {
   }
 
   /**
-   * List networks for a business
+   * Asynchronous {@link #listNetworks(String, RequestOptions)}.
    *
-   * <p>List the networks a vendor business belongs to.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/{vendor_business_uuid}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param vendorBusinessUuid Vendor business UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param vendorBusinessUuid the {@code vendor_business_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesListNetworksResponse> listNetworksAsync(String vendorBusinessUuid, RequestOptions options) {
     return client.executeAsync(listNetworksRequest(vendorBusinessUuid), options, LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List networks for a business
+   * Same as {@link #listNetworks(String, RequestOptions)}, with the client's options.
    *
-   * <p>List the networks a vendor business belongs to.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/{vendor_business_uuid}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param vendorBusinessUuid Vendor business UUID.
-   * @return the response body
+   * @param vendorBusinessUuid the {@code vendor_business_uuid}
+   * @return the result
    */
   public BusinessesListNetworksResponse listNetworks(String vendorBusinessUuid) {
     return client.execute(listNetworksRequest(vendorBusinessUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE).data();
   }
 
   /**
-   * List networks for a business
+   * Asynchronous {@link #listNetworks(String, RequestOptions)}, with the client's options.
    *
-   * <p>List the networks a vendor business belongs to.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/{vendor_business_uuid}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param vendorBusinessUuid Vendor business UUID.
-   * @return a future completed with the response body
+   * @param vendorBusinessUuid the {@code vendor_business_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<BusinessesListNetworksResponse> listNetworksAsync(String vendorBusinessUuid) {
     return client.executeAsync(listNetworksRequest(vendorBusinessUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
@@ -1127,960 +891,668 @@ public final class BusinessesResource {
     }
 
     /**
-     * List businesses
-     *
-     * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/businesses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(BusinessesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<BusinessListItem>> list(BusinessesListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List businesses
-     *
-     * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/businesses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(BusinessesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<BusinessListItem>>> listAsync(BusinessesListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List businesses
-     *
-     * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/businesses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(BusinessesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<BusinessListItem>> list(BusinessesListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List businesses
-     *
-     * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/businesses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(BusinessesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<BusinessListItem>>> listAsync(BusinessesListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List businesses
+     * {@link #list(BusinessesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/businesses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<BusinessListItem>> list(RequestOptions options) {
       return client.execute(listRequest(BusinessesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List businesses
+     * Asynchronous {@link #list(BusinessesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/businesses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<BusinessListItem>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(BusinessesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List businesses
+     * {@link #list(BusinessesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/businesses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<BusinessListItem>> list() {
       return client.execute(listRequest(BusinessesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List businesses
+     * Asynchronous {@link #list(BusinessesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List [businesses](/entities/businesses) Didit assembles from KYB sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus businesses created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
-     *
-     * <p>{@code GET /v3/businesses/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<BusinessListItem>>> listAsync() {
       return client.executeAsync(listRequest(BusinessesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Get business
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Fetch one [business](/entities/businesses) by <code>vendor_data</code> (exact match). Adds <code>metadata</code> and <code>updated_at</code> to the list view. Deleted businesses return 404.
-     *
-     * <p>{@code GET /v3/businesses/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the business — a free-form string (NOT a UUID), matched exactly as sent.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param vendorData the {@code vendor_data}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessDetailItem> retrieve(String vendorData, RequestOptions options) {
       return client.execute(retrieveRequest(vendorData), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get business
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Fetch one [business](/entities/businesses) by <code>vendor_data</code> (exact match). Adds <code>metadata</code> and <code>updated_at</code> to the list view. Deleted businesses return 404.
-     *
-     * <p>{@code GET /v3/businesses/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the business — a free-form string (NOT a UUID), matched exactly as sent.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param vendorData the {@code vendor_data}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessDetailItem>> retrieveAsync(String vendorData, RequestOptions options) {
       return client.executeAsync(retrieveRequest(vendorData), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get business
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Fetch one [business](/entities/businesses) by <code>vendor_data</code> (exact match). Adds <code>metadata</code> and <code>updated_at</code> to the list view. Deleted businesses return 404.
-     *
-     * <p>{@code GET /v3/businesses/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the business — a free-form string (NOT a UUID), matched exactly as sent.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param vendorData the {@code vendor_data}
+     * @return the result
      */
     public RawResponse<BusinessDetailItem> retrieve(String vendorData) {
       return client.execute(retrieveRequest(vendorData), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get business
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Fetch one [business](/entities/businesses) by <code>vendor_data</code> (exact match). Adds <code>metadata</code> and <code>updated_at</code> to the list view. Deleted businesses return 404.
-     *
-     * <p>{@code GET /v3/businesses/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the business — a free-form string (NOT a UUID), matched exactly as sent.
-     * @return a future completed with the raw response
+     * @param vendorData the {@code vendor_data}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessDetailItem>> retrieveAsync(String vendorData) {
       return client.executeAsync(retrieveRequest(vendorData), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Update business
+     * {@link #update(String, BusinessesUpdateParams, RequestOptions)} with the raw response.
      *
-     * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-     *
-     * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessDetailItem> update(String vendorData, BusinessesUpdateParams params, RequestOptions options) {
       return client.execute(updateRequest(vendorData, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update business
+     * Asynchronous {@link #update(String, BusinessesUpdateParams, RequestOptions)} with the raw response.
      *
-     * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-     *
-     * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessDetailItem>> updateAsync(String vendorData, BusinessesUpdateParams params, RequestOptions options) {
       return client.executeAsync(updateRequest(vendorData, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update business
+     * {@link #update(String, BusinessesUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-     *
-     * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BusinessDetailItem> update(String vendorData, BusinessesUpdateParams params) {
       return client.execute(updateRequest(vendorData, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update business
+     * Asynchronous {@link #update(String, BusinessesUpdateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-     *
-     * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessDetailItem>> updateAsync(String vendorData, BusinessesUpdateParams params) {
       return client.executeAsync(updateRequest(vendorData, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update business
+     * {@link #update(String, BusinessesUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-     *
-     * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param vendorData the {@code vendor_data}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessDetailItem> update(String vendorData, RequestOptions options) {
       return client.execute(updateRequest(vendorData, BusinessesUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update business
+     * Asynchronous {@link #update(String, BusinessesUpdateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-     *
-     * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param vendorData the {@code vendor_data}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessDetailItem>> updateAsync(String vendorData, RequestOptions options) {
       return client.executeAsync(updateRequest(vendorData, BusinessesUpdateParams.builder().build()), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update business
+     * {@link #update(String, BusinessesUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-     *
-     * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param vendorData the {@code vendor_data}
+     * @return the result
      */
     public RawResponse<BusinessDetailItem> update(String vendorData) {
       return client.execute(updateRequest(vendorData, BusinessesUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update business
+     * Asynchronous {@link #update(String, BusinessesUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
-     *
-     * <p>{@code PATCH /v3/businesses/{vendor_data}/}
-     *
-     * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
-     * @return a future completed with the raw response
+     * @param vendorData the {@code vendor_data}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessDetailItem>> updateAsync(String vendorData) {
       return client.executeAsync(updateRequest(vendorData, BusinessesUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update business status
+     * {@link #updateStatus(String, BusinessesUpdateStatusParams, RequestOptions)} with the raw response.
      *
-     * <p>Flip only the lifecycle <code>status</code> of a business — VendorBusinessStatusChoices (<code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code>, NOT session statuses). <code>BLOCKED</code> adds <code>vendor_data</code> to the system blocklist.
-     *
-     * <p>{@code PATCH /v3/businesses/{vendor_data}/update-status/}
-     *
-     * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessDetailItem> updateStatus(String vendorData, BusinessesUpdateStatusParams params, RequestOptions options) {
       return client.execute(updateStatusRequest(vendorData, params), options, UPDATE_STATUS_RESPONSE);
     }
 
     /**
-     * Update business status
+     * Asynchronous {@link #updateStatus(String, BusinessesUpdateStatusParams, RequestOptions)} with the raw response.
      *
-     * <p>Flip only the lifecycle <code>status</code> of a business — VendorBusinessStatusChoices (<code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code>, NOT session statuses). <code>BLOCKED</code> adds <code>vendor_data</code> to the system blocklist.
-     *
-     * <p>{@code PATCH /v3/businesses/{vendor_data}/update-status/}
-     *
-     * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessDetailItem>> updateStatusAsync(String vendorData, BusinessesUpdateStatusParams params, RequestOptions options) {
       return client.executeAsync(updateStatusRequest(vendorData, params), options, UPDATE_STATUS_RESPONSE);
     }
 
     /**
-     * Update business status
+     * {@link #updateStatus(String, BusinessesUpdateStatusParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Flip only the lifecycle <code>status</code> of a business — VendorBusinessStatusChoices (<code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code>, NOT session statuses). <code>BLOCKED</code> adds <code>vendor_data</code> to the system blocklist.
-     *
-     * <p>{@code PATCH /v3/businesses/{vendor_data}/update-status/}
-     *
-     * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BusinessDetailItem> updateStatus(String vendorData, BusinessesUpdateStatusParams params) {
       return client.execute(updateStatusRequest(vendorData, params), RequestOptions.none(), UPDATE_STATUS_RESPONSE);
     }
 
     /**
-     * Update business status
+     * Asynchronous {@link #updateStatus(String, BusinessesUpdateStatusParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Flip only the lifecycle <code>status</code> of a business — VendorBusinessStatusChoices (<code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code>, NOT session statuses). <code>BLOCKED</code> adds <code>vendor_data</code> to the system blocklist.
-     *
-     * <p>{@code PATCH /v3/businesses/{vendor_data}/update-status/}
-     *
-     * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
+     * @param vendorData the {@code vendor_data}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessDetailItem>> updateStatusAsync(String vendorData, BusinessesUpdateStatusParams params) {
       return client.executeAsync(updateStatusRequest(vendorData, params), RequestOptions.none(), UPDATE_STATUS_RESPONSE);
     }
 
     /**
-     * Batch delete businesses
-     *
-     * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-     *
-     * <p>{@code POST /v3/businesses/delete/}
+     * {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessesBatchDeleteResponse> batchDelete(BusinessesBatchDeleteParams params, RequestOptions options) {
       return client.execute(batchDeleteRequest(params), options, BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Batch delete businesses
-     *
-     * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-     *
-     * <p>{@code POST /v3/businesses/delete/}
+     * Asynchronous {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesBatchDeleteResponse>> batchDeleteAsync(BusinessesBatchDeleteParams params, RequestOptions options) {
       return client.executeAsync(batchDeleteRequest(params), options, BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Batch delete businesses
-     *
-     * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-     *
-     * <p>{@code POST /v3/businesses/delete/}
+     * {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BusinessesBatchDeleteResponse> batchDelete(BusinessesBatchDeleteParams params) {
       return client.execute(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Batch delete businesses
-     *
-     * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-     *
-     * <p>{@code POST /v3/businesses/delete/}
+     * Asynchronous {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesBatchDeleteResponse>> batchDeleteAsync(BusinessesBatchDeleteParams params) {
       return client.executeAsync(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Batch delete businesses
+     * {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-     *
-     * <p>{@code POST /v3/businesses/delete/}
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessesBatchDeleteResponse> batchDelete(RequestOptions options) {
       return client.execute(batchDeleteRequest(BusinessesBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Batch delete businesses
+     * Asynchronous {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-     *
-     * <p>{@code POST /v3/businesses/delete/}
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesBatchDeleteResponse>> batchDeleteAsync(RequestOptions options) {
       return client.executeAsync(batchDeleteRequest(BusinessesBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Batch delete businesses
+     * {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-     *
-     * <p>{@code POST /v3/businesses/delete/}
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BusinessesBatchDeleteResponse> batchDelete() {
       return client.execute(batchDeleteRequest(BusinessesBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Batch delete businesses
+     * Asynchronous {@link #batchDelete(BusinessesBatchDeleteParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
-     *
-     * <p>{@code POST /v3/businesses/delete/}
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesBatchDeleteResponse>> batchDeleteAsync() {
       return client.executeAsync(batchDeleteRequest(BusinessesBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE);
     }
 
     /**
-     * Enable or disable AML ongoing monitoring for businesses
-     *
-     * <p>Turns AML ongoing monitoring on or off for the selected businesses, with the same semantics as the Business Console. Exactly one monitored AML screening is kept per business, so a profile that verified several times is monitored and billed once; disabling turns monitoring off across all of the profile's screenings. Businesses without any AML screening are screened first (billed as a regular AML screening) when they have the legal or display name needed; otherwise they are reported as <code>skipped_no_identity_data</code>.
-     *
-     * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
-     *
-     * <p>{@code POST /v3/businesses/aml-monitoring/}
+     * {@link #setAmlMonitoring(BusinessesSetAmlMonitoringParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessesSetAmlMonitoringResponse> setAmlMonitoring(BusinessesSetAmlMonitoringParams params, RequestOptions options) {
       return client.execute(setAmlMonitoringRequest(params), options, SET_AML_MONITORING_RESPONSE);
     }
 
     /**
-     * Enable or disable AML ongoing monitoring for businesses
-     *
-     * <p>Turns AML ongoing monitoring on or off for the selected businesses, with the same semantics as the Business Console. Exactly one monitored AML screening is kept per business, so a profile that verified several times is monitored and billed once; disabling turns monitoring off across all of the profile's screenings. Businesses without any AML screening are screened first (billed as a regular AML screening) when they have the legal or display name needed; otherwise they are reported as <code>skipped_no_identity_data</code>.
-     *
-     * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
-     *
-     * <p>{@code POST /v3/businesses/aml-monitoring/}
+     * Asynchronous {@link #setAmlMonitoring(BusinessesSetAmlMonitoringParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesSetAmlMonitoringResponse>> setAmlMonitoringAsync(BusinessesSetAmlMonitoringParams params, RequestOptions options) {
       return client.executeAsync(setAmlMonitoringRequest(params), options, SET_AML_MONITORING_RESPONSE);
     }
 
     /**
-     * Enable or disable AML ongoing monitoring for businesses
-     *
-     * <p>Turns AML ongoing monitoring on or off for the selected businesses, with the same semantics as the Business Console. Exactly one monitored AML screening is kept per business, so a profile that verified several times is monitored and billed once; disabling turns monitoring off across all of the profile's screenings. Businesses without any AML screening are screened first (billed as a regular AML screening) when they have the legal or display name needed; otherwise they are reported as <code>skipped_no_identity_data</code>.
-     *
-     * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
-     *
-     * <p>{@code POST /v3/businesses/aml-monitoring/}
+     * {@link #setAmlMonitoring(BusinessesSetAmlMonitoringParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BusinessesSetAmlMonitoringResponse> setAmlMonitoring(BusinessesSetAmlMonitoringParams params) {
       return client.execute(setAmlMonitoringRequest(params), RequestOptions.none(), SET_AML_MONITORING_RESPONSE);
     }
 
     /**
-     * Enable or disable AML ongoing monitoring for businesses
-     *
-     * <p>Turns AML ongoing monitoring on or off for the selected businesses, with the same semantics as the Business Console. Exactly one monitored AML screening is kept per business, so a profile that verified several times is monitored and billed once; disabling turns monitoring off across all of the profile's screenings. Businesses without any AML screening are screened first (billed as a regular AML screening) when they have the legal or display name needed; otherwise they are reported as <code>skipped_no_identity_data</code>.
-     *
-     * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
-     *
-     * <p>{@code POST /v3/businesses/aml-monitoring/}
+     * Asynchronous {@link #setAmlMonitoring(BusinessesSetAmlMonitoringParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesSetAmlMonitoringResponse>> setAmlMonitoringAsync(BusinessesSetAmlMonitoringParams params) {
       return client.executeAsync(setAmlMonitoringRequest(params), RequestOptions.none(), SET_AML_MONITORING_RESPONSE);
     }
 
     /**
-     * Create business
-     *
-     * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-     *
-     * <p>{@code POST /v3/businesses/create/}
+     * {@link #create(BusinessesCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessDetailItem> create(BusinessesCreateParams params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create business
-     *
-     * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-     *
-     * <p>{@code POST /v3/businesses/create/}
+     * Asynchronous {@link #create(BusinessesCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessDetailItem>> createAsync(BusinessesCreateParams params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create business
-     *
-     * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-     *
-     * <p>{@code POST /v3/businesses/create/}
+     * {@link #create(BusinessesCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BusinessDetailItem> create(BusinessesCreateParams params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create business
-     *
-     * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-     *
-     * <p>{@code POST /v3/businesses/create/}
+     * Asynchronous {@link #create(BusinessesCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessDetailItem>> createAsync(BusinessesCreateParams params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create business
+     * {@link #create(BusinessesCreateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-     *
-     * <p>{@code POST /v3/businesses/create/}
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessDetailItem> create(RequestOptions options) {
       return client.execute(createRequest(BusinessesCreateParams.builder().build()), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create business
+     * Asynchronous {@link #create(BusinessesCreateParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-     *
-     * <p>{@code POST /v3/businesses/create/}
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessDetailItem>> createAsync(RequestOptions options) {
       return client.executeAsync(createRequest(BusinessesCreateParams.builder().build()), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create business
+     * {@link #create(BusinessesCreateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-     *
-     * <p>{@code POST /v3/businesses/create/}
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BusinessDetailItem> create() {
       return client.execute(createRequest(BusinessesCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create business
+     * Asynchronous {@link #create(BusinessesCreateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
-     *
-     * <p>{@code POST /v3/businesses/create/}
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessDetailItem>> createAsync() {
       return client.executeAsync(createRequest(BusinessesCreateParams.builder().build()), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Toggle AML ongoing monitoring for businesses
-     *
-     * <p>Business-level equivalent of the user toggle: one monitored AML screening per business, with businesses lacking any AML screening screened first (company entity). Same estimate_only, inline fast-path and async job contract.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #setOngoingMonitoring(BusinessesSetOngoingMonitoringParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessesSetOngoingMonitoringResponse> setOngoingMonitoring(BusinessesSetOngoingMonitoringParams params, RequestOptions options) {
       return client.execute(setOngoingMonitoringRequest(params), options, SET_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Toggle AML ongoing monitoring for businesses
-     *
-     * <p>Business-level equivalent of the user toggle: one monitored AML screening per business, with businesses lacking any AML screening screened first (company entity). Same estimate_only, inline fast-path and async job contract.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #setOngoingMonitoring(BusinessesSetOngoingMonitoringParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesSetOngoingMonitoringResponse>> setOngoingMonitoringAsync(BusinessesSetOngoingMonitoringParams params, RequestOptions options) {
       return client.executeAsync(setOngoingMonitoringRequest(params), options, SET_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Toggle AML ongoing monitoring for businesses
-     *
-     * <p>Business-level equivalent of the user toggle: one monitored AML screening per business, with businesses lacking any AML screening screened first (company entity). Same estimate_only, inline fast-path and async job contract.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #setOngoingMonitoring(BusinessesSetOngoingMonitoringParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BusinessesSetOngoingMonitoringResponse> setOngoingMonitoring(BusinessesSetOngoingMonitoringParams params) {
       return client.execute(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Toggle AML ongoing monitoring for businesses
-     *
-     * <p>Business-level equivalent of the user toggle: one monitored AML screening per business, with businesses lacking any AML screening screened first (company entity). Same estimate_only, inline fast-path and async job contract.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #setOngoingMonitoring(BusinessesSetOngoingMonitoringParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesSetOngoingMonitoringResponse>> setOngoingMonitoringAsync(BusinessesSetOngoingMonitoringParams params) {
       return client.executeAsync(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * {@link #retrieveOngoingMonitoringJob(String, RequestOptions)} with the raw response.
      *
-     * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/{job_id}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param jobId Monitoring job UUID returned by the toggle endpoint.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param jobId the {@code job_id}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessesRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJob(String jobId, RequestOptions options) {
       return client.execute(retrieveOngoingMonitoringJobRequest(jobId), options, RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * Asynchronous {@link #retrieveOngoingMonitoringJob(String, RequestOptions)} with the raw response.
      *
-     * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/{job_id}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param jobId Monitoring job UUID returned by the toggle endpoint.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param jobId the {@code job_id}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesRetrieveOngoingMonitoringJobResponse>> retrieveOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
       return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), options, RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * {@link #retrieveOngoingMonitoringJob(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/{job_id}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param jobId Monitoring job UUID returned by the toggle endpoint.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param jobId the {@code job_id}
+     * @return the result
      */
     public RawResponse<BusinessesRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJob(String jobId) {
       return client.execute(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * Asynchronous {@link #retrieveOngoingMonitoringJob(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/{job_id}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param jobId Monitoring job UUID returned by the toggle endpoint.
-     * @return a future completed with the raw response
+     * @param jobId the {@code job_id}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesRetrieveOngoingMonitoringJobResponse>> retrieveOngoingMonitoringJobAsync(String jobId) {
       return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
     /**
-     * Toggle AML ongoing monitoring for business sessions
-     *
-     * <p>Session-level toggle for KYB verifications, addressed by session number. Sessions without an AML screening get one created and attached to the session itself. Same estimate_only, inline fast-path and async job contract as the user-level endpoints. Replaces the legacy synchronous behavior that skipped sessions without an AML screening.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #setSessionOngoingMonitoring(BusinessesSetSessionOngoingMonitoringParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessesSetSessionOngoingMonitoringResponse> setSessionOngoingMonitoring(BusinessesSetSessionOngoingMonitoringParams params, RequestOptions options) {
       return client.execute(setSessionOngoingMonitoringRequest(params), options, SET_SESSION_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Toggle AML ongoing monitoring for business sessions
-     *
-     * <p>Session-level toggle for KYB verifications, addressed by session number. Sessions without an AML screening get one created and attached to the session itself. Same estimate_only, inline fast-path and async job contract as the user-level endpoints. Replaces the legacy synchronous behavior that skipped sessions without an AML screening.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #setSessionOngoingMonitoring(BusinessesSetSessionOngoingMonitoringParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesSetSessionOngoingMonitoringResponse>> setSessionOngoingMonitoringAsync(BusinessesSetSessionOngoingMonitoringParams params, RequestOptions options) {
       return client.executeAsync(setSessionOngoingMonitoringRequest(params), options, SET_SESSION_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Toggle AML ongoing monitoring for business sessions
-     *
-     * <p>Session-level toggle for KYB verifications, addressed by session number. Sessions without an AML screening get one created and attached to the session itself. Same estimate_only, inline fast-path and async job contract as the user-level endpoints. Replaces the legacy synchronous behavior that skipped sessions without an AML screening.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * {@link #setSessionOngoingMonitoring(BusinessesSetSessionOngoingMonitoringParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BusinessesSetSessionOngoingMonitoringResponse> setSessionOngoingMonitoring(BusinessesSetSessionOngoingMonitoringParams params) {
       return client.execute(setSessionOngoingMonitoringRequest(params), RequestOptions.none(), SET_SESSION_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Toggle AML ongoing monitoring for business sessions
-     *
-     * <p>Session-level toggle for KYB verifications, addressed by session number. Sessions without an AML screening get one created and attached to the session itself. Same estimate_only, inline fast-path and async job contract as the user-level endpoints. Replaces the legacy synchronous behavior that skipped sessions without an AML screening.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/}
-     * <p>Application scoped: the organization and application ids come from the client options.
+     * Asynchronous {@link #setSessionOngoingMonitoring(BusinessesSetSessionOngoingMonitoringParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesSetSessionOngoingMonitoringResponse>> setSessionOngoingMonitoringAsync(BusinessesSetSessionOngoingMonitoringParams params) {
       return client.executeAsync(setSessionOngoingMonitoringRequest(params), RequestOptions.none(), SET_SESSION_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * {@link #retrieveSessionOngoingMonitoringJob(String, RequestOptions)} with the raw response.
      *
-     * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/{job_id}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param jobId Monitoring job UUID returned by the toggle endpoint.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param jobId the {@code job_id}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessesRetrieveSessionOngoingMonitoringJobResponse> retrieveSessionOngoingMonitoringJob(String jobId, RequestOptions options) {
       return client.execute(retrieveSessionOngoingMonitoringJobRequest(jobId), options, RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * Asynchronous {@link #retrieveSessionOngoingMonitoringJob(String, RequestOptions)} with the raw response.
      *
-     * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/{job_id}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param jobId Monitoring job UUID returned by the toggle endpoint.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param jobId the {@code job_id}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesRetrieveSessionOngoingMonitoringJobResponse>> retrieveSessionOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
       return client.executeAsync(retrieveSessionOngoingMonitoringJobRequest(jobId), options, RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * {@link #retrieveSessionOngoingMonitoringJob(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/{job_id}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param jobId Monitoring job UUID returned by the toggle endpoint.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param jobId the {@code job_id}
+     * @return the result
      */
     public RawResponse<BusinessesRetrieveSessionOngoingMonitoringJobResponse> retrieveSessionOngoingMonitoringJob(String jobId) {
       return client.execute(retrieveSessionOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
     /**
-     * Get AML ongoing monitoring job
+     * Asynchronous {@link #retrieveSessionOngoingMonitoringJob(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Progress and per-outcome counters of a monitoring toggle job. Poll every couple of seconds while status is PENDING or PROCESSING.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/{job_id}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param jobId Monitoring job UUID returned by the toggle endpoint.
-     * @return a future completed with the raw response
+     * @param jobId the {@code job_id}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesRetrieveSessionOngoingMonitoringJobResponse>> retrieveSessionOngoingMonitoringJobAsync(String jobId) {
       return client.executeAsync(retrieveSessionOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
     /**
-     * List networks for a business
+     * {@link #listNetworks(String, RequestOptions)} with the raw response.
      *
-     * <p>List the networks a vendor business belongs to.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/{vendor_business_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param vendorBusinessUuid Vendor business UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param vendorBusinessUuid the {@code vendor_business_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BusinessesListNetworksResponse> listNetworks(String vendorBusinessUuid, RequestOptions options) {
       return client.execute(listNetworksRequest(vendorBusinessUuid), options, LIST_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a business
+     * Asynchronous {@link #listNetworks(String, RequestOptions)} with the raw response.
      *
-     * <p>List the networks a vendor business belongs to.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/{vendor_business_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param vendorBusinessUuid Vendor business UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param vendorBusinessUuid the {@code vendor_business_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesListNetworksResponse>> listNetworksAsync(String vendorBusinessUuid, RequestOptions options) {
       return client.executeAsync(listNetworksRequest(vendorBusinessUuid), options, LIST_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a business
+     * {@link #listNetworks(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the networks a vendor business belongs to.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/{vendor_business_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param vendorBusinessUuid Vendor business UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param vendorBusinessUuid the {@code vendor_business_uuid}
+     * @return the result
      */
     public RawResponse<BusinessesListNetworksResponse> listNetworks(String vendorBusinessUuid) {
       return client.execute(listNetworksRequest(vendorBusinessUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a business
+     * Asynchronous {@link #listNetworks(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the networks a vendor business belongs to.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/{vendor_business_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param vendorBusinessUuid Vendor business UUID.
-     * @return a future completed with the raw response
+     * @param vendorBusinessUuid the {@code vendor_business_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BusinessesListNetworksResponse>> listNetworksAsync(String vendorBusinessUuid) {
       return client.executeAsync(listNetworksRequest(vendorBusinessUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE);

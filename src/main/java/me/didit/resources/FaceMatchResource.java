@@ -61,85 +61,31 @@ public final class FaceMatchResource {
   }
 
   /**
-   * Face Match
-   *
-   * <p>Compare two face images (1:1) and get back a similarity <code>score</code> (0–100) plus an <code>Approved</code>/<code>Declined</code> <code>status</code>.
-   *
-   * <p><b>How it works.</b> Both images are decoded and analyzed by a biometric model (set <code>rotate_image=true</code> if captures may be sideways or upside down), then a similarity score between the two faces is computed. A score <b>strictly above</b> <code>face_match_score_decline_threshold</code> (default <code>30</code>) returns <code>status: "Approved"</code>; a score at or below it returns <code>Declined</code> with a <code>LOW_FACE_MATCH_SIMILARITY</code> warning. If no face pair can be scored at all, the call still returns <code>200</code> with <code>status: "Declined"</code> and a <code>NO_REFERENCE_IMAGE</code> warning — <code>score</code> is <code>null</code> on the default save path, or <code>0</code> with <code>save_api_request=false</code>. Submit one clear, front-facing face per image for best results.
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one Face Match API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-   *
-   * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, both images are stored as the session's face-match source/target images, and a <code>status.updated</code> webhook is emitted to your configured webhook endpoints. When <code>false</code>, nothing is stored and <code>request_id</code> is a one-off correlation UUID that cannot be looked up later.
-   *
-   * <p><b>Face search index.</b> This endpoint never enrolls faces into your face search index and never runs blocklist or duplicate screening — use <code>POST /v3/passive-liveness/</code> or <code>POST /v3/face-search/</code> for those.
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/face-match/}
+   * Asynchronous {@link #compare(FaceMatchCompareParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<FaceMatchCompareResponse> compareAsync(FaceMatchCompareParams params, RequestOptions options) {
     return client.executeAsync(compareRequest(params), options, COMPARE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Face Match
-   *
-   * <p>Compare two face images (1:1) and get back a similarity <code>score</code> (0–100) plus an <code>Approved</code>/<code>Declined</code> <code>status</code>.
-   *
-   * <p><b>How it works.</b> Both images are decoded and analyzed by a biometric model (set <code>rotate_image=true</code> if captures may be sideways or upside down), then a similarity score between the two faces is computed. A score <b>strictly above</b> <code>face_match_score_decline_threshold</code> (default <code>30</code>) returns <code>status: "Approved"</code>; a score at or below it returns <code>Declined</code> with a <code>LOW_FACE_MATCH_SIMILARITY</code> warning. If no face pair can be scored at all, the call still returns <code>200</code> with <code>status: "Declined"</code> and a <code>NO_REFERENCE_IMAGE</code> warning — <code>score</code> is <code>null</code> on the default save path, or <code>0</code> with <code>save_api_request=false</code>. Submit one clear, front-facing face per image for best results.
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one Face Match API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-   *
-   * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, both images are stored as the session's face-match source/target images, and a <code>status.updated</code> webhook is emitted to your configured webhook endpoints. When <code>false</code>, nothing is stored and <code>request_id</code> is a one-off correlation UUID that cannot be looked up later.
-   *
-   * <p><b>Face search index.</b> This endpoint never enrolls faces into your face search index and never runs blocklist or duplicate screening — use <code>POST /v3/passive-liveness/</code> or <code>POST /v3/face-search/</code> for those.
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/face-match/}
+   * Same as {@link #compare(FaceMatchCompareParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public FaceMatchCompareResponse compare(FaceMatchCompareParams params) {
     return client.execute(compareRequest(params), RequestOptions.none(), COMPARE_RESPONSE).data();
   }
 
   /**
-   * Face Match
-   *
-   * <p>Compare two face images (1:1) and get back a similarity <code>score</code> (0–100) plus an <code>Approved</code>/<code>Declined</code> <code>status</code>.
-   *
-   * <p><b>How it works.</b> Both images are decoded and analyzed by a biometric model (set <code>rotate_image=true</code> if captures may be sideways or upside down), then a similarity score between the two faces is computed. A score <b>strictly above</b> <code>face_match_score_decline_threshold</code> (default <code>30</code>) returns <code>status: "Approved"</code>; a score at or below it returns <code>Declined</code> with a <code>LOW_FACE_MATCH_SIMILARITY</code> warning. If no face pair can be scored at all, the call still returns <code>200</code> with <code>status: "Declined"</code> and a <code>NO_REFERENCE_IMAGE</code> warning — <code>score</code> is <code>null</code> on the default save path, or <code>0</code> with <code>save_api_request=false</code>. Submit one clear, front-facing face per image for best results.
-   *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one Face Match API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-   *
-   * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, both images are stored as the session's face-match source/target images, and a <code>status.updated</code> webhook is emitted to your configured webhook endpoints. When <code>false</code>, nothing is stored and <code>request_id</code> is a one-off correlation UUID that cannot be looked up later.
-   *
-   * <p><b>Face search index.</b> This endpoint never enrolls faces into your face search index and never runs blocklist or duplicate screening — use <code>POST /v3/passive-liveness/</code> or <code>POST /v3/face-search/</code> for those.
-   *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-   *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-   *
-   * <p>{@code POST /v3/face-match/}
+   * Asynchronous {@link #compare(FaceMatchCompareParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<FaceMatchCompareResponse> compareAsync(FaceMatchCompareParams params) {
     return client.executeAsync(compareRequest(params), RequestOptions.none(), COMPARE_RESPONSE).thenApply(RawResponse::data);
@@ -163,114 +109,42 @@ public final class FaceMatchResource {
     }
 
     /**
-     * Face Match
-     *
-     * <p>Compare two face images (1:1) and get back a similarity <code>score</code> (0–100) plus an <code>Approved</code>/<code>Declined</code> <code>status</code>.
-     *
-     * <p><b>How it works.</b> Both images are decoded and analyzed by a biometric model (set <code>rotate_image=true</code> if captures may be sideways or upside down), then a similarity score between the two faces is computed. A score <b>strictly above</b> <code>face_match_score_decline_threshold</code> (default <code>30</code>) returns <code>status: "Approved"</code>; a score at or below it returns <code>Declined</code> with a <code>LOW_FACE_MATCH_SIMILARITY</code> warning. If no face pair can be scored at all, the call still returns <code>200</code> with <code>status: "Declined"</code> and a <code>NO_REFERENCE_IMAGE</code> warning — <code>score</code> is <code>null</code> on the default save path, or <code>0</code> with <code>save_api_request=false</code>. Submit one clear, front-facing face per image for best results.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Face Match API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-     *
-     * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, both images are stored as the session's face-match source/target images, and a <code>status.updated</code> webhook is emitted to your configured webhook endpoints. When <code>false</code>, nothing is stored and <code>request_id</code> is a one-off correlation UUID that cannot be looked up later.
-     *
-     * <p><b>Face search index.</b> This endpoint never enrolls faces into your face search index and never runs blocklist or duplicate screening — use <code>POST /v3/passive-liveness/</code> or <code>POST /v3/face-search/</code> for those.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/face-match/}
+     * {@link #compare(FaceMatchCompareParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<FaceMatchCompareResponse> compare(FaceMatchCompareParams params, RequestOptions options) {
       return client.execute(compareRequest(params), options, COMPARE_RESPONSE);
     }
 
     /**
-     * Face Match
-     *
-     * <p>Compare two face images (1:1) and get back a similarity <code>score</code> (0–100) plus an <code>Approved</code>/<code>Declined</code> <code>status</code>.
-     *
-     * <p><b>How it works.</b> Both images are decoded and analyzed by a biometric model (set <code>rotate_image=true</code> if captures may be sideways or upside down), then a similarity score between the two faces is computed. A score <b>strictly above</b> <code>face_match_score_decline_threshold</code> (default <code>30</code>) returns <code>status: "Approved"</code>; a score at or below it returns <code>Declined</code> with a <code>LOW_FACE_MATCH_SIMILARITY</code> warning. If no face pair can be scored at all, the call still returns <code>200</code> with <code>status: "Declined"</code> and a <code>NO_REFERENCE_IMAGE</code> warning — <code>score</code> is <code>null</code> on the default save path, or <code>0</code> with <code>save_api_request=false</code>. Submit one clear, front-facing face per image for best results.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Face Match API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-     *
-     * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, both images are stored as the session's face-match source/target images, and a <code>status.updated</code> webhook is emitted to your configured webhook endpoints. When <code>false</code>, nothing is stored and <code>request_id</code> is a one-off correlation UUID that cannot be looked up later.
-     *
-     * <p><b>Face search index.</b> This endpoint never enrolls faces into your face search index and never runs blocklist or duplicate screening — use <code>POST /v3/passive-liveness/</code> or <code>POST /v3/face-search/</code> for those.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/face-match/}
+     * Asynchronous {@link #compare(FaceMatchCompareParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<FaceMatchCompareResponse>> compareAsync(FaceMatchCompareParams params, RequestOptions options) {
       return client.executeAsync(compareRequest(params), options, COMPARE_RESPONSE);
     }
 
     /**
-     * Face Match
-     *
-     * <p>Compare two face images (1:1) and get back a similarity <code>score</code> (0–100) plus an <code>Approved</code>/<code>Declined</code> <code>status</code>.
-     *
-     * <p><b>How it works.</b> Both images are decoded and analyzed by a biometric model (set <code>rotate_image=true</code> if captures may be sideways or upside down), then a similarity score between the two faces is computed. A score <b>strictly above</b> <code>face_match_score_decline_threshold</code> (default <code>30</code>) returns <code>status: "Approved"</code>; a score at or below it returns <code>Declined</code> with a <code>LOW_FACE_MATCH_SIMILARITY</code> warning. If no face pair can be scored at all, the call still returns <code>200</code> with <code>status: "Declined"</code> and a <code>NO_REFERENCE_IMAGE</code> warning — <code>score</code> is <code>null</code> on the default save path, or <code>0</code> with <code>save_api_request=false</code>. Submit one clear, front-facing face per image for best results.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Face Match API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-     *
-     * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, both images are stored as the session's face-match source/target images, and a <code>status.updated</code> webhook is emitted to your configured webhook endpoints. When <code>false</code>, nothing is stored and <code>request_id</code> is a one-off correlation UUID that cannot be looked up later.
-     *
-     * <p><b>Face search index.</b> This endpoint never enrolls faces into your face search index and never runs blocklist or duplicate screening — use <code>POST /v3/passive-liveness/</code> or <code>POST /v3/face-search/</code> for those.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/face-match/}
+     * {@link #compare(FaceMatchCompareParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<FaceMatchCompareResponse> compare(FaceMatchCompareParams params) {
       return client.execute(compareRequest(params), RequestOptions.none(), COMPARE_RESPONSE);
     }
 
     /**
-     * Face Match
-     *
-     * <p>Compare two face images (1:1) and get back a similarity <code>score</code> (0–100) plus an <code>Approved</code>/<code>Declined</code> <code>status</code>.
-     *
-     * <p><b>How it works.</b> Both images are decoded and analyzed by a biometric model (set <code>rotate_image=true</code> if captures may be sideways or upside down), then a similarity score between the two faces is computed. A score <b>strictly above</b> <code>face_match_score_decline_threshold</code> (default <code>30</code>) returns <code>status: "Approved"</code>; a score at or below it returns <code>Declined</code> with a <code>LOW_FACE_MATCH_SIMILARITY</code> warning. If no face pair can be scored at all, the call still returns <code>200</code> with <code>status: "Declined"</code> and a <code>NO_REFERENCE_IMAGE</code> warning — <code>score</code> is <code>null</code> on the default save path, or <code>0</code> with <code>save_api_request=false</code>. Submit one clear, front-facing face per image for best results.
-     *
-     * <p><b>Billing.</b> Each <code>200</code> response consumes one Face Match API credit (standalone APIs have no free tier). When the organization's balance cannot cover the call, the endpoint returns <code>403</code> with the not-enough-credits error before any image processing.
-     *
-     * <p>**Session persistence (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session: it appears in the Business Console, the returned <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, both images are stored as the session's face-match source/target images, and a <code>status.updated</code> webhook is emitted to your configured webhook endpoints. When <code>false</code>, nothing is stored and <code>request_id</code> is a one-off correlation UUID that cannot be looked up later.
-     *
-     * <p><b>Face search index.</b> This endpoint never enrolls faces into your face search index and never runs blocklist or duplicate screening — use <code>POST /v3/passive-liveness/</code> or <code>POST /v3/face-search/</code> for those.
-     *
-     * <p><b>Sandbox.</b> Sandbox API keys skip all processing and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Approved</code> mock payload, no session is persisted, and no credits are consumed.
-     *
-     * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
-     *
-     * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
-     *
-     * <p>{@code POST /v3/face-match/}
+     * Asynchronous {@link #compare(FaceMatchCompareParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<FaceMatchCompareResponse>> compareAsync(FaceMatchCompareParams params) {
       return client.executeAsync(compareRequest(params), RequestOptions.none(), COMPARE_RESPONSE);

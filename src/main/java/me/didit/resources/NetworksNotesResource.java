@@ -51,31 +51,21 @@ public final class NetworksNotesResource {
   }
 
   /**
-   * Delete your network note
+   * Asynchronous {@link #delete(String, String, RequestOptions)}.
    *
-   * <p>Requires write:networks and the authenticated author of the note. Deletion is irreversible. Connected account and verification data are unaffected.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/{note_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
+   * @param networkUuid the {@code network_uuid}
    * @param noteUuid the {@code note_uuid}
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String networkUuid, String noteUuid, RequestOptions options) {
     return client.executeAsync(deleteRequest(networkUuid, noteUuid), options, DELETE_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * Delete your network note
+   * Same as {@link #delete(String, String, RequestOptions)}, with the client's options.
    *
-   * <p>Requires write:networks and the authenticated author of the note. Deletion is irreversible. Connected account and verification data are unaffected.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/{note_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
+   * @param networkUuid the {@code network_uuid}
    * @param noteUuid the {@code note_uuid}
    */
   public void delete(String networkUuid, String noteUuid) {
@@ -83,16 +73,11 @@ public final class NetworksNotesResource {
   }
 
   /**
-   * Delete your network note
+   * Asynchronous {@link #delete(String, String, RequestOptions)}, with the client's options.
    *
-   * <p>Requires write:networks and the authenticated author of the note. Deletion is irreversible. Connected account and verification data are unaffected.
-   *
-   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/{note_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
+   * @param networkUuid the {@code network_uuid}
    * @param noteUuid the {@code note_uuid}
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String networkUuid, String noteUuid) {
     return client.executeAsync(deleteRequest(networkUuid, noteUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
@@ -117,118 +102,76 @@ public final class NetworksNotesResource {
   }
 
   /**
-   * List private network notes
+   * Asynchronous {@link #list(String, NetworksNotesListParams, RequestOptions)}.
    *
-   * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param networkUuid Network UUID.
+   * @param networkUuid the {@code network_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<NetworkNote>> listAsync(String networkUuid, NetworksNotesListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(networkUuid, params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List private network notes
+   * Same as {@link #list(String, NetworksNotesListParams, RequestOptions)}, with the client's options.
    *
-   * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param networkUuid Network UUID.
+   * @param networkUuid the {@code network_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<NetworkNote> list(String networkUuid, NetworksNotesListParams params) {
     return client.execute(listRequest(networkUuid, params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List private network notes
+   * Asynchronous {@link #list(String, NetworksNotesListParams, RequestOptions)}, with the client's options.
    *
-   * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param networkUuid Network UUID.
+   * @param networkUuid the {@code network_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<NetworkNote>> listAsync(String networkUuid, NetworksNotesListParams params) {
     return client.executeAsync(listRequest(networkUuid, params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List private network notes
+   * Same as {@link #list(String, NetworksNotesListParams, RequestOptions)}, without parameters.
    *
-   * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param networkUuid Network UUID.
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param networkUuid the {@code network_uuid}
+   * @param options per-request options
+   * @return the result
    */
   public Page<NetworkNote> list(String networkUuid, RequestOptions options) {
     return client.execute(listRequest(networkUuid, NetworksNotesListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List private network notes
+   * Asynchronous {@link #list(String, NetworksNotesListParams, RequestOptions)}, without parameters.
    *
-   * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param networkUuid Network UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<NetworkNote>> listAsync(String networkUuid, RequestOptions options) {
     return client.executeAsync(listRequest(networkUuid, NetworksNotesListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List private network notes
+   * Same as {@link #list(String, NetworksNotesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param networkUuid Network UUID.
-   * @return the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return the result
    */
   public Page<NetworkNote> list(String networkUuid) {
     return client.execute(listRequest(networkUuid, NetworksNotesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List private network notes
+   * Asynchronous {@link #list(String, NetworksNotesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param networkUuid Network UUID.
-   * @return a future completed with the response body
+   * @param networkUuid the {@code network_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<NetworkNote>> listAsync(String networkUuid) {
     return client.executeAsync(listRequest(networkUuid, NetworksNotesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -252,49 +195,34 @@ public final class NetworksNotesResource {
   }
 
   /**
-   * Add a private network note
+   * Asynchronous {@link #create(String, NetworksNotesCreateParams, RequestOptions)}.
    *
-   * <p>Requires a console user with write:networks. The author is assigned from the authenticated user. Supply a new random UUID client_reference for each note; retry the same body and reference after an uncertain response to avoid duplicates. Reusing a reference for another body, author or network returns 409. Notes follow the surviving investigation when networks merge.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
+   * @param networkUuid the {@code network_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworkNote> createAsync(String networkUuid, NetworksNotesCreateParams params, RequestOptions options) {
     return client.executeAsync(createRequest(networkUuid, params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Add a private network note
+   * Same as {@link #create(String, NetworksNotesCreateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Requires a console user with write:networks. The author is assigned from the authenticated user. Supply a new random UUID client_reference for each note; retry the same body and reference after an uncertain response to avoid duplicates. Reusing a reference for another body, author or network returns 409. Notes follow the surviving investigation when networks merge.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
+   * @param networkUuid the {@code network_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public NetworkNote create(String networkUuid, NetworksNotesCreateParams params) {
     return client.execute(createRequest(networkUuid, params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Add a private network note
+   * Asynchronous {@link #create(String, NetworksNotesCreateParams, RequestOptions)}, with the client's options.
    *
-   * <p>Requires a console user with write:networks. The author is assigned from the authenticated user. Supply a new random UUID client_reference for each note; retry the same body and reference after an uncertain response to avoid duplicates. Reusing a reference for another body, author or network returns 409. Notes follow the surviving investigation when networks merge.
-   *
-   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param networkUuid Network UUID.
+   * @param networkUuid the {@code network_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<NetworkNote> createAsync(String networkUuid, NetworksNotesCreateParams params) {
     return client.executeAsync(createRequest(networkUuid, params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -341,268 +269,180 @@ public final class NetworksNotesResource {
     }
 
     /**
-     * Delete your network note
+     * {@link #delete(String, String, RequestOptions)} with the raw response.
      *
-     * <p>Requires write:networks and the authenticated author of the note. Deletion is irreversible. Connected account and verification data are unaffected.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param noteUuid the {@code note_uuid}
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String networkUuid, String noteUuid, RequestOptions options) {
       return client.execute(deleteRequest(networkUuid, noteUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete your network note
+     * Asynchronous {@link #delete(String, String, RequestOptions)} with the raw response.
      *
-     * <p>Requires write:networks and the authenticated author of the note. Deletion is irreversible. Connected account and verification data are unaffected.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param noteUuid the {@code note_uuid}
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String networkUuid, String noteUuid, RequestOptions options) {
       return client.executeAsync(deleteRequest(networkUuid, noteUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete your network note
+     * {@link #delete(String, String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Requires write:networks and the authenticated author of the note. Deletion is irreversible. Connected account and verification data are unaffected.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param noteUuid the {@code note_uuid}
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String networkUuid, String noteUuid) {
       return client.execute(deleteRequest(networkUuid, noteUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Delete your network note
+     * Asynchronous {@link #delete(String, String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Requires write:networks and the authenticated author of the note. Deletion is irreversible. Connected account and verification data are unaffected.
-     *
-     * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/{note_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param noteUuid the {@code note_uuid}
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String networkUuid, String noteUuid) {
       return client.executeAsync(deleteRequest(networkUuid, noteUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * List private network notes
+     * {@link #list(String, NetworksNotesListParams, RequestOptions)} with the raw response.
      *
-     * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<NetworkNote>> list(String networkUuid, NetworksNotesListParams params, RequestOptions options) {
       return client.execute(listRequest(networkUuid, params), options, LIST_RESPONSE);
     }
 
     /**
-     * List private network notes
+     * Asynchronous {@link #list(String, NetworksNotesListParams, RequestOptions)} with the raw response.
      *
-     * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<NetworkNote>>> listAsync(String networkUuid, NetworksNotesListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(networkUuid, params), options, LIST_RESPONSE);
     }
 
     /**
-     * List private network notes
+     * {@link #list(String, NetworksNotesListParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<NetworkNote>> list(String networkUuid, NetworksNotesListParams params) {
       return client.execute(listRequest(networkUuid, params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List private network notes
+     * Asynchronous {@link #list(String, NetworksNotesListParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<NetworkNote>>> listAsync(String networkUuid, NetworksNotesListParams params) {
       return client.executeAsync(listRequest(networkUuid, params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List private network notes
+     * {@link #list(String, NetworksNotesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<NetworkNote>> list(String networkUuid, RequestOptions options) {
       return client.execute(listRequest(networkUuid, NetworksNotesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List private network notes
+     * Asynchronous {@link #list(String, NetworksNotesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param networkUuid Network UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<NetworkNote>>> listAsync(String networkUuid, RequestOptions options) {
       return client.executeAsync(listRequest(networkUuid, NetworksNotesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List private network notes
+     * {@link #list(String, NetworksNotesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param networkUuid Network UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param networkUuid the {@code network_uuid}
+     * @return the result
      */
     public RawResponse<Page<NetworkNote>> list(String networkUuid) {
       return client.execute(listRequest(networkUuid, NetworksNotesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List private network notes
+     * Asynchronous {@link #list(String, NetworksNotesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Console users with read:networks can read notes on a network visible to the application. Notes stay within the organization and are not contributed to shared intelligence. Newest notes appear first.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param networkUuid Network UUID.
-     * @return a future completed with the raw response
+     * @param networkUuid the {@code network_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<NetworkNote>>> listAsync(String networkUuid) {
       return client.executeAsync(listRequest(networkUuid, NetworksNotesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Add a private network note
+     * {@link #create(String, NetworksNotesCreateParams, RequestOptions)} with the raw response.
      *
-     * <p>Requires a console user with write:networks. The author is assigned from the authenticated user. Supply a new random UUID client_reference for each note; retry the same body and reference after an uncertain response to avoid duplicates. Reusing a reference for another body, author or network returns 409. Notes follow the surviving investigation when networks merge.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<NetworkNote> create(String networkUuid, NetworksNotesCreateParams params, RequestOptions options) {
       return client.execute(createRequest(networkUuid, params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Add a private network note
+     * Asynchronous {@link #create(String, NetworksNotesCreateParams, RequestOptions)} with the raw response.
      *
-     * <p>Requires a console user with write:networks. The author is assigned from the authenticated user. Supply a new random UUID client_reference for each note; retry the same body and reference after an uncertain response to avoid duplicates. Reusing a reference for another body, author or network returns 409. Notes follow the surviving investigation when networks merge.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworkNote>> createAsync(String networkUuid, NetworksNotesCreateParams params, RequestOptions options) {
       return client.executeAsync(createRequest(networkUuid, params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Add a private network note
+     * {@link #create(String, NetworksNotesCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Requires a console user with write:networks. The author is assigned from the authenticated user. Supply a new random UUID client_reference for each note; retry the same body and reference after an uncertain response to avoid duplicates. Reusing a reference for another body, author or network returns 409. Notes follow the surviving investigation when networks merge.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<NetworkNote> create(String networkUuid, NetworksNotesCreateParams params) {
       return client.execute(createRequest(networkUuid, params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Add a private network note
+     * Asynchronous {@link #create(String, NetworksNotesCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Requires a console user with write:networks. The author is assigned from the authenticated user. Supply a new random UUID client_reference for each note; retry the same body and reference after an uncertain response to avoid duplicates. Reusing a reference for another body, author or network returns 409. Notes follow the surviving investigation when networks merge.
-     *
-     * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param networkUuid Network UUID.
+     * @param networkUuid the {@code network_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworkNote>> createAsync(String networkUuid, NetworksNotesCreateParams params) {
       return client.executeAsync(createRequest(networkUuid, params), RequestOptions.none(), CREATE_RESPONSE);

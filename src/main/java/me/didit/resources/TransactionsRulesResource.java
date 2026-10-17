@@ -58,104 +58,69 @@ public final class TransactionsRulesResource {
   }
 
   /**
-   * List rules
-   *
-   * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-   *
-   * <p>{@code GET /v3/transactions/rules/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(TransactionsRulesListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<TransactionRuleDetail>> listAsync(TransactionsRulesListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List rules
-   *
-   * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-   *
-   * <p>{@code GET /v3/transactions/rules/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(TransactionsRulesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<TransactionRuleDetail> list(TransactionsRulesListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List rules
-   *
-   * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-   *
-   * <p>{@code GET /v3/transactions/rules/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(TransactionsRulesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<TransactionRuleDetail>> listAsync(TransactionsRulesListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List rules
+   * Same as {@link #list(TransactionsRulesListParams, RequestOptions)}, without parameters.
    *
-   * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-   *
-   * <p>{@code GET /v3/transactions/rules/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<TransactionRuleDetail> list(RequestOptions options) {
     return client.execute(listRequest(TransactionsRulesListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List rules
+   * Asynchronous {@link #list(TransactionsRulesListParams, RequestOptions)}, without parameters.
    *
-   * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-   *
-   * <p>{@code GET /v3/transactions/rules/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<TransactionRuleDetail>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(TransactionsRulesListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List rules
+   * Same as {@link #list(TransactionsRulesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-   *
-   * <p>{@code GET /v3/transactions/rules/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<TransactionRuleDetail> list() {
     return client.execute(listRequest(TransactionsRulesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List rules
+   * Asynchronous {@link #list(TransactionsRulesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-   *
-   * <p>{@code GET /v3/transactions/rules/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<TransactionRuleDetail>> listAsync() {
     return client.executeAsync(listRequest(TransactionsRulesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -177,43 +142,31 @@ public final class TransactionsRulesResource {
   }
 
   /**
-   * Create rule
-   *
-   * <p>Create a CUSTOM transaction-monitoring rule. Titles are unique per application (duplicate -&gt; 400). A <code>change_status</code> action targeting <code>AWAITING_USER</code> must carry <code>workflow_id</code>. Rules created in ACTIVE mode apply to new transactions immediately - the recommended workflow is create in TEST mode, backtest, then switch mode to ACTIVE.
-   *
-   * <p>{@code POST /v3/transactions/rules/}
+   * Asynchronous {@link #create(TransactionRuleCreateRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionRuleDetail> createAsync(TransactionRuleCreateRequest params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create rule
-   *
-   * <p>Create a CUSTOM transaction-monitoring rule. Titles are unique per application (duplicate -&gt; 400). A <code>change_status</code> action targeting <code>AWAITING_USER</code> must carry <code>workflow_id</code>. Rules created in ACTIVE mode apply to new transactions immediately - the recommended workflow is create in TEST mode, backtest, then switch mode to ACTIVE.
-   *
-   * <p>{@code POST /v3/transactions/rules/}
+   * Same as {@link #create(TransactionRuleCreateRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public TransactionRuleDetail create(TransactionRuleCreateRequest params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create rule
-   *
-   * <p>Create a CUSTOM transaction-monitoring rule. Titles are unique per application (duplicate -&gt; 400). A <code>change_status</code> action targeting <code>AWAITING_USER</code> must carry <code>workflow_id</code>. Rules created in ACTIVE mode apply to new transactions immediately - the recommended workflow is create in TEST mode, backtest, then switch mode to ACTIVE.
-   *
-   * <p>{@code POST /v3/transactions/rules/}
+   * Asynchronous {@link #create(TransactionRuleCreateRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionRuleDetail> createAsync(TransactionRuleCreateRequest params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -235,43 +188,31 @@ public final class TransactionsRulesResource {
   }
 
   /**
-   * Get rule
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
-   * <p>Retrieve one rule with its full configuration and execution counters.
-   *
-   * <p>{@code GET /v3/transactions/rules/{rule_uuid}/}
-   *
-   * @param ruleUuid The rule's uuid from list or create.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param ruleUuid the {@code rule_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionRuleDetail> retrieveAsync(String ruleUuid, RequestOptions options) {
     return client.executeAsync(retrieveRequest(ruleUuid), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get rule
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve one rule with its full configuration and execution counters.
-   *
-   * <p>{@code GET /v3/transactions/rules/{rule_uuid}/}
-   *
-   * @param ruleUuid The rule's uuid from list or create.
-   * @return the response body
+   * @param ruleUuid the {@code rule_uuid}
+   * @return the result
    */
   public TransactionRuleDetail retrieve(String ruleUuid) {
     return client.execute(retrieveRequest(ruleUuid), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get rule
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve one rule with its full configuration and execution counters.
-   *
-   * <p>{@code GET /v3/transactions/rules/{rule_uuid}/}
-   *
-   * @param ruleUuid The rule's uuid from list or create.
-   * @return a future completed with the response body
+   * @param ruleUuid the {@code rule_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionRuleDetail> retrieveAsync(String ruleUuid) {
     return client.executeAsync(retrieveRequest(ruleUuid), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -294,46 +235,34 @@ public final class TransactionsRulesResource {
   }
 
   /**
-   * Update rule
+   * Asynchronous {@link #update(String, TransactionRuleUpdateRequest, RequestOptions)}.
    *
-   * <p>Partially update a rule. Custom rules accept every configuration field. Library (PRESET) rules accept only <code>mode</code> - use it to activate, disable, or switch a preset to TEST; any other field returns 400.
-   *
-   * <p>{@code PATCH /v3/transactions/rules/{rule_uuid}/}
-   *
-   * @param ruleUuid The rule's uuid from list or create.
+   * @param ruleUuid the {@code rule_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionRuleDetail> updateAsync(String ruleUuid, TransactionRuleUpdateRequest params, RequestOptions options) {
     return client.executeAsync(updateRequest(ruleUuid, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update rule
+   * Same as {@link #update(String, TransactionRuleUpdateRequest, RequestOptions)}, with the client's options.
    *
-   * <p>Partially update a rule. Custom rules accept every configuration field. Library (PRESET) rules accept only <code>mode</code> - use it to activate, disable, or switch a preset to TEST; any other field returns 400.
-   *
-   * <p>{@code PATCH /v3/transactions/rules/{rule_uuid}/}
-   *
-   * @param ruleUuid The rule's uuid from list or create.
+   * @param ruleUuid the {@code rule_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public TransactionRuleDetail update(String ruleUuid, TransactionRuleUpdateRequest params) {
     return client.execute(updateRequest(ruleUuid, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update rule
+   * Asynchronous {@link #update(String, TransactionRuleUpdateRequest, RequestOptions)}, with the client's options.
    *
-   * <p>Partially update a rule. Custom rules accept every configuration field. Library (PRESET) rules accept only <code>mode</code> - use it to activate, disable, or switch a preset to TEST; any other field returns 400.
-   *
-   * <p>{@code PATCH /v3/transactions/rules/{rule_uuid}/}
-   *
-   * @param ruleUuid The rule's uuid from list or create.
+   * @param ruleUuid the {@code rule_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionRuleDetail> updateAsync(String ruleUuid, TransactionRuleUpdateRequest params) {
     return client.executeAsync(updateRequest(ruleUuid, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -354,42 +283,30 @@ public final class TransactionsRulesResource {
   }
 
   /**
-   * Delete rule
+   * Asynchronous {@link #delete(String, RequestOptions)}.
    *
-   * <p>Delete a CUSTOM rule. Deletion is immediate and permanent: the rule stops evaluating for new transactions and disappears from listings, while past rule runs on already-evaluated transactions keep their recorded results. Library rules cannot be deleted - uninstall them via the install endpoint instead (they can always be reinstalled from the library).
-   *
-   * <p>{@code DELETE /v3/transactions/rules/{rule_uuid}/}
-   *
-   * @param ruleUuid The rule's uuid from list or create.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param ruleUuid the {@code rule_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String ruleUuid, RequestOptions options) {
     return client.executeAsync(deleteRequest(ruleUuid), options, DELETE_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * Delete rule
+   * Same as {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Delete a CUSTOM rule. Deletion is immediate and permanent: the rule stops evaluating for new transactions and disappears from listings, while past rule runs on already-evaluated transactions keep their recorded results. Library rules cannot be deleted - uninstall them via the install endpoint instead (they can always be reinstalled from the library).
-   *
-   * <p>{@code DELETE /v3/transactions/rules/{rule_uuid}/}
-   *
-   * @param ruleUuid The rule's uuid from list or create.
+   * @param ruleUuid the {@code rule_uuid}
    */
   public void delete(String ruleUuid) {
     client.execute(deleteRequest(ruleUuid), RequestOptions.none(), DELETE_RESPONSE);
   }
 
   /**
-   * Delete rule
+   * Asynchronous {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Delete a CUSTOM rule. Deletion is immediate and permanent: the rule stops evaluating for new transactions and disappears from listings, while past rule runs on already-evaluated transactions keep their recorded results. Library rules cannot be deleted - uninstall them via the install endpoint instead (they can always be reinstalled from the library).
-   *
-   * <p>{@code DELETE /v3/transactions/rules/{rule_uuid}/}
-   *
-   * @param ruleUuid The rule's uuid from list or create.
-   * @return a future completed with the response body
+   * @param ruleUuid the {@code rule_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String ruleUuid) {
     return client.executeAsync(deleteRequest(ruleUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
@@ -411,43 +328,31 @@ public final class TransactionsRulesResource {
   }
 
   /**
-   * Backtest rule configuration
-   *
-   * <p>Evaluate a hypothetical rule configuration against your recent transactions (most recent first, up to the backtest cap) without creating a rule or touching any transaction. Use it before activating a rule to see how often it would have matched and how many subjects it would have affected.
-   *
-   * <p>{@code POST /v3/transactions/rules/backtest/}
+   * Asynchronous {@link #backtest(TransactionRuleBacktestRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionRuleBacktestResult> backtestAsync(TransactionRuleBacktestRequest params, RequestOptions options) {
     return client.executeAsync(backtestRequest(params), options, BACKTEST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Backtest rule configuration
-   *
-   * <p>Evaluate a hypothetical rule configuration against your recent transactions (most recent first, up to the backtest cap) without creating a rule or touching any transaction. Use it before activating a rule to see how often it would have matched and how many subjects it would have affected.
-   *
-   * <p>{@code POST /v3/transactions/rules/backtest/}
+   * Same as {@link #backtest(TransactionRuleBacktestRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public TransactionRuleBacktestResult backtest(TransactionRuleBacktestRequest params) {
     return client.execute(backtestRequest(params), RequestOptions.none(), BACKTEST_RESPONSE).data();
   }
 
   /**
-   * Backtest rule configuration
-   *
-   * <p>Evaluate a hypothetical rule configuration against your recent transactions (most recent first, up to the backtest cap) without creating a rule or touching any transaction. Use it before activating a rule to see how often it would have matched and how many subjects it would have affected.
-   *
-   * <p>{@code POST /v3/transactions/rules/backtest/}
+   * Asynchronous {@link #backtest(TransactionRuleBacktestRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionRuleBacktestResult> backtestAsync(TransactionRuleBacktestRequest params) {
     return client.executeAsync(backtestRequest(params), RequestOptions.none(), BACKTEST_RESPONSE).thenApply(RawResponse::data);
@@ -470,104 +375,69 @@ public final class TransactionsRulesResource {
   }
 
   /**
-   * List rule library
-   *
-   * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-   *
-   * <p>{@code GET /v3/transactions/rules/library/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<TransactionRuleLibraryEntry>> listLibraryAsync(TransactionsRulesListLibraryParams params, RequestOptions options) {
     return client.executeAsync(listLibraryRequest(params), options, LIST_LIBRARY_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List rule library
-   *
-   * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-   *
-   * <p>{@code GET /v3/transactions/rules/library/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<TransactionRuleLibraryEntry> listLibrary(TransactionsRulesListLibraryParams params) {
     return client.execute(listLibraryRequest(params), RequestOptions.none(), LIST_LIBRARY_RESPONSE).data();
   }
 
   /**
-   * List rule library
-   *
-   * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-   *
-   * <p>{@code GET /v3/transactions/rules/library/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<TransactionRuleLibraryEntry>> listLibraryAsync(TransactionsRulesListLibraryParams params) {
     return client.executeAsync(listLibraryRequest(params), RequestOptions.none(), LIST_LIBRARY_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List rule library
+   * Same as {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)}, without parameters.
    *
-   * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-   *
-   * <p>{@code GET /v3/transactions/rules/library/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<TransactionRuleLibraryEntry> listLibrary(RequestOptions options) {
     return client.execute(listLibraryRequest(TransactionsRulesListLibraryParams.builder().build()), options, LIST_LIBRARY_RESPONSE).data();
   }
 
   /**
-   * List rule library
+   * Asynchronous {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)}, without parameters.
    *
-   * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-   *
-   * <p>{@code GET /v3/transactions/rules/library/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<TransactionRuleLibraryEntry>> listLibraryAsync(RequestOptions options) {
     return client.executeAsync(listLibraryRequest(TransactionsRulesListLibraryParams.builder().build()), options, LIST_LIBRARY_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List rule library
+   * Same as {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-   *
-   * <p>{@code GET /v3/transactions/rules/library/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<TransactionRuleLibraryEntry> listLibrary() {
     return client.execute(listLibraryRequest(TransactionsRulesListLibraryParams.builder().build()), RequestOptions.none(), LIST_LIBRARY_RESPONSE).data();
   }
 
   /**
-   * List rule library
+   * Asynchronous {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-   *
-   * <p>{@code GET /v3/transactions/rules/library/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<TransactionRuleLibraryEntry>> listLibraryAsync() {
     return client.executeAsync(listLibraryRequest(TransactionsRulesListLibraryParams.builder().build()), RequestOptions.none(), LIST_LIBRARY_RESPONSE).thenApply(RawResponse::data);
@@ -589,43 +459,31 @@ public final class TransactionsRulesResource {
   }
 
   /**
-   * Install library rules
-   *
-   * <p>Install one or more presets onto the application, by <code>library_keys</code> or a whole <code>bundle</code>. Installed presets evaluate immediately in their default mode; already-installed keys are skipped.
-   *
-   * <p>{@code POST /v3/transactions/rules/install/}
+   * Asynchronous {@link #installLibrary(TransactionRuleInstallRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionRuleInstallResult> installLibraryAsync(TransactionRuleInstallRequest params, RequestOptions options) {
     return client.executeAsync(installLibraryRequest(params), options, INSTALL_LIBRARY_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Install library rules
-   *
-   * <p>Install one or more presets onto the application, by <code>library_keys</code> or a whole <code>bundle</code>. Installed presets evaluate immediately in their default mode; already-installed keys are skipped.
-   *
-   * <p>{@code POST /v3/transactions/rules/install/}
+   * Same as {@link #installLibrary(TransactionRuleInstallRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public TransactionRuleInstallResult installLibrary(TransactionRuleInstallRequest params) {
     return client.execute(installLibraryRequest(params), RequestOptions.none(), INSTALL_LIBRARY_RESPONSE).data();
   }
 
   /**
-   * Install library rules
-   *
-   * <p>Install one or more presets onto the application, by <code>library_keys</code> or a whole <code>bundle</code>. Installed presets evaluate immediately in their default mode; already-installed keys are skipped.
-   *
-   * <p>{@code POST /v3/transactions/rules/install/}
+   * Asynchronous {@link #installLibrary(TransactionRuleInstallRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionRuleInstallResult> installLibraryAsync(TransactionRuleInstallRequest params) {
     return client.executeAsync(installLibraryRequest(params), RequestOptions.none(), INSTALL_LIBRARY_RESPONSE).thenApply(RawResponse::data);
@@ -647,43 +505,31 @@ public final class TransactionsRulesResource {
   }
 
   /**
-   * Uninstall library rules
-   *
-   * <p>Remove installed presets from the application, by <code>library_keys</code> or a whole <code>bundle</code>. Uninstalled presets stop evaluating immediately and can be reinstalled from the library at any time.
-   *
-   * <p>{@code DELETE /v3/transactions/rules/install/}
+   * Asynchronous {@link #uninstallLibrary(TransactionRuleInstallRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionRuleInstallResult> uninstallLibraryAsync(TransactionRuleInstallRequest params, RequestOptions options) {
     return client.executeAsync(uninstallLibraryRequest(params), options, UNINSTALL_LIBRARY_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Uninstall library rules
-   *
-   * <p>Remove installed presets from the application, by <code>library_keys</code> or a whole <code>bundle</code>. Uninstalled presets stop evaluating immediately and can be reinstalled from the library at any time.
-   *
-   * <p>{@code DELETE /v3/transactions/rules/install/}
+   * Same as {@link #uninstallLibrary(TransactionRuleInstallRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public TransactionRuleInstallResult uninstallLibrary(TransactionRuleInstallRequest params) {
     return client.execute(uninstallLibraryRequest(params), RequestOptions.none(), UNINSTALL_LIBRARY_RESPONSE).data();
   }
 
   /**
-   * Uninstall library rules
-   *
-   * <p>Remove installed presets from the application, by <code>library_keys</code> or a whole <code>bundle</code>. Uninstalled presets stop evaluating immediately and can be reinstalled from the library at any time.
-   *
-   * <p>{@code DELETE /v3/transactions/rules/install/}
+   * Asynchronous {@link #uninstallLibrary(TransactionRuleInstallRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionRuleInstallResult> uninstallLibraryAsync(TransactionRuleInstallRequest params) {
     return client.executeAsync(uninstallLibraryRequest(params), RequestOptions.none(), UNINSTALL_LIBRARY_RESPONSE).thenApply(RawResponse::data);
@@ -778,650 +624,458 @@ public final class TransactionsRulesResource {
     }
 
     /**
-     * List rules
-     *
-     * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-     *
-     * <p>{@code GET /v3/transactions/rules/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(TransactionsRulesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<TransactionRuleDetail>> list(TransactionsRulesListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List rules
-     *
-     * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-     *
-     * <p>{@code GET /v3/transactions/rules/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(TransactionsRulesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<TransactionRuleDetail>>> listAsync(TransactionsRulesListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List rules
-     *
-     * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-     *
-     * <p>{@code GET /v3/transactions/rules/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(TransactionsRulesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<TransactionRuleDetail>> list(TransactionsRulesListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List rules
-     *
-     * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-     *
-     * <p>{@code GET /v3/transactions/rules/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(TransactionsRulesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<TransactionRuleDetail>>> listAsync(TransactionsRulesListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List rules
+     * {@link #list(TransactionsRulesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-     *
-     * <p>{@code GET /v3/transactions/rules/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<TransactionRuleDetail>> list(RequestOptions options) {
       return client.execute(listRequest(TransactionsRulesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List rules
+     * Asynchronous {@link #list(TransactionsRulesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-     *
-     * <p>{@code GET /v3/transactions/rules/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<TransactionRuleDetail>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(TransactionsRulesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List rules
+     * {@link #list(TransactionsRulesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-     *
-     * <p>{@code GET /v3/transactions/rules/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<TransactionRuleDetail>> list() {
       return client.execute(listRequest(TransactionsRulesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List rules
+     * Asynchronous {@link #list(TransactionsRulesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List the application's transaction-monitoring rules: your custom rules plus any library presets you have installed. Filter by source, category, mode, bundle or free-text search; order with <code>ordering</code> (run_count, approved_pct, reviewed_pct, declined_pct, latest_triggered_at, title, created_at, source, each with an optional <code>-</code> prefix).
-     *
-     * <p>{@code GET /v3/transactions/rules/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<TransactionRuleDetail>>> listAsync() {
       return client.executeAsync(listRequest(TransactionsRulesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Create rule
-     *
-     * <p>Create a CUSTOM transaction-monitoring rule. Titles are unique per application (duplicate -&gt; 400). A <code>change_status</code> action targeting <code>AWAITING_USER</code> must carry <code>workflow_id</code>. Rules created in ACTIVE mode apply to new transactions immediately - the recommended workflow is create in TEST mode, backtest, then switch mode to ACTIVE.
-     *
-     * <p>{@code POST /v3/transactions/rules/}
+     * {@link #create(TransactionRuleCreateRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TransactionRuleDetail> create(TransactionRuleCreateRequest params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create rule
-     *
-     * <p>Create a CUSTOM transaction-monitoring rule. Titles are unique per application (duplicate -&gt; 400). A <code>change_status</code> action targeting <code>AWAITING_USER</code> must carry <code>workflow_id</code>. Rules created in ACTIVE mode apply to new transactions immediately - the recommended workflow is create in TEST mode, backtest, then switch mode to ACTIVE.
-     *
-     * <p>{@code POST /v3/transactions/rules/}
+     * Asynchronous {@link #create(TransactionRuleCreateRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionRuleDetail>> createAsync(TransactionRuleCreateRequest params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create rule
-     *
-     * <p>Create a CUSTOM transaction-monitoring rule. Titles are unique per application (duplicate -&gt; 400). A <code>change_status</code> action targeting <code>AWAITING_USER</code> must carry <code>workflow_id</code>. Rules created in ACTIVE mode apply to new transactions immediately - the recommended workflow is create in TEST mode, backtest, then switch mode to ACTIVE.
-     *
-     * <p>{@code POST /v3/transactions/rules/}
+     * {@link #create(TransactionRuleCreateRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<TransactionRuleDetail> create(TransactionRuleCreateRequest params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create rule
-     *
-     * <p>Create a CUSTOM transaction-monitoring rule. Titles are unique per application (duplicate -&gt; 400). A <code>change_status</code> action targeting <code>AWAITING_USER</code> must carry <code>workflow_id</code>. Rules created in ACTIVE mode apply to new transactions immediately - the recommended workflow is create in TEST mode, backtest, then switch mode to ACTIVE.
-     *
-     * <p>{@code POST /v3/transactions/rules/}
+     * Asynchronous {@link #create(TransactionRuleCreateRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionRuleDetail>> createAsync(TransactionRuleCreateRequest params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Get rule
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve one rule with its full configuration and execution counters.
-     *
-     * <p>{@code GET /v3/transactions/rules/{rule_uuid}/}
-     *
-     * @param ruleUuid The rule's uuid from list or create.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param ruleUuid the {@code rule_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TransactionRuleDetail> retrieve(String ruleUuid, RequestOptions options) {
       return client.execute(retrieveRequest(ruleUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get rule
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve one rule with its full configuration and execution counters.
-     *
-     * <p>{@code GET /v3/transactions/rules/{rule_uuid}/}
-     *
-     * @param ruleUuid The rule's uuid from list or create.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param ruleUuid the {@code rule_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionRuleDetail>> retrieveAsync(String ruleUuid, RequestOptions options) {
       return client.executeAsync(retrieveRequest(ruleUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get rule
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve one rule with its full configuration and execution counters.
-     *
-     * <p>{@code GET /v3/transactions/rules/{rule_uuid}/}
-     *
-     * @param ruleUuid The rule's uuid from list or create.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param ruleUuid the {@code rule_uuid}
+     * @return the result
      */
     public RawResponse<TransactionRuleDetail> retrieve(String ruleUuid) {
       return client.execute(retrieveRequest(ruleUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get rule
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve one rule with its full configuration and execution counters.
-     *
-     * <p>{@code GET /v3/transactions/rules/{rule_uuid}/}
-     *
-     * @param ruleUuid The rule's uuid from list or create.
-     * @return a future completed with the raw response
+     * @param ruleUuid the {@code rule_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionRuleDetail>> retrieveAsync(String ruleUuid) {
       return client.executeAsync(retrieveRequest(ruleUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Update rule
+     * {@link #update(String, TransactionRuleUpdateRequest, RequestOptions)} with the raw response.
      *
-     * <p>Partially update a rule. Custom rules accept every configuration field. Library (PRESET) rules accept only <code>mode</code> - use it to activate, disable, or switch a preset to TEST; any other field returns 400.
-     *
-     * <p>{@code PATCH /v3/transactions/rules/{rule_uuid}/}
-     *
-     * @param ruleUuid The rule's uuid from list or create.
+     * @param ruleUuid the {@code rule_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TransactionRuleDetail> update(String ruleUuid, TransactionRuleUpdateRequest params, RequestOptions options) {
       return client.execute(updateRequest(ruleUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update rule
+     * Asynchronous {@link #update(String, TransactionRuleUpdateRequest, RequestOptions)} with the raw response.
      *
-     * <p>Partially update a rule. Custom rules accept every configuration field. Library (PRESET) rules accept only <code>mode</code> - use it to activate, disable, or switch a preset to TEST; any other field returns 400.
-     *
-     * <p>{@code PATCH /v3/transactions/rules/{rule_uuid}/}
-     *
-     * @param ruleUuid The rule's uuid from list or create.
+     * @param ruleUuid the {@code rule_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionRuleDetail>> updateAsync(String ruleUuid, TransactionRuleUpdateRequest params, RequestOptions options) {
       return client.executeAsync(updateRequest(ruleUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update rule
+     * {@link #update(String, TransactionRuleUpdateRequest, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Partially update a rule. Custom rules accept every configuration field. Library (PRESET) rules accept only <code>mode</code> - use it to activate, disable, or switch a preset to TEST; any other field returns 400.
-     *
-     * <p>{@code PATCH /v3/transactions/rules/{rule_uuid}/}
-     *
-     * @param ruleUuid The rule's uuid from list or create.
+     * @param ruleUuid the {@code rule_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<TransactionRuleDetail> update(String ruleUuid, TransactionRuleUpdateRequest params) {
       return client.execute(updateRequest(ruleUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update rule
+     * Asynchronous {@link #update(String, TransactionRuleUpdateRequest, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Partially update a rule. Custom rules accept every configuration field. Library (PRESET) rules accept only <code>mode</code> - use it to activate, disable, or switch a preset to TEST; any other field returns 400.
-     *
-     * <p>{@code PATCH /v3/transactions/rules/{rule_uuid}/}
-     *
-     * @param ruleUuid The rule's uuid from list or create.
+     * @param ruleUuid the {@code rule_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionRuleDetail>> updateAsync(String ruleUuid, TransactionRuleUpdateRequest params) {
       return client.executeAsync(updateRequest(ruleUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Delete rule
+     * {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Delete a CUSTOM rule. Deletion is immediate and permanent: the rule stops evaluating for new transactions and disappears from listings, while past rule runs on already-evaluated transactions keep their recorded results. Library rules cannot be deleted - uninstall them via the install endpoint instead (they can always be reinstalled from the library).
-     *
-     * <p>{@code DELETE /v3/transactions/rules/{rule_uuid}/}
-     *
-     * @param ruleUuid The rule's uuid from list or create.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param ruleUuid the {@code rule_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String ruleUuid, RequestOptions options) {
       return client.execute(deleteRequest(ruleUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete rule
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Delete a CUSTOM rule. Deletion is immediate and permanent: the rule stops evaluating for new transactions and disappears from listings, while past rule runs on already-evaluated transactions keep their recorded results. Library rules cannot be deleted - uninstall them via the install endpoint instead (they can always be reinstalled from the library).
-     *
-     * <p>{@code DELETE /v3/transactions/rules/{rule_uuid}/}
-     *
-     * @param ruleUuid The rule's uuid from list or create.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param ruleUuid the {@code rule_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String ruleUuid, RequestOptions options) {
       return client.executeAsync(deleteRequest(ruleUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete rule
+     * {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Delete a CUSTOM rule. Deletion is immediate and permanent: the rule stops evaluating for new transactions and disappears from listings, while past rule runs on already-evaluated transactions keep their recorded results. Library rules cannot be deleted - uninstall them via the install endpoint instead (they can always be reinstalled from the library).
-     *
-     * <p>{@code DELETE /v3/transactions/rules/{rule_uuid}/}
-     *
-     * @param ruleUuid The rule's uuid from list or create.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param ruleUuid the {@code rule_uuid}
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String ruleUuid) {
       return client.execute(deleteRequest(ruleUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Delete rule
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Delete a CUSTOM rule. Deletion is immediate and permanent: the rule stops evaluating for new transactions and disappears from listings, while past rule runs on already-evaluated transactions keep their recorded results. Library rules cannot be deleted - uninstall them via the install endpoint instead (they can always be reinstalled from the library).
-     *
-     * <p>{@code DELETE /v3/transactions/rules/{rule_uuid}/}
-     *
-     * @param ruleUuid The rule's uuid from list or create.
-     * @return a future completed with the raw response
+     * @param ruleUuid the {@code rule_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String ruleUuid) {
       return client.executeAsync(deleteRequest(ruleUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Backtest rule configuration
-     *
-     * <p>Evaluate a hypothetical rule configuration against your recent transactions (most recent first, up to the backtest cap) without creating a rule or touching any transaction. Use it before activating a rule to see how often it would have matched and how many subjects it would have affected.
-     *
-     * <p>{@code POST /v3/transactions/rules/backtest/}
+     * {@link #backtest(TransactionRuleBacktestRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TransactionRuleBacktestResult> backtest(TransactionRuleBacktestRequest params, RequestOptions options) {
       return client.execute(backtestRequest(params), options, BACKTEST_RESPONSE);
     }
 
     /**
-     * Backtest rule configuration
-     *
-     * <p>Evaluate a hypothetical rule configuration against your recent transactions (most recent first, up to the backtest cap) without creating a rule or touching any transaction. Use it before activating a rule to see how often it would have matched and how many subjects it would have affected.
-     *
-     * <p>{@code POST /v3/transactions/rules/backtest/}
+     * Asynchronous {@link #backtest(TransactionRuleBacktestRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionRuleBacktestResult>> backtestAsync(TransactionRuleBacktestRequest params, RequestOptions options) {
       return client.executeAsync(backtestRequest(params), options, BACKTEST_RESPONSE);
     }
 
     /**
-     * Backtest rule configuration
-     *
-     * <p>Evaluate a hypothetical rule configuration against your recent transactions (most recent first, up to the backtest cap) without creating a rule or touching any transaction. Use it before activating a rule to see how often it would have matched and how many subjects it would have affected.
-     *
-     * <p>{@code POST /v3/transactions/rules/backtest/}
+     * {@link #backtest(TransactionRuleBacktestRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<TransactionRuleBacktestResult> backtest(TransactionRuleBacktestRequest params) {
       return client.execute(backtestRequest(params), RequestOptions.none(), BACKTEST_RESPONSE);
     }
 
     /**
-     * Backtest rule configuration
-     *
-     * <p>Evaluate a hypothetical rule configuration against your recent transactions (most recent first, up to the backtest cap) without creating a rule or touching any transaction. Use it before activating a rule to see how often it would have matched and how many subjects it would have affected.
-     *
-     * <p>{@code POST /v3/transactions/rules/backtest/}
+     * Asynchronous {@link #backtest(TransactionRuleBacktestRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionRuleBacktestResult>> backtestAsync(TransactionRuleBacktestRequest params) {
       return client.executeAsync(backtestRequest(params), RequestOptions.none(), BACKTEST_RESPONSE);
     }
 
     /**
-     * List rule library
-     *
-     * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-     *
-     * <p>{@code GET /v3/transactions/rules/library/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<TransactionRuleLibraryEntry>> listLibrary(TransactionsRulesListLibraryParams params, RequestOptions options) {
       return client.execute(listLibraryRequest(params), options, LIST_LIBRARY_RESPONSE);
     }
 
     /**
-     * List rule library
-     *
-     * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-     *
-     * <p>{@code GET /v3/transactions/rules/library/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<TransactionRuleLibraryEntry>>> listLibraryAsync(TransactionsRulesListLibraryParams params, RequestOptions options) {
       return client.executeAsync(listLibraryRequest(params), options, LIST_LIBRARY_RESPONSE);
     }
 
     /**
-     * List rule library
-     *
-     * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-     *
-     * <p>{@code GET /v3/transactions/rules/library/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<TransactionRuleLibraryEntry>> listLibrary(TransactionsRulesListLibraryParams params) {
       return client.execute(listLibraryRequest(params), RequestOptions.none(), LIST_LIBRARY_RESPONSE);
     }
 
     /**
-     * List rule library
-     *
-     * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-     *
-     * <p>{@code GET /v3/transactions/rules/library/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<TransactionRuleLibraryEntry>>> listLibraryAsync(TransactionsRulesListLibraryParams params) {
       return client.executeAsync(listLibraryRequest(params), RequestOptions.none(), LIST_LIBRARY_RESPONSE);
     }
 
     /**
-     * List rule library
+     * {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-     *
-     * <p>{@code GET /v3/transactions/rules/library/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<TransactionRuleLibraryEntry>> listLibrary(RequestOptions options) {
       return client.execute(listLibraryRequest(TransactionsRulesListLibraryParams.builder().build()), options, LIST_LIBRARY_RESPONSE);
     }
 
     /**
-     * List rule library
+     * Asynchronous {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-     *
-     * <p>{@code GET /v3/transactions/rules/library/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<TransactionRuleLibraryEntry>>> listLibraryAsync(RequestOptions options) {
       return client.executeAsync(listLibraryRequest(TransactionsRulesListLibraryParams.builder().build()), options, LIST_LIBRARY_RESPONSE);
     }
 
     /**
-     * List rule library
+     * {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-     *
-     * <p>{@code GET /v3/transactions/rules/library/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<TransactionRuleLibraryEntry>> listLibrary() {
       return client.execute(listLibraryRequest(TransactionsRulesListLibraryParams.builder().build()), RequestOptions.none(), LIST_LIBRARY_RESPONSE);
     }
 
     /**
-     * List rule library
+     * Asynchronous {@link #listLibrary(TransactionsRulesListLibraryParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
-     *
-     * <p>{@code GET /v3/transactions/rules/library/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<TransactionRuleLibraryEntry>>> listLibraryAsync() {
       return client.executeAsync(listLibraryRequest(TransactionsRulesListLibraryParams.builder().build()), RequestOptions.none(), LIST_LIBRARY_RESPONSE);
     }
 
     /**
-     * Install library rules
-     *
-     * <p>Install one or more presets onto the application, by <code>library_keys</code> or a whole <code>bundle</code>. Installed presets evaluate immediately in their default mode; already-installed keys are skipped.
-     *
-     * <p>{@code POST /v3/transactions/rules/install/}
+     * {@link #installLibrary(TransactionRuleInstallRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TransactionRuleInstallResult> installLibrary(TransactionRuleInstallRequest params, RequestOptions options) {
       return client.execute(installLibraryRequest(params), options, INSTALL_LIBRARY_RESPONSE);
     }
 
     /**
-     * Install library rules
-     *
-     * <p>Install one or more presets onto the application, by <code>library_keys</code> or a whole <code>bundle</code>. Installed presets evaluate immediately in their default mode; already-installed keys are skipped.
-     *
-     * <p>{@code POST /v3/transactions/rules/install/}
+     * Asynchronous {@link #installLibrary(TransactionRuleInstallRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionRuleInstallResult>> installLibraryAsync(TransactionRuleInstallRequest params, RequestOptions options) {
       return client.executeAsync(installLibraryRequest(params), options, INSTALL_LIBRARY_RESPONSE);
     }
 
     /**
-     * Install library rules
-     *
-     * <p>Install one or more presets onto the application, by <code>library_keys</code> or a whole <code>bundle</code>. Installed presets evaluate immediately in their default mode; already-installed keys are skipped.
-     *
-     * <p>{@code POST /v3/transactions/rules/install/}
+     * {@link #installLibrary(TransactionRuleInstallRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<TransactionRuleInstallResult> installLibrary(TransactionRuleInstallRequest params) {
       return client.execute(installLibraryRequest(params), RequestOptions.none(), INSTALL_LIBRARY_RESPONSE);
     }
 
     /**
-     * Install library rules
-     *
-     * <p>Install one or more presets onto the application, by <code>library_keys</code> or a whole <code>bundle</code>. Installed presets evaluate immediately in their default mode; already-installed keys are skipped.
-     *
-     * <p>{@code POST /v3/transactions/rules/install/}
+     * Asynchronous {@link #installLibrary(TransactionRuleInstallRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionRuleInstallResult>> installLibraryAsync(TransactionRuleInstallRequest params) {
       return client.executeAsync(installLibraryRequest(params), RequestOptions.none(), INSTALL_LIBRARY_RESPONSE);
     }
 
     /**
-     * Uninstall library rules
-     *
-     * <p>Remove installed presets from the application, by <code>library_keys</code> or a whole <code>bundle</code>. Uninstalled presets stop evaluating immediately and can be reinstalled from the library at any time.
-     *
-     * <p>{@code DELETE /v3/transactions/rules/install/}
+     * {@link #uninstallLibrary(TransactionRuleInstallRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TransactionRuleInstallResult> uninstallLibrary(TransactionRuleInstallRequest params, RequestOptions options) {
       return client.execute(uninstallLibraryRequest(params), options, UNINSTALL_LIBRARY_RESPONSE);
     }
 
     /**
-     * Uninstall library rules
-     *
-     * <p>Remove installed presets from the application, by <code>library_keys</code> or a whole <code>bundle</code>. Uninstalled presets stop evaluating immediately and can be reinstalled from the library at any time.
-     *
-     * <p>{@code DELETE /v3/transactions/rules/install/}
+     * Asynchronous {@link #uninstallLibrary(TransactionRuleInstallRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionRuleInstallResult>> uninstallLibraryAsync(TransactionRuleInstallRequest params, RequestOptions options) {
       return client.executeAsync(uninstallLibraryRequest(params), options, UNINSTALL_LIBRARY_RESPONSE);
     }
 
     /**
-     * Uninstall library rules
-     *
-     * <p>Remove installed presets from the application, by <code>library_keys</code> or a whole <code>bundle</code>. Uninstalled presets stop evaluating immediately and can be reinstalled from the library at any time.
-     *
-     * <p>{@code DELETE /v3/transactions/rules/install/}
+     * {@link #uninstallLibrary(TransactionRuleInstallRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<TransactionRuleInstallResult> uninstallLibrary(TransactionRuleInstallRequest params) {
       return client.execute(uninstallLibraryRequest(params), RequestOptions.none(), UNINSTALL_LIBRARY_RESPONSE);
     }
 
     /**
-     * Uninstall library rules
-     *
-     * <p>Remove installed presets from the application, by <code>library_keys</code> or a whole <code>bundle</code>. Uninstalled presets stop evaluating immediately and can be reinstalled from the library at any time.
-     *
-     * <p>{@code DELETE /v3/transactions/rules/install/}
+     * Asynchronous {@link #uninstallLibrary(TransactionRuleInstallRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionRuleInstallResult>> uninstallLibraryAsync(TransactionRuleInstallRequest params) {
       return client.executeAsync(uninstallLibraryRequest(params), RequestOptions.none(), UNINSTALL_LIBRARY_RESPONSE);

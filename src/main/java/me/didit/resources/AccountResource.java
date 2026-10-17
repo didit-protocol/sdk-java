@@ -75,43 +75,31 @@ public final class AccountResource {
   }
 
   /**
-   * Register Account
-   *
-   * <p>Step 1 of programmatic onboarding. Creates a pending account and emails a 6-char code (10 min TTL). Rate limit: 5/IP/hour.
-   *
-   * <p>{@code POST /programmatic/register/}
+   * Asynchronous {@link #register(RegisterRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<RegisterResponse> registerAsync(RegisterRequest params, RequestOptions options) {
     return client.executeAsync(registerRequest(params), options, REGISTER_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Register Account
-   *
-   * <p>Step 1 of programmatic onboarding. Creates a pending account and emails a 6-char code (10 min TTL). Rate limit: 5/IP/hour.
-   *
-   * <p>{@code POST /programmatic/register/}
+   * Same as {@link #register(RegisterRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public RegisterResponse register(RegisterRequest params) {
     return client.execute(registerRequest(params), RequestOptions.none(), REGISTER_RESPONSE).data();
   }
 
   /**
-   * Register Account
-   *
-   * <p>Step 1 of programmatic onboarding. Creates a pending account and emails a 6-char code (10 min TTL). Rate limit: 5/IP/hour.
-   *
-   * <p>{@code POST /programmatic/register/}
+   * Asynchronous {@link #register(RegisterRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<RegisterResponse> registerAsync(RegisterRequest params) {
     return client.executeAsync(registerRequest(params), RequestOptions.none(), REGISTER_RESPONSE).thenApply(RawResponse::data);
@@ -133,43 +121,31 @@ public final class AccountResource {
   }
 
   /**
-   * Verify Email and Issue Credentials
-   *
-   * <p>Step 2 of onboarding. Exchanges the 6-char code for a verified account, a default org+app, and a JWT pair. Persist the returned <code>api_key</code>.
-   *
-   * <p>{@code POST /programmatic/verify-email/}
+   * Asynchronous {@link #verifyEmail(VerifyEmailRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<VerifyEmailResponse> verifyEmailAsync(VerifyEmailRequest params, RequestOptions options) {
     return client.executeAsync(verifyEmailRequest(params), options, VERIFY_EMAIL_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Verify Email and Issue Credentials
-   *
-   * <p>Step 2 of onboarding. Exchanges the 6-char code for a verified account, a default org+app, and a JWT pair. Persist the returned <code>api_key</code>.
-   *
-   * <p>{@code POST /programmatic/verify-email/}
+   * Same as {@link #verifyEmail(VerifyEmailRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public VerifyEmailResponse verifyEmail(VerifyEmailRequest params) {
     return client.execute(verifyEmailRequest(params), RequestOptions.none(), VERIFY_EMAIL_RESPONSE).data();
   }
 
   /**
-   * Verify Email and Issue Credentials
-   *
-   * <p>Step 2 of onboarding. Exchanges the 6-char code for a verified account, a default org+app, and a JWT pair. Persist the returned <code>api_key</code>.
-   *
-   * <p>{@code POST /programmatic/verify-email/}
+   * Asynchronous {@link #verifyEmail(VerifyEmailRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<VerifyEmailResponse> verifyEmailAsync(VerifyEmailRequest params) {
     return client.executeAsync(verifyEmailRequest(params), RequestOptions.none(), VERIFY_EMAIL_RESPONSE).thenApply(RawResponse::data);
@@ -191,43 +167,31 @@ public final class AccountResource {
   }
 
   /**
-   * Programmatic Login
-   *
-   * <p>Authenticate any verified email/password Didit account and receive an RS256 JWT pair (default lifetime 86400s). Console-created email/password accounts can use this endpoint; OAuth-only console accounts must set a password first.
-   *
-   * <p>{@code POST /programmatic/login/}
+   * Asynchronous {@link #login(LoginRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<LoginResponse> loginAsync(LoginRequest params, RequestOptions options) {
     return client.executeAsync(loginRequest(params), options, LOGIN_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Programmatic Login
-   *
-   * <p>Authenticate any verified email/password Didit account and receive an RS256 JWT pair (default lifetime 86400s). Console-created email/password accounts can use this endpoint; OAuth-only console accounts must set a password first.
-   *
-   * <p>{@code POST /programmatic/login/}
+   * Same as {@link #login(LoginRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public LoginResponse login(LoginRequest params) {
     return client.execute(loginRequest(params), RequestOptions.none(), LOGIN_RESPONSE).data();
   }
 
   /**
-   * Programmatic Login
-   *
-   * <p>Authenticate any verified email/password Didit account and receive an RS256 JWT pair (default lifetime 86400s). Console-created email/password accounts can use this endpoint; OAuth-only console accounts must set a password first.
-   *
-   * <p>{@code POST /programmatic/login/}
+   * Asynchronous {@link #login(LoginRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<LoginResponse> loginAsync(LoginRequest params) {
     return client.executeAsync(loginRequest(params), RequestOptions.none(), LOGIN_RESPONSE).thenApply(RawResponse::data);
@@ -251,49 +215,31 @@ public final class AccountResource {
   }
 
   /**
-   * Resend the email verification code
-   *
-   * <p>Resend the 6-character verification code for an unverified programmatic account. Requires the account's email and password so only the owner can trigger a new code (no console Basic Auth). A fresh code replaces the previous one and is valid for 10 minutes.
-   *
-   * <p>Rate limits: a per-email cooldown of 60 seconds between resends (HTTP 429 with <code>Retry-After</code>), and the same 5-per-IP-per-hour budget as registration.
-   *
-   * <p>{@code POST /programmatic/resend-otp/}
+   * Asynchronous {@link #resendOtp(AccountResendOtpParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<JsonNode> resendOtpAsync(AccountResendOtpParams params, RequestOptions options) {
     return client.executeAsync(resendOtpRequest(params), options, RESEND_OTP_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Resend the email verification code
-   *
-   * <p>Resend the 6-character verification code for an unverified programmatic account. Requires the account's email and password so only the owner can trigger a new code (no console Basic Auth). A fresh code replaces the previous one and is valid for 10 minutes.
-   *
-   * <p>Rate limits: a per-email cooldown of 60 seconds between resends (HTTP 429 with <code>Retry-After</code>), and the same 5-per-IP-per-hour budget as registration.
-   *
-   * <p>{@code POST /programmatic/resend-otp/}
+   * Same as {@link #resendOtp(AccountResendOtpParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public JsonNode resendOtp(AccountResendOtpParams params) {
     return client.execute(resendOtpRequest(params), RequestOptions.none(), RESEND_OTP_RESPONSE).data();
   }
 
   /**
-   * Resend the email verification code
-   *
-   * <p>Resend the 6-character verification code for an unverified programmatic account. Requires the account's email and password so only the owner can trigger a new code (no console Basic Auth). A fresh code replaces the previous one and is valid for 10 minutes.
-   *
-   * <p>Rate limits: a per-email cooldown of 60 seconds between resends (HTTP 429 with <code>Retry-After</code>), and the same 5-per-IP-per-hour budget as registration.
-   *
-   * <p>{@code POST /programmatic/resend-otp/}
+   * Asynchronous {@link #resendOtp(AccountResendOtpParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<JsonNode> resendOtpAsync(AccountResendOtpParams params) {
     return client.executeAsync(resendOtpRequest(params), RequestOptions.none(), RESEND_OTP_RESPONSE).thenApply(RawResponse::data);
@@ -352,240 +298,168 @@ public final class AccountResource {
     }
 
     /**
-     * Register Account
-     *
-     * <p>Step 1 of programmatic onboarding. Creates a pending account and emails a 6-char code (10 min TTL). Rate limit: 5/IP/hour.
-     *
-     * <p>{@code POST /programmatic/register/}
+     * {@link #register(RegisterRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<RegisterResponse> register(RegisterRequest params, RequestOptions options) {
       return client.execute(registerRequest(params), options, REGISTER_RESPONSE);
     }
 
     /**
-     * Register Account
-     *
-     * <p>Step 1 of programmatic onboarding. Creates a pending account and emails a 6-char code (10 min TTL). Rate limit: 5/IP/hour.
-     *
-     * <p>{@code POST /programmatic/register/}
+     * Asynchronous {@link #register(RegisterRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegisterResponse>> registerAsync(RegisterRequest params, RequestOptions options) {
       return client.executeAsync(registerRequest(params), options, REGISTER_RESPONSE);
     }
 
     /**
-     * Register Account
-     *
-     * <p>Step 1 of programmatic onboarding. Creates a pending account and emails a 6-char code (10 min TTL). Rate limit: 5/IP/hour.
-     *
-     * <p>{@code POST /programmatic/register/}
+     * {@link #register(RegisterRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<RegisterResponse> register(RegisterRequest params) {
       return client.execute(registerRequest(params), RequestOptions.none(), REGISTER_RESPONSE);
     }
 
     /**
-     * Register Account
-     *
-     * <p>Step 1 of programmatic onboarding. Creates a pending account and emails a 6-char code (10 min TTL). Rate limit: 5/IP/hour.
-     *
-     * <p>{@code POST /programmatic/register/}
+     * Asynchronous {@link #register(RegisterRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<RegisterResponse>> registerAsync(RegisterRequest params) {
       return client.executeAsync(registerRequest(params), RequestOptions.none(), REGISTER_RESPONSE);
     }
 
     /**
-     * Verify Email and Issue Credentials
-     *
-     * <p>Step 2 of onboarding. Exchanges the 6-char code for a verified account, a default org+app, and a JWT pair. Persist the returned <code>api_key</code>.
-     *
-     * <p>{@code POST /programmatic/verify-email/}
+     * {@link #verifyEmail(VerifyEmailRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<VerifyEmailResponse> verifyEmail(VerifyEmailRequest params, RequestOptions options) {
       return client.execute(verifyEmailRequest(params), options, VERIFY_EMAIL_RESPONSE);
     }
 
     /**
-     * Verify Email and Issue Credentials
-     *
-     * <p>Step 2 of onboarding. Exchanges the 6-char code for a verified account, a default org+app, and a JWT pair. Persist the returned <code>api_key</code>.
-     *
-     * <p>{@code POST /programmatic/verify-email/}
+     * Asynchronous {@link #verifyEmail(VerifyEmailRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<VerifyEmailResponse>> verifyEmailAsync(VerifyEmailRequest params, RequestOptions options) {
       return client.executeAsync(verifyEmailRequest(params), options, VERIFY_EMAIL_RESPONSE);
     }
 
     /**
-     * Verify Email and Issue Credentials
-     *
-     * <p>Step 2 of onboarding. Exchanges the 6-char code for a verified account, a default org+app, and a JWT pair. Persist the returned <code>api_key</code>.
-     *
-     * <p>{@code POST /programmatic/verify-email/}
+     * {@link #verifyEmail(VerifyEmailRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<VerifyEmailResponse> verifyEmail(VerifyEmailRequest params) {
       return client.execute(verifyEmailRequest(params), RequestOptions.none(), VERIFY_EMAIL_RESPONSE);
     }
 
     /**
-     * Verify Email and Issue Credentials
-     *
-     * <p>Step 2 of onboarding. Exchanges the 6-char code for a verified account, a default org+app, and a JWT pair. Persist the returned <code>api_key</code>.
-     *
-     * <p>{@code POST /programmatic/verify-email/}
+     * Asynchronous {@link #verifyEmail(VerifyEmailRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<VerifyEmailResponse>> verifyEmailAsync(VerifyEmailRequest params) {
       return client.executeAsync(verifyEmailRequest(params), RequestOptions.none(), VERIFY_EMAIL_RESPONSE);
     }
 
     /**
-     * Programmatic Login
-     *
-     * <p>Authenticate any verified email/password Didit account and receive an RS256 JWT pair (default lifetime 86400s). Console-created email/password accounts can use this endpoint; OAuth-only console accounts must set a password first.
-     *
-     * <p>{@code POST /programmatic/login/}
+     * {@link #login(LoginRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<LoginResponse> login(LoginRequest params, RequestOptions options) {
       return client.execute(loginRequest(params), options, LOGIN_RESPONSE);
     }
 
     /**
-     * Programmatic Login
-     *
-     * <p>Authenticate any verified email/password Didit account and receive an RS256 JWT pair (default lifetime 86400s). Console-created email/password accounts can use this endpoint; OAuth-only console accounts must set a password first.
-     *
-     * <p>{@code POST /programmatic/login/}
+     * Asynchronous {@link #login(LoginRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<LoginResponse>> loginAsync(LoginRequest params, RequestOptions options) {
       return client.executeAsync(loginRequest(params), options, LOGIN_RESPONSE);
     }
 
     /**
-     * Programmatic Login
-     *
-     * <p>Authenticate any verified email/password Didit account and receive an RS256 JWT pair (default lifetime 86400s). Console-created email/password accounts can use this endpoint; OAuth-only console accounts must set a password first.
-     *
-     * <p>{@code POST /programmatic/login/}
+     * {@link #login(LoginRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<LoginResponse> login(LoginRequest params) {
       return client.execute(loginRequest(params), RequestOptions.none(), LOGIN_RESPONSE);
     }
 
     /**
-     * Programmatic Login
-     *
-     * <p>Authenticate any verified email/password Didit account and receive an RS256 JWT pair (default lifetime 86400s). Console-created email/password accounts can use this endpoint; OAuth-only console accounts must set a password first.
-     *
-     * <p>{@code POST /programmatic/login/}
+     * Asynchronous {@link #login(LoginRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<LoginResponse>> loginAsync(LoginRequest params) {
       return client.executeAsync(loginRequest(params), RequestOptions.none(), LOGIN_RESPONSE);
     }
 
     /**
-     * Resend the email verification code
-     *
-     * <p>Resend the 6-character verification code for an unverified programmatic account. Requires the account's email and password so only the owner can trigger a new code (no console Basic Auth). A fresh code replaces the previous one and is valid for 10 minutes.
-     *
-     * <p>Rate limits: a per-email cooldown of 60 seconds between resends (HTTP 429 with <code>Retry-After</code>), and the same 5-per-IP-per-hour budget as registration.
-     *
-     * <p>{@code POST /programmatic/resend-otp/}
+     * {@link #resendOtp(AccountResendOtpParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<JsonNode> resendOtp(AccountResendOtpParams params, RequestOptions options) {
       return client.execute(resendOtpRequest(params), options, RESEND_OTP_RESPONSE);
     }
 
     /**
-     * Resend the email verification code
-     *
-     * <p>Resend the 6-character verification code for an unverified programmatic account. Requires the account's email and password so only the owner can trigger a new code (no console Basic Auth). A fresh code replaces the previous one and is valid for 10 minutes.
-     *
-     * <p>Rate limits: a per-email cooldown of 60 seconds between resends (HTTP 429 with <code>Retry-After</code>), and the same 5-per-IP-per-hour budget as registration.
-     *
-     * <p>{@code POST /programmatic/resend-otp/}
+     * Asynchronous {@link #resendOtp(AccountResendOtpParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<JsonNode>> resendOtpAsync(AccountResendOtpParams params, RequestOptions options) {
       return client.executeAsync(resendOtpRequest(params), options, RESEND_OTP_RESPONSE);
     }
 
     /**
-     * Resend the email verification code
-     *
-     * <p>Resend the 6-character verification code for an unverified programmatic account. Requires the account's email and password so only the owner can trigger a new code (no console Basic Auth). A fresh code replaces the previous one and is valid for 10 minutes.
-     *
-     * <p>Rate limits: a per-email cooldown of 60 seconds between resends (HTTP 429 with <code>Retry-After</code>), and the same 5-per-IP-per-hour budget as registration.
-     *
-     * <p>{@code POST /programmatic/resend-otp/}
+     * {@link #resendOtp(AccountResendOtpParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<JsonNode> resendOtp(AccountResendOtpParams params) {
       return client.execute(resendOtpRequest(params), RequestOptions.none(), RESEND_OTP_RESPONSE);
     }
 
     /**
-     * Resend the email verification code
-     *
-     * <p>Resend the 6-character verification code for an unverified programmatic account. Requires the account's email and password so only the owner can trigger a new code (no console Basic Auth). A fresh code replaces the previous one and is valid for 10 minutes.
-     *
-     * <p>Rate limits: a per-email cooldown of 60 seconds between resends (HTTP 429 with <code>Retry-After</code>), and the same 5-per-IP-per-hour budget as registration.
-     *
-     * <p>{@code POST /programmatic/resend-otp/}
+     * Asynchronous {@link #resendOtp(AccountResendOtpParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<JsonNode>> resendOtpAsync(AccountResendOtpParams params) {
       return client.executeAsync(resendOtpRequest(params), RequestOptions.none(), RESEND_OTP_RESPONSE);

@@ -49,46 +49,31 @@ public final class CasesChecklistResource {
   }
 
   /**
-   * List case checklist
+   * Asynchronous {@link #list(String, RequestOptions)}.
    *
-   * <p>List the case's checklist items, copied from the blueprint's content_config.checklist.items at creation, ordered.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<List<CaseChecklistItem>> listAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(listRequest(caseUuid), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List case checklist
+   * Same as {@link #list(String, RequestOptions)}, with the client's options.
    *
-   * <p>List the case's checklist items, copied from the blueprint's content_config.checklist.items at creation, ordered.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return the result
    */
   public List<CaseChecklistItem> list(String caseUuid) {
     return client.execute(listRequest(caseUuid), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List case checklist
+   * Asynchronous {@link #list(String, RequestOptions)}, with the client's options.
    *
-   * <p>List the case's checklist items, copied from the blueprint's content_config.checklist.items at creation, ordered.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @return a future completed with the response body
+   * @param caseUuid the {@code case_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<List<CaseChecklistItem>> listAsync(String caseUuid) {
     return client.executeAsync(listRequest(caseUuid), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -113,52 +98,37 @@ public final class CasesChecklistResource {
   }
 
   /**
-   * Toggle checklist item
+   * Asynchronous {@link #toggleItem(String, String, CasesChecklistToggleItemParams, RequestOptions)}.
    *
-   * <p>Mark a checklist item complete or incomplete. Resolution is blocked while any item is incomplete, unless the blueprint marks the checklist optional.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/{item_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param itemUuid Checklist item UUID.
+   * @param caseUuid the {@code case_uuid}
+   * @param itemUuid the {@code item_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseChecklistItem> toggleItemAsync(String caseUuid, String itemUuid, CasesChecklistToggleItemParams params, RequestOptions options) {
     return client.executeAsync(toggleItemRequest(caseUuid, itemUuid, params), options, TOGGLE_ITEM_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Toggle checklist item
+   * Same as {@link #toggleItem(String, String, CasesChecklistToggleItemParams, RequestOptions)}, with the client's options.
    *
-   * <p>Mark a checklist item complete or incomplete. Resolution is blocked while any item is incomplete, unless the blueprint marks the checklist optional.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/{item_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param itemUuid Checklist item UUID.
+   * @param caseUuid the {@code case_uuid}
+   * @param itemUuid the {@code item_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public CaseChecklistItem toggleItem(String caseUuid, String itemUuid, CasesChecklistToggleItemParams params) {
     return client.execute(toggleItemRequest(caseUuid, itemUuid, params), RequestOptions.none(), TOGGLE_ITEM_RESPONSE).data();
   }
 
   /**
-   * Toggle checklist item
+   * Asynchronous {@link #toggleItem(String, String, CasesChecklistToggleItemParams, RequestOptions)}, with the client's options.
    *
-   * <p>Mark a checklist item complete or incomplete. Resolution is blocked while any item is incomplete, unless the blueprint marks the checklist optional.
-   *
-   * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/{item_uuid}/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param caseUuid Case UUID.
-   * @param itemUuid Checklist item UUID.
+   * @param caseUuid the {@code case_uuid}
+   * @param itemUuid the {@code item_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<CaseChecklistItem> toggleItemAsync(String caseUuid, String itemUuid, CasesChecklistToggleItemParams params) {
     return client.executeAsync(toggleItemRequest(caseUuid, itemUuid, params), RequestOptions.none(), TOGGLE_ITEM_RESPONSE).thenApply(RawResponse::data);
@@ -194,132 +164,92 @@ public final class CasesChecklistResource {
     }
 
     /**
-     * List case checklist
+     * {@link #list(String, RequestOptions)} with the raw response.
      *
-     * <p>List the case's checklist items, copied from the blueprint's content_config.checklist.items at creation, ordered.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<List<CaseChecklistItem>> list(String caseUuid, RequestOptions options) {
       return client.execute(listRequest(caseUuid), options, LIST_RESPONSE);
     }
 
     /**
-     * List case checklist
+     * Asynchronous {@link #list(String, RequestOptions)} with the raw response.
      *
-     * <p>List the case's checklist items, copied from the blueprint's content_config.checklist.items at creation, ordered.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<List<CaseChecklistItem>>> listAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(listRequest(caseUuid), options, LIST_RESPONSE);
     }
 
     /**
-     * List case checklist
+     * {@link #list(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the case's checklist items, copied from the blueprint's content_config.checklist.items at creation, ordered.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param caseUuid the {@code case_uuid}
+     * @return the result
      */
     public RawResponse<List<CaseChecklistItem>> list(String caseUuid) {
       return client.execute(listRequest(caseUuid), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List case checklist
+     * Asynchronous {@link #list(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the case's checklist items, copied from the blueprint's content_config.checklist.items at creation, ordered.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @return a future completed with the raw response
+     * @param caseUuid the {@code case_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<List<CaseChecklistItem>>> listAsync(String caseUuid) {
       return client.executeAsync(listRequest(caseUuid), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Toggle checklist item
+     * {@link #toggleItem(String, String, CasesChecklistToggleItemParams, RequestOptions)} with the raw response.
      *
-     * <p>Mark a checklist item complete or incomplete. Resolution is blocked while any item is incomplete, unless the blueprint marks the checklist optional.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/{item_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param itemUuid Checklist item UUID.
+     * @param caseUuid the {@code case_uuid}
+     * @param itemUuid the {@code item_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<CaseChecklistItem> toggleItem(String caseUuid, String itemUuid, CasesChecklistToggleItemParams params, RequestOptions options) {
       return client.execute(toggleItemRequest(caseUuid, itemUuid, params), options, TOGGLE_ITEM_RESPONSE);
     }
 
     /**
-     * Toggle checklist item
+     * Asynchronous {@link #toggleItem(String, String, CasesChecklistToggleItemParams, RequestOptions)} with the raw response.
      *
-     * <p>Mark a checklist item complete or incomplete. Resolution is blocked while any item is incomplete, unless the blueprint marks the checklist optional.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/{item_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param itemUuid Checklist item UUID.
+     * @param caseUuid the {@code case_uuid}
+     * @param itemUuid the {@code item_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseChecklistItem>> toggleItemAsync(String caseUuid, String itemUuid, CasesChecklistToggleItemParams params, RequestOptions options) {
       return client.executeAsync(toggleItemRequest(caseUuid, itemUuid, params), options, TOGGLE_ITEM_RESPONSE);
     }
 
     /**
-     * Toggle checklist item
+     * {@link #toggleItem(String, String, CasesChecklistToggleItemParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Mark a checklist item complete or incomplete. Resolution is blocked while any item is incomplete, unless the blueprint marks the checklist optional.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/{item_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param itemUuid Checklist item UUID.
+     * @param caseUuid the {@code case_uuid}
+     * @param itemUuid the {@code item_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<CaseChecklistItem> toggleItem(String caseUuid, String itemUuid, CasesChecklistToggleItemParams params) {
       return client.execute(toggleItemRequest(caseUuid, itemUuid, params), RequestOptions.none(), TOGGLE_ITEM_RESPONSE);
     }
 
     /**
-     * Toggle checklist item
+     * Asynchronous {@link #toggleItem(String, String, CasesChecklistToggleItemParams, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Mark a checklist item complete or incomplete. Resolution is blocked while any item is incomplete, unless the blueprint marks the checklist optional.
-     *
-     * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/{item_uuid}/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param caseUuid Case UUID.
-     * @param itemUuid Checklist item UUID.
+     * @param caseUuid the {@code case_uuid}
+     * @param itemUuid the {@code item_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<CaseChecklistItem>> toggleItemAsync(String caseUuid, String itemUuid, CasesChecklistToggleItemParams params) {
       return client.executeAsync(toggleItemRequest(caseUuid, itemUuid, params), RequestOptions.none(), TOGGLE_ITEM_RESPONSE);

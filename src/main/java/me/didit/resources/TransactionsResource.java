@@ -77,104 +77,69 @@ public final class TransactionsResource {
   }
 
   /**
-   * List transactions
-   *
-   * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-   *
-   * <p>{@code GET /v3/transactions/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(TransactionsListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<TransactionsListResponse.Results>> listAsync(TransactionsListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List transactions
-   *
-   * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-   *
-   * <p>{@code GET /v3/transactions/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(TransactionsListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<TransactionsListResponse.Results> list(TransactionsListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List transactions
-   *
-   * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-   *
-   * <p>{@code GET /v3/transactions/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(TransactionsListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<TransactionsListResponse.Results>> listAsync(TransactionsListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List transactions
+   * Same as {@link #list(TransactionsListParams, RequestOptions)}, without parameters.
    *
-   * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-   *
-   * <p>{@code GET /v3/transactions/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<TransactionsListResponse.Results> list(RequestOptions options) {
     return client.execute(listRequest(TransactionsListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List transactions
+   * Asynchronous {@link #list(TransactionsListParams, RequestOptions)}, without parameters.
    *
-   * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-   *
-   * <p>{@code GET /v3/transactions/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<TransactionsListResponse.Results>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(TransactionsListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List transactions
+   * Same as {@link #list(TransactionsListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-   *
-   * <p>{@code GET /v3/transactions/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<TransactionsListResponse.Results> list() {
     return client.execute(listRequest(TransactionsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List transactions
+   * Asynchronous {@link #list(TransactionsListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-   *
-   * <p>{@code GET /v3/transactions/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<TransactionsListResponse.Results>> listAsync() {
     return client.executeAsync(listRequest(TransactionsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -196,43 +161,31 @@ public final class TransactionsResource {
   }
 
   /**
-   * Create transaction
-   *
-   * <p>Submit a transaction for synchronous AML/risk monitoring. The transaction is created <code>APPROVED</code>, then your rules (and crypto screening, when applicable) run inline and may flip the returned <code>status</code> to <code>IN_REVIEW</code> or <code>DECLINED</code>. **<code>transaction_id</code> is your idempotency key** (max 128 chars, unique per app); reusing it returns 400. A <code>transaction.created</code> webhook is dispatched on success (sandbox applications are not billed and do not emit webhooks).
-   *
-   * <p>{@code POST /v3/transactions/}
+   * Asynchronous {@link #create(TransactionsCreateParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionDetail> createAsync(TransactionsCreateParams params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create transaction
-   *
-   * <p>Submit a transaction for synchronous AML/risk monitoring. The transaction is created <code>APPROVED</code>, then your rules (and crypto screening, when applicable) run inline and may flip the returned <code>status</code> to <code>IN_REVIEW</code> or <code>DECLINED</code>. **<code>transaction_id</code> is your idempotency key** (max 128 chars, unique per app); reusing it returns 400. A <code>transaction.created</code> webhook is dispatched on success (sandbox applications are not billed and do not emit webhooks).
-   *
-   * <p>{@code POST /v3/transactions/}
+   * Same as {@link #create(TransactionsCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public TransactionDetail create(TransactionsCreateParams params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create transaction
-   *
-   * <p>Submit a transaction for synchronous AML/risk monitoring. The transaction is created <code>APPROVED</code>, then your rules (and crypto screening, when applicable) run inline and may flip the returned <code>status</code> to <code>IN_REVIEW</code> or <code>DECLINED</code>. **<code>transaction_id</code> is your idempotency key** (max 128 chars, unique per app); reusing it returns 400. A <code>transaction.created</code> webhook is dispatched on success (sandbox applications are not billed and do not emit webhooks).
-   *
-   * <p>{@code POST /v3/transactions/}
+   * Asynchronous {@link #create(TransactionsCreateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionDetail> createAsync(TransactionsCreateParams params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -254,43 +207,31 @@ public final class TransactionsResource {
   }
 
   /**
-   * Get transaction
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
-   * <p>Retrieve the full monitoring record for one transaction: parties, score/severity, rule runs, alerts, Travel Rule outcome, remediation session.
-   *
-   * <p>{@code GET /v3/transactions/{transaction_id}/}
-   *
-   * @param transactionId Didit-stable transaction UUID (the `uuid` returned from create / list, **not** your `txn_id`).
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param transactionId the {@code transaction_id}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionDetail> retrieveAsync(String transactionId, RequestOptions options) {
     return client.executeAsync(retrieveRequest(transactionId), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get transaction
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve the full monitoring record for one transaction: parties, score/severity, rule runs, alerts, Travel Rule outcome, remediation session.
-   *
-   * <p>{@code GET /v3/transactions/{transaction_id}/}
-   *
-   * @param transactionId Didit-stable transaction UUID (the `uuid` returned from create / list, **not** your `txn_id`).
-   * @return the response body
+   * @param transactionId the {@code transaction_id}
+   * @return the result
    */
   public TransactionDetail retrieve(String transactionId) {
     return client.execute(retrieveRequest(transactionId), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get transaction
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Retrieve the full monitoring record for one transaction: parties, score/severity, rule runs, alerts, Travel Rule outcome, remediation session.
-   *
-   * <p>{@code GET /v3/transactions/{transaction_id}/}
-   *
-   * @param transactionId Didit-stable transaction UUID (the `uuid` returned from create / list, **not** your `txn_id`).
-   * @return a future completed with the response body
+   * @param transactionId the {@code transaction_id}
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionDetail> retrieveAsync(String transactionId) {
     return client.executeAsync(retrieveRequest(transactionId), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -312,43 +253,31 @@ public final class TransactionsResource {
   }
 
   /**
-   * Mint an SDK transaction token
-   *
-   * <p>Mint a short-lived scoped token your app passes to the Didit SDKs so they can submit transactions directly from the end-user's device via <code>POST /v1/transactions/</code>. The token is bound to one <code>vendor_data</code> (your user id): every transaction submitted with it has its subject identity enforced server-side from that binding, so a tampered client cannot submit on behalf of another user. Mint tokens from your backend - never ship the API key itself in an app. camelCase aliases (<code>vendorData</code>, <code>ttlSeconds</code>, <code>maxUses</code>) are also accepted.
-   *
-   * <p>{@code POST /v3/transactions/sdk-token/}
+   * Asynchronous {@link #createSdkToken(TransactionsCreateSdkTokenParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionsCreateSdkTokenResponse> createSdkTokenAsync(TransactionsCreateSdkTokenParams params, RequestOptions options) {
     return client.executeAsync(createSdkTokenRequest(params), options, CREATE_SDK_TOKEN_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Mint an SDK transaction token
-   *
-   * <p>Mint a short-lived scoped token your app passes to the Didit SDKs so they can submit transactions directly from the end-user's device via <code>POST /v1/transactions/</code>. The token is bound to one <code>vendor_data</code> (your user id): every transaction submitted with it has its subject identity enforced server-side from that binding, so a tampered client cannot submit on behalf of another user. Mint tokens from your backend - never ship the API key itself in an app. camelCase aliases (<code>vendorData</code>, <code>ttlSeconds</code>, <code>maxUses</code>) are also accepted.
-   *
-   * <p>{@code POST /v3/transactions/sdk-token/}
+   * Same as {@link #createSdkToken(TransactionsCreateSdkTokenParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public TransactionsCreateSdkTokenResponse createSdkToken(TransactionsCreateSdkTokenParams params) {
     return client.execute(createSdkTokenRequest(params), RequestOptions.none(), CREATE_SDK_TOKEN_RESPONSE).data();
   }
 
   /**
-   * Mint an SDK transaction token
-   *
-   * <p>Mint a short-lived scoped token your app passes to the Didit SDKs so they can submit transactions directly from the end-user's device via <code>POST /v1/transactions/</code>. The token is bound to one <code>vendor_data</code> (your user id): every transaction submitted with it has its subject identity enforced server-side from that binding, so a tampered client cannot submit on behalf of another user. Mint tokens from your backend - never ship the API key itself in an app. camelCase aliases (<code>vendorData</code>, <code>ttlSeconds</code>, <code>maxUses</code>) are also accepted.
-   *
-   * <p>{@code POST /v3/transactions/sdk-token/}
+   * Asynchronous {@link #createSdkToken(TransactionsCreateSdkTokenParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionsCreateSdkTokenResponse> createSdkTokenAsync(TransactionsCreateSdkTokenParams params) {
     return client.executeAsync(createSdkTokenRequest(params), RequestOptions.none(), CREATE_SDK_TOKEN_RESPONSE).thenApply(RawResponse::data);
@@ -371,46 +300,31 @@ public final class TransactionsResource {
   }
 
   /**
-   * List networks for a transaction
+   * Asynchronous {@link #listNetworks(String, RequestOptions)}.
    *
-   * <p>List the networks the transaction's backing KYC/KYB subject belongs to (resolved through the transaction's session or business session).
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param transactionUuid Transaction UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param transactionUuid the {@code transaction_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionsListNetworksResponse> listNetworksAsync(String transactionUuid, RequestOptions options) {
     return client.executeAsync(listNetworksRequest(transactionUuid), options, LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List networks for a transaction
+   * Same as {@link #listNetworks(String, RequestOptions)}, with the client's options.
    *
-   * <p>List the networks the transaction's backing KYC/KYB subject belongs to (resolved through the transaction's session or business session).
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param transactionUuid Transaction UUID.
-   * @return the response body
+   * @param transactionUuid the {@code transaction_uuid}
+   * @return the result
    */
   public TransactionsListNetworksResponse listNetworks(String transactionUuid) {
     return client.execute(listNetworksRequest(transactionUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE).data();
   }
 
   /**
-   * List networks for a transaction
+   * Asynchronous {@link #listNetworks(String, RequestOptions)}, with the client's options.
    *
-   * <p>List the networks the transaction's backing KYC/KYB subject belongs to (resolved through the transaction's session or business session).
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param transactionUuid Transaction UUID.
-   * @return a future completed with the response body
+   * @param transactionUuid the {@code transaction_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionsListNetworksResponse> listNetworksAsync(String transactionUuid) {
     return client.executeAsync(listNetworksRequest(transactionUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
@@ -434,49 +348,34 @@ public final class TransactionsResource {
   }
 
   /**
-   * List networks for a transaction party
+   * Asynchronous {@link #listPartyNetworks(String, String, RequestOptions)}.
    *
-   * <p>List the networks a transaction party (remitter, beneficiary, or counterparty) belongs to, resolved through the party itself rather than through the transaction's backing session.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/parties/{transaction_party_uuid}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param transactionUuid Transaction UUID.
-   * @param transactionPartyUuid Transaction party UUID.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param transactionUuid the {@code transaction_uuid}
+   * @param transactionPartyUuid the {@code transaction_party_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionsListPartyNetworksResponse> listPartyNetworksAsync(String transactionUuid, String transactionPartyUuid, RequestOptions options) {
     return client.executeAsync(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), options, LIST_PARTY_NETWORKS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List networks for a transaction party
+   * Same as {@link #listPartyNetworks(String, String, RequestOptions)}, with the client's options.
    *
-   * <p>List the networks a transaction party (remitter, beneficiary, or counterparty) belongs to, resolved through the party itself rather than through the transaction's backing session.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/parties/{transaction_party_uuid}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param transactionUuid Transaction UUID.
-   * @param transactionPartyUuid Transaction party UUID.
-   * @return the response body
+   * @param transactionUuid the {@code transaction_uuid}
+   * @param transactionPartyUuid the {@code transaction_party_uuid}
+   * @return the result
    */
   public TransactionsListPartyNetworksResponse listPartyNetworks(String transactionUuid, String transactionPartyUuid) {
     return client.execute(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), RequestOptions.none(), LIST_PARTY_NETWORKS_RESPONSE).data();
   }
 
   /**
-   * List networks for a transaction party
+   * Asynchronous {@link #listPartyNetworks(String, String, RequestOptions)}, with the client's options.
    *
-   * <p>List the networks a transaction party (remitter, beneficiary, or counterparty) belongs to, resolved through the party itself rather than through the transaction's backing session.
-   *
-   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/parties/{transaction_party_uuid}/networks/}
-   * <p>Application scoped: the organization and application ids come from the client options.
-   *
-   * @param transactionUuid Transaction UUID.
-   * @param transactionPartyUuid Transaction party UUID.
-   * @return a future completed with the response body
+   * @param transactionUuid the {@code transaction_uuid}
+   * @param transactionPartyUuid the {@code transaction_party_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<TransactionsListPartyNetworksResponse> listPartyNetworksAsync(String transactionUuid, String transactionPartyUuid) {
     return client.executeAsync(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), RequestOptions.none(), LIST_PARTY_NETWORKS_RESPONSE).thenApply(RawResponse::data);
@@ -545,422 +444,294 @@ public final class TransactionsResource {
     }
 
     /**
-     * List transactions
-     *
-     * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-     *
-     * <p>{@code GET /v3/transactions/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(TransactionsListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<TransactionsListResponse.Results>> list(TransactionsListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List transactions
-     *
-     * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-     *
-     * <p>{@code GET /v3/transactions/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(TransactionsListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<TransactionsListResponse.Results>>> listAsync(TransactionsListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List transactions
-     *
-     * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-     *
-     * <p>{@code GET /v3/transactions/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(TransactionsListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<TransactionsListResponse.Results>> list(TransactionsListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List transactions
-     *
-     * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-     *
-     * <p>{@code GET /v3/transactions/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(TransactionsListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<TransactionsListResponse.Results>>> listAsync(TransactionsListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List transactions
+     * {@link #list(TransactionsListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-     *
-     * <p>{@code GET /v3/transactions/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<TransactionsListResponse.Results>> list(RequestOptions options) {
       return client.execute(listRequest(TransactionsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List transactions
+     * Asynchronous {@link #list(TransactionsListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-     *
-     * <p>{@code GET /v3/transactions/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<TransactionsListResponse.Results>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(TransactionsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List transactions
+     * {@link #list(TransactionsListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-     *
-     * <p>{@code GET /v3/transactions/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<TransactionsListResponse.Results>> list() {
       return client.execute(listRequest(TransactionsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List transactions
+     * Asynchronous {@link #list(TransactionsListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>Paginated list of monitored transactions, newest first (<code>txn_date</code> desc). <code>count</code> is capped at 100; use <code>total_transactions</code> for the true row count. This endpoint does not support filtering or search parameters.
-     *
-     * <p>{@code GET /v3/transactions/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<TransactionsListResponse.Results>>> listAsync() {
       return client.executeAsync(listRequest(TransactionsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Create transaction
-     *
-     * <p>Submit a transaction for synchronous AML/risk monitoring. The transaction is created <code>APPROVED</code>, then your rules (and crypto screening, when applicable) run inline and may flip the returned <code>status</code> to <code>IN_REVIEW</code> or <code>DECLINED</code>. **<code>transaction_id</code> is your idempotency key** (max 128 chars, unique per app); reusing it returns 400. A <code>transaction.created</code> webhook is dispatched on success (sandbox applications are not billed and do not emit webhooks).
-     *
-     * <p>{@code POST /v3/transactions/}
+     * {@link #create(TransactionsCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TransactionDetail> create(TransactionsCreateParams params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create transaction
-     *
-     * <p>Submit a transaction for synchronous AML/risk monitoring. The transaction is created <code>APPROVED</code>, then your rules (and crypto screening, when applicable) run inline and may flip the returned <code>status</code> to <code>IN_REVIEW</code> or <code>DECLINED</code>. **<code>transaction_id</code> is your idempotency key** (max 128 chars, unique per app); reusing it returns 400. A <code>transaction.created</code> webhook is dispatched on success (sandbox applications are not billed and do not emit webhooks).
-     *
-     * <p>{@code POST /v3/transactions/}
+     * Asynchronous {@link #create(TransactionsCreateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionDetail>> createAsync(TransactionsCreateParams params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create transaction
-     *
-     * <p>Submit a transaction for synchronous AML/risk monitoring. The transaction is created <code>APPROVED</code>, then your rules (and crypto screening, when applicable) run inline and may flip the returned <code>status</code> to <code>IN_REVIEW</code> or <code>DECLINED</code>. **<code>transaction_id</code> is your idempotency key** (max 128 chars, unique per app); reusing it returns 400. A <code>transaction.created</code> webhook is dispatched on success (sandbox applications are not billed and do not emit webhooks).
-     *
-     * <p>{@code POST /v3/transactions/}
+     * {@link #create(TransactionsCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<TransactionDetail> create(TransactionsCreateParams params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create transaction
-     *
-     * <p>Submit a transaction for synchronous AML/risk monitoring. The transaction is created <code>APPROVED</code>, then your rules (and crypto screening, when applicable) run inline and may flip the returned <code>status</code> to <code>IN_REVIEW</code> or <code>DECLINED</code>. **<code>transaction_id</code> is your idempotency key** (max 128 chars, unique per app); reusing it returns 400. A <code>transaction.created</code> webhook is dispatched on success (sandbox applications are not billed and do not emit webhooks).
-     *
-     * <p>{@code POST /v3/transactions/}
+     * Asynchronous {@link #create(TransactionsCreateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionDetail>> createAsync(TransactionsCreateParams params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Get transaction
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve the full monitoring record for one transaction: parties, score/severity, rule runs, alerts, Travel Rule outcome, remediation session.
-     *
-     * <p>{@code GET /v3/transactions/{transaction_id}/}
-     *
-     * @param transactionId Didit-stable transaction UUID (the `uuid` returned from create / list, **not** your `txn_id`).
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param transactionId the {@code transaction_id}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TransactionDetail> retrieve(String transactionId, RequestOptions options) {
       return client.execute(retrieveRequest(transactionId), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get transaction
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Retrieve the full monitoring record for one transaction: parties, score/severity, rule runs, alerts, Travel Rule outcome, remediation session.
-     *
-     * <p>{@code GET /v3/transactions/{transaction_id}/}
-     *
-     * @param transactionId Didit-stable transaction UUID (the `uuid` returned from create / list, **not** your `txn_id`).
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param transactionId the {@code transaction_id}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionDetail>> retrieveAsync(String transactionId, RequestOptions options) {
       return client.executeAsync(retrieveRequest(transactionId), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get transaction
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve the full monitoring record for one transaction: parties, score/severity, rule runs, alerts, Travel Rule outcome, remediation session.
-     *
-     * <p>{@code GET /v3/transactions/{transaction_id}/}
-     *
-     * @param transactionId Didit-stable transaction UUID (the `uuid` returned from create / list, **not** your `txn_id`).
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param transactionId the {@code transaction_id}
+     * @return the result
      */
     public RawResponse<TransactionDetail> retrieve(String transactionId) {
       return client.execute(retrieveRequest(transactionId), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get transaction
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Retrieve the full monitoring record for one transaction: parties, score/severity, rule runs, alerts, Travel Rule outcome, remediation session.
-     *
-     * <p>{@code GET /v3/transactions/{transaction_id}/}
-     *
-     * @param transactionId Didit-stable transaction UUID (the `uuid` returned from create / list, **not** your `txn_id`).
-     * @return a future completed with the raw response
+     * @param transactionId the {@code transaction_id}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionDetail>> retrieveAsync(String transactionId) {
       return client.executeAsync(retrieveRequest(transactionId), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Mint an SDK transaction token
-     *
-     * <p>Mint a short-lived scoped token your app passes to the Didit SDKs so they can submit transactions directly from the end-user's device via <code>POST /v1/transactions/</code>. The token is bound to one <code>vendor_data</code> (your user id): every transaction submitted with it has its subject identity enforced server-side from that binding, so a tampered client cannot submit on behalf of another user. Mint tokens from your backend - never ship the API key itself in an app. camelCase aliases (<code>vendorData</code>, <code>ttlSeconds</code>, <code>maxUses</code>) are also accepted.
-     *
-     * <p>{@code POST /v3/transactions/sdk-token/}
+     * {@link #createSdkToken(TransactionsCreateSdkTokenParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TransactionsCreateSdkTokenResponse> createSdkToken(TransactionsCreateSdkTokenParams params, RequestOptions options) {
       return client.execute(createSdkTokenRequest(params), options, CREATE_SDK_TOKEN_RESPONSE);
     }
 
     /**
-     * Mint an SDK transaction token
-     *
-     * <p>Mint a short-lived scoped token your app passes to the Didit SDKs so they can submit transactions directly from the end-user's device via <code>POST /v1/transactions/</code>. The token is bound to one <code>vendor_data</code> (your user id): every transaction submitted with it has its subject identity enforced server-side from that binding, so a tampered client cannot submit on behalf of another user. Mint tokens from your backend - never ship the API key itself in an app. camelCase aliases (<code>vendorData</code>, <code>ttlSeconds</code>, <code>maxUses</code>) are also accepted.
-     *
-     * <p>{@code POST /v3/transactions/sdk-token/}
+     * Asynchronous {@link #createSdkToken(TransactionsCreateSdkTokenParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionsCreateSdkTokenResponse>> createSdkTokenAsync(TransactionsCreateSdkTokenParams params, RequestOptions options) {
       return client.executeAsync(createSdkTokenRequest(params), options, CREATE_SDK_TOKEN_RESPONSE);
     }
 
     /**
-     * Mint an SDK transaction token
-     *
-     * <p>Mint a short-lived scoped token your app passes to the Didit SDKs so they can submit transactions directly from the end-user's device via <code>POST /v1/transactions/</code>. The token is bound to one <code>vendor_data</code> (your user id): every transaction submitted with it has its subject identity enforced server-side from that binding, so a tampered client cannot submit on behalf of another user. Mint tokens from your backend - never ship the API key itself in an app. camelCase aliases (<code>vendorData</code>, <code>ttlSeconds</code>, <code>maxUses</code>) are also accepted.
-     *
-     * <p>{@code POST /v3/transactions/sdk-token/}
+     * {@link #createSdkToken(TransactionsCreateSdkTokenParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<TransactionsCreateSdkTokenResponse> createSdkToken(TransactionsCreateSdkTokenParams params) {
       return client.execute(createSdkTokenRequest(params), RequestOptions.none(), CREATE_SDK_TOKEN_RESPONSE);
     }
 
     /**
-     * Mint an SDK transaction token
-     *
-     * <p>Mint a short-lived scoped token your app passes to the Didit SDKs so they can submit transactions directly from the end-user's device via <code>POST /v1/transactions/</code>. The token is bound to one <code>vendor_data</code> (your user id): every transaction submitted with it has its subject identity enforced server-side from that binding, so a tampered client cannot submit on behalf of another user. Mint tokens from your backend - never ship the API key itself in an app. camelCase aliases (<code>vendorData</code>, <code>ttlSeconds</code>, <code>maxUses</code>) are also accepted.
-     *
-     * <p>{@code POST /v3/transactions/sdk-token/}
+     * Asynchronous {@link #createSdkToken(TransactionsCreateSdkTokenParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionsCreateSdkTokenResponse>> createSdkTokenAsync(TransactionsCreateSdkTokenParams params) {
       return client.executeAsync(createSdkTokenRequest(params), RequestOptions.none(), CREATE_SDK_TOKEN_RESPONSE);
     }
 
     /**
-     * List networks for a transaction
+     * {@link #listNetworks(String, RequestOptions)} with the raw response.
      *
-     * <p>List the networks the transaction's backing KYC/KYB subject belongs to (resolved through the transaction's session or business session).
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param transactionUuid Transaction UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param transactionUuid the {@code transaction_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TransactionsListNetworksResponse> listNetworks(String transactionUuid, RequestOptions options) {
       return client.execute(listNetworksRequest(transactionUuid), options, LIST_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a transaction
+     * Asynchronous {@link #listNetworks(String, RequestOptions)} with the raw response.
      *
-     * <p>List the networks the transaction's backing KYC/KYB subject belongs to (resolved through the transaction's session or business session).
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param transactionUuid Transaction UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param transactionUuid the {@code transaction_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionsListNetworksResponse>> listNetworksAsync(String transactionUuid, RequestOptions options) {
       return client.executeAsync(listNetworksRequest(transactionUuid), options, LIST_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a transaction
+     * {@link #listNetworks(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the networks the transaction's backing KYC/KYB subject belongs to (resolved through the transaction's session or business session).
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param transactionUuid Transaction UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param transactionUuid the {@code transaction_uuid}
+     * @return the result
      */
     public RawResponse<TransactionsListNetworksResponse> listNetworks(String transactionUuid) {
       return client.execute(listNetworksRequest(transactionUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a transaction
+     * Asynchronous {@link #listNetworks(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the networks the transaction's backing KYC/KYB subject belongs to (resolved through the transaction's session or business session).
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param transactionUuid Transaction UUID.
-     * @return a future completed with the raw response
+     * @param transactionUuid the {@code transaction_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionsListNetworksResponse>> listNetworksAsync(String transactionUuid) {
       return client.executeAsync(listNetworksRequest(transactionUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a transaction party
+     * {@link #listPartyNetworks(String, String, RequestOptions)} with the raw response.
      *
-     * <p>List the networks a transaction party (remitter, beneficiary, or counterparty) belongs to, resolved through the party itself rather than through the transaction's backing session.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/parties/{transaction_party_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param transactionUuid Transaction UUID.
-     * @param transactionPartyUuid Transaction party UUID.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param transactionUuid the {@code transaction_uuid}
+     * @param transactionPartyUuid the {@code transaction_party_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<TransactionsListPartyNetworksResponse> listPartyNetworks(String transactionUuid, String transactionPartyUuid, RequestOptions options) {
       return client.execute(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), options, LIST_PARTY_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a transaction party
+     * Asynchronous {@link #listPartyNetworks(String, String, RequestOptions)} with the raw response.
      *
-     * <p>List the networks a transaction party (remitter, beneficiary, or counterparty) belongs to, resolved through the party itself rather than through the transaction's backing session.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/parties/{transaction_party_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param transactionUuid Transaction UUID.
-     * @param transactionPartyUuid Transaction party UUID.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param transactionUuid the {@code transaction_uuid}
+     * @param transactionPartyUuid the {@code transaction_party_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionsListPartyNetworksResponse>> listPartyNetworksAsync(String transactionUuid, String transactionPartyUuid, RequestOptions options) {
       return client.executeAsync(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), options, LIST_PARTY_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a transaction party
+     * {@link #listPartyNetworks(String, String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the networks a transaction party (remitter, beneficiary, or counterparty) belongs to, resolved through the party itself rather than through the transaction's backing session.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/parties/{transaction_party_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param transactionUuid Transaction UUID.
-     * @param transactionPartyUuid Transaction party UUID.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param transactionUuid the {@code transaction_uuid}
+     * @param transactionPartyUuid the {@code transaction_party_uuid}
+     * @return the result
      */
     public RawResponse<TransactionsListPartyNetworksResponse> listPartyNetworks(String transactionUuid, String transactionPartyUuid) {
       return client.execute(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), RequestOptions.none(), LIST_PARTY_NETWORKS_RESPONSE);
     }
 
     /**
-     * List networks for a transaction party
+     * Asynchronous {@link #listPartyNetworks(String, String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List the networks a transaction party (remitter, beneficiary, or counterparty) belongs to, resolved through the party itself rather than through the transaction's backing session.
-     *
-     * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/parties/{transaction_party_uuid}/networks/}
-     * <p>Application scoped: the organization and application ids come from the client options.
-     *
-     * @param transactionUuid Transaction UUID.
-     * @param transactionPartyUuid Transaction party UUID.
-     * @return a future completed with the raw response
+     * @param transactionUuid the {@code transaction_uuid}
+     * @param transactionPartyUuid the {@code transaction_party_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<TransactionsListPartyNetworksResponse>> listPartyNetworksAsync(String transactionUuid, String transactionPartyUuid) {
       return client.executeAsync(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), RequestOptions.none(), LIST_PARTY_NETWORKS_RESPONSE);

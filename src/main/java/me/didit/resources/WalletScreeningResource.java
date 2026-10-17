@@ -48,43 +48,31 @@ public final class WalletScreeningResource {
   }
 
   /**
-   * Screen a wallet address
-   *
-   * <p>Run on-demand AML screening for a single crypto wallet/address without creating a transaction. Resolves your application's configured blockchain analytics provider, screens the address synchronously, and returns the normalised risk result. LIGHTNING is available only with an Elliptic or Chainalysis BYOK connection added through Marketplace. Nothing is written to the transactions table. One AML monitoring usage is billed per successful screening (sandbox applications are not billed).
-   *
-   * <p>{@code POST /v3/wallet-screening/}
+   * Asynchronous {@link #screen(WalletScreeningScreenParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<WalletScreeningResult> screenAsync(WalletScreeningScreenParams params, RequestOptions options) {
     return client.executeAsync(screenRequest(params), options, SCREEN_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Screen a wallet address
-   *
-   * <p>Run on-demand AML screening for a single crypto wallet/address without creating a transaction. Resolves your application's configured blockchain analytics provider, screens the address synchronously, and returns the normalised risk result. LIGHTNING is available only with an Elliptic or Chainalysis BYOK connection added through Marketplace. Nothing is written to the transactions table. One AML monitoring usage is billed per successful screening (sandbox applications are not billed).
-   *
-   * <p>{@code POST /v3/wallet-screening/}
+   * Same as {@link #screen(WalletScreeningScreenParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public WalletScreeningResult screen(WalletScreeningScreenParams params) {
     return client.execute(screenRequest(params), RequestOptions.none(), SCREEN_RESPONSE).data();
   }
 
   /**
-   * Screen a wallet address
-   *
-   * <p>Run on-demand AML screening for a single crypto wallet/address without creating a transaction. Resolves your application's configured blockchain analytics provider, screens the address synchronously, and returns the normalised risk result. LIGHTNING is available only with an Elliptic or Chainalysis BYOK connection added through Marketplace. Nothing is written to the transactions table. One AML monitoring usage is billed per successful screening (sandbox applications are not billed).
-   *
-   * <p>{@code POST /v3/wallet-screening/}
+   * Asynchronous {@link #screen(WalletScreeningScreenParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<WalletScreeningResult> screenAsync(WalletScreeningScreenParams params) {
     return client.executeAsync(screenRequest(params), RequestOptions.none(), SCREEN_RESPONSE).thenApply(RawResponse::data);
@@ -107,46 +95,31 @@ public final class WalletScreeningResource {
   }
 
   /**
-   * Render a wallet-screening result as a PDF
-   *
-   * <p>Stateless companion to <code>POST /v3/wallet-screening/</code>: repost the exact JSON body that endpoint returned — including the <code>report_signature</code> it added — and get back a Didit-branded PDF of the same result. No provider is called and nothing is billed or persisted; this only re-renders a result Didit already produced. The signature ties the PDF to an unmodified result: editing <code>risk_score</code>, <code>severity</code>, <code>sanctions_hit</code>, or any other signed field before reposting fails with <code>400</code>.
-   *
-   * <p>{@code POST /v3/wallet-screening/pdf/}
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+   * Asynchronous {@link #screenPdf(WalletScreeningResult, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<BinaryResponse> screenPdfAsync(WalletScreeningResult params, RequestOptions options) {
     return client.executeAsync(screenPdfRequest(params), options, SCREEN_PDF_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Render a wallet-screening result as a PDF
-   *
-   * <p>Stateless companion to <code>POST /v3/wallet-screening/</code>: repost the exact JSON body that endpoint returned — including the <code>report_signature</code> it added — and get back a Didit-branded PDF of the same result. No provider is called and nothing is billed or persisted; this only re-renders a result Didit already produced. The signature ties the PDF to an unmodified result: editing <code>risk_score</code>, <code>severity</code>, <code>sanctions_hit</code>, or any other signed field before reposting fails with <code>400</code>.
-   *
-   * <p>{@code POST /v3/wallet-screening/pdf/}
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+   * Same as {@link #screenPdf(WalletScreeningResult, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public BinaryResponse screenPdf(WalletScreeningResult params) {
     return client.execute(screenPdfRequest(params), RequestOptions.none(), SCREEN_PDF_RESPONSE).data();
   }
 
   /**
-   * Render a wallet-screening result as a PDF
-   *
-   * <p>Stateless companion to <code>POST /v3/wallet-screening/</code>: repost the exact JSON body that endpoint returned — including the <code>report_signature</code> it added — and get back a Didit-branded PDF of the same result. No provider is called and nothing is billed or persisted; this only re-renders a result Didit already produced. The signature ties the PDF to an unmodified result: editing <code>risk_score</code>, <code>severity</code>, <code>sanctions_hit</code>, or any other signed field before reposting fails with <code>400</code>.
-   *
-   * <p>{@code POST /v3/wallet-screening/pdf/}
-   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+   * Asynchronous {@link #screenPdf(WalletScreeningResult, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<BinaryResponse> screenPdfAsync(WalletScreeningResult params) {
     return client.executeAsync(screenPdfRequest(params), RequestOptions.none(), SCREEN_PDF_RESPONSE).thenApply(RawResponse::data);
@@ -180,120 +153,84 @@ public final class WalletScreeningResource {
     }
 
     /**
-     * Screen a wallet address
-     *
-     * <p>Run on-demand AML screening for a single crypto wallet/address without creating a transaction. Resolves your application's configured blockchain analytics provider, screens the address synchronously, and returns the normalised risk result. LIGHTNING is available only with an Elliptic or Chainalysis BYOK connection added through Marketplace. Nothing is written to the transactions table. One AML monitoring usage is billed per successful screening (sandbox applications are not billed).
-     *
-     * <p>{@code POST /v3/wallet-screening/}
+     * {@link #screen(WalletScreeningScreenParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<WalletScreeningResult> screen(WalletScreeningScreenParams params, RequestOptions options) {
       return client.execute(screenRequest(params), options, SCREEN_RESPONSE);
     }
 
     /**
-     * Screen a wallet address
-     *
-     * <p>Run on-demand AML screening for a single crypto wallet/address without creating a transaction. Resolves your application's configured blockchain analytics provider, screens the address synchronously, and returns the normalised risk result. LIGHTNING is available only with an Elliptic or Chainalysis BYOK connection added through Marketplace. Nothing is written to the transactions table. One AML monitoring usage is billed per successful screening (sandbox applications are not billed).
-     *
-     * <p>{@code POST /v3/wallet-screening/}
+     * Asynchronous {@link #screen(WalletScreeningScreenParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<WalletScreeningResult>> screenAsync(WalletScreeningScreenParams params, RequestOptions options) {
       return client.executeAsync(screenRequest(params), options, SCREEN_RESPONSE);
     }
 
     /**
-     * Screen a wallet address
-     *
-     * <p>Run on-demand AML screening for a single crypto wallet/address without creating a transaction. Resolves your application's configured blockchain analytics provider, screens the address synchronously, and returns the normalised risk result. LIGHTNING is available only with an Elliptic or Chainalysis BYOK connection added through Marketplace. Nothing is written to the transactions table. One AML monitoring usage is billed per successful screening (sandbox applications are not billed).
-     *
-     * <p>{@code POST /v3/wallet-screening/}
+     * {@link #screen(WalletScreeningScreenParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<WalletScreeningResult> screen(WalletScreeningScreenParams params) {
       return client.execute(screenRequest(params), RequestOptions.none(), SCREEN_RESPONSE);
     }
 
     /**
-     * Screen a wallet address
-     *
-     * <p>Run on-demand AML screening for a single crypto wallet/address without creating a transaction. Resolves your application's configured blockchain analytics provider, screens the address synchronously, and returns the normalised risk result. LIGHTNING is available only with an Elliptic or Chainalysis BYOK connection added through Marketplace. Nothing is written to the transactions table. One AML monitoring usage is billed per successful screening (sandbox applications are not billed).
-     *
-     * <p>{@code POST /v3/wallet-screening/}
+     * Asynchronous {@link #screen(WalletScreeningScreenParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<WalletScreeningResult>> screenAsync(WalletScreeningScreenParams params) {
       return client.executeAsync(screenRequest(params), RequestOptions.none(), SCREEN_RESPONSE);
     }
 
     /**
-     * Render a wallet-screening result as a PDF
-     *
-     * <p>Stateless companion to <code>POST /v3/wallet-screening/</code>: repost the exact JSON body that endpoint returned — including the <code>report_signature</code> it added — and get back a Didit-branded PDF of the same result. No provider is called and nothing is billed or persisted; this only re-renders a result Didit already produced. The signature ties the PDF to an unmodified result: editing <code>risk_score</code>, <code>severity</code>, <code>sanctions_hit</code>, or any other signed field before reposting fails with <code>400</code>.
-     *
-     * <p>{@code POST /v3/wallet-screening/pdf/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+     * {@link #screenPdf(WalletScreeningResult, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<BinaryResponse> screenPdf(WalletScreeningResult params, RequestOptions options) {
       return client.execute(screenPdfRequest(params), options, SCREEN_PDF_RESPONSE);
     }
 
     /**
-     * Render a wallet-screening result as a PDF
-     *
-     * <p>Stateless companion to <code>POST /v3/wallet-screening/</code>: repost the exact JSON body that endpoint returned — including the <code>report_signature</code> it added — and get back a Didit-branded PDF of the same result. No provider is called and nothing is billed or persisted; this only re-renders a result Didit already produced. The signature ties the PDF to an unmodified result: editing <code>risk_score</code>, <code>severity</code>, <code>sanctions_hit</code>, or any other signed field before reposting fails with <code>400</code>.
-     *
-     * <p>{@code POST /v3/wallet-screening/pdf/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+     * Asynchronous {@link #screenPdf(WalletScreeningResult, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BinaryResponse>> screenPdfAsync(WalletScreeningResult params, RequestOptions options) {
       return client.executeAsync(screenPdfRequest(params), options, SCREEN_PDF_RESPONSE);
     }
 
     /**
-     * Render a wallet-screening result as a PDF
-     *
-     * <p>Stateless companion to <code>POST /v3/wallet-screening/</code>: repost the exact JSON body that endpoint returned — including the <code>report_signature</code> it added — and get back a Didit-branded PDF of the same result. No provider is called and nothing is billed or persisted; this only re-renders a result Didit already produced. The signature ties the PDF to an unmodified result: editing <code>risk_score</code>, <code>severity</code>, <code>sanctions_hit</code>, or any other signed field before reposting fails with <code>400</code>.
-     *
-     * <p>{@code POST /v3/wallet-screening/pdf/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+     * {@link #screenPdf(WalletScreeningResult, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<BinaryResponse> screenPdf(WalletScreeningResult params) {
       return client.execute(screenPdfRequest(params), RequestOptions.none(), SCREEN_PDF_RESPONSE);
     }
 
     /**
-     * Render a wallet-screening result as a PDF
-     *
-     * <p>Stateless companion to <code>POST /v3/wallet-screening/</code>: repost the exact JSON body that endpoint returned — including the <code>report_signature</code> it added — and get back a Didit-branded PDF of the same result. No provider is called and nothing is billed or persisted; this only re-renders a result Didit already produced. The signature ties the PDF to an unmodified result: editing <code>risk_score</code>, <code>severity</code>, <code>sanctions_hit</code>, or any other signed field before reposting fails with <code>400</code>.
-     *
-     * <p>{@code POST /v3/wallet-screening/pdf/}
-     * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+     * Asynchronous {@link #screenPdf(WalletScreeningResult, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BinaryResponse>> screenPdfAsync(WalletScreeningResult params) {
       return client.executeAsync(screenPdfRequest(params), RequestOptions.none(), SCREEN_PDF_RESPONSE);

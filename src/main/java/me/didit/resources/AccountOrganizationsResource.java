@@ -46,40 +46,28 @@ public final class AccountOrganizationsResource {
   }
 
   /**
-   * List My Organizations
+   * Asynchronous {@link #list(RequestOptions)}.
    *
-   * <p>List organizations the authenticated user belongs to. Each entry's <code>uuid</code> is the <code>org_id</code> used on the application endpoints.
-   *
-   * <p>{@code GET /organizations/me/}
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<List<Organization>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List My Organizations
+   * Same as {@link #list(RequestOptions)}, with the client's options.
    *
-   * <p>List organizations the authenticated user belongs to. Each entry's <code>uuid</code> is the <code>org_id</code> used on the application endpoints.
-   *
-   * <p>{@code GET /organizations/me/}
-   *
-   * @return the response body
+   * @return the result
    */
   public List<Organization> list() {
     return client.execute(listRequest(), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List My Organizations
+   * Asynchronous {@link #list(RequestOptions)}, with the client's options.
    *
-   * <p>List organizations the authenticated user belongs to. Each entry's <code>uuid</code> is the <code>org_id</code> used on the application endpoints.
-   *
-   * <p>{@code GET /organizations/me/}
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<List<Organization>> listAsync() {
     return client.executeAsync(listRequest(), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -103,54 +91,38 @@ public final class AccountOrganizationsResource {
     }
 
     /**
-     * List My Organizations
+     * {@link #list(RequestOptions)} with the raw response.
      *
-     * <p>List organizations the authenticated user belongs to. Each entry's <code>uuid</code> is the <code>org_id</code> used on the application endpoints.
-     *
-     * <p>{@code GET /organizations/me/}
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<List<Organization>> list(RequestOptions options) {
       return client.execute(listRequest(), options, LIST_RESPONSE);
     }
 
     /**
-     * List My Organizations
+     * Asynchronous {@link #list(RequestOptions)} with the raw response.
      *
-     * <p>List organizations the authenticated user belongs to. Each entry's <code>uuid</code> is the <code>org_id</code> used on the application endpoints.
-     *
-     * <p>{@code GET /organizations/me/}
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<List<Organization>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(), options, LIST_RESPONSE);
     }
 
     /**
-     * List My Organizations
+     * {@link #list(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List organizations the authenticated user belongs to. Each entry's <code>uuid</code> is the <code>org_id</code> used on the application endpoints.
-     *
-     * <p>{@code GET /organizations/me/}
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<List<Organization>> list() {
       return client.execute(listRequest(), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List My Organizations
+     * Asynchronous {@link #list(RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>List organizations the authenticated user belongs to. Each entry's <code>uuid</code> is the <code>org_id</code> used on the application endpoints.
-     *
-     * <p>{@code GET /organizations/me/}
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<List<Organization>>> listAsync() {
       return client.executeAsync(listRequest(), RequestOptions.none(), LIST_RESPONSE);

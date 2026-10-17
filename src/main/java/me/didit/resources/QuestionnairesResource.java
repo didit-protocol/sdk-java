@@ -53,104 +53,69 @@ public final class QuestionnairesResource {
   }
 
   /**
-   * List questionnaires
-   *
-   * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-   *
-   * <p>{@code GET /v3/questionnaires/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(QuestionnairesListParams, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<QuestionnaireListItem>> listAsync(QuestionnairesListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List questionnaires
-   *
-   * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-   *
-   * <p>{@code GET /v3/questionnaires/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Same as {@link #list(QuestionnairesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public Page<QuestionnaireListItem> list(QuestionnairesListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List questionnaires
-   *
-   * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-   *
-   * <p>{@code GET /v3/questionnaires/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
+   * Asynchronous {@link #list(QuestionnairesListParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<QuestionnaireListItem>> listAsync(QuestionnairesListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List questionnaires
+   * Same as {@link #list(QuestionnairesListParams, RequestOptions)}, without parameters.
    *
-   * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-   *
-   * <p>{@code GET /v3/questionnaires/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return the response body
+   * @param options per-request options
+   * @return the result
    */
   public Page<QuestionnaireListItem> list(RequestOptions options) {
     return client.execute(listRequest(QuestionnairesListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
   /**
-   * List questionnaires
+   * Asynchronous {@link #list(QuestionnairesListParams, RequestOptions)}, without parameters.
    *
-   * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-   *
-   * <p>{@code GET /v3/questionnaires/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<QuestionnaireListItem>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(QuestionnairesListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * List questionnaires
+   * Same as {@link #list(QuestionnairesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-   *
-   * <p>{@code GET /v3/questionnaires/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return the response body
+   * @return the result
    */
   public Page<QuestionnaireListItem> list() {
     return client.execute(listRequest(QuestionnairesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
   /**
-   * List questionnaires
+   * Asynchronous {@link #list(QuestionnairesListParams, RequestOptions)}, without parameters, with the client's options.
    *
-   * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-   *
-   * <p>{@code GET /v3/questionnaires/}
-   * <p>Returns one page; iterate it to fetch every following page automatically.
-   *
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<Page<QuestionnaireListItem>> listAsync() {
     return client.executeAsync(listRequest(QuestionnairesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
@@ -172,43 +137,31 @@ public final class QuestionnairesResource {
   }
 
   /**
-   * Create questionnaire
-   *
-   * <p>Create a simple linear questionnaire. Send <code>form_elements</code> in display order; branching and repeatable groups require the Console. Defaults to <code>published</code> v1.
-   *
-   * <p>{@code POST /v3/questionnaires/}
+   * Asynchronous {@link #create(SimpleQuestionnaireRequest, RequestOptions)}.
    *
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<QuestionnaireDetail> createAsync(SimpleQuestionnaireRequest params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Create questionnaire
-   *
-   * <p>Create a simple linear questionnaire. Send <code>form_elements</code> in display order; branching and repeatable groups require the Console. Defaults to <code>published</code> v1.
-   *
-   * <p>{@code POST /v3/questionnaires/}
+   * Same as {@link #create(SimpleQuestionnaireRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public QuestionnaireDetail create(SimpleQuestionnaireRequest params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
   /**
-   * Create questionnaire
-   *
-   * <p>Create a simple linear questionnaire. Send <code>form_elements</code> in display order; branching and repeatable groups require the Console. Defaults to <code>published</code> v1.
-   *
-   * <p>{@code POST /v3/questionnaires/}
+   * Asynchronous {@link #create(SimpleQuestionnaireRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<QuestionnaireDetail> createAsync(SimpleQuestionnaireRequest params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
@@ -230,43 +183,31 @@ public final class QuestionnairesResource {
   }
 
   /**
-   * Get questionnaire
+   * Asynchronous {@link #retrieve(String, RequestOptions)}.
    *
-   * <p>Fetch full questionnaire detail for one version by <code>questionnaire_uuid</code>: title, <code>languages</code>, canonical <code>graph</code>, derived <code>sections</code>, and version metadata.
-   *
-   * <p>{@code GET /v3/questionnaires/{questionnaire_uuid}/}
-   *
-   * @param questionnaireUuid Per-version UUID of the questionnaire (the `uuid` value returned by the list endpoint, also returned as `questionnaire_id` on detail endpoints).
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param questionnaireUuid the {@code questionnaire_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<QuestionnaireDetail> retrieveAsync(String questionnaireUuid, RequestOptions options) {
     return client.executeAsync(retrieveRequest(questionnaireUuid), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Get questionnaire
+   * Same as {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Fetch full questionnaire detail for one version by <code>questionnaire_uuid</code>: title, <code>languages</code>, canonical <code>graph</code>, derived <code>sections</code>, and version metadata.
-   *
-   * <p>{@code GET /v3/questionnaires/{questionnaire_uuid}/}
-   *
-   * @param questionnaireUuid Per-version UUID of the questionnaire (the `uuid` value returned by the list endpoint, also returned as `questionnaire_id` on detail endpoints).
-   * @return the response body
+   * @param questionnaireUuid the {@code questionnaire_uuid}
+   * @return the result
    */
   public QuestionnaireDetail retrieve(String questionnaireUuid) {
     return client.execute(retrieveRequest(questionnaireUuid), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
   /**
-   * Get questionnaire
+   * Asynchronous {@link #retrieve(String, RequestOptions)}, with the client's options.
    *
-   * <p>Fetch full questionnaire detail for one version by <code>questionnaire_uuid</code>: title, <code>languages</code>, canonical <code>graph</code>, derived <code>sections</code>, and version metadata.
-   *
-   * <p>{@code GET /v3/questionnaires/{questionnaire_uuid}/}
-   *
-   * @param questionnaireUuid Per-version UUID of the questionnaire (the `uuid` value returned by the list endpoint, also returned as `questionnaire_id` on detail endpoints).
-   * @return a future completed with the response body
+   * @param questionnaireUuid the {@code questionnaire_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<QuestionnaireDetail> retrieveAsync(String questionnaireUuid) {
     return client.executeAsync(retrieveRequest(questionnaireUuid), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
@@ -289,46 +230,34 @@ public final class QuestionnairesResource {
   }
 
   /**
-   * Update questionnaire
+   * Asynchronous {@link #update(String, SimpleQuestionnaireUpdateRequest, RequestOptions)}.
    *
-   * <p>Update a questionnaire. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>questionnaire_id</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>questionnaire_group_id</code> (new <code>questionnaire_id</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>).
-   *
-   * <p>{@code PATCH /v3/questionnaires/{questionnaire_uuid}/}
-   *
-   * @param questionnaireUuid Per-version UUID of the questionnaire to update.
+   * @param questionnaireUuid the {@code questionnaire_uuid}
    * @param params the request parameters
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<QuestionnaireDetail> updateAsync(String questionnaireUuid, SimpleQuestionnaireUpdateRequest params, RequestOptions options) {
     return client.executeAsync(updateRequest(questionnaireUuid, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Update questionnaire
+   * Same as {@link #update(String, SimpleQuestionnaireUpdateRequest, RequestOptions)}, with the client's options.
    *
-   * <p>Update a questionnaire. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>questionnaire_id</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>questionnaire_group_id</code> (new <code>questionnaire_id</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>).
-   *
-   * <p>{@code PATCH /v3/questionnaires/{questionnaire_uuid}/}
-   *
-   * @param questionnaireUuid Per-version UUID of the questionnaire to update.
+   * @param questionnaireUuid the {@code questionnaire_uuid}
    * @param params the request parameters
-   * @return the response body
+   * @return the result
    */
   public QuestionnaireDetail update(String questionnaireUuid, SimpleQuestionnaireUpdateRequest params) {
     return client.execute(updateRequest(questionnaireUuid, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
   /**
-   * Update questionnaire
+   * Asynchronous {@link #update(String, SimpleQuestionnaireUpdateRequest, RequestOptions)}, with the client's options.
    *
-   * <p>Update a questionnaire. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>questionnaire_id</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>questionnaire_group_id</code> (new <code>questionnaire_id</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>).
-   *
-   * <p>{@code PATCH /v3/questionnaires/{questionnaire_uuid}/}
-   *
-   * @param questionnaireUuid Per-version UUID of the questionnaire to update.
+   * @param questionnaireUuid the {@code questionnaire_uuid}
    * @param params the request parameters
-   * @return a future completed with the response body
+   * @return a future completed with the result
    */
   public CompletableFuture<QuestionnaireDetail> updateAsync(String questionnaireUuid, SimpleQuestionnaireUpdateRequest params) {
     return client.executeAsync(updateRequest(questionnaireUuid, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
@@ -349,42 +278,30 @@ public final class QuestionnairesResource {
   }
 
   /**
-   * Delete questionnaire
+   * Asynchronous {@link #delete(String, RequestOptions)}.
    *
-   * <p>Permanently delete one questionnaire version (no undo). Stored questionnaire responses linked to this version are deleted with it, and sessions referencing it lose the link; other versions in the same group are not deleted. Workflows that referenced it keep running but the questionnaire step can no longer load it.
-   *
-   * <p>{@code DELETE /v3/questionnaires/{questionnaire_uuid}/}
-   *
-   * @param questionnaireUuid Per-version UUID of the questionnaire to delete.
-   * @param options per-request options that override the client options
-   * @return a future completed with the response body
+   * @param questionnaireUuid the {@code questionnaire_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String questionnaireUuid, RequestOptions options) {
     return client.executeAsync(deleteRequest(questionnaireUuid), options, DELETE_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * Delete questionnaire
+   * Same as {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Permanently delete one questionnaire version (no undo). Stored questionnaire responses linked to this version are deleted with it, and sessions referencing it lose the link; other versions in the same group are not deleted. Workflows that referenced it keep running but the questionnaire step can no longer load it.
-   *
-   * <p>{@code DELETE /v3/questionnaires/{questionnaire_uuid}/}
-   *
-   * @param questionnaireUuid Per-version UUID of the questionnaire to delete.
+   * @param questionnaireUuid the {@code questionnaire_uuid}
    */
   public void delete(String questionnaireUuid) {
     client.execute(deleteRequest(questionnaireUuid), RequestOptions.none(), DELETE_RESPONSE);
   }
 
   /**
-   * Delete questionnaire
+   * Asynchronous {@link #delete(String, RequestOptions)}, with the client's options.
    *
-   * <p>Permanently delete one questionnaire version (no undo). Stored questionnaire responses linked to this version are deleted with it, and sessions referencing it lose the link; other versions in the same group are not deleted. Workflows that referenced it keep running but the questionnaire step can no longer load it.
-   *
-   * <p>{@code DELETE /v3/questionnaires/{questionnaire_uuid}/}
-   *
-   * @param questionnaireUuid Per-version UUID of the questionnaire to delete.
-   * @return a future completed with the response body
+   * @param questionnaireUuid the {@code questionnaire_uuid}
+   * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String questionnaireUuid) {
     return client.executeAsync(deleteRequest(questionnaireUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
@@ -443,356 +360,252 @@ public final class QuestionnairesResource {
     }
 
     /**
-     * List questionnaires
-     *
-     * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/questionnaires/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(QuestionnairesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<QuestionnaireListItem>> list(QuestionnairesListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List questionnaires
-     *
-     * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/questionnaires/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(QuestionnairesListParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<QuestionnaireListItem>>> listAsync(QuestionnairesListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
     /**
-     * List questionnaires
-     *
-     * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/questionnaires/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * {@link #list(QuestionnairesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<QuestionnaireListItem>> list(QuestionnairesListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List questionnaires
-     *
-     * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/questionnaires/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
+     * Asynchronous {@link #list(QuestionnairesListParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<QuestionnaireListItem>>> listAsync(QuestionnairesListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List questionnaires
+     * {@link #list(QuestionnairesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/questionnaires/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<Page<QuestionnaireListItem>> list(RequestOptions options) {
       return client.execute(listRequest(QuestionnairesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List questionnaires
+     * Asynchronous {@link #list(QuestionnairesListParams, RequestOptions)} with the raw response, without parameters.
      *
-     * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/questionnaires/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<QuestionnaireListItem>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(QuestionnairesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
     /**
-     * List questionnaires
+     * {@link #list(QuestionnairesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/questionnaires/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<Page<QuestionnaireListItem>> list() {
       return client.execute(listRequest(QuestionnairesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * List questionnaires
+     * Asynchronous {@link #list(QuestionnairesListParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
-     * <p>List your questionnaires, newest first, in a limit/offset pagination envelope (<code>{count, next, previous, results}</code>, default page size 50). Each row is one version; <code>questionnaire_group_id</code> is the stable group ID resolved to the latest <code>published</code> version.
-     *
-     * <p>{@code GET /v3/questionnaires/}
-     * <p>Returns one page; iterate it to fetch every following page automatically.
-     *
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<Page<QuestionnaireListItem>>> listAsync() {
       return client.executeAsync(listRequest(QuestionnairesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
     /**
-     * Create questionnaire
-     *
-     * <p>Create a simple linear questionnaire. Send <code>form_elements</code> in display order; branching and repeatable groups require the Console. Defaults to <code>published</code> v1.
-     *
-     * <p>{@code POST /v3/questionnaires/}
+     * {@link #create(SimpleQuestionnaireRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<QuestionnaireDetail> create(SimpleQuestionnaireRequest params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create questionnaire
-     *
-     * <p>Create a simple linear questionnaire. Send <code>form_elements</code> in display order; branching and repeatable groups require the Console. Defaults to <code>published</code> v1.
-     *
-     * <p>{@code POST /v3/questionnaires/}
+     * Asynchronous {@link #create(SimpleQuestionnaireRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<QuestionnaireDetail>> createAsync(SimpleQuestionnaireRequest params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
     /**
-     * Create questionnaire
-     *
-     * <p>Create a simple linear questionnaire. Send <code>form_elements</code> in display order; branching and repeatable groups require the Console. Defaults to <code>published</code> v1.
-     *
-     * <p>{@code POST /v3/questionnaires/}
+     * {@link #create(SimpleQuestionnaireRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<QuestionnaireDetail> create(SimpleQuestionnaireRequest params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Create questionnaire
-     *
-     * <p>Create a simple linear questionnaire. Send <code>form_elements</code> in display order; branching and repeatable groups require the Console. Defaults to <code>published</code> v1.
-     *
-     * <p>{@code POST /v3/questionnaires/}
+     * Asynchronous {@link #create(SimpleQuestionnaireRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<QuestionnaireDetail>> createAsync(SimpleQuestionnaireRequest params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
     /**
-     * Get questionnaire
+     * {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Fetch full questionnaire detail for one version by <code>questionnaire_uuid</code>: title, <code>languages</code>, canonical <code>graph</code>, derived <code>sections</code>, and version metadata.
-     *
-     * <p>{@code GET /v3/questionnaires/{questionnaire_uuid}/}
-     *
-     * @param questionnaireUuid Per-version UUID of the questionnaire (the `uuid` value returned by the list endpoint, also returned as `questionnaire_id` on detail endpoints).
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param questionnaireUuid the {@code questionnaire_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<QuestionnaireDetail> retrieve(String questionnaireUuid, RequestOptions options) {
       return client.execute(retrieveRequest(questionnaireUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get questionnaire
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response.
      *
-     * <p>Fetch full questionnaire detail for one version by <code>questionnaire_uuid</code>: title, <code>languages</code>, canonical <code>graph</code>, derived <code>sections</code>, and version metadata.
-     *
-     * <p>{@code GET /v3/questionnaires/{questionnaire_uuid}/}
-     *
-     * @param questionnaireUuid Per-version UUID of the questionnaire (the `uuid` value returned by the list endpoint, also returned as `questionnaire_id` on detail endpoints).
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param questionnaireUuid the {@code questionnaire_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<QuestionnaireDetail>> retrieveAsync(String questionnaireUuid, RequestOptions options) {
       return client.executeAsync(retrieveRequest(questionnaireUuid), options, RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get questionnaire
+     * {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Fetch full questionnaire detail for one version by <code>questionnaire_uuid</code>: title, <code>languages</code>, canonical <code>graph</code>, derived <code>sections</code>, and version metadata.
-     *
-     * <p>{@code GET /v3/questionnaires/{questionnaire_uuid}/}
-     *
-     * @param questionnaireUuid Per-version UUID of the questionnaire (the `uuid` value returned by the list endpoint, also returned as `questionnaire_id` on detail endpoints).
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param questionnaireUuid the {@code questionnaire_uuid}
+     * @return the result
      */
     public RawResponse<QuestionnaireDetail> retrieve(String questionnaireUuid) {
       return client.execute(retrieveRequest(questionnaireUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Get questionnaire
+     * Asynchronous {@link #retrieve(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Fetch full questionnaire detail for one version by <code>questionnaire_uuid</code>: title, <code>languages</code>, canonical <code>graph</code>, derived <code>sections</code>, and version metadata.
-     *
-     * <p>{@code GET /v3/questionnaires/{questionnaire_uuid}/}
-     *
-     * @param questionnaireUuid Per-version UUID of the questionnaire (the `uuid` value returned by the list endpoint, also returned as `questionnaire_id` on detail endpoints).
-     * @return a future completed with the raw response
+     * @param questionnaireUuid the {@code questionnaire_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<QuestionnaireDetail>> retrieveAsync(String questionnaireUuid) {
       return client.executeAsync(retrieveRequest(questionnaireUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
     /**
-     * Update questionnaire
+     * {@link #update(String, SimpleQuestionnaireUpdateRequest, RequestOptions)} with the raw response.
      *
-     * <p>Update a questionnaire. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>questionnaire_id</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>questionnaire_group_id</code> (new <code>questionnaire_id</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>).
-     *
-     * <p>{@code PATCH /v3/questionnaires/{questionnaire_uuid}/}
-     *
-     * @param questionnaireUuid Per-version UUID of the questionnaire to update.
+     * @param questionnaireUuid the {@code questionnaire_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<QuestionnaireDetail> update(String questionnaireUuid, SimpleQuestionnaireUpdateRequest params, RequestOptions options) {
       return client.execute(updateRequest(questionnaireUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update questionnaire
+     * Asynchronous {@link #update(String, SimpleQuestionnaireUpdateRequest, RequestOptions)} with the raw response.
      *
-     * <p>Update a questionnaire. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>questionnaire_id</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>questionnaire_group_id</code> (new <code>questionnaire_id</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>).
-     *
-     * <p>{@code PATCH /v3/questionnaires/{questionnaire_uuid}/}
-     *
-     * @param questionnaireUuid Per-version UUID of the questionnaire to update.
+     * @param questionnaireUuid the {@code questionnaire_uuid}
      * @param params the request parameters
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<QuestionnaireDetail>> updateAsync(String questionnaireUuid, SimpleQuestionnaireUpdateRequest params, RequestOptions options) {
       return client.executeAsync(updateRequest(questionnaireUuid, params), options, UPDATE_RESPONSE);
     }
 
     /**
-     * Update questionnaire
+     * {@link #update(String, SimpleQuestionnaireUpdateRequest, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Update a questionnaire. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>questionnaire_id</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>questionnaire_group_id</code> (new <code>questionnaire_id</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>).
-     *
-     * <p>{@code PATCH /v3/questionnaires/{questionnaire_uuid}/}
-     *
-     * @param questionnaireUuid Per-version UUID of the questionnaire to update.
+     * @param questionnaireUuid the {@code questionnaire_uuid}
      * @param params the request parameters
-     * @return the HTTP status, headers and request id with the parsed body
+     * @return the result
      */
     public RawResponse<QuestionnaireDetail> update(String questionnaireUuid, SimpleQuestionnaireUpdateRequest params) {
       return client.execute(updateRequest(questionnaireUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Update questionnaire
+     * Asynchronous {@link #update(String, SimpleQuestionnaireUpdateRequest, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Update a questionnaire. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>questionnaire_id</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>questionnaire_group_id</code> (new <code>questionnaire_id</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>).
-     *
-     * <p>{@code PATCH /v3/questionnaires/{questionnaire_uuid}/}
-     *
-     * @param questionnaireUuid Per-version UUID of the questionnaire to update.
+     * @param questionnaireUuid the {@code questionnaire_uuid}
      * @param params the request parameters
-     * @return a future completed with the raw response
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<QuestionnaireDetail>> updateAsync(String questionnaireUuid, SimpleQuestionnaireUpdateRequest params) {
       return client.executeAsync(updateRequest(questionnaireUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**
-     * Delete questionnaire
+     * {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Permanently delete one questionnaire version (no undo). Stored questionnaire responses linked to this version are deleted with it, and sessions referencing it lose the link; other versions in the same group are not deleted. Workflows that referenced it keep running but the questionnaire step can no longer load it.
-     *
-     * <p>{@code DELETE /v3/questionnaires/{questionnaire_uuid}/}
-     *
-     * @param questionnaireUuid Per-version UUID of the questionnaire to delete.
-     * @param options per-request options that override the client options
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param questionnaireUuid the {@code questionnaire_uuid}
+     * @param options per-request options
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String questionnaireUuid, RequestOptions options) {
       return client.execute(deleteRequest(questionnaireUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete questionnaire
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response.
      *
-     * <p>Permanently delete one questionnaire version (no undo). Stored questionnaire responses linked to this version are deleted with it, and sessions referencing it lose the link; other versions in the same group are not deleted. Workflows that referenced it keep running but the questionnaire step can no longer load it.
-     *
-     * <p>{@code DELETE /v3/questionnaires/{questionnaire_uuid}/}
-     *
-     * @param questionnaireUuid Per-version UUID of the questionnaire to delete.
-     * @param options per-request options that override the client options
-     * @return a future completed with the raw response
+     * @param questionnaireUuid the {@code questionnaire_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String questionnaireUuid, RequestOptions options) {
       return client.executeAsync(deleteRequest(questionnaireUuid), options, DELETE_RESPONSE);
     }
 
     /**
-     * Delete questionnaire
+     * {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Permanently delete one questionnaire version (no undo). Stored questionnaire responses linked to this version are deleted with it, and sessions referencing it lose the link; other versions in the same group are not deleted. Workflows that referenced it keep running but the questionnaire step can no longer load it.
-     *
-     * <p>{@code DELETE /v3/questionnaires/{questionnaire_uuid}/}
-     *
-     * @param questionnaireUuid Per-version UUID of the questionnaire to delete.
-     * @return the HTTP status, headers and request id with the parsed body
+     * @param questionnaireUuid the {@code questionnaire_uuid}
+     * @return the result
      */
     public RawResponse<@Nullable Void> delete(String questionnaireUuid) {
       return client.execute(deleteRequest(questionnaireUuid), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Delete questionnaire
+     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
      *
-     * <p>Permanently delete one questionnaire version (no undo). Stored questionnaire responses linked to this version are deleted with it, and sessions referencing it lose the link; other versions in the same group are not deleted. Workflows that referenced it keep running but the questionnaire step can no longer load it.
-     *
-     * <p>{@code DELETE /v3/questionnaires/{questionnaire_uuid}/}
-     *
-     * @param questionnaireUuid Per-version UUID of the questionnaire to delete.
-     * @return a future completed with the raw response
+     * @param questionnaireUuid the {@code questionnaire_uuid}
+     * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String questionnaireUuid) {
       return client.executeAsync(deleteRequest(questionnaireUuid), RequestOptions.none(), DELETE_RESPONSE);
