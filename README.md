@@ -164,7 +164,7 @@ List methods return a `Page`. Iterating a page fetches the following pages as yo
 
 ```java
 for (WorkflowListItem workflow : client.workflows().list()) {
-  System.out.println(workflow.uuid());
+  System.out.println(workflow.uuid().orElse("?"));
 }
 
 Page<SessionsListResponse.Results> page = client.sessions().list(
