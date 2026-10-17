@@ -520,7 +520,8 @@ public final class Authentication {
 
   /** The cached discovery document; concurrent callers share one fetch. */
   CompletableFuture<Discovery> discoveryAsync() {
-    CompletableFuture<Discovery> pending;
+    CompletableFuture<Void> start;
+    CompletableFuture<Discovery> fetch;
     synchronized (lock) {
       Discovery cached = discovery;
       if (cached != null && clock.instant().isBefore(discoveryExpiry)) {
@@ -529,33 +530,33 @@ public final class Authentication {
       if (discoveryFetch != null) {
         return discoveryFetch.copy();
       }
-      pending = new CompletableFuture<>();
-      discoveryFetch = pending;
+      // The fetch starts once it is registered, so a transport that answers at once still finds
+      // discoveryFetch set when it clears it.
+      start = new CompletableFuture<>();
+      URI uri = URI.create(issuer + "/.well-known/openid-configuration");
+      fetch =
+          start
+              .thenCompose(ignored -> send("GET", uri, Map.of(), new byte[0]))
+              .thenApply(
+                  response -> {
+                    ObjectNode doc = jsonObject(response, "the discovery document");
+                    Discovery parsed = parseDiscovery(doc);
+                    synchronized (lock) {
+                      discovery = parsed;
+                      discoveryExpiry = clock.instant().plus(cacheLifetime(response.headers()));
+                    }
+                    return parsed;
+                  })
+              .whenComplete(
+                  (parsed, error) -> {
+                    synchronized (lock) {
+                      discoveryFetch = null;
+                    }
+                  });
+      discoveryFetch = fetch;
     }
-    URI uri = URI.create(issuer + "/.well-known/openid-configuration");
-    send("GET", uri, Map.of(), new byte[0])
-        .thenApply(
-            response -> {
-              ObjectNode doc = jsonObject(response, "the discovery document");
-              Discovery parsed = parseDiscovery(doc);
-              synchronized (lock) {
-                discovery = parsed;
-                discoveryExpiry = clock.instant().plus(cacheLifetime(response.headers()));
-              }
-              return parsed;
-            })
-        .whenComplete(
-            (parsed, error) -> {
-              synchronized (lock) {
-                discoveryFetch = null;
-              }
-              if (error != null) {
-                pending.completeExceptionally(failure(error));
-              } else {
-                pending.complete(parsed);
-              }
-            });
-    return pending.copy();
+    start.complete(null);
+    return fetch.copy();
   }
 
   private Discovery parseDiscovery(ObjectNode doc) {
@@ -599,15 +600,15 @@ public final class Authentication {
    */
   CompletableFuture<ECPublicKey> keyAsync(String kid) {
     Instant now = clock.instant();
-    CompletableFuture<Map<String, ECPublicKey>> pending;
-    boolean start = false;
+    CompletableFuture<Void> start = null;
+    CompletableFuture<Map<String, ECPublicKey>> fetch;
     synchronized (lock) {
       ECPublicKey key = keys.get(kid);
       if (key != null && now.isBefore(keysExpiry)) {
         return CompletableFuture.completedFuture(key);
       }
-      pending = keysFetch;
-      if (pending == null) {
+      fetch = keysFetch;
+      if (fetch == null) {
         boolean expired = !now.isBefore(keysExpiry);
         if (!expired && now.isBefore(lastKeysFetch.plus(REFETCH_INTERVAL))) {
           return CompletableFuture.failedFuture(unknownKey());
@@ -617,15 +618,15 @@ public final class Authentication {
           return CompletableFuture.failedFuture(failed);
         }
         lastKeysFetch = now;
-        pending = new CompletableFuture<>();
-        keysFetch = pending;
-        start = true;
+        start = new CompletableFuture<>();
+        fetch = start.thenCompose(ignored -> fetchKeys());
+        keysFetch = fetch;
       }
     }
-    if (start) {
-      fetchKeys(pending);
+    if (start != null) {
+      start.complete(null);
     }
-    return pending.thenApply(
+    return fetch.thenApply(
         parsed -> {
           ECPublicKey key = parsed.get(kid);
           if (key == null) {
@@ -635,8 +636,8 @@ public final class Authentication {
         });
   }
 
-  private void fetchKeys(CompletableFuture<Map<String, ECPublicKey>> pending) {
-    discoveryAsync()
+  private CompletableFuture<Map<String, ECPublicKey>> fetchKeys() {
+    return discoveryAsync()
         .thenCompose(d -> send("GET", d.jwksUri, Map.of(), new byte[0]))
         .thenApply(
             response -> {
@@ -651,18 +652,12 @@ public final class Authentication {
             })
         .whenComplete(
             (parsed, error) -> {
-              RuntimeException failed = error == null ? null : failure(error);
               synchronized (lock) {
                 keysFetch = null;
-                if (failed != null) {
-                  keysFailure = failed;
+                if (error != null) {
+                  keysFailure = failure(error);
                   keysRetryAfter = clock.instant().plus(FAILED_FETCH_BACKOFF);
                 }
-              }
-              if (failed != null) {
-                pending.completeExceptionally(failed);
-              } else {
-                pending.complete(parsed);
               }
             });
   }
