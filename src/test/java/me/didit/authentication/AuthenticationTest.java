@@ -18,6 +18,7 @@ import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -25,7 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import me.didit.core.Headers;
+import me.didit.core.TransportResponse;
 import me.didit.errors.ApiConnectionException;
 import me.didit.errors.ApiTimeoutException;
 import me.didit.errors.AuthenticationException;
@@ -153,6 +156,12 @@ final class AuthenticationTest {
     assertTrue(v.liveness().orElseThrow());
     assertTrue(c.organization().isEmpty());
     assertEquals(List.of("other", StubIssuer.APP_ID), c.audience());
+    // toString() leaves identity data out, also inside nested objects.
+    String printed = c.toString();
+    for (String personal : new String[] {"Ana", "Ruiz", "1990-01-31", "ESP", "user-42"}) {
+      assertFalse(printed.contains(personal), personal);
+    }
+    assertTrue(printed.contains("agent-1"), printed);
     ObjectNode empty = issuer.accessClaims(now);
     empty.putObject("verified");
     assertTrue(auth().verifyAccessToken(access(empty)).verified().isEmpty());
@@ -496,6 +505,18 @@ final class AuthenticationTest {
             .issuer());
     // Discovery was fetched once and cached for both calls.
     assertEquals(1, fourth.count("GET /.well-known/openid-configuration"));
+
+    // A loopback issuer may use http for its keys, whatever the case of the scheme.
+    StubIssuer local = new StubIssuer();
+    String upper = "HTTP://localhost:8000";
+    local.discovery.put("issuer", upper);
+    local.discovery.put("jwks_uri", "http://localhost:8000/.well-known/jwks.json");
+    Authentication e =
+        Authentication.builder().issuer(upper).transport(local).clock(clock).build();
+    ObjectNode localClaims = local.accessClaims(now);
+    localClaims.put("iss", upper);
+    assertEquals(
+        upper, e.verifyAccessToken(local.sign(local.header("at+jwt"), localClaims)).issuer());
 
     StubIssuer fifth = new StubIssuer();
     fifth.discovery.remove("issuer");
