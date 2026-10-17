@@ -13,27 +13,7 @@ final class Platform {
   private static String build() {
     String java = System.getProperty("java.version", "unknown");
     String os = System.getProperty("os.name", "unknown");
-    String arch = System.getProperty("os.arch", "");
-    String kotlin = kotlinVersion();
-    StringBuilder out = new StringBuilder("didit-java/").append(Version.VERSION).append(" (Java ");
-    out.append(clean(java)).append("; ").append(clean(os));
-    if (!arch.isEmpty()) {
-      out.append(' ').append(clean(arch));
-    }
-    if (!kotlin.isEmpty()) {
-      out.append("; Kotlin ").append(clean(kotlin));
-    }
-    return out.append(')').toString();
-  }
-
-  private static String kotlinVersion() {
-    try {
-      Class<?> version = Class.forName("kotlin.KotlinVersion");
-      Object current = version.getField("CURRENT").get(null);
-      return String.valueOf(current);
-    } catch (ReflectiveOperationException | LinkageError e) {
-      return "";
-    }
+    return "didit-java/" + Version.VERSION + " (Java " + clean(java) + "; " + clean(os) + ")";
   }
 
   private static String clean(String value) {

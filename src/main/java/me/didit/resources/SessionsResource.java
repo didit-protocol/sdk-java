@@ -2938,6 +2938,7 @@ public final class SessionsResource {
     return ApiRequest.builder("PATCH", "/v3/session/{sessionId}/update-aml-hit-status/")
         .pathParam("sessionId", sessionId)
         .params(params)
+        .queryField("node_id", "node_id_query")
         .body(ApiRequest.BodyEncoding.JSON)
         .build();
   }
@@ -2948,6 +2949,7 @@ public final class SessionsResource {
     return ApiRequest.builder("PATCH", "/v3/session/{sessionId}/bulk-update-aml-hit-status/")
         .pathParam("sessionId", sessionId)
         .params(params)
+        .queryField("node_id", "node_id_query")
         .body(ApiRequest.BodyEncoding.JSON)
         .build();
   }

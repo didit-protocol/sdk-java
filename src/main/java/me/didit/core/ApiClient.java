@@ -222,10 +222,10 @@ public final class ApiClient {
       }
     }
     List<String[]> query = new ArrayList<>();
-    for (String field : request.queryFields) {
-      JsonNode value = fields.remove(field);
+    for (Map.Entry<String, String> queryField : request.queryFields.entrySet()) {
+      JsonNode value = fields.remove(queryField.getValue());
       if (value != null && !value.isNull()) {
-        addQuery(query, field, value);
+        addQuery(query, queryField.getKey(), value);
       }
     }
     for (Map.Entry<String, String> extra : ro.queryParams().entrySet()) {

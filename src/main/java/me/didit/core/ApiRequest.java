@@ -2,11 +2,8 @@ package me.didit.core;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -51,7 +48,7 @@ public final class ApiRequest {
   final boolean applicationScoped;
   final Map<String, String> pathParams;
   final @Nullable JsonModel params;
-  final Set<String> queryFields;
+  final Map<String, String> queryFields;
   final Map<String, String> headerFields;
   final BodyEncoding bodyEncoding;
   final @Nullable String accept;
@@ -64,7 +61,7 @@ public final class ApiRequest {
     this.applicationScoped = b.applicationScoped;
     this.pathParams = Collections.unmodifiableMap(new LinkedHashMap<>(b.pathParams));
     this.params = b.params;
-    this.queryFields = Collections.unmodifiableSet(new LinkedHashSet<>(b.queryFields));
+    this.queryFields = Collections.unmodifiableMap(new LinkedHashMap<>(b.queryFields));
     this.headerFields = Collections.unmodifiableMap(new LinkedHashMap<>(b.headerFields));
     this.bodyEncoding = b.params == null ? BodyEncoding.NONE : b.bodyEncoding;
     this.accept = b.accept;
@@ -103,7 +100,7 @@ public final class ApiRequest {
     private boolean applicationScoped;
     private final Map<String, String> pathParams = new LinkedHashMap<>();
     private @Nullable JsonModel params;
-    private final Set<String> queryFields = new LinkedHashSet<>();
+    private final Map<String, String> queryFields = new LinkedHashMap<>();
     private final Map<String, String> headerFields = new LinkedHashMap<>();
     private BodyEncoding bodyEncoding = BodyEncoding.NONE;
     private @Nullable String accept;
@@ -174,7 +171,21 @@ public final class ApiRequest {
      * @return this builder
      */
     public Builder queryFields(String... fields) {
-      queryFields.addAll(List.of(fields));
+      for (String field : fields) {
+        queryFields.put(field, field);
+      }
+      return this;
+    }
+
+    /**
+     * Names a parameter field sent in the query string under another name.
+     *
+     * @param name the query parameter name
+     * @param field the JSON field name in the parameters
+     * @return this builder
+     */
+    public Builder queryField(String name, String field) {
+      queryFields.put(name, field);
       return this;
     }
 

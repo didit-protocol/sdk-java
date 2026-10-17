@@ -743,8 +743,12 @@ def emit_operation(om: OpModel, ctx: Ctx) -> tuple[str, str, str]:
         lines.append(f".pathParam({java_string(pp.json_name)}, {pp.java_name})")
     if ptype is not None:
         lines.append(".params(params)")
-    if om.query_fields:
-        lines.append(".queryFields(" + ", ".join(java_string(q) for q in om.query_fields) + ")")
+    same = [q for q, f in om.query_fields if q == f]
+    if same:
+        lines.append(".queryFields(" + ", ".join(java_string(q) for q in same) + ")")
+    for q, f in om.query_fields:
+        if q != f:
+            lines.append(f".queryField({java_string(q)}, {java_string(f)})")
     for header, field_name in om.header_fields:
         lines.append(f".headerField({java_string(header)}, {java_string(field_name)})")
     if om.body_encoding == "multipart":

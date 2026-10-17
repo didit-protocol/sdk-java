@@ -457,9 +457,9 @@ def emit_test(om: OpModel, ctx: Ctx) -> str:
         for key, val in value.items():
             prop: Prop = props[key]
             if om.params_class is not None and prop.location == "query":
-                query[key] = expected_query_value(val)
+                query[prop.wire] = expected_query_value(val)
             elif om.params_class is not None and prop.location == "header":
-                headers[key] = expected_query_value(val)[0]
+                headers[prop.wire] = expected_query_value(val)[0]
             else:
                 body[key] = val
     if om.idempotency:

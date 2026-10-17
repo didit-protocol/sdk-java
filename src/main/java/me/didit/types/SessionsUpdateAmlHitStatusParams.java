@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 
 /** Parameters for {&#64;code sessions.update_aml_hit_status}. */
 public final class SessionsUpdateAmlHitStatusParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("hit_id", "review_status", "node_id");
+  private static final Set<String> KNOWN_FIELDS = Set.of("node_id_query", "hit_id", "review_status", "node_id");
 
   private SessionsUpdateAmlHitStatusParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -48,6 +48,16 @@ public final class SessionsUpdateAmlHitStatusParams extends JsonModel {
    */
   public Builder toBuilder() {
     return new Builder(this);
+  }
+
+  /**
+   * Workflow graph node ID. Required only when the session has multiple AML checks (one per node); omit it for single-AML sessions.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> nodeIdQuery() {
+    return Json.optional(json, "node_id_query", Conv.STRING);
   }
 
   /**
@@ -91,6 +101,16 @@ public final class SessionsUpdateAmlHitStatusParams extends JsonModel {
 
     private Builder(SessionsUpdateAmlHitStatusParams from) {
       super(from);
+    }
+
+    /**
+     * Workflow graph node ID. Required only when the session has multiple AML checks (one per node); omit it for single-AML sessions.
+     *
+     * @param nodeIdQuery the value
+     * @return this builder
+     */
+    public Builder nodeIdQuery(String nodeIdQuery) {
+      return set("node_id_query", Conv.STRING, nodeIdQuery);
     }
 
     /**

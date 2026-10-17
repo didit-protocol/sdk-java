@@ -38,6 +38,11 @@ class Prop:
     deprecated: bool
     schema: dict[str, Any]
     location: str = "body"  # body query header
+    wire_name: str = ""  # query or header name when it differs from json_name
+
+    @property
+    def wire(self) -> str:
+        return self.wire_name or self.json_name
 
 
 @dataclass(eq=False)
@@ -112,7 +117,7 @@ class OpModel:
     body_type: TypeRef | None
     body_required: bool
     body_encoding: str | None  # json multipart json_or_multipart
-    query_fields: list[str]
+    query_fields: list[tuple[str, str]]  # (query name, params field)
     header_fields: list[tuple[str, str]]
     response: ResponseModel
     idempotency: bool
@@ -617,7 +622,7 @@ class Builder:
             params_class.description = f"Parameters for {{@code {op.resource}.{op.method}}}."
             for prop in params_class.props:
                 if prop.location == "header":
-                    header_fields.append((prop.json_name, prop.json_name))
+                    header_fields.append((prop.wire, prop.json_name))
 
         response = self._response(op, prefix)
         summary = str(op.raw.get("summary", "")).strip()
@@ -630,7 +635,7 @@ class Builder:
             body_type,
             body_required,
             body_encoding,
-            [p.json_name for p in query_props if p.location == "query"],
+            [(p.wire, p.json_name) for p in query_props if p.location == "query"],
             header_fields,
             response,
             idempotency,
@@ -679,10 +684,14 @@ class Builder:
         query_props: list[Prop],
         context: str,
     ) -> None:
-        # A query parameter with the same name as a body field means the same thing
-        # (the backend reads either); the SDK sends it in the body only.
+        # A query parameter named like a body field keeps both: the query one gets a
+        # "_query" suffix (Java name nodeIdQuery), like the other SDKs.
         body_names = {name for name, _, _, _ in self._collect_object(doc, schema, pointer)[0]}
-        query_props[:] = [p for p in query_props if p.json_name not in body_names]
+        for prop in query_props:
+            if prop.json_name in body_names:
+                prop.wire_name = prop.json_name
+                prop.json_name = prop.json_name + "_query"
+                prop.java_name = names.safe_member(names.camel(prop.json_name))
         temp = self._model(doc, schema, pointer + "#tmp", cls, "Tmp", "params", context, True, query_props)
         tmp_cls = temp.cls
         assert tmp_cls is not None
