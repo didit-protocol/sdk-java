@@ -990,7 +990,7 @@ public final class AmlScreenResponse extends JsonModel {
          * @param reviewStatus the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder reviewStatus(@Nullable AmlScreenResponse.Aml.HitsItem.ReviewStatus reviewStatus) {
+        public Builder reviewStatus(AmlScreenResponse.Aml.HitsItem.@Nullable ReviewStatus reviewStatus) {
           return setNullable("review_status", Conv.enumeration(AmlScreenResponse.Aml.HitsItem.ReviewStatus::of), reviewStatus);
         }
 
@@ -1000,7 +1000,7 @@ public final class AmlScreenResponse extends JsonModel {
          * @param scoreBreakdown the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder scoreBreakdown(@Nullable AmlScreenResponse.Aml.HitsItem.ScoreBreakdown scoreBreakdown) {
+        public Builder scoreBreakdown(AmlScreenResponse.Aml.HitsItem.@Nullable ScoreBreakdown scoreBreakdown) {
           return setNullable("score_breakdown", Conv.model(AmlScreenResponse.Aml.HitsItem.ScoreBreakdown::fromJson), scoreBreakdown);
         }
 
@@ -2131,7 +2131,7 @@ public final class AmlScreenResponse extends JsonModel {
            * @param documentNumberMatchType the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder documentNumberMatchType(@Nullable AmlScreenResponse.Aml.HitsItem.ScoreBreakdown.DocumentNumberMatchType documentNumberMatchType) {
+          public Builder documentNumberMatchType(AmlScreenResponse.Aml.HitsItem.ScoreBreakdown.@Nullable DocumentNumberMatchType documentNumberMatchType) {
             return setNullable("document_number_match_type", Conv.enumeration(AmlScreenResponse.Aml.HitsItem.ScoreBreakdown.DocumentNumberMatchType::of), documentNumberMatchType);
           }
 

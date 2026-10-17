@@ -161,7 +161,7 @@ public final class KybListUbosResponse extends JsonModel {
      * @param registryTierDelivered the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder registryTierDelivered(@Nullable KybListUbosResponse.RegistryTierDelivered registryTierDelivered) {
+    public Builder registryTierDelivered(KybListUbosResponse.@Nullable RegistryTierDelivered registryTierDelivered) {
       return setNullable("registry_tier_delivered", Conv.enumeration(KybListUbosResponse.RegistryTierDelivered::of), registryTierDelivered);
     }
 
@@ -888,7 +888,7 @@ public final class KybListUbosResponse extends JsonModel {
        * @param registryStatus the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder registryStatus(@Nullable KybListUbosResponse.KybRegistry.RegistryStatus registryStatus) {
+      public Builder registryStatus(KybListUbosResponse.KybRegistry.@Nullable RegistryStatus registryStatus) {
         return setNullable("registry_status", Conv.enumeration(KybListUbosResponse.KybRegistry.RegistryStatus::of), registryStatus);
       }
 
@@ -1158,7 +1158,7 @@ public final class KybListUbosResponse extends JsonModel {
        * @param vatValidationSource the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder vatValidationSource(@Nullable KybListUbosResponse.KybRegistry.VatValidationSource vatValidationSource) {
+      public Builder vatValidationSource(KybListUbosResponse.KybRegistry.@Nullable VatValidationSource vatValidationSource) {
         return setNullable("vat_validation_source", Conv.enumeration(KybListUbosResponse.KybRegistry.VatValidationSource::of), vatValidationSource);
       }
 
@@ -1308,7 +1308,7 @@ public final class KybListUbosResponse extends JsonModel {
        * @param registryTierDelivered the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder registryTierDelivered(@Nullable KybListUbosResponse.KybRegistry.RegistryTierDelivered registryTierDelivered) {
+      public Builder registryTierDelivered(KybListUbosResponse.KybRegistry.@Nullable RegistryTierDelivered registryTierDelivered) {
         return setNullable("registry_tier_delivered", Conv.enumeration(KybListUbosResponse.KybRegistry.RegistryTierDelivered::of), registryTierDelivered);
       }
 
@@ -1318,7 +1318,7 @@ public final class KybListUbosResponse extends JsonModel {
        * @param registryOwnershipStatus the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder registryOwnershipStatus(@Nullable KybListUbosResponse.KybRegistry.RegistryOwnershipStatus registryOwnershipStatus) {
+      public Builder registryOwnershipStatus(KybListUbosResponse.KybRegistry.@Nullable RegistryOwnershipStatus registryOwnershipStatus) {
         return setNullable("registry_ownership_status", Conv.enumeration(KybListUbosResponse.KybRegistry.RegistryOwnershipStatus::of), registryOwnershipStatus);
       }
 
@@ -1916,7 +1916,7 @@ public final class KybListUbosResponse extends JsonModel {
          * @param kycStatus the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder kycStatus(@Nullable KybListUbosResponse.KybRegistry.OfficersItem.KycStatus kycStatus) {
+        public Builder kycStatus(KybListUbosResponse.KybRegistry.OfficersItem.@Nullable KycStatus kycStatus) {
           return setNullable("kyc_status", Conv.enumeration(KybListUbosResponse.KybRegistry.OfficersItem.KycStatus::of), kycStatus);
         }
 
@@ -2535,7 +2535,7 @@ public final class KybListUbosResponse extends JsonModel {
          * @param kycStatus the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder kycStatus(@Nullable KybListUbosResponse.KybRegistry.BeneficialOwnersItem.KycStatus kycStatus) {
+        public Builder kycStatus(KybListUbosResponse.KybRegistry.BeneficialOwnersItem.@Nullable KycStatus kycStatus) {
           return setNullable("kyc_status", Conv.enumeration(KybListUbosResponse.KybRegistry.BeneficialOwnersItem.KycStatus::of), kycStatus);
         }
 

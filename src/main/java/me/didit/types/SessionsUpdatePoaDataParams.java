@@ -261,7 +261,7 @@ public final class SessionsUpdatePoaDataParams extends JsonModel {
      * @param poaParsedAddress the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder poaParsedAddress(@Nullable SessionsUpdatePoaDataParams.PoaParsedAddress poaParsedAddress) {
+    public Builder poaParsedAddress(SessionsUpdatePoaDataParams.@Nullable PoaParsedAddress poaParsedAddress) {
       return setNullable("poa_parsed_address", Conv.model(SessionsUpdatePoaDataParams.PoaParsedAddress::fromJson), poaParsedAddress);
     }
 

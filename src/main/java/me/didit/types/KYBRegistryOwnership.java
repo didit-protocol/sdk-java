@@ -132,7 +132,7 @@ public final class KYBRegistryOwnership extends JsonModel {
      * @param status the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder status(@Nullable KYBRegistryOwnership.Status status) {
+    public Builder status(KYBRegistryOwnership.@Nullable Status status) {
       return setNullable("status", Conv.enumeration(KYBRegistryOwnership.Status::of), status);
     }
 
@@ -142,7 +142,7 @@ public final class KYBRegistryOwnership extends JsonModel {
      * @param tierRequested the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder tierRequested(@Nullable KYBRegistryOwnership.TierRequested tierRequested) {
+    public Builder tierRequested(KYBRegistryOwnership.@Nullable TierRequested tierRequested) {
       return setNullable("tier_requested", Conv.enumeration(KYBRegistryOwnership.TierRequested::of), tierRequested);
     }
 
@@ -152,7 +152,7 @@ public final class KYBRegistryOwnership extends JsonModel {
      * @param tierDelivered the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder tierDelivered(@Nullable KYBRegistryOwnership.TierDelivered tierDelivered) {
+    public Builder tierDelivered(KYBRegistryOwnership.@Nullable TierDelivered tierDelivered) {
       return setNullable("tier_delivered", Conv.enumeration(KYBRegistryOwnership.TierDelivered::of), tierDelivered);
     }
 
@@ -162,7 +162,7 @@ public final class KYBRegistryOwnership extends JsonModel {
      * @param unavailableReason the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder unavailableReason(@Nullable KYBRegistryOwnership.UnavailableReason unavailableReason) {
+    public Builder unavailableReason(KYBRegistryOwnership.@Nullable UnavailableReason unavailableReason) {
       return setNullable("unavailable_reason", Conv.enumeration(KYBRegistryOwnership.UnavailableReason::of), unavailableReason);
     }
 

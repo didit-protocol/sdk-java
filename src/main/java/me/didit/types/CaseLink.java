@@ -130,7 +130,7 @@ public final class CaseLink extends JsonModel {
      * @param linkedEntityType the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder linkedEntityType(@Nullable CaseLink.LinkedEntityType linkedEntityType) {
+    public Builder linkedEntityType(CaseLink.@Nullable LinkedEntityType linkedEntityType) {
       return setNullable("linked_entity_type", Conv.enumeration(CaseLink.LinkedEntityType::of), linkedEntityType);
     }
 

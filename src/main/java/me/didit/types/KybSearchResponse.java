@@ -294,7 +294,7 @@ public final class KybSearchResponse extends JsonModel {
        * @param searchStatus the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder searchStatus(@Nullable KybSearchResponse.KybRegistry.SearchStatus searchStatus) {
+      public Builder searchStatus(KybSearchResponse.KybRegistry.@Nullable SearchStatus searchStatus) {
         return setNullable("search_status", Conv.enumeration(KybSearchResponse.KybRegistry.SearchStatus::of), searchStatus);
       }
 

@@ -263,7 +263,7 @@ public final class ReviewItem extends JsonModel {
      * @param newStatus the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder newStatus(@Nullable ReviewItem.NewStatus newStatus) {
+    public Builder newStatus(ReviewItem.@Nullable NewStatus newStatus) {
       return setNullable("new_status", Conv.enumeration(ReviewItem.NewStatus::of), newStatus);
     }
 
@@ -273,7 +273,7 @@ public final class ReviewItem extends JsonModel {
      * @param previousStatus the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder previousStatus(@Nullable ReviewItem.PreviousStatus previousStatus) {
+    public Builder previousStatus(ReviewItem.@Nullable PreviousStatus previousStatus) {
       return setNullable("previous_status", Conv.enumeration(ReviewItem.PreviousStatus::of), previousStatus);
     }
 

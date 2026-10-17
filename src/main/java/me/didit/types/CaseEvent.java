@@ -190,7 +190,7 @@ public final class CaseEvent extends JsonModel {
      * @param previousStatus the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder previousStatus(@Nullable CaseEvent.PreviousStatus previousStatus) {
+    public Builder previousStatus(CaseEvent.@Nullable PreviousStatus previousStatus) {
       return setNullable("previous_status", Conv.enumeration(CaseEvent.PreviousStatus::of), previousStatus);
     }
 
@@ -200,7 +200,7 @@ public final class CaseEvent extends JsonModel {
      * @param newStatus the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder newStatus(@Nullable CaseEvent.NewStatus newStatus) {
+    public Builder newStatus(CaseEvent.@Nullable NewStatus newStatus) {
       return setNullable("new_status", Conv.enumeration(CaseEvent.NewStatus::of), newStatus);
     }
 

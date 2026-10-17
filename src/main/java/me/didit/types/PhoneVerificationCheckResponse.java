@@ -170,7 +170,7 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
      * @param phone the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder phone(@Nullable PhoneVerificationCheckResponse.Phone phone) {
+    public Builder phone(PhoneVerificationCheckResponse.@Nullable Phone phone) {
       return setNullable("phone", Conv.model(PhoneVerificationCheckResponse.Phone::fromJson), phone);
     }
 

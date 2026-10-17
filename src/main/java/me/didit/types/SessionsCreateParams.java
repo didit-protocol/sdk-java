@@ -1112,7 +1112,7 @@ public final class SessionsCreateParams extends JsonModel {
        * @param gender the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder gender(@Nullable SessionsCreateParams.ExpectedDetails.Gender gender) {
+      public Builder gender(SessionsCreateParams.ExpectedDetails.@Nullable Gender gender) {
         return setNullable("gender", Conv.enumeration(SessionsCreateParams.ExpectedDetails.Gender::of), gender);
       }
 

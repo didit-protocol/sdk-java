@@ -515,7 +515,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
        * @param poaParsedAddress the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder poaParsedAddress(@Nullable ProofOfAddressVerifyResponse.Poa.PoaParsedAddress poaParsedAddress) {
+      public Builder poaParsedAddress(ProofOfAddressVerifyResponse.Poa.@Nullable PoaParsedAddress poaParsedAddress) {
         return setNullable("poa_parsed_address", Conv.model(ProofOfAddressVerifyResponse.Poa.PoaParsedAddress::fromJson), poaParsedAddress);
       }
 
@@ -887,7 +887,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
          * @param documentLocation the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder documentLocation(@Nullable ProofOfAddressVerifyResponse.Poa.PoaParsedAddress.DocumentLocation documentLocation) {
+        public Builder documentLocation(ProofOfAddressVerifyResponse.Poa.PoaParsedAddress.@Nullable DocumentLocation documentLocation) {
           return setNullable("document_location", Conv.model(ProofOfAddressVerifyResponse.Poa.PoaParsedAddress.DocumentLocation::fromJson), documentLocation);
         }
 

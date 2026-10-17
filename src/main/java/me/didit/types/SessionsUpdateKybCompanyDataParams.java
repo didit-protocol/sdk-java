@@ -411,7 +411,7 @@ public final class SessionsUpdateKybCompanyDataParams extends JsonModel {
      * @param registryStatus the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder registryStatus(@Nullable SessionsUpdateKybCompanyDataParams.RegistryStatus registryStatus) {
+    public Builder registryStatus(SessionsUpdateKybCompanyDataParams.@Nullable RegistryStatus registryStatus) {
       return setNullable("registry_status", Conv.enumeration(SessionsUpdateKybCompanyDataParams.RegistryStatus::of), registryStatus);
     }
 
@@ -421,7 +421,7 @@ public final class SessionsUpdateKybCompanyDataParams extends JsonModel {
      * @param verificationStatus the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder verificationStatus(@Nullable SessionsUpdateKybCompanyDataParams.VerificationStatus verificationStatus) {
+    public Builder verificationStatus(SessionsUpdateKybCompanyDataParams.@Nullable VerificationStatus verificationStatus) {
       return setNullable("verification_status", Conv.enumeration(SessionsUpdateKybCompanyDataParams.VerificationStatus::of), verificationStatus);
     }
 

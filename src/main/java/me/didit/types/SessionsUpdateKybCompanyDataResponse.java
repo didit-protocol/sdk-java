@@ -824,7 +824,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
      * @param vatValidationSource the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder vatValidationSource(@Nullable SessionsUpdateKybCompanyDataResponse.VatValidationSource vatValidationSource) {
+    public Builder vatValidationSource(SessionsUpdateKybCompanyDataResponse.@Nullable VatValidationSource vatValidationSource) {
       return setNullable("vat_validation_source", Conv.enumeration(SessionsUpdateKybCompanyDataResponse.VatValidationSource::of), vatValidationSource);
     }
 

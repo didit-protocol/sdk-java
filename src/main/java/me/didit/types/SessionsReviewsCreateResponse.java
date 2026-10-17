@@ -120,7 +120,7 @@ public final class SessionsReviewsCreateResponse extends JsonModel {
      * @param newStatus the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder newStatus(@Nullable SessionsReviewsCreateResponse.NewStatus newStatus) {
+    public Builder newStatus(SessionsReviewsCreateResponse.@Nullable NewStatus newStatus) {
       return setNullable("new_status", Conv.enumeration(SessionsReviewsCreateResponse.NewStatus::of), newStatus);
     }
 

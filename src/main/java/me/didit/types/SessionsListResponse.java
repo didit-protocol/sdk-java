@@ -513,7 +513,7 @@ public final class SessionsListResponse extends JsonModel {
          * @param documentType the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder documentType(@Nullable SessionsListResponse.ResultsItem.User.DocumentType documentType) {
+        public Builder documentType(SessionsListResponse.ResultsItem.User.@Nullable DocumentType documentType) {
           return setNullable("document_type", Conv.enumeration(SessionsListResponse.ResultsItem.User.DocumentType::of), documentType);
         }
 
@@ -593,7 +593,7 @@ public final class SessionsListResponse extends JsonModel {
          * @param phoneNumber the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder phoneNumber(@Nullable SessionsListResponse.ResultsItem.User.PhoneNumber phoneNumber) {
+        public Builder phoneNumber(SessionsListResponse.ResultsItem.User.@Nullable PhoneNumber phoneNumber) {
           return setNullable("phone_number", Conv.model(SessionsListResponse.ResultsItem.User.PhoneNumber::fromJson), phoneNumber);
         }
 
@@ -603,7 +603,7 @@ public final class SessionsListResponse extends JsonModel {
          * @param emailAddress the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder emailAddress(@Nullable SessionsListResponse.ResultsItem.User.EmailAddress emailAddress) {
+        public Builder emailAddress(SessionsListResponse.ResultsItem.User.@Nullable EmailAddress emailAddress) {
           return setNullable("email_address", Conv.model(SessionsListResponse.ResultsItem.User.EmailAddress::fromJson), emailAddress);
         }
 
@@ -613,7 +613,7 @@ public final class SessionsListResponse extends JsonModel {
          * @param additionalDetails the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder additionalDetails(@Nullable SessionsListResponse.ResultsItem.User.AdditionalDetails additionalDetails) {
+        public Builder additionalDetails(SessionsListResponse.ResultsItem.User.@Nullable AdditionalDetails additionalDetails) {
           return setNullable("additional_details", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails::fromJson), additionalDetails);
         }
 

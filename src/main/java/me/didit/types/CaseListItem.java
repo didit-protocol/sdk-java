@@ -350,7 +350,7 @@ public final class CaseListItem extends JsonModel {
      * @param resolution the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder resolution(@Nullable CaseListItem.Resolution resolution) {
+    public Builder resolution(CaseListItem.@Nullable Resolution resolution) {
       return setNullable("resolution", Conv.enumeration(CaseListItem.Resolution::of), resolution);
     }
 

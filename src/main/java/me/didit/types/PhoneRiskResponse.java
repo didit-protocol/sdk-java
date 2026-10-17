@@ -545,7 +545,7 @@ public final class PhoneRiskResponse extends JsonModel {
        * @param carrier the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder carrier(@Nullable PhoneRiskResponse.Phone.Carrier carrier) {
+      public Builder carrier(PhoneRiskResponse.Phone.@Nullable Carrier carrier) {
         return setNullable("carrier", Conv.model(PhoneRiskResponse.Phone.Carrier::fromJson), carrier);
       }
 

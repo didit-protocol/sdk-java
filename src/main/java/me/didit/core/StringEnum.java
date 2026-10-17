@@ -33,7 +33,7 @@ public abstract class StringEnum {
   protected static <T extends StringEnum> T lookup(
       List<T> known, String value, Function<String, T> create) {
     for (T constant : known) {
-      if (constant.value.equals(value)) {
+      if (constant.value().equals(value)) {
         return constant;
       }
     }

@@ -243,7 +243,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
      * @param rail the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder rail(@Nullable TravelRuleTransferDetail.Rail rail) {
+    public Builder rail(TravelRuleTransferDetail.@Nullable Rail rail) {
       return setNullable("rail", Conv.enumeration(TravelRuleTransferDetail.Rail::of), rail);
     }
 
@@ -313,7 +313,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
      * @param counterpartyVasp the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder counterpartyVasp(@Nullable TravelRuleTransferDetail.CounterpartyVasp counterpartyVasp) {
+    public Builder counterpartyVasp(TravelRuleTransferDetail.@Nullable CounterpartyVasp counterpartyVasp) {
       return setNullable("counterparty_vasp", Conv.model(TravelRuleTransferDetail.CounterpartyVasp::fromJson), counterpartyVasp);
     }
 

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.cfg.JsonNodeFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.NullNode;
@@ -25,7 +26,7 @@ public final class Json {
   /** The mapper the SDK uses to read and write JSON. Do not reconfigure it. */
   static final ObjectMapper MAPPER =
       JsonMapper.builder()
-          .nodeFactory(JsonNodeFactory.withExactBigDecimals(true))
+          .configure(JsonNodeFeature.STRIP_TRAILING_BIGDECIMAL_ZEROES, false)
           .enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS)
           .disable(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION)
           .disable(JsonReadFeature.ALLOW_NON_NUMERIC_NUMBERS)

@@ -685,7 +685,7 @@ public final class TransactionDetail extends JsonModel {
      * @param severity the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder severity(@Nullable TransactionDetail.Severity severity) {
+    public Builder severity(TransactionDetail.@Nullable Severity severity) {
       return setNullable("severity", Conv.enumeration(TransactionDetail.Severity::of), severity);
     }
 
@@ -825,7 +825,7 @@ public final class TransactionDetail extends JsonModel {
      * @param travelRule the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder travelRule(@Nullable TransactionDetail.TravelRule travelRule) {
+    public Builder travelRule(TransactionDetail.@Nullable TravelRule travelRule) {
       return setNullable("travel_rule", Conv.model(TransactionDetail.TravelRule::fromJson), travelRule);
     }
 
@@ -835,7 +835,7 @@ public final class TransactionDetail extends JsonModel {
      * @param networkSnapshot the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder networkSnapshot(@Nullable TransactionDetail.NetworkSnapshot networkSnapshot) {
+    public Builder networkSnapshot(TransactionDetail.@Nullable NetworkSnapshot networkSnapshot) {
       return setNullable("network_snapshot", Conv.model(TransactionDetail.NetworkSnapshot::fromJson), networkSnapshot);
     }
 
@@ -845,7 +845,7 @@ public final class TransactionDetail extends JsonModel {
      * @param remediation the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder remediation(@Nullable TransactionDetail.Remediation remediation) {
+    public Builder remediation(TransactionDetail.@Nullable Remediation remediation) {
       return setNullable("remediation", Conv.model(TransactionDetail.Remediation::fromJson), remediation);
     }
 
@@ -855,7 +855,7 @@ public final class TransactionDetail extends JsonModel {
      * @param actionRequired the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder actionRequired(@Nullable TransactionDetail.ActionRequired actionRequired) {
+    public Builder actionRequired(TransactionDetail.@Nullable ActionRequired actionRequired) {
       return setNullable("action_required", Conv.union(TransactionDetail.ActionRequired::fromJson), actionRequired);
     }
 

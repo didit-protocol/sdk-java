@@ -159,7 +159,7 @@ public final class NetworkNodeTag extends JsonModel {
      * @param category the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder category(@Nullable NetworkNodeTag.Category category) {
+    public Builder category(NetworkNodeTag.@Nullable Category category) {
       return setNullable("category", Conv.enumeration(NetworkNodeTag.Category::of), category);
     }
 

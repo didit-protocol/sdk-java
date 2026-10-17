@@ -171,7 +171,7 @@ public final class EmailVerificationCheckResponse extends JsonModel {
      * @param email the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder email(@Nullable EmailVerificationCheckResponse.Email email) {
+    public Builder email(EmailVerificationCheckResponse.@Nullable Email email) {
       return setNullable("email", Conv.model(EmailVerificationCheckResponse.Email::fromJson), email);
     }
 

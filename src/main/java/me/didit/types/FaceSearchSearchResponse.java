@@ -661,7 +661,7 @@ public final class FaceSearchSearchResponse extends JsonModel {
          * @param userDetails the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder userDetails(@Nullable FaceSearchSearchResponse.FaceSearch.MatchesItem.UserDetails userDetails) {
+        public Builder userDetails(FaceSearchSearchResponse.FaceSearch.MatchesItem.@Nullable UserDetails userDetails) {
           return setNullable("user_details", Conv.model(FaceSearchSearchResponse.FaceSearch.MatchesItem.UserDetails::fromJson), userDetails);
         }
 

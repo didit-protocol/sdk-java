@@ -375,7 +375,7 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
        * @param matchType the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder matchType(@Nullable DatabaseValidationValidateResponse.DatabaseValidation.MatchType matchType) {
+      public Builder matchType(DatabaseValidationValidateResponse.DatabaseValidation.@Nullable MatchType matchType) {
         return setNullable("match_type", Conv.enumeration(DatabaseValidationValidateResponse.DatabaseValidation.MatchType::of), matchType);
       }
 

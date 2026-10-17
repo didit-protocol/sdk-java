@@ -149,7 +149,7 @@ public final class SocialFootprintProfile extends JsonModel {
      * @param privacyStatus the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder privacyStatus(@Nullable SocialFootprintProfile.PrivacyStatus privacyStatus) {
+    public Builder privacyStatus(SocialFootprintProfile.@Nullable PrivacyStatus privacyStatus) {
       return setNullable("privacy_status", Conv.enumeration(SocialFootprintProfile.PrivacyStatus::of), privacyStatus);
     }
 

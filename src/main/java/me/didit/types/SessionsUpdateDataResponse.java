@@ -240,7 +240,7 @@ public final class SessionsUpdateDataResponse extends JsonModel {
      * @param documentType the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder documentType(@Nullable SessionsUpdateDataResponse.DocumentType documentType) {
+    public Builder documentType(SessionsUpdateDataResponse.@Nullable DocumentType documentType) {
       return setNullable("document_type", Conv.enumeration(SessionsUpdateDataResponse.DocumentType::of), documentType);
     }
 
@@ -340,7 +340,7 @@ public final class SessionsUpdateDataResponse extends JsonModel {
      * @param gender the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder gender(@Nullable SessionsUpdateDataResponse.Gender gender) {
+    public Builder gender(SessionsUpdateDataResponse.@Nullable Gender gender) {
       return setNullable("gender", Conv.enumeration(SessionsUpdateDataResponse.Gender::of), gender);
     }
 
@@ -400,7 +400,7 @@ public final class SessionsUpdateDataResponse extends JsonModel {
      * @param parsedAddress the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder parsedAddress(@Nullable SessionsUpdateDataResponse.ParsedAddress parsedAddress) {
+    public Builder parsedAddress(SessionsUpdateDataResponse.@Nullable ParsedAddress parsedAddress) {
       return setNullable("parsed_address", Conv.model(SessionsUpdateDataResponse.ParsedAddress::fromJson), parsedAddress);
     }
 

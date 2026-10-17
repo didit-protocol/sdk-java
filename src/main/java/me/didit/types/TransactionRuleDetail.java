@@ -430,7 +430,7 @@ public final class TransactionRuleDetail extends JsonModel {
      * @param severity the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder severity(@Nullable TransactionRuleDetail.Severity severity) {
+    public Builder severity(TransactionRuleDetail.@Nullable Severity severity) {
       return setNullable("severity", Conv.enumeration(TransactionRuleDetail.Severity::of), severity);
     }
 

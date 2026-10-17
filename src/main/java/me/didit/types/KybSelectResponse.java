@@ -888,7 +888,7 @@ public final class KybSelectResponse extends JsonModel {
        * @param registryStatus the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder registryStatus(@Nullable KybSelectResponse.KybRegistry.RegistryStatus registryStatus) {
+      public Builder registryStatus(KybSelectResponse.KybRegistry.@Nullable RegistryStatus registryStatus) {
         return setNullable("registry_status", Conv.enumeration(KybSelectResponse.KybRegistry.RegistryStatus::of), registryStatus);
       }
 
@@ -1158,7 +1158,7 @@ public final class KybSelectResponse extends JsonModel {
        * @param vatValidationSource the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder vatValidationSource(@Nullable KybSelectResponse.KybRegistry.VatValidationSource vatValidationSource) {
+      public Builder vatValidationSource(KybSelectResponse.KybRegistry.@Nullable VatValidationSource vatValidationSource) {
         return setNullable("vat_validation_source", Conv.enumeration(KybSelectResponse.KybRegistry.VatValidationSource::of), vatValidationSource);
       }
 
@@ -1318,7 +1318,7 @@ public final class KybSelectResponse extends JsonModel {
        * @param registryOwnershipStatus the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder registryOwnershipStatus(@Nullable KybSelectResponse.KybRegistry.RegistryOwnershipStatus registryOwnershipStatus) {
+      public Builder registryOwnershipStatus(KybSelectResponse.KybRegistry.@Nullable RegistryOwnershipStatus registryOwnershipStatus) {
         return setNullable("registry_ownership_status", Conv.enumeration(KybSelectResponse.KybRegistry.RegistryOwnershipStatus::of), registryOwnershipStatus);
       }
 
@@ -1916,7 +1916,7 @@ public final class KybSelectResponse extends JsonModel {
          * @param kycStatus the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder kycStatus(@Nullable KybSelectResponse.KybRegistry.OfficersItem.KycStatus kycStatus) {
+        public Builder kycStatus(KybSelectResponse.KybRegistry.OfficersItem.@Nullable KycStatus kycStatus) {
           return setNullable("kyc_status", Conv.enumeration(KybSelectResponse.KybRegistry.OfficersItem.KycStatus::of), kycStatus);
         }
 
@@ -2535,7 +2535,7 @@ public final class KybSelectResponse extends JsonModel {
          * @param kycStatus the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder kycStatus(@Nullable KybSelectResponse.KybRegistry.BeneficialOwnersItem.KycStatus kycStatus) {
+        public Builder kycStatus(KybSelectResponse.KybRegistry.BeneficialOwnersItem.@Nullable KycStatus kycStatus) {
           return setNullable("kyc_status", Conv.enumeration(KybSelectResponse.KybRegistry.BeneficialOwnersItem.KycStatus::of), kycStatus);
         }
 

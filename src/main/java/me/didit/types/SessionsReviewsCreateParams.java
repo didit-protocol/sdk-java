@@ -90,7 +90,7 @@ public final class SessionsReviewsCreateParams extends JsonModel {
      * @param newStatus the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder newStatus(@Nullable SessionsReviewsCreateParams.NewStatus newStatus) {
+    public Builder newStatus(SessionsReviewsCreateParams.@Nullable NewStatus newStatus) {
       return setNullable("new_status", Conv.enumeration(SessionsReviewsCreateParams.NewStatus::of), newStatus);
     }
 

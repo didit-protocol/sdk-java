@@ -1228,7 +1228,7 @@ public final class UserDetailItem extends JsonModel {
        * @param previousStatus the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder previousStatus(@Nullable UserDetailItem.CommentsItem.PreviousStatus previousStatus) {
+      public Builder previousStatus(UserDetailItem.CommentsItem.@Nullable PreviousStatus previousStatus) {
         return setNullable("previous_status", Conv.enumeration(UserDetailItem.CommentsItem.PreviousStatus::of), previousStatus);
       }
 
@@ -1238,7 +1238,7 @@ public final class UserDetailItem extends JsonModel {
        * @param newStatus the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder newStatus(@Nullable UserDetailItem.CommentsItem.NewStatus newStatus) {
+      public Builder newStatus(UserDetailItem.CommentsItem.@Nullable NewStatus newStatus) {
         return setNullable("new_status", Conv.enumeration(UserDetailItem.CommentsItem.NewStatus::of), newStatus);
       }
 

@@ -491,7 +491,7 @@ public final class WorkflowListItem extends JsonModel {
      * @param createdBy the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder createdBy(@Nullable WorkflowListItem.CreatedBy createdBy) {
+    public Builder createdBy(WorkflowListItem.@Nullable CreatedBy createdBy) {
       return setNullable("created_by", Conv.model(WorkflowListItem.CreatedBy::fromJson), createdBy);
     }
 

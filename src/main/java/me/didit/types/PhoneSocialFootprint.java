@@ -362,7 +362,7 @@ public final class PhoneSocialFootprint extends JsonModel {
      * @param whatsappProfileCompleteness the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder whatsappProfileCompleteness(@Nullable PhoneSocialFootprint.WhatsappProfileCompleteness whatsappProfileCompleteness) {
+    public Builder whatsappProfileCompleteness(PhoneSocialFootprint.@Nullable WhatsappProfileCompleteness whatsappProfileCompleteness) {
       return setNullable("whatsapp_profile_completeness", Conv.enumeration(PhoneSocialFootprint.WhatsappProfileCompleteness::of), whatsappProfileCompleteness);
     }
 

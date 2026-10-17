@@ -128,6 +128,15 @@ def file_text(ctx: Ctx, body: str) -> str:
     return f"{HEADER}package {ctx.package};\n\n{imports_block(ctx, ctx.package)}{body}"
 
 
+def nullable_type(java_type: str) -> str:
+    """Annotates a type with JSpecify @Nullable; nested types take it on the last segment."""
+    head = java_type.split("<", 1)[0]
+    if "." in head:
+        dot = head.rfind(".")
+        return f"{java_type[: dot + 1]}@Nullable {java_type[dot + 1:]}"
+    return f"@Nullable {java_type}"
+
+
 def deprecated_lines(text: str = "") -> list[str]:
     return ["", "@deprecated " + (javadoc.escape(text) if text else "Deprecated by the API.")]
 
@@ -295,7 +304,7 @@ def emit_setter(prop: Prop, ctx: Ctx, indent: str) -> str:
         jt = ctx.java_type(prop.type, boxed=nullable)
         if nullable:
             ctx.use("org.jspecify.annotations.Nullable")
-            decl = f"@Nullable {jt} {param}"
+            decl = f"{nullable_type(jt)} {param}"
             body = f'return setNullable("{prop.json_name}", {ctx.conv(prop.type)}, {param});'
         else:
             decl = f"{jt} {param}"
@@ -714,7 +723,7 @@ def emit_operation(om: OpModel, ctx: Ctx) -> tuple[str, str, str]:
         ) and not om.body_required
         if nullable_body:
             ctx.use("org.jspecify.annotations.Nullable")
-            req_args.append(f"@Nullable {ptype} params")
+            req_args.append(f"{nullable_type(ptype)} params")
         else:
             req_args.append(f"{ptype} params")
     lines = [f"ApiRequest.builder({java_string(om.op.http_method.upper())}, {java_string(om.op.path)})"]

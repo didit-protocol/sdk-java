@@ -370,7 +370,7 @@ public final class CaseDetail extends JsonModel {
      * @param resolution the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder resolution(@Nullable CaseDetail.Resolution resolution) {
+    public Builder resolution(CaseDetail.@Nullable Resolution resolution) {
       return setNullable("resolution", Conv.enumeration(CaseDetail.Resolution::of), resolution);
     }
 
@@ -480,7 +480,7 @@ public final class CaseDetail extends JsonModel {
      * @param pendingResolution the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder pendingResolution(@Nullable CaseDetail.PendingResolution pendingResolution) {
+    public Builder pendingResolution(CaseDetail.@Nullable PendingResolution pendingResolution) {
       return setNullable("pending_resolution", Conv.model(CaseDetail.PendingResolution::fromJson), pendingResolution);
     }
 

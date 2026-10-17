@@ -695,7 +695,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
        * @param frontImageQualityScore the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder frontImageQualityScore(@Nullable IdVerificationVerifyResponse.IdVerification.FrontImageQualityScore frontImageQualityScore) {
+      public Builder frontImageQualityScore(IdVerificationVerifyResponse.IdVerification.@Nullable FrontImageQualityScore frontImageQualityScore) {
         return setNullable("front_image_quality_score", Conv.model(IdVerificationVerifyResponse.IdVerification.FrontImageQualityScore::fromJson), frontImageQualityScore);
       }
 
@@ -705,7 +705,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
        * @param backImageQualityScore the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder backImageQualityScore(@Nullable IdVerificationVerifyResponse.IdVerification.BackImageQualityScore backImageQualityScore) {
+      public Builder backImageQualityScore(IdVerificationVerifyResponse.IdVerification.@Nullable BackImageQualityScore backImageQualityScore) {
         return setNullable("back_image_quality_score", Conv.model(IdVerificationVerifyResponse.IdVerification.BackImageQualityScore::fromJson), backImageQualityScore);
       }
 
@@ -885,7 +885,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
        * @param parsedAddress the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder parsedAddress(@Nullable IdVerificationVerifyResponse.IdVerification.ParsedAddress parsedAddress) {
+      public Builder parsedAddress(IdVerificationVerifyResponse.IdVerification.@Nullable ParsedAddress parsedAddress) {
         return setNullable("parsed_address", Conv.model(IdVerificationVerifyResponse.IdVerification.ParsedAddress::fromJson), parsedAddress);
       }
 
@@ -2109,7 +2109,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
          * @param documentLocation the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder documentLocation(@Nullable IdVerificationVerifyResponse.IdVerification.ParsedAddress.DocumentLocation documentLocation) {
+        public Builder documentLocation(IdVerificationVerifyResponse.IdVerification.ParsedAddress.@Nullable DocumentLocation documentLocation) {
           return setNullable("document_location", Conv.model(IdVerificationVerifyResponse.IdVerification.ParsedAddress.DocumentLocation::fromJson), documentLocation);
         }
 

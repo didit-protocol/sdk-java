@@ -239,7 +239,7 @@ public final class SimpleQuestionnaireElement extends JsonModel {
      * @param validation the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder validation(@Nullable SimpleQuestionnaireElement.Validation validation) {
+    public Builder validation(SimpleQuestionnaireElement.@Nullable Validation validation) {
       return setNullable("validation", Conv.model(SimpleQuestionnaireElement.Validation::fromJson), validation);
     }
 

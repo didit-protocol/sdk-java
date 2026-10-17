@@ -139,7 +139,7 @@ public final class EmailVerificationSendResponse extends JsonModel {
      * @param reason the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder reason(@Nullable EmailVerificationSendResponse.Reason reason) {
+    public Builder reason(EmailVerificationSendResponse.@Nullable Reason reason) {
       return setNullable("reason", Conv.enumeration(EmailVerificationSendResponse.Reason::of), reason);
     }
 

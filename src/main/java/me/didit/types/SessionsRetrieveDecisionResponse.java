@@ -527,7 +527,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param expectedDetails the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder expectedDetails(@Nullable SessionsRetrieveDecisionResponse.ExpectedDetails expectedDetails) {
+    public Builder expectedDetails(SessionsRetrieveDecisionResponse.@Nullable ExpectedDetails expectedDetails) {
       return setNullable("expected_details", Conv.model(SessionsRetrieveDecisionResponse.ExpectedDetails::fromJson), expectedDetails);
     }
 
@@ -537,7 +537,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param contactDetails the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder contactDetails(@Nullable SessionsRetrieveDecisionResponse.ContactDetails contactDetails) {
+    public Builder contactDetails(SessionsRetrieveDecisionResponse.@Nullable ContactDetails contactDetails) {
       return setNullable("contact_details", Conv.model(SessionsRetrieveDecisionResponse.ContactDetails::fromJson), contactDetails);
     }
 
@@ -567,7 +567,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param nfcSkipReason the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder nfcSkipReason(@Nullable SessionsRetrieveDecisionResponse.NfcSkipReason nfcSkipReason) {
+    public Builder nfcSkipReason(SessionsRetrieveDecisionResponse.@Nullable NfcSkipReason nfcSkipReason) {
       return setNullable("nfc_skip_reason", Conv.enumeration(SessionsRetrieveDecisionResponse.NfcSkipReason::of), nfcSkipReason);
     }
 
@@ -1160,7 +1160,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param gender the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder gender(@Nullable SessionsRetrieveDecisionResponse.ExpectedDetails.Gender gender) {
+      public Builder gender(SessionsRetrieveDecisionResponse.ExpectedDetails.@Nullable Gender gender) {
         return setNullable("gender", Conv.enumeration(SessionsRetrieveDecisionResponse.ExpectedDetails.Gender::of), gender);
       }
 
@@ -2116,7 +2116,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param fallbackFrom the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder fallbackFrom(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.FallbackFrom fallbackFrom) {
+      public Builder fallbackFrom(SessionsRetrieveDecisionResponse.IdVerificationsItem.@Nullable FallbackFrom fallbackFrom) {
         return setNullable("fallback_from", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.FallbackFrom::fromJson), fallbackFrom);
       }
 
@@ -2126,7 +2126,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param idLookup the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder idLookup(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup idLookup) {
+      public Builder idLookup(SessionsRetrieveDecisionResponse.IdVerificationsItem.@Nullable IdLookup idLookup) {
         return setNullable("id_lookup", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup::fromJson), idLookup);
       }
 
@@ -2136,7 +2136,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param walletVerification the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder walletVerification(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.WalletVerification walletVerification) {
+      public Builder walletVerification(SessionsRetrieveDecisionResponse.IdVerificationsItem.@Nullable WalletVerification walletVerification) {
         return setNullable("wallet_verification", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.WalletVerification::fromJson), walletVerification);
       }
 
@@ -2446,7 +2446,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param mrz the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder mrz(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.Mrz mrz) {
+      public Builder mrz(SessionsRetrieveDecisionResponse.IdVerificationsItem.@Nullable Mrz mrz) {
         return setNullable("mrz", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.Mrz::fromJson), mrz);
       }
 
@@ -2506,7 +2506,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param frontImageQualityScore the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder frontImageQualityScore(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.FrontImageQualityScore frontImageQualityScore) {
+      public Builder frontImageQualityScore(SessionsRetrieveDecisionResponse.IdVerificationsItem.@Nullable FrontImageQualityScore frontImageQualityScore) {
         return setNullable("front_image_quality_score", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.FrontImageQualityScore::fromJson), frontImageQualityScore);
       }
 
@@ -2516,7 +2516,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param backImageQualityScore the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder backImageQualityScore(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.BackImageQualityScore backImageQualityScore) {
+      public Builder backImageQualityScore(SessionsRetrieveDecisionResponse.IdVerificationsItem.@Nullable BackImageQualityScore backImageQualityScore) {
         return setNullable("back_image_quality_score", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.BackImageQualityScore::fromJson), backImageQualityScore);
       }
 
@@ -2546,7 +2546,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param documentLiveness the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder documentLiveness(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness documentLiveness) {
+      public Builder documentLiveness(SessionsRetrieveDecisionResponse.IdVerificationsItem.@Nullable DocumentLiveness documentLiveness) {
         return setNullable("document_liveness", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness::fromJson), documentLiveness);
       }
 
@@ -3006,7 +3006,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param outcome the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder outcome(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.Outcome outcome) {
+        public Builder outcome(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.@Nullable Outcome outcome) {
           return setNullable("outcome", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.Outcome::of), outcome);
         }
 
@@ -3598,7 +3598,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param levelOfAssurance the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder levelOfAssurance(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.WalletVerification.LevelOfAssurance levelOfAssurance) {
+        public Builder levelOfAssurance(SessionsRetrieveDecisionResponse.IdVerificationsItem.WalletVerification.@Nullable LevelOfAssurance levelOfAssurance) {
           return setNullable("level_of_assurance", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.WalletVerification.LevelOfAssurance::of), levelOfAssurance);
         }
 
@@ -6343,7 +6343,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param userDetails the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder userDetails(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem.UserDetails userDetails) {
+        public Builder userDetails(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem.@Nullable UserDetails userDetails) {
           return setNullable("user_details", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem.UserDetails::fromJson), userDetails);
         }
 
@@ -7809,7 +7809,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param portraitReplace the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder portraitReplace(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PortraitReplace portraitReplace) {
+        public Builder portraitReplace(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.@Nullable PortraitReplace portraitReplace) {
           return setNullable("portrait_replace", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PortraitReplace::fromJson), portraitReplace);
         }
 
@@ -7819,7 +7819,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param printedCopy the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder printedCopy(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PrintedCopy printedCopy) {
+        public Builder printedCopy(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.@Nullable PrintedCopy printedCopy) {
           return setNullable("printed_copy", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PrintedCopy::fromJson), printedCopy);
         }
 
@@ -7829,7 +7829,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param screenReplay the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder screenReplay(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.ScreenReplay screenReplay) {
+        public Builder screenReplay(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.@Nullable ScreenReplay screenReplay) {
           return setNullable("screen_replay", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.ScreenReplay::fromJson), screenReplay);
         }
 
@@ -8013,7 +8013,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param bucket the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder bucket(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PortraitReplace.Bucket bucket) {
+          public Builder bucket(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PortraitReplace.@Nullable Bucket bucket) {
             return setNullable("bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PortraitReplace.Bucket::of), bucket);
           }
 
@@ -8244,7 +8244,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param bucket the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder bucket(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PrintedCopy.Bucket bucket) {
+          public Builder bucket(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PrintedCopy.@Nullable Bucket bucket) {
             return setNullable("bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PrintedCopy.Bucket::of), bucket);
           }
 
@@ -8475,7 +8475,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param bucket the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder bucket(@Nullable SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.ScreenReplay.Bucket bucket) {
+          public Builder bucket(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.ScreenReplay.@Nullable Bucket bucket) {
             return setNullable("bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.ScreenReplay.Bucket::of), bucket);
           }
 
@@ -8784,7 +8784,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param skipReason the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder skipReason(@Nullable SessionsRetrieveDecisionResponse.NfcVerificationsItem.SkipReason skipReason) {
+      public Builder skipReason(SessionsRetrieveDecisionResponse.NfcVerificationsItem.@Nullable SkipReason skipReason) {
         return setNullable("skip_reason", Conv.enumeration(SessionsRetrieveDecisionResponse.NfcVerificationsItem.SkipReason::of), skipReason);
       }
 
@@ -10415,7 +10415,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param userDetails the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder userDetails(@Nullable SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem.UserDetails userDetails) {
+        public Builder userDetails(SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem.@Nullable UserDetails userDetails) {
           return setNullable("user_details", Conv.model(SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem.UserDetails::fromJson), userDetails);
         }
 
@@ -12161,7 +12161,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param details the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder details(@Nullable SessionsRetrieveDecisionResponse.PhoneVerificationsItem.LifecycleItem.Details details) {
+        public Builder details(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.LifecycleItem.@Nullable Details details) {
           return setNullable("details", Conv.model(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.LifecycleItem.Details::fromJson), details);
         }
 
@@ -13918,7 +13918,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param details the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder details(@Nullable SessionsRetrieveDecisionResponse.EmailVerificationsItem.LifecycleItem.Details details) {
+        public Builder details(SessionsRetrieveDecisionResponse.EmailVerificationsItem.LifecycleItem.@Nullable Details details) {
           return setNullable("details", Conv.model(SessionsRetrieveDecisionResponse.EmailVerificationsItem.LifecycleItem.Details::fromJson), details);
         }
 
@@ -14730,7 +14730,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param documentMetadata the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder documentMetadata(@Nullable SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata documentMetadata) {
+      public Builder documentMetadata(SessionsRetrieveDecisionResponse.PoaVerificationsItem.@Nullable DocumentMetadata documentMetadata) {
         return setNullable("document_metadata", Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata::fromJson), documentMetadata);
       }
 
@@ -15219,7 +15219,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param overlayManipulation the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder overlayManipulation(@Nullable SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata.OverlayManipulation overlayManipulation) {
+        public Builder overlayManipulation(SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata.@Nullable OverlayManipulation overlayManipulation) {
           return setNullable("overlay_manipulation", Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata.OverlayManipulation::fromJson), overlayManipulation);
         }
 
@@ -23964,7 +23964,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param location the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder location(@Nullable SessionsRetrieveDecisionResponse.IpAnalysesItem.Ip.Location location) {
+        public Builder location(SessionsRetrieveDecisionResponse.IpAnalysesItem.Ip.@Nullable Location location) {
           return setNullable("location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.Ip.Location::fromJson), location);
         }
 
@@ -24198,7 +24198,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param location the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder location(@Nullable SessionsRetrieveDecisionResponse.IpAnalysesItem.IdDocument.Location location) {
+        public Builder location(SessionsRetrieveDecisionResponse.IpAnalysesItem.IdDocument.@Nullable Location location) {
           return setNullable("location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.IdDocument.Location::fromJson), location);
         }
 
@@ -24432,7 +24432,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param location the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder location(@Nullable SessionsRetrieveDecisionResponse.IpAnalysesItem.PoaDocument.Location location) {
+        public Builder location(SessionsRetrieveDecisionResponse.IpAnalysesItem.PoaDocument.@Nullable Location location) {
           return setNullable("location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.PoaDocument.Location::fromJson), location);
         }
 
@@ -26066,7 +26066,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param matchType the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder matchType(@Nullable SessionsRetrieveDecisionResponse.DatabaseValidationsItem.MatchType matchType) {
+      public Builder matchType(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.@Nullable MatchType matchType) {
         return setNullable("match_type", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.MatchType::of), matchType);
       }
 
@@ -28174,7 +28174,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param riskLevel the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder riskLevel(@Nullable SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.RiskLevel riskLevel) {
+        public Builder riskLevel(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.@Nullable RiskLevel riskLevel) {
           return setNullable("risk_level", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.RiskLevel::of), riskLevel);
         }
 
@@ -28344,7 +28344,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param vatValidationSource the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder vatValidationSource(@Nullable SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.VatValidationSource vatValidationSource) {
+        public Builder vatValidationSource(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.@Nullable VatValidationSource vatValidationSource) {
           return setNullable("vat_validation_source", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.VatValidationSource::of), vatValidationSource);
         }
 
@@ -28985,7 +28985,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kycStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kycStatus(@Nullable SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.OfficersItem.KycStatus kycStatus) {
+          public Builder kycStatus(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.OfficersItem.@Nullable KycStatus kycStatus) {
             return setNullable("kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.OfficersItem.KycStatus::of), kycStatus);
           }
 
@@ -29515,7 +29515,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kycStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kycStatus(@Nullable SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem.KycStatus kycStatus) {
+          public Builder kycStatus(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem.@Nullable KycStatus kycStatus) {
             return setNullable("kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem.KycStatus::of), kycStatus);
           }
 
@@ -29912,7 +29912,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param uboKycSummary the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder uboKycSummary(@Nullable SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.UboKycSummary uboKycSummary) {
+      public Builder uboKycSummary(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.@Nullable UboKycSummary uboKycSummary) {
         return setNullable("ubo_kyc_summary", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.UboKycSummary::fromJson), uboKycSummary);
       }
 
@@ -30481,7 +30481,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param amlStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder amlStatus(@Nullable SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.AmlStatus amlStatus) {
+          public Builder amlStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.@Nullable AmlStatus amlStatus) {
             return setNullable("aml_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.AmlStatus::of), amlStatus);
           }
 
@@ -30491,7 +30491,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kycStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kycStatus(@Nullable SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycStatus kycStatus) {
+          public Builder kycStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.@Nullable KycStatus kycStatus) {
             return setNullable("kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycStatus::of), kycStatus);
           }
 
@@ -30611,7 +30611,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kycAmlCategories the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kycAmlCategories(@Nullable SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories kycAmlCategories) {
+          public Builder kycAmlCategories(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.@Nullable KycAmlCategories kycAmlCategories) {
             return setNullable("kyc_aml_categories", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories::fromJson), kycAmlCategories);
           }
 
@@ -31946,7 +31946,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param amlStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder amlStatus(@Nullable SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.AmlStatus amlStatus) {
+          public Builder amlStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.@Nullable AmlStatus amlStatus) {
             return setNullable("aml_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.AmlStatus::of), amlStatus);
           }
 
@@ -31956,7 +31956,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kycStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kycStatus(@Nullable SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycStatus kycStatus) {
+          public Builder kycStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.@Nullable KycStatus kycStatus) {
             return setNullable("kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycStatus::of), kycStatus);
           }
 
@@ -32076,7 +32076,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kycAmlCategories the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kycAmlCategories(@Nullable SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories kycAmlCategories) {
+          public Builder kycAmlCategories(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.@Nullable KycAmlCategories kycAmlCategories) {
             return setNullable("kyc_aml_categories", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories::fromJson), kycAmlCategories);
           }
 
@@ -33414,7 +33414,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kycSessionStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kycSessionStatus(@Nullable SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.KycSessionStatus kycSessionStatus) {
+          public Builder kycSessionStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.@Nullable KycSessionStatus kycSessionStatus) {
             return setNullable("kyc_session_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.KycSessionStatus::of), kycSessionStatus);
           }
 
@@ -33444,7 +33444,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kybSubSessionStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kybSubSessionStatus(@Nullable SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.KybSubSessionStatus kybSubSessionStatus) {
+          public Builder kybSubSessionStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.@Nullable KybSubSessionStatus kybSubSessionStatus) {
             return setNullable("kyb_sub_session_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.KybSubSessionStatus::of), kybSubSessionStatus);
           }
 
@@ -34667,7 +34667,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param documentType the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder documentType(@Nullable SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentType documentType) {
+        public Builder documentType(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.@Nullable DocumentType documentType) {
           return setNullable("document_type", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentType::of), documentType);
         }
 
@@ -34687,7 +34687,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param documentGroup the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder documentGroup(@Nullable SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentGroup documentGroup) {
+        public Builder documentGroup(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.@Nullable DocumentGroup documentGroup) {
           return setNullable("document_group", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentGroup::of), documentGroup);
         }
 
@@ -34757,7 +34757,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param documentMetadata the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder documentMetadata(@Nullable SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata documentMetadata) {
+        public Builder documentMetadata(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.@Nullable DocumentMetadata documentMetadata) {
           return setNullable("document_metadata", Conv.model(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata::fromJson), documentMetadata);
         }
 
@@ -35350,7 +35350,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param overlayManipulation the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder overlayManipulation(@Nullable SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata.OverlayManipulation overlayManipulation) {
+          public Builder overlayManipulation(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata.@Nullable OverlayManipulation overlayManipulation) {
             return setNullable("overlay_manipulation", Conv.model(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata.OverlayManipulation::fromJson), overlayManipulation);
           }
 
@@ -36148,7 +36148,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param requestedBy the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder requestedBy(@Nullable SessionsRetrieveDecisionResponse.ResubmissionsItem.RequestedBy requestedBy) {
+      public Builder requestedBy(SessionsRetrieveDecisionResponse.ResubmissionsItem.@Nullable RequestedBy requestedBy) {
         return setNullable("requested_by", Conv.model(SessionsRetrieveDecisionResponse.ResubmissionsItem.RequestedBy::fromJson), requestedBy);
       }
 

@@ -624,7 +624,7 @@ public final class TransactionsListResponse extends JsonModel {
        * @param severity the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder severity(@Nullable TransactionsListResponse.ResultsItem.Severity severity) {
+      public Builder severity(TransactionsListResponse.ResultsItem.@Nullable Severity severity) {
         return setNullable("severity", Conv.enumeration(TransactionsListResponse.ResultsItem.Severity::of), severity);
       }
 
