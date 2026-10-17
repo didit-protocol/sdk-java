@@ -459,7 +459,7 @@ final class AuthenticationTest {
     noEmail.remove("email_verified");
     assertFalse(
         authWithClient()
-            .verifyIdToken(issuer.sign(issuer.header("JWT"), noEmail), null)
+            .verifyIdToken(issuer.sign(issuer.header("JWT"), noEmail), "nonce-1")
             .emailVerified());
   }
 
@@ -545,6 +545,15 @@ final class AuthenticationTest {
     ObjectNode shortX = StubIssuer.jwk("short", (ECPublicKey) issuer.keys.getPublic());
     shortX.put("x", "AAAA");
     doc.withArray("keys").add(shortX);
+    ObjectNode p384 = doc.withArray("keys").addObject();
+    p384.put("kty", "EC");
+    p384.put("crv", "P-384");
+    p384.put("kid", "p384");
+    p384.put("x", Base64.getUrlEncoder().withoutPadding().encodeToString(new byte[48]));
+    p384.put("y", Base64.getUrlEncoder().withoutPadding().encodeToString(new byte[48]));
+    ObjectNode noCurve = StubIssuer.jwk("no-curve", (ECPublicKey) issuer.keys.getPublic());
+    noCurve.remove("crv");
+    doc.withArray("keys").add(noCurve);
     Map<String, ECPublicKey> keys = Authentication.parseKeys(doc);
     assertEquals(Set.of(issuer.kid), keys.keySet());
     assertThrows(
