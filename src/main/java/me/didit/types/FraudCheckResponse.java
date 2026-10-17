@@ -410,8 +410,8 @@ public final class FraudCheckResponse extends JsonModel {
      * @param attributeEvidence the value
      * @return this builder
      */
-    public Builder attributeEvidence(List<Map<String, JsonNode>> attributeEvidence) {
-      return set("attribute_evidence", Conv.list(Conv.OBJECT), attributeEvidence);
+    public Builder attributeEvidence(List<? extends Map<String, ?>> attributeEvidence) {
+      return setAny("attribute_evidence", attributeEvidence);
     }
 
     /**
@@ -420,8 +420,8 @@ public final class FraudCheckResponse extends JsonModel {
      * @param compoundEvidence the value
      * @return this builder
      */
-    public Builder compoundEvidence(List<Map<String, JsonNode>> compoundEvidence) {
-      return set("compound_evidence", Conv.list(Conv.OBJECT), compoundEvidence);
+    public Builder compoundEvidence(List<? extends Map<String, ?>> compoundEvidence) {
+      return setAny("compound_evidence", compoundEvidence);
     }
 
     /**
@@ -515,8 +515,8 @@ public final class FraudCheckResponse extends JsonModel {
      * @param usage the value
      * @return this builder
      */
-    public Builder usage(List<Map<String, JsonNode>> usage) {
-      return set("usage", Conv.list(Conv.OBJECT), usage);
+    public Builder usage(List<? extends Map<String, ?>> usage) {
+      return setAny("usage", usage);
     }
 
     /**

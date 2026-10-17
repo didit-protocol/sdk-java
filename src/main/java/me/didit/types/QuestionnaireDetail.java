@@ -291,8 +291,8 @@ public final class QuestionnaireDetail extends JsonModel {
      * @param sections the value
      * @return this builder
      */
-    public Builder sections(List<Map<String, JsonNode>> sections) {
-      return set("sections", Conv.list(Conv.OBJECT), sections);
+    public Builder sections(List<? extends Map<String, ?>> sections) {
+      return setAny("sections", sections);
     }
 
     /**

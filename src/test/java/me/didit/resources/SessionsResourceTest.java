@@ -10,6 +10,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -52,7 +53,7 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"workflow_id\":\"00000000-0000-4000-8000-000000001b5b\",\"vendor_data\":\"value-vendor-data\",\"callback\":\"value-callback\",\"callback_method\":\"initiator\",\"metadata\":\"value\",\"language\":\"en\",\"contact_details\":{\"email\":\"user@example.com\",\"send_notification_emails\":true},\"expected_details\":{\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\"},\"portrait_image\":\"value-portrait-image\",\"sandbox_scenario\":\"value-sandbox-scenario\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -69,7 +70,7 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -86,7 +87,7 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"retain_face_embeddings\":true,\"face_retention_days\":1,\"face_retention_deadline\":\"2026-11-01T10:15:30Z\",\"deletion_instruction\":\"operational_session_delete\",\"instruction_id\":\"value-instruction-id\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -118,7 +119,7 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"new_status\":\"Approved\",\"comment\":\"value-comment\",\"nodes_to_resubmit\":[{\"node_id\":\"value-node-id\",\"feature\":\"OCR\"}],\"send_email\":true,\"email_address\":\"user@example.com\",\"email_language\":\"value-email-language\",\"email_preview_token\":\"value-email-preview-token\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -153,7 +154,7 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"for_application_id\":\"00000000-0000-4000-8000-0000000045ff\",\"ttl_in_seconds\":1}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -186,7 +187,7 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"session_numbers\":[\"value-session-numbers\"],\"delete_all\":true,\"retain_face_embeddings\":true,\"face_retention_days\":1,\"face_retention_deadline\":\"2026-11-01T10:15:30Z\",\"deletion_instruction\":\"operational_session_delete\",\"instruction_id\":\"value-instruction-id\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     assertEquals(200, result.statusCode());
     TestModels.readAll(result);
   }
@@ -203,7 +204,7 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -220,7 +221,7 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"document_type\":\"P\",\"document_subtype\":\"value-document-subtype\",\"document_number\":\"value-document-number\",\"personal_number\":\"value-personal-number\",\"date_of_birth\":\"2026-11-01\",\"date_of_issue\":\"2026-11-01\",\"expiration_date\":\"2026-11-01\",\"issuing_state\":\"value-issuing-state\",\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\",\"gender\":\"M\",\"address\":\"value-address\",\"place_of_birth\":\"value-place-of-birth\",\"nationality\":\"value-nationality\",\"marital_status\":\"SINGLE\",\"extra_fields\":{\"key\":\"value\"},\"parsed_address\":{\"address_type\":\"value-address-type\",\"city\":\"value-city\"}}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -237,7 +238,7 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"new_status\":\"Approved\",\"comment\":\"value-comment\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -286,7 +287,7 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"issuing_state\":\"value-issuing-state\",\"document_type\":\"UTILITY_BILL\",\"document_language\":\"value-document-language\",\"issuer\":\"value-issuer\",\"issue_date\":\"2026-11-01\",\"poa_address\":\"value-poa-address\",\"name_on_document\":\"value-name-on-document\",\"extra_fields\":{\"key\":\"value\"},\"poa_parsed_address\":{\"address_type\":\"value-address-type\",\"city\":\"value-city\"}}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -303,7 +304,7 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"company_name\":\"value-company-name\",\"registration_number\":\"value-registration-number\",\"country_code\":\"value-country-code\",\"region\":\"value-region\",\"incorporation_date\":\"2026-11-01\",\"registration_date\":\"2026-11-01\",\"dissolution_date\":\"2026-11-01\",\"tax_number\":\"value-tax-number\",\"legal_address\":\"value-legal-address\",\"company_type\":\"value-company-type\",\"registry_status\":\"active\",\"verification_status\":\"verified\",\"alternative_names\":\"value-alternative-names\",\"nature_of_business\":\"value-nature-of-business\",\"registered_capital\":\"value-registered-capital\",\"registered_capital_amount\":1.5,\"registered_capital_currency\":\"value-registered-capital-currency\",\"website\":\"value-website\",\"email\":\"user@example.com\",\"phone\":\"value-phone\",\"legal_entity_identifier\":\"value-legal-entity-identifier\",\"location_of_registration\":\"value-location-of-registration\",\"vat_number\":\"value-vat-number\",\"control_scheme\":\"value-control-scheme\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -320,7 +321,7 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"is_skipped\":true}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -336,7 +337,7 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -353,7 +354,7 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"nodes_to_resubmit\":[{\"node_id\":\"value-node-id\",\"feature\":\"OCR\"}],\"email_address\":\"user@example.com\",\"email_language\":\"value-email-language\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

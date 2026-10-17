@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.FileUpload;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -58,7 +59,7 @@ final class CasesNotesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"comment\":\"value-comment\",\"reply_to\":\"00000000-0000-4000-8000-000000000f77\",\"client_reference\":\"00000000-0000-4000-8000-00000000378b\",\"mentioned_emails\":[\"user@example.com\"],\"is_internal\":true,\"attachments\":[{\"key\":\"value\"}],\"tags\":[\"value-tags\"]}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -75,7 +76,7 @@ final class CasesNotesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"is_pinned\":true}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -105,7 +106,7 @@ final class CasesNotesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -123,7 +124,7 @@ final class CasesNotesResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(Map.of(), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("file", List.of("file.pdf"))), request.multipartFiles());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

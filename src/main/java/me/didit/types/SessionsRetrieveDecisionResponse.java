@@ -16692,8 +16692,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param warnings the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder warnings(@Nullable List<Map<String, JsonNode>> warnings) {
-        return setNullable("warnings", Conv.list(Conv.OBJECT), warnings);
+      public Builder warnings(@Nullable List<? extends Map<String, ?>> warnings) {
+        return setAny("warnings", warnings);
       }
 
       /**
@@ -27477,8 +27477,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<Map<String, JsonNode>> warnings) {
-        return set("warnings", Conv.list(Conv.OBJECT), warnings);
+      public Builder warnings(List<? extends Map<String, ?>> warnings) {
+        return setAny("warnings", warnings);
       }
 
       /**
@@ -29922,8 +29922,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<Map<String, JsonNode>> warnings) {
-        return set("warnings", Conv.list(Conv.OBJECT), warnings);
+      public Builder warnings(List<? extends Map<String, ?>> warnings) {
+        return setAny("warnings", warnings);
       }
 
       /**
@@ -32096,8 +32096,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param childBeneficialOwners the value
            * @return this builder
            */
-          public Builder childBeneficialOwners(List<Map<String, JsonNode>> childBeneficialOwners) {
-            return set("child_beneficial_owners", Conv.list(Conv.OBJECT), childBeneficialOwners);
+          public Builder childBeneficialOwners(List<? extends Map<String, ?>> childBeneficialOwners) {
+            return setAny("child_beneficial_owners", childBeneficialOwners);
           }
 
           /**
@@ -34423,8 +34423,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<Map<String, JsonNode>> warnings) {
-        return set("warnings", Conv.list(Conv.OBJECT), warnings);
+      public Builder warnings(List<? extends Map<String, ?>> warnings) {
+        return setAny("warnings", warnings);
       }
 
       /**

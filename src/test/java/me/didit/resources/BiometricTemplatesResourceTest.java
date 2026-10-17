@@ -9,6 +9,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -56,7 +57,7 @@ final class BiometricTemplatesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -72,7 +73,7 @@ final class BiometricTemplatesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -88,7 +89,7 @@ final class BiometricTemplatesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -105,7 +106,7 @@ final class BiometricTemplatesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"template_uuids\":[\"00000000-0000-4000-8000-000000002c35\"],\"delete_all\":true,\"vendor_data\":\"value-vendor-data\",\"vendor_user_uuid\":\"00000000-0000-4000-8000-000000003947\",\"status\":\"pending\",\"source_type\":\"session_delete\",\"retained_from\":\"2026-11-01T10:15:30Z\",\"retained_to\":\"2026-11-01T10:15:30Z\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -56,7 +57,7 @@ final class WorkflowsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"workflow_label\":\"value-workflow-label\",\"is_default\":true,\"status\":\"draft\",\"features\":[{\"feature\":\"OCR\",\"config\":{\"key\":\"value\"},\"label\":\"value-label\"}],\"is_white_label_enabled\":true,\"is_desktop_allowed\":true,\"max_retry_attempts\":1,\"retry_window_days\":1,\"face_liveness_max_attempts\":1,\"face_match_max_attempts\":1,\"session_expiration_time\":1}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -88,7 +89,7 @@ final class WorkflowsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"workflow_label\":\"value-workflow-label\",\"is_default\":true,\"status\":\"draft\",\"features\":[{\"feature\":\"OCR\",\"config\":{\"key\":\"value\"},\"label\":\"value-label\"}],\"is_white_label_enabled\":true,\"is_desktop_allowed\":true,\"max_retry_attempts\":1,\"retry_window_days\":1,\"face_liveness_max_attempts\":1,\"face_match_max_attempts\":1,\"session_expiration_time\":1}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 

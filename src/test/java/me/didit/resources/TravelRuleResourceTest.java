@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -37,7 +38,7 @@ final class TravelRuleResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -54,7 +55,7 @@ final class TravelRuleResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"is_enabled\":true,\"legal_name\":\"value-legal-name\",\"lei\":\"value-lei\",\"jurisdiction\":\"value-jurisdiction\",\"name_matching_strictness\":\"NONE\",\"confirmation_timeout_hours\":1,\"timeout_outcome\":\"HOLD\",\"compliance_email\":\"user@example.com\",\"is_discoverable\":true,\"threshold_amount\":\"value-threshold-amount\",\"inbound_auto_accept\":true,\"allow_self_declaration\":true,\"allow_screenshot_proof\":true,\"auto_wallet_verification\":true,\"vasp_attribution_enabled\":true,\"disabled_networks\":[\"GTR\"]}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -89,7 +90,7 @@ final class TravelRuleResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"chain\":\"value-chain\",\"txid\":\"value-txid\",\"wallet_address\":\"value-wallet-address\",\"amount\":\"value-amount\",\"currency\":\"value-currency\",\"originator_data\":{\"key\":\"value\"},\"beneficiary_data\":{\"key\":\"value\"},\"originating_vasp\":{\"name\":\"value-name\",\"lei\":\"value-lei\"}}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -106,7 +107,7 @@ final class TravelRuleResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"wallet_address\":\"value-wallet-address\",\"chain\":\"value-chain\",\"holder_name\":\"value-holder-name\",\"vendor_data\":\"value-vendor-data\",\"transaction_id\":\"00000000-0000-4000-8000-000000002b0f\",\"satoshi_deposit_address\":\"value-satoshi-deposit-address\",\"callback_url\":\"value-callback-url\",\"expires_in_minutes\":1}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

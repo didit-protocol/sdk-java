@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -41,7 +42,7 @@ final class FraudChecksResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -58,7 +59,7 @@ final class FraudChecksResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"client_reference\":\"value-client-reference\",\"profile\":\"value-profile\",\"profile_version\":\"value-profile-version\",\"subject\":{\"selfie\":\"value-selfie\",\"identifiers\":[{\"type\":\"email\",\"value\":\"value-value\",\"country\":\"value-country\",\"issuer\":\"value-issuer\"}],\"attributes\":{\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\"}},\"context\":{\"ip_address\":\"value-ip-address\",\"user_agent\":\"value-user-agent\"},\"checks\":{\"include\":[\"normalization\"],\"exclude\":[\"normalization\"]},\"vendor_data\":\"value-vendor-data\",\"metadata\":\"value\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -75,7 +76,7 @@ final class FraudChecksResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"client_reference\":\"value-client-reference\",\"profile\":\"value-profile\",\"profile_version\":\"value-profile-version\",\"subject\":{\"selfie\":\"value-selfie\",\"identifiers\":[{\"type\":\"email\",\"value\":\"value-value\",\"country\":\"value-country\",\"issuer\":\"value-issuer\"}],\"attributes\":{\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\"}},\"context\":{\"ip_address\":\"value-ip-address\",\"user_agent\":\"value-user-agent\"},\"checks\":{\"include\":[\"normalization\"],\"exclude\":[\"normalization\"]},\"vendor_data\":\"value-vendor-data\",\"metadata\":\"value\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

@@ -12,6 +12,8 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -99,8 +101,21 @@ public final class Json {
     if (value instanceof StringEnum) {
       return MAPPER.getNodeFactory().textNode(((StringEnum) value).value());
     }
+    if (value instanceof OffsetDateTime) {
+      return Conv.DATE_TIME.write((OffsetDateTime) value);
+    }
+    if (value instanceof LocalDate) {
+      return Conv.DATE.write((LocalDate) value);
+    }
     if (value instanceof java.time.temporal.TemporalAccessor) {
       return MAPPER.getNodeFactory().textNode(value.toString());
+    }
+    if (value instanceof Optional) {
+      Optional<?> optional = (Optional<?>) value;
+      return optional.isPresent() ? toNode(optional.get()) : NullNode.getInstance();
+    }
+    if (value instanceof MultiStatusResponse) {
+      return ((MultiStatusResponse) value).json.deepCopy();
     }
     if (value instanceof Map) {
       ObjectNode out = MAPPER.createObjectNode();

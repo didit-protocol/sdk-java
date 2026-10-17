@@ -241,8 +241,8 @@ public final class CasesCreateParams extends JsonModel {
      * @param links the value
      * @return this builder
      */
-    public Builder links(List<Map<String, JsonNode>> links) {
-      return set("links", Conv.list(Conv.OBJECT), links);
+    public Builder links(List<? extends Map<String, ?>> links) {
+      return setAny("links", links);
     }
 
     /**

@@ -188,8 +188,8 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
      * @param attachments the value
      * @return this builder
      */
-    public Builder attachments(List<Map<String, JsonNode>> attachments) {
-      return set("attachments", Conv.list(Conv.OBJECT), attachments);
+    public Builder attachments(List<? extends Map<String, ?>> attachments) {
+      return setAny("attachments", attachments);
     }
 
     /**

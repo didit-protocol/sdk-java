@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.FileUpload;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -37,7 +38,7 @@ final class PassiveLivenessResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(Map.ofEntries(Map.entry("face_liveness_score_decline_threshold", List.of("1.5")), Map.entry("rotate_image", List.of("true")), Map.entry("save_api_request", List.of("true")), Map.entry("vendor_data", List.of("value-vendor-data")), Map.entry("metadata", List.of("{\"key\":\"value\"}"))), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("user_image", List.of("user_image.pdf"))), request.multipartFiles());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

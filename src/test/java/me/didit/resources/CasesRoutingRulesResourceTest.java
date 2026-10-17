@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -59,7 +60,7 @@ final class CasesRoutingRulesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -76,7 +77,7 @@ final class CasesRoutingRulesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"name\":\"value-name\",\"description\":\"value-description\",\"priority\":1,\"conditions\":[{\"field\":\"source\",\"operator\":\"equals\",\"value\":\"value-value\"}],\"required_skills\":[\"value-required-skills\"],\"blueprint\":\"00000000-0000-4000-8000-00000000136c\",\"team\":\"00000000-0000-4000-8000-000000000415\",\"is_active\":true,\"expected_version\":1}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -111,7 +112,7 @@ final class CasesRoutingRulesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"name\":\"value-name\",\"description\":\"value-description\",\"priority\":1,\"conditions\":[{\"field\":\"source\",\"operator\":\"equals\",\"value\":\"value-value\"}],\"required_skills\":[\"value-required-skills\"],\"blueprint\":\"00000000-0000-4000-8000-00000000136c\",\"team\":\"00000000-0000-4000-8000-000000000415\",\"is_active\":true,\"publish\":true}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -128,7 +129,7 @@ final class CasesRoutingRulesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"expected_version\":1,\"expected_revision\":\"00000000-0000-4000-8000-000000004071\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -144,7 +145,7 @@ final class CasesRoutingRulesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -161,7 +162,7 @@ final class CasesRoutingRulesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"expected_version\":1,\"expected_revision\":\"00000000-0000-4000-8000-000000004071\",\"changes\":{\"key\":\"value\"}}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -192,7 +193,7 @@ final class CasesRoutingRulesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"source\":\"MANUAL\",\"priority\":\"LOW\",\"tags\":[\"value-tags\"],\"rule_uuid\":\"00000000-0000-4000-8000-0000000012cc\",\"draft\":{\"name\":\"value-name\",\"description\":\"value-description\",\"priority\":1,\"conditions\":[{\"field\":\"source\",\"operator\":\"equals\",\"value\":\"value-value\"}],\"blueprint\":\"00000000-0000-4000-8000-00000000136c\"}}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -38,7 +39,7 @@ final class PhoneResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"phone_number\":\"value-phone-number\",\"country_code\":\"value-country-code\",\"signals\":{\"ip\":\"192.0.2.10\",\"device_id\":\"value-device-id\"},\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"enable_social\":true}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -55,7 +56,7 @@ final class PhoneResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"phone_number\":\"value-phone-number\",\"options\":{\"code_size\":1,\"locale\":\"value-locale\"},\"signals\":{\"ip\":\"value-ip\",\"device_id\":\"value-device-id\"},\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"}}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -72,7 +73,7 @@ final class PhoneResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"phone_number\":\"value-phone-number\",\"code\":\"value-code\",\"duplicated_phone_number_action\":\"NO_ACTION\",\"disposable_number_action\":\"NO_ACTION\",\"voip_number_action\":\"NO_ACTION\",\"enable_social\":true,\"phone_no_social_presence_action\":\"NO_ACTION\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

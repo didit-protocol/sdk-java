@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.FileUpload;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -37,7 +38,7 @@ final class IdVerificationResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(Map.ofEntries(Map.entry("front_image_password", List.of("value-front-image-password")), Map.entry("back_image_password", List.of("value-back-image-password")), Map.entry("perform_document_liveness", List.of("true")), Map.entry("minimum_age", List.of("1")), Map.entry("expiration_date_not_detected_action", List.of("NO_ACTION")), Map.entry("invalid_mrz_action", List.of("NO_ACTION")), Map.entry("inconsistent_data_action", List.of("NO_ACTION")), Map.entry("critical_field_occlusion_action", List.of("NO_ACTION")), Map.entry("document_or_personal_number_format_mismatch_action", List.of("NO_ACTION")), Map.entry("preferred_characters", List.of("latin")), Map.entry("save_api_request", List.of("true")), Map.entry("vendor_data", List.of("value-vendor-data")), Map.entry("metadata", List.of("{\"key\":\"value\"}"))), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("front_image", List.of("front_image.pdf")), Map.entry("back_image", List.of("back_image.pdf"))), request.multipartFiles());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

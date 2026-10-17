@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -62,7 +63,7 @@ final class TransactionsRulesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"title\":\"value-title\",\"description\":\"value-description\",\"category\":\"value-category\",\"mode\":\"ACTIVE\",\"evaluation_mode\":\"ALL\",\"scope\":{\"transaction_types\":[\"value-transaction-types\"],\"directions\":[\"INBOUND\"]},\"conditions\":[{\"field\":\"value-field\",\"operator\":\"eq\",\"value\":\"value\",\"value_type\":\"list\"}],\"aggregation\":[{\"metric\":\"count\",\"field\":\"value-field\",\"value\":1.5}],\"actions\":[{\"type\":\"add_score\",\"value\":1}],\"metadata\":{\"key\":\"value\"}}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -78,7 +79,7 @@ final class TransactionsRulesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -95,7 +96,7 @@ final class TransactionsRulesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"title\":\"value-title\",\"description\":\"value-description\",\"category\":\"value-category\",\"mode\":\"ACTIVE\",\"evaluation_mode\":\"ALL\",\"scope\":{\"transaction_types\":[\"value-transaction-types\"],\"directions\":[\"INBOUND\"]},\"conditions\":[{\"field\":\"value-field\",\"operator\":\"eq\",\"value\":\"value\",\"value_type\":\"list\"}],\"aggregation\":[{\"metric\":\"count\",\"field\":\"value-field\",\"value\":1.5}],\"actions\":[{\"type\":\"add_score\",\"value\":1}],\"metadata\":{\"key\":\"value\"}}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -125,7 +126,7 @@ final class TransactionsRulesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"conditions\":[{\"field\":\"value-field\",\"operator\":\"eq\",\"value\":\"value\",\"value_type\":\"list\"}],\"aggregation\":[{\"metric\":\"count\",\"field\":\"value-field\",\"value\":1.5}],\"evaluation_mode\":\"ALL\",\"scope\":{\"transaction_types\":[\"value-transaction-types\"],\"directions\":[\"INBOUND\"]},\"period_days\":1}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -160,7 +161,7 @@ final class TransactionsRulesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"library_keys\":[\"value-library-keys\"],\"bundle\":\"value-bundle\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -177,7 +178,7 @@ final class TransactionsRulesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"library_keys\":[\"value-library-keys\"],\"bundle\":\"value-bundle\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

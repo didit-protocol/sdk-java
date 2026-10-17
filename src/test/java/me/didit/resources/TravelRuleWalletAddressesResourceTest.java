@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -55,7 +56,7 @@ final class TravelRuleWalletAddressesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"address\":\"value-address\",\"chain\":\"value-chain\",\"holder_vendor_data\":\"value-holder-vendor-data\",\"holder_name\":\"value-holder-name\",\"entity_type\":\"value-entity-type\",\"self_declared\":true,\"travel_address\":\"value-travel-address\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -72,7 +73,7 @@ final class TravelRuleWalletAddressesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"holder_name\":\"value-holder-name\",\"holder_vendor_data\":\"value-holder-vendor-data\",\"entity_type\":\"value-entity-type\",\"travel_address\":\"value-travel-address\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.FileUpload;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -39,7 +40,7 @@ final class SessionsImportsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(Map.ofEntries(Map.entry("import_type", List.of("user_verification")), Map.entry("workflow_id", List.of("00000000-0000-4000-8000-000000001b5b")), Map.entry("source_format", List.of("csv")), Map.entry("source_file_url", List.of("https://example.com/callback"))), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("file", List.of("file.pdf"))), request.multipartFiles());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -71,7 +72,7 @@ final class SessionsImportsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 

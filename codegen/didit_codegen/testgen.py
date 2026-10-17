@@ -540,7 +540,7 @@ def emit_test(om: OpModel, ctx: Ctx) -> str:
         if _response_readable(om, example, status):
             lines.append("    TestModels.readAll(result.results());")
     elif r.kind == "json":
-        lines.append("    TestJson.assertJsonEquals(example, result._json());")
+        lines.append("    TestJson.assertJsonEquals(example, Json.toNode(result));")
         if r.type is not None and r.type.kind == "class" and r.type.cls is not None and r.type.cls.kind == "status":
             lines.append(f"    assertEquals({status}, result.statusCode());")
         if _response_readable(om, example, status):
@@ -581,6 +581,7 @@ def emit_tests(model: Model) -> dict[str, str]:
             "me.didit.testing.SpecExamples",
             "me.didit.testing.TestJson",
             "me.didit.testing.TestModels",
+            "me.didit.core.Json",
         ):
             ctx.use(imp)
         tests = [emit_test(om, ctx) for om in ops]

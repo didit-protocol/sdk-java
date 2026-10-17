@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
@@ -80,7 +81,7 @@ final class IdWalletsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -96,7 +97,7 @@ final class IdWalletsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -112,7 +113,7 @@ final class IdWalletsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -128,7 +129,7 @@ final class IdWalletsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -147,7 +148,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"DNK\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -166,7 +167,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"SWE\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -185,7 +186,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"NOR\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -204,7 +205,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"NOR\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -223,7 +224,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"NOR\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -242,7 +243,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"BEL\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -261,7 +262,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"NLD\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -280,7 +281,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"FIN\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -299,7 +300,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"DEU\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -318,7 +319,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"SWE\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -337,7 +338,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"ARE\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -356,7 +357,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"BRA\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -375,7 +376,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"GBR\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -394,7 +395,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"GBR\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -413,7 +414,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"EST\",\"personal_code\":\"value-personal-code\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -432,7 +433,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"EST\",\"personal_code\":\"value-personal-code\",\"phone_number\":\"value-phone-number\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -451,7 +452,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"EST\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -470,7 +471,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"LVA\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -489,7 +490,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"CZE\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -508,7 +509,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"CZE\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -527,7 +528,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"UKR\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -546,7 +547,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"FRA\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -565,7 +566,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"ISL\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -584,7 +585,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"AUS\",\"authorisation_server_id\":\"value-authorisation-server-id\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -603,7 +604,7 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"AUT\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

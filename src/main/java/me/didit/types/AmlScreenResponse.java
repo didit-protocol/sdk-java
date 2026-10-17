@@ -900,8 +900,8 @@ public final class AmlScreenResponse extends JsonModel {
          * @param sanctionMatches the value
          * @return this builder
          */
-        public Builder sanctionMatches(List<Map<String, JsonNode>> sanctionMatches) {
-          return set("sanction_matches", Conv.list(Conv.OBJECT), sanctionMatches);
+        public Builder sanctionMatches(List<? extends Map<String, ?>> sanctionMatches) {
+          return setAny("sanction_matches", sanctionMatches);
         }
 
         /**
@@ -910,8 +910,8 @@ public final class AmlScreenResponse extends JsonModel {
          * @param warningMatches the value
          * @return this builder
          */
-        public Builder warningMatches(List<Map<String, JsonNode>> warningMatches) {
-          return set("warning_matches", Conv.list(Conv.OBJECT), warningMatches);
+        public Builder warningMatches(List<? extends Map<String, ?>> warningMatches) {
+          return setAny("warning_matches", warningMatches);
         }
 
         /**

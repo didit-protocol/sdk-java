@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.FileUpload;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -35,7 +36,7 @@ final class CustomizationResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -53,7 +54,7 @@ final class CustomizationResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(Map.of(), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("image_square", List.of("image_square.pdf")), Map.entry("image_rectangular", List.of("image_rectangular.pdf")), Map.entry("image_favicon", List.of("image_favicon.pdf"))), request.multipartFiles());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

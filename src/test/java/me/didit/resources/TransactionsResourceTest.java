@@ -9,6 +9,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -56,7 +57,7 @@ final class TransactionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"transaction_id\":\"value-transaction-id\",\"transaction_at\":\"2026-11-01T10:15:30Z\",\"time_zone\":\"value-time-zone\",\"transaction_category\":\"finance\",\"transaction_details\":{\"direction\":\"inbound\",\"amount\":1.5,\"currency\":\"value-currency\",\"currency_kind\":\"value-currency-kind\",\"amount_in_default_currency\":1.5},\"subject\":{\"entity_type\":\"value-entity-type\",\"vendor_data\":\"value-vendor-data\",\"full_name\":\"value-full-name\",\"first_name\":\"value-first-name\"},\"counterparty\":{\"entity_type\":\"value-entity-type\",\"vendor_data\":\"value-vendor-data\"},\"custom_properties\":{\"key\":\"value\"},\"travel_rule_details\":{\"status\":\"value-status\",\"protocol\":\"value-protocol\",\"required\":true},\"network_snapshot\":{\"nodes\":[{\"key\":\"value\"}],\"edges\":[{\"key\":\"value\"}]},\"include_crypto_screening\":true}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -72,7 +73,7 @@ final class TransactionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -89,7 +90,7 @@ final class TransactionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"ttl_seconds\":1,\"max_uses\":1}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -105,7 +106,7 @@ final class TransactionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -121,7 +122,7 @@ final class TransactionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

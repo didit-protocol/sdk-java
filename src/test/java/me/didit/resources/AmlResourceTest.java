@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
@@ -39,7 +40,7 @@ final class AmlResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"full_name\":\"value-full-name\",\"entity_type\":\"person\",\"date_of_birth\":\"2026-11-01\",\"nationality\":\"value-nationality\",\"document_number\":\"value-document-number\",\"aml_score_approve_threshold\":1.5,\"aml_score_review_threshold\":1.5,\"aml_name_weight\":1,\"aml_dob_weight\":1,\"aml_country_weight\":1,\"aml_match_score_threshold\":1,\"include_adverse_media\":true,\"include_ongoing_monitoring\":true,\"save_api_request\":true,\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

@@ -469,8 +469,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @param senderRows the value
      * @return this builder
      */
-    public Builder senderRows(List<Map<String, JsonNode>> senderRows) {
-      return set("sender_rows", Conv.list(Conv.OBJECT), senderRows);
+    public Builder senderRows(List<? extends Map<String, ?>> senderRows) {
+      return setAny("sender_rows", senderRows);
     }
 
     /**
@@ -479,8 +479,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @param receiverRows the value
      * @return this builder
      */
-    public Builder receiverRows(List<Map<String, JsonNode>> receiverRows) {
-      return set("receiver_rows", Conv.list(Conv.OBJECT), receiverRows);
+    public Builder receiverRows(List<? extends Map<String, ?>> receiverRows) {
+      return setAny("receiver_rows", receiverRows);
     }
 
     /**
@@ -489,8 +489,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @param transactionFlows the value
      * @return this builder
      */
-    public Builder transactionFlows(List<Map<String, JsonNode>> transactionFlows) {
-      return set("transaction_flows", Conv.list(Conv.OBJECT), transactionFlows);
+    public Builder transactionFlows(List<? extends Map<String, ?>> transactionFlows) {
+      return setAny("transaction_flows", transactionFlows);
     }
 
     /**
@@ -549,8 +549,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @param networkNodes the value
      * @return this builder
      */
-    public Builder networkNodes(List<Map<String, JsonNode>> networkNodes) {
-      return set("network_nodes", Conv.list(Conv.OBJECT), networkNodes);
+    public Builder networkNodes(List<? extends Map<String, ?>> networkNodes) {
+      return setAny("network_nodes", networkNodes);
     }
 
     /**
@@ -559,8 +559,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @param networkEdges the value
      * @return this builder
      */
-    public Builder networkEdges(List<Map<String, JsonNode>> networkEdges) {
-      return set("network_edges", Conv.list(Conv.OBJECT), networkEdges);
+    public Builder networkEdges(List<? extends Map<String, ?>> networkEdges) {
+      return setAny("network_edges", networkEdges);
     }
 
     /**

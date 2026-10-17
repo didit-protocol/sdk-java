@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -60,7 +61,7 @@ final class UsersResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -77,7 +78,7 @@ final class UsersResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"full_name\":\"value-full-name\",\"display_name\":\"value-display-name\",\"date_of_birth\":\"2026-11-01\",\"status\":\"ACTIVE\",\"metadata\":{\"key\":\"value\"},\"approved_emails\":[\"value-approved-emails\"],\"approved_phones\":[\"value-approved-phones\"],\"issuing_states\":[\"value-issuing-states\"]}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -109,7 +110,7 @@ final class UsersResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"vendor_data_list\":[\"value-vendor-data-list\"],\"didit_internal_id_list\":[\"00000000-0000-4000-8000-0000000068ce\"],\"delete_all\":true}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -126,7 +127,7 @@ final class UsersResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"is_enabled\":true,\"estimate_only\":true,\"vendor_data_list\":[\"value-vendor-data-list\"],\"didit_internal_id_list\":[\"00000000-0000-4000-8000-0000000068ce\"]}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     assertEquals(200, result.statusCode());
     TestModels.readAll(result);
   }
@@ -144,7 +145,7 @@ final class UsersResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"status\":\"ACTIVE\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -161,7 +162,7 @@ final class UsersResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"full_name\":\"value-full-name\",\"display_name\":\"value-display-name\",\"date_of_birth\":\"2026-11-01\",\"status\":\"ACTIVE\",\"metadata\":{\"key\":\"value\"},\"approved_emails\":[\"value-approved-emails\"],\"approved_phones\":[\"value-approved-phones\"],\"issuing_states\":[\"value-issuing-states\"]}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -178,7 +179,7 @@ final class UsersResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"image\":\"value-image\",\"comment\":\"value-comment\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -195,7 +196,7 @@ final class UsersResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"is_enabled\":true,\"estimate_only\":true,\"update_all\":true,\"filter_search\":\"value-filter-search\",\"filter_status\":[\"value-filter-status\"],\"filter_country\":\"value-filter-country\",\"filter_date_from\":\"2026-11-01\",\"filter_date_to\":\"2026-11-01\",\"didit_internal_id_list\":[\"00000000-0000-4000-8000-0000000068ce\"]}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     assertEquals(200, result.statusCode());
     TestModels.readAll(result);
   }
@@ -212,7 +213,7 @@ final class UsersResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -228,7 +229,7 @@ final class UsersResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

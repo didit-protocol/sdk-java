@@ -471,8 +471,8 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
      * @param creationSources the value
      * @return this builder
      */
-    public Builder creationSources(List<Map<String, JsonNode>> creationSources) {
-      return set("creation_sources", Conv.list(Conv.OBJECT), creationSources);
+    public Builder creationSources(List<? extends Map<String, ?>> creationSources) {
+      return setAny("creation_sources", creationSources);
     }
 
     /**
@@ -481,8 +481,8 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
      * @param receivesEscalationFrom the value
      * @return this builder
      */
-    public Builder receivesEscalationFrom(List<Map<String, JsonNode>> receivesEscalationFrom) {
-      return set("receives_escalation_from", Conv.list(Conv.OBJECT), receivesEscalationFrom);
+    public Builder receivesEscalationFrom(List<? extends Map<String, ?>> receivesEscalationFrom) {
+      return setAny("receives_escalation_from", receivesEscalationFrom);
     }
 
     /**

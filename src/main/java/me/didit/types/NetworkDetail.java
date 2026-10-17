@@ -389,8 +389,8 @@ public final class NetworkDetail extends JsonModel {
      * @param fraudTags the value
      * @return this builder
      */
-    public Builder fraudTags(List<Map<String, JsonNode>> fraudTags) {
-      return set("fraud_tags", Conv.list(Conv.OBJECT), fraudTags);
+    public Builder fraudTags(List<? extends Map<String, ?>> fraudTags) {
+      return setAny("fraud_tags", fraudTags);
     }
 
     /**

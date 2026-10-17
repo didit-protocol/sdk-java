@@ -9,6 +9,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -55,7 +56,7 @@ final class CasesRegulatoryReportsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"report_type\":\"SAR\",\"jurisdiction\":\"value-jurisdiction\",\"template\":\"00000000-0000-4000-8000-000000000efb\",\"transactions\":[\"00000000-0000-4000-8000-000000002132\"],\"rentity_id\":\"value-rentity-id\",\"rentity_branch\":\"value-rentity-branch\",\"submission_code\":\"E\",\"entity_reference\":\"value-entity-reference\",\"fiu_ref_number\":\"value-fiu-ref-number\",\"currency_code_local\":\"value-currency-code-local\",\"submission_date\":\"2026-11-01T10:15:30Z\",\"reporting_person\":{\"key\":\"value\"},\"location\":{\"key\":\"value\"},\"reason\":\"value-reason\",\"action\":\"value-action\",\"activity\":\"value-activity\",\"narrative\":{\"who\":\"value-who\",\"what\":\"value-what\"},\"report_indicators\":[\"value-report-indicators\"],\"included_fields\":[\"value-included-fields\"]}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 }

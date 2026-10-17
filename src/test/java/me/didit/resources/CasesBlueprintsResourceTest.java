@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -60,7 +61,7 @@ final class CasesBlueprintsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"name\":\"value-name\",\"description\":\"value-description\",\"assignee_pool\":[\"00000000-0000-4000-8000-0000000025f2\"],\"assignment_method\":\"MANUAL\",\"max_active_cases\":1,\"escalation_enabled\":true,\"escalation_blueprint\":\"00000000-0000-4000-8000-0000000058a9\",\"transfer_enabled\":true,\"four_eyes_checker_blueprint\":\"00000000-0000-4000-8000-000000009dc3\",\"require_resolution_note\":true,\"content_config\":{\"checklist\":{\"enabled\":true,\"optional\":true},\"aml_control\":{\"enabled\":true,\"financial\":true}},\"is_active\":true,\"default_deadline_hours\":1,\"publish\":true}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -76,7 +77,7 @@ final class CasesBlueprintsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -93,7 +94,7 @@ final class CasesBlueprintsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"name\":\"value-name\",\"description\":\"value-description\",\"assignee_pool\":[\"00000000-0000-4000-8000-0000000025f2\"],\"assignment_method\":\"MANUAL\",\"max_active_cases\":1,\"escalation_enabled\":true,\"escalation_blueprint\":\"00000000-0000-4000-8000-0000000058a9\",\"transfer_enabled\":true,\"four_eyes_checker_blueprint\":\"00000000-0000-4000-8000-000000009dc3\",\"require_resolution_note\":true,\"content_config\":{\"checklist\":{\"enabled\":true,\"optional\":true},\"aml_control\":{\"enabled\":true,\"financial\":true}},\"is_active\":true,\"default_deadline_hours\":1,\"expected_version\":1}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -122,7 +123,7 @@ final class CasesBlueprintsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -139,7 +140,7 @@ final class CasesBlueprintsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"preset_keys\":[\"value-preset-keys\"]}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     assertEquals(200, result.statusCode());
     TestModels.readAll(result);
   }
@@ -157,7 +158,7 @@ final class CasesBlueprintsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"expected_version\":1,\"expected_revision\":\"00000000-0000-4000-8000-000000004071\"}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -173,7 +174,7 @@ final class CasesBlueprintsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
@@ -190,7 +191,7 @@ final class CasesBlueprintsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"expected_version\":1,\"expected_revision\":\"00000000-0000-4000-8000-000000004071\",\"changes\":{\"key\":\"value\"}}", request.body());
-    TestJson.assertJsonEquals(example, result._json());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 

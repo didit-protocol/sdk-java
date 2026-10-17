@@ -874,8 +874,8 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
      * @param officers the value
      * @return this builder
      */
-    public Builder officers(List<Map<String, JsonNode>> officers) {
-      return set("officers", Conv.list(Conv.OBJECT), officers);
+    public Builder officers(List<? extends Map<String, ?>> officers) {
+      return setAny("officers", officers);
     }
 
     /**
@@ -884,8 +884,8 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
      * @param beneficialOwners the value
      * @return this builder
      */
-    public Builder beneficialOwners(List<Map<String, JsonNode>> beneficialOwners) {
-      return set("beneficial_owners", Conv.list(Conv.OBJECT), beneficialOwners);
+    public Builder beneficialOwners(List<? extends Map<String, ?>> beneficialOwners) {
+      return setAny("beneficial_owners", beneficialOwners);
     }
 
     /**
@@ -894,8 +894,8 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
      * @param addresses the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder addresses(@Nullable List<Map<String, JsonNode>> addresses) {
-      return setNullable("addresses", Conv.list(Conv.OBJECT), addresses);
+    public Builder addresses(@Nullable List<? extends Map<String, ?>> addresses) {
+      return setAny("addresses", addresses);
     }
 
     /**
@@ -904,8 +904,8 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
      * @param industries the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder industries(@Nullable List<Map<String, JsonNode>> industries) {
-      return setNullable("industries", Conv.list(Conv.OBJECT), industries);
+    public Builder industries(@Nullable List<? extends Map<String, ?>> industries) {
+      return setAny("industries", industries);
     }
 
     /**

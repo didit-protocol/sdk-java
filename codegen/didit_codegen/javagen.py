@@ -83,6 +83,25 @@ class Ctx:
             return self.ref(t.cls)
         raise ValueError(f"unknown type kind {k}")
 
+    def input_type(self, t: TypeRef) -> str:
+        """The setter parameter type of a container holding free-form JSON."""
+        if t.kind == "any":
+            return "Object"
+        if t.kind == "object":
+            self.use("java.util.Map")
+            return "Map<String, ?>"
+        if t.kind == "list":
+            assert t.item is not None
+            self.use("java.util.List")
+            inner = self.input_type(t.item) if has_untyped(t.item) else self.java_type(t.item)
+            return f"List<? extends {inner}>" if inner != "Object" else "List<?>"
+        if t.kind == "map":
+            assert t.item is not None
+            self.use("java.util.Map")
+            inner = self.input_type(t.item) if has_untyped(t.item) else self.java_type(t.item)
+            return f"Map<String, ? extends {inner}>" if inner != "Object" else "Map<String, ?>"
+        return self.java_type(t)
+
     def conv(self, t: TypeRef) -> str:
         self.use("me.didit.core.Conv")
         k = t.kind
@@ -113,6 +132,12 @@ class Ctx:
                 return f"Conv.union({ref}::fromJson)"
             return f"Conv.model({ref}::fromJson)"
         raise ValueError(f"no converter for {k}")
+
+
+def has_untyped(t: TypeRef) -> bool:
+    if t.kind in ("any", "object"):
+        return True
+    return t.item is not None and has_untyped(t.item)
 
 
 def imports_block(ctx: Ctx, own_package: str) -> str:
@@ -288,6 +313,15 @@ def emit_setter(prop: Prop, ctx: Ctx, indent: str) -> str:
         call = "setFile" if prop.type.kind == "file" else "setFiles"
         decl = f"{jt} {param}"
         body = f'return {call}("{prop.json_name}", {param});'
+    elif prop.type.kind in ("list", "map") and has_untyped(prop.type):
+        # Lists and maps of free-form JSON accept plain Java maps, lists and values.
+        jt = ctx.input_type(prop.type)
+        if nullable:
+            ctx.use("org.jspecify.annotations.Nullable")
+            decl = f"{nullable_type(jt)} {param}"
+        else:
+            decl = f"{jt} {param}"
+        body = f'return setAny("{prop.json_name}", {param});'
     elif prop.type.kind in ("any",):
         ctx.use("org.jspecify.annotations.Nullable")
         decl = f"@Nullable Object {param}"

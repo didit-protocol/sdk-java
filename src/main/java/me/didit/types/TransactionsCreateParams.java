@@ -3064,8 +3064,8 @@ public final class TransactionsCreateParams extends JsonModel {
        * @param nodes the value
        * @return this builder
        */
-      public Builder nodes(List<Map<String, JsonNode>> nodes) {
-        return set("nodes", Conv.list(Conv.OBJECT), nodes);
+      public Builder nodes(List<? extends Map<String, ?>> nodes) {
+        return setAny("nodes", nodes);
       }
 
       /**
@@ -3074,8 +3074,8 @@ public final class TransactionsCreateParams extends JsonModel {
        * @param edges the value
        * @return this builder
        */
-      public Builder edges(List<Map<String, JsonNode>> edges) {
-        return set("edges", Conv.list(Conv.OBJECT), edges);
+      public Builder edges(List<? extends Map<String, ?>> edges) {
+        return setAny("edges", edges);
       }
 
       /**
