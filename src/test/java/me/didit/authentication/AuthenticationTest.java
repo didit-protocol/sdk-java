@@ -400,6 +400,7 @@ final class AuthenticationTest {
     assertEquals(Reason.MALFORMED, reject(auth(), arrayPayload));
     // A signature part whose length leaves a remainder of 1 is not base64url at all; the async
     // variant reports it through the future, never by throwing.
+    long fetches = issuer.count("GET /.well-known/jwks.json");
     for (String signature : new String[] {"A", parts[2].substring(0, 85)}) {
       String bad = parts[0] + "." + parts[1] + "." + signature;
       assertEquals(1, signature.length() % 4);
@@ -410,7 +411,7 @@ final class AuthenticationTest {
           assertThrows(java.util.concurrent.ExecutionException.class, future::get);
       assertEquals(Reason.MALFORMED, ((TokenVerificationException) e.getCause()).reason());
     }
-    assertEquals(0, issuer.count("GET /.well-known/jwks.json"));
+    assertEquals(fetches, issuer.count("GET /.well-known/jwks.json"));
   }
 
   @Test
