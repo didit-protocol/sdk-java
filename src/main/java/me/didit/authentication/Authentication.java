@@ -69,8 +69,9 @@ import org.jspecify.annotations.Nullable;
  *
  * <p>Discovery and the signing keys are fetched lazily and cached as the issuer says (5 minutes
  * today, kept between 1 minute and 24 hours); a token with an unknown key id refetches the keys at
- * most once a minute. Concurrent verifications share one fetch, and after a failed fetch the issuer
- * is not asked again for 5 seconds. Thread-safe: create one per issuer and reuse it.
+ * most once a minute. Concurrent calls share one fetch, and after a failed key fetch verifications
+ * fail fast for 5 seconds before the issuer is asked again. Thread-safe: create one per issuer and
+ * reuse it.
  *
  * <p>Refreshes of one session must be serialised: each refresh token works once, and reusing a
  * consumed one revokes the session.
