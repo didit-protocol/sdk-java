@@ -3,7 +3,6 @@ package me.didit.core;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.net.ConnectException;
 import java.net.NoRouteToHostException;
 import java.net.URI;
@@ -706,9 +705,5 @@ public final class ApiClient {
     private static boolean isDefault(URI uri) {
       return uri.getPort() == -1;
     }
-  }
-
-  static UncheckedIOException unchecked(IOException e) {
-    return new UncheckedIOException(e);
   }
 }
