@@ -50,7 +50,7 @@ public final class BinaryResponse implements AutoCloseable {
    */
   public Optional<String> fileName() {
     String disposition = headers.firstValue("Content-Disposition").orElse("");
-    for (String part : disposition.split(";")) {
+    for (String part : disposition.split(";", -1)) {
       String p = part.trim();
       if (p.toLowerCase(Locale.ROOT).startsWith("filename=")) {
         String name = p.substring("filename=".length()).trim();
