@@ -11,7 +11,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -28,7 +27,7 @@ public final class Json {
       JsonMapper.builder()
           .nodeFactory(JsonNodeFactory.withExactBigDecimals(true))
           .enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS)
-          .enable(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION)
+          .disable(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION)
           .disable(JsonReadFeature.ALLOW_NON_NUMERIC_NUMBERS)
           .build();
 
@@ -263,9 +262,7 @@ public final class Json {
   private static JsonNode redact(JsonNode node) {
     if (node.isObject()) {
       ObjectNode out = MAPPER.createObjectNode();
-      Iterator<Map.Entry<String, JsonNode>> fields = node.fields();
-      while (fields.hasNext()) {
-        Map.Entry<String, JsonNode> entry = fields.next();
+      for (Map.Entry<String, JsonNode> entry : node.properties()) {
         JsonNode value = entry.getValue();
         if (value.isTextual() && SECRET_KEY.matcher(entry.getKey()).matches()) {
           out.put(entry.getKey(), "[REDACTED]");
