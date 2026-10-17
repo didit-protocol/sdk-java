@@ -109,6 +109,7 @@ public final class Authentication {
   private Instant lastKeysFetch = Instant.MIN;
   private @Nullable CompletableFuture<Map<String, ECPublicKey>> keysFetch;
   private @Nullable RuntimeException keysFailure;
+  private Instant keysRetryAfter = Instant.MIN;
 
   private Authentication(Builder b, String issuer) {
     this.issuer = issuer;
@@ -513,15 +514,22 @@ public final class Authentication {
     }
   }
 
+  /** The cached discovery document; concurrent callers share one fetch. */
   CompletableFuture<Discovery> discoveryAsync() {
+    CompletableFuture<Discovery> pending;
     synchronized (lock) {
       Discovery cached = discovery;
       if (cached != null && clock.instant().isBefore(discoveryExpiry)) {
         return CompletableFuture.completedFuture(cached);
       }
+      if (discoveryFetch != null) {
+        return discoveryFetch.copy();
+      }
+      pending = new CompletableFuture<>();
+      discoveryFetch = pending;
     }
     URI uri = URI.create(issuer + "/.well-known/openid-configuration");
-    return send("GET", uri, Map.of(), new byte[0])
+    send("GET", uri, Map.of(), new byte[0])
         .thenApply(
             response -> {
               ObjectNode doc = jsonObject(response, "the discovery document");
@@ -531,7 +539,19 @@ public final class Authentication {
                 discoveryExpiry = clock.instant().plus(cacheLifetime(response.headers()));
               }
               return parsed;
+            })
+        .whenComplete(
+            (parsed, error) -> {
+              synchronized (lock) {
+                discoveryFetch = null;
+              }
+              if (error != null) {
+                pending.completeExceptionally(failure(error));
+              } else {
+                pending.complete(parsed);
+              }
             });
+    return pending.copy();
   }
 
   private Discovery parseDiscovery(ObjectNode doc) {
@@ -568,23 +588,51 @@ public final class Authentication {
     return new Discovery(tokenEndpoint, jwks);
   }
 
+  /**
+   * The key for a key id. The keys are fetched when they expire, or for an unknown key id at most
+   * once a minute; concurrent callers share one fetch, and a failed fetch is answered from memory
+   * for {@link #FAILED_FETCH_BACKOFF} so an issuer outage does not turn every request into a fetch.
+   */
   CompletableFuture<ECPublicKey> keyAsync(String kid) {
     Instant now = clock.instant();
-    boolean refetch;
+    CompletableFuture<Map<String, ECPublicKey>> pending;
+    boolean start = false;
     synchronized (lock) {
       ECPublicKey key = keys.get(kid);
       if (key != null && now.isBefore(keysExpiry)) {
         return CompletableFuture.completedFuture(key);
       }
-      boolean expired = !now.isBefore(keysExpiry);
-      refetch = expired || !now.isBefore(lastKeysFetch.plus(REFETCH_INTERVAL));
-      if (!refetch) {
-        return CompletableFuture.failedFuture(
-            new TokenVerificationException(Reason.UNKNOWN_KEY, "No published key has this key id"));
+      pending = keysFetch;
+      if (pending == null) {
+        boolean expired = !now.isBefore(keysExpiry);
+        if (!expired && now.isBefore(lastKeysFetch.plus(REFETCH_INTERVAL))) {
+          return CompletableFuture.failedFuture(unknownKey());
+        }
+        RuntimeException failed = keysFailure;
+        if (failed != null && now.isBefore(keysRetryAfter)) {
+          return CompletableFuture.failedFuture(failed);
+        }
+        lastKeysFetch = now;
+        pending = new CompletableFuture<>();
+        keysFetch = pending;
+        start = true;
       }
-      lastKeysFetch = now;
     }
-    return discoveryAsync()
+    if (start) {
+      fetchKeys(pending);
+    }
+    return pending.thenApply(
+        parsed -> {
+          ECPublicKey key = parsed.get(kid);
+          if (key == null) {
+            throw unknownKey();
+          }
+          return key;
+        });
+  }
+
+  private void fetchKeys(CompletableFuture<Map<String, ECPublicKey>> pending) {
+    discoveryAsync()
         .thenCompose(d -> send("GET", d.jwksUri, Map.of(), new byte[0]))
         .thenApply(
             response -> {
@@ -593,14 +641,30 @@ public final class Authentication {
               synchronized (lock) {
                 keys = parsed;
                 keysExpiry = clock.instant().plus(cacheLifetime(response.headers()));
+                keysFailure = null;
               }
-              ECPublicKey key = parsed.get(kid);
-              if (key == null) {
-                throw new TokenVerificationException(
-                    Reason.UNKNOWN_KEY, "No published key has this key id");
+              return parsed;
+            })
+        .whenComplete(
+            (parsed, error) -> {
+              RuntimeException failed = error == null ? null : failure(error);
+              synchronized (lock) {
+                keysFetch = null;
+                if (failed != null) {
+                  keysFailure = failed;
+                  keysRetryAfter = clock.instant().plus(FAILED_FETCH_BACKOFF);
+                }
               }
-              return key;
+              if (failed != null) {
+                pending.completeExceptionally(failed);
+              } else {
+                pending.complete(parsed);
+              }
             });
+  }
+
+  private static TokenVerificationException unknownKey() {
+    return new TokenVerificationException(Reason.UNKNOWN_KEY, "No published key has this key id");
   }
 
   static Map<String, ECPublicKey> parseKeys(ObjectNode doc) {
