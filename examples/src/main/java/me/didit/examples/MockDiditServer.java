@@ -51,7 +51,8 @@ public final class MockDiditServer implements AutoCloseable {
   }
 
   private void send(HttpExchange exchange, int status, String body) throws IOException {
-    log.add(exchange.getRequestMethod() + " " + exchange.getRequestURI().getPath() + " -> " + status);
+    log.add(
+        exchange.getRequestMethod() + " " + exchange.getRequestURI().getPath() + " -> " + status);
     byte[] bytes = body.getBytes(StandardCharsets.UTF_8);
     exchange.getResponseHeaders().add("Content-Type", "application/json");
     exchange.getResponseHeaders().add("X-Request-Id", "req-mock-" + log.size());

@@ -103,7 +103,13 @@ public final class TransportRequest {
 
   @Override
   public String toString() {
-    return "TransportRequest{" + method + " " + uri.getScheme() + "://" + uri.getAuthority()
-        + uri.getRawPath() + "}";
+    return "TransportRequest{"
+        + method
+        + " "
+        + uri.getScheme()
+        + "://"
+        + uri.getAuthority()
+        + uri.getRawPath()
+        + "}";
   }
 }

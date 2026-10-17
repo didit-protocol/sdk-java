@@ -23,6 +23,7 @@ import org.jspecify.annotations.Nullable;
 public abstract class JsonModel {
   /** The underlying object, owned by this instance; generated getters read it. */
   protected final ObjectNode json;
+
   private final Map<String, List<FileUpload>> files;
 
   /**

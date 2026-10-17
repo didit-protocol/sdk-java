@@ -74,12 +74,15 @@ final class CanonicalJsonTest {
   void keysAreSortedByCodePoint() {
     // U+1F600 (astral) sorts after U+FFFD by code point, before it by UTF-16 unit.
     String json = "{\"\\ufffd\":1,\"\\ud83d\\ude00\":2,\"b\":3,\"a\":{\"z\":1,\"y\":2}}";
-    assertEquals("{\"a\":{\"y\":2,\"z\":1},\"b\":3,\"\ufffd\":1,\"\ud83d\ude00\":2}", Webhooks.canonicalJson(json));
+    assertEquals(
+        "{\"a\":{\"y\":2,\"z\":1},\"b\":3,\"\ufffd\":1,\"\ud83d\ude00\":2}",
+        Webhooks.canonicalJson(json));
   }
 
   @Test
   void stringsEscapeLikePython() {
-    String json = "{\"s\":\"q\\\" b\\\\ n\\n r\\r t\\t b\\b f\\f c\\u0001 d\\u007f / \\u2028 \\u00e9\"}";
+    String json =
+        "{\"s\":\"q\\\" b\\\\ n\\n r\\r t\\t b\\b f\\f c\\u0001 d\\u007f / \\u2028 \\u00e9\"}";
     assertEquals(
         "{\"s\":\"q\\\" b\\\\ n\\n r\\r t\\t b\\b f\\f c\\u0001 d\u007f / \u2028 \u00e9\"}",
         Webhooks.canonicalJson(json));
@@ -93,7 +96,15 @@ final class CanonicalJsonTest {
   @ParameterizedTest
   @CsvSource(
       delimiter = '|',
-      value = {"{\"a\":NaN}", "{\"a\":Infinity}", "{\"a\":1e400}", "{\"a\":\"\\ud800\"}", "[1]", "nope", "{\"a\":1} x"})
+      value = {
+        "{\"a\":NaN}",
+        "{\"a\":Infinity}",
+        "{\"a\":1e400}",
+        "{\"a\":\"\\ud800\"}",
+        "[1]",
+        "nope",
+        "{\"a\":1} x"
+      })
   void rejectsWhatPythonCannotHaveSigned(String input) {
     WebhookVerificationException e =
         assertThrows(WebhookVerificationException.class, () -> Webhooks.canonicalJson(input));
@@ -102,7 +113,8 @@ final class CanonicalJsonTest {
 
   @Test
   void canonicalOfParsedValue() {
-    assertEquals("{\"a\":[1,0.5]}", Webhooks.canonicalJson(TestJson.parse("{ \"a\" : [ 1.0 , 0.5 ] }")));
+    assertEquals(
+        "{\"a\":[1,0.5]}", Webhooks.canonicalJson(TestJson.parse("{ \"a\" : [ 1.0 , 0.5 ] }")));
   }
 
   @Test

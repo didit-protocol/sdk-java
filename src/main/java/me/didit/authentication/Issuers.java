@@ -17,7 +17,8 @@ final class Issuers {
     for (int i = 0; i < value.length(); i++) {
       char c = value.charAt(i);
       if (c <= 0x20 || c == 0x7f) {
-        throw new ConfigurationException("The issuer must not contain spaces or control characters");
+        throw new ConfigurationException(
+            "The issuer must not contain spaces or control characters");
       }
     }
     URI uri;
@@ -28,7 +29,9 @@ final class Issuers {
     }
     String scheme = uri.getScheme() == null ? "" : uri.getScheme().toLowerCase(Locale.ROOT);
     String host = uri.getHost();
-    if (host == null || uri.getRawUserInfo() != null || uri.getRawQuery() != null
+    if (host == null
+        || uri.getRawUserInfo() != null
+        || uri.getRawQuery() != null
         || uri.getRawFragment() != null) {
       throw new ConfigurationException("The issuer must be an https URL without query or fragment");
     }

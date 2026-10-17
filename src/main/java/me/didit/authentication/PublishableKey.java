@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
 import me.didit.errors.ConfigurationException;
 
 /**
- * A publishable key: {@code pk_live_} or {@code pk_test_} followed by the unpadded base64url
- * issuer URL. It is public and safe to ship to browsers and apps.
+ * A publishable key: {@code pk_live_} or {@code pk_test_} followed by the unpadded base64url issuer
+ * URL. It is public and safe to ship to browsers and apps.
  */
 public final class PublishableKey {
   private static final Pattern BODY = Pattern.compile("[A-Za-z0-9_-]+");

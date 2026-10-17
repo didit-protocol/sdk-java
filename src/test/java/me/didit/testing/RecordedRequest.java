@@ -121,7 +121,8 @@ public final class RecordedRequest {
 
   public List<Part> parts() {
     String contentType = header("Content-Type");
-    if (contentType == null || !contentType.toLowerCase(Locale.ROOT).startsWith("multipart/form-data")) {
+    if (contentType == null
+        || !contentType.toLowerCase(Locale.ROOT).startsWith("multipart/form-data")) {
       throw new AssertionError("Not a multipart request: " + contentType);
     }
     String boundary = contentType.substring(contentType.indexOf("boundary=") + 9);

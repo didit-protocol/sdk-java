@@ -22,8 +22,8 @@ import java.util.function.Function;
 import me.didit.errors.UnexpectedResponseException;
 
 /**
- * Converts between JSON values and the Java types of generated fields. Reading is lenient where
- * the meaning is unambiguous (a number sent as a string), and strict otherwise.
+ * Converts between JSON values and the Java types of generated fields. Reading is lenient where the
+ * meaning is unambiguous (a number sent as a string), and strict otherwise.
  *
  * @param <T> the Java type
  */
@@ -118,8 +118,7 @@ public abstract class Conv<T> {
         @Override
         public OffsetDateTime read(JsonNode node) {
           if (node.isNumber()) {
-            return OffsetDateTime.ofInstant(
-                Instant.ofEpochSecond(node.asLong()), ZoneOffset.UTC);
+            return OffsetDateTime.ofInstant(Instant.ofEpochSecond(node.asLong()), ZoneOffset.UTC);
           }
           if (!node.isTextual()) {
             throw mismatch("a date-time string", node);

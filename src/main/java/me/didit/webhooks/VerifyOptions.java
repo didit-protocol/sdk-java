@@ -129,8 +129,8 @@ public final class VerifyOptions {
     }
 
     /**
-     * Accepts the deprecated {@code X-Signature-Simple}, which authenticates the envelope only.
-     * Off by default.
+     * Accepts the deprecated {@code X-Signature-Simple}, which authenticates the envelope only. Off
+     * by default.
      *
      * @param allowSimple whether to accept it
      * @return this builder

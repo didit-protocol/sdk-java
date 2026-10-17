@@ -5,7 +5,10 @@ import java.util.Optional;
 import me.didit.core.Conv;
 import me.didit.types.TransactionDetail;
 
-/** A transaction monitoring event: {@code transaction.created} or {@code transaction.status.updated}. */
+/**
+ * A transaction monitoring event: {@code transaction.created} or {@code
+ * transaction.status.updated}.
+ */
 public abstract class TransactionEvent extends WebhookEvent {
   TransactionEvent(ObjectNode json, VerifiedBy verifiedBy) {
     super(json, verifiedBy);

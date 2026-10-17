@@ -88,7 +88,8 @@ final class StubIssuer implements HttpTransport {
     Map<String, List<String>> h = new LinkedHashMap<>();
     h.put("Content-Type", List.of("application/json"));
     h.put("Cache-Control", List.of(cacheControl));
-    return new TransportResponse(status, Headers.of(h), body.toString().getBytes(StandardCharsets.UTF_8));
+    return new TransportResponse(
+        status, Headers.of(h), body.toString().getBytes(StandardCharsets.UTF_8));
   }
 
   static TransportResponse json(int status, String body) {
@@ -99,7 +100,9 @@ final class StubIssuer implements HttpTransport {
   }
 
   long count(String route) {
-    return requests.stream().filter(r -> route.equals(r.method() + " " + r.uri().getPath())).count();
+    return requests.stream()
+        .filter(r -> route.equals(r.method() + " " + r.uri().getPath()))
+        .count();
   }
 
   TransportRequest last(String route) {

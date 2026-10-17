@@ -33,7 +33,9 @@ final class ContractTest {
           }
           JsonNode sdk = op.getValue().get("x-didit-sdk");
           if (sdk == null) {
-            sdk = overlay.get(spec[1] + op.getKey().toUpperCase(java.util.Locale.ROOT) + " " + path.getKey());
+            sdk =
+                overlay.get(
+                    spec[1] + op.getKey().toUpperCase(java.util.Locale.ROOT) + " " + path.getKey());
           }
           if (sdk == null) {
             throw new AssertionError("No SDK naming for " + op.getKey() + " " + path.getKey());
@@ -64,7 +66,8 @@ final class ContractTest {
     return out;
   }
 
-  private static void walk(Class<?> type, String resource, Set<String> out, Map<String, Class<?>> seen) {
+  private static void walk(
+      Class<?> type, String resource, Set<String> out, Map<String, Class<?>> seen) {
     for (Method m : type.getMethods()) {
       if (Modifier.isStatic(m.getModifiers()) || m.getDeclaringClass() == Object.class) {
         continue;
@@ -122,7 +125,10 @@ final class ContractTest {
       String removeIn = entry.getValue().path("remove_in").asText("");
       assertTrue(
           compareVersions(me.didit.core.Version.VERSION, removeIn) < 0,
-          entry.getKey() + " was due for removal in " + removeIn + ": delete it from openapi/deprecated-operations.json");
+          entry.getKey()
+              + " was due for removal in "
+              + removeIn
+              + ": delete it from openapi/deprecated-operations.json");
     }
     assertTrue(compareVersions("0.1.0", "0.2.0") < 0);
     assertTrue(compareVersions("1.10.0", "1.9.0") > 0);
@@ -149,7 +155,8 @@ final class ContractTest {
       Class<?> type = e.getValue();
       Set<String> names = new TreeSet<>();
       for (Method m : type.getDeclaredMethods()) {
-        if (Modifier.isPublic(m.getModifiers()) && !m.getName().equals("withRawResponse")
+        if (Modifier.isPublic(m.getModifiers())
+            && !m.getName().equals("withRawResponse")
             && !m.getReturnType().getSimpleName().endsWith("Resource")) {
           names.add(m.getName());
         }

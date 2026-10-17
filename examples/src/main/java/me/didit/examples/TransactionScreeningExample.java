@@ -21,7 +21,8 @@ public final class TransactionScreeningExample {
                     .transactionCategory(TransactionsCreateParams.TransactionCategory.FINANCE)
                     .transactionDetails(
                         TransactionsCreateParams.TransactionDetails.builder()
-                            .direction(TransactionsCreateParams.TransactionDetails.Direction.OUTBOUND)
+                            .direction(
+                                TransactionsCreateParams.TransactionDetails.Direction.OUTBOUND)
                             .amount(250.0)
                             .currency("EUR")
                             .build())

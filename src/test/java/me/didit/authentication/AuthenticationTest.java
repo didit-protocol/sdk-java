@@ -61,7 +61,8 @@ final class AuthenticationTest {
   }
 
   private Reason reject(Authentication auth, String token) {
-    return assertThrows(TokenVerificationException.class, () -> auth.verifyAccessToken(token)).reason();
+    return assertThrows(TokenVerificationException.class, () -> auth.verifyAccessToken(token))
+        .reason();
   }
 
   static final class MutableClock extends Clock {
@@ -168,8 +169,14 @@ final class AuthenticationTest {
     assertEquals(Reason.UNSUPPORTED_ALGORITHM, reject(auth(), issuer.sign(noAlg, claims)));
     // alg none with an empty signature never reaches the key lookup.
     String b64header =
-        Base64.getUrlEncoder().withoutPadding().encodeToString("{\"alg\":\"none\",\"typ\":\"at+jwt\"}".getBytes(StandardCharsets.UTF_8));
-    String b64claims = Base64.getUrlEncoder().withoutPadding().encodeToString(claims.toString().getBytes(StandardCharsets.UTF_8));
+        Base64.getUrlEncoder()
+            .withoutPadding()
+            .encodeToString(
+                "{\"alg\":\"none\",\"typ\":\"at+jwt\"}".getBytes(StandardCharsets.UTF_8));
+    String b64claims =
+        Base64.getUrlEncoder()
+            .withoutPadding()
+            .encodeToString(claims.toString().getBytes(StandardCharsets.UTF_8));
     assertEquals(Reason.MALFORMED, reject(auth(), b64header + "." + b64claims + "."));
     assertEquals(0, issuer.count("GET /.well-known/jwks.json"));
   }
@@ -183,7 +190,9 @@ final class AuthenticationTest {
     assertEquals(Reason.INVALID_TYPE, reject(auth(), issuer.sign(noTyp, claims)));
     assertEquals(
         StubIssuer.ISSUER,
-        auth().verifyAccessToken(issuer.sign(issuer.header("application/AT+JWT"), claims)).issuer());
+        auth()
+            .verifyAccessToken(issuer.sign(issuer.header("application/AT+JWT"), claims))
+            .issuer());
     // An access token is not an ID token.
     TokenVerificationException e =
         assertThrows(
@@ -225,7 +234,8 @@ final class AuthenticationTest {
     assertEquals(Reason.NOT_YET_VALID, reject(auth(), access(future)));
     ObjectNode nbfOk = issuer.accessClaims(now);
     nbfOk.put("nbf", now.getEpochSecond() + 30);
-    assertEquals(now.plusSeconds(30), auth().verifyAccessToken(access(nbfOk)).notBefore().orElseThrow());
+    assertEquals(
+        now.plusSeconds(30), auth().verifyAccessToken(access(nbfOk)).notBefore().orElseThrow());
     ObjectNode nbfString = issuer.accessClaims(now);
     nbfString.put("nbf", "soon");
     assertEquals(Reason.MALFORMED, reject(auth(), access(nbfString)));
@@ -259,10 +269,13 @@ final class AuthenticationTest {
         "GET /.well-known/jwks.json",
         r -> {
           ObjectNode doc = issuer.jwks();
-          doc.withArray("keys").add(StubIssuer.jwk("k_unknown", (ECPublicKey) issuer.keys.getPublic()));
+          doc.withArray("keys")
+              .add(StubIssuer.jwk("k_unknown", (ECPublicKey) issuer.keys.getPublic()));
           return StubIssuer.json(200, doc, "max-age=300");
         });
-    assertEquals(StubIssuer.ISSUER, auth.verifyAccessToken(issuer.sign(header, issuer.accessClaims(clock.instant))).issuer());
+    assertEquals(
+        StubIssuer.ISSUER,
+        auth.verifyAccessToken(issuer.sign(header, issuer.accessClaims(clock.instant))).issuer());
     assertEquals(2, issuer.count("GET /.well-known/jwks.json"));
 
     // Another key under the known kid.
@@ -274,10 +287,18 @@ final class AuthenticationTest {
     ObjectNode tampered = claims.deepCopy();
     tampered.put("sub", "someone-else");
     String forgedPayload =
-        parts[0] + "." + Base64.getUrlEncoder().withoutPadding().encodeToString(tampered.toString().getBytes(StandardCharsets.UTF_8)) + "." + parts[2];
+        parts[0]
+            + "."
+            + Base64.getUrlEncoder()
+                .withoutPadding()
+                .encodeToString(tampered.toString().getBytes(StandardCharsets.UTF_8))
+            + "."
+            + parts[2];
     assertEquals(Reason.INVALID_SIGNATURE, reject(auth(), forgedPayload));
     // A DER or truncated signature.
-    assertEquals(Reason.INVALID_SIGNATURE, reject(auth(), parts[0] + "." + parts[1] + "." + parts[2].substring(0, 40)));
+    assertEquals(
+        Reason.INVALID_SIGNATURE,
+        reject(auth(), parts[0] + "." + parts[1] + "." + parts[2].substring(0, 40)));
   }
 
   @Test
@@ -292,11 +313,22 @@ final class AuthenticationTest {
           parts[0] + "." + parts[1],
           token + ".x",
           parts[0] + ".%%%." + parts[2],
-          b64.encodeToString("not json".getBytes(StandardCharsets.UTF_8)) + "." + parts[1] + "." + parts[2],
-          b64.encodeToString("{\"alg\":\"ES256\",\"alg\":\"ES256\",\"typ\":\"at+jwt\",\"kid\":\"k\"}".getBytes(StandardCharsets.UTF_8)) + "." + parts[1] + "." + parts[2],
+          b64.encodeToString("not json".getBytes(StandardCharsets.UTF_8))
+              + "."
+              + parts[1]
+              + "."
+              + parts[2],
+          b64.encodeToString(
+                  "{\"alg\":\"ES256\",\"alg\":\"ES256\",\"typ\":\"at+jwt\",\"kid\":\"k\"}"
+                      .getBytes(StandardCharsets.UTF_8))
+              + "."
+              + parts[1]
+              + "."
+              + parts[2],
           "a".repeat(16385)
         }) {
-      assertEquals(Reason.MALFORMED, reject(auth(), bad), bad.length() > 60 ? bad.substring(0, 60) : bad);
+      assertEquals(
+          Reason.MALFORMED, reject(auth(), bad), bad.length() > 60 ? bad.substring(0, 60) : bad);
     }
     ObjectNode crit = issuer.header("at+jwt");
     crit.putArray("crit").add("exp");
@@ -305,8 +337,7 @@ final class AuthenticationTest {
     noKid.remove("kid");
     assertEquals(Reason.MALFORMED, reject(auth(), issuer.sign(noKid, issuer.accessClaims(now))));
     // A payload that is not an object, correctly signed.
-    String arrayPayload =
-        signRaw(issuer.header("at+jwt").toString(), "[1]");
+    String arrayPayload = signRaw(issuer.header("at+jwt").toString(), "[1]");
     assertEquals(Reason.MALFORMED, reject(auth(), arrayPayload));
   }
 
@@ -331,7 +362,10 @@ final class AuthenticationTest {
     assertFalse(id.toString().contains("ana@example.com"));
     assertEquals(
         Reason.INVALID_NONCE,
-        assertThrows(TokenVerificationException.class, () -> authWithClient().verifyIdToken(token, "other")).reason());
+        assertThrows(
+                TokenVerificationException.class,
+                () -> authWithClient().verifyIdToken(token, "other"))
+            .reason());
     // A refreshed ID token has no nonce: pass null.
     ObjectNode refreshed = claims.deepCopy();
     refreshed.remove("nonce");
@@ -339,58 +373,89 @@ final class AuthenticationTest {
     assertTrue(authWithClient().verifyIdToken(refreshedToken, null).nonce().isEmpty());
     assertEquals(
         Reason.INVALID_NONCE,
-        assertThrows(TokenVerificationException.class, () -> authWithClient().verifyIdToken(refreshedToken, "nonce-1")).reason());
+        assertThrows(
+                TokenVerificationException.class,
+                () -> authWithClient().verifyIdToken(refreshedToken, "nonce-1"))
+            .reason());
     // typ may be absent on an ID token.
     ObjectNode noTyp = issuer.header("JWT");
     noTyp.remove("typ");
-    assertEquals("Ana", auth().verifyIdToken(issuer.sign(noTyp, claims), "nonce-1", StubIssuer.APP_ID).name().orElseThrow());
+    assertEquals(
+        "Ana",
+        auth()
+            .verifyIdToken(issuer.sign(noTyp, claims), "nonce-1", StubIssuer.APP_ID)
+            .name()
+            .orElseThrow());
     // The audience is required.
     assertThrows(ConfigurationException.class, () -> auth().verifyIdToken(token, "nonce-1"));
     ObjectNode noEmail = claims.deepCopy();
     noEmail.remove("email_verified");
-    assertFalse(authWithClient().verifyIdToken(issuer.sign(issuer.header("JWT"), noEmail), null).emailVerified());
+    assertFalse(
+        authWithClient()
+            .verifyIdToken(issuer.sign(issuer.header("JWT"), noEmail), null)
+            .emailVerified());
   }
 
   @Test
   void discoveryRules() {
     issuer.discovery.put("issuer", "https://other.auth.didit.me");
-    assertThrows(ConfigurationException.class, () -> auth().verifyAccessToken(access(issuer.accessClaims(now))));
+    assertThrows(
+        ConfigurationException.class,
+        () -> auth().verifyAccessToken(access(issuer.accessClaims(now))));
 
     StubIssuer second = new StubIssuer();
     second.discovery.put("token_endpoint", "https://evil.example.com/token/");
-    Authentication a = Authentication.builder().issuer(StubIssuer.ISSUER).transport(second).clock(clock).build();
+    Authentication a =
+        Authentication.builder().issuer(StubIssuer.ISSUER).transport(second).clock(clock).build();
     assertThrows(ConfigurationException.class, () -> a.exchangeCode("c", "v", "https://app/cb"));
 
     StubIssuer third = new StubIssuer();
     third.discovery.put("jwks_uri", "http://acme.auth.didit.me/keys");
-    Authentication b = Authentication.builder().issuer(StubIssuer.ISSUER).transport(third).clock(clock).build();
-    assertThrows(ConfigurationException.class, () -> b.verifyAccessToken(access(third.accessClaims(now))));
+    Authentication b =
+        Authentication.builder().issuer(StubIssuer.ISSUER).transport(third).clock(clock).build();
+    assertThrows(
+        ConfigurationException.class, () -> b.verifyAccessToken(access(third.accessClaims(now))));
 
     StubIssuer fourth = new StubIssuer();
     fourth.discovery.remove("token_endpoint");
     fourth.discovery.remove("jwks_uri");
     fourth.routes.put("POST /token/", r -> StubIssuer.json(200, "{\"access_token\":\"a\"}"));
-    Authentication c = Authentication.builder().issuer(StubIssuer.ISSUER).transport(fourth).clock(clock).build();
+    Authentication c =
+        Authentication.builder().issuer(StubIssuer.ISSUER).transport(fourth).clock(clock).build();
     assertEquals("a", c.exchangeCode("code", "verifier", "https://app/cb").accessToken());
-    assertEquals(StubIssuer.ISSUER, c.verifyAccessToken(fourth.sign(fourth.header("at+jwt"), fourth.accessClaims(now))).issuer());
+    assertEquals(
+        StubIssuer.ISSUER,
+        c.verifyAccessToken(fourth.sign(fourth.header("at+jwt"), fourth.accessClaims(now)))
+            .issuer());
     // Discovery was fetched once and cached for both calls.
     assertEquals(1, fourth.count("GET /.well-known/openid-configuration"));
 
     StubIssuer fifth = new StubIssuer();
     fifth.discovery.remove("issuer");
-    Authentication d = Authentication.builder().issuer(StubIssuer.ISSUER).transport(fifth).clock(clock).build();
+    Authentication d =
+        Authentication.builder().issuer(StubIssuer.ISSUER).transport(fifth).clock(clock).build();
     assertThrows(me.didit.errors.UnexpectedResponseException.class, () -> d.refresh("r"));
   }
 
   @Test
   void cacheLifetimes() {
     assertEquals(Duration.ofMinutes(5), Authentication.cacheLifetime(Headers.empty()));
-    assertEquals(Duration.ofSeconds(600), Authentication.cacheLifetime(headers("Cache-Control", "public, max-age=600")));
-    assertEquals(Duration.ofSeconds(500), Authentication.cacheLifetime(headers("Cache-Control", "max-age=600", "Age", "100")));
-    assertEquals(Duration.ofMinutes(1), Authentication.cacheLifetime(headers("Cache-Control", "no-store")));
-    assertEquals(Duration.ofMinutes(1), Authentication.cacheLifetime(headers("Cache-Control", "max-age=5")));
-    assertEquals(Duration.ofHours(24), Authentication.cacheLifetime(headers("Cache-Control", "max-age=999999")));
-    assertEquals(Duration.ofMinutes(5), Authentication.cacheLifetime(headers("Cache-Control", "max-age=abc", "Age", "x")));
+    assertEquals(
+        Duration.ofSeconds(600),
+        Authentication.cacheLifetime(headers("Cache-Control", "public, max-age=600")));
+    assertEquals(
+        Duration.ofSeconds(500),
+        Authentication.cacheLifetime(headers("Cache-Control", "max-age=600", "Age", "100")));
+    assertEquals(
+        Duration.ofMinutes(1), Authentication.cacheLifetime(headers("Cache-Control", "no-store")));
+    assertEquals(
+        Duration.ofMinutes(1), Authentication.cacheLifetime(headers("Cache-Control", "max-age=5")));
+    assertEquals(
+        Duration.ofHours(24),
+        Authentication.cacheLifetime(headers("Cache-Control", "max-age=999999")));
+    assertEquals(
+        Duration.ofMinutes(5),
+        Authentication.cacheLifetime(headers("Cache-Control", "max-age=abc", "Age", "x")));
   }
 
   @Test
@@ -415,7 +480,9 @@ final class AuthenticationTest {
     doc.withArray("keys").add(shortX);
     Map<String, ECPublicKey> keys = Authentication.parseKeys(doc);
     assertEquals(Set.of(issuer.kid), keys.keySet());
-    assertThrows(me.didit.errors.UnexpectedResponseException.class, () -> Authentication.parseKeys(StubIssuer.parse("{}")));
+    assertThrows(
+        me.didit.errors.UnexpectedResponseException.class,
+        () -> Authentication.parseKeys(StubIssuer.parse("{}")));
   }
 
   @Test
@@ -427,7 +494,8 @@ final class AuthenticationTest {
                 200,
                 "{\"access_token\":\"at-1\",\"id_token\":\"id-1\",\"refresh_token\":\"rt-1\","
                     + "\"token_type\":\"Bearer\",\"expires_in\":300,\"session_id\":\"s-1\"}"));
-    TokenResponse tokens = authWithClient().exchangeCode("code-1", "verifier-1", "https://app.example.com/cb");
+    TokenResponse tokens =
+        authWithClient().exchangeCode("code-1", "verifier-1", "https://app.example.com/cb");
     assertEquals("at-1", tokens.accessToken());
     assertEquals("id-1", tokens.idToken().orElseThrow());
     assertEquals("rt-1", tokens.refreshToken().orElseThrow());
@@ -452,11 +520,17 @@ final class AuthenticationTest {
     assertNull(refresh.get("client_id"));
 
     issuer.routes.put("POST /token/", r -> StubIssuer.json(400, "{\"error\":\"invalid_grant\"}"));
-    BadRequestException e = assertThrows(BadRequestException.class, () -> auth().refresh("rt-used"));
+    BadRequestException e =
+        assertThrows(BadRequestException.class, () -> auth().refresh("rt-used"));
     assertTrue(e.getMessage().contains("invalid_grant"), e.getMessage());
     assertFalse(e.getMessage().contains("rt-used"));
-    issuer.routes.put("POST /token/", r -> StubIssuer.json(400, "{\"error\":\"mfa_required\",\"error_description\":\"MFA\"}"));
-    assertTrue(assertThrows(BadRequestException.class, () -> auth().refresh("r")).getMessage().contains("mfa_required: MFA"));
+    issuer.routes.put(
+        "POST /token/",
+        r -> StubIssuer.json(400, "{\"error\":\"mfa_required\",\"error_description\":\"MFA\"}"));
+    assertTrue(
+        assertThrows(BadRequestException.class, () -> auth().refresh("r"))
+            .getMessage()
+            .contains("mfa_required: MFA"));
     issuer.routes.put("POST /token/", r -> StubIssuer.json(500, "oops"));
     assertThrows(me.didit.errors.InternalServerException.class, () -> auth().refresh("r"));
   }
@@ -498,13 +572,17 @@ final class AuthenticationTest {
     issuer.routes.put("GET /session/", r -> StubIssuer.json(401, "{\"detail\":\"invalid_token\"}"));
     assertThrows(AuthenticationException.class, () -> auth().getSession("expired"));
 
-    issuer.routes.put("DELETE /session/", r -> new me.didit.core.TransportResponse(204, Headers.empty(), new byte[0]));
+    issuer.routes.put(
+        "DELETE /session/",
+        r -> new me.didit.core.TransportResponse(204, Headers.empty(), new byte[0]));
     auth().revokeSession("at-1");
     assertEquals(1, issuer.count("DELETE /session/"));
 
     issuer.routes.put("POST /step-up/", r -> StubIssuer.json(200, "{\"required\":false}"));
     StepUp notNeeded =
-        auth().createStepUp("at-1", StepUpParams.builder("contact").returnTo("https://app/back").build());
+        auth()
+            .createStepUp(
+                "at-1", StepUpParams.builder("contact").returnTo("https://app/back").build());
     assertFalse(notNeeded.required());
     issuer.routes.put(
         "POST /step-up/",
@@ -545,16 +623,22 @@ final class AuthenticationTest {
 
     issuer.routes.put(
         "GET /step-up/33333333-3333-4333-8333-333333333333/",
-        r -> StubIssuer.json(200, "{\"id\":\"33333333-3333-4333-8333-333333333333\",\"status\":\"approved\"}"));
+        r ->
+            StubIssuer.json(
+                200, "{\"id\":\"33333333-3333-4333-8333-333333333333\",\"status\":\"approved\"}"));
     assertTrue(auth().retrieveStepUp("at-1", "33333333-3333-4333-8333-333333333333").isApproved());
     for (String bad : new String[] {"", ".", ".."}) {
       assertThrows(ConfigurationException.class, () -> auth().retrieveStepUp("at-1", bad));
     }
-    assertThrows(IllegalArgumentException.class, () -> StepUpParams.builder("payout").amount("12,5"));
+    assertThrows(
+        IllegalArgumentException.class, () -> StepUpParams.builder("payout").amount("12,5"));
     assertEquals(
         404,
-        assertThrows(me.didit.errors.NotFoundException.class, () -> auth().retrieveStepUp("at-1", "a/b")).statusCode());
-    assertTrue(issuer.requests.stream().anyMatch(r -> r.uri().getRawPath().equals("/step-up/a%2Fb/")));
+        assertThrows(
+                me.didit.errors.NotFoundException.class, () -> auth().retrieveStepUp("at-1", "a/b"))
+            .statusCode());
+    assertTrue(
+        issuer.requests.stream().anyMatch(r -> r.uri().getRawPath().equals("/step-up/a%2Fb/")));
     // Never sends the API key or an Origin header.
     for (me.didit.core.TransportRequest r : issuer.requests) {
       assertFalse(r.headers().containsKey("x-api-key"));
@@ -567,7 +651,9 @@ final class AuthenticationTest {
   void asyncVariants() throws Exception {
     issuer.routes.put("POST /token/", r -> StubIssuer.json(200, "{\"access_token\":\"a\"}"));
     issuer.routes.put("GET /session/", r -> StubIssuer.json(200, "{\"sub\":\"u\"}"));
-    issuer.routes.put("DELETE /session/", r -> new me.didit.core.TransportResponse(204, Headers.empty(), new byte[0]));
+    issuer.routes.put(
+        "DELETE /session/",
+        r -> new me.didit.core.TransportResponse(204, Headers.empty(), new byte[0]));
     issuer.routes.put("POST /step-up/", r -> StubIssuer.json(200, "{\"required\":false}"));
     issuer.routes.put("GET /step-up/x/", r -> StubIssuer.json(200, "{\"status\":\"declined\"}"));
     Authentication a = authWithClient();
@@ -577,7 +663,9 @@ final class AuthenticationTest {
     a.revokeSessionAsync("t").get();
     assertFalse(a.createStepUpAsync("t", StepUpParams.builder("bank").build()).get().required());
     assertFalse(a.retrieveStepUpAsync("t", "x").get().isApproved());
-    assertEquals(StubIssuer.ISSUER, a.verifyAccessTokenAsync(access(issuer.accessClaims(now)), null).get().issuer());
+    assertEquals(
+        StubIssuer.ISSUER,
+        a.verifyAccessTokenAsync(access(issuer.accessClaims(now)), null).get().issuer());
   }
 
   @Test
@@ -634,7 +722,9 @@ final class AuthenticationTest {
     Pkce pkce = Authentication.createPkce();
     assertEquals(43, pkce.verifier().length());
     assertEquals("S256", pkce.method());
-    byte[] digest = MessageDigest.getInstance("SHA-256").digest(pkce.verifier().getBytes(StandardCharsets.US_ASCII));
+    byte[] digest =
+        MessageDigest.getInstance("SHA-256")
+            .digest(pkce.verifier().getBytes(StandardCharsets.US_ASCII));
     assertEquals(Base64.getUrlEncoder().withoutPadding().encodeToString(digest), pkce.challenge());
     assertFalse(pkce.toString().contains(pkce.verifier()));
     Set<String> seen = new HashSet<>();
@@ -650,21 +740,46 @@ final class AuthenticationTest {
 
   @Test
   void publishableKeysAndIssuers() {
-    String live = "pk_live_" + Base64.getUrlEncoder().withoutPadding().encodeToString("https://acme.auth.didit.me/".getBytes(StandardCharsets.UTF_8));
+    String live =
+        "pk_live_"
+            + Base64.getUrlEncoder()
+                .withoutPadding()
+                .encodeToString("https://acme.auth.didit.me/".getBytes(StandardCharsets.UTF_8));
     PublishableKey key = PublishableKey.parse(" " + live + " ");
     assertEquals("https://acme.auth.didit.me", key.issuer());
     assertTrue(key.isLive());
     assertTrue(key.toString().contains("acme"));
     assertEquals("https://acme.auth.didit.me", Authentication.fromPublishableKey(live).issuer());
-    String test = "pk_test_" + Base64.getUrlEncoder().withoutPadding().encodeToString("http://localhost:8000".getBytes(StandardCharsets.UTF_8));
+    String test =
+        "pk_test_"
+            + Base64.getUrlEncoder()
+                .withoutPadding()
+                .encodeToString("http://localhost:8000".getBytes(StandardCharsets.UTF_8));
     assertFalse(PublishableKey.parse(test).isLive());
-    String liveHttp = "pk_live_" + Base64.getUrlEncoder().withoutPadding().encodeToString("http://localhost:8000".getBytes(StandardCharsets.UTF_8));
+    String liveHttp =
+        "pk_live_"
+            + Base64.getUrlEncoder()
+                .withoutPadding()
+                .encodeToString("http://localhost:8000".getBytes(StandardCharsets.UTF_8));
     assertThrows(ConfigurationException.class, () -> PublishableKey.parse(liveHttp));
-    for (String bad : new String[] {"sk_live_abc", "pk_live_", "pk_live_a", "pk_live_ab+c", "pk_test_" + Base64.getUrlEncoder().withoutPadding().encodeToString(new byte[] {(byte) 0xff, (byte) 0xfe})}) {
+    for (String bad :
+        new String[] {
+          "sk_live_abc",
+          "pk_live_",
+          "pk_live_a",
+          "pk_live_ab+c",
+          "pk_test_"
+              + Base64.getUrlEncoder()
+                  .withoutPadding()
+                  .encodeToString(new byte[] {(byte) 0xff, (byte) 0xfe})
+        }) {
       assertThrows(ConfigurationException.class, () -> PublishableKey.parse(bad), bad);
     }
-    assertEquals("https://acme.auth.didit.me", Authentication.create("https://acme.auth.didit.me//").issuer());
-    assertEquals("http://app.localhost:8000", Authentication.create("http://app.localhost:8000").issuer());
+    assertEquals(
+        "https://acme.auth.didit.me",
+        Authentication.create("https://acme.auth.didit.me//").issuer());
+    assertEquals(
+        "http://app.localhost:8000", Authentication.create("http://app.localhost:8000").issuer());
     assertEquals("http://127.0.0.1:8000", Authentication.create("http://127.0.0.1:8000").issuer());
     for (String bad :
         new String[] {
@@ -681,14 +796,20 @@ final class AuthenticationTest {
     }
     assertThrows(ConfigurationException.class, () -> Authentication.builder().build());
     assertThrows(ConfigurationException.class, () -> Authentication.builder().clientId(""));
-    assertThrows(ConfigurationException.class, () -> Authentication.builder().leeway(Duration.ofSeconds(-1)));
-    assertThrows(ConfigurationException.class, () -> Authentication.builder().timeout(Duration.ZERO));
+    assertThrows(
+        ConfigurationException.class,
+        () -> Authentication.builder().leeway(Duration.ofSeconds(-1)));
+    assertThrows(
+        ConfigurationException.class, () -> Authentication.builder().timeout(Duration.ZERO));
     assertTrue(Authentication.create("https://acme.auth.didit.me").toString().contains("acme"));
     assertEquals(
         "https://acme.auth.didit.me",
         Authentication.builder()
             .issuer("https://acme.auth.didit.me")
-            .httpClient(java.net.http.HttpClient.newBuilder().followRedirects(java.net.http.HttpClient.Redirect.NEVER).build())
+            .httpClient(
+                java.net.http.HttpClient.newBuilder()
+                    .followRedirects(java.net.http.HttpClient.Redirect.NEVER)
+                    .build())
             .leeway(Duration.ZERO)
             .build()
             .issuer());
@@ -701,7 +822,8 @@ final class AuthenticationTest {
             + "."
             + b64.encodeToString(payload.getBytes(StandardCharsets.UTF_8));
     try {
-      java.security.Signature signer = java.security.Signature.getInstance("SHA256withECDSAinP1363Format");
+      java.security.Signature signer =
+          java.security.Signature.getInstance("SHA256withECDSAinP1363Format");
       signer.initSign(issuer.keys.getPrivate());
       signer.update(input.getBytes(StandardCharsets.US_ASCII));
       return input + "." + b64.encodeToString(signer.sign());
@@ -722,7 +844,9 @@ final class AuthenticationTest {
     Map<String, String> out = new LinkedHashMap<>();
     for (String pair : new String(body, StandardCharsets.UTF_8).split("&")) {
       String[] kv = pair.split("=", 2);
-      out.put(URLDecoder.decode(kv[0], StandardCharsets.UTF_8), URLDecoder.decode(kv[1], StandardCharsets.UTF_8));
+      out.put(
+          URLDecoder.decode(kv[0], StandardCharsets.UTF_8),
+          URLDecoder.decode(kv[1], StandardCharsets.UTF_8));
     }
     return out;
   }

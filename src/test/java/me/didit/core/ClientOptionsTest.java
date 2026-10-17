@@ -63,13 +63,28 @@ final class ClientOptionsTest {
   void baseUrlRules() {
     assertEquals(
         "http://localhost:4010",
-        ClientOptions.builder().environment(n -> null).baseUrl("http://localhost:4010/").build().baseUrl().toString());
+        ClientOptions.builder()
+            .environment(n -> null)
+            .baseUrl("http://localhost:4010/")
+            .build()
+            .baseUrl()
+            .toString());
     assertEquals(
         "http://127.0.0.1:4010/prefix",
-        ClientOptions.builder().environment(n -> null).baseUrl("http://127.0.0.1:4010/prefix").build().baseUrl().toString());
+        ClientOptions.builder()
+            .environment(n -> null)
+            .baseUrl("http://127.0.0.1:4010/prefix")
+            .build()
+            .baseUrl()
+            .toString());
     assertEquals(
         "http://[::1]:4010",
-        ClientOptions.builder().environment(n -> null).accountBaseUrl("http://[::1]:4010").build().accountBaseUrl().toString());
+        ClientOptions.builder()
+            .environment(n -> null)
+            .accountBaseUrl("http://[::1]:4010")
+            .build()
+            .accountBaseUrl()
+            .toString());
     for (String bad :
         new String[] {
           "http://verification.didit.me",
@@ -90,12 +105,19 @@ final class ClientOptionsTest {
   @Test
   void validation() {
     assertThrows(IllegalArgumentException.class, () -> ClientOptions.builder().maxRetries(-1));
-    assertThrows(IllegalArgumentException.class, () -> ClientOptions.builder().timeout(Duration.ZERO));
-    assertThrows(IllegalArgumentException.class, () -> ClientOptions.builder().timeout(Duration.ofSeconds(-1)));
+    assertThrows(
+        IllegalArgumentException.class, () -> ClientOptions.builder().timeout(Duration.ZERO));
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> ClientOptions.builder().timeout(Duration.ofSeconds(-1)));
     assertThrows(IllegalArgumentException.class, () -> RequestOptions.builder().maxRetries(-1));
-    assertThrows(IllegalArgumentException.class, () -> RequestOptions.builder().timeout(Duration.ZERO));
-    HttpClient redirecting = HttpClient.newBuilder().followRedirects(HttpClient.Redirect.NORMAL).build();
-    assertThrows(IllegalArgumentException.class, () -> ClientOptions.builder().httpClient(redirecting).build());
+    assertThrows(
+        IllegalArgumentException.class, () -> RequestOptions.builder().timeout(Duration.ZERO));
+    HttpClient redirecting =
+        HttpClient.newBuilder().followRedirects(HttpClient.Redirect.NORMAL).build();
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> ClientOptions.builder().httpClient(redirecting).build());
   }
 
   @Test
@@ -125,10 +147,19 @@ final class ClientOptionsTest {
     assertFalse(o.toString().contains("secret-key"));
     assertFalse(o.toString().contains("secret-token"));
     assertTrue(o.toString().contains("[REDACTED]"));
-    assertTrue(ClientOptions.builder().environment(n -> null).build().toString().contains("apiKey=unset"));
+    assertTrue(
+        ClientOptions.builder().environment(n -> null).build().toString().contains("apiKey=unset"));
     HttpClient client = HttpClient.newBuilder().followRedirects(HttpClient.Redirect.NEVER).build();
-    assertTrue(ClientOptions.builder().environment(n -> null).httpClient(client).build().transport() instanceof JdkHttpTransport);
-    assertTrue(ClientOptions.builder().environment(n -> null).timeout(Duration.ofSeconds(5)).build().transport() instanceof JdkHttpTransport);
+    assertTrue(
+        ClientOptions.builder().environment(n -> null).httpClient(client).build().transport()
+            instanceof JdkHttpTransport);
+    assertTrue(
+        ClientOptions.builder()
+                .environment(n -> null)
+                .timeout(Duration.ofSeconds(5))
+                .build()
+                .transport()
+            instanceof JdkHttpTransport);
     RequestOptions ro = RequestOptions.builder().apiKey("hidden").header("X", "1").build();
     assertFalse(ro.toString().contains("hidden"));
     assertTrue(RequestOptions.none().headers().isEmpty());

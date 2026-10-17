@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * A Spring Boot webhook receiver. Take the body as {@code byte[]} so the signature covers the
- * exact bytes Didit sent.
+ * A Spring Boot webhook receiver. Take the body as {@code byte[]} so the signature covers the exact
+ * bytes Didit sent.
  */
 @SpringBootApplication
 @RestController
@@ -24,7 +24,8 @@ public class SpringBootReceiver {
   private final String secret = System.getenv("DIDIT_WEBHOOK_SECRET");
 
   @PostMapping("/webhooks/didit")
-  public ResponseEntity<Void> receive(@RequestBody byte[] body, @RequestHeader HttpHeaders headers) {
+  public ResponseEntity<Void> receive(
+      @RequestBody byte[] body, @RequestHeader HttpHeaders headers) {
     WebhookEvent event;
     try {
       event = Webhooks.verify(body, headers::getFirst, secret);
@@ -35,7 +36,8 @@ public class SpringBootReceiver {
       SessionStatusUpdatedEvent session = (SessionStatusUpdatedEvent) event;
       System.out.println(session.sessionId().orElse("?") + " is " + session.status().orElse("?"));
     } else if (event instanceof TransactionStatusUpdatedEvent) {
-      System.out.println("Transaction " + ((TransactionStatusUpdatedEvent) event).transactionId().orElse("?"));
+      System.out.println(
+          "Transaction " + ((TransactionStatusUpdatedEvent) event).transactionId().orElse("?"));
     }
     return ResponseEntity.ok().build();
   }

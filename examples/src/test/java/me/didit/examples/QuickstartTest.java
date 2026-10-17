@@ -17,7 +17,12 @@ final class QuickstartTest {
   @Test
   void quickstartRunsAgainstTheMock() throws Exception {
     try (MockDiditServer server = new MockDiditServer()) {
-      Didit client = Didit.builder().apiKey("test-key").baseUrl(server.baseUrl()).environment(n -> null).build();
+      Didit client =
+          Didit.builder()
+              .apiKey("test-key")
+              .baseUrl(server.baseUrl())
+              .environment(n -> null)
+              .build();
       assertEquals(
           "11111111-2222-4333-8444-555555555555",
           Quickstart.run(client, "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee"));
@@ -29,10 +34,12 @@ final class QuickstartTest {
     }
     String secret = "whsec_test_quickstart_0123";
     long now = Instant.now().getEpochSecond();
-    String body = "{\"status\":\"Approved\",\"timestamp\":" + now + ",\"webhook_type\":\"status.updated\"}";
+    String body =
+        "{\"status\":\"Approved\",\"timestamp\":" + now + ",\"webhook_type\":\"status.updated\"}";
     Map<String, String> headers =
         Map.of("X-Signature-V2", QuickstartDemo.hmac(secret, Webhooks.canonicalJson(body)));
-    WebhookEvent event = Quickstart.onWebhook(body.getBytes(StandardCharsets.UTF_8), headers, secret);
+    WebhookEvent event =
+        Quickstart.onWebhook(body.getBytes(StandardCharsets.UTF_8), headers, secret);
     assertEquals(VerifiedBy.SIGNATURE_V2, event.verifiedBy());
   }
 }

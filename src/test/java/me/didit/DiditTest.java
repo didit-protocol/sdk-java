@@ -47,7 +47,10 @@ final class DiditTest {
     assertSame(transport, o.transport());
     assertFalse(client.toString().contains("k,"));
     assertTrue(client.toString().contains("[REDACTED]"));
-    Didit other = Didit.builder().httpClient(HttpClient.newBuilder().followRedirects(HttpClient.Redirect.NEVER).build()).build();
+    Didit other =
+        Didit.builder()
+            .httpClient(HttpClient.newBuilder().followRedirects(HttpClient.Redirect.NEVER).build())
+            .build();
     assertTrue(other.options().transport() instanceof me.didit.core.JdkHttpTransport);
   }
 
@@ -71,19 +74,22 @@ final class DiditTest {
   void constructors() {
     Didit fromKey = new Didit("k");
     assertEquals("k", fromKey.options().apiKey().orElseThrow());
-    Didit fromOptions = new Didit(ClientOptions.builder().apiKey("x").environment(n -> null).build());
+    Didit fromOptions =
+        new Didit(ClientOptions.builder().apiKey("x").environment(n -> null).build());
     assertEquals("x", fromOptions.options().apiKey().orElseThrow());
     // The no-argument constructor reads the environment; it never fails for a missing key.
     Didit fromEnv = new Didit();
     assertTrue(fromEnv.options().baseUrl().toString().startsWith("https://"));
-    assertThrows(ConfigurationException.class, () -> Didit.builder().baseUrl("http://example.com").build());
+    assertThrows(
+        ConfigurationException.class, () -> Didit.builder().baseUrl("http://example.com").build());
   }
 
   @Test
   void applicationScopedCallsNeedBothIds() {
     MockTransport transport = new MockTransport();
     Didit client = Didit.builder().apiKey("k").environment(n -> null).transport(transport).build();
-    ConfigurationException e = assertThrows(ConfigurationException.class, () -> client.cases().list());
+    ConfigurationException e =
+        assertThrows(ConfigurationException.class, () -> client.cases().list());
     assertTrue(e.getMessage().contains("DIDIT_ORGANIZATION_ID"));
     assertEquals(0, transport.requests().size());
   }

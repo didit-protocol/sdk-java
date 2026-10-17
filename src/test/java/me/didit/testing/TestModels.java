@@ -92,7 +92,8 @@ public final class TestModels {
         read(method.invoke(value), path + "." + method.getName() + "()", seen);
       } catch (InvocationTargetException e) {
         throw new AssertionError(
-            "Reading " + path + "." + method.getName() + "() failed: " + e.getCause(), e.getCause());
+            "Reading " + path + "." + method.getName() + "() failed: " + e.getCause(),
+            e.getCause());
       } catch (IllegalAccessException e) {
         throw new AssertionError(e);
       }

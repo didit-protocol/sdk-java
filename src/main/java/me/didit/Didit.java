@@ -27,8 +27,8 @@ public final class Didit extends DiditResources {
   private final ApiClient client;
 
   /**
-   * A client configured from the environment: {@code DIDIT_API_KEY}, {@code
-   * DIDIT_ORGANIZATION_ID}, {@code DIDIT_APPLICATION_ID}.
+   * A client configured from the environment: {@code DIDIT_API_KEY}, {@code DIDIT_ORGANIZATION_ID},
+   * {@code DIDIT_APPLICATION_ID}.
    */
   public Didit() {
     this(new ApiClient(ClientOptions.builder().build()));

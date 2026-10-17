@@ -38,9 +38,9 @@ import me.didit.errors.UnexpectedResponseException;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Sends API requests: credentials, headers, retries, timeouts, errors and logging (DESIGN 6 and
- * 7). Shared by every resource of a client; thread-safe. Used by the generated resources, not
- * meant for direct use.
+ * Sends API requests: credentials, headers, retries, timeouts, errors and logging (DESIGN 6 and 7).
+ * Shared by every resource of a client; thread-safe. Used by the generated resources, not meant for
+ * direct use.
  */
 public final class ApiClient {
   static final Duration INITIAL_BACKOFF = Duration.ofMillis(500);
@@ -176,11 +176,13 @@ public final class ApiClient {
     return request.api == ApiRequest.Api.ACCOUNT ? options.accountBaseUrl() : options.baseUrl();
   }
 
-  Prepared prepare(
-      ApiRequest request, RequestOptions ro, boolean streaming, @Nullable URI target) {
+  Prepared prepare(ApiRequest request, RequestOptions ro, boolean streaming, @Nullable URI target) {
     URI base = baseFor(request);
     Map<String, List<String>> headers = new LinkedHashMap<>();
-    put(headers, "Accept", request.accept == null ? "application/json" : request.accept + ", application/json");
+    put(
+        headers,
+        "Accept",
+        request.accept == null ? "application/json" : request.accept + ", application/json");
     put(headers, "User-Agent", Platform.userAgent());
     put(headers, "X-Didit-Client", "java/" + Version.VERSION);
     switch (request.auth) {
@@ -326,22 +328,22 @@ public final class ApiClient {
     CompletableFuture<TransportResponse> inFlight = sent;
     CompletableFuture<?> unused =
         result.whenComplete(
-        (r, e) -> {
-          if (e instanceof CancellationException) {
-            inFlight.cancel(true);
-          }
-        });
-    CompletableFuture<?> unusedAttempt =
-        sent.orTimeout(prepared.timeout.toMillis() + 50, TimeUnit.MILLISECONDS)
-        .whenComplete(
-            (response, error) -> {
-              if (error != null) {
+            (r, e) -> {
+              if (e instanceof CancellationException) {
                 inFlight.cancel(true);
-                onFailure(prepared, request, ro, handler, retry, started, result, error);
-              } else {
-                onResponse(prepared, request, ro, handler, retry, started, result, response);
               }
             });
+    CompletableFuture<?> unusedAttempt =
+        sent.orTimeout(prepared.timeout.toMillis() + 50, TimeUnit.MILLISECONDS)
+            .whenComplete(
+                (response, error) -> {
+                  if (error != null) {
+                    inFlight.cancel(true);
+                    onFailure(prepared, request, ro, handler, retry, started, result, error);
+                  } else {
+                    onResponse(prepared, request, ro, handler, retry, started, result, response);
+                  }
+                });
   }
 
   private <T extends @Nullable Object> void onFailure(
@@ -439,7 +441,8 @@ public final class ApiClient {
       }
     }
     log(prepared, retry, started, Integer.toString(status), headers.requestId());
-    result.completeExceptionally(ApiStatusException.create(status, body, headers, prepared.logPath));
+    result.completeExceptionally(
+        ApiStatusException.create(status, body, headers, prepared.logPath));
   }
 
   private <T extends @Nullable Object> void scheduleRetry(
@@ -464,8 +467,8 @@ public final class ApiClient {
     }
     CompletableFuture<?> unused =
         CompletableFuture.runAsync(
-        () -> attempt(prepared, request, ro, handler, retry + 1, started, result),
-        options.scheduler().after(delay));
+            () -> attempt(prepared, request, ro, handler, retry + 1, started, result),
+            options.scheduler().after(delay));
   }
 
   static ZonedDateTime now() {
@@ -530,10 +533,11 @@ public final class ApiClient {
     }
 
     /**
-     * The wait before retry number {@code retry + 1}: {@code Retry-After} when valid (capped at
-     * 60 s), otherwise exponential backoff from 0.5 s with full jitter, capped at 8 s.
+     * The wait before retry number {@code retry + 1}: {@code Retry-After} when valid (capped at 60
+     * s), otherwise exponential backoff from 0.5 s with full jitter, capped at 8 s.
      */
-    static Duration delay(int retry, Optional<String> retryAfter, double jitter, ZonedDateTime now) {
+    static Duration delay(
+        int retry, Optional<String> retryAfter, double jitter, ZonedDateTime now) {
       Optional<Duration> fromHeader = retryAfter.flatMap(value -> parseRetryAfter(value, now));
       if (fromHeader.isPresent()) {
         Duration d = fromHeader.get();

@@ -194,8 +194,8 @@ public final class ClientOptions {
   }
 
   /**
-   * Whether every request is logged (method, path, status, duration and request id; never bodies
-   * or headers).
+   * Whether every request is logged (method, path, status, duration and request id; never bodies or
+   * headers).
    *
    * @return true when debug logging is on
    */
@@ -487,9 +487,10 @@ public final class ClientOptions {
         chosen =
             httpClient != null
                 ? new JdkHttpTransport(httpClient)
-                : JdkHttpTransport.create(timeout.compareTo(Duration.ofSeconds(30)) < 0
-                    ? timeout
-                    : Duration.ofSeconds(30));
+                : JdkHttpTransport.create(
+                    timeout.compareTo(Duration.ofSeconds(30)) < 0
+                        ? timeout
+                        : Duration.ofSeconds(30));
       }
       return new ClientOptions(this, chosen);
     }

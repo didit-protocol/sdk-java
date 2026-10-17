@@ -61,7 +61,12 @@ public final class Quickstart {
               + e.verifiedBy()
               + ")");
     } else {
-      System.out.println("Webhook: " + event.webhookType() + " " + new String(rawBody, StandardCharsets.UTF_8).length() + " bytes");
+      System.out.println(
+          "Webhook: "
+              + event.webhookType()
+              + " "
+              + new String(rawBody, StandardCharsets.UTF_8).length()
+              + " bytes");
     }
     return event;
   }

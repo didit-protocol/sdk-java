@@ -7,8 +7,8 @@ import java.util.Objects;
 import org.jspecify.annotations.Nullable;
 
 /**
- * The description of one API call, built by the generated resources. Not meant for direct use;
- * its shape may change between minor versions.
+ * The description of one API call, built by the generated resources. Not meant for direct use; its
+ * shape may change between minor versions.
  */
 public final class ApiRequest {
   /** Which API the call goes to. */

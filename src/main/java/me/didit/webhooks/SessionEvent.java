@@ -87,8 +87,8 @@ public abstract class SessionEvent extends WebhookEvent {
 
   /**
    * The decision, sent with {@code Approved}, {@code Declined}, {@code In Review} and {@code
-   * Abandoned}. Its fields depend on the application's webhook version; read raw values with
-   * {@link SessionsRetrieveDecisionResponse#_json()}.
+   * Abandoned}. Its fields depend on the application's webhook version; read raw values with {@link
+   * SessionsRetrieveDecisionResponse#_json()}.
    *
    * @return the decision
    */

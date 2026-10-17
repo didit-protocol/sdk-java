@@ -1,8 +1,8 @@
 package me.didit.errors;
 
 /**
- * A webhook delivery failed verification (DESIGN 9.3). Answer it with 400 or 401 and do not act
- * on its content; {@link #reason()} says why.
+ * A webhook delivery failed verification (DESIGN 9.3). Answer it with 400 or 401 and do not act on
+ * its content; {@link #reason()} says why.
  */
 public class WebhookVerificationException extends DiditException {
   private static final long serialVersionUID = 1L;

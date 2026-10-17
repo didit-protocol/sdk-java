@@ -6,8 +6,8 @@ import java.util.function.Function;
 import org.jspecify.annotations.Nullable;
 
 /**
- * The webhook helpers reachable as {@code client.webhooks().verify(...)}; they do the same as
- * the static methods of {@link Webhooks} and need no API key.
+ * The webhook helpers reachable as {@code client.webhooks().verify(...)}; they do the same as the
+ * static methods of {@link Webhooks} and need no API key.
  */
 public abstract class WebhookMethods {
   /** Creates the helpers. */

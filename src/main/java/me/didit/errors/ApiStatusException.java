@@ -6,8 +6,8 @@ import me.didit.core.Headers;
 import org.jspecify.annotations.Nullable;
 
 /**
- * The API answered with a status outside 2xx. Subclasses name the common statuses; {@link
- * #create} picks the right one.
+ * The API answered with a status outside 2xx. Subclasses name the common statuses; {@link #create}
+ * picks the right one.
  */
 public class ApiStatusException extends DiditException {
   private static final long serialVersionUID = 1L;

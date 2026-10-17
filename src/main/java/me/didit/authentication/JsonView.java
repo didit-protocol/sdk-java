@@ -48,8 +48,13 @@ abstract class JsonView {
       first = false;
       String key = e.getKey();
       boolean secret =
-          key.contains("token") || key.equals("code") || key.equals("nonce") || key.equals("email")
-              || key.equals("phone") || key.equals("phone_number") || key.equals("name");
+          key.contains("token")
+              || key.equals("code")
+              || key.equals("nonce")
+              || key.equals("email")
+              || key.equals("phone")
+              || key.equals("phone_number")
+              || key.equals("name");
       out.append(key).append('=').append(secret ? "[REDACTED]" : e.getValue().toString());
     }
     return out.append('}').toString();

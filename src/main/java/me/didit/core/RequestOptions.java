@@ -238,8 +238,7 @@ public final class RequestOptions {
      * @return this builder
      */
     public Builder queryParam(String name, String value) {
-      queryParams.put(
-          Objects.requireNonNull(name, "name"), Objects.requireNonNull(value, "value"));
+      queryParams.put(Objects.requireNonNull(name, "name"), Objects.requireNonNull(value, "value"));
       return this;
     }
 

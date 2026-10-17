@@ -57,8 +57,8 @@ import me.didit.errors.UnexpectedResponseException;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Didit Authentication for your backend (DESIGN 10). It talks to your application's issuer
- * ({@code https://<slug>.auth.didit.me} or your own domain), never with the API key.
+ * Didit Authentication for your backend (DESIGN 10). It talks to your application's issuer ({@code
+ * https://<slug>.auth.didit.me} or your own domain), never with the API key.
  *
  * <pre>{@code
  * Authentication auth = Authentication.fromPublishableKey("pk_live_...");
@@ -67,8 +67,8 @@ import org.jspecify.annotations.Nullable;
  * }</pre>
  *
  * <p>Discovery and the signing keys are fetched lazily and cached as the issuer says (5 minutes
- * today, kept between 1 minute and 24 hours); a token with an unknown key id refetches the keys
- * at most once a minute. Thread-safe: create one per issuer and reuse it.
+ * today, kept between 1 minute and 24 hours); a token with an unknown key id refetches the keys at
+ * most once a minute. Thread-safe: create one per issuer and reuse it.
  *
  * <p>Refreshes of one session must be serialised: each refresh token works once, and reusing a
  * consumed one revokes the session.
@@ -220,8 +220,8 @@ public final class Authentication {
    * Verifies an access token for an audience.
    *
    * @param token the Bearer token
-   * @param audience the expected audience (your application id), or {@code null} for the
-   *     configured client id
+   * @param audience the expected audience (your application id), or {@code null} for the configured
+   *     client id
    * @return the verified claims
    * @throws TokenVerificationException when the token is not valid
    * @throws DiditException when the issuer's keys cannot be fetched
@@ -266,7 +266,8 @@ public final class Authentication {
    * @throws TokenVerificationException when the token is not valid
    * @throws ConfigurationException when no audience is given or configured
    */
-  public IdTokenClaims verifyIdToken(String token, @Nullable String nonce, @Nullable String audience) {
+  public IdTokenClaims verifyIdToken(
+      String token, @Nullable String nonce, @Nullable String audience) {
     return await(verifyIdTokenAsync(token, nonce, audience));
   }
 
@@ -311,7 +312,8 @@ public final class Authentication {
       ObjectNode claims, @Nullable String audience, @Nullable String nonce, boolean access) {
     JsonNode iss = claims.get("iss");
     if (iss == null || !iss.isTextual() || !iss.textValue().equals(issuer)) {
-      throw new TokenVerificationException(Reason.INVALID_ISSUER, "The token's issuer is not " + issuer);
+      throw new TokenVerificationException(
+          Reason.INVALID_ISSUER, "The token's issuer is not " + issuer);
     }
     JsonNode sub = claims.get("sub");
     if (sub == null || !sub.isTextual() || sub.textValue().isEmpty()) {
@@ -340,7 +342,8 @@ public final class Authentication {
       }
     }
     if (iat.asDouble() > now + leewaySeconds) {
-      throw new TokenVerificationException(Reason.INVALID_ISSUED_AT, "The token was issued in the future");
+      throw new TokenVerificationException(
+          Reason.INVALID_ISSUED_AT, "The token was issued in the future");
     }
     if (audience != null && !TokenClaims.audiences(claims).contains(audience)) {
       throw new TokenVerificationException(
@@ -353,7 +356,8 @@ public final class Authentication {
           || !MessageDigest.isEqual(
               actual.textValue().getBytes(StandardCharsets.UTF_8),
               nonce.getBytes(StandardCharsets.UTF_8))) {
-        throw new TokenVerificationException(Reason.INVALID_NONCE, "The token's nonce does not match");
+        throw new TokenVerificationException(
+            Reason.INVALID_NONCE, "The token's nonce does not match");
       }
     }
   }
@@ -395,7 +399,8 @@ public final class Authentication {
         throw malformed("The token has critical header parameters");
       }
       JsonNode typ = header.get("typ");
-      String type = typ != null && typ.isTextual() ? typ.textValue().toLowerCase(Locale.ROOT) : null;
+      String type =
+          typ != null && typ.isTextual() ? typ.textValue().toLowerCase(Locale.ROOT) : null;
       boolean typeOk =
           access
               ? "at+jwt".equals(type) || "application/at+jwt".equals(type)
@@ -424,10 +429,12 @@ public final class Authentication {
         verifier.initVerify(key);
         verifier.update(signingInput);
         if (!verifier.verify(signature)) {
-          throw new TokenVerificationException(Reason.INVALID_SIGNATURE, "The signature does not match");
+          throw new TokenVerificationException(
+              Reason.INVALID_SIGNATURE, "The signature does not match");
         }
       } catch (GeneralSecurityException e) {
-        throw new TokenVerificationException(Reason.INVALID_SIGNATURE, "The signature does not match");
+        throw new TokenVerificationException(
+            Reason.INVALID_SIGNATURE, "The signature does not match");
       }
     }
 
@@ -521,7 +528,8 @@ public final class Authentication {
     JsonNode jwksUri = doc.get("jwks_uri");
     if (jwksUri != null && jwksUri.isTextual()) {
       URI candidate = base.resolve(jwksUri.textValue());
-      String scheme = candidate.getScheme() == null ? "" : candidate.getScheme().toLowerCase(Locale.ROOT);
+      String scheme =
+          candidate.getScheme() == null ? "" : candidate.getScheme().toLowerCase(Locale.ROOT);
       boolean httpIssuer = issuer.startsWith("http://");
       if (!scheme.equals("https") && !(httpIssuer && scheme.equals("http"))) {
         throw new ConfigurationException("The JWKS URI must use https");
@@ -803,7 +811,8 @@ public final class Authentication {
     params.returnTo().ifPresent(r -> body.put("return_to", r));
     Map<String, String> headers = new LinkedHashMap<>(bearer(accessToken));
     headers.put("Content-Type", "application/json");
-    return send("POST", runtime("step-up/"), headers, Json.write(body).getBytes(StandardCharsets.UTF_8))
+    return send(
+            "POST", runtime("step-up/"), headers, Json.write(body).getBytes(StandardCharsets.UTF_8))
         .thenApply(response -> new StepUp(jsonObject(response, "the step-up")));
   }
 
@@ -885,7 +894,8 @@ public final class Authentication {
                 }
               }
               throw new CompletionException(
-                  ApiStatusException.create(status, oauthDetail(parsed), response.headers(), where));
+                  ApiStatusException.create(
+                      status, oauthDetail(parsed), response.headers(), where));
             });
   }
 
@@ -925,7 +935,8 @@ public final class Authentication {
     }
     JsonNode node = Json.parse(bytes);
     if (!node.isObject()) {
-      throw new UnexpectedResponseException("The issuer returned " + what + " that is not a JSON object");
+      throw new UnexpectedResponseException(
+          "The issuer returned " + what + " that is not a JSON object");
     }
     return (ObjectNode) node;
   }

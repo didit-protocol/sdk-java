@@ -79,7 +79,8 @@ public final class FileUpload {
    * @return the upload
    */
   public static FileUpload of(InputStream stream, String fileName, @Nullable String contentType) {
-    return new FileUpload(null, null, Objects.requireNonNull(stream, "stream"), fileName, contentType);
+    return new FileUpload(
+        null, null, Objects.requireNonNull(stream, "stream"), fileName, contentType);
   }
 
   /**

@@ -19,8 +19,8 @@ import java.util.stream.StreamSupport;
 import me.didit.errors.UnexpectedResponseException;
 
 /**
- * One page of a list (DESIGN 8): {@code count}, {@code next}, {@code previous} and {@code
- * results}. Iterating a page walks every following page too:
+ * One page of a list (DESIGN 8): {@code count}, {@code next}, {@code previous} and {@code results}.
+ * Iterating a page walks every following page too:
  *
  * <pre>{@code
  * for (WorkflowListItem workflow : client.workflows().list()) {
@@ -53,8 +53,7 @@ public final class Page<T> implements Iterable<T> {
     this.item = item;
     this.seen = seen;
     JsonNode results = json.get("results");
-    this.results =
-        results == null || results.isNull() ? List.of() : Conv.list(item).read(results);
+    this.results = results == null || results.isNull() ? List.of() : Conv.list(item).read(results);
   }
 
   static <T> Page<T> first(SuccessResponse response, Conv<T> item) {
@@ -66,12 +65,7 @@ public final class Page<T> implements Iterable<T> {
     Set<String> seen = new HashSet<>();
     seen.add(key(response.uri));
     return new Page<>(
-        response.client,
-        response.request,
-        response.options,
-        (ObjectNode) json,
-        item,
-        seen);
+        response.client, response.request, response.options, (ObjectNode) json, item, seen);
   }
 
   private static String key(URI uri) {

@@ -97,7 +97,8 @@ public final class Webhooks {
    * @throws ConfigurationException when the secret is empty
    */
   public static WebhookEvent verify(String rawBody, Map<String, ?> headers, String secret) {
-    return verify(rawBody.getBytes(StandardCharsets.UTF_8), lookup(headers), VerifyOptions.of(secret));
+    return verify(
+        rawBody.getBytes(StandardCharsets.UTF_8), lookup(headers), VerifyOptions.of(secret));
   }
 
   /**
@@ -184,9 +185,8 @@ public final class Webhooks {
   }
 
   /**
-   * Verifies a delivery whose body the framework already parsed. Only {@code X-Signature-V2}
-   * (and the opt-in Simple signature) can be checked this way; prefer {@link #verify} with the
-   * raw body.
+   * Verifies a delivery whose body the framework already parsed. Only {@code X-Signature-V2} (and
+   * the opt-in Simple signature) can be checked this way; prefer {@link #verify} with the raw body.
    *
    * @param payload the parsed JSON body
    * @param headers the request headers; values may be strings or lists of strings
@@ -200,8 +200,8 @@ public final class Webhooks {
   }
 
   /**
-   * Verifies a delivery whose body the framework parsed into a map (for example Spring's {@code
-   * @RequestBody Map<String, Object>}). Only {@code X-Signature-V2} can be checked this way.
+   * Verifies a delivery whose body the framework parsed into a map (for example Spring's
+   * {@code @RequestBody Map<String, Object>}). Only {@code X-Signature-V2} can be checked this way.
    *
    * @param payload the parsed JSON body
    * @param headers the request headers; values may be strings or lists of strings
@@ -245,7 +245,8 @@ public final class Webhooks {
       JsonNode payload, Function<String, @Nullable String> headers, VerifyOptions options) {
     List<String> secrets = secrets(options);
     if (!payload.isObject()) {
-      throw new WebhookVerificationException(Reason.INVALID_PAYLOAD, "The body is not a JSON object");
+      throw new WebhookVerificationException(
+          Reason.INVALID_PAYLOAD, "The body is not a JSON object");
     }
     ObjectNode object = ((ObjectNode) payload).deepCopy();
     checkTimestamp(object, headers, options);
@@ -270,8 +271,8 @@ public final class Webhooks {
    *
    * @param payload the parsed body
    * @return the canonical JSON
-   * @throws WebhookVerificationException with {@code invalid_payload} for NaN, infinite numbers
-   *     or lone surrogates
+   * @throws WebhookVerificationException with {@code invalid_payload} for NaN, infinite numbers or
+   *     lone surrogates
    */
   public static String canonicalJson(JsonNode payload) {
     return canonical(payload);
@@ -287,7 +288,8 @@ public final class Webhooks {
    */
   public static WebhookEvent parseEvent(JsonNode payload) {
     if (!payload.isObject()) {
-      throw new WebhookVerificationException(Reason.INVALID_PAYLOAD, "The body is not a JSON object");
+      throw new WebhookVerificationException(
+          Reason.INVALID_PAYLOAD, "The body is not a JSON object");
     }
     return WebhookEvent.of(((ObjectNode) payload).deepCopy(), VerifiedBy.NONE);
   }
@@ -357,7 +359,8 @@ public final class Webhooks {
       throw new WebhookVerificationException(Reason.INVALID_PAYLOAD, "The body is not valid JSON");
     }
     if (node == null || !node.isObject()) {
-      throw new WebhookVerificationException(Reason.INVALID_PAYLOAD, "The body is not a JSON object");
+      throw new WebhookVerificationException(
+          Reason.INVALID_PAYLOAD, "The body is not a JSON object");
     }
     return (ObjectNode) node;
   }
@@ -400,7 +403,8 @@ public final class Webhooks {
     try {
       return CanonicalJson.write(payload);
     } catch (CanonicalJson.InvalidValueException e) {
-      throw new WebhookVerificationException(Reason.INVALID_PAYLOAD, String.valueOf(e.getMessage()));
+      throw new WebhookVerificationException(
+          Reason.INVALID_PAYLOAD, String.valueOf(e.getMessage()));
     }
   }
 
@@ -505,8 +509,8 @@ public final class Webhooks {
   }
 
   /**
-   * Header lookup over a map: names compare without case, the first matching entry wins, and a
-   * list value gives its first item.
+   * Header lookup over a map: names compare without case, the first matching entry wins, and a list
+   * value gives its first item.
    */
   static Function<String, @Nullable String> lookup(Map<String, ?> headers) {
     Objects.requireNonNull(headers, "headers");

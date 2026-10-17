@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Encodes {@code multipart/form-data} (DESIGN 8). Strings, numbers and booleans become text
- * fields; a list of scalars becomes one field per item; objects and lists of objects become JSON
- * text; null fields are left out.
+ * Encodes {@code multipart/form-data} (DESIGN 8). Strings, numbers and booleans become text fields;
+ * a list of scalars becomes one field per item; objects and lists of objects become JSON text; null
+ * fields are left out.
  */
 final class Multipart {
   private static final SecureRandom RANDOM = new SecureRandom();

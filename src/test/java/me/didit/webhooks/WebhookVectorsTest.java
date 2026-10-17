@@ -37,7 +37,9 @@ final class WebhookVectorsTest {
   private static VerifyOptions options(JsonNode vector, boolean allowSimple) {
     return VerifyOptions.builder()
         .secret(vector.get("secret").asText())
-        .tolerance(java.time.Duration.ofSeconds(SpecExamples.document("webhook-vectors.json").get("tolerance_seconds").asLong()))
+        .tolerance(
+            java.time.Duration.ofSeconds(
+                SpecExamples.document("webhook-vectors.json").get("tolerance_seconds").asLong()))
         .allowSimple(allowSimple)
         .clock(Clock.fixed(Instant.ofEpochSecond(vector.get("now").asLong()), ZoneOffset.UTC))
         .build();
@@ -81,7 +83,8 @@ final class WebhookVectorsTest {
           v2Only.remove("X-Signature");
           v2Only.remove("X-Signature-Previous");
           WebhookEvent fromV2 =
-              Webhooks.verify(body.getBytes(StandardCharsets.UTF_8), v2Only, options(vector, false));
+              Webhooks.verify(
+                  body.getBytes(StandardCharsets.UTF_8), v2Only, options(vector, false));
           assertEquals(VerifiedBy.SIGNATURE_V2, fromV2.verifiedBy());
           WebhookEvent parsed =
               Webhooks.verifyParsed(TestJson.parse(body), headers, options(vector, false));

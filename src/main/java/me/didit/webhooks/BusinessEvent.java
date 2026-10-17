@@ -11,7 +11,7 @@ public abstract class BusinessEvent extends WebhookEvent {
   }
 
   /**
-   * Didit's id of  {@code business.status.updated} or {@code business.data.updated}.:the business.
+   * Didit's id of {@code business.status.updated} or {@code business.data.updated}.:the business.
    *
    * @return the id
    */
@@ -20,7 +20,8 @@ public abstract class BusinessEvent extends WebhookEvent {
   }
 
   /**
-   * Your reference for  {@code business.status.updated} or {@code business.data.updated}.:the business.
+   * Your reference for {@code business.status.updated} or {@code business.data.updated}.:the
+   * business.
    *
    * @return the vendor data
    */
@@ -29,7 +30,7 @@ public abstract class BusinessEvent extends WebhookEvent {
   }
 
   /**
-   * The status of  {@code business.status.updated} or {@code business.data.updated}.:the business.
+   * The status of {@code business.status.updated} or {@code business.data.updated}.:the business.
    *
    * @return the status
    */

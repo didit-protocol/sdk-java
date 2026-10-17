@@ -22,7 +22,11 @@ final class PageTest {
     transport.respond(200, body);
     ApiClient client =
         new ApiClient(
-            ClientOptions.builder().apiKey("k").environment(n -> null).transport(transport).build());
+            ClientOptions.builder()
+                .apiKey("k")
+                .environment(n -> null)
+                .transport(transport)
+                .build());
     return client
         .execute(
             ApiRequest.builder("GET", "/v3/pets/")
@@ -36,13 +40,20 @@ final class PageTest {
 
   private static String page(String next, String... names) {
     String results =
-        java.util.Arrays.stream(names).map(n -> "{\"name\":\"" + n + "\"}").collect(Collectors.joining(","));
-    return "{\"count\":3,\"next\":" + next + ",\"previous\":null,\"results\":[" + results + "],\"total\":9}";
+        java.util.Arrays.stream(names)
+            .map(n -> "{\"name\":\"" + n + "\"}")
+            .collect(Collectors.joining(","));
+    return "{\"count\":3,\"next\":"
+        + next
+        + ",\"previous\":null,\"results\":["
+        + results
+        + "],\"total\":9}";
   }
 
   @Test
   void iteratesEveryPage() {
-    Page<Pet> page = first(page("\"https://verification.didit.me/v3/pets/?limit=2&offset=2\"", "a", "b"));
+    Page<Pet> page =
+        first(page("\"https://verification.didit.me/v3/pets/?limit=2&offset=2\"", "a", "b"));
     transport.respond(200, page("null", "c"));
     assertEquals(2, page.results().size());
     assertEquals(3L, page.count().orElseThrow());
@@ -66,7 +77,8 @@ final class PageTest {
     Page<Pet> page = first(page("\"/v3/pets/?offset=2\"", "a", "b"));
     transport.respond(200, page("null", "c"));
     assertEquals(
-        List.of("a", "b", "c"), page.autoPager().stream().map(Pet::name).collect(Collectors.toList()));
+        List.of("a", "b", "c"),
+        page.autoPager().stream().map(Pet::name).collect(Collectors.toList()));
     transport.respond(200, page("null", "c"));
     List<String> names = new ArrayList<>();
     page.forEachAsync(p -> names.add(p.name())).get();

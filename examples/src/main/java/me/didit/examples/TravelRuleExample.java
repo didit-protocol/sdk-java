@@ -22,10 +22,17 @@ public final class TravelRuleExample {
                     .blockchain(WalletScreeningScreenParams.Blockchain.of("bitcoin"))
                     .build());
     System.out.println(
-        "Wallet risk " + wallet.riskScore() + " (" + wallet.severity() + "), sanctions hit: " + wallet.sanctionsHit());
+        "Wallet risk "
+            + wallet.riskScore()
+            + " ("
+            + wallet.severity()
+            + "), sanctions hit: "
+            + wallet.sanctionsHit());
 
     Page<VaspDirectoryEntry> vasps =
-        client.travelRule().listVasps(TravelRuleListVaspsParams.builder().search("exchange").limit(50).build());
+        client
+            .travelRule()
+            .listVasps(TravelRuleListVaspsParams.builder().search("exchange").limit(50).build());
     int shown = 0;
     for (VaspDirectoryEntry vasp : vasps) { // fetches the following pages as needed
       System.out.println(vasp.name().orElse("?") + " " + vasp.jurisdiction().orElse(""));

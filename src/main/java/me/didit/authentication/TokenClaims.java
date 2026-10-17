@@ -107,7 +107,8 @@ public abstract class TokenClaims extends JsonView {
   }
 
   final Optional<Instant> instant(String claim) {
-    return optional(claim, Conv.DOUBLE).map(seconds -> Instant.ofEpochMilli((long) (seconds * 1000)));
+    return optional(claim, Conv.DOUBLE)
+        .map(seconds -> Instant.ofEpochMilli((long) (seconds * 1000)));
   }
 
   /**

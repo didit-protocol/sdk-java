@@ -28,6 +28,9 @@ public final class AmlScreeningExample {
         .ifPresent(
             aml ->
                 System.out.println(
-                    "AML " + aml.status().map(Object::toString).orElse("?") + ", hits " + aml.totalHits().orElse(0L)));
+                    "AML "
+                        + aml.status().map(Object::toString).orElse("?")
+                        + ", hits "
+                        + aml.totalHits().orElse(0L)));
   }
 }

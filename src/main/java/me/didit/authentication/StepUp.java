@@ -6,8 +6,8 @@ import java.util.Optional;
 import me.didit.core.Conv;
 
 /**
- * A step-up verification. Act on a sensitive action only when {@link #isApproved()} is true,
- * after reading it back with {@link Authentication#retrieveStepUp}.
+ * A step-up verification. Act on a sensitive action only when {@link #isApproved()} is true, after
+ * reading it back with {@link Authentication#retrieveStepUp}.
  */
 public final class StepUp extends JsonView {
   StepUp(ObjectNode json) {

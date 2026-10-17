@@ -11,7 +11,7 @@ public abstract class UserEvent extends WebhookEvent {
   }
 
   /**
-   * Didit's id of  {@code user.status.updated} or {@code user.data.updated}.:the user.
+   * Didit's id of {@code user.status.updated} or {@code user.data.updated}.:the user.
    *
    * @return the id
    */
@@ -20,7 +20,7 @@ public abstract class UserEvent extends WebhookEvent {
   }
 
   /**
-   * Your reference for  {@code user.status.updated} or {@code user.data.updated}.:the user.
+   * Your reference for {@code user.status.updated} or {@code user.data.updated}.:the user.
    *
    * @return the vendor data
    */
@@ -29,7 +29,7 @@ public abstract class UserEvent extends WebhookEvent {
   }
 
   /**
-   * The status of  {@code user.status.updated} or {@code user.data.updated}.:the user.
+   * The status of {@code user.status.updated} or {@code user.data.updated}.:the user.
    *
    * @return the status
    */

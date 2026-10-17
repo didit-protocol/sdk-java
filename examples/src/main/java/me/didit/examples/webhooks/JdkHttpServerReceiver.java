@@ -25,7 +25,8 @@ public final class JdkHttpServerReceiver {
             WebhookEvent event =
                 Webhooks.verify(body, exchange.getRequestHeaders()::getFirst, options);
             if (event instanceof SessionStatusUpdatedEvent) {
-              System.out.println("Session " + ((SessionStatusUpdatedEvent) event).sessionId().orElse("?"));
+              System.out.println(
+                  "Session " + ((SessionStatusUpdatedEvent) event).sessionId().orElse("?"));
             }
             status = 200;
           } catch (WebhookVerificationException e) {

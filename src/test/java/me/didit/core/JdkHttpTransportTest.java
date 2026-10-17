@@ -14,8 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicReference;
 import me.didit.Didit;
-import me.didit.errors.ApiStatusException;
 import me.didit.errors.ApiConnectionException;
+import me.didit.errors.ApiStatusException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,8 @@ final class JdkHttpTransportTest {
         "/v3/echo/",
         exchange -> {
           lastKey.set(exchange.getRequestHeaders().getFirst("x-api-key"));
-          lastBody.set(new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8));
+          lastBody.set(
+              new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8));
           byte[] body = "{\"ok\":true}".getBytes(StandardCharsets.UTF_8);
           exchange.getResponseHeaders().add("Content-Type", "application/json");
           exchange.getResponseHeaders().add("X-Request-Id", "req-local");
@@ -111,7 +112,12 @@ final class JdkHttpTransportTest {
     ApiStatusException e =
         assertThrows(
             ApiStatusException.class,
-            () -> client().execute(ApiRequest.builder("GET", "/v3/redirect/").build(), RequestOptions.none(), Responses.jsonNode()));
+            () ->
+                client()
+                    .execute(
+                        ApiRequest.builder("GET", "/v3/redirect/").build(),
+                        RequestOptions.none(),
+                        Responses.jsonNode()));
     assertEquals(302, e.statusCode());
   }
 
@@ -129,7 +135,11 @@ final class JdkHttpTransportTest {
                 .build());
     assertThrows(
         ApiConnectionException.class,
-        () -> client.execute(ApiRequest.builder("GET", "/v3/echo/").build(), RequestOptions.none(), Responses.jsonNode()));
+        () ->
+            client.execute(
+                ApiRequest.builder("GET", "/v3/echo/").build(),
+                RequestOptions.none(),
+                Responses.jsonNode()));
     start();
   }
 

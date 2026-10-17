@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Base class of the generated union ({@code oneOf}) types: an immutable JSON value that matches
- * one of several shapes. Generated subclasses offer {@code isX()} and {@code asX()} per variant.
+ * Base class of the generated union ({@code oneOf}) types: an immutable JSON value that matches one
+ * of several shapes. Generated subclasses offer {@code isX()} and {@code asX()} per variant.
  */
 public abstract class JsonUnion {
   /** The wrapped value, owned by this instance. */

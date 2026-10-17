@@ -50,18 +50,24 @@ final class ModelTest {
 
   @Test
   void requiredFields() {
-    IllegalStateException e = assertThrows(IllegalStateException.class, () -> Pet.builder().build());
+    IllegalStateException e =
+        assertThrows(IllegalStateException.class, () -> Pet.builder().build());
     assertTrue(e.getMessage().contains("name"));
     assertThrows(IllegalStateException.class, () -> Pet.builder().name("Rex").buildWithPhoto());
     assertThrows(NullPointerException.class, () -> Pet.builder().name(null));
     UnexpectedResponseException missing =
-        assertThrows(UnexpectedResponseException.class, () -> Pet.fromJson(TestJson.parse("{}")).name());
+        assertThrows(
+            UnexpectedResponseException.class, () -> Pet.fromJson(TestJson.parse("{}")).name());
     assertTrue(missing.getMessage().contains("'name' is missing"));
     UnexpectedResponseException nul =
-        assertThrows(UnexpectedResponseException.class, () -> Pet.fromJson(TestJson.parse("{\"name\":null}")).name());
+        assertThrows(
+            UnexpectedResponseException.class,
+            () -> Pet.fromJson(TestJson.parse("{\"name\":null}")).name());
     assertTrue(nul.getMessage().contains("is null"));
     UnexpectedResponseException wrong =
-        assertThrows(UnexpectedResponseException.class, () -> Pet.fromJson(TestJson.parse("{\"age\":\"old\"}")).age());
+        assertThrows(
+            UnexpectedResponseException.class,
+            () -> Pet.fromJson(TestJson.parse("{\"age\":\"old\"}")).age());
     assertTrue(wrong.getMessage().contains("Field 'age'"));
     assertThrows(UnexpectedResponseException.class, () -> Pet.fromJson(TestJson.parse("[]")));
   }
@@ -77,7 +83,12 @@ final class ModelTest {
 
   @Test
   void toStringRedactsSecrets() {
-    Pet pet = Pet.builder().name("Rex").apiToken("secret-value").extra(Map.of("password", "p", "list", List.of(Map.of("session_token", "t")))).build();
+    Pet pet =
+        Pet.builder()
+            .name("Rex")
+            .apiToken("secret-value")
+            .extra(Map.of("password", "p", "list", List.of(Map.of("session_token", "t"))))
+            .build();
     String text = pet.toString();
     assertTrue(text.startsWith("Pet{"), text);
     assertFalse(text.contains("secret-value"));
@@ -93,7 +104,12 @@ final class ModelTest {
     Path tmp = Files.createTempFile("didit", ".png");
     try {
       Files.write(tmp, new byte[] {9, 8});
-      Pet pet = Pet.builder().name("Rex").photo(tmp).photos(List.of(FileUpload.of(new byte[] {1}, "b.webp"))).build();
+      Pet pet =
+          Pet.builder()
+              .name("Rex")
+              .photo(tmp)
+              .photos(List.of(FileUpload.of(new byte[] {1}, "b.webp")))
+              .build();
       FileUpload photo = pet.photo().orElseThrow();
       assertEquals(tmp.getFileName().toString(), photo.fileName());
       assertEquals("image/png", photo.contentType());
@@ -103,7 +119,8 @@ final class ModelTest {
     } finally {
       Files.delete(tmp);
     }
-    FileUpload stream = FileUpload.of(new ByteArrayInputStream(new byte[] {1, 2, 3}), "doc.pdf", null);
+    FileUpload stream =
+        FileUpload.of(new ByteArrayInputStream(new byte[] {1, 2, 3}), "doc.pdf", null);
     assertEquals(3, stream.read().length);
     assertEquals(3, stream.read().length, "a stream is read once and reused for retries");
     assertEquals("application/pdf", stream.contentType());
@@ -115,7 +132,8 @@ final class ModelTest {
     assertEquals("application/octet-stream", FileUpload.of(new byte[0], "blob").contentType());
     assertEquals("image/gif", FileUpload.of(new byte[0], "a.gif").contentType());
     assertTrue(FileUpload.of(new byte[0], "a.bin", "x/y").toString().contains("x/y"));
-    assertThrows(UncheckedIOException.class, () -> FileUpload.of(Path.of("does-not-exist.jpg")).read());
+    assertThrows(
+        UncheckedIOException.class, () -> FileUpload.of(Path.of("does-not-exist.jpg")).read());
     assertEquals("file", FileUpload.of(Path.of("/")).fileName());
     Pet empty = Pet.builder().name("a").build();
     assertTrue(empty.photo().isEmpty());
@@ -139,9 +157,11 @@ final class ModelTest {
 
   @Test
   void unions() {
-    Pet.PetOrName a = Pet.PetOrName.fromJson(TestJson.parse("{\"name\":\"Rex\",\"session_token\":\"s\"}"));
+    Pet.PetOrName a =
+        Pet.PetOrName.fromJson(TestJson.parse("{\"name\":\"Rex\",\"session_token\":\"s\"}"));
     assertTrue(a.isPet());
-    assertEquals(a, Pet.PetOrName.fromJson(TestJson.parse("{\"name\":\"Rex\",\"session_token\":\"s\"}")));
+    assertEquals(
+        a, Pet.PetOrName.fromJson(TestJson.parse("{\"name\":\"Rex\",\"session_token\":\"s\"}")));
     assertEquals(a.hashCode(), Pet.PetOrName.fromJson(a._json()).hashCode());
     assertFalse(a.equals(null));
     assertFalse(a.toString().contains("\"s\""));
@@ -158,7 +178,9 @@ final class ModelTest {
     assertEquals(5L, Conv.LONG.read(TestJson.parse("\"5\"")));
     assertEquals(5L, Conv.LONG.read(TestJson.parse("5.0")));
     assertThrows(UnexpectedResponseException.class, () -> Conv.LONG.read(TestJson.parse("5.5")));
-    assertThrows(UnexpectedResponseException.class, () -> Conv.LONG.read(TestJson.parse("99999999999999999999")));
+    assertThrows(
+        UnexpectedResponseException.class,
+        () -> Conv.LONG.read(TestJson.parse("99999999999999999999")));
     assertThrows(UnexpectedResponseException.class, () -> Conv.LONG.read(TestJson.parse("\"x\"")));
     assertThrows(UnexpectedResponseException.class, () -> Conv.LONG.read(TestJson.parse("[]")));
     assertEquals(1.25, Conv.DOUBLE.read(TestJson.parse("\"1.25\"")));
@@ -166,19 +188,43 @@ final class ModelTest {
     assertThrows(IllegalArgumentException.class, () -> Conv.DOUBLE.write(Double.POSITIVE_INFINITY));
     assertEquals(2.5, Conv.DOUBLE.write(2.5).asDouble());
     assertTrue(Conv.BOOLEAN.read(TestJson.parse("\"true\"")));
-    assertThrows(UnexpectedResponseException.class, () -> Conv.BOOLEAN.read(TestJson.parse("\"yes\"")));
-    assertEquals(OffsetDateTime.of(2026, 11, 1, 10, 0, 0, 0, ZoneOffset.UTC), Conv.DATE_TIME.read(TestJson.parse("\"2026-11-01T10:00:00Z\"")));
-    assertEquals(OffsetDateTime.of(2026, 11, 1, 10, 0, 0, 0, ZoneOffset.ofHours(2)), Conv.DATE_TIME.read(TestJson.parse("\"2026-11-01T10:00:00+02:00\"")));
-    assertEquals(OffsetDateTime.of(2026, 11, 1, 10, 0, 0, 0, ZoneOffset.UTC), Conv.DATE_TIME.read(TestJson.parse("\"2026-11-01T10:00:00\"")));
-    assertEquals(OffsetDateTime.of(2026, 11, 1, 10, 0, 0, 0, ZoneOffset.UTC), Conv.DATE_TIME.read(TestJson.parse("\"2026-11-01 10:00:00\"")));
-    assertEquals(OffsetDateTime.of(2026, 11, 1, 0, 0, 0, 0, ZoneOffset.UTC), Conv.DATE_TIME.read(TestJson.parse("\"2026-11-01\"")));
-    assertEquals(OffsetDateTime.of(1970, 1, 1, 0, 0, 10, 0, ZoneOffset.UTC), Conv.DATE_TIME.read(TestJson.parse("10")));
-    assertThrows(UnexpectedResponseException.class, () -> Conv.DATE_TIME.read(TestJson.parse("\"tomorrow\"")));
-    assertThrows(UnexpectedResponseException.class, () -> Conv.DATE_TIME.read(TestJson.parse("true")));
-    assertEquals("2026-11-01T10:15:30Z", Conv.DATE_TIME.write(OffsetDateTime.of(2026, 11, 1, 10, 15, 30, 0, ZoneOffset.UTC)).asText());
-    assertEquals("2026-11-01T10:00:00Z", Conv.DATE_TIME.write(OffsetDateTime.of(2026, 11, 1, 10, 0, 0, 0, ZoneOffset.UTC)).asText());
-    assertEquals(LocalDate.of(2026, 11, 1), Conv.DATE.read(TestJson.parse("\"2026-11-01T23:00:00Z\"")));
-    assertThrows(UnexpectedResponseException.class, () -> Conv.DATE.read(TestJson.parse("\"11/01/2026\"")));
+    assertThrows(
+        UnexpectedResponseException.class, () -> Conv.BOOLEAN.read(TestJson.parse("\"yes\"")));
+    assertEquals(
+        OffsetDateTime.of(2026, 11, 1, 10, 0, 0, 0, ZoneOffset.UTC),
+        Conv.DATE_TIME.read(TestJson.parse("\"2026-11-01T10:00:00Z\"")));
+    assertEquals(
+        OffsetDateTime.of(2026, 11, 1, 10, 0, 0, 0, ZoneOffset.ofHours(2)),
+        Conv.DATE_TIME.read(TestJson.parse("\"2026-11-01T10:00:00+02:00\"")));
+    assertEquals(
+        OffsetDateTime.of(2026, 11, 1, 10, 0, 0, 0, ZoneOffset.UTC),
+        Conv.DATE_TIME.read(TestJson.parse("\"2026-11-01T10:00:00\"")));
+    assertEquals(
+        OffsetDateTime.of(2026, 11, 1, 10, 0, 0, 0, ZoneOffset.UTC),
+        Conv.DATE_TIME.read(TestJson.parse("\"2026-11-01 10:00:00\"")));
+    assertEquals(
+        OffsetDateTime.of(2026, 11, 1, 0, 0, 0, 0, ZoneOffset.UTC),
+        Conv.DATE_TIME.read(TestJson.parse("\"2026-11-01\"")));
+    assertEquals(
+        OffsetDateTime.of(1970, 1, 1, 0, 0, 10, 0, ZoneOffset.UTC),
+        Conv.DATE_TIME.read(TestJson.parse("10")));
+    assertThrows(
+        UnexpectedResponseException.class,
+        () -> Conv.DATE_TIME.read(TestJson.parse("\"tomorrow\"")));
+    assertThrows(
+        UnexpectedResponseException.class, () -> Conv.DATE_TIME.read(TestJson.parse("true")));
+    assertEquals(
+        "2026-11-01T10:15:30Z",
+        Conv.DATE_TIME
+            .write(OffsetDateTime.of(2026, 11, 1, 10, 15, 30, 0, ZoneOffset.UTC))
+            .asText());
+    assertEquals(
+        "2026-11-01T10:00:00Z",
+        Conv.DATE_TIME.write(OffsetDateTime.of(2026, 11, 1, 10, 0, 0, 0, ZoneOffset.UTC)).asText());
+    assertEquals(
+        LocalDate.of(2026, 11, 1), Conv.DATE.read(TestJson.parse("\"2026-11-01T23:00:00Z\"")));
+    assertThrows(
+        UnexpectedResponseException.class, () -> Conv.DATE.read(TestJson.parse("\"11/01/2026\"")));
     assertThrows(UnexpectedResponseException.class, () -> Conv.DATE.read(TestJson.parse("1")));
     assertEquals("2026-11-01", Conv.DATE.write(LocalDate.of(2026, 11, 1)).asText());
     assertEquals(TestJson.parse("{\"a\":[1]}"), Conv.ANY.write(TestJson.parse("{\"a\":[1]}")));
@@ -187,18 +233,36 @@ final class ModelTest {
     assertThrows(UnexpectedResponseException.class, () -> Conv.OBJECT.read(TestJson.parse("[]")));
     assertEquals(2, Conv.OBJECT.write(object).size());
     UnexpectedResponseException item =
-        assertThrows(UnexpectedResponseException.class, () -> Conv.list(Conv.LONG).read(TestJson.parse("[1,\"x\"]")));
+        assertThrows(
+            UnexpectedResponseException.class,
+            () -> Conv.list(Conv.LONG).read(TestJson.parse("[1,\"x\"]")));
     assertTrue(item.getMessage().contains("item 1"));
-    assertThrows(UnexpectedResponseException.class, () -> Conv.list(Conv.LONG).read(TestJson.parse("[1,null]")));
-    assertThrows(UnexpectedResponseException.class, () -> Conv.list(Conv.LONG).read(TestJson.parse("{}")));
+    assertThrows(
+        UnexpectedResponseException.class,
+        () -> Conv.list(Conv.LONG).read(TestJson.parse("[1,null]")));
+    assertThrows(
+        UnexpectedResponseException.class, () -> Conv.list(Conv.LONG).read(TestJson.parse("{}")));
     assertEquals(Map.of("a", 1L), Conv.map(Conv.LONG).read(TestJson.parse("{\"a\":1,\"b\":null}")));
-    assertThrows(UnexpectedResponseException.class, () -> Conv.map(Conv.LONG).read(TestJson.parse("{\"a\":\"x\"}")));
-    assertThrows(UnexpectedResponseException.class, () -> Conv.map(Conv.LONG).read(TestJson.parse("[]")));
+    assertThrows(
+        UnexpectedResponseException.class,
+        () -> Conv.map(Conv.LONG).read(TestJson.parse("{\"a\":\"x\"}")));
+    assertThrows(
+        UnexpectedResponseException.class, () -> Conv.map(Conv.LONG).read(TestJson.parse("[]")));
     assertEquals("{\"a\":1}", Conv.map(Conv.LONG).write(Map.of("a", 1L)).toString());
-    assertThrows(UnexpectedResponseException.class, () -> Conv.model(Pet::fromJson).read(TestJson.parse("1")));
-    assertEquals("Rex", Conv.model(Pet::fromJson).write(Pet.builder().name("Rex").build()).get("name").asText());
-    assertEquals("\"x\"", Conv.union(Pet.PetOrName::fromJson).write(Pet.PetOrName.fromJson(TestJson.parse("\"x\""))).toString());
-    assertThrows(UnexpectedResponseException.class, () -> Conv.enumeration(Pet.Kind::of).read(TestJson.parse("1")));
+    assertThrows(
+        UnexpectedResponseException.class,
+        () -> Conv.model(Pet::fromJson).read(TestJson.parse("1")));
+    assertEquals(
+        "Rex",
+        Conv.model(Pet::fromJson).write(Pet.builder().name("Rex").build()).get("name").asText());
+    assertEquals(
+        "\"x\"",
+        Conv.union(Pet.PetOrName::fromJson)
+            .write(Pet.PetOrName.fromJson(TestJson.parse("\"x\"")))
+            .toString());
+    assertThrows(
+        UnexpectedResponseException.class,
+        () -> Conv.enumeration(Pet.Kind::of).read(TestJson.parse("1")));
     assertEquals("\"cat\"", Conv.enumeration(Pet.Kind::of).write(Pet.Kind.CAT).toString());
   }
 
@@ -225,7 +289,9 @@ final class ModelTest {
         Json.write(node));
     assertThrows(UnexpectedResponseException.class, () -> Json.parse("{"));
     assertThrows(UnexpectedResponseException.class, () -> Json.parse(new byte[] {'['}));
-    assertEquals("12345678901234567890.10", Json.parse("12345678901234567890.10").decimalValue().toPlainString());
+    assertEquals(
+        "12345678901234567890.10",
+        Json.parse("12345678901234567890.10").decimalValue().toPlainString());
     assertTrue(Json.hasValue(TestJson.parse("{\"t\":\"a\"}"), "t", "a"));
     assertFalse(Json.hasValue(TestJson.parse("[1]"), "t", "a"));
     assertTrue(Json.hasFields(TestJson.parse("{\"a\":1,\"b\":2}"), "a", "b"));

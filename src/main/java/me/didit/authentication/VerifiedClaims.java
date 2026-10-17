@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Optional;
 import me.didit.core.Conv;
 
-/** The {@code verified} claim: what Didit verified about the user. Fields are present when shared. */
+/**
+ * The {@code verified} claim: what Didit verified about the user. Fields are present when shared.
+ */
 public final class VerifiedClaims extends JsonView {
   VerifiedClaims(ObjectNode json) {
     super(json);

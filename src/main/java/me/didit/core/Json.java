@@ -79,8 +79,8 @@ public final class Json {
   }
 
   /**
-   * Converts a Java value (map, list, string, number, boolean, {@link JsonNode}, generated type)
-   * to JSON.
+   * Converts a Java value (map, list, string, number, boolean, {@link JsonNode}, generated type) to
+   * JSON.
    *
    * @param value the value; {@code null} becomes JSON null
    * @return the JSON value

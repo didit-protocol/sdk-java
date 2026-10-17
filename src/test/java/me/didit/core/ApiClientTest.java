@@ -80,7 +80,9 @@ final class ApiClientTest {
     RecordedRequest r = transport.only();
     assertEquals("test-api-key", r.header("x-api-key"));
     assertEquals("application/json", r.header("Accept"));
-    assertTrue(r.header("User-Agent").matches("didit-java/\\d+\\.\\d+\\.\\d+.* \\(Java [^;]+; [^)]+\\)"), r.header("User-Agent"));
+    assertTrue(
+        r.header("User-Agent").matches("didit-java/\\d+\\.\\d+\\.\\d+.* \\(Java [^;]+; [^)]+\\)"),
+        r.header("User-Agent"));
     assertEquals("java/" + Version.VERSION, r.header("X-Didit-Client"));
     assertNull(r.header("Content-Type"));
     assertEquals("https://verification.didit.me/v3/x/", r.uri().toString());
@@ -95,7 +97,8 @@ final class ApiClientTest {
     ApiClient client =
         new ApiClient(options().defaultHeader("X-Team", "a").defaultHeader("X-Other", "1").build());
     client.execute(
-        ApiRequest.builder("POST", "/v3/organization/{organization_id}/application/{application_id}/x/")
+        ApiRequest.builder(
+                "POST", "/v3/organization/{organization_id}/application/{application_id}/x/")
             .applicationScoped()
             .build(),
         RequestOptions.builder()
@@ -134,7 +137,9 @@ final class ApiClientTest {
         () ->
             new ApiClient(withoutKey)
                 .execute(
-                    ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/x/")
+                    ApiRequest.builder(
+                            "GET",
+                            "/v3/organization/{organization_id}/application/{application_id}/x/")
                         .auth(ApiRequest.Auth.NONE)
                         .applicationScoped()
                         .build(),
@@ -145,7 +150,10 @@ final class ApiClientTest {
         () ->
             new ApiClient(withoutKey)
                 .execute(
-                    ApiRequest.builder("GET", "/x/").account().auth(ApiRequest.Auth.ACCOUNT_TOKEN).build(),
+                    ApiRequest.builder("GET", "/x/")
+                        .account()
+                        .auth(ApiRequest.Auth.ACCOUNT_TOKEN)
+                        .build(),
                     RequestOptions.none(),
                     JSON));
     for (String bad : new String[] {"", ".", ".."}) {
@@ -159,7 +167,11 @@ final class ApiClientTest {
     }
     assertThrows(
         ConfigurationException.class,
-        () -> noKey.execute(ApiRequest.builder("GET", "/v3/session/{id}/").build(), RequestOptions.none(), JSON));
+        () ->
+            noKey.execute(
+                ApiRequest.builder("GET", "/v3/session/{id}/").build(),
+                RequestOptions.none(),
+                JSON));
     assertEquals(0, transport.requests().size());
   }
 
@@ -253,7 +265,10 @@ final class ApiClientTest {
     transport.respond(200, "[]");
     ApiClient client = new ApiClient(options().accountToken("acct-1").build());
     client.execute(
-        ApiRequest.builder("GET", "/organizations/me/").account().auth(ApiRequest.Auth.ACCOUNT_TOKEN).build(),
+        ApiRequest.builder("GET", "/organizations/me/")
+            .account()
+            .auth(ApiRequest.Auth.ACCOUNT_TOKEN)
+            .build(),
         RequestOptions.none(),
         JSON);
     RecordedRequest r = transport.only();
@@ -262,7 +277,10 @@ final class ApiClientTest {
     assertNull(r.header("x-api-key"));
     transport.respond(200, "{}");
     client.execute(
-        ApiRequest.builder("POST", "/programmatic/login/").account().auth(ApiRequest.Auth.NONE).build(),
+        ApiRequest.builder("POST", "/programmatic/login/")
+            .account()
+            .auth(ApiRequest.Auth.NONE)
+            .build(),
         RequestOptions.builder().accountToken("ignored").build(),
         JSON);
     RecordedRequest login = transport.requests().get(1);
@@ -285,12 +303,18 @@ final class ApiClientTest {
   })
   void statusErrors(int status, String type) {
     for (int i = 0; i < 3; i++) {
-      transport.respond(status, Map.of("Content-Type", "application/json", "X-Request-Id", "req-9"), "{\"detail\":\"Nope\"}");
+      transport.respond(
+          status,
+          Map.of("Content-Type", "application/json", "X-Request-Id", "req-9"),
+          "{\"detail\":\"Nope\"}");
     }
     ApiStatusException e =
         assertThrows(
             ApiStatusException.class,
-            () -> client().execute(ApiRequest.builder("POST", "/v3/x/").build(), RequestOptions.none(), JSON));
+            () ->
+                client()
+                    .execute(
+                        ApiRequest.builder("POST", "/v3/x/").build(), RequestOptions.none(), JSON));
     assertEquals(type, e.getClass().getSimpleName());
     assertEquals(status, e.statusCode());
     assertEquals("Nope", e.body().orElseThrow().get("detail").asText());
@@ -306,17 +330,23 @@ final class ApiClientTest {
   void errorBodiesThatAreNotJson() {
     transport.respond(404, Map.of("Content-Type", "text/html"), "<h1>" + "x".repeat(400) + "</h1>");
     NotFoundException e =
-        assertThrows(NotFoundException.class, () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
+        assertThrows(
+            NotFoundException.class,
+            () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
     assertTrue(e.body().orElseThrow().isTextual());
     assertTrue(e.getMessage().endsWith("..."));
     transport.respond(400, Map.of(), "");
     BadRequestException empty =
-        assertThrows(BadRequestException.class, () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
+        assertThrows(
+            BadRequestException.class,
+            () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
     assertTrue(empty.body().isEmpty());
     assertTrue(empty.requestId().isEmpty());
     transport.respond(422, "{\"field\":[\"bad\"]}");
     UnprocessableEntityException fields =
-        assertThrows(UnprocessableEntityException.class, () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
+        assertThrows(
+            UnprocessableEntityException.class,
+            () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
     assertTrue(fields.getMessage().contains("field"));
   }
 
@@ -336,7 +366,9 @@ final class ApiClientTest {
     for (int i = 0; i < 3; i++) {
       transport.respond(500, "{}");
     }
-    assertThrows(InternalServerException.class, () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
+    assertThrows(
+        InternalServerException.class,
+        () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
     assertEquals(3, transport.requests().size());
   }
 
@@ -345,24 +377,36 @@ final class ApiClientTest {
     transport.respond(503, "{}");
     assertThrows(
         InternalServerException.class,
-        () -> client().execute(ApiRequest.builder("POST", "/v3/x/").build(), RequestOptions.none(), JSON));
+        () ->
+            client()
+                .execute(
+                    ApiRequest.builder("POST", "/v3/x/").build(), RequestOptions.none(), JSON));
     assertEquals(1, transport.requests().size());
     transport.respond(408, "{}");
     assertThrows(
         ApiStatusException.class,
-        () -> client().execute(ApiRequest.builder("PATCH", "/v3/x/").build(), RequestOptions.none(), JSON));
+        () ->
+            client()
+                .execute(
+                    ApiRequest.builder("PATCH", "/v3/x/").build(), RequestOptions.none(), JSON));
     assertEquals(2, transport.requests().size());
     transport.fail(new IOException("connection reset"));
     ApiConnectionException e =
         assertThrows(
             ApiConnectionException.class,
-            () -> client().execute(ApiRequest.builder("POST", "/v3/x/").build(), RequestOptions.none(), JSON));
+            () ->
+                client()
+                    .execute(
+                        ApiRequest.builder("POST", "/v3/x/").build(), RequestOptions.none(), JSON));
     assertTrue(e.getMessage().contains("connection reset"));
     assertEquals(3, transport.requests().size());
     transport.fail(new HttpTimeoutException("read timed out"));
     assertThrows(
         ApiTimeoutException.class,
-        () -> client().execute(ApiRequest.builder("POST", "/v3/x/").build(), RequestOptions.none(), JSON));
+        () ->
+            client()
+                .execute(
+                    ApiRequest.builder("POST", "/v3/x/").build(), RequestOptions.none(), JSON));
     assertEquals(4, transport.requests().size());
   }
 
@@ -384,18 +428,25 @@ final class ApiClientTest {
 
   @Test
   void retriesGetOnConnectionErrorsAndTimeouts() {
-    transport.fail(new IOException("reset")).fail(new HttpTimeoutException("slow")).respond(200, "{}");
+    transport
+        .fail(new IOException("reset"))
+        .fail(new HttpTimeoutException("slow"))
+        .respond(200, "{}");
     client().execute(get("/v3/x/"), RequestOptions.none(), JSON);
     assertEquals(3, transport.requests().size());
     for (int i = 0; i < 3; i++) {
       transport.fail(new HttpTimeoutException("slow"));
     }
-    assertThrows(ApiTimeoutException.class, () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
+    assertThrows(
+        ApiTimeoutException.class,
+        () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
     transport.fail(new HttpConnectTimeoutException("connect"));
     ApiConnectionException e =
         assertThrows(
             ApiConnectionException.class,
-            () -> client().execute(get("/v3/x/"), RequestOptions.builder().maxRetries(0).build(), JSON));
+            () ->
+                client()
+                    .execute(get("/v3/x/"), RequestOptions.builder().maxRetries(0).build(), JSON));
     assertFalse(e instanceof ApiTimeoutException);
   }
 
@@ -406,7 +457,9 @@ final class ApiClientTest {
           throw new IllegalStateException("bug");
         });
     ApiConnectionException e =
-        assertThrows(ApiConnectionException.class, () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
+        assertThrows(
+            ApiConnectionException.class,
+            () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
     assertInstanceOf(IllegalStateException.class, e.getCause());
     assertEquals(1, transport.requests().size());
   }
@@ -442,15 +495,21 @@ final class ApiClientTest {
     assertEquals(Optional.empty(), ApiClient.RetryPolicy.parseRetryAfter("soon", now));
     assertEquals(Optional.empty(), ApiClient.RetryPolicy.parseRetryAfter("-1", now));
     assertEquals(Optional.empty(), ApiClient.RetryPolicy.parseRetryAfter("NaN", now));
-    assertEquals(Duration.ofSeconds(60), ApiClient.RetryPolicy.delay(0, Optional.of("3600"), 0.5, now));
-    assertEquals(Duration.ofMillis(250), ApiClient.RetryPolicy.delay(0, Optional.empty(), 0.5, now));
-    assertEquals(Duration.ofMillis(500), ApiClient.RetryPolicy.delay(1, Optional.of("x"), 0.5, now));
-    assertEquals(Duration.ofSeconds(8), ApiClient.RetryPolicy.delay(10, Optional.empty(), 1.0, now));
+    assertEquals(
+        Duration.ofSeconds(60), ApiClient.RetryPolicy.delay(0, Optional.of("3600"), 0.5, now));
+    assertEquals(
+        Duration.ofMillis(250), ApiClient.RetryPolicy.delay(0, Optional.empty(), 0.5, now));
+    assertEquals(
+        Duration.ofMillis(500), ApiClient.RetryPolicy.delay(1, Optional.of("x"), 0.5, now));
+    assertEquals(
+        Duration.ofSeconds(8), ApiClient.RetryPolicy.delay(10, Optional.empty(), 1.0, now));
     assertTrue(ApiClient.RetryPolicy.retryableStatus(429, false));
     assertFalse(ApiClient.RetryPolicy.retryableStatus(500, false));
     assertTrue(ApiClient.RetryPolicy.retryableStatus(408, true));
     assertFalse(ApiClient.RetryPolicy.retryableStatus(404, true));
-    assertTrue(ApiClient.RetryPolicy.failedBeforeSending(new IOException(new java.net.UnknownHostException("x"))));
+    assertTrue(
+        ApiClient.RetryPolicy.failedBeforeSending(
+            new IOException(new java.net.UnknownHostException("x"))));
     assertFalse(ApiClient.RetryPolicy.failedBeforeSending(new IOException("reset")));
   }
 
@@ -471,26 +530,48 @@ final class ApiClientTest {
     transport.respond(200, "[1]");
     assertThrows(
         UnexpectedResponseException.class,
-        () -> client().execute(get("/v3/x/"), RequestOptions.none(), Responses.json(Conv.model(Pet::fromJson))));
+        () ->
+            client()
+                .execute(
+                    get("/v3/x/"),
+                    RequestOptions.none(),
+                    Responses.json(Conv.model(Pet::fromJson))));
     transport.respond(204, Map.of(), "");
-    assertNull(client().execute(ApiRequest.builder("DELETE", "/v3/x/").build(), RequestOptions.none(), Responses.none()).data());
+    assertNull(
+        client()
+            .execute(
+                ApiRequest.builder("DELETE", "/v3/x/").build(),
+                RequestOptions.none(),
+                Responses.none())
+            .data());
   }
 
   @Test
   void typedAndStatusDependentBodies() {
     transport.respond(200, "{\"name\":\"Rex\",\"age\":\"4\"}");
-    Pet pet = client().execute(get("/v3/pet/"), RequestOptions.none(), Responses.json(Conv.model(Pet::fromJson))).data();
+    Pet pet =
+        client()
+            .execute(
+                get("/v3/pet/"), RequestOptions.none(), Responses.json(Conv.model(Pet::fromJson)))
+            .data();
     assertEquals("Rex", pet.name());
     assertEquals(4L, pet.age().orElseThrow());
     transport.respond(202, "{\"job\":1}");
     Pet.Outcome outcome =
-        client().execute(get("/v3/pet/"), RequestOptions.none(), Responses.byStatus(Pet.Outcome::fromResponse)).data();
+        client()
+            .execute(
+                get("/v3/pet/"),
+                RequestOptions.none(),
+                Responses.byStatus(Pet.Outcome::fromResponse))
+            .data();
     assertEquals(202, outcome.statusCode());
     assertEquals(1, outcome._json().get("job").asInt());
     assertTrue(outcome.toString().contains("202"));
     assertTrue(outcome.equals(Pet.Outcome.fromResponse(202, TestJson.parse("{\"job\":1}"))));
     assertFalse(outcome.equals(Pet.Outcome.fromResponse(200, TestJson.parse("{\"job\":1}"))));
-    assertEquals(outcome.hashCode(), Pet.Outcome.fromResponse(202, TestJson.parse("{\"job\":1}")).hashCode());
+    assertEquals(
+        outcome.hashCode(),
+        Pet.Outcome.fromResponse(202, TestJson.parse("{\"job\":1}")).hashCode());
   }
 
   @Test
@@ -499,7 +580,10 @@ final class ApiClientTest {
     BinaryResponse pdf =
         client()
             .execute(
-                ApiRequest.builder("GET", "/v3/session/{id}/generate-pdf/").pathParam("id", "s").accept("application/pdf").build(),
+                ApiRequest.builder("GET", "/v3/session/{id}/generate-pdf/")
+                    .pathParam("id", "s")
+                    .accept("application/pdf")
+                    .build(),
                 RequestOptions.none(),
                 Responses.binary())
             .data();
@@ -512,7 +596,8 @@ final class ApiClientTest {
 
     BinaryResponse file =
         BinaryResponse.of(
-            MockTransport.headers(Map.of("Content-Disposition", "attachment; filename=\"report.pdf\"")),
+            MockTransport.headers(
+                Map.of("Content-Disposition", "attachment; filename=\"report.pdf\"")),
             new byte[] {1, 2});
     assertEquals("report.pdf", file.fileName().orElseThrow());
     java.nio.file.Path target = java.nio.file.Files.createTempFile("didit", ".pdf");
@@ -529,12 +614,16 @@ final class ApiClientTest {
     stream.close();
     assertTrue(BinaryResponse.of(Headers.empty(), new byte[0]).fileName().isEmpty());
     assertTrue(
-        BinaryResponse.of(MockTransport.headers(Map.of("Content-Disposition", "inline; filename=")), new byte[0])
+        BinaryResponse.of(
+                MockTransport.headers(Map.of("Content-Disposition", "inline; filename=")),
+                new byte[0])
             .fileName()
             .isEmpty());
     assertEquals(
         "a.csv",
-        BinaryResponse.of(MockTransport.headers(Map.of("Content-Disposition", "attachment; FILENAME=a.csv")), new byte[0])
+        BinaryResponse.of(
+                MockTransport.headers(Map.of("Content-Disposition", "attachment; FILENAME=a.csv")),
+                new byte[0])
             .fileName()
             .orElseThrow());
   }
@@ -566,7 +655,10 @@ final class ApiClientTest {
     assertTrue(Thread.interrupted());
     assertTrue(never.isCancelled());
     CompletableFuture<String> checked = CompletableFuture.failedFuture(new Exception("checked"));
-    assertEquals("Request failed", assertThrows(me.didit.errors.DiditException.class, () -> ApiClient.await(checked)).getMessage());
+    assertEquals(
+        "Request failed",
+        assertThrows(me.didit.errors.DiditException.class, () -> ApiClient.await(checked))
+            .getMessage());
     CompletableFuture<String> error = CompletableFuture.failedFuture(new AssertionError("boom"));
     assertThrows(AssertionError.class, () -> ApiClient.await(error));
   }
@@ -577,10 +669,13 @@ final class ApiClientTest {
     ApiClient client = new ApiClient(options().debugLogging(true).build());
     assertTrue(client.options().debugLogging());
     client.execute(get("/v3/x/"), RequestOptions.none(), JSON);
-    assertThrows(NotFoundException.class, () -> client.execute(get("/v3/x/"), RequestOptions.none(), JSON));
+    assertThrows(
+        NotFoundException.class, () -> client.execute(get("/v3/x/"), RequestOptions.none(), JSON));
     assertThrows(
         ApiConnectionException.class,
-        () -> client.execute(ApiRequest.builder("POST", "/v3/x/").build(), RequestOptions.none(), JSON));
+        () ->
+            client.execute(
+                ApiRequest.builder("POST", "/v3/x/").build(), RequestOptions.none(), JSON));
   }
 
   @Test
@@ -590,7 +685,9 @@ final class ApiClientTest {
         response -> {
           throw new UnexpectedResponseException("bad shape");
         };
-    assertThrows(UnexpectedResponseException.class, () -> client().execute(get("/v3/x/"), RequestOptions.none(), broken));
+    assertThrows(
+        UnexpectedResponseException.class,
+        () -> client().execute(get("/v3/x/"), RequestOptions.none(), broken));
     transport.answer(
         r ->
             CompletableFuture.completedFuture(
@@ -603,7 +700,9 @@ final class ApiClientTest {
                         throw new IOException("reset while reading");
                       }
                     })));
-    assertThrows(ApiConnectionException.class, () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
+    assertThrows(
+        ApiConnectionException.class,
+        () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
   }
 
   @Test
@@ -621,7 +720,9 @@ final class ApiClientTest {
                       }
                     })));
     BadRequestException e =
-        assertThrows(BadRequestException.class, () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
+        assertThrows(
+            BadRequestException.class,
+            () -> client().execute(get("/v3/x/"), RequestOptions.none(), JSON));
     assertTrue(e.body().isEmpty());
   }
 
@@ -640,12 +741,19 @@ final class ApiClientTest {
     URI base = URI.create("https://verification.didit.me");
     assertEquals(
         "https://verification.didit.me/v3/sessions/?offset=10",
-        ApiClient.Paths.sameOrigin(base, URI.create("http://verification.didit.me/v3/sessions/?offset=10")).toString());
+        ApiClient.Paths.sameOrigin(
+                base, URI.create("http://verification.didit.me/v3/sessions/?offset=10"))
+            .toString());
     assertEquals(
         "https://verification.didit.me/v3/x/?a=1",
         ApiClient.Paths.sameOrigin(base, URI.create("/v3/x/?a=1")).toString());
-    assertThrows(UnexpectedResponseException.class, () -> ApiClient.Paths.sameOrigin(base, URI.create("https://evil.example.com/v3/")));
-    assertThrows(UnexpectedResponseException.class, () -> ApiClient.Paths.sameOrigin(base, URI.create("https://verification.didit.me:8443/v3/")));
+    assertThrows(
+        UnexpectedResponseException.class,
+        () -> ApiClient.Paths.sameOrigin(base, URI.create("https://evil.example.com/v3/")));
+    assertThrows(
+        UnexpectedResponseException.class,
+        () ->
+            ApiClient.Paths.sameOrigin(base, URI.create("https://verification.didit.me:8443/v3/")));
     assertEquals("", ApiClient.Paths.queryString(List.of()));
   }
 }

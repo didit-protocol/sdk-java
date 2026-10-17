@@ -209,7 +209,9 @@ final class CanonicalJson {
       }
       out.append(".0");
     } else {
-      out.append(digits, 0, pointPosition).append('.').append(digits, pointPosition, digits.length());
+      out.append(digits, 0, pointPosition)
+          .append('.')
+          .append(digits, pointPosition, digits.length());
     }
     return out.toString();
   }

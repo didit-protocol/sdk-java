@@ -35,9 +35,15 @@ final class WebhooksTest {
   }
 
   static String body(String type, long timestamp, String extra) {
-    return "{\"webhook_type\":\"" + type + "\",\"timestamp\":" + timestamp + ",\"event_id\":\"e-1\","
-        + "\"application_id\":\"app-1\",\"environment\":\"sandbox\",\"created_at\":" + timestamp
-        + extra + "}";
+    return "{\"webhook_type\":\""
+        + type
+        + "\",\"timestamp\":"
+        + timestamp
+        + ",\"event_id\":\"e-1\","
+        + "\"application_id\":\"app-1\",\"environment\":\"sandbox\",\"created_at\":"
+        + timestamp
+        + extra
+        + "}";
   }
 
   /** Signs like the backend: X-Signature over the bytes, V2 over the canonical JSON. */
@@ -55,7 +61,8 @@ final class WebhooksTest {
     return h;
   }
 
-  static WebhookVerificationException.Reason reject(String body, Map<String, ?> headers, VerifyOptions o) {
+  static WebhookVerificationException.Reason reject(
+      String body, Map<String, ?> headers, VerifyOptions o) {
     return assertThrows(WebhookVerificationException.class, () -> Webhooks.verify(body, headers, o))
         .reason();
   }
@@ -125,7 +132,8 @@ final class WebhooksTest {
                 + "\"severity\":\"LOW\",\"amount\":\"100.00\",\"currency\":\"EUR\",\"direction\":\"inbound\","
                 + "\"action_required\":{\"type\":\"verification_session\",\"url\":\"https://example.com/v\"}");
     TransactionStatusUpdatedEvent t =
-        (TransactionStatusUpdatedEvent) Webhooks.verify(tx, sign(tx, SECRET), options(SECRET).build());
+        (TransactionStatusUpdatedEvent)
+            Webhooks.verify(tx, sign(tx, SECRET), options(SECRET).build());
     assertEquals("t-1", t.transactionId().orElseThrow());
     assertEquals("ref-1", t.txnId().orElseThrow());
     assertEquals("APPROVED", t.status().orElseThrow());
@@ -143,7 +151,8 @@ final class WebhooksTest {
             ",\"transaction_id\":\"t-1\",\"txn_id\":\"ref-1\",\"travel_rule_status\":\"COMPLETED\","
                 + "\"rail\":\"TRP\",\"direction\":\"outbound\"");
     TravelRuleStatusUpdatedEvent r =
-        (TravelRuleStatusUpdatedEvent) Webhooks.verify(tr, sign(tr, SECRET), options(SECRET).build());
+        (TravelRuleStatusUpdatedEvent)
+            Webhooks.verify(tr, sign(tr, SECRET), options(SECRET).build());
     assertEquals("t-1", r.transactionId().orElseThrow());
     assertEquals("ref-1", r.txnId().orElseThrow());
     assertEquals("COMPLETED", r.travelRuleStatus().orElseThrow());
@@ -151,7 +160,10 @@ final class WebhooksTest {
     assertEquals("outbound", r.direction().orElseThrow());
 
     String user =
-        body("user.status.updated", NOW, ",\"vendor_user_id\":\"u-1\",\"vendor_data\":\"v\",\"status\":\"ACTIVE\"");
+        body(
+            "user.status.updated",
+            NOW,
+            ",\"vendor_user_id\":\"u-1\",\"vendor_data\":\"v\",\"status\":\"ACTIVE\"");
     UserStatusUpdatedEvent u =
         (UserStatusUpdatedEvent) Webhooks.verify(user, sign(user, SECRET), options(SECRET).build());
     assertEquals("u-1", u.vendorUserId().orElseThrow());
@@ -171,7 +183,8 @@ final class WebhooksTest {
 
     String wf = body("workflow.compliance_changed", NOW, ",\"workflow_id\":\"w-9\"");
     WorkflowComplianceChangedEvent w =
-        (WorkflowComplianceChangedEvent) Webhooks.verify(wf, sign(wf, SECRET), options(SECRET).build());
+        (WorkflowComplianceChangedEvent)
+            Webhooks.verify(wf, sign(wf, SECRET), options(SECRET).build());
     assertEquals("w-9", w.workflowId().orElseThrow());
   }
 
@@ -212,16 +225,19 @@ final class WebhooksTest {
     previousOnly.put("X-Signature", "0".repeat(64));
     previousOnly.put("X-Signature-Previous", sign(body, SECRET).get("X-Signature"));
     assertEquals(
-        VerifiedBy.SIGNATURE, Webhooks.verify(body, previousOnly, options(SECRET).build()).verifiedBy());
+        VerifiedBy.SIGNATURE,
+        Webhooks.verify(body, previousOnly, options(SECRET).build()).verifiedBy());
     Map<String, String> v2Previous = new HashMap<>();
     v2Previous.put("X-Signature-V2-Previous", sign(body, SECRET).get("X-Signature-V2"));
     assertEquals(
-        VerifiedBy.SIGNATURE_V2, Webhooks.verify(body, v2Previous, options(SECRET).build()).verifiedBy());
+        VerifiedBy.SIGNATURE_V2,
+        Webhooks.verify(body, v2Previous, options(SECRET).build()).verifiedBy());
     Map<String, String> simplePrevious = new HashMap<>();
     simplePrevious.put("X-Signature-Simple-Previous", sign(body, SECRET).get("X-Signature-Simple"));
     assertEquals(
         VerifiedBy.SIGNATURE_SIMPLE,
-        Webhooks.verify(body, simplePrevious, options(SECRET).allowSimple(true).build()).verifiedBy());
+        Webhooks.verify(body, simplePrevious, options(SECRET).allowSimple(true).build())
+            .verifiedBy());
   }
 
   @Test
@@ -231,7 +247,8 @@ final class WebhooksTest {
     Map<String, Object> headers = new LinkedHashMap<>();
     headers.put("x-signature", List.of(" " + signed.get("X-Signature") + " "));
     headers.put("X-TIMESTAMP", new String[] {String.valueOf(NOW)});
-    assertEquals(VerifiedBy.SIGNATURE, Webhooks.verify(body, headers, options(SECRET).build()).verifiedBy());
+    assertEquals(
+        VerifiedBy.SIGNATURE, Webhooks.verify(body, headers, options(SECRET).build()).verifiedBy());
     // A function lookup, like request::getHeader.
     byte[] bytes = body.getBytes(StandardCharsets.UTF_8);
     assertEquals(
@@ -260,22 +277,32 @@ final class WebhooksTest {
     String body = body("status.updated", NOW, "");
     Map<String, String> h = new HashMap<>(sign(body, SECRET));
     h.put("X-Timestamp", "abc");
-    assertEquals(WebhookVerificationException.Reason.TIMESTAMP_MISMATCH, reject(body, h, options(SECRET).build()));
+    assertEquals(
+        WebhookVerificationException.Reason.TIMESTAMP_MISMATCH,
+        reject(body, h, options(SECRET).build()));
     h.put("X-Timestamp", String.valueOf(NOW + 1));
-    assertEquals(WebhookVerificationException.Reason.TIMESTAMP_MISMATCH, reject(body, h, options(SECRET).build()));
+    assertEquals(
+        WebhookVerificationException.Reason.TIMESTAMP_MISMATCH,
+        reject(body, h, options(SECRET).build()));
     h.remove("X-Timestamp");
-    assertEquals(VerifiedBy.SIGNATURE, Webhooks.verify(body, h, options(SECRET).build()).verifiedBy());
+    assertEquals(
+        VerifiedBy.SIGNATURE, Webhooks.verify(body, h, options(SECRET).build()).verifiedBy());
 
     // The tolerance bound is inclusive.
     String edge = body("status.updated", NOW - 300, "");
-    assertEquals(VerifiedBy.SIGNATURE, Webhooks.verify(edge, sign(edge, SECRET), options(SECRET).build()).verifiedBy());
+    assertEquals(
+        VerifiedBy.SIGNATURE,
+        Webhooks.verify(edge, sign(edge, SECRET), options(SECRET).build()).verifiedBy());
     String stale = body("status.updated", NOW - 301, "");
     assertEquals(
         WebhookVerificationException.Reason.TIMESTAMP_OUT_OF_TOLERANCE,
         reject(stale, sign(stale, SECRET), options(SECRET).build()));
     assertEquals(
         VerifiedBy.SIGNATURE,
-        Webhooks.verify(stale, sign(stale, SECRET), options(SECRET).tolerance(Duration.ofMinutes(10)).build())
+        Webhooks.verify(
+                stale,
+                sign(stale, SECRET),
+                options(SECRET).tolerance(Duration.ofMinutes(10)).build())
             .verifiedBy());
 
     for (String ts : new String[] {"\"1800000000\"", "1800000000.0", "true", "null"}) {
@@ -295,12 +322,14 @@ final class WebhooksTest {
   void invalidPayloads() {
     VerifyOptions o = options(SECRET).build();
     for (String body : new String[] {"", "[]", "not json", "{\"a\":1}{", "{\"timestamp\":NaN}"}) {
-      assertEquals(WebhookVerificationException.Reason.INVALID_PAYLOAD, reject(body, Map.of(), o), body);
+      assertEquals(
+          WebhookVerificationException.Reason.INVALID_PAYLOAD, reject(body, Map.of(), o), body);
     }
     byte[] notUtf8 = {'{', '"', 'a', '"', ':', '"', (byte) 0xff, '"', '}'};
     assertEquals(
         WebhookVerificationException.Reason.INVALID_PAYLOAD,
-        assertThrows(WebhookVerificationException.class, () -> Webhooks.verify(notUtf8, Map.of(), o))
+        assertThrows(
+                WebhookVerificationException.class, () -> Webhooks.verify(notUtf8, Map.of(), o))
             .reason());
     assertEquals(
         WebhookVerificationException.Reason.INVALID_PAYLOAD,
@@ -308,19 +337,25 @@ final class WebhooksTest {
                 WebhookVerificationException.class,
                 () -> Webhooks.verifyParsed(TestJson.parse("[1]"), Map.of(), o))
             .reason());
-    assertThrows(WebhookVerificationException.class, () -> Webhooks.parseEvent(TestJson.parse("1")));
+    assertThrows(
+        WebhookVerificationException.class, () -> Webhooks.parseEvent(TestJson.parse("1")));
   }
 
   @Test
   void simpleSignatureOnlyWhenAllowedAndNeverAuthenticatesTheBody() {
     String body = body("status.updated", NOW, ",\"session_id\":null,\"status\":true");
-    Map<String, String> simple = Map.of("X-Signature-Simple", sign(body, SECRET).get("X-Signature-Simple"));
-    assertEquals(WebhookVerificationException.Reason.INVALID_SIGNATURE, reject(body, simple, options(SECRET).build()));
+    Map<String, String> simple =
+        Map.of("X-Signature-Simple", sign(body, SECRET).get("X-Signature-Simple"));
+    assertEquals(
+        WebhookVerificationException.Reason.INVALID_SIGNATURE,
+        reject(body, simple, options(SECRET).build()));
     WebhookEvent event = Webhooks.verify(body, simple, options(SECRET).allowSimple(true).build());
     assertEquals(VerifiedBy.SIGNATURE_SIMPLE, event.verifiedBy());
     assertFalse(event.isBodyAuthenticated());
     // Python's str(): None and True.
-    assertEquals(NOW + ":None:True:status.updated", Webhooks.simpleString(Webhooks.parse(body.getBytes(StandardCharsets.UTF_8))));
+    assertEquals(
+        NOW + ":None:True:status.updated",
+        Webhooks.simpleString(Webhooks.parse(body.getBytes(StandardCharsets.UTF_8))));
   }
 
   @Test
@@ -340,7 +375,9 @@ final class WebhooksTest {
     assertThrows(
         ConfigurationException.class,
         () -> Webhooks.verify(body, Map.of(), VerifyOptions.builder().build()));
-    assertThrows(IllegalArgumentException.class, () -> VerifyOptions.builder().tolerance(Duration.ofSeconds(-1)));
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> VerifyOptions.builder().tolerance(Duration.ofSeconds(-1)));
     assertTrue(VerifyOptions.of(SECRET).toString().contains("secrets=1"));
     assertFalse(VerifyOptions.of(SECRET).toString().contains(SECRET));
   }
@@ -351,7 +388,8 @@ final class WebhooksTest {
     Map<String, String> signed = sign(body, SECRET);
     Map<String, Object> payload = new LinkedHashMap<>();
     TestJson.parse(body).properties().forEach(e -> payload.put(e.getKey(), e.getValue()));
-    assertEquals(VerifiedBy.SIGNATURE_V2, Webhooks.verifyParsed(payload, signed, SECRET).verifiedBy());
+    assertEquals(
+        VerifiedBy.SIGNATURE_V2, Webhooks.verifyParsed(payload, signed, SECRET).verifiedBy());
     Map<String, String> rawOnly = Map.of("X-Signature", signed.get("X-Signature"));
     assertEquals(
         WebhookVerificationException.Reason.INVALID_SIGNATURE,
@@ -366,20 +404,26 @@ final class WebhooksTest {
     Didit client = Didit.builder().environment(name -> null).build();
     String body = body("status.updated", Instant.now().getEpochSecond(), "");
     Map<String, String> signed = sign(body, SECRET);
-    assertInstanceOf(SessionStatusUpdatedEvent.class, client.webhooks().verify(body, signed, SECRET));
+    assertInstanceOf(
+        SessionStatusUpdatedEvent.class, client.webhooks().verify(body, signed, SECRET));
     assertInstanceOf(
         SessionStatusUpdatedEvent.class,
-        client.webhooks().verify(body.getBytes(StandardCharsets.UTF_8), signed, VerifyOptions.of(SECRET)));
+        client
+            .webhooks()
+            .verify(body.getBytes(StandardCharsets.UTF_8), signed, VerifyOptions.of(SECRET)));
     assertInstanceOf(
         SessionStatusUpdatedEvent.class,
-        client.webhooks().verify(body.getBytes(StandardCharsets.UTF_8), signed::get, VerifyOptions.of(SECRET)));
+        client
+            .webhooks()
+            .verify(body.getBytes(StandardCharsets.UTF_8), signed::get, VerifyOptions.of(SECRET)));
     assertInstanceOf(
         SessionStatusUpdatedEvent.class,
         client.webhooks().verifyParsed(TestJson.parse(body), signed, SECRET));
     assertEquals(
         VerifiedBy.SIGNATURE,
         Webhooks.verify(body.getBytes(StandardCharsets.UTF_8), signed, SECRET).verifiedBy());
-    assertEquals(VerifiedBy.SIGNATURE, Webhooks.verify(body, signed, VerifyOptions.of(SECRET)).verifiedBy());
+    assertEquals(
+        VerifiedBy.SIGNATURE, Webhooks.verify(body, signed, VerifyOptions.of(SECRET)).verifiedBy());
     assertEquals(
         VerifiedBy.SIGNATURE,
         Webhooks.verify(body.getBytes(StandardCharsets.UTF_8), signed::get, SECRET).verifiedBy());

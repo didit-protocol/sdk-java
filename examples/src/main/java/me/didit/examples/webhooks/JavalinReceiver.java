@@ -18,7 +18,8 @@ public final class JavalinReceiver {
                     "/webhooks/didit",
                     ctx -> {
                       try {
-                        WebhookEvent event = Webhooks.verify(ctx.bodyAsBytes(), ctx::header, options);
+                        WebhookEvent event =
+                            Webhooks.verify(ctx.bodyAsBytes(), ctx::header, options);
                         System.out.println("Received " + event.webhookType());
                         ctx.status(200);
                       } catch (WebhookVerificationException e) {
