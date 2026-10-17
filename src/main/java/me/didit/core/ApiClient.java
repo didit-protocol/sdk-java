@@ -347,13 +347,15 @@ public final class ApiClient {
       sent = CompletableFuture.failedFuture(e);
     }
     CompletableFuture<TransportResponse> inFlight = sent;
-    result.whenComplete(
+    CompletableFuture<?> unused =
+        result.whenComplete(
         (r, e) -> {
           if (e instanceof CancellationException) {
             inFlight.cancel(true);
           }
         });
-    sent.orTimeout(prepared.timeout.toMillis() + 50, TimeUnit.MILLISECONDS)
+    CompletableFuture<?> unusedAttempt =
+        sent.orTimeout(prepared.timeout.toMillis() + 50, TimeUnit.MILLISECONDS)
         .whenComplete(
             (response, error) -> {
               if (error != null) {
@@ -483,7 +485,8 @@ public final class ApiClient {
           retry + 1,
           prepared.maxRetries);
     }
-    CompletableFuture.runAsync(
+    CompletableFuture<?> unused =
+        CompletableFuture.runAsync(
         () -> attempt(prepared, request, ro, handler, retry + 1, started, result),
         options.scheduler().after(delay));
   }
@@ -537,9 +540,6 @@ public final class ApiClient {
             || t instanceof SSLHandshakeException) {
           return true;
         }
-        if (t.getCause() == t) {
-          break;
-        }
       }
       return false;
     }
@@ -564,7 +564,8 @@ public final class ApiClient {
       }
       double ceiling =
           Math.min(
-              MAX_BACKOFF.toMillis(), INITIAL_BACKOFF.toMillis() * Math.pow(2, Math.min(retry, 20)));
+              (double) MAX_BACKOFF.toMillis(),
+              (double) INITIAL_BACKOFF.toMillis() * Math.pow(2, Math.min(retry, 20)));
       return Duration.ofMillis((long) (ceiling * jitter));
     }
 
@@ -679,7 +680,7 @@ public final class ApiClient {
       String host = resolved.getHost();
       if (host == null
           || !host.equalsIgnoreCase(base.getHost())
-          || port(resolved) != port(base) && !(isDefault(resolved) && isDefault(base))) {
+          || (port(resolved) != port(base) && !(isDefault(resolved) && isDefault(base)))) {
         throw new UnexpectedResponseException(
             "Refusing to follow a next page link to another origin: "
                 + resolved.getScheme()

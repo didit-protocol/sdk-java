@@ -18,7 +18,7 @@ public final class Headers {
 
   private final Map<String, List<String>> values;
 
-  private Headers(TreeMap<String, List<String>> values) {
+  private Headers(Map<String, List<String>> values) {
     this.values = Collections.unmodifiableMap(values);
   }
 
