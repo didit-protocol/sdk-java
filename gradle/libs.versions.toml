@@ -1,0 +1,32 @@
+[versions]
+jackson = "2.22.3"
+jspecify = "1.0.0"
+junit = "5.14.4"
+errorprone = "2.50.0"
+nullaway = "0.14.2"
+google-java-format = "1.36.1"
+kotlin = "2.4.21"
+javalin = "7.2.3"
+ktor = "3.6.0"
+spring-boot = "4.1.1"
+slf4j = "2.0.20"
+
+[libraries]
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+jspecify = { module = "org.jspecify:jspecify", version.ref = "jspecify" }
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone" }
+nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
+javalin = { module = "io.javalin:javalin", version.ref = "javalin" }
+ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
+
+[plugins]
+errorprone = { id = "net.ltgt.errorprone", version = "5.1.1" }
+spotless = { id = "com.diffplug.spotless", version = "8.10.4" }
+maven-publish = { id = "com.vanniktech.maven.publish", version = "0.37.0" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
