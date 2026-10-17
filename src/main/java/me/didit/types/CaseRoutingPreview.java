@@ -50,7 +50,7 @@ public final class CaseRoutingPreview extends JsonModel {
   }
 
   /**
-   * The {@code rule_uuid} field.
+   * The <code>rule_uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -60,7 +60,7 @@ public final class CaseRoutingPreview extends JsonModel {
   }
 
   /**
-   * The {@code rule_name} field.
+   * The <code>rule_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -70,7 +70,7 @@ public final class CaseRoutingPreview extends JsonModel {
   }
 
   /**
-   * The {@code rule_version} field.
+   * The <code>rule_version</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -80,7 +80,7 @@ public final class CaseRoutingPreview extends JsonModel {
   }
 
   /**
-   * The {@code blueprint_uuid} field.
+   * The <code>blueprint_uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -90,7 +90,7 @@ public final class CaseRoutingPreview extends JsonModel {
   }
 
   /**
-   * The {@code team_uuid} field.
+   * The <code>team_uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -100,7 +100,7 @@ public final class CaseRoutingPreview extends JsonModel {
   }
 
   /**
-   * The {@code assignee_user_id} field.
+   * The <code>assignee_user_id</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -110,7 +110,7 @@ public final class CaseRoutingPreview extends JsonModel {
   }
 
   /**
-   * The {@code reason} field.
+   * The <code>reason</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -120,7 +120,7 @@ public final class CaseRoutingPreview extends JsonModel {
   }
 
   /**
-   * The {@code candidates} field.
+   * The <code>candidates</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -130,7 +130,7 @@ public final class CaseRoutingPreview extends JsonModel {
   }
 
   /**
-   * The {@code matched_rules} field.
+   * The <code>matched_rules</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -153,7 +153,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code rule_uuid} field.
+     * The <code>rule_uuid</code> field.
      *
      * @param ruleUuid the value, or {@code null} to send JSON null
      * @return this builder
@@ -163,7 +163,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code rule_name} field.
+     * The <code>rule_name</code> field.
      *
      * @param ruleName the value, or {@code null} to send JSON null
      * @return this builder
@@ -173,7 +173,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code rule_version} field.
+     * The <code>rule_version</code> field.
      *
      * @param ruleVersion the value, or {@code null} to send JSON null
      * @return this builder
@@ -183,7 +183,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code blueprint_uuid} field.
+     * The <code>blueprint_uuid</code> field.
      *
      * @param blueprintUuid the value, or {@code null} to send JSON null
      * @return this builder
@@ -193,7 +193,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code team_uuid} field.
+     * The <code>team_uuid</code> field.
      *
      * @param teamUuid the value, or {@code null} to send JSON null
      * @return this builder
@@ -203,7 +203,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code assignee_user_id} field.
+     * The <code>assignee_user_id</code> field.
      *
      * @param assigneeUserId the value, or {@code null} to send JSON null
      * @return this builder
@@ -213,7 +213,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code reason} field.
+     * The <code>reason</code> field.
      *
      * @param reason the value
      * @return this builder
@@ -223,7 +223,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code candidates} field.
+     * The <code>candidates</code> field.
      *
      * @param candidates the value
      * @return this builder
@@ -233,7 +233,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code matched_rules} field.
+     * The <code>matched_rules</code> field.
      *
      * @param matchedRules the value
      * @return this builder
@@ -294,7 +294,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code user_id} field.
+     * The <code>user_id</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -304,7 +304,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code eligible} field.
+     * The <code>eligible</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -314,7 +314,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code active_cases} field.
+     * The <code>active_cases</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -324,7 +324,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code reason} field.
+     * The <code>reason</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -347,7 +347,7 @@ public final class CaseRoutingPreview extends JsonModel {
       }
 
       /**
-       * The {@code user_id} field.
+       * The <code>user_id</code> field.
        *
        * @param userId the value
        * @return this builder
@@ -357,7 +357,7 @@ public final class CaseRoutingPreview extends JsonModel {
       }
 
       /**
-       * The {@code eligible} field.
+       * The <code>eligible</code> field.
        *
        * @param eligible the value
        * @return this builder
@@ -367,7 +367,7 @@ public final class CaseRoutingPreview extends JsonModel {
       }
 
       /**
-       * The {@code active_cases} field.
+       * The <code>active_cases</code> field.
        *
        * @param activeCases the value, or {@code null} to send JSON null
        * @return this builder
@@ -377,7 +377,7 @@ public final class CaseRoutingPreview extends JsonModel {
       }
 
       /**
-       * The {@code reason} field.
+       * The <code>reason</code> field.
        *
        * @param reason the value, or {@code null} to send JSON null
        * @return this builder
@@ -439,7 +439,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -449,7 +449,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code name} field.
+     * The <code>name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -459,7 +459,7 @@ public final class CaseRoutingPreview extends JsonModel {
     }
 
     /**
-     * The {@code priority} field.
+     * The <code>priority</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -482,7 +482,7 @@ public final class CaseRoutingPreview extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @param uuid the value
        * @return this builder
@@ -492,7 +492,7 @@ public final class CaseRoutingPreview extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @param name the value
        * @return this builder
@@ -502,7 +502,7 @@ public final class CaseRoutingPreview extends JsonModel {
       }
 
       /**
-       * The {@code priority} field.
+       * The <code>priority</code> field.
        *
        * @param priority the value
        * @return this builder

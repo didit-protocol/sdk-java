@@ -63,7 +63,7 @@ public final class QuestionnaireDetail extends JsonModel {
   }
 
   /**
-   * The {@code title} field.
+   * The <code>title</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -73,7 +73,7 @@ public final class QuestionnaireDetail extends JsonModel {
   }
 
   /**
-   * The {@code description} field.
+   * The <code>description</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -83,7 +83,7 @@ public final class QuestionnaireDetail extends JsonModel {
   }
 
   /**
-   * The {@code languages} field.
+   * The <code>languages</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -93,7 +93,7 @@ public final class QuestionnaireDetail extends JsonModel {
   }
 
   /**
-   * The {@code default_language} field.
+   * The <code>default_language</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -103,7 +103,7 @@ public final class QuestionnaireDetail extends JsonModel {
   }
 
   /**
-   * The {@code is_active} field.
+   * The <code>is_active</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -113,7 +113,7 @@ public final class QuestionnaireDetail extends JsonModel {
   }
 
   /**
-   * The {@code is_simple_questionnaire} field.
+   * The <code>is_simple_questionnaire</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -153,7 +153,7 @@ public final class QuestionnaireDetail extends JsonModel {
   }
 
   /**
-   * The {@code version} field.
+   * The <code>version</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -163,7 +163,7 @@ public final class QuestionnaireDetail extends JsonModel {
   }
 
   /**
-   * The {@code status} field.
+   * The <code>status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -173,7 +173,7 @@ public final class QuestionnaireDetail extends JsonModel {
   }
 
   /**
-   * The {@code published_at} field.
+   * The <code>published_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -216,7 +216,7 @@ public final class QuestionnaireDetail extends JsonModel {
     }
 
     /**
-     * The {@code title} field.
+     * The <code>title</code> field.
      *
      * @param title the value
      * @return this builder
@@ -226,7 +226,7 @@ public final class QuestionnaireDetail extends JsonModel {
     }
 
     /**
-     * The {@code description} field.
+     * The <code>description</code> field.
      *
      * @param description the value, or {@code null} to send JSON null
      * @return this builder
@@ -236,7 +236,7 @@ public final class QuestionnaireDetail extends JsonModel {
     }
 
     /**
-     * The {@code languages} field.
+     * The <code>languages</code> field.
      *
      * @param languages the value
      * @return this builder
@@ -246,7 +246,7 @@ public final class QuestionnaireDetail extends JsonModel {
     }
 
     /**
-     * The {@code default_language} field.
+     * The <code>default_language</code> field.
      *
      * @param defaultLanguage the value
      * @return this builder
@@ -256,7 +256,7 @@ public final class QuestionnaireDetail extends JsonModel {
     }
 
     /**
-     * The {@code is_active} field.
+     * The <code>is_active</code> field.
      *
      * @param isActive the value
      * @return this builder
@@ -266,7 +266,7 @@ public final class QuestionnaireDetail extends JsonModel {
     }
 
     /**
-     * The {@code is_simple_questionnaire} field.
+     * The <code>is_simple_questionnaire</code> field.
      *
      * @param isSimpleQuestionnaire the value
      * @return this builder
@@ -306,7 +306,7 @@ public final class QuestionnaireDetail extends JsonModel {
     }
 
     /**
-     * The {@code version} field.
+     * The <code>version</code> field.
      *
      * @param version the value
      * @return this builder
@@ -316,7 +316,7 @@ public final class QuestionnaireDetail extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @param status the value
      * @return this builder
@@ -326,7 +326,7 @@ public final class QuestionnaireDetail extends JsonModel {
     }
 
     /**
-     * The {@code published_at} field.
+     * The <code>published_at</code> field.
      *
      * @param publishedAt the value, or {@code null} to send JSON null
      * @return this builder

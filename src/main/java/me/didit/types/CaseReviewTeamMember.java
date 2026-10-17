@@ -52,7 +52,7 @@ public final class CaseReviewTeamMember extends JsonModel {
   }
 
   /**
-   * The {@code user_id} field.
+   * The <code>user_id</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -62,7 +62,7 @@ public final class CaseReviewTeamMember extends JsonModel {
   }
 
   /**
-   * The {@code availability} field.
+   * The <code>availability</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class CaseReviewTeamMember extends JsonModel {
   }
 
   /**
-   * The {@code capacity} field.
+   * The <code>capacity</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class CaseReviewTeamMember extends JsonModel {
   }
 
   /**
-   * The {@code skills} field.
+   * The <code>skills</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class CaseReviewTeamMember extends JsonModel {
   }
 
   /**
-   * The {@code available_from} field.
+   * The <code>available_from</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +102,7 @@ public final class CaseReviewTeamMember extends JsonModel {
   }
 
   /**
-   * The {@code available_until} field.
+   * The <code>available_until</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -125,7 +125,7 @@ public final class CaseReviewTeamMember extends JsonModel {
     }
 
     /**
-     * The {@code user_id} field.
+     * The <code>user_id</code> field.
      *
      * @param userId the value
      * @return this builder
@@ -135,7 +135,7 @@ public final class CaseReviewTeamMember extends JsonModel {
     }
 
     /**
-     * The {@code availability} field.
+     * The <code>availability</code> field.
      *
      * @param availability the value
      * @return this builder
@@ -145,7 +145,7 @@ public final class CaseReviewTeamMember extends JsonModel {
     }
 
     /**
-     * The {@code capacity} field.
+     * The <code>capacity</code> field.
      *
      * @param capacity the value
      * @return this builder
@@ -155,7 +155,7 @@ public final class CaseReviewTeamMember extends JsonModel {
     }
 
     /**
-     * The {@code skills} field.
+     * The <code>skills</code> field.
      *
      * @param skills the value
      * @return this builder
@@ -165,7 +165,7 @@ public final class CaseReviewTeamMember extends JsonModel {
     }
 
     /**
-     * The {@code available_from} field.
+     * The <code>available_from</code> field.
      *
      * @param availableFrom the value, or {@code null} to send JSON null
      * @return this builder
@@ -175,7 +175,7 @@ public final class CaseReviewTeamMember extends JsonModel {
     }
 
     /**
-     * The {@code available_until} field.
+     * The <code>available_until</code> field.
      *
      * @param availableUntil the value, or {@code null} to send JSON null
      * @return this builder

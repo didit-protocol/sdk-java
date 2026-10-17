@@ -450,7 +450,7 @@ public final class KYBRegistryOwnership extends JsonModel {
     }
 
     /**
-     * The {@code reason} field.
+     * The <code>reason</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -460,7 +460,7 @@ public final class KYBRegistryOwnership extends JsonModel {
     }
 
     /**
-     * The {@code section} field.
+     * The <code>section</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -483,7 +483,7 @@ public final class KYBRegistryOwnership extends JsonModel {
       }
 
       /**
-       * The {@code reason} field.
+       * The <code>reason</code> field.
        *
        * @param reason the value
        * @return this builder
@@ -493,7 +493,7 @@ public final class KYBRegistryOwnership extends JsonModel {
       }
 
       /**
-       * The {@code section} field.
+       * The <code>section</code> field.
        *
        * @param section the value, or {@code null} to send JSON null
        * @return this builder

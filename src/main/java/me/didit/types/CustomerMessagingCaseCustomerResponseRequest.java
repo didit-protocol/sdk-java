@@ -50,7 +50,7 @@ public final class CustomerMessagingCaseCustomerResponseRequest extends JsonMode
   }
 
   /**
-   * The {@code full_name} field.
+   * The <code>full_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -60,7 +60,7 @@ public final class CustomerMessagingCaseCustomerResponseRequest extends JsonMode
   }
 
   /**
-   * The {@code date_of_birth} field.
+   * The <code>date_of_birth</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -70,7 +70,7 @@ public final class CustomerMessagingCaseCustomerResponseRequest extends JsonMode
   }
 
   /**
-   * The {@code file} field.
+   * The <code>file</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -93,7 +93,7 @@ public final class CustomerMessagingCaseCustomerResponseRequest extends JsonMode
     }
 
     /**
-     * The {@code full_name} field.
+     * The <code>full_name</code> field.
      *
      * @param fullName the value
      * @return this builder
@@ -103,7 +103,7 @@ public final class CustomerMessagingCaseCustomerResponseRequest extends JsonMode
     }
 
     /**
-     * The {@code date_of_birth} field.
+     * The <code>date_of_birth</code> field.
      *
      * @param dateOfBirth the value
      * @return this builder
@@ -113,7 +113,7 @@ public final class CustomerMessagingCaseCustomerResponseRequest extends JsonMode
     }
 
     /**
-     * The {@code file} field.
+     * The <code>file</code> field.
      *
      * @param file the value
      * @return this builder

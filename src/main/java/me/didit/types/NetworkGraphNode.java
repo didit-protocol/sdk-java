@@ -53,7 +53,7 @@ public final class NetworkGraphNode extends JsonModel {
   }
 
   /**
-   * The {@code id} field.
+   * The <code>id</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -63,7 +63,7 @@ public final class NetworkGraphNode extends JsonModel {
   }
 
   /**
-   * The {@code kind} field.
+   * The <code>kind</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -86,7 +86,7 @@ public final class NetworkGraphNode extends JsonModel {
     }
 
     /**
-     * The {@code id} field.
+     * The <code>id</code> field.
      *
      * @param id the value
      * @return this builder
@@ -96,7 +96,7 @@ public final class NetworkGraphNode extends JsonModel {
     }
 
     /**
-     * The {@code kind} field.
+     * The <code>kind</code> field.
      *
      * @param kind the value
      * @return this builder

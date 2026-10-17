@@ -53,7 +53,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code case} field.
+   * The <code>case</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -63,7 +63,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code template} field.
+   * The <code>template</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -103,7 +103,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code rentity_id} field.
+   * The <code>rentity_id</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -113,7 +113,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code rentity_branch} field.
+   * The <code>rentity_branch</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -123,7 +123,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code submission_code} field.
+   * The <code>submission_code</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -133,7 +133,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code entity_reference} field.
+   * The <code>entity_reference</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -143,7 +143,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code fiu_ref_number} field.
+   * The <code>fiu_ref_number</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -153,7 +153,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code currency_code_local} field.
+   * The <code>currency_code_local</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -163,7 +163,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code submission_date} field.
+   * The <code>submission_date</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -173,7 +173,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code reporting_person} field.
+   * The <code>reporting_person</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -183,7 +183,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code location} field.
+   * The <code>location</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -193,7 +193,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code reason} field.
+   * The <code>reason</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -203,7 +203,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code action} field.
+   * The <code>action</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -213,7 +213,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code activity} field.
+   * The <code>activity</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -223,7 +223,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code narrative} field.
+   * The <code>narrative</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -233,7 +233,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code report_indicators} field.
+   * The <code>report_indicators</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -243,7 +243,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code included_fields} field.
+   * The <code>included_fields</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -266,7 +266,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code case} field.
+     * The <code>case</code> field.
      *
      * @param case_ the value
      * @return this builder
@@ -276,7 +276,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code template} field.
+     * The <code>template</code> field.
      *
      * @param template the value
      * @return this builder
@@ -316,7 +316,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code rentity_id} field.
+     * The <code>rentity_id</code> field.
      *
      * @param rentityId the value, or {@code null} to send JSON null
      * @return this builder
@@ -326,7 +326,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code rentity_branch} field.
+     * The <code>rentity_branch</code> field.
      *
      * @param rentityBranch the value, or {@code null} to send JSON null
      * @return this builder
@@ -336,7 +336,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code submission_code} field.
+     * The <code>submission_code</code> field.
      *
      * @param submissionCode the value
      * @return this builder
@@ -346,7 +346,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code entity_reference} field.
+     * The <code>entity_reference</code> field.
      *
      * @param entityReference the value, or {@code null} to send JSON null
      * @return this builder
@@ -356,7 +356,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code fiu_ref_number} field.
+     * The <code>fiu_ref_number</code> field.
      *
      * @param fiuRefNumber the value, or {@code null} to send JSON null
      * @return this builder
@@ -366,7 +366,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code currency_code_local} field.
+     * The <code>currency_code_local</code> field.
      *
      * @param currencyCodeLocal the value, or {@code null} to send JSON null
      * @return this builder
@@ -376,7 +376,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code submission_date} field.
+     * The <code>submission_date</code> field.
      *
      * @param submissionDate the value, or {@code null} to send JSON null
      * @return this builder
@@ -386,7 +386,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code reporting_person} field.
+     * The <code>reporting_person</code> field.
      *
      * @param reportingPerson the value
      * @return this builder
@@ -396,7 +396,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code location} field.
+     * The <code>location</code> field.
      *
      * @param location the value
      * @return this builder
@@ -406,7 +406,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code reason} field.
+     * The <code>reason</code> field.
      *
      * @param reason the value, or {@code null} to send JSON null
      * @return this builder
@@ -416,7 +416,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code action} field.
+     * The <code>action</code> field.
      *
      * @param action the value, or {@code null} to send JSON null
      * @return this builder
@@ -426,7 +426,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code activity} field.
+     * The <code>activity</code> field.
      *
      * @param activity the value, or {@code null} to send JSON null
      * @return this builder
@@ -436,7 +436,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code narrative} field.
+     * The <code>narrative</code> field.
      *
      * @param narrative the value
      * @return this builder
@@ -446,7 +446,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code report_indicators} field.
+     * The <code>report_indicators</code> field.
      *
      * @param reportIndicators the value
      * @return this builder
@@ -456,7 +456,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code included_fields} field.
+     * The <code>included_fields</code> field.
      *
      * @param includedFields the value
      * @return this builder
@@ -623,7 +623,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code who} field.
+     * The <code>who</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -633,7 +633,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code what} field.
+     * The <code>what</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -643,7 +643,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code when} field.
+     * The <code>when</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -653,7 +653,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code where} field.
+     * The <code>where</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -663,7 +663,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code why} field.
+     * The <code>why</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -673,7 +673,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code how} field.
+     * The <code>how</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -696,7 +696,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code who} field.
+       * The <code>who</code> field.
        *
        * @param who the value
        * @return this builder
@@ -706,7 +706,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code what} field.
+       * The <code>what</code> field.
        *
        * @param what the value
        * @return this builder
@@ -716,7 +716,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code when} field.
+       * The <code>when</code> field.
        *
        * @param when_ the value
        * @return this builder
@@ -726,7 +726,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code where} field.
+       * The <code>where</code> field.
        *
        * @param where the value
        * @return this builder
@@ -736,7 +736,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code why} field.
+       * The <code>why</code> field.
        *
        * @param why the value
        * @return this builder
@@ -746,7 +746,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code how} field.
+       * The <code>how</code> field.
        *
        * @param how the value
        * @return this builder

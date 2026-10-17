@@ -50,7 +50,7 @@ public final class CaseCollaborationCaseNoteReply extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -60,7 +60,7 @@ public final class CaseCollaborationCaseNoteReply extends JsonModel {
   }
 
   /**
-   * The {@code actor_name} field.
+   * The <code>actor_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -70,7 +70,7 @@ public final class CaseCollaborationCaseNoteReply extends JsonModel {
   }
 
   /**
-   * The {@code actor_email} field.
+   * The <code>actor_email</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -80,7 +80,7 @@ public final class CaseCollaborationCaseNoteReply extends JsonModel {
   }
 
   /**
-   * The {@code comment} field.
+   * The <code>comment</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -103,7 +103,7 @@ public final class CaseCollaborationCaseNoteReply extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -113,7 +113,7 @@ public final class CaseCollaborationCaseNoteReply extends JsonModel {
     }
 
     /**
-     * The {@code actor_name} field.
+     * The <code>actor_name</code> field.
      *
      * @param actorName the value, or {@code null} to send JSON null
      * @return this builder
@@ -123,7 +123,7 @@ public final class CaseCollaborationCaseNoteReply extends JsonModel {
     }
 
     /**
-     * The {@code actor_email} field.
+     * The <code>actor_email</code> field.
      *
      * @param actorEmail the value, or {@code null} to send JSON null
      * @return this builder
@@ -133,7 +133,7 @@ public final class CaseCollaborationCaseNoteReply extends JsonModel {
     }
 
     /**
-     * The {@code comment} field.
+     * The <code>comment</code> field.
      *
      * @param comment the value
      * @return this builder

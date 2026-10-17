@@ -51,7 +51,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
   }
 
   /**
-   * The {@code wallet} field.
+   * The <code>wallet</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -61,7 +61,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
   }
 
   /**
-   * The {@code country} field.
+   * The <code>country</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -95,7 +95,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
   }
 
   /**
-   * The {@code error} field.
+   * The <code>error</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -105,7 +105,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
   }
 
   /**
-   * The {@code interaction} field.
+   * The <code>interaction</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -115,7 +115,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
   }
 
   /**
-   * The {@code simulated} field.
+   * The <code>simulated</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -125,7 +125,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
   }
 
   /**
-   * The {@code expires_at} field.
+   * The <code>expires_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -135,7 +135,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
   }
 
   /**
-   * The {@code next_action} field.
+   * The <code>next_action</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -145,7 +145,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
   }
 
   /**
-   * The {@code identity} field.
+   * The <code>identity</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -155,7 +155,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
   }
 
   /**
-   * The {@code attributes} field.
+   * The <code>attributes</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -165,7 +165,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
   }
 
   /**
-   * The {@code level_of_assurance} field.
+   * The <code>level_of_assurance</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -175,7 +175,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
   }
 
   /**
-   * The {@code verified_at} field.
+   * The <code>verified_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -195,7 +195,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
   }
 
   /**
-   * The {@code credential_type} field.
+   * The <code>credential_type</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -218,7 +218,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
     }
 
     /**
-     * The {@code wallet} field.
+     * The <code>wallet</code> field.
      *
      * @param wallet the value
      * @return this builder
@@ -228,7 +228,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
     }
 
     /**
-     * The {@code country} field.
+     * The <code>country</code> field.
      *
      * @param country the value
      * @return this builder
@@ -262,7 +262,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
     }
 
     /**
-     * The {@code error} field.
+     * The <code>error</code> field.
      *
      * @param error the value, or {@code null} to send JSON null
      * @return this builder
@@ -272,7 +272,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
     }
 
     /**
-     * The {@code interaction} field.
+     * The <code>interaction</code> field.
      *
      * @param interaction the value
      * @return this builder
@@ -282,7 +282,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
     }
 
     /**
-     * The {@code simulated} field.
+     * The <code>simulated</code> field.
      *
      * @param simulated the value
      * @return this builder
@@ -292,7 +292,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
     }
 
     /**
-     * The {@code expires_at} field.
+     * The <code>expires_at</code> field.
      *
      * @param expiresAt the value
      * @return this builder
@@ -302,7 +302,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
     }
 
     /**
-     * The {@code next_action} field.
+     * The <code>next_action</code> field.
      *
      * @param nextAction the value, or {@code null} to send JSON null
      * @return this builder
@@ -312,7 +312,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
     }
 
     /**
-     * The {@code identity} field.
+     * The <code>identity</code> field.
      *
      * @param identity the value, or {@code null} to send JSON null
      * @return this builder
@@ -322,7 +322,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
     }
 
     /**
-     * The {@code attributes} field.
+     * The <code>attributes</code> field.
      *
      * @param attributes the value, or {@code null} to send JSON null
      * @return this builder
@@ -332,7 +332,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
     }
 
     /**
-     * The {@code level_of_assurance} field.
+     * The <code>level_of_assurance</code> field.
      *
      * @param levelOfAssurance the value, or {@code null} to send JSON null
      * @return this builder
@@ -342,7 +342,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
     }
 
     /**
-     * The {@code verified_at} field.
+     * The <code>verified_at</code> field.
      *
      * @param verifiedAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -362,7 +362,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
     }
 
     /**
-     * The {@code credential_type} field.
+     * The <code>credential_type</code> field.
      *
      * @param credentialType the value, or {@code null} to send JSON null
      * @return this builder

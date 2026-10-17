@@ -59,7 +59,7 @@ public final class CaseDuplicateCaseSubjectInputRequest extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -93,7 +93,7 @@ public final class CaseDuplicateCaseSubjectInputRequest extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder

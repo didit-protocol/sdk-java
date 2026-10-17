@@ -122,7 +122,7 @@ public final class BiometricTemplatesRetrieveResponse extends JsonModel {
   }
 
   /**
-   * The {@code retained_at} field.
+   * The <code>retained_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -152,7 +152,7 @@ public final class BiometricTemplatesRetrieveResponse extends JsonModel {
   }
 
   /**
-   * The {@code retained_by_type} field.
+   * The <code>retained_by_type</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -162,7 +162,7 @@ public final class BiometricTemplatesRetrieveResponse extends JsonModel {
   }
 
   /**
-   * The {@code instruction_class} field.
+   * The <code>instruction_class</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -172,7 +172,7 @@ public final class BiometricTemplatesRetrieveResponse extends JsonModel {
   }
 
   /**
-   * The {@code instruction_source} field.
+   * The <code>instruction_source</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -212,7 +212,7 @@ public final class BiometricTemplatesRetrieveResponse extends JsonModel {
   }
 
   /**
-   * The {@code purged_at} field.
+   * The <code>purged_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -305,7 +305,7 @@ public final class BiometricTemplatesRetrieveResponse extends JsonModel {
     }
 
     /**
-     * The {@code retained_at} field.
+     * The <code>retained_at</code> field.
      *
      * @param retainedAt the value
      * @return this builder
@@ -335,7 +335,7 @@ public final class BiometricTemplatesRetrieveResponse extends JsonModel {
     }
 
     /**
-     * The {@code retained_by_type} field.
+     * The <code>retained_by_type</code> field.
      *
      * @param retainedByType the value
      * @return this builder
@@ -345,7 +345,7 @@ public final class BiometricTemplatesRetrieveResponse extends JsonModel {
     }
 
     /**
-     * The {@code instruction_class} field.
+     * The <code>instruction_class</code> field.
      *
      * @param instructionClass the value
      * @return this builder
@@ -355,7 +355,7 @@ public final class BiometricTemplatesRetrieveResponse extends JsonModel {
     }
 
     /**
-     * The {@code instruction_source} field.
+     * The <code>instruction_source</code> field.
      *
      * @param instructionSource the value
      * @return this builder
@@ -395,7 +395,7 @@ public final class BiometricTemplatesRetrieveResponse extends JsonModel {
     }
 
     /**
-     * The {@code purged_at} field.
+     * The <code>purged_at</code> field.
      *
      * @param purgedAt the value, or {@code null} to send JSON null
      * @return this builder

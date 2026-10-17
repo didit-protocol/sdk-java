@@ -52,7 +52,7 @@ public final class AmlMonitoringRetrieveJobResponse extends JsonModel {
   }
 
   /**
-   * The {@code job_id} field.
+   * The <code>job_id</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -62,7 +62,7 @@ public final class AmlMonitoringRetrieveJobResponse extends JsonModel {
   }
 
   /**
-   * The {@code status} field.
+   * The <code>status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -142,7 +142,7 @@ public final class AmlMonitoringRetrieveJobResponse extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -152,7 +152,7 @@ public final class AmlMonitoringRetrieveJobResponse extends JsonModel {
   }
 
   /**
-   * The {@code completed_at} field.
+   * The <code>completed_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -175,7 +175,7 @@ public final class AmlMonitoringRetrieveJobResponse extends JsonModel {
     }
 
     /**
-     * The {@code job_id} field.
+     * The <code>job_id</code> field.
      *
      * @param jobId the value
      * @return this builder
@@ -185,7 +185,7 @@ public final class AmlMonitoringRetrieveJobResponse extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @param status the value
      * @return this builder
@@ -265,7 +265,7 @@ public final class AmlMonitoringRetrieveJobResponse extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -275,7 +275,7 @@ public final class AmlMonitoringRetrieveJobResponse extends JsonModel {
     }
 
     /**
-     * The {@code completed_at} field.
+     * The <code>completed_at</code> field.
      *
      * @param completedAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -695,7 +695,7 @@ public final class AmlMonitoringRetrieveJobResponse extends JsonModel {
     }
 
     /**
-     * The {@code outcome} field.
+     * The <code>outcome</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -738,7 +738,7 @@ public final class AmlMonitoringRetrieveJobResponse extends JsonModel {
       }
 
       /**
-       * The {@code outcome} field.
+       * The <code>outcome</code> field.
        *
        * @param outcome the value
        * @return this builder

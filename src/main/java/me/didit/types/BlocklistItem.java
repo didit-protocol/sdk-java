@@ -52,7 +52,7 @@ public final class BlocklistItem extends JsonModel {
   }
 
   /**
-   * The {@code type} field.
+   * The <code>type</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -62,7 +62,7 @@ public final class BlocklistItem extends JsonModel {
   }
 
   /**
-   * The {@code session_id} field.
+   * The <code>session_id</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class BlocklistItem extends JsonModel {
   }
 
   /**
-   * The {@code session_number} field.
+   * The <code>session_number</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class BlocklistItem extends JsonModel {
   }
 
   /**
-   * The {@code blocklisted_at} field.
+   * The <code>blocklisted_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class BlocklistItem extends JsonModel {
   }
 
   /**
-   * The {@code face_image} field.
+   * The <code>face_image</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +102,7 @@ public final class BlocklistItem extends JsonModel {
   }
 
   /**
-   * The {@code document_type} field.
+   * The <code>document_type</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,7 +112,7 @@ public final class BlocklistItem extends JsonModel {
   }
 
   /**
-   * The {@code document_number} field.
+   * The <code>document_number</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -122,7 +122,7 @@ public final class BlocklistItem extends JsonModel {
   }
 
   /**
-   * The {@code phone_number} field.
+   * The <code>phone_number</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -132,7 +132,7 @@ public final class BlocklistItem extends JsonModel {
   }
 
   /**
-   * The {@code email} field.
+   * The <code>email</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -155,7 +155,7 @@ public final class BlocklistItem extends JsonModel {
     }
 
     /**
-     * The {@code type} field.
+     * The <code>type</code> field.
      *
      * @param type the value
      * @return this builder
@@ -165,7 +165,7 @@ public final class BlocklistItem extends JsonModel {
     }
 
     /**
-     * The {@code session_id} field.
+     * The <code>session_id</code> field.
      *
      * @param sessionId the value
      * @return this builder
@@ -175,7 +175,7 @@ public final class BlocklistItem extends JsonModel {
     }
 
     /**
-     * The {@code session_number} field.
+     * The <code>session_number</code> field.
      *
      * @param sessionNumber the value
      * @return this builder
@@ -185,7 +185,7 @@ public final class BlocklistItem extends JsonModel {
     }
 
     /**
-     * The {@code blocklisted_at} field.
+     * The <code>blocklisted_at</code> field.
      *
      * @param blocklistedAt the value
      * @return this builder
@@ -195,7 +195,7 @@ public final class BlocklistItem extends JsonModel {
     }
 
     /**
-     * The {@code face_image} field.
+     * The <code>face_image</code> field.
      *
      * @param faceImage the value, or {@code null} to send JSON null
      * @return this builder
@@ -205,7 +205,7 @@ public final class BlocklistItem extends JsonModel {
     }
 
     /**
-     * The {@code document_type} field.
+     * The <code>document_type</code> field.
      *
      * @param documentType the value, or {@code null} to send JSON null
      * @return this builder
@@ -215,7 +215,7 @@ public final class BlocklistItem extends JsonModel {
     }
 
     /**
-     * The {@code document_number} field.
+     * The <code>document_number</code> field.
      *
      * @param documentNumber the value, or {@code null} to send JSON null
      * @return this builder
@@ -225,7 +225,7 @@ public final class BlocklistItem extends JsonModel {
     }
 
     /**
-     * The {@code phone_number} field.
+     * The <code>phone_number</code> field.
      *
      * @param phoneNumber the value, or {@code null} to send JSON null
      * @return this builder
@@ -235,7 +235,7 @@ public final class BlocklistItem extends JsonModel {
     }
 
     /**
-     * The {@code email} field.
+     * The <code>email</code> field.
      *
      * @param email the value, or {@code null} to send JSON null
      * @return this builder

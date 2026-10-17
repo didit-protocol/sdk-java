@@ -49,7 +49,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
   }
 
   /**
-   * The {@code request_id} field.
+   * The <code>request_id</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -59,7 +59,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
   }
 
   /**
-   * The {@code expires_at} field.
+   * The <code>expires_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -69,7 +69,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
   }
 
   /**
-   * The {@code recipient} field.
+   * The <code>recipient</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -79,7 +79,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
   }
 
   /**
-   * The {@code sender} field.
+   * The <code>sender</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -89,7 +89,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
   }
 
   /**
-   * The {@code subject} field.
+   * The <code>subject</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -99,7 +99,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
   }
 
   /**
-   * The {@code html} field.
+   * The <code>html</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -109,7 +109,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
   }
 
   /**
-   * The {@code requires_user_action} field.
+   * The <code>requires_user_action</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -119,7 +119,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
   }
 
   /**
-   * The {@code preview_token} field.
+   * The <code>preview_token</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -142,7 +142,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
     }
 
     /**
-     * The {@code request_id} field.
+     * The <code>request_id</code> field.
      *
      * @param requestId the value
      * @return this builder
@@ -152,7 +152,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
     }
 
     /**
-     * The {@code expires_at} field.
+     * The <code>expires_at</code> field.
      *
      * @param expiresAt the value
      * @return this builder
@@ -162,7 +162,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
     }
 
     /**
-     * The {@code recipient} field.
+     * The <code>recipient</code> field.
      *
      * @param recipient the value
      * @return this builder
@@ -172,7 +172,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
     }
 
     /**
-     * The {@code sender} field.
+     * The <code>sender</code> field.
      *
      * @param sender the value
      * @return this builder
@@ -182,7 +182,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
     }
 
     /**
-     * The {@code subject} field.
+     * The <code>subject</code> field.
      *
      * @param subject the value
      * @return this builder
@@ -192,7 +192,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
     }
 
     /**
-     * The {@code html} field.
+     * The <code>html</code> field.
      *
      * @param html the value
      * @return this builder
@@ -202,7 +202,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
     }
 
     /**
-     * The {@code requires_user_action} field.
+     * The <code>requires_user_action</code> field.
      *
      * @param requiresUserAction the value
      * @return this builder
@@ -212,7 +212,7 @@ public final class CustomerMessagingCaseRequestPreviewResponse extends JsonModel
     }
 
     /**
-     * The {@code preview_token} field.
+     * The <code>preview_token</code> field.
      *
      * @param previewToken the value
      * @return this builder

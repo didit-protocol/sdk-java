@@ -620,7 +620,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * The {@code gtr} field.
+     * The <code>gtr</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -630,7 +630,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * The {@code trust} field.
+     * The <code>trust</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -640,7 +640,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * The {@code verifyvasp} field.
+     * The <code>verifyvasp</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -650,7 +650,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * The {@code sygna} field.
+     * The <code>sygna</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -673,7 +673,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
       }
 
       /**
-       * The {@code gtr} field.
+       * The <code>gtr</code> field.
        *
        * @param gtr the value
        * @return this builder
@@ -683,7 +683,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
       }
 
       /**
-       * The {@code trust} field.
+       * The <code>trust</code> field.
        *
        * @param trust the value
        * @return this builder
@@ -693,7 +693,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
       }
 
       /**
-       * The {@code verifyvasp} field.
+       * The <code>verifyvasp</code> field.
        *
        * @param verifyvasp the value
        * @return this builder
@@ -703,7 +703,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
       }
 
       /**
-       * The {@code sygna} field.
+       * The <code>sygna</code> field.
        *
        * @param sygna the value
        * @return this builder
@@ -764,7 +764,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
       }
 
       /**
-       * The {@code rail} field.
+       * The <code>rail</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -817,7 +817,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
         }
 
         /**
-         * The {@code rail} field.
+         * The <code>rail</code> field.
          *
          * @param rail the value
          * @return this builder
@@ -997,7 +997,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
       }
 
       /**
-       * The {@code rail} field.
+       * The <code>rail</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1050,7 +1050,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
         }
 
         /**
-         * The {@code rail} field.
+         * The <code>rail</code> field.
          *
          * @param rail the value
          * @return this builder
@@ -1230,7 +1230,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
       }
 
       /**
-       * The {@code rail} field.
+       * The <code>rail</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1283,7 +1283,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
         }
 
         /**
-         * The {@code rail} field.
+         * The <code>rail</code> field.
          *
          * @param rail the value
          * @return this builder
@@ -1463,7 +1463,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
       }
 
       /**
-       * The {@code rail} field.
+       * The <code>rail</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1516,7 +1516,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
         }
 
         /**
-         * The {@code rail} field.
+         * The <code>rail</code> field.
          *
          * @param rail the value
          * @return this builder

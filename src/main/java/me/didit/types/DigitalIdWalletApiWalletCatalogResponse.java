@@ -48,7 +48,7 @@ public final class DigitalIdWalletApiWalletCatalogResponse extends JsonModel {
   }
 
   /**
-   * The {@code wallets} field.
+   * The <code>wallets</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -71,7 +71,7 @@ public final class DigitalIdWalletApiWalletCatalogResponse extends JsonModel {
     }
 
     /**
-     * The {@code wallets} field.
+     * The <code>wallets</code> field.
      *
      * @param wallets the value
      * @return this builder

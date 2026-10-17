@@ -157,7 +157,7 @@ public final class SessionsBulkUpdateAmlHitStatusParams extends JsonModel {
     }
 
     /**
-     * The {@code hit_id} field.
+     * The <code>hit_id</code> field.
      *
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -167,7 +167,7 @@ public final class SessionsBulkUpdateAmlHitStatusParams extends JsonModel {
     }
 
     /**
-     * The {@code review_status} field.
+     * The <code>review_status</code> field.
      *
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -190,7 +190,7 @@ public final class SessionsBulkUpdateAmlHitStatusParams extends JsonModel {
       }
 
       /**
-       * The {@code hit_id} field.
+       * The <code>hit_id</code> field.
        *
        * @param hitId the value
        * @return this builder
@@ -200,7 +200,7 @@ public final class SessionsBulkUpdateAmlHitStatusParams extends JsonModel {
       }
 
       /**
-       * The {@code review_status} field.
+       * The <code>review_status</code> field.
        *
        * @param reviewStatus the value
        * @return this builder

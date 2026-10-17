@@ -58,7 +58,7 @@ public final class DigitalIdWalletApiWalletVerificationError extends JsonModel {
   }
 
   /**
-   * The {@code detail} field.
+   * The <code>detail</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -91,7 +91,7 @@ public final class DigitalIdWalletApiWalletVerificationError extends JsonModel {
     }
 
     /**
-     * The {@code detail} field.
+     * The <code>detail</code> field.
      *
      * @param detail the value
      * @return this builder

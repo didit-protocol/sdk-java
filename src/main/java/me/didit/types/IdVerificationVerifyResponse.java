@@ -63,7 +63,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
   }
 
   /**
-   * The {@code id_verification} field.
+   * The <code>id_verification</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -126,7 +126,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
     }
 
     /**
-     * The {@code id_verification} field.
+     * The <code>id_verification</code> field.
      *
      * @param idVerification the value
      * @return this builder
@@ -247,7 +247,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
     }
 
     /**
-     * The {@code document_number} field.
+     * The <code>document_number</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -357,7 +357,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
     }
 
     /**
-     * The {@code date_of_birth} field.
+     * The <code>date_of_birth</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -377,7 +377,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
     }
 
     /**
-     * The {@code expiration_date} field.
+     * The <code>expiration_date</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -387,7 +387,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
     }
 
     /**
-     * The {@code date_of_issue} field.
+     * The <code>date_of_issue</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -407,7 +407,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
     }
 
     /**
-     * The {@code issuing_state_name} field.
+     * The <code>issuing_state_name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -417,7 +417,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
     }
 
     /**
-     * The {@code first_name} field.
+     * The <code>first_name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -427,7 +427,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
     }
 
     /**
-     * The {@code last_name} field.
+     * The <code>last_name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -437,7 +437,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
     }
 
     /**
-     * The {@code full_name} field.
+     * The <code>full_name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -477,7 +477,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
     }
 
     /**
-     * The {@code place_of_birth} field.
+     * The <code>place_of_birth</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -600,7 +600,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code document_number} field.
+       * The <code>document_number</code> field.
        *
        * @param documentNumber the value, or {@code null} to send JSON null
        * @return this builder
@@ -710,7 +710,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code date_of_birth} field.
+       * The <code>date_of_birth</code> field.
        *
        * @param dateOfBirth the value, or {@code null} to send JSON null
        * @return this builder
@@ -730,7 +730,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code expiration_date} field.
+       * The <code>expiration_date</code> field.
        *
        * @param expirationDate the value, or {@code null} to send JSON null
        * @return this builder
@@ -740,7 +740,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code date_of_issue} field.
+       * The <code>date_of_issue</code> field.
        *
        * @param dateOfIssue the value, or {@code null} to send JSON null
        * @return this builder
@@ -760,7 +760,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code issuing_state_name} field.
+       * The <code>issuing_state_name</code> field.
        *
        * @param issuingStateName the value, or {@code null} to send JSON null
        * @return this builder
@@ -770,7 +770,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code first_name} field.
+       * The <code>first_name</code> field.
        *
        * @param firstName the value, or {@code null} to send JSON null
        * @return this builder
@@ -780,7 +780,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code last_name} field.
+       * The <code>last_name</code> field.
        *
        * @param lastName the value, or {@code null} to send JSON null
        * @return this builder
@@ -790,7 +790,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code full_name} field.
+       * The <code>full_name</code> field.
        *
        * @param fullName the value, or {@code null} to send JSON null
        * @return this builder
@@ -830,7 +830,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code place_of_birth} field.
+       * The <code>place_of_birth</code> field.
        *
        * @param placeOfBirth the value, or {@code null} to send JSON null
        * @return this builder
@@ -1383,7 +1383,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code surname} field.
+       * The <code>surname</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1393,7 +1393,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1443,7 +1443,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code sex} field.
+       * The <code>sex</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1463,7 +1463,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code document_number} field.
+       * The <code>document_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1473,7 +1473,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code optional_data} field.
+       * The <code>optional_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1483,7 +1483,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code optional_data_2} field.
+       * The <code>optional_data_2</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1533,7 +1533,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code personal_number} field.
+       * The <code>personal_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1606,7 +1606,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code surname} field.
+         * The <code>surname</code> field.
          *
          * @param surname the value
          * @return this builder
@@ -1616,7 +1616,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @param name the value
          * @return this builder
@@ -1666,7 +1666,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code sex} field.
+         * The <code>sex</code> field.
          *
          * @param sex the value
          * @return this builder
@@ -1686,7 +1686,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_number} field.
+         * The <code>document_number</code> field.
          *
          * @param documentNumber the value
          * @return this builder
@@ -1696,7 +1696,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code optional_data} field.
+         * The <code>optional_data</code> field.
          *
          * @param optionalData the value, or {@code null} to send JSON null
          * @return this builder
@@ -1706,7 +1706,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code optional_data_2} field.
+         * The <code>optional_data_2</code> field.
          *
          * @param optionalData2 the value, or {@code null} to send JSON null
          * @return this builder
@@ -1756,7 +1756,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code personal_number} field.
+         * The <code>personal_number</code> field.
          *
          * @param personalNumber the value, or {@code null} to send JSON null
          * @return this builder
@@ -1871,7 +1871,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code street_1} field.
+       * The <code>street_1</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1881,7 +1881,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code street_2} field.
+       * The <code>street_2</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1891,7 +1891,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code city} field.
+       * The <code>city</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1901,7 +1901,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code region} field.
+       * The <code>region</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1921,7 +1921,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code postal_code} field.
+       * The <code>postal_code</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1931,7 +1931,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code address_type} field.
+       * The <code>address_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2014,7 +2014,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code street_1} field.
+         * The <code>street_1</code> field.
          *
          * @param street1 the value, or {@code null} to send JSON null
          * @return this builder
@@ -2024,7 +2024,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code street_2} field.
+         * The <code>street_2</code> field.
          *
          * @param street2 the value, or {@code null} to send JSON null
          * @return this builder
@@ -2034,7 +2034,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code city} field.
+         * The <code>city</code> field.
          *
          * @param city the value, or {@code null} to send JSON null
          * @return this builder
@@ -2044,7 +2044,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code region} field.
+         * The <code>region</code> field.
          *
          * @param region the value, or {@code null} to send JSON null
          * @return this builder
@@ -2064,7 +2064,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code postal_code} field.
+         * The <code>postal_code</code> field.
          *
          * @param postalCode the value, or {@code null} to send JSON null
          * @return this builder
@@ -2074,7 +2074,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code address_type} field.
+         * The <code>address_type</code> field.
          *
          * @param addressType the value, or {@code null} to send JSON null
          * @return this builder
@@ -2196,7 +2196,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code latitude} field.
+         * The <code>latitude</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2206,7 +2206,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code longitude} field.
+         * The <code>longitude</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2229,7 +2229,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
           }
 
           /**
-           * The {@code latitude} field.
+           * The <code>latitude</code> field.
            *
            * @param latitude the value
            * @return this builder
@@ -2239,7 +2239,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
           }
 
           /**
-           * The {@code longitude} field.
+           * The <code>longitude</code> field.
            *
            * @param longitude the value
            * @return this builder

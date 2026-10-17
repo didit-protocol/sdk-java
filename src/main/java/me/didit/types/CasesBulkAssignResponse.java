@@ -49,7 +49,7 @@ public final class CasesBulkAssignResponse extends JsonModel {
   }
 
   /**
-   * The {@code updated} field.
+   * The <code>updated</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -59,7 +59,7 @@ public final class CasesBulkAssignResponse extends JsonModel {
   }
 
   /**
-   * The {@code failures} field.
+   * The <code>failures</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class CasesBulkAssignResponse extends JsonModel {
     }
 
     /**
-     * The {@code updated} field.
+     * The <code>updated</code> field.
      *
      * @param updated the value
      * @return this builder
@@ -92,7 +92,7 @@ public final class CasesBulkAssignResponse extends JsonModel {
     }
 
     /**
-     * The {@code failures} field.
+     * The <code>failures</code> field.
      *
      * @param failures the value
      * @return this builder
@@ -153,7 +153,7 @@ public final class CasesBulkAssignResponse extends JsonModel {
     }
 
     /**
-     * The {@code case_uuid} field.
+     * The <code>case_uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -163,7 +163,7 @@ public final class CasesBulkAssignResponse extends JsonModel {
     }
 
     /**
-     * The {@code detail} field.
+     * The <code>detail</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -186,7 +186,7 @@ public final class CasesBulkAssignResponse extends JsonModel {
       }
 
       /**
-       * The {@code case_uuid} field.
+       * The <code>case_uuid</code> field.
        *
        * @param caseUuid the value
        * @return this builder
@@ -196,7 +196,7 @@ public final class CasesBulkAssignResponse extends JsonModel {
       }
 
       /**
-       * The {@code detail} field.
+       * The <code>detail</code> field.
        *
        * @param detail the value
        * @return this builder

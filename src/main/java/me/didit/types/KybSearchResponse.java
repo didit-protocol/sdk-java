@@ -62,7 +62,7 @@ public final class KybSearchResponse extends JsonModel {
   }
 
   /**
-   * The {@code kyb_registry} field.
+   * The <code>kyb_registry</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class KybSearchResponse extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -125,7 +125,7 @@ public final class KybSearchResponse extends JsonModel {
     }
 
     /**
-     * The {@code kyb_registry} field.
+     * The <code>kyb_registry</code> field.
      *
      * @param kybRegistry the value
      * @return this builder
@@ -155,7 +155,7 @@ public final class KybSearchResponse extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -226,7 +226,7 @@ public final class KybSearchResponse extends JsonModel {
     }
 
     /**
-     * The {@code pagination} field.
+     * The <code>pagination</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -279,7 +279,7 @@ public final class KybSearchResponse extends JsonModel {
       }
 
       /**
-       * The {@code pagination} field.
+       * The <code>pagination</code> field.
        *
        * @param pagination the value
        * @return this builder
@@ -575,7 +575,7 @@ public final class KybSearchResponse extends JsonModel {
       }
 
       /**
-       * The {@code page} field.
+       * The <code>page</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -585,7 +585,7 @@ public final class KybSearchResponse extends JsonModel {
       }
 
       /**
-       * The {@code per_page} field.
+       * The <code>per_page</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -618,7 +618,7 @@ public final class KybSearchResponse extends JsonModel {
         }
 
         /**
-         * The {@code page} field.
+         * The <code>page</code> field.
          *
          * @param page the value
          * @return this builder
@@ -628,7 +628,7 @@ public final class KybSearchResponse extends JsonModel {
         }
 
         /**
-         * The {@code per_page} field.
+         * The <code>per_page</code> field.
          *
          * @param perPage the value
          * @return this builder

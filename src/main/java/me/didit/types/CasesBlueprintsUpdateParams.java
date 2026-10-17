@@ -62,7 +62,7 @@ public final class CasesBlueprintsUpdateParams extends JsonModel {
   }
 
   /**
-   * The {@code description} field.
+   * The <code>description</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class CasesBlueprintsUpdateParams extends JsonModel {
   }
 
   /**
-   * The {@code assignment_method} field.
+   * The <code>assignment_method</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +102,7 @@ public final class CasesBlueprintsUpdateParams extends JsonModel {
   }
 
   /**
-   * The {@code escalation_enabled} field.
+   * The <code>escalation_enabled</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -122,7 +122,7 @@ public final class CasesBlueprintsUpdateParams extends JsonModel {
   }
 
   /**
-   * The {@code transfer_enabled} field.
+   * The <code>transfer_enabled</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -142,7 +142,7 @@ public final class CasesBlueprintsUpdateParams extends JsonModel {
   }
 
   /**
-   * The {@code require_resolution_note} field.
+   * The <code>require_resolution_note</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -162,7 +162,7 @@ public final class CasesBlueprintsUpdateParams extends JsonModel {
   }
 
   /**
-   * The {@code is_active} field.
+   * The <code>is_active</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -215,7 +215,7 @@ public final class CasesBlueprintsUpdateParams extends JsonModel {
     }
 
     /**
-     * The {@code description} field.
+     * The <code>description</code> field.
      *
      * @param description the value, or {@code null} to send JSON null
      * @return this builder
@@ -235,7 +235,7 @@ public final class CasesBlueprintsUpdateParams extends JsonModel {
     }
 
     /**
-     * The {@code assignment_method} field.
+     * The <code>assignment_method</code> field.
      *
      * @param assignmentMethod the value
      * @return this builder
@@ -255,7 +255,7 @@ public final class CasesBlueprintsUpdateParams extends JsonModel {
     }
 
     /**
-     * The {@code escalation_enabled} field.
+     * The <code>escalation_enabled</code> field.
      *
      * @param escalationEnabled the value
      * @return this builder
@@ -275,7 +275,7 @@ public final class CasesBlueprintsUpdateParams extends JsonModel {
     }
 
     /**
-     * The {@code transfer_enabled} field.
+     * The <code>transfer_enabled</code> field.
      *
      * @param transferEnabled the value
      * @return this builder
@@ -295,7 +295,7 @@ public final class CasesBlueprintsUpdateParams extends JsonModel {
     }
 
     /**
-     * The {@code require_resolution_note} field.
+     * The <code>require_resolution_note</code> field.
      *
      * @param requireResolutionNote the value
      * @return this builder
@@ -315,7 +315,7 @@ public final class CasesBlueprintsUpdateParams extends JsonModel {
     }
 
     /**
-     * The {@code is_active} field.
+     * The <code>is_active</code> field.
      *
      * @param isActive the value
      * @return this builder

@@ -49,7 +49,7 @@ public final class CasesChecklistToggleItemParams extends JsonModel {
   }
 
   /**
-   * The {@code is_completed} field.
+   * The <code>is_completed</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -72,7 +72,7 @@ public final class CasesChecklistToggleItemParams extends JsonModel {
     }
 
     /**
-     * The {@code is_completed} field.
+     * The <code>is_completed</code> field.
      *
      * @param isCompleted the value
      * @return this builder

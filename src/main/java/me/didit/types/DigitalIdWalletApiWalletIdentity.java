@@ -51,7 +51,7 @@ public final class DigitalIdWalletApiWalletIdentity extends JsonModel {
   }
 
   /**
-   * The {@code full_name} field.
+   * The <code>full_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -61,7 +61,7 @@ public final class DigitalIdWalletApiWalletIdentity extends JsonModel {
   }
 
   /**
-   * The {@code first_name} field.
+   * The <code>first_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -71,7 +71,7 @@ public final class DigitalIdWalletApiWalletIdentity extends JsonModel {
   }
 
   /**
-   * The {@code last_name} field.
+   * The <code>last_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -81,7 +81,7 @@ public final class DigitalIdWalletApiWalletIdentity extends JsonModel {
   }
 
   /**
-   * The {@code date_of_birth} field.
+   * The <code>date_of_birth</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -124,7 +124,7 @@ public final class DigitalIdWalletApiWalletIdentity extends JsonModel {
     }
 
     /**
-     * The {@code full_name} field.
+     * The <code>full_name</code> field.
      *
      * @param fullName the value, or {@code null} to send JSON null
      * @return this builder
@@ -134,7 +134,7 @@ public final class DigitalIdWalletApiWalletIdentity extends JsonModel {
     }
 
     /**
-     * The {@code first_name} field.
+     * The <code>first_name</code> field.
      *
      * @param firstName the value, or {@code null} to send JSON null
      * @return this builder
@@ -144,7 +144,7 @@ public final class DigitalIdWalletApiWalletIdentity extends JsonModel {
     }
 
     /**
-     * The {@code last_name} field.
+     * The <code>last_name</code> field.
      *
      * @param lastName the value, or {@code null} to send JSON null
      * @return this builder
@@ -154,7 +154,7 @@ public final class DigitalIdWalletApiWalletIdentity extends JsonModel {
     }
 
     /**
-     * The {@code date_of_birth} field.
+     * The <code>date_of_birth</code> field.
      *
      * @param dateOfBirth the value, or {@code null} to send JSON null
      * @return this builder

@@ -207,7 +207,7 @@ public final class TransactionDetail extends JsonModel {
   }
 
   /**
-   * The {@code default_currency_code} field.
+   * The <code>default_currency_code</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -227,7 +227,7 @@ public final class TransactionDetail extends JsonModel {
   }
 
   /**
-   * The {@code preferred_currency_code} field.
+   * The <code>preferred_currency_code</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -620,7 +620,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code default_currency_code} field.
+     * The <code>default_currency_code</code> field.
      *
      * @param defaultCurrencyCode the value, or {@code null} to send JSON null
      * @return this builder
@@ -640,7 +640,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code preferred_currency_code} field.
+     * The <code>preferred_currency_code</code> field.
      *
      * @param preferredCurrencyCode the value, or {@code null} to send JSON null
      * @return this builder
@@ -1151,7 +1151,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1161,7 +1161,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code name} field.
+     * The <code>name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1171,7 +1171,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code color} field.
+     * The <code>color</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1181,7 +1181,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code description} field.
+     * The <code>description</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1214,7 +1214,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @param uuid the value
        * @return this builder
@@ -1224,7 +1224,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @param name the value
        * @return this builder
@@ -1234,7 +1234,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code color} field.
+       * The <code>color</code> field.
        *
        * @param color the value
        * @return this builder
@@ -1244,7 +1244,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code description} field.
+       * The <code>description</code> field.
        *
        * @param description the value, or {@code null} to send JSON null
        * @return this builder
@@ -1359,7 +1359,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1379,7 +1379,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code entity_type} field.
+     * The <code>entity_type</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1409,7 +1409,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code full_name} field.
+     * The <code>full_name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1419,7 +1419,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code first_name} field.
+     * The <code>first_name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1429,7 +1429,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code last_name} field.
+     * The <code>last_name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1512,7 +1512,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @param uuid the value
        * @return this builder
@@ -1532,7 +1532,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code entity_type} field.
+       * The <code>entity_type</code> field.
        *
        * @param entityType the value
        * @return this builder
@@ -1562,7 +1562,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code full_name} field.
+       * The <code>full_name</code> field.
        *
        * @param fullName the value, or {@code null} to send JSON null
        * @return this builder
@@ -1572,7 +1572,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code first_name} field.
+       * The <code>first_name</code> field.
        *
        * @param firstName the value, or {@code null} to send JSON null
        * @return this builder
@@ -1582,7 +1582,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code last_name} field.
+       * The <code>last_name</code> field.
        *
        * @param lastName the value, or {@code null} to send JSON null
        * @return this builder
@@ -2301,7 +2301,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2311,7 +2311,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code payment_method_type} field.
+     * The <code>payment_method_type</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2321,7 +2321,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code label} field.
+     * The <code>label</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2351,7 +2351,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code issuing_country} field.
+     * The <code>issuing_country</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2361,7 +2361,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code owner_kind} field.
+     * The <code>owner_kind</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2381,7 +2381,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code owner_name} field.
+     * The <code>owner_name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2391,7 +2391,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code institution_info} field.
+     * The <code>institution_info</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2411,7 +2411,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code external_owner_snapshot} field.
+     * The <code>external_owner_snapshot</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2444,7 +2444,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @param uuid the value
        * @return this builder
@@ -2454,7 +2454,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code payment_method_type} field.
+       * The <code>payment_method_type</code> field.
        *
        * @param paymentMethodType the value
        * @return this builder
@@ -2464,7 +2464,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code label} field.
+       * The <code>label</code> field.
        *
        * @param label the value, or {@code null} to send JSON null
        * @return this builder
@@ -2494,7 +2494,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code issuing_country} field.
+       * The <code>issuing_country</code> field.
        *
        * @param issuingCountry the value, or {@code null} to send JSON null
        * @return this builder
@@ -2504,7 +2504,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code owner_kind} field.
+       * The <code>owner_kind</code> field.
        *
        * @param ownerKind the value
        * @return this builder
@@ -2524,7 +2524,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code owner_name} field.
+       * The <code>owner_name</code> field.
        *
        * @param ownerName the value, or {@code null} to send JSON null
        * @return this builder
@@ -2534,7 +2534,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code institution_info} field.
+       * The <code>institution_info</code> field.
        *
        * @param institutionInfo the value
        * @return this builder
@@ -2554,7 +2554,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code external_owner_snapshot} field.
+       * The <code>external_owner_snapshot</code> field.
        *
        * @param externalOwnerSnapshot the value, or {@code null} to send JSON null
        * @return this builder
@@ -2774,7 +2774,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2784,7 +2784,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code label} field.
+     * The <code>label</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2794,7 +2794,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code note} field.
+     * The <code>note</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2804,7 +2804,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code uploaded_by} field.
+     * The <code>uploaded_by</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2814,7 +2814,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2824,7 +2824,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code files} field.
+     * The <code>files</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2847,7 +2847,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @param uuid the value
        * @return this builder
@@ -2857,7 +2857,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code label} field.
+       * The <code>label</code> field.
        *
        * @param label the value, or {@code null} to send JSON null
        * @return this builder
@@ -2867,7 +2867,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code note} field.
+       * The <code>note</code> field.
        *
        * @param note the value, or {@code null} to send JSON null
        * @return this builder
@@ -2877,7 +2877,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code uploaded_by} field.
+       * The <code>uploaded_by</code> field.
        *
        * @param uploadedBy the value, or {@code null} to send JSON null
        * @return this builder
@@ -2887,7 +2887,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code created_at} field.
+       * The <code>created_at</code> field.
        *
        * @param createdAt the value
        * @return this builder
@@ -2897,7 +2897,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code files} field.
+       * The <code>files</code> field.
        *
        * @param files the value
        * @return this builder
@@ -2958,7 +2958,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2978,7 +2978,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code original_filename} field.
+       * The <code>original_filename</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2988,7 +2988,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code file_size} field.
+       * The <code>file_size</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3011,7 +3011,7 @@ public final class TransactionDetail extends JsonModel {
         }
 
         /**
-         * The {@code uuid} field.
+         * The <code>uuid</code> field.
          *
          * @param uuid the value
          * @return this builder
@@ -3031,7 +3031,7 @@ public final class TransactionDetail extends JsonModel {
         }
 
         /**
-         * The {@code original_filename} field.
+         * The <code>original_filename</code> field.
          *
          * @param originalFilename the value, or {@code null} to send JSON null
          * @return this builder
@@ -3041,7 +3041,7 @@ public final class TransactionDetail extends JsonModel {
         }
 
         /**
-         * The {@code file_size} field.
+         * The <code>file_size</code> field.
          *
          * @param fileSize the value, or {@code null} to send JSON null
          * @return this builder
@@ -3104,7 +3104,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3124,7 +3124,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code source} field.
+     * The <code>source</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3134,7 +3134,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3144,7 +3144,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code title} field.
+     * The <code>title</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3154,7 +3154,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code description} field.
+     * The <code>description</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3164,7 +3164,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code metadata} field.
+     * The <code>metadata</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3174,7 +3174,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code occurred_at} field.
+     * The <code>occurred_at</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3197,7 +3197,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @param uuid the value
        * @return this builder
@@ -3217,7 +3217,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code source} field.
+       * The <code>source</code> field.
        *
        * @param source the value
        * @return this builder
@@ -3227,7 +3227,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @param status the value, or {@code null} to send JSON null
        * @return this builder
@@ -3237,7 +3237,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code title} field.
+       * The <code>title</code> field.
        *
        * @param title the value, or {@code null} to send JSON null
        * @return this builder
@@ -3247,7 +3247,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code description} field.
+       * The <code>description</code> field.
        *
        * @param description the value, or {@code null} to send JSON null
        * @return this builder
@@ -3257,7 +3257,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code metadata} field.
+       * The <code>metadata</code> field.
        *
        * @param metadata the value
        * @return this builder
@@ -3267,7 +3267,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code occurred_at} field.
+       * The <code>occurred_at</code> field.
        *
        * @param occurredAt the value
        * @return this builder
@@ -3329,7 +3329,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3339,7 +3339,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code title} field.
+     * The <code>title</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3349,7 +3349,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code description} field.
+     * The <code>description</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3359,7 +3359,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code severity} field.
+     * The <code>severity</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3369,7 +3369,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3379,7 +3379,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code source} field.
+     * The <code>source</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3389,7 +3389,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code metadata} field.
+     * The <code>metadata</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3399,7 +3399,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3409,7 +3409,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code due_at} field.
+     * The <code>due_at</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3432,7 +3432,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @param uuid the value
        * @return this builder
@@ -3442,7 +3442,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code title} field.
+       * The <code>title</code> field.
        *
        * @param title the value
        * @return this builder
@@ -3452,7 +3452,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code description} field.
+       * The <code>description</code> field.
        *
        * @param description the value, or {@code null} to send JSON null
        * @return this builder
@@ -3462,7 +3462,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code severity} field.
+       * The <code>severity</code> field.
        *
        * @param severity the value
        * @return this builder
@@ -3472,7 +3472,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @param status the value
        * @return this builder
@@ -3482,7 +3482,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code source} field.
+       * The <code>source</code> field.
        *
        * @param source the value
        * @return this builder
@@ -3492,7 +3492,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code metadata} field.
+       * The <code>metadata</code> field.
        *
        * @param metadata the value
        * @return this builder
@@ -3502,7 +3502,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code created_at} field.
+       * The <code>created_at</code> field.
        *
        * @param createdAt the value
        * @return this builder
@@ -3512,7 +3512,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code due_at} field.
+       * The <code>due_at</code> field.
        *
        * @param dueAt the value, or {@code null} to send JSON null
        * @return this builder
@@ -3727,7 +3727,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3747,7 +3747,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code rule_title} field.
+     * The <code>rule_title</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3757,7 +3757,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code rule_description} field.
+     * The <code>rule_description</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3767,7 +3767,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code rule_category} field.
+     * The <code>rule_category</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3797,7 +3797,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code mode} field.
+     * The <code>mode</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3807,7 +3807,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code severity} field.
+     * The <code>severity</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3857,7 +3857,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3880,7 +3880,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @param uuid the value
        * @return this builder
@@ -3900,7 +3900,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code rule_title} field.
+       * The <code>rule_title</code> field.
        *
        * @param ruleTitle the value
        * @return this builder
@@ -3910,7 +3910,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code rule_description} field.
+       * The <code>rule_description</code> field.
        *
        * @param ruleDescription the value, or {@code null} to send JSON null
        * @return this builder
@@ -3920,7 +3920,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code rule_category} field.
+       * The <code>rule_category</code> field.
        *
        * @param ruleCategory the value
        * @return this builder
@@ -3950,7 +3950,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code mode} field.
+       * The <code>mode</code> field.
        *
        * @param mode the value
        * @return this builder
@@ -3960,7 +3960,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code severity} field.
+       * The <code>severity</code> field.
        *
        * @param severity the value, or {@code null} to send JSON null
        * @return this builder
@@ -4010,7 +4010,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code created_at} field.
+       * The <code>created_at</code> field.
        *
        * @param createdAt the value
        * @return this builder
@@ -4117,7 +4117,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4127,7 +4127,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code provider} field.
+     * The <code>provider</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4137,7 +4137,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code result_type} field.
+     * The <code>result_type</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4147,7 +4147,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4157,7 +4157,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code severity} field.
+     * The <code>severity</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4167,7 +4167,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code score} field.
+     * The <code>score</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4177,7 +4177,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code summary} field.
+     * The <code>summary</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4197,7 +4197,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4220,7 +4220,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @param uuid the value
        * @return this builder
@@ -4230,7 +4230,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code provider} field.
+       * The <code>provider</code> field.
        *
        * @param provider the value
        * @return this builder
@@ -4240,7 +4240,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code result_type} field.
+       * The <code>result_type</code> field.
        *
        * @param resultType the value
        * @return this builder
@@ -4250,7 +4250,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @param status the value
        * @return this builder
@@ -4260,7 +4260,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code severity} field.
+       * The <code>severity</code> field.
        *
        * @param severity the value, or {@code null} to send JSON null
        * @return this builder
@@ -4270,7 +4270,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code score} field.
+       * The <code>score</code> field.
        *
        * @param score the value
        * @return this builder
@@ -4280,7 +4280,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code summary} field.
+       * The <code>summary</code> field.
        *
        * @param summary the value, or {@code null} to send JSON null
        * @return this builder
@@ -4300,7 +4300,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code created_at} field.
+       * The <code>created_at</code> field.
        *
        * @param createdAt the value
        * @return this builder
@@ -4419,7 +4419,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4429,7 +4429,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4439,7 +4439,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code protocol} field.
+     * The <code>protocol</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4449,7 +4449,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code required} field.
+     * The <code>required</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4459,7 +4459,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code obligations_count} field.
+     * The <code>obligations_count</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4469,7 +4469,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code originator_data} field.
+     * The <code>originator_data</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4479,7 +4479,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code beneficiary_data} field.
+     * The <code>beneficiary_data</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4489,7 +4489,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code metadata} field.
+     * The <code>metadata</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4512,7 +4512,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @param uuid the value
        * @return this builder
@@ -4522,7 +4522,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @param status the value
        * @return this builder
@@ -4532,7 +4532,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code protocol} field.
+       * The <code>protocol</code> field.
        *
        * @param protocol the value, or {@code null} to send JSON null
        * @return this builder
@@ -4542,7 +4542,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code required} field.
+       * The <code>required</code> field.
        *
        * @param required the value
        * @return this builder
@@ -4552,7 +4552,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code obligations_count} field.
+       * The <code>obligations_count</code> field.
        *
        * @param obligationsCount the value
        * @return this builder
@@ -4562,7 +4562,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code originator_data} field.
+       * The <code>originator_data</code> field.
        *
        * @param originatorData the value
        * @return this builder
@@ -4572,7 +4572,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code beneficiary_data} field.
+       * The <code>beneficiary_data</code> field.
        *
        * @param beneficiaryData the value
        * @return this builder
@@ -4582,7 +4582,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code metadata} field.
+       * The <code>metadata</code> field.
        *
        * @param metadata the value
        * @return this builder
@@ -4647,7 +4647,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4657,7 +4657,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code nodes} field.
+     * The <code>nodes</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4667,7 +4667,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code edges} field.
+     * The <code>edges</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4677,7 +4677,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code metrics} field.
+     * The <code>metrics</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4700,7 +4700,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @param uuid the value
        * @return this builder
@@ -4710,7 +4710,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code nodes} field.
+       * The <code>nodes</code> field.
        *
        * @param nodes the value
        * @return this builder
@@ -4720,7 +4720,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code edges} field.
+       * The <code>edges</code> field.
        *
        * @param edges the value
        * @return this builder
@@ -4730,7 +4730,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code metrics} field.
+       * The <code>metrics</code> field.
        *
        * @param metrics the value
        * @return this builder
@@ -4795,7 +4795,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code session_id} field.
+     * The <code>session_id</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4805,7 +4805,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code session_token} field.
+     * The <code>session_token</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4815,7 +4815,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code url} field.
+     * The <code>url</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4825,7 +4825,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4848,7 +4848,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code session_id} field.
+       * The <code>session_id</code> field.
        *
        * @param sessionId the value
        * @return this builder
@@ -4858,7 +4858,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code session_token} field.
+       * The <code>session_token</code> field.
        *
        * @param sessionToken the value
        * @return this builder
@@ -4868,7 +4868,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code url} field.
+       * The <code>url</code> field.
        *
        * @param url the value
        * @return this builder
@@ -4878,7 +4878,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @param status the value
        * @return this builder
@@ -5022,7 +5022,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code type} field.
+       * The <code>type</code> field.
        *
        * @return the value
        * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -5085,7 +5085,7 @@ public final class TransactionDetail extends JsonModel {
         }
 
         /**
-         * The {@code type} field.
+         * The <code>type</code> field.
          *
          * @param type the value
          * @return this builder
@@ -5230,7 +5230,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * The {@code type} field.
+       * The <code>type</code> field.
        *
        * @return the value
        * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -5283,7 +5283,7 @@ public final class TransactionDetail extends JsonModel {
         }
 
         /**
-         * The {@code type} field.
+         * The <code>type</code> field.
          *
          * @param type the value
          * @return this builder

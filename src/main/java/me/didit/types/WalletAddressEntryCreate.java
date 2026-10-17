@@ -49,7 +49,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
   }
 
   /**
-   * The {@code address} field.
+   * The <code>address</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -59,7 +59,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
   }
 
   /**
-   * The {@code chain} field.
+   * The <code>chain</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -69,7 +69,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
   }
 
   /**
-   * The {@code holder_vendor_data} field.
+   * The <code>holder_vendor_data</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -79,7 +79,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
   }
 
   /**
-   * The {@code holder_name} field.
+   * The <code>holder_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -89,7 +89,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
   }
 
   /**
-   * The {@code entity_type} field.
+   * The <code>entity_type</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -132,7 +132,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
     }
 
     /**
-     * The {@code address} field.
+     * The <code>address</code> field.
      *
      * @param address the value
      * @return this builder
@@ -142,7 +142,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
     }
 
     /**
-     * The {@code chain} field.
+     * The <code>chain</code> field.
      *
      * @param chain the value
      * @return this builder
@@ -152,7 +152,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
     }
 
     /**
-     * The {@code holder_vendor_data} field.
+     * The <code>holder_vendor_data</code> field.
      *
      * @param holderVendorData the value
      * @return this builder
@@ -162,7 +162,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
     }
 
     /**
-     * The {@code holder_name} field.
+     * The <code>holder_name</code> field.
      *
      * @param holderName the value
      * @return this builder
@@ -172,7 +172,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
     }
 
     /**
-     * The {@code entity_type} field.
+     * The <code>entity_type</code> field.
      *
      * @param entityType the value
      * @return this builder

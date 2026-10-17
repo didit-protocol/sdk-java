@@ -50,7 +50,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
   }
 
   /**
-   * The {@code series} field.
+   * The <code>series</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -60,7 +60,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
   }
 
   /**
-   * The {@code tables} field.
+   * The <code>tables</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -70,7 +70,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
   }
 
   /**
-   * The {@code totals} field.
+   * The <code>totals</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -103,7 +103,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code series} field.
+     * The <code>series</code> field.
      *
      * @param series the value
      * @return this builder
@@ -113,7 +113,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code tables} field.
+     * The <code>tables</code> field.
      *
      * @param tables the value
      * @return this builder
@@ -123,7 +123,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code totals} field.
+     * The <code>totals</code> field.
      *
      * @param totals the value
      * @return this builder
@@ -194,7 +194,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code date} field.
+     * The <code>date</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -204,7 +204,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code created} field.
+     * The <code>created</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -214,7 +214,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code reviewed} field.
+     * The <code>reviewed</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -237,7 +237,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code date} field.
+       * The <code>date</code> field.
        *
        * @param date the value
        * @return this builder
@@ -247,7 +247,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code created} field.
+       * The <code>created</code> field.
        *
        * @param created the value
        * @return this builder
@@ -257,7 +257,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code reviewed} field.
+       * The <code>reviewed</code> field.
        *
        * @param reviewed the value
        * @return this builder
@@ -319,7 +319,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code officer} field.
+     * The <code>officer</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -329,7 +329,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code blueprint} field.
+     * The <code>blueprint</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -339,7 +339,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code source} field.
+     * The <code>source</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -349,7 +349,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -372,7 +372,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code officer} field.
+       * The <code>officer</code> field.
        *
        * @param officer the value
        * @return this builder
@@ -382,7 +382,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code blueprint} field.
+       * The <code>blueprint</code> field.
        *
        * @param blueprint the value
        * @return this builder
@@ -392,7 +392,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code source} field.
+       * The <code>source</code> field.
        *
        * @param source the value
        * @return this builder
@@ -402,7 +402,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @param status the value
        * @return this builder
@@ -473,7 +473,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code created} field.
+       * The <code>created</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -483,7 +483,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code assigned} field.
+       * The <code>assigned</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -493,7 +493,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code resolved} field.
+       * The <code>resolved</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -503,7 +503,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code threat_rate} field.
+       * The <code>threat_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -513,7 +513,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code false_positive_rate} field.
+       * The <code>false_positive_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -523,7 +523,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code unresolved} field.
+       * The <code>unresolved</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -533,7 +533,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code reassignment_rate} field.
+       * The <code>reassignment_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -543,7 +543,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code escalation_rate} field.
+       * The <code>escalation_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -553,7 +553,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_assign_hours} field.
+       * The <code>avg_assign_hours</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -563,7 +563,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_resolve_hours} field.
+       * The <code>avg_resolve_hours</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -573,7 +573,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_handling_hours} field.
+       * The <code>avg_handling_hours</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -606,7 +606,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code created} field.
+         * The <code>created</code> field.
          *
          * @param created the value
          * @return this builder
@@ -616,7 +616,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code assigned} field.
+         * The <code>assigned</code> field.
          *
          * @param assigned the value
          * @return this builder
@@ -626,7 +626,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code resolved} field.
+         * The <code>resolved</code> field.
          *
          * @param resolved the value
          * @return this builder
@@ -636,7 +636,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code threat_rate} field.
+         * The <code>threat_rate</code> field.
          *
          * @param threatRate the value
          * @return this builder
@@ -646,7 +646,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code false_positive_rate} field.
+         * The <code>false_positive_rate</code> field.
          *
          * @param falsePositiveRate the value
          * @return this builder
@@ -656,7 +656,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code unresolved} field.
+         * The <code>unresolved</code> field.
          *
          * @param unresolved the value
          * @return this builder
@@ -666,7 +666,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code reassignment_rate} field.
+         * The <code>reassignment_rate</code> field.
          *
          * @param reassignmentRate the value
          * @return this builder
@@ -676,7 +676,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code escalation_rate} field.
+         * The <code>escalation_rate</code> field.
          *
          * @param escalationRate the value
          * @return this builder
@@ -686,7 +686,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code avg_assign_hours} field.
+         * The <code>avg_assign_hours</code> field.
          *
          * @param avgAssignHours the value
          * @return this builder
@@ -696,7 +696,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code avg_resolve_hours} field.
+         * The <code>avg_resolve_hours</code> field.
          *
          * @param avgResolveHours the value
          * @return this builder
@@ -706,7 +706,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code avg_handling_hours} field.
+         * The <code>avg_handling_hours</code> field.
          *
          * @param avgHandlingHours the value
          * @return this builder
@@ -778,7 +778,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code created} field.
+       * The <code>created</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -788,7 +788,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code assigned} field.
+       * The <code>assigned</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -798,7 +798,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code resolved} field.
+       * The <code>resolved</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -808,7 +808,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code threat_rate} field.
+       * The <code>threat_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -818,7 +818,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code false_positive_rate} field.
+       * The <code>false_positive_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -828,7 +828,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code unresolved} field.
+       * The <code>unresolved</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -838,7 +838,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code reassignment_rate} field.
+       * The <code>reassignment_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -848,7 +848,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code escalation_rate} field.
+       * The <code>escalation_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -858,7 +858,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_assign_hours} field.
+       * The <code>avg_assign_hours</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -868,7 +868,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_resolve_hours} field.
+       * The <code>avg_resolve_hours</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -878,7 +878,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_handling_hours} field.
+       * The <code>avg_handling_hours</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -911,7 +911,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code created} field.
+         * The <code>created</code> field.
          *
          * @param created the value
          * @return this builder
@@ -921,7 +921,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code assigned} field.
+         * The <code>assigned</code> field.
          *
          * @param assigned the value
          * @return this builder
@@ -931,7 +931,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code resolved} field.
+         * The <code>resolved</code> field.
          *
          * @param resolved the value
          * @return this builder
@@ -941,7 +941,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code threat_rate} field.
+         * The <code>threat_rate</code> field.
          *
          * @param threatRate the value
          * @return this builder
@@ -951,7 +951,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code false_positive_rate} field.
+         * The <code>false_positive_rate</code> field.
          *
          * @param falsePositiveRate the value
          * @return this builder
@@ -961,7 +961,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code unresolved} field.
+         * The <code>unresolved</code> field.
          *
          * @param unresolved the value
          * @return this builder
@@ -971,7 +971,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code reassignment_rate} field.
+         * The <code>reassignment_rate</code> field.
          *
          * @param reassignmentRate the value
          * @return this builder
@@ -981,7 +981,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code escalation_rate} field.
+         * The <code>escalation_rate</code> field.
          *
          * @param escalationRate the value
          * @return this builder
@@ -991,7 +991,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code avg_assign_hours} field.
+         * The <code>avg_assign_hours</code> field.
          *
          * @param avgAssignHours the value
          * @return this builder
@@ -1001,7 +1001,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code avg_resolve_hours} field.
+         * The <code>avg_resolve_hours</code> field.
          *
          * @param avgResolveHours the value
          * @return this builder
@@ -1011,7 +1011,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code avg_handling_hours} field.
+         * The <code>avg_handling_hours</code> field.
          *
          * @param avgHandlingHours the value
          * @return this builder
@@ -1083,7 +1083,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code created} field.
+       * The <code>created</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1093,7 +1093,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code assigned} field.
+       * The <code>assigned</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1103,7 +1103,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code resolved} field.
+       * The <code>resolved</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1113,7 +1113,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code threat_rate} field.
+       * The <code>threat_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1123,7 +1123,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code false_positive_rate} field.
+       * The <code>false_positive_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1133,7 +1133,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code unresolved} field.
+       * The <code>unresolved</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1143,7 +1143,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code reassignment_rate} field.
+       * The <code>reassignment_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1153,7 +1153,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code escalation_rate} field.
+       * The <code>escalation_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1163,7 +1163,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_assign_hours} field.
+       * The <code>avg_assign_hours</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1173,7 +1173,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_resolve_hours} field.
+       * The <code>avg_resolve_hours</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1183,7 +1183,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_handling_hours} field.
+       * The <code>avg_handling_hours</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1216,7 +1216,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code created} field.
+         * The <code>created</code> field.
          *
          * @param created the value
          * @return this builder
@@ -1226,7 +1226,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code assigned} field.
+         * The <code>assigned</code> field.
          *
          * @param assigned the value
          * @return this builder
@@ -1236,7 +1236,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code resolved} field.
+         * The <code>resolved</code> field.
          *
          * @param resolved the value
          * @return this builder
@@ -1246,7 +1246,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code threat_rate} field.
+         * The <code>threat_rate</code> field.
          *
          * @param threatRate the value
          * @return this builder
@@ -1256,7 +1256,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code false_positive_rate} field.
+         * The <code>false_positive_rate</code> field.
          *
          * @param falsePositiveRate the value
          * @return this builder
@@ -1266,7 +1266,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code unresolved} field.
+         * The <code>unresolved</code> field.
          *
          * @param unresolved the value
          * @return this builder
@@ -1276,7 +1276,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code reassignment_rate} field.
+         * The <code>reassignment_rate</code> field.
          *
          * @param reassignmentRate the value
          * @return this builder
@@ -1286,7 +1286,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code escalation_rate} field.
+         * The <code>escalation_rate</code> field.
          *
          * @param escalationRate the value
          * @return this builder
@@ -1296,7 +1296,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code avg_assign_hours} field.
+         * The <code>avg_assign_hours</code> field.
          *
          * @param avgAssignHours the value
          * @return this builder
@@ -1306,7 +1306,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code avg_resolve_hours} field.
+         * The <code>avg_resolve_hours</code> field.
          *
          * @param avgResolveHours the value
          * @return this builder
@@ -1316,7 +1316,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code avg_handling_hours} field.
+         * The <code>avg_handling_hours</code> field.
          *
          * @param avgHandlingHours the value
          * @return this builder
@@ -1388,7 +1388,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code created} field.
+       * The <code>created</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1398,7 +1398,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code assigned} field.
+       * The <code>assigned</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1408,7 +1408,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code resolved} field.
+       * The <code>resolved</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1418,7 +1418,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code threat_rate} field.
+       * The <code>threat_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1428,7 +1428,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code false_positive_rate} field.
+       * The <code>false_positive_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1438,7 +1438,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code unresolved} field.
+       * The <code>unresolved</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1448,7 +1448,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code reassignment_rate} field.
+       * The <code>reassignment_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1458,7 +1458,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code escalation_rate} field.
+       * The <code>escalation_rate</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1468,7 +1468,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_assign_hours} field.
+       * The <code>avg_assign_hours</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1478,7 +1478,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_resolve_hours} field.
+       * The <code>avg_resolve_hours</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1488,7 +1488,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_handling_hours} field.
+       * The <code>avg_handling_hours</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1521,7 +1521,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code created} field.
+         * The <code>created</code> field.
          *
          * @param created the value
          * @return this builder
@@ -1531,7 +1531,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code assigned} field.
+         * The <code>assigned</code> field.
          *
          * @param assigned the value
          * @return this builder
@@ -1541,7 +1541,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code resolved} field.
+         * The <code>resolved</code> field.
          *
          * @param resolved the value
          * @return this builder
@@ -1551,7 +1551,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code threat_rate} field.
+         * The <code>threat_rate</code> field.
          *
          * @param threatRate the value
          * @return this builder
@@ -1561,7 +1561,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code false_positive_rate} field.
+         * The <code>false_positive_rate</code> field.
          *
          * @param falsePositiveRate the value
          * @return this builder
@@ -1571,7 +1571,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code unresolved} field.
+         * The <code>unresolved</code> field.
          *
          * @param unresolved the value
          * @return this builder
@@ -1581,7 +1581,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code reassignment_rate} field.
+         * The <code>reassignment_rate</code> field.
          *
          * @param reassignmentRate the value
          * @return this builder
@@ -1591,7 +1591,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code escalation_rate} field.
+         * The <code>escalation_rate</code> field.
          *
          * @param escalationRate the value
          * @return this builder
@@ -1601,7 +1601,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code avg_assign_hours} field.
+         * The <code>avg_assign_hours</code> field.
          *
          * @param avgAssignHours the value
          * @return this builder
@@ -1611,7 +1611,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code avg_resolve_hours} field.
+         * The <code>avg_resolve_hours</code> field.
          *
          * @param avgResolveHours the value
          * @return this builder
@@ -1621,7 +1621,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         }
 
         /**
-         * The {@code avg_handling_hours} field.
+         * The <code>avg_handling_hours</code> field.
          *
          * @param avgHandlingHours the value
          * @return this builder
@@ -1684,7 +1684,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code created} field.
+     * The <code>created</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1694,7 +1694,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code assigned} field.
+     * The <code>assigned</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1704,7 +1704,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code resolved} field.
+     * The <code>resolved</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1714,7 +1714,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code threat_rate} field.
+     * The <code>threat_rate</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1724,7 +1724,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code false_positive_rate} field.
+     * The <code>false_positive_rate</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1734,7 +1734,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code unresolved} field.
+     * The <code>unresolved</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1744,7 +1744,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code reassignment_rate} field.
+     * The <code>reassignment_rate</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1754,7 +1754,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code escalation_rate} field.
+     * The <code>escalation_rate</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1764,7 +1764,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code avg_assign_hours} field.
+     * The <code>avg_assign_hours</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1774,7 +1774,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code avg_resolve_hours} field.
+     * The <code>avg_resolve_hours</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1784,7 +1784,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code avg_handling_hours} field.
+     * The <code>avg_handling_hours</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1807,7 +1807,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code created} field.
+       * The <code>created</code> field.
        *
        * @param created the value
        * @return this builder
@@ -1817,7 +1817,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code assigned} field.
+       * The <code>assigned</code> field.
        *
        * @param assigned the value
        * @return this builder
@@ -1827,7 +1827,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code resolved} field.
+       * The <code>resolved</code> field.
        *
        * @param resolved the value
        * @return this builder
@@ -1837,7 +1837,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code threat_rate} field.
+       * The <code>threat_rate</code> field.
        *
        * @param threatRate the value
        * @return this builder
@@ -1847,7 +1847,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code false_positive_rate} field.
+       * The <code>false_positive_rate</code> field.
        *
        * @param falsePositiveRate the value
        * @return this builder
@@ -1857,7 +1857,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code unresolved} field.
+       * The <code>unresolved</code> field.
        *
        * @param unresolved the value
        * @return this builder
@@ -1867,7 +1867,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code reassignment_rate} field.
+       * The <code>reassignment_rate</code> field.
        *
        * @param reassignmentRate the value
        * @return this builder
@@ -1877,7 +1877,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code escalation_rate} field.
+       * The <code>escalation_rate</code> field.
        *
        * @param escalationRate the value
        * @return this builder
@@ -1887,7 +1887,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_assign_hours} field.
+       * The <code>avg_assign_hours</code> field.
        *
        * @param avgAssignHours the value
        * @return this builder
@@ -1897,7 +1897,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_resolve_hours} field.
+       * The <code>avg_resolve_hours</code> field.
        *
        * @param avgResolveHours the value
        * @return this builder
@@ -1907,7 +1907,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_handling_hours} field.
+       * The <code>avg_handling_hours</code> field.
        *
        * @param avgHandlingHours the value
        * @return this builder
@@ -1970,7 +1970,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code open} field.
+     * The <code>open</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1980,7 +1980,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
 
     /**
-     * The {@code overdue} field.
+     * The <code>overdue</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2003,7 +2003,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code open} field.
+       * The <code>open</code> field.
        *
        * @param open the value
        * @return this builder
@@ -2013,7 +2013,7 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
 
       /**
-       * The {@code overdue} field.
+       * The <code>overdue</code> field.
        *
        * @param overdue the value
        * @return this builder

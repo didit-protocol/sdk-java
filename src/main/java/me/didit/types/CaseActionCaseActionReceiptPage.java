@@ -50,7 +50,7 @@ public final class CaseActionCaseActionReceiptPage extends JsonModel {
   }
 
   /**
-   * The {@code count} field.
+   * The <code>count</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -60,7 +60,7 @@ public final class CaseActionCaseActionReceiptPage extends JsonModel {
   }
 
   /**
-   * The {@code next_offset} field.
+   * The <code>next_offset</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -70,7 +70,7 @@ public final class CaseActionCaseActionReceiptPage extends JsonModel {
   }
 
   /**
-   * The {@code results} field.
+   * The <code>results</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -93,7 +93,7 @@ public final class CaseActionCaseActionReceiptPage extends JsonModel {
     }
 
     /**
-     * The {@code count} field.
+     * The <code>count</code> field.
      *
      * @param count the value
      * @return this builder
@@ -103,7 +103,7 @@ public final class CaseActionCaseActionReceiptPage extends JsonModel {
     }
 
     /**
-     * The {@code next_offset} field.
+     * The <code>next_offset</code> field.
      *
      * @param nextOffset the value, or {@code null} to send JSON null
      * @return this builder
@@ -113,7 +113,7 @@ public final class CaseActionCaseActionReceiptPage extends JsonModel {
     }
 
     /**
-     * The {@code results} field.
+     * The <code>results</code> field.
      *
      * @param results the value
      * @return this builder

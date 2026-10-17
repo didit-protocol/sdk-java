@@ -50,7 +50,7 @@ public final class CasesListActionReceiptsParams extends JsonModel {
   }
 
   /**
-   * The {@code offset} field.
+   * The <code>offset</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -73,7 +73,7 @@ public final class CasesListActionReceiptsParams extends JsonModel {
     }
 
     /**
-     * The {@code offset} field.
+     * The <code>offset</code> field.
      *
      * @param offset the value
      * @return this builder

@@ -62,7 +62,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code status} field.
+   * The <code>status</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -72,7 +72,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code import_type} field.
+   * The <code>import_type</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -82,7 +82,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code source_format} field.
+   * The <code>source_format</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -92,7 +92,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code source_filename} field.
+   * The <code>source_filename</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -102,7 +102,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code total_rows} field.
+   * The <code>total_rows</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -112,7 +112,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code processed_rows} field.
+   * The <code>processed_rows</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -122,7 +122,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code checkpoint_row} field.
+   * The <code>checkpoint_row</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -132,7 +132,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code created_count} field.
+   * The <code>created_count</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -142,7 +142,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code updated_count} field.
+   * The <code>updated_count</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -152,7 +152,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code skipped_count} field.
+   * The <code>skipped_count</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -162,7 +162,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code failed_count} field.
+   * The <code>failed_count</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -172,7 +172,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code total_media_bytes} field.
+   * The <code>total_media_bytes</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -182,7 +182,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code last_error} field.
+   * The <code>last_error</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -192,7 +192,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -202,7 +202,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code updated_at} field.
+   * The <code>updated_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -212,7 +212,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code started_at} field.
+   * The <code>started_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -222,7 +222,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The {@code completed_at} field.
+   * The <code>completed_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -255,7 +255,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @param status the value
      * @return this builder
@@ -265,7 +265,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code import_type} field.
+     * The <code>import_type</code> field.
      *
      * @param importType the value
      * @return this builder
@@ -275,7 +275,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code source_format} field.
+     * The <code>source_format</code> field.
      *
      * @param sourceFormat the value
      * @return this builder
@@ -285,7 +285,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code source_filename} field.
+     * The <code>source_filename</code> field.
      *
      * @param sourceFilename the value
      * @return this builder
@@ -295,7 +295,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code total_rows} field.
+     * The <code>total_rows</code> field.
      *
      * @param totalRows the value
      * @return this builder
@@ -305,7 +305,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code processed_rows} field.
+     * The <code>processed_rows</code> field.
      *
      * @param processedRows the value
      * @return this builder
@@ -315,7 +315,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code checkpoint_row} field.
+     * The <code>checkpoint_row</code> field.
      *
      * @param checkpointRow the value
      * @return this builder
@@ -325,7 +325,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code created_count} field.
+     * The <code>created_count</code> field.
      *
      * @param createdCount the value
      * @return this builder
@@ -335,7 +335,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code updated_count} field.
+     * The <code>updated_count</code> field.
      *
      * @param updatedCount the value
      * @return this builder
@@ -345,7 +345,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code skipped_count} field.
+     * The <code>skipped_count</code> field.
      *
      * @param skippedCount the value
      * @return this builder
@@ -355,7 +355,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code failed_count} field.
+     * The <code>failed_count</code> field.
      *
      * @param failedCount the value
      * @return this builder
@@ -365,7 +365,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code total_media_bytes} field.
+     * The <code>total_media_bytes</code> field.
      *
      * @param totalMediaBytes the value
      * @return this builder
@@ -375,7 +375,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code last_error} field.
+     * The <code>last_error</code> field.
      *
      * @param lastError the value, or {@code null} to send JSON null
      * @return this builder
@@ -385,7 +385,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -395,7 +395,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code updated_at} field.
+     * The <code>updated_at</code> field.
      *
      * @param updatedAt the value
      * @return this builder
@@ -405,7 +405,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code started_at} field.
+     * The <code>started_at</code> field.
      *
      * @param startedAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -415,7 +415,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The {@code completed_at} field.
+     * The <code>completed_at</code> field.
      *
      * @param completedAt the value, or {@code null} to send JSON null
      * @return this builder

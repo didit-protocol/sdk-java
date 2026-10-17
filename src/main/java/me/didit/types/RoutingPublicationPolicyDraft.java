@@ -51,7 +51,7 @@ public final class RoutingPublicationPolicyDraft extends JsonModel {
   }
 
   /**
-   * The {@code revision} field.
+   * The <code>revision</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -61,7 +61,7 @@ public final class RoutingPublicationPolicyDraft extends JsonModel {
   }
 
   /**
-   * The {@code base_version} field.
+   * The <code>base_version</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -71,7 +71,7 @@ public final class RoutingPublicationPolicyDraft extends JsonModel {
   }
 
   /**
-   * The {@code changes} field.
+   * The <code>changes</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -81,7 +81,7 @@ public final class RoutingPublicationPolicyDraft extends JsonModel {
   }
 
   /**
-   * The {@code actor_email} field.
+   * The <code>actor_email</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -91,7 +91,7 @@ public final class RoutingPublicationPolicyDraft extends JsonModel {
   }
 
   /**
-   * The {@code updated_at} field.
+   * The <code>updated_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -114,7 +114,7 @@ public final class RoutingPublicationPolicyDraft extends JsonModel {
     }
 
     /**
-     * The {@code revision} field.
+     * The <code>revision</code> field.
      *
      * @param revision the value
      * @return this builder
@@ -124,7 +124,7 @@ public final class RoutingPublicationPolicyDraft extends JsonModel {
     }
 
     /**
-     * The {@code base_version} field.
+     * The <code>base_version</code> field.
      *
      * @param baseVersion the value
      * @return this builder
@@ -134,7 +134,7 @@ public final class RoutingPublicationPolicyDraft extends JsonModel {
     }
 
     /**
-     * The {@code changes} field.
+     * The <code>changes</code> field.
      *
      * @param changes the value
      * @return this builder
@@ -144,7 +144,7 @@ public final class RoutingPublicationPolicyDraft extends JsonModel {
     }
 
     /**
-     * The {@code actor_email} field.
+     * The <code>actor_email</code> field.
      *
      * @param actorEmail the value, or {@code null} to send JSON null
      * @return this builder
@@ -154,7 +154,7 @@ public final class RoutingPublicationPolicyDraft extends JsonModel {
     }
 
     /**
-     * The {@code updated_at} field.
+     * The <code>updated_at</code> field.
      *
      * @param updatedAt the value
      * @return this builder

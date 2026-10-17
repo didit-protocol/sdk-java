@@ -1195,7 +1195,7 @@ public final class SessionsListResponse extends JsonModel {
         }
 
         /**
-         * The {@code email} field.
+         * The <code>email</code> field.
          *
          * @return the value
          * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -1228,7 +1228,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code email} field.
+           * The <code>email</code> field.
            *
            * @param email the value
            * @return this builder
@@ -1531,7 +1531,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_adverse_media_fetched} field.
+           * The <code>is_adverse_media_fetched</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1584,7 +1584,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code is_adverse_media_fetched} field.
+             * The <code>is_adverse_media_fetched</code> field.
              *
              * @param isAdverseMediaFetched the value
              * @return this builder
@@ -1656,7 +1656,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code nationality} field.
+             * The <code>nationality</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1666,7 +1666,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code document_number} field.
+             * The <code>document_number</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1676,7 +1676,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code date_of_birth} field.
+             * The <code>date_of_birth</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1699,7 +1699,7 @@ public final class SessionsListResponse extends JsonModel {
               }
 
               /**
-               * The {@code nationality} field.
+               * The <code>nationality</code> field.
                *
                * @param nationality the value
                * @return this builder
@@ -1709,7 +1709,7 @@ public final class SessionsListResponse extends JsonModel {
               }
 
               /**
-               * The {@code document_number} field.
+               * The <code>document_number</code> field.
                *
                * @param documentNumber the value
                * @return this builder
@@ -1719,7 +1719,7 @@ public final class SessionsListResponse extends JsonModel {
               }
 
               /**
-               * The {@code date_of_birth} field.
+               * The <code>date_of_birth</code> field.
                *
                * @param dateOfBirth the value
                * @return this builder
@@ -1783,7 +1783,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code validation_type} field.
+           * The <code>validation_type</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1793,7 +1793,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code match_type} field.
+           * The <code>match_type</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1826,7 +1826,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code validation_type} field.
+             * The <code>validation_type</code> field.
              *
              * @param validationType the value
              * @return this builder
@@ -1836,7 +1836,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code match_type} field.
+             * The <code>match_type</code> field.
              *
              * @param matchType the value
              * @return this builder
@@ -1909,7 +1909,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code document_type} field.
+           * The <code>document_type</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1919,7 +1919,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code issuer} field.
+           * The <code>issuer</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1929,7 +1929,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code address} field.
+           * The <code>address</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1939,7 +1939,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code name_on_document} field.
+           * The <code>name_on_document</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1962,7 +1962,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code document_type} field.
+             * The <code>document_type</code> field.
              *
              * @param documentType the value
              * @return this builder
@@ -1972,7 +1972,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code issuer} field.
+             * The <code>issuer</code> field.
              *
              * @param issuer the value
              * @return this builder
@@ -1982,7 +1982,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code address} field.
+             * The <code>address</code> field.
              *
              * @param address the value
              * @return this builder
@@ -1992,7 +1992,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code name_on_document} field.
+             * The <code>name_on_document</code> field.
              *
              * @param nameOnDocument the value
              * @return this builder
@@ -2055,7 +2055,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code method} field.
+           * The <code>method</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2088,7 +2088,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code method} field.
+             * The <code>method</code> field.
              *
              * @param method the value
              * @return this builder
@@ -2297,7 +2297,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_temporary} field.
+           * The <code>is_temporary</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2307,7 +2307,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_ported} field.
+           * The <code>is_ported</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2317,7 +2317,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_blocked} field.
+           * The <code>is_blocked</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2350,7 +2350,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code is_temporary} field.
+             * The <code>is_temporary</code> field.
              *
              * @param isTemporary the value
              * @return this builder
@@ -2360,7 +2360,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code is_ported} field.
+             * The <code>is_ported</code> field.
              *
              * @param isPorted the value
              * @return this builder
@@ -2370,7 +2370,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code is_blocked} field.
+             * The <code>is_blocked</code> field.
              *
              * @param isBlocked the value
              * @return this builder
@@ -2433,7 +2433,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_breached} field.
+           * The <code>is_breached</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2443,7 +2443,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_disposable} field.
+           * The <code>is_disposable</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2453,7 +2453,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_undeliverable} field.
+           * The <code>is_undeliverable</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2463,7 +2463,7 @@ public final class SessionsListResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_blocklisted} field.
+           * The <code>is_blocklisted</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2486,7 +2486,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code is_breached} field.
+             * The <code>is_breached</code> field.
              *
              * @param isBreached the value
              * @return this builder
@@ -2496,7 +2496,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code is_disposable} field.
+             * The <code>is_disposable</code> field.
              *
              * @param isDisposable the value
              * @return this builder
@@ -2506,7 +2506,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code is_undeliverable} field.
+             * The <code>is_undeliverable</code> field.
              *
              * @param isUndeliverable the value
              * @return this builder
@@ -2516,7 +2516,7 @@ public final class SessionsListResponse extends JsonModel {
             }
 
             /**
-             * The {@code is_blocklisted} field.
+             * The <code>is_blocklisted</code> field.
              *
              * @param isBlocklisted the value
              * @return this builder

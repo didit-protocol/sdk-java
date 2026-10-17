@@ -49,7 +49,7 @@ public final class CasesListReviewersResponse extends JsonModel {
   }
 
   /**
-   * The {@code results} field.
+   * The <code>results</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class CasesListReviewersResponse extends JsonModel {
     }
 
     /**
-     * The {@code results} field.
+     * The <code>results</code> field.
      *
      * @param results the value
      * @return this builder
@@ -133,7 +133,7 @@ public final class CasesListReviewersResponse extends JsonModel {
     }
 
     /**
-     * The {@code user_id} field.
+     * The <code>user_id</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -143,7 +143,7 @@ public final class CasesListReviewersResponse extends JsonModel {
     }
 
     /**
-     * The {@code email} field.
+     * The <code>email</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -153,7 +153,7 @@ public final class CasesListReviewersResponse extends JsonModel {
     }
 
     /**
-     * The {@code name} field.
+     * The <code>name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -176,7 +176,7 @@ public final class CasesListReviewersResponse extends JsonModel {
       }
 
       /**
-       * The {@code user_id} field.
+       * The <code>user_id</code> field.
        *
        * @param userId the value
        * @return this builder
@@ -186,7 +186,7 @@ public final class CasesListReviewersResponse extends JsonModel {
       }
 
       /**
-       * The {@code email} field.
+       * The <code>email</code> field.
        *
        * @param email the value
        * @return this builder
@@ -196,7 +196,7 @@ public final class CasesListReviewersResponse extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @param name the value
        * @return this builder

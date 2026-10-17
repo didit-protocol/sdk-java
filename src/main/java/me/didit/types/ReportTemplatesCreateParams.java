@@ -51,7 +51,7 @@ public final class ReportTemplatesCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code name} field.
+   * The <code>name</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -71,7 +71,7 @@ public final class ReportTemplatesCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code report_type} field.
+   * The <code>report_type</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -104,7 +104,7 @@ public final class ReportTemplatesCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code name} field.
+     * The <code>name</code> field.
      *
      * @param name the value
      * @return this builder
@@ -124,7 +124,7 @@ public final class ReportTemplatesCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code report_type} field.
+     * The <code>report_type</code> field.
      *
      * @param reportType the value
      * @return this builder

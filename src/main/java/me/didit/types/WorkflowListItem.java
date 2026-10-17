@@ -103,7 +103,7 @@ public final class WorkflowListItem extends JsonModel {
   }
 
   /**
-   * The {@code is_archived} field.
+   * The <code>is_archived</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -263,7 +263,7 @@ public final class WorkflowListItem extends JsonModel {
   }
 
   /**
-   * The {@code updated_at} field.
+   * The <code>updated_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -336,7 +336,7 @@ public final class WorkflowListItem extends JsonModel {
     }
 
     /**
-     * The {@code is_archived} field.
+     * The <code>is_archived</code> field.
      *
      * @param isArchived the value
      * @return this builder
@@ -496,7 +496,7 @@ public final class WorkflowListItem extends JsonModel {
     }
 
     /**
-     * The {@code updated_at} field.
+     * The <code>updated_at</code> field.
      *
      * @param updatedAt the value
      * @return this builder
@@ -603,7 +603,7 @@ public final class WorkflowListItem extends JsonModel {
     }
 
     /**
-     * The {@code name} field.
+     * The <code>name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -613,7 +613,7 @@ public final class WorkflowListItem extends JsonModel {
     }
 
     /**
-     * The {@code email} field.
+     * The <code>email</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -623,7 +623,7 @@ public final class WorkflowListItem extends JsonModel {
     }
 
     /**
-     * The {@code type} field.
+     * The <code>type</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -646,7 +646,7 @@ public final class WorkflowListItem extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @param name the value
        * @return this builder
@@ -656,7 +656,7 @@ public final class WorkflowListItem extends JsonModel {
       }
 
       /**
-       * The {@code email} field.
+       * The <code>email</code> field.
        *
        * @param email the value, or {@code null} to send JSON null
        * @return this builder
@@ -666,7 +666,7 @@ public final class WorkflowListItem extends JsonModel {
       }
 
       /**
-       * The {@code type} field.
+       * The <code>type</code> field.
        *
        * @param type the value
        * @return this builder

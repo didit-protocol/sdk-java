@@ -94,7 +94,7 @@ public final class UserListItem extends JsonModel {
   }
 
   /**
-   * The {@code date_of_birth} field.
+   * The <code>date_of_birth</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -264,7 +264,7 @@ public final class UserListItem extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -327,7 +327,7 @@ public final class UserListItem extends JsonModel {
     }
 
     /**
-     * The {@code date_of_birth} field.
+     * The <code>date_of_birth</code> field.
      *
      * @param dateOfBirth the value, or {@code null} to send JSON null
      * @return this builder
@@ -497,7 +497,7 @@ public final class UserListItem extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -604,7 +604,7 @@ public final class UserListItem extends JsonModel {
     }
 
     /**
-     * The {@code feature} field.
+     * The <code>feature</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -614,7 +614,7 @@ public final class UserListItem extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -637,7 +637,7 @@ public final class UserListItem extends JsonModel {
       }
 
       /**
-       * The {@code feature} field.
+       * The <code>feature</code> field.
        *
        * @param feature the value
        * @return this builder
@@ -647,7 +647,7 @@ public final class UserListItem extends JsonModel {
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @param status the value
        * @return this builder
@@ -709,7 +709,7 @@ public final class UserListItem extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -719,7 +719,7 @@ public final class UserListItem extends JsonModel {
     }
 
     /**
-     * The {@code name} field.
+     * The <code>name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -729,7 +729,7 @@ public final class UserListItem extends JsonModel {
     }
 
     /**
-     * The {@code color} field.
+     * The <code>color</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -752,7 +752,7 @@ public final class UserListItem extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @param uuid the value
        * @return this builder
@@ -762,7 +762,7 @@ public final class UserListItem extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @param name the value
        * @return this builder
@@ -772,7 +772,7 @@ public final class UserListItem extends JsonModel {
       }
 
       /**
-       * The {@code color} field.
+       * The <code>color</code> field.
        *
        * @param color the value
        * @return this builder

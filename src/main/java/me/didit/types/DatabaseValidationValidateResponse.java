@@ -63,7 +63,7 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
   }
 
   /**
-   * The {@code database_validation} field.
+   * The <code>database_validation</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -93,7 +93,7 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -126,7 +126,7 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
     }
 
     /**
-     * The {@code database_validation} field.
+     * The <code>database_validation</code> field.
      *
      * @param databaseValidation the value
      * @return this builder
@@ -156,7 +156,7 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -1238,7 +1238,7 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
       }
 
       /**
-       * The {@code service_id} field.
+       * The <code>service_id</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1248,7 +1248,7 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
       }
 
       /**
-       * The {@code code} field.
+       * The <code>code</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1258,7 +1258,7 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
       }
 
       /**
-       * The {@code message} field.
+       * The <code>message</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1291,7 +1291,7 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
         }
 
         /**
-         * The {@code service_id} field.
+         * The <code>service_id</code> field.
          *
          * @param serviceId the value
          * @return this builder
@@ -1301,7 +1301,7 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
         }
 
         /**
-         * The {@code code} field.
+         * The <code>code</code> field.
          *
          * @param code the value
          * @return this builder
@@ -1311,7 +1311,7 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
         }
 
         /**
-         * The {@code message} field.
+         * The <code>message</code> field.
          *
          * @param message the value
          * @return this builder

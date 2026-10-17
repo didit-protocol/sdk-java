@@ -197,7 +197,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code already_enabled} field.
+       * The <code>already_enabled</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -227,7 +227,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code skipped_no_identity_data} field.
+       * The <code>skipped_no_identity_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -237,7 +237,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code skipped_blocked} field.
+       * The <code>skipped_blocked</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -247,7 +247,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code estimated_screening_cost_usd} field.
+       * The <code>estimated_screening_cost_usd</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -257,7 +257,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code estimated_annual_monitoring_cost_usd} field.
+       * The <code>estimated_annual_monitoring_cost_usd</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -267,7 +267,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code balance_sufficient} field.
+       * The <code>balance_sufficient</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -300,7 +300,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code already_enabled} field.
+         * The <code>already_enabled</code> field.
          *
          * @param alreadyEnabled the value
          * @return this builder
@@ -330,7 +330,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code skipped_no_identity_data} field.
+         * The <code>skipped_no_identity_data</code> field.
          *
          * @param skippedNoIdentityData the value
          * @return this builder
@@ -340,7 +340,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code skipped_blocked} field.
+         * The <code>skipped_blocked</code> field.
          *
          * @param skippedBlocked the value
          * @return this builder
@@ -350,7 +350,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code estimated_screening_cost_usd} field.
+         * The <code>estimated_screening_cost_usd</code> field.
          *
          * @param estimatedScreeningCostUsd the value
          * @return this builder
@@ -360,7 +360,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code estimated_annual_monitoring_cost_usd} field.
+         * The <code>estimated_annual_monitoring_cost_usd</code> field.
          *
          * @param estimatedAnnualMonitoringCostUsd the value
          * @return this builder
@@ -370,7 +370,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code balance_sufficient} field.
+         * The <code>balance_sufficient</code> field.
          *
          * @param balanceSufficient the value
          * @return this builder
@@ -432,7 +432,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code job_id} field.
+       * The <code>job_id</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -442,7 +442,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -452,7 +452,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code is_enabled} field.
+       * The <code>is_enabled</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -462,7 +462,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code total} field.
+       * The <code>total</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -472,7 +472,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code processed} field.
+       * The <code>processed</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -492,7 +492,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code error} field.
+       * The <code>error</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -525,7 +525,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code job_id} field.
+         * The <code>job_id</code> field.
          *
          * @param jobId the value
          * @return this builder
@@ -535,7 +535,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code status} field.
+         * The <code>status</code> field.
          *
          * @param status the value
          * @return this builder
@@ -545,7 +545,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code is_enabled} field.
+         * The <code>is_enabled</code> field.
          *
          * @param isEnabled the value
          * @return this builder
@@ -555,7 +555,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code total} field.
+         * The <code>total</code> field.
          *
          * @param total the value
          * @return this builder
@@ -565,7 +565,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code processed} field.
+         * The <code>processed</code> field.
          *
          * @param processed the value
          * @return this builder
@@ -585,7 +585,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code error} field.
+         * The <code>error</code> field.
          *
          * @param error the value, or {@code null} to send JSON null
          * @return this builder
@@ -963,7 +963,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code already_enabled} field.
+         * The <code>already_enabled</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -993,7 +993,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code skipped_no_identity_data} field.
+         * The <code>skipped_no_identity_data</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1003,7 +1003,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code skipped_blocked} field.
+         * The <code>skipped_blocked</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1013,7 +1013,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code estimated_screening_cost_usd} field.
+         * The <code>estimated_screening_cost_usd</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1023,7 +1023,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code estimated_annual_monitoring_cost_usd} field.
+         * The <code>estimated_annual_monitoring_cost_usd</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1033,7 +1033,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code balance_sufficient} field.
+         * The <code>balance_sufficient</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1066,7 +1066,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
           }
 
           /**
-           * The {@code already_enabled} field.
+           * The <code>already_enabled</code> field.
            *
            * @param alreadyEnabled the value
            * @return this builder
@@ -1096,7 +1096,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
           }
 
           /**
-           * The {@code skipped_no_identity_data} field.
+           * The <code>skipped_no_identity_data</code> field.
            *
            * @param skippedNoIdentityData the value
            * @return this builder
@@ -1106,7 +1106,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
           }
 
           /**
-           * The {@code skipped_blocked} field.
+           * The <code>skipped_blocked</code> field.
            *
            * @param skippedBlocked the value
            * @return this builder
@@ -1116,7 +1116,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
           }
 
           /**
-           * The {@code estimated_screening_cost_usd} field.
+           * The <code>estimated_screening_cost_usd</code> field.
            *
            * @param estimatedScreeningCostUsd the value
            * @return this builder
@@ -1126,7 +1126,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
           }
 
           /**
-           * The {@code estimated_annual_monitoring_cost_usd} field.
+           * The <code>estimated_annual_monitoring_cost_usd</code> field.
            *
            * @param estimatedAnnualMonitoringCostUsd the value
            * @return this builder
@@ -1136,7 +1136,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
           }
 
           /**
-           * The {@code balance_sufficient} field.
+           * The <code>balance_sufficient</code> field.
            *
            * @param balanceSufficient the value
            * @return this builder
@@ -1200,7 +1200,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
     }
 
     /**
-     * The {@code job_id} field.
+     * The <code>job_id</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1210,7 +1210,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1220,7 +1220,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
     }
 
     /**
-     * The {@code is_enabled} field.
+     * The <code>is_enabled</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1230,7 +1230,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
     }
 
     /**
-     * The {@code total} field.
+     * The <code>total</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1240,7 +1240,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
     }
 
     /**
-     * The {@code processed} field.
+     * The <code>processed</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1260,7 +1260,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
     }
 
     /**
-     * The {@code error} field.
+     * The <code>error</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1293,7 +1293,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code job_id} field.
+       * The <code>job_id</code> field.
        *
        * @param jobId the value
        * @return this builder
@@ -1303,7 +1303,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @param status the value
        * @return this builder
@@ -1313,7 +1313,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code is_enabled} field.
+       * The <code>is_enabled</code> field.
        *
        * @param isEnabled the value
        * @return this builder
@@ -1323,7 +1323,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code total} field.
+       * The <code>total</code> field.
        *
        * @param total the value
        * @return this builder
@@ -1333,7 +1333,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code processed} field.
+       * The <code>processed</code> field.
        *
        * @param processed the value
        * @return this builder
@@ -1353,7 +1353,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code error} field.
+       * The <code>error</code> field.
        *
        * @param error the value, or {@code null} to send JSON null
        * @return this builder
@@ -1731,7 +1731,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code already_enabled} field.
+       * The <code>already_enabled</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1761,7 +1761,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code skipped_no_identity_data} field.
+       * The <code>skipped_no_identity_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1771,7 +1771,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code skipped_blocked} field.
+       * The <code>skipped_blocked</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1781,7 +1781,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code estimated_screening_cost_usd} field.
+       * The <code>estimated_screening_cost_usd</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1791,7 +1791,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code estimated_annual_monitoring_cost_usd} field.
+       * The <code>estimated_annual_monitoring_cost_usd</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1801,7 +1801,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
       }
 
       /**
-       * The {@code balance_sufficient} field.
+       * The <code>balance_sufficient</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1834,7 +1834,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code already_enabled} field.
+         * The <code>already_enabled</code> field.
          *
          * @param alreadyEnabled the value
          * @return this builder
@@ -1864,7 +1864,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code skipped_no_identity_data} field.
+         * The <code>skipped_no_identity_data</code> field.
          *
          * @param skippedNoIdentityData the value
          * @return this builder
@@ -1874,7 +1874,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code skipped_blocked} field.
+         * The <code>skipped_blocked</code> field.
          *
          * @param skippedBlocked the value
          * @return this builder
@@ -1884,7 +1884,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code estimated_screening_cost_usd} field.
+         * The <code>estimated_screening_cost_usd</code> field.
          *
          * @param estimatedScreeningCostUsd the value
          * @return this builder
@@ -1894,7 +1894,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code estimated_annual_monitoring_cost_usd} field.
+         * The <code>estimated_annual_monitoring_cost_usd</code> field.
          *
          * @param estimatedAnnualMonitoringCostUsd the value
          * @return this builder
@@ -1904,7 +1904,7 @@ public final class BusinessesSetSessionOngoingMonitoringResponse extends MultiSt
         }
 
         /**
-         * The {@code balance_sufficient} field.
+         * The <code>balance_sufficient</code> field.
          *
          * @param balanceSufficient the value
          * @return this builder

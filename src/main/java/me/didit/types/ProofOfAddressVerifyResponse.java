@@ -63,7 +63,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
   }
 
   /**
-   * The {@code poa} field.
+   * The <code>poa</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -126,7 +126,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
     }
 
     /**
-     * The {@code poa} field.
+     * The <code>poa</code> field.
      *
      * @param poa the value
      * @return this builder
@@ -739,7 +739,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code street_1} field.
+       * The <code>street_1</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -749,7 +749,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code street_2} field.
+       * The <code>street_2</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -759,7 +759,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code city} field.
+       * The <code>city</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -769,7 +769,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code region} field.
+       * The <code>region</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -789,7 +789,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code postal_code} field.
+       * The <code>postal_code</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -822,7 +822,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code street_1} field.
+         * The <code>street_1</code> field.
          *
          * @param street1 the value, or {@code null} to send JSON null
          * @return this builder
@@ -832,7 +832,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code street_2} field.
+         * The <code>street_2</code> field.
          *
          * @param street2 the value, or {@code null} to send JSON null
          * @return this builder
@@ -842,7 +842,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code city} field.
+         * The <code>city</code> field.
          *
          * @param city the value, or {@code null} to send JSON null
          * @return this builder
@@ -852,7 +852,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code region} field.
+         * The <code>region</code> field.
          *
          * @param region the value, or {@code null} to send JSON null
          * @return this builder
@@ -872,7 +872,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code postal_code} field.
+         * The <code>postal_code</code> field.
          *
          * @param postalCode the value, or {@code null} to send JSON null
          * @return this builder
@@ -944,7 +944,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code latitude} field.
+         * The <code>latitude</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -954,7 +954,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code longitude} field.
+         * The <code>longitude</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -977,7 +977,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
           }
 
           /**
-           * The {@code latitude} field.
+           * The <code>latitude</code> field.
            *
            * @param latitude the value
            * @return this builder
@@ -987,7 +987,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
           }
 
           /**
-           * The {@code longitude} field.
+           * The <code>longitude</code> field.
            *
            * @param longitude the value
            * @return this builder
@@ -1053,7 +1053,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code bank_account_number} field.
+       * The <code>bank_account_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1063,7 +1063,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code bank_iban} field.
+       * The <code>bank_iban</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1073,7 +1073,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code bank_sort_code} field.
+       * The <code>bank_sort_code</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1083,7 +1083,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code bank_routing_number} field.
+       * The <code>bank_routing_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1093,7 +1093,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code bank_swift_bic} field.
+       * The <code>bank_swift_bic</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1103,7 +1103,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code bank_branch_name} field.
+       * The <code>bank_branch_name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1113,7 +1113,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
       }
 
       /**
-       * The {@code bank_branch_address} field.
+       * The <code>bank_branch_address</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1156,7 +1156,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code bank_account_number} field.
+         * The <code>bank_account_number</code> field.
          *
          * @param bankAccountNumber the value, or {@code null} to send JSON null
          * @return this builder
@@ -1166,7 +1166,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code bank_iban} field.
+         * The <code>bank_iban</code> field.
          *
          * @param bankIban the value, or {@code null} to send JSON null
          * @return this builder
@@ -1176,7 +1176,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code bank_sort_code} field.
+         * The <code>bank_sort_code</code> field.
          *
          * @param bankSortCode the value, or {@code null} to send JSON null
          * @return this builder
@@ -1186,7 +1186,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code bank_routing_number} field.
+         * The <code>bank_routing_number</code> field.
          *
          * @param bankRoutingNumber the value, or {@code null} to send JSON null
          * @return this builder
@@ -1196,7 +1196,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code bank_swift_bic} field.
+         * The <code>bank_swift_bic</code> field.
          *
          * @param bankSwiftBic the value, or {@code null} to send JSON null
          * @return this builder
@@ -1206,7 +1206,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code bank_branch_name} field.
+         * The <code>bank_branch_name</code> field.
          *
          * @param bankBranchName the value, or {@code null} to send JSON null
          * @return this builder
@@ -1216,7 +1216,7 @@ public final class ProofOfAddressVerifyResponse extends JsonModel {
         }
 
         /**
-         * The {@code bank_branch_address} field.
+         * The <code>bank_branch_address</code> field.
          *
          * @param bankBranchAddress the value, or {@code null} to send JSON null
          * @return this builder

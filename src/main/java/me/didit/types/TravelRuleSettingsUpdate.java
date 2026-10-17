@@ -51,7 +51,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The {@code is_enabled} field.
+   * The <code>is_enabled</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -61,7 +61,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The {@code legal_name} field.
+   * The <code>legal_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -71,7 +71,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The {@code lei} field.
+   * The <code>lei</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -81,7 +81,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The {@code jurisdiction} field.
+   * The <code>jurisdiction</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -91,7 +91,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The {@code name_matching_strictness} field.
+   * The <code>name_matching_strictness</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -101,7 +101,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The {@code confirmation_timeout_hours} field.
+   * The <code>confirmation_timeout_hours</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -111,7 +111,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The {@code timeout_outcome} field.
+   * The <code>timeout_outcome</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -121,7 +121,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The {@code compliance_email} field.
+   * The <code>compliance_email</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -131,7 +131,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The {@code is_discoverable} field.
+   * The <code>is_discoverable</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -151,7 +151,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The {@code inbound_auto_accept} field.
+   * The <code>inbound_auto_accept</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -161,7 +161,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The {@code allow_self_declaration} field.
+   * The <code>allow_self_declaration</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -181,7 +181,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The {@code auto_wallet_verification} field.
+   * The <code>auto_wallet_verification</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -191,7 +191,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The {@code vasp_attribution_enabled} field.
+   * The <code>vasp_attribution_enabled</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -224,7 +224,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The {@code is_enabled} field.
+     * The <code>is_enabled</code> field.
      *
      * @param isEnabled the value
      * @return this builder
@@ -234,7 +234,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The {@code legal_name} field.
+     * The <code>legal_name</code> field.
      *
      * @param legalName the value
      * @return this builder
@@ -244,7 +244,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The {@code lei} field.
+     * The <code>lei</code> field.
      *
      * @param lei the value
      * @return this builder
@@ -254,7 +254,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The {@code jurisdiction} field.
+     * The <code>jurisdiction</code> field.
      *
      * @param jurisdiction the value
      * @return this builder
@@ -264,7 +264,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The {@code name_matching_strictness} field.
+     * The <code>name_matching_strictness</code> field.
      *
      * @param nameMatchingStrictness the value
      * @return this builder
@@ -274,7 +274,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The {@code confirmation_timeout_hours} field.
+     * The <code>confirmation_timeout_hours</code> field.
      *
      * @param confirmationTimeoutHours the value
      * @return this builder
@@ -284,7 +284,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The {@code timeout_outcome} field.
+     * The <code>timeout_outcome</code> field.
      *
      * @param timeoutOutcome the value
      * @return this builder
@@ -294,7 +294,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The {@code compliance_email} field.
+     * The <code>compliance_email</code> field.
      *
      * @param complianceEmail the value
      * @return this builder
@@ -304,7 +304,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The {@code is_discoverable} field.
+     * The <code>is_discoverable</code> field.
      *
      * @param isDiscoverable the value
      * @return this builder
@@ -324,7 +324,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The {@code inbound_auto_accept} field.
+     * The <code>inbound_auto_accept</code> field.
      *
      * @param inboundAutoAccept the value
      * @return this builder
@@ -334,7 +334,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The {@code allow_self_declaration} field.
+     * The <code>allow_self_declaration</code> field.
      *
      * @param allowSelfDeclaration the value
      * @return this builder
@@ -354,7 +354,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The {@code auto_wallet_verification} field.
+     * The <code>auto_wallet_verification</code> field.
      *
      * @param autoWalletVerification the value
      * @return this builder
@@ -364,7 +364,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The {@code vasp_attribution_enabled} field.
+     * The <code>vasp_attribution_enabled</code> field.
      *
      * @param vaspAttributionEnabled the value
      * @return this builder

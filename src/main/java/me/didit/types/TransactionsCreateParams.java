@@ -1093,7 +1093,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code town} field.
+       * The <code>town</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1103,7 +1103,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code state} field.
+       * The <code>state</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1113,7 +1113,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code street} field.
+       * The <code>street</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1123,7 +1123,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code post_code} field.
+       * The <code>post_code</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1156,7 +1156,7 @@ public final class TransactionsCreateParams extends JsonModel {
         }
 
         /**
-         * The {@code town} field.
+         * The <code>town</code> field.
          *
          * @param town the value
          * @return this builder
@@ -1166,7 +1166,7 @@ public final class TransactionsCreateParams extends JsonModel {
         }
 
         /**
-         * The {@code state} field.
+         * The <code>state</code> field.
          *
          * @param state the value
          * @return this builder
@@ -1176,7 +1176,7 @@ public final class TransactionsCreateParams extends JsonModel {
         }
 
         /**
-         * The {@code street} field.
+         * The <code>street</code> field.
          *
          * @param street the value
          * @return this builder
@@ -1186,7 +1186,7 @@ public final class TransactionsCreateParams extends JsonModel {
         }
 
         /**
-         * The {@code post_code} field.
+         * The <code>post_code</code> field.
          *
          * @param postCode the value
          * @return this builder
@@ -1249,7 +1249,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1259,7 +1259,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code code} field.
+       * The <code>code</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1269,7 +1269,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code address} field.
+       * The <code>address</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1292,7 +1292,7 @@ public final class TransactionsCreateParams extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @param name the value
          * @return this builder
@@ -1302,7 +1302,7 @@ public final class TransactionsCreateParams extends JsonModel {
         }
 
         /**
-         * The {@code code} field.
+         * The <code>code</code> field.
          *
          * @param code the value
          * @return this builder
@@ -1312,7 +1312,7 @@ public final class TransactionsCreateParams extends JsonModel {
         }
 
         /**
-         * The {@code address} field.
+         * The <code>address</code> field.
          *
          * @param address the value
          * @return this builder
@@ -1988,7 +1988,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code first_name} field.
+     * The <code>first_name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1998,7 +1998,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code last_name} field.
+     * The <code>last_name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2008,7 +2008,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code date_of_birth} field.
+     * The <code>date_of_birth</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2028,7 +2028,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code institution_details} field.
+     * The <code>institution_details</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2101,7 +2101,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code first_name} field.
+       * The <code>first_name</code> field.
        *
        * @param firstName the value
        * @return this builder
@@ -2111,7 +2111,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code last_name} field.
+       * The <code>last_name</code> field.
        *
        * @param lastName the value
        * @return this builder
@@ -2121,7 +2121,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code date_of_birth} field.
+       * The <code>date_of_birth</code> field.
        *
        * @param dateOfBirth the value
        * @return this builder
@@ -2141,7 +2141,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code institution_details} field.
+       * The <code>institution_details</code> field.
        *
        * @param institutionDetails the value
        * @return this builder
@@ -2701,7 +2701,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code issuing_country} field.
+       * The <code>issuing_country</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2744,7 +2744,7 @@ public final class TransactionsCreateParams extends JsonModel {
         }
 
         /**
-         * The {@code issuing_country} field.
+         * The <code>issuing_country</code> field.
          *
          * @param issuingCountry the value
          * @return this builder
@@ -2808,7 +2808,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -2818,7 +2818,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code protocol} field.
+     * The <code>protocol</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2828,7 +2828,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code required} field.
+     * The <code>required</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2838,7 +2838,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code obligations_count} field.
+     * The <code>obligations_count</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2848,7 +2848,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code originator_data} field.
+     * The <code>originator_data</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2858,7 +2858,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code beneficiary_data} field.
+     * The <code>beneficiary_data</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2868,7 +2868,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code metadata} field.
+     * The <code>metadata</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2891,7 +2891,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @param status the value
        * @return this builder
@@ -2901,7 +2901,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code protocol} field.
+       * The <code>protocol</code> field.
        *
        * @param protocol the value
        * @return this builder
@@ -2911,7 +2911,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code required} field.
+       * The <code>required</code> field.
        *
        * @param required the value
        * @return this builder
@@ -2921,7 +2921,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code obligations_count} field.
+       * The <code>obligations_count</code> field.
        *
        * @param obligationsCount the value
        * @return this builder
@@ -2931,7 +2931,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code originator_data} field.
+       * The <code>originator_data</code> field.
        *
        * @param originatorData the value
        * @return this builder
@@ -2941,7 +2941,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code beneficiary_data} field.
+       * The <code>beneficiary_data</code> field.
        *
        * @param beneficiaryData the value
        * @return this builder
@@ -2951,7 +2951,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code metadata} field.
+       * The <code>metadata</code> field.
        *
        * @param metadata the value
        * @return this builder
@@ -3016,7 +3016,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code nodes} field.
+     * The <code>nodes</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3026,7 +3026,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code edges} field.
+     * The <code>edges</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3036,7 +3036,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code metrics} field.
+     * The <code>metrics</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3059,7 +3059,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code nodes} field.
+       * The <code>nodes</code> field.
        *
        * @param nodes the value
        * @return this builder
@@ -3069,7 +3069,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code edges} field.
+       * The <code>edges</code> field.
        *
        * @param edges the value
        * @return this builder
@@ -3079,7 +3079,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The {@code metrics} field.
+       * The <code>metrics</code> field.
        *
        * @param metrics the value
        * @return this builder

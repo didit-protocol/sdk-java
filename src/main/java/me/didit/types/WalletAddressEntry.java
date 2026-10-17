@@ -51,7 +51,7 @@ public final class WalletAddressEntry extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -121,7 +121,7 @@ public final class WalletAddressEntry extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -164,7 +164,7 @@ public final class WalletAddressEntry extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -234,7 +234,7 @@ public final class WalletAddressEntry extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder

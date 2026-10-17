@@ -51,7 +51,7 @@ public final class CaseChecklistItem extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -61,7 +61,7 @@ public final class CaseChecklistItem extends JsonModel {
   }
 
   /**
-   * The {@code label} field.
+   * The <code>label</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -71,7 +71,7 @@ public final class CaseChecklistItem extends JsonModel {
   }
 
   /**
-   * The {@code is_completed} field.
+   * The <code>is_completed</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -81,7 +81,7 @@ public final class CaseChecklistItem extends JsonModel {
   }
 
   /**
-   * The {@code completed_by} field.
+   * The <code>completed_by</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -91,7 +91,7 @@ public final class CaseChecklistItem extends JsonModel {
   }
 
   /**
-   * The {@code completed_at} field.
+   * The <code>completed_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -101,7 +101,7 @@ public final class CaseChecklistItem extends JsonModel {
   }
 
   /**
-   * The {@code order} field.
+   * The <code>order</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -124,7 +124,7 @@ public final class CaseChecklistItem extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -134,7 +134,7 @@ public final class CaseChecklistItem extends JsonModel {
     }
 
     /**
-     * The {@code label} field.
+     * The <code>label</code> field.
      *
      * @param label the value
      * @return this builder
@@ -144,7 +144,7 @@ public final class CaseChecklistItem extends JsonModel {
     }
 
     /**
-     * The {@code is_completed} field.
+     * The <code>is_completed</code> field.
      *
      * @param isCompleted the value
      * @return this builder
@@ -154,7 +154,7 @@ public final class CaseChecklistItem extends JsonModel {
     }
 
     /**
-     * The {@code completed_by} field.
+     * The <code>completed_by</code> field.
      *
      * @param completedBy the value, or {@code null} to send JSON null
      * @return this builder
@@ -164,7 +164,7 @@ public final class CaseChecklistItem extends JsonModel {
     }
 
     /**
-     * The {@code completed_at} field.
+     * The <code>completed_at</code> field.
      *
      * @param completedAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -174,7 +174,7 @@ public final class CaseChecklistItem extends JsonModel {
     }
 
     /**
-     * The {@code order} field.
+     * The <code>order</code> field.
      *
      * @param order the value
      * @return this builder

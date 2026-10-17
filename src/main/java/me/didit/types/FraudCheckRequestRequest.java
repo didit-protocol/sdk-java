@@ -80,7 +80,7 @@ public final class FraudCheckRequestRequest extends JsonModel {
   }
 
   /**
-   * The {@code subject} field.
+   * The <code>subject</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -90,7 +90,7 @@ public final class FraudCheckRequestRequest extends JsonModel {
   }
 
   /**
-   * The {@code context} field.
+   * The <code>context</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -100,7 +100,7 @@ public final class FraudCheckRequestRequest extends JsonModel {
   }
 
   /**
-   * The {@code checks} field.
+   * The <code>checks</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -110,7 +110,7 @@ public final class FraudCheckRequestRequest extends JsonModel {
   }
 
   /**
-   * The {@code vendor_data} field.
+   * The <code>vendor_data</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -120,7 +120,7 @@ public final class FraudCheckRequestRequest extends JsonModel {
   }
 
   /**
-   * The {@code metadata} field.
+   * The <code>metadata</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -173,7 +173,7 @@ public final class FraudCheckRequestRequest extends JsonModel {
     }
 
     /**
-     * The {@code subject} field.
+     * The <code>subject</code> field.
      *
      * @param subject the value
      * @return this builder
@@ -183,7 +183,7 @@ public final class FraudCheckRequestRequest extends JsonModel {
     }
 
     /**
-     * The {@code context} field.
+     * The <code>context</code> field.
      *
      * @param context the value
      * @return this builder
@@ -193,7 +193,7 @@ public final class FraudCheckRequestRequest extends JsonModel {
     }
 
     /**
-     * The {@code checks} field.
+     * The <code>checks</code> field.
      *
      * @param checks the value
      * @return this builder
@@ -203,7 +203,7 @@ public final class FraudCheckRequestRequest extends JsonModel {
     }
 
     /**
-     * The {@code vendor_data} field.
+     * The <code>vendor_data</code> field.
      *
      * @param vendorData the value
      * @return this builder
@@ -213,7 +213,7 @@ public final class FraudCheckRequestRequest extends JsonModel {
     }
 
     /**
-     * The {@code metadata} field.
+     * The <code>metadata</code> field.
      *
      * @param metadata the value
      * @return this builder

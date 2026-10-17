@@ -48,7 +48,7 @@ public final class TravelRuleOwnershipConfirmRequest extends JsonModel {
   }
 
   /**
-   * The {@code confirmed} field.
+   * The <code>confirmed</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -71,7 +71,7 @@ public final class TravelRuleOwnershipConfirmRequest extends JsonModel {
     }
 
     /**
-     * The {@code confirmed} field.
+     * The <code>confirmed</code> field.
      *
      * @param confirmed the value
      * @return this builder

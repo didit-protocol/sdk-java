@@ -94,7 +94,7 @@ public final class UserDetailItem extends JsonModel {
   }
 
   /**
-   * The {@code date_of_birth} field.
+   * The <code>date_of_birth</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -254,7 +254,7 @@ public final class UserDetailItem extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -294,7 +294,7 @@ public final class UserDetailItem extends JsonModel {
   }
 
   /**
-   * The {@code updated_at} field.
+   * The <code>updated_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -357,7 +357,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code date_of_birth} field.
+     * The <code>date_of_birth</code> field.
      *
      * @param dateOfBirth the value, or {@code null} to send JSON null
      * @return this builder
@@ -517,7 +517,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -557,7 +557,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code updated_at} field.
+     * The <code>updated_at</code> field.
      *
      * @param updatedAt the value
      * @return this builder
@@ -628,7 +628,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code tag} field.
+     * The <code>tag</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -638,7 +638,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code added_by_email} field.
+     * The <code>added_by_email</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -648,7 +648,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code added_by_name} field.
+     * The <code>added_by_name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -658,7 +658,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -691,7 +691,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code tag} field.
+       * The <code>tag</code> field.
        *
        * @param tag the value
        * @return this builder
@@ -701,7 +701,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code added_by_email} field.
+       * The <code>added_by_email</code> field.
        *
        * @param addedByEmail the value, or {@code null} to send JSON null
        * @return this builder
@@ -711,7 +711,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code added_by_name} field.
+       * The <code>added_by_name</code> field.
        *
        * @param addedByName the value, or {@code null} to send JSON null
        * @return this builder
@@ -721,7 +721,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code created_at} field.
+       * The <code>created_at</code> field.
        *
        * @param createdAt the value
        * @return this builder
@@ -782,7 +782,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -792,7 +792,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -802,7 +802,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code color} field.
+       * The <code>color</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -812,7 +812,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code description} field.
+       * The <code>description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -822,7 +822,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code source} field.
+       * The <code>source</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -832,7 +832,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code created_at} field.
+       * The <code>created_at</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -842,7 +842,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code updated_at} field.
+       * The <code>updated_at</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -865,7 +865,7 @@ public final class UserDetailItem extends JsonModel {
         }
 
         /**
-         * The {@code uuid} field.
+         * The <code>uuid</code> field.
          *
          * @param uuid the value
          * @return this builder
@@ -875,7 +875,7 @@ public final class UserDetailItem extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @param name the value
          * @return this builder
@@ -885,7 +885,7 @@ public final class UserDetailItem extends JsonModel {
         }
 
         /**
-         * The {@code color} field.
+         * The <code>color</code> field.
          *
          * @param color the value
          * @return this builder
@@ -895,7 +895,7 @@ public final class UserDetailItem extends JsonModel {
         }
 
         /**
-         * The {@code description} field.
+         * The <code>description</code> field.
          *
          * @param description the value, or {@code null} to send JSON null
          * @return this builder
@@ -905,7 +905,7 @@ public final class UserDetailItem extends JsonModel {
         }
 
         /**
-         * The {@code source} field.
+         * The <code>source</code> field.
          *
          * @param source the value
          * @return this builder
@@ -915,7 +915,7 @@ public final class UserDetailItem extends JsonModel {
         }
 
         /**
-         * The {@code created_at} field.
+         * The <code>created_at</code> field.
          *
          * @param createdAt the value
          * @return this builder
@@ -925,7 +925,7 @@ public final class UserDetailItem extends JsonModel {
         }
 
         /**
-         * The {@code updated_at} field.
+         * The <code>updated_at</code> field.
          *
          * @param updatedAt the value
          * @return this builder
@@ -1030,7 +1030,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1040,7 +1040,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code comment_type} field.
+     * The <code>comment_type</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1050,7 +1050,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code comment} field.
+     * The <code>comment</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1060,7 +1060,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code actor_email} field.
+     * The <code>actor_email</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1070,7 +1070,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code actor_name} field.
+     * The <code>actor_name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1080,7 +1080,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code previous_status} field.
+     * The <code>previous_status</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1090,7 +1090,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code new_status} field.
+     * The <code>new_status</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1130,7 +1130,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code metadata} field.
+     * The <code>metadata</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1140,7 +1140,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code mentioned_emails} field.
+     * The <code>mentioned_emails</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1150,7 +1150,7 @@ public final class UserDetailItem extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1173,7 +1173,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @param uuid the value
        * @return this builder
@@ -1183,7 +1183,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code comment_type} field.
+       * The <code>comment_type</code> field.
        *
        * @param commentType the value
        * @return this builder
@@ -1193,7 +1193,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code comment} field.
+       * The <code>comment</code> field.
        *
        * @param comment the value, or {@code null} to send JSON null
        * @return this builder
@@ -1203,7 +1203,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code actor_email} field.
+       * The <code>actor_email</code> field.
        *
        * @param actorEmail the value, or {@code null} to send JSON null
        * @return this builder
@@ -1213,7 +1213,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code actor_name} field.
+       * The <code>actor_name</code> field.
        *
        * @param actorName the value, or {@code null} to send JSON null
        * @return this builder
@@ -1223,7 +1223,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code previous_status} field.
+       * The <code>previous_status</code> field.
        *
        * @param previousStatus the value, or {@code null} to send JSON null
        * @return this builder
@@ -1233,7 +1233,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code new_status} field.
+       * The <code>new_status</code> field.
        *
        * @param newStatus the value, or {@code null} to send JSON null
        * @return this builder
@@ -1273,7 +1273,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code metadata} field.
+       * The <code>metadata</code> field.
        *
        * @param metadata the value, or {@code null} to send JSON null
        * @return this builder
@@ -1283,7 +1283,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code mentioned_emails} field.
+       * The <code>mentioned_emails</code> field.
        *
        * @param mentionedEmails the value
        * @return this builder
@@ -1293,7 +1293,7 @@ public final class UserDetailItem extends JsonModel {
       }
 
       /**
-       * The {@code created_at} field.
+       * The <code>created_at</code> field.
        *
        * @param createdAt the value
        * @return this builder

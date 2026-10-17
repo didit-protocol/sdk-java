@@ -50,7 +50,7 @@ public final class CaseRoutingPreviewRequest extends JsonModel {
   }
 
   /**
-   * The {@code source} field.
+   * The <code>source</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -60,7 +60,7 @@ public final class CaseRoutingPreviewRequest extends JsonModel {
   }
 
   /**
-   * The {@code priority} field.
+   * The <code>priority</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -70,7 +70,7 @@ public final class CaseRoutingPreviewRequest extends JsonModel {
   }
 
   /**
-   * The {@code tags} field.
+   * The <code>tags</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -80,7 +80,7 @@ public final class CaseRoutingPreviewRequest extends JsonModel {
   }
 
   /**
-   * The {@code rule_uuid} field.
+   * The <code>rule_uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -90,7 +90,7 @@ public final class CaseRoutingPreviewRequest extends JsonModel {
   }
 
   /**
-   * The {@code draft} field.
+   * The <code>draft</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -113,7 +113,7 @@ public final class CaseRoutingPreviewRequest extends JsonModel {
     }
 
     /**
-     * The {@code source} field.
+     * The <code>source</code> field.
      *
      * @param source the value
      * @return this builder
@@ -123,7 +123,7 @@ public final class CaseRoutingPreviewRequest extends JsonModel {
     }
 
     /**
-     * The {@code priority} field.
+     * The <code>priority</code> field.
      *
      * @param priority the value
      * @return this builder
@@ -133,7 +133,7 @@ public final class CaseRoutingPreviewRequest extends JsonModel {
     }
 
     /**
-     * The {@code tags} field.
+     * The <code>tags</code> field.
      *
      * @param tags the value
      * @return this builder
@@ -143,7 +143,7 @@ public final class CaseRoutingPreviewRequest extends JsonModel {
     }
 
     /**
-     * The {@code rule_uuid} field.
+     * The <code>rule_uuid</code> field.
      *
      * @param ruleUuid the value
      * @return this builder
@@ -153,7 +153,7 @@ public final class CaseRoutingPreviewRequest extends JsonModel {
     }
 
     /**
-     * The {@code draft} field.
+     * The <code>draft</code> field.
      *
      * @param draft the value
      * @return this builder

@@ -52,7 +52,7 @@ public final class CasesResolveParams extends JsonModel {
   }
 
   /**
-   * The {@code resolution} field.
+   * The <code>resolution</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -85,7 +85,7 @@ public final class CasesResolveParams extends JsonModel {
     }
 
     /**
-     * The {@code resolution} field.
+     * The <code>resolution</code> field.
      *
      * @param resolution the value
      * @return this builder

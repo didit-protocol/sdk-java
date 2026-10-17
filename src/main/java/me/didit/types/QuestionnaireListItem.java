@@ -63,7 +63,7 @@ public final class QuestionnaireListItem extends JsonModel {
   }
 
   /**
-   * The {@code title} field.
+   * The <code>title</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -73,7 +73,7 @@ public final class QuestionnaireListItem extends JsonModel {
   }
 
   /**
-   * The {@code description} field.
+   * The <code>description</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -83,7 +83,7 @@ public final class QuestionnaireListItem extends JsonModel {
   }
 
   /**
-   * The {@code languages} field.
+   * The <code>languages</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -93,7 +93,7 @@ public final class QuestionnaireListItem extends JsonModel {
   }
 
   /**
-   * The {@code default_language} field.
+   * The <code>default_language</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -103,7 +103,7 @@ public final class QuestionnaireListItem extends JsonModel {
   }
 
   /**
-   * The {@code is_active} field.
+   * The <code>is_active</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -123,7 +123,7 @@ public final class QuestionnaireListItem extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -133,7 +133,7 @@ public final class QuestionnaireListItem extends JsonModel {
   }
 
   /**
-   * The {@code updated_at} field.
+   * The <code>updated_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -183,7 +183,7 @@ public final class QuestionnaireListItem extends JsonModel {
   }
 
   /**
-   * The {@code status} field.
+   * The <code>status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -236,7 +236,7 @@ public final class QuestionnaireListItem extends JsonModel {
     }
 
     /**
-     * The {@code title} field.
+     * The <code>title</code> field.
      *
      * @param title the value
      * @return this builder
@@ -246,7 +246,7 @@ public final class QuestionnaireListItem extends JsonModel {
     }
 
     /**
-     * The {@code description} field.
+     * The <code>description</code> field.
      *
      * @param description the value, or {@code null} to send JSON null
      * @return this builder
@@ -256,7 +256,7 @@ public final class QuestionnaireListItem extends JsonModel {
     }
 
     /**
-     * The {@code languages} field.
+     * The <code>languages</code> field.
      *
      * @param languages the value
      * @return this builder
@@ -266,7 +266,7 @@ public final class QuestionnaireListItem extends JsonModel {
     }
 
     /**
-     * The {@code default_language} field.
+     * The <code>default_language</code> field.
      *
      * @param defaultLanguage the value
      * @return this builder
@@ -276,7 +276,7 @@ public final class QuestionnaireListItem extends JsonModel {
     }
 
     /**
-     * The {@code is_active} field.
+     * The <code>is_active</code> field.
      *
      * @param isActive the value
      * @return this builder
@@ -296,7 +296,7 @@ public final class QuestionnaireListItem extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -306,7 +306,7 @@ public final class QuestionnaireListItem extends JsonModel {
     }
 
     /**
-     * The {@code updated_at} field.
+     * The <code>updated_at</code> field.
      *
      * @param updatedAt the value
      * @return this builder
@@ -356,7 +356,7 @@ public final class QuestionnaireListItem extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @param status the value
      * @return this builder

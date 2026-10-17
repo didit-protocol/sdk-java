@@ -53,7 +53,7 @@ public final class CasesUpdateParams extends JsonModel {
   }
 
   /**
-   * The {@code title} field.
+   * The <code>title</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -63,7 +63,7 @@ public final class CasesUpdateParams extends JsonModel {
   }
 
   /**
-   * The {@code priority} field.
+   * The <code>priority</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -73,7 +73,7 @@ public final class CasesUpdateParams extends JsonModel {
   }
 
   /**
-   * The {@code due_at} field.
+   * The <code>due_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -83,7 +83,7 @@ public final class CasesUpdateParams extends JsonModel {
   }
 
   /**
-   * The {@code tags} field.
+   * The <code>tags</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -106,7 +106,7 @@ public final class CasesUpdateParams extends JsonModel {
     }
 
     /**
-     * The {@code title} field.
+     * The <code>title</code> field.
      *
      * @param title the value
      * @return this builder
@@ -116,7 +116,7 @@ public final class CasesUpdateParams extends JsonModel {
     }
 
     /**
-     * The {@code priority} field.
+     * The <code>priority</code> field.
      *
      * @param priority the value
      * @return this builder
@@ -126,7 +126,7 @@ public final class CasesUpdateParams extends JsonModel {
     }
 
     /**
-     * The {@code due_at} field.
+     * The <code>due_at</code> field.
      *
      * @param dueAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -136,7 +136,7 @@ public final class CasesUpdateParams extends JsonModel {
     }
 
     /**
-     * The {@code tags} field.
+     * The <code>tags</code> field.
      *
      * @param tags the value
      * @return this builder

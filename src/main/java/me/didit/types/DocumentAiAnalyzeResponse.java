@@ -62,7 +62,7 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
   }
 
   /**
-   * The {@code document_ai} field.
+   * The <code>document_ai</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -125,7 +125,7 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
     }
 
     /**
-     * The {@code document_ai} field.
+     * The <code>document_ai</code> field.
      *
      * @param documentAi the value
      * @return this builder
@@ -466,7 +466,7 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
       }
 
       /**
-       * The {@code key} field.
+       * The <code>key</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -476,7 +476,7 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -486,7 +486,7 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
       }
 
       /**
-       * The {@code instruction} field.
+       * The <code>instruction</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -496,7 +496,7 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
       }
 
       /**
-       * The {@code type} field.
+       * The <code>type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -506,7 +506,7 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
       }
 
       /**
-       * The {@code required} field.
+       * The <code>required</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -516,7 +516,7 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
       }
 
       /**
-       * The {@code is_full_name} field.
+       * The <code>is_full_name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -539,7 +539,7 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
         }
 
         /**
-         * The {@code key} field.
+         * The <code>key</code> field.
          *
          * @param key the value
          * @return this builder
@@ -549,7 +549,7 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @param name the value
          * @return this builder
@@ -559,7 +559,7 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
         }
 
         /**
-         * The {@code instruction} field.
+         * The <code>instruction</code> field.
          *
          * @param instruction the value
          * @return this builder
@@ -569,7 +569,7 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
         }
 
         /**
-         * The {@code type} field.
+         * The <code>type</code> field.
          *
          * @param type the value
          * @return this builder
@@ -579,7 +579,7 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
         }
 
         /**
-         * The {@code required} field.
+         * The <code>required</code> field.
          *
          * @param required the value
          * @return this builder
@@ -589,7 +589,7 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
         }
 
         /**
-         * The {@code is_full_name} field.
+         * The <code>is_full_name</code> field.
          *
          * @param isFullName the value
          * @return this builder

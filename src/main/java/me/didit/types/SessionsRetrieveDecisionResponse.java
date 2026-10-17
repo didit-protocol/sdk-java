@@ -339,7 +339,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
   }
 
   /**
-   * The {@code reviews} field.
+   * The <code>reviews</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -718,7 +718,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code reviews} field.
+     * The <code>reviews</code> field.
      *
      * @param reviews the value
      * @return this builder
@@ -3806,7 +3806,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code dl_categories} field.
+       * The <code>dl_categories</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3816,7 +3816,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code blood_group} field.
+       * The <code>blood_group</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3959,7 +3959,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code dl_categories} field.
+         * The <code>dl_categories</code> field.
          *
          * @param dlCategories the value
          * @return this builder
@@ -3969,7 +3969,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code blood_group} field.
+         * The <code>blood_group</code> field.
          *
          * @param bloodGroup the value, or {@code null} to send JSON null
          * @return this builder
@@ -4154,7 +4154,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code surname} field.
+       * The <code>surname</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4164,7 +4164,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4174,7 +4174,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code country} field.
+       * The <code>country</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4184,7 +4184,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code nationality} field.
+       * The <code>nationality</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4194,7 +4194,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code birth_date} field.
+       * The <code>birth_date</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4204,7 +4204,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code expiry_date} field.
+       * The <code>expiry_date</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4214,7 +4214,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code sex} field.
+       * The <code>sex</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4224,7 +4224,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code document_type} field.
+       * The <code>document_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4234,7 +4234,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code document_number} field.
+       * The <code>document_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4244,7 +4244,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code optional_data} field.
+       * The <code>optional_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4254,7 +4254,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code optional_data_2} field.
+       * The <code>optional_data_2</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4264,7 +4264,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code birth_date_hash} field.
+       * The <code>birth_date_hash</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4274,7 +4274,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code expiry_date_hash} field.
+       * The <code>expiry_date_hash</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4284,7 +4284,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code document_number_hash} field.
+       * The <code>document_number_hash</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4294,7 +4294,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code final_hash} field.
+       * The <code>final_hash</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4304,7 +4304,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code personal_number} field.
+       * The <code>personal_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4314,7 +4314,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code warnings} field.
+       * The <code>warnings</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4324,7 +4324,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code errors} field.
+       * The <code>errors</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4334,7 +4334,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code mrz_type} field.
+       * The <code>mrz_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4344,7 +4344,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code mrz_string} field.
+       * The <code>mrz_string</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4354,7 +4354,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code mrz_key} field.
+       * The <code>mrz_key</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4377,7 +4377,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code surname} field.
+         * The <code>surname</code> field.
          *
          * @param surname the value
          * @return this builder
@@ -4387,7 +4387,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @param name the value
          * @return this builder
@@ -4397,7 +4397,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code country} field.
+         * The <code>country</code> field.
          *
          * @param country the value
          * @return this builder
@@ -4407,7 +4407,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code nationality} field.
+         * The <code>nationality</code> field.
          *
          * @param nationality the value
          * @return this builder
@@ -4417,7 +4417,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code birth_date} field.
+         * The <code>birth_date</code> field.
          *
          * @param birthDate the value
          * @return this builder
@@ -4427,7 +4427,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code expiry_date} field.
+         * The <code>expiry_date</code> field.
          *
          * @param expiryDate the value
          * @return this builder
@@ -4437,7 +4437,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code sex} field.
+         * The <code>sex</code> field.
          *
          * @param sex the value
          * @return this builder
@@ -4447,7 +4447,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_type} field.
+         * The <code>document_type</code> field.
          *
          * @param documentType the value
          * @return this builder
@@ -4457,7 +4457,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_number} field.
+         * The <code>document_number</code> field.
          *
          * @param documentNumber the value
          * @return this builder
@@ -4467,7 +4467,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code optional_data} field.
+         * The <code>optional_data</code> field.
          *
          * @param optionalData the value
          * @return this builder
@@ -4477,7 +4477,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code optional_data_2} field.
+         * The <code>optional_data_2</code> field.
          *
          * @param optionalData2 the value
          * @return this builder
@@ -4487,7 +4487,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code birth_date_hash} field.
+         * The <code>birth_date_hash</code> field.
          *
          * @param birthDateHash the value
          * @return this builder
@@ -4497,7 +4497,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code expiry_date_hash} field.
+         * The <code>expiry_date_hash</code> field.
          *
          * @param expiryDateHash the value
          * @return this builder
@@ -4507,7 +4507,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_number_hash} field.
+         * The <code>document_number_hash</code> field.
          *
          * @param documentNumberHash the value
          * @return this builder
@@ -4517,7 +4517,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code final_hash} field.
+         * The <code>final_hash</code> field.
          *
          * @param finalHash the value
          * @return this builder
@@ -4527,7 +4527,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code personal_number} field.
+         * The <code>personal_number</code> field.
          *
          * @param personalNumber the value
          * @return this builder
@@ -4537,7 +4537,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code warnings} field.
+         * The <code>warnings</code> field.
          *
          * @param warnings the value
          * @return this builder
@@ -4547,7 +4547,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code errors} field.
+         * The <code>errors</code> field.
          *
          * @param errors the value
          * @return this builder
@@ -4557,7 +4557,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code mrz_type} field.
+         * The <code>mrz_type</code> field.
          *
          * @param mrzType the value
          * @return this builder
@@ -4567,7 +4567,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code mrz_string} field.
+         * The <code>mrz_string</code> field.
          *
          * @param mrzString the value
          * @return this builder
@@ -4577,7 +4577,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code mrz_key} field.
+         * The <code>mrz_key</code> field.
          *
          * @param mrzKey the value
          * @return this builder
@@ -4640,7 +4640,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code city} field.
+       * The <code>city</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4650,7 +4650,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code label} field.
+       * The <code>label</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4660,7 +4660,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code region} field.
+       * The <code>region</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4690,7 +4690,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code street_1} field.
+       * The <code>street_1</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4700,7 +4700,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code street_2} field.
+       * The <code>street_2</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4720,7 +4720,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code postal_code} field.
+       * The <code>postal_code</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4730,7 +4730,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code raw_results} field.
+       * The <code>raw_results</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4740,7 +4740,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code address_type} field.
+       * The <code>address_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4750,7 +4750,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code document_location} field.
+       * The <code>document_location</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4760,7 +4760,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code formatted_address} field.
+       * The <code>formatted_address</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4783,7 +4783,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code city} field.
+         * The <code>city</code> field.
          *
          * @param city the value
          * @return this builder
@@ -4793,7 +4793,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code label} field.
+         * The <code>label</code> field.
          *
          * @param label the value
          * @return this builder
@@ -4803,7 +4803,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code region} field.
+         * The <code>region</code> field.
          *
          * @param region the value
          * @return this builder
@@ -4833,7 +4833,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code street_1} field.
+         * The <code>street_1</code> field.
          *
          * @param street1 the value
          * @return this builder
@@ -4843,7 +4843,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code street_2} field.
+         * The <code>street_2</code> field.
          *
          * @param street2 the value, or {@code null} to send JSON null
          * @return this builder
@@ -4863,7 +4863,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code postal_code} field.
+         * The <code>postal_code</code> field.
          *
          * @param postalCode the value
          * @return this builder
@@ -4873,7 +4873,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code raw_results} field.
+         * The <code>raw_results</code> field.
          *
          * @param rawResults the value
          * @return this builder
@@ -4883,7 +4883,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code address_type} field.
+         * The <code>address_type</code> field.
          *
          * @param addressType the value
          * @return this builder
@@ -4893,7 +4893,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_location} field.
+         * The <code>document_location</code> field.
          *
          * @param documentLocation the value
          * @return this builder
@@ -4903,7 +4903,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code formatted_address} field.
+         * The <code>formatted_address</code> field.
          *
          * @param formattedAddress the value
          * @return this builder
@@ -4964,7 +4964,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code types} field.
+         * The <code>types</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4974,7 +4974,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code geometry} field.
+         * The <code>geometry</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4984,7 +4984,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code place_id} field.
+         * The <code>place_id</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4994,7 +4994,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code formatted_address} field.
+         * The <code>formatted_address</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5004,7 +5004,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code navigation_points} field.
+         * The <code>navigation_points</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5014,7 +5014,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code address_components} field.
+         * The <code>address_components</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5037,7 +5037,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code types} field.
+           * The <code>types</code> field.
            *
            * @param types the value
            * @return this builder
@@ -5047,7 +5047,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code geometry} field.
+           * The <code>geometry</code> field.
            *
            * @param geometry the value
            * @return this builder
@@ -5057,7 +5057,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code place_id} field.
+           * The <code>place_id</code> field.
            *
            * @param placeId the value
            * @return this builder
@@ -5067,7 +5067,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code formatted_address} field.
+           * The <code>formatted_address</code> field.
            *
            * @param formattedAddress the value
            * @return this builder
@@ -5077,7 +5077,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code navigation_points} field.
+           * The <code>navigation_points</code> field.
            *
            * @param navigationPoints the value
            * @return this builder
@@ -5087,7 +5087,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code address_components} field.
+           * The <code>address_components</code> field.
            *
            * @param addressComponents the value
            * @return this builder
@@ -5148,7 +5148,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code location} field.
+           * The <code>location</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5158,7 +5158,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code viewport} field.
+           * The <code>viewport</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5168,7 +5168,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code location_type} field.
+           * The <code>location_type</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5191,7 +5191,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code location} field.
+             * The <code>location</code> field.
              *
              * @param location the value
              * @return this builder
@@ -5201,7 +5201,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code viewport} field.
+             * The <code>viewport</code> field.
              *
              * @param viewport the value
              * @return this builder
@@ -5211,7 +5211,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code location_type} field.
+             * The <code>location_type</code> field.
              *
              * @param locationType the value
              * @return this builder
@@ -5272,7 +5272,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code lat} field.
+             * The <code>lat</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5282,7 +5282,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code lng} field.
+             * The <code>lng</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5305,7 +5305,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code lat} field.
+               * The <code>lat</code> field.
                *
                * @param lat the value
                * @return this builder
@@ -5315,7 +5315,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code lng} field.
+               * The <code>lng</code> field.
                *
                * @param lng the value
                * @return this builder
@@ -5377,7 +5377,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code northeast} field.
+             * The <code>northeast</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5387,7 +5387,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code southwest} field.
+             * The <code>southwest</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5410,7 +5410,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code northeast} field.
+               * The <code>northeast</code> field.
                *
                * @param northeast the value
                * @return this builder
@@ -5420,7 +5420,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code southwest} field.
+               * The <code>southwest</code> field.
                *
                * @param southwest the value
                * @return this builder
@@ -5481,7 +5481,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code lat} field.
+               * The <code>lat</code> field.
                *
                * @return the value, or empty when the field is absent or null
                * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5491,7 +5491,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code lng} field.
+               * The <code>lng</code> field.
                *
                * @return the value, or empty when the field is absent or null
                * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5514,7 +5514,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
                 }
 
                 /**
-                 * The {@code lat} field.
+                 * The <code>lat</code> field.
                  *
                  * @param lat the value
                  * @return this builder
@@ -5524,7 +5524,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
                 }
 
                 /**
-                 * The {@code lng} field.
+                 * The <code>lng</code> field.
                  *
                  * @param lng the value
                  * @return this builder
@@ -5586,7 +5586,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code lat} field.
+               * The <code>lat</code> field.
                *
                * @return the value, or empty when the field is absent or null
                * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5596,7 +5596,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code lng} field.
+               * The <code>lng</code> field.
                *
                * @return the value, or empty when the field is absent or null
                * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5619,7 +5619,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
                 }
 
                 /**
-                 * The {@code lat} field.
+                 * The <code>lat</code> field.
                  *
                  * @param lat the value
                  * @return this builder
@@ -5629,7 +5629,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
                 }
 
                 /**
-                 * The {@code lng} field.
+                 * The <code>lng</code> field.
                  *
                  * @param lng the value
                  * @return this builder
@@ -5693,7 +5693,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code location} field.
+           * The <code>location</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5716,7 +5716,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code location} field.
+             * The <code>location</code> field.
              *
              * @param location the value
              * @return this builder
@@ -5777,7 +5777,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code latitude} field.
+             * The <code>latitude</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5787,7 +5787,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code longitude} field.
+             * The <code>longitude</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5810,7 +5810,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code latitude} field.
+               * The <code>latitude</code> field.
                *
                * @param latitude the value
                * @return this builder
@@ -5820,7 +5820,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code longitude} field.
+               * The <code>longitude</code> field.
                *
                * @param longitude the value
                * @return this builder
@@ -5883,7 +5883,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code types} field.
+           * The <code>types</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5893,7 +5893,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code long_name} field.
+           * The <code>long_name</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5903,7 +5903,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code short_name} field.
+           * The <code>short_name</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5926,7 +5926,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code types} field.
+             * The <code>types</code> field.
              *
              * @param types the value
              * @return this builder
@@ -5936,7 +5936,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code long_name} field.
+             * The <code>long_name</code> field.
              *
              * @param longName the value
              * @return this builder
@@ -5946,7 +5946,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code short_name} field.
+             * The <code>short_name</code> field.
              *
              * @param shortName the value
              * @return this builder
@@ -6009,7 +6009,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code latitude} field.
+         * The <code>latitude</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -6019,7 +6019,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code longitude} field.
+         * The <code>longitude</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -6042,7 +6042,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code latitude} field.
+           * The <code>latitude</code> field.
            *
            * @param latitude the value
            * @return this builder
@@ -6052,7 +6052,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code longitude} field.
+           * The <code>longitude</code> field.
            *
            * @param longitude the value
            * @return this builder
@@ -6125,7 +6125,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code session_number} field.
+       * The <code>session_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -6278,7 +6278,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code session_number} field.
+         * The <code>session_number</code> field.
          *
          * @param sessionNumber the value, or {@code null} to send JSON null
          * @return this builder
@@ -6462,7 +6462,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code full_name} field.
+         * The <code>full_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -6472,7 +6472,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_type} field.
+         * The <code>document_type</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -6482,7 +6482,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_number} field.
+         * The <code>document_number</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -6505,7 +6505,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code full_name} field.
+           * The <code>full_name</code> field.
            *
            * @param fullName the value, or {@code null} to send JSON null
            * @return this builder
@@ -6515,7 +6515,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code document_type} field.
+           * The <code>document_type</code> field.
            *
            * @param documentType the value, or {@code null} to send JSON null
            * @return this builder
@@ -6525,7 +6525,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code document_number} field.
+           * The <code>document_number</code> field.
            *
            * @param documentNumber the value, or {@code null} to send JSON null
            * @return this builder
@@ -7111,7 +7111,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code risk} field.
+       * The <code>risk</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -7141,7 +7141,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code short_description} field.
+       * The <code>short_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -7151,7 +7151,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code long_description} field.
+       * The <code>long_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -7194,7 +7194,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code risk} field.
+         * The <code>risk</code> field.
          *
          * @param risk the value
          * @return this builder
@@ -7224,7 +7224,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code short_description} field.
+         * The <code>short_description</code> field.
          *
          * @param shortDescription the value
          * @return this builder
@@ -7234,7 +7234,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code long_description} field.
+         * The <code>long_description</code> field.
          *
          * @param longDescription the value
          * @return this builder
@@ -7428,7 +7428,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code user_details} field.
+       * The <code>user_details</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -7531,7 +7531,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code user_details} field.
+         * The <code>user_details</code> field.
          *
          * @param userDetails the value
          * @return this builder
@@ -7761,7 +7761,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code portrait_replace} field.
+       * The <code>portrait_replace</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -7771,7 +7771,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code printed_copy} field.
+       * The <code>printed_copy</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -7781,7 +7781,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code screen_replay} field.
+       * The <code>screen_replay</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -7804,7 +7804,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code portrait_replace} field.
+         * The <code>portrait_replace</code> field.
          *
          * @param portraitReplace the value, or {@code null} to send JSON null
          * @return this builder
@@ -7814,7 +7814,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code printed_copy} field.
+         * The <code>printed_copy</code> field.
          *
          * @param printedCopy the value, or {@code null} to send JSON null
          * @return this builder
@@ -7824,7 +7824,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code screen_replay} field.
+         * The <code>screen_replay</code> field.
          *
          * @param screenReplay the value, or {@code null} to send JSON null
          * @return this builder
@@ -8676,7 +8676,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code portrait_image} field.
+     * The <code>portrait_image</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -8686,7 +8686,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code signature_image} field.
+     * The <code>signature_image</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -8696,7 +8696,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code chip_data} field.
+     * The <code>chip_data</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -8706,7 +8706,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code authenticity} field.
+     * The <code>authenticity</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -8716,7 +8716,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code certificate_summary} field.
+     * The <code>certificate_summary</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -8726,7 +8726,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code warnings} field.
+     * The <code>warnings</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -8789,7 +8789,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code portrait_image} field.
+       * The <code>portrait_image</code> field.
        *
        * @param portraitImage the value
        * @return this builder
@@ -8799,7 +8799,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code signature_image} field.
+       * The <code>signature_image</code> field.
        *
        * @param signatureImage the value
        * @return this builder
@@ -8809,7 +8809,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code chip_data} field.
+       * The <code>chip_data</code> field.
        *
        * @param chipData the value
        * @return this builder
@@ -8819,7 +8819,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code authenticity} field.
+       * The <code>authenticity</code> field.
        *
        * @param authenticity the value
        * @return this builder
@@ -8829,7 +8829,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code certificate_summary} field.
+       * The <code>certificate_summary</code> field.
        *
        * @param certificateSummary the value
        * @return this builder
@@ -8839,7 +8839,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code warnings} field.
+       * The <code>warnings</code> field.
        *
        * @param warnings the value
        * @return this builder
@@ -9007,7 +9007,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code document_type} field.
+       * The <code>document_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9017,7 +9017,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code issuing_country} field.
+       * The <code>issuing_country</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9027,7 +9027,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code document_number} field.
+       * The <code>document_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9037,7 +9037,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code expiration_date} field.
+       * The <code>expiration_date</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9047,7 +9047,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code first_name} field.
+       * The <code>first_name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9057,7 +9057,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code last_name} field.
+       * The <code>last_name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9067,7 +9067,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code birth_date} field.
+       * The <code>birth_date</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9077,7 +9077,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code gender} field.
+       * The <code>gender</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9087,7 +9087,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code nationality} field.
+       * The <code>nationality</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9097,7 +9097,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code address} field.
+       * The <code>address</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9107,7 +9107,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code place_of_birth} field.
+       * The <code>place_of_birth</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9130,7 +9130,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_type} field.
+         * The <code>document_type</code> field.
          *
          * @param documentType the value
          * @return this builder
@@ -9140,7 +9140,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code issuing_country} field.
+         * The <code>issuing_country</code> field.
          *
          * @param issuingCountry the value
          * @return this builder
@@ -9150,7 +9150,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_number} field.
+         * The <code>document_number</code> field.
          *
          * @param documentNumber the value
          * @return this builder
@@ -9160,7 +9160,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code expiration_date} field.
+         * The <code>expiration_date</code> field.
          *
          * @param expirationDate the value
          * @return this builder
@@ -9170,7 +9170,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code first_name} field.
+         * The <code>first_name</code> field.
          *
          * @param firstName the value
          * @return this builder
@@ -9180,7 +9180,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code last_name} field.
+         * The <code>last_name</code> field.
          *
          * @param lastName the value
          * @return this builder
@@ -9190,7 +9190,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code birth_date} field.
+         * The <code>birth_date</code> field.
          *
          * @param birthDate the value
          * @return this builder
@@ -9200,7 +9200,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code gender} field.
+         * The <code>gender</code> field.
          *
          * @param gender the value
          * @return this builder
@@ -9210,7 +9210,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code nationality} field.
+         * The <code>nationality</code> field.
          *
          * @param nationality the value
          * @return this builder
@@ -9220,7 +9220,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code address} field.
+         * The <code>address</code> field.
          *
          * @param address the value
          * @return this builder
@@ -9230,7 +9230,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code place_of_birth} field.
+         * The <code>place_of_birth</code> field.
          *
          * @param placeOfBirth the value
          * @return this builder
@@ -9292,7 +9292,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code sod_integrity} field.
+       * The <code>sod_integrity</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9302,7 +9302,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code dg_integrity} field.
+       * The <code>dg_integrity</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9325,7 +9325,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code sod_integrity} field.
+         * The <code>sod_integrity</code> field.
          *
          * @param sodIntegrity the value
          * @return this builder
@@ -9335,7 +9335,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code dg_integrity} field.
+         * The <code>dg_integrity</code> field.
          *
          * @param dgIntegrity the value
          * @return this builder
@@ -9397,7 +9397,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code issuer} field.
+       * The <code>issuer</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9407,7 +9407,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code subject} field.
+       * The <code>subject</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9417,7 +9417,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code serial_number} field.
+       * The <code>serial_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9427,7 +9427,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code not_valid_after} field.
+       * The <code>not_valid_after</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9437,7 +9437,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code not_valid_before} field.
+       * The <code>not_valid_before</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9460,7 +9460,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code issuer} field.
+         * The <code>issuer</code> field.
          *
          * @param issuer the value
          * @return this builder
@@ -9470,7 +9470,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code subject} field.
+         * The <code>subject</code> field.
          *
          * @param subject the value
          * @return this builder
@@ -9480,7 +9480,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code serial_number} field.
+         * The <code>serial_number</code> field.
          *
          * @param serialNumber the value
          * @return this builder
@@ -9490,7 +9490,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code not_valid_after} field.
+         * The <code>not_valid_after</code> field.
          *
          * @param notValidAfter the value
          * @return this builder
@@ -9500,7 +9500,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code not_valid_before} field.
+         * The <code>not_valid_before</code> field.
          *
          * @param notValidBefore the value
          * @return this builder
@@ -9572,7 +9572,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code risk} field.
+       * The <code>risk</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9582,7 +9582,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code additional_data} field.
+       * The <code>additional_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9592,7 +9592,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code log_type} field.
+       * The <code>log_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9602,7 +9602,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code short_description} field.
+       * The <code>short_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9612,7 +9612,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code long_description} field.
+       * The <code>long_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9655,7 +9655,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code risk} field.
+         * The <code>risk</code> field.
          *
          * @param risk the value
          * @return this builder
@@ -9665,7 +9665,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code additional_data} field.
+         * The <code>additional_data</code> field.
          *
          * @param additionalData the value, or {@code null} to send JSON null
          * @return this builder
@@ -9675,7 +9675,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code log_type} field.
+         * The <code>log_type</code> field.
          *
          * @param logType the value
          * @return this builder
@@ -9685,7 +9685,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code short_description} field.
+         * The <code>short_description</code> field.
          *
          * @param shortDescription the value
          * @return this builder
@@ -9695,7 +9695,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code long_description} field.
+         * The <code>long_description</code> field.
          *
          * @param longDescription the value
          * @return this builder
@@ -9931,7 +9931,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code warnings} field.
+     * The <code>warnings</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -10054,7 +10054,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code warnings} field.
+       * The <code>warnings</code> field.
        *
        * @param warnings the value
        * @return this builder
@@ -10197,7 +10197,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code session_number} field.
+       * The <code>session_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -10350,7 +10350,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code session_number} field.
+         * The <code>session_number</code> field.
          *
          * @param sessionNumber the value, or {@code null} to send JSON null
          * @return this builder
@@ -10534,7 +10534,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code full_name} field.
+         * The <code>full_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -10544,7 +10544,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_type} field.
+         * The <code>document_type</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -10554,7 +10554,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_number} field.
+         * The <code>document_number</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -10577,7 +10577,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code full_name} field.
+           * The <code>full_name</code> field.
            *
            * @param fullName the value, or {@code null} to send JSON null
            * @return this builder
@@ -10587,7 +10587,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code document_type} field.
+           * The <code>document_type</code> field.
            *
            * @param documentType the value, or {@code null} to send JSON null
            * @return this builder
@@ -10597,7 +10597,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code document_number} field.
+           * The <code>document_number</code> field.
            *
            * @param documentNumber the value, or {@code null} to send JSON null
            * @return this builder
@@ -10719,7 +10719,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code risk} field.
+       * The <code>risk</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -10729,7 +10729,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code additional_data} field.
+       * The <code>additional_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -10739,7 +10739,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code log_type} field.
+       * The <code>log_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -10749,7 +10749,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code short_description} field.
+       * The <code>short_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -10759,7 +10759,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code long_description} field.
+       * The <code>long_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -10802,7 +10802,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code risk} field.
+         * The <code>risk</code> field.
          *
          * @param risk the value
          * @return this builder
@@ -10812,7 +10812,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code additional_data} field.
+         * The <code>additional_data</code> field.
          *
          * @param additionalData the value, or {@code null} to send JSON null
          * @return this builder
@@ -10822,7 +10822,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code log_type} field.
+         * The <code>log_type</code> field.
          *
          * @param logType the value
          * @return this builder
@@ -10832,7 +10832,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code short_description} field.
+         * The <code>short_description</code> field.
          *
          * @param shortDescription the value
          * @return this builder
@@ -10842,7 +10842,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code long_description} field.
+         * The <code>long_description</code> field.
          *
          * @param longDescription the value
          * @return this builder
@@ -11264,7 +11264,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code risk} field.
+       * The <code>risk</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -11274,7 +11274,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code additional_data} field.
+       * The <code>additional_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -11284,7 +11284,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code log_type} field.
+       * The <code>log_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -11294,7 +11294,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code short_description} field.
+       * The <code>short_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -11304,7 +11304,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code long_description} field.
+       * The <code>long_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -11347,7 +11347,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code risk} field.
+         * The <code>risk</code> field.
          *
          * @param risk the value
          * @return this builder
@@ -11357,7 +11357,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code additional_data} field.
+         * The <code>additional_data</code> field.
          *
          * @param additionalData the value, or {@code null} to send JSON null
          * @return this builder
@@ -11367,7 +11367,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code log_type} field.
+         * The <code>log_type</code> field.
          *
          * @param logType the value
          * @return this builder
@@ -11377,7 +11377,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code short_description} field.
+         * The <code>short_description</code> field.
          *
          * @param shortDescription the value
          * @return this builder
@@ -11387,7 +11387,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code long_description} field.
+         * The <code>long_description</code> field.
          *
          * @param longDescription the value
          * @return this builder
@@ -11612,7 +11612,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code carrier} field.
+     * The <code>carrier</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -11785,7 +11785,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code carrier} field.
+       * The <code>carrier</code> field.
        *
        * @param carrier the value
        * @return this builder
@@ -12083,7 +12083,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code type} field.
+       * The <code>type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12093,7 +12093,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code timestamp} field.
+       * The <code>timestamp</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12113,7 +12113,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code fee} field.
+       * The <code>fee</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12136,7 +12136,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code type} field.
+         * The <code>type</code> field.
          *
          * @param type the value
          * @return this builder
@@ -12146,7 +12146,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code timestamp} field.
+         * The <code>timestamp</code> field.
          *
          * @param timestamp the value
          * @return this builder
@@ -12166,7 +12166,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code fee} field.
+         * The <code>fee</code> field.
          *
          * @param fee the value
          * @return this builder
@@ -12230,7 +12230,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code status} field.
+         * The <code>status</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12240,7 +12240,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code reason} field.
+         * The <code>reason</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12250,7 +12250,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code channel} field.
+         * The <code>channel</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12260,7 +12260,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code actual_channel} field.
+         * The <code>actual_channel</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12270,7 +12270,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code code_tried} field.
+         * The <code>code_tried</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12293,7 +12293,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code status} field.
+           * The <code>status</code> field.
            *
            * @param status the value
            * @return this builder
@@ -12303,7 +12303,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code reason} field.
+           * The <code>reason</code> field.
            *
            * @param reason the value, or {@code null} to send JSON null
            * @return this builder
@@ -12313,7 +12313,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code channel} field.
+           * The <code>channel</code> field.
            *
            * @param channel the value, or {@code null} to send JSON null
            * @return this builder
@@ -12323,7 +12323,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code actual_channel} field.
+           * The <code>actual_channel</code> field.
            *
            * @param actualChannel the value, or {@code null} to send JSON null
            * @return this builder
@@ -12333,7 +12333,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code code_tried} field.
+           * The <code>code_tried</code> field.
            *
            * @param codeTried the value
            * @return this builder
@@ -12406,7 +12406,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code risk} field.
+       * The <code>risk</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12416,7 +12416,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code additional_data} field.
+       * The <code>additional_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12426,7 +12426,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code log_type} field.
+       * The <code>log_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12436,7 +12436,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code short_description} field.
+       * The <code>short_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12446,7 +12446,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code long_description} field.
+       * The <code>long_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12489,7 +12489,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code risk} field.
+         * The <code>risk</code> field.
          *
          * @param risk the value
          * @return this builder
@@ -12499,7 +12499,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code additional_data} field.
+         * The <code>additional_data</code> field.
          *
          * @param additionalData the value, or {@code null} to send JSON null
          * @return this builder
@@ -12509,7 +12509,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code log_type} field.
+         * The <code>log_type</code> field.
          *
          * @param logType the value
          * @return this builder
@@ -12519,7 +12519,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code short_description} field.
+         * The <code>short_description</code> field.
          *
          * @param shortDescription the value
          * @return this builder
@@ -12529,7 +12529,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code long_description} field.
+         * The <code>long_description</code> field.
          *
          * @param longDescription the value
          * @return this builder
@@ -12683,7 +12683,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code session_id} field.
+       * The <code>session_id</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12693,7 +12693,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code session_number} field.
+       * The <code>session_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12703,7 +12703,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code vendor_data} field.
+       * The <code>vendor_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12713,7 +12713,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code verification_date} field.
+       * The <code>verification_date</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12723,7 +12723,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code phone_number} field.
+       * The <code>phone_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12733,7 +12733,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12743,7 +12743,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code is_blocklisted} field.
+       * The <code>is_blocklisted</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12753,7 +12753,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code api_service} field.
+       * The <code>api_service</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -12786,7 +12786,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code session_id} field.
+         * The <code>session_id</code> field.
          *
          * @param sessionId the value, or {@code null} to send JSON null
          * @return this builder
@@ -12796,7 +12796,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code session_number} field.
+         * The <code>session_number</code> field.
          *
          * @param sessionNumber the value, or {@code null} to send JSON null
          * @return this builder
@@ -12806,7 +12806,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code vendor_data} field.
+         * The <code>vendor_data</code> field.
          *
          * @param vendorData the value, or {@code null} to send JSON null
          * @return this builder
@@ -12816,7 +12816,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code verification_date} field.
+         * The <code>verification_date</code> field.
          *
          * @param verificationDate the value, or {@code null} to send JSON null
          * @return this builder
@@ -12826,7 +12826,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code phone_number} field.
+         * The <code>phone_number</code> field.
          *
          * @param phoneNumber the value
          * @return this builder
@@ -12836,7 +12836,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code status} field.
+         * The <code>status</code> field.
          *
          * @param status the value, or {@code null} to send JSON null
          * @return this builder
@@ -12846,7 +12846,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code is_blocklisted} field.
+         * The <code>is_blocklisted</code> field.
          *
          * @param isBlocklisted the value
          * @return this builder
@@ -12856,7 +12856,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code api_service} field.
+         * The <code>api_service</code> field.
          *
          * @param apiService the value, or {@code null} to send JSON null
          * @return this builder
@@ -13563,7 +13563,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code risk} field.
+       * The <code>risk</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -13573,7 +13573,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code additional_data} field.
+       * The <code>additional_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -13583,7 +13583,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code log_type} field.
+       * The <code>log_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -13593,7 +13593,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code short_description} field.
+       * The <code>short_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -13603,7 +13603,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code long_description} field.
+       * The <code>long_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -13646,7 +13646,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code risk} field.
+         * The <code>risk</code> field.
          *
          * @param risk the value
          * @return this builder
@@ -13656,7 +13656,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code additional_data} field.
+         * The <code>additional_data</code> field.
          *
          * @param additionalData the value, or {@code null} to send JSON null
          * @return this builder
@@ -13666,7 +13666,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code log_type} field.
+         * The <code>log_type</code> field.
          *
          * @param logType the value
          * @return this builder
@@ -13676,7 +13676,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code short_description} field.
+         * The <code>short_description</code> field.
          *
          * @param shortDescription the value
          * @return this builder
@@ -13686,7 +13686,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code long_description} field.
+         * The <code>long_description</code> field.
          *
          * @param longDescription the value
          * @return this builder
@@ -13840,7 +13840,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code type} field.
+       * The <code>type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -13850,7 +13850,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code timestamp} field.
+       * The <code>timestamp</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -13870,7 +13870,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code fee} field.
+       * The <code>fee</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -13893,7 +13893,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code type} field.
+         * The <code>type</code> field.
          *
          * @param type the value
          * @return this builder
@@ -13903,7 +13903,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code timestamp} field.
+         * The <code>timestamp</code> field.
          *
          * @param timestamp the value
          * @return this builder
@@ -13923,7 +13923,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code fee} field.
+         * The <code>fee</code> field.
          *
          * @param fee the value
          * @return this builder
@@ -13987,7 +13987,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code status} field.
+         * The <code>status</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -13997,7 +13997,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code reason} field.
+         * The <code>reason</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -14007,7 +14007,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code code_tried} field.
+         * The <code>code_tried</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -14030,7 +14030,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code status} field.
+           * The <code>status</code> field.
            *
            * @param status the value
            * @return this builder
@@ -14040,7 +14040,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code reason} field.
+           * The <code>reason</code> field.
            *
            * @param reason the value, or {@code null} to send JSON null
            * @return this builder
@@ -14050,7 +14050,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code code_tried} field.
+           * The <code>code_tried</code> field.
            *
            * @param codeTried the value
            * @return this builder
@@ -14113,7 +14113,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code session_id} field.
+       * The <code>session_id</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -14123,7 +14123,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code session_number} field.
+       * The <code>session_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -14133,7 +14133,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code vendor_data} field.
+       * The <code>vendor_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -14143,7 +14143,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code verification_date} field.
+       * The <code>verification_date</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -14153,7 +14153,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code email} field.
+       * The <code>email</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -14163,7 +14163,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -14173,7 +14173,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code is_blocklisted} field.
+       * The <code>is_blocklisted</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -14183,7 +14183,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code api_service} field.
+       * The <code>api_service</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -14216,7 +14216,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code session_id} field.
+         * The <code>session_id</code> field.
          *
          * @param sessionId the value, or {@code null} to send JSON null
          * @return this builder
@@ -14226,7 +14226,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code session_number} field.
+         * The <code>session_number</code> field.
          *
          * @param sessionNumber the value, or {@code null} to send JSON null
          * @return this builder
@@ -14236,7 +14236,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code vendor_data} field.
+         * The <code>vendor_data</code> field.
          *
          * @param vendorData the value, or {@code null} to send JSON null
          * @return this builder
@@ -14246,7 +14246,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code verification_date} field.
+         * The <code>verification_date</code> field.
          *
          * @param verificationDate the value, or {@code null} to send JSON null
          * @return this builder
@@ -14256,7 +14256,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code email} field.
+         * The <code>email</code> field.
          *
          * @param email the value
          * @return this builder
@@ -14266,7 +14266,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code status} field.
+         * The <code>status</code> field.
          *
          * @param status the value, or {@code null} to send JSON null
          * @return this builder
@@ -14276,7 +14276,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code is_blocklisted} field.
+         * The <code>is_blocklisted</code> field.
          *
          * @param isBlocklisted the value
          * @return this builder
@@ -14286,7 +14286,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code api_service} field.
+         * The <code>api_service</code> field.
          *
          * @param apiService the value, or {@code null} to send JSON null
          * @return this builder
@@ -14532,7 +14532,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code poa_parsed_address} field.
+     * The <code>poa_parsed_address</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -14622,7 +14622,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code warnings} field.
+     * The <code>warnings</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -14785,7 +14785,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code poa_parsed_address} field.
+       * The <code>poa_parsed_address</code> field.
        *
        * @param poaParsedAddress the value
        * @return this builder
@@ -14875,7 +14875,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code warnings} field.
+       * The <code>warnings</code> field.
        *
        * @param warnings the value
        * @return this builder
@@ -15532,7 +15532,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code page} field.
+           * The <code>page</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -15542,7 +15542,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code x} field.
+           * The <code>x</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -15552,7 +15552,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code y} field.
+           * The <code>y</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -15562,7 +15562,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code width} field.
+           * The <code>width</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -15572,7 +15572,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code height} field.
+           * The <code>height</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -15582,7 +15582,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code page_width} field.
+           * The <code>page_width</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -15592,7 +15592,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code page_height} field.
+           * The <code>page_height</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -15615,7 +15615,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code page} field.
+             * The <code>page</code> field.
              *
              * @param page the value
              * @return this builder
@@ -15625,7 +15625,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code x} field.
+             * The <code>x</code> field.
              *
              * @param x the value
              * @return this builder
@@ -15635,7 +15635,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code y} field.
+             * The <code>y</code> field.
              *
              * @param y the value
              * @return this builder
@@ -15645,7 +15645,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code width} field.
+             * The <code>width</code> field.
              *
              * @param width the value
              * @return this builder
@@ -15655,7 +15655,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code height} field.
+             * The <code>height</code> field.
              *
              * @param height the value
              * @return this builder
@@ -15665,7 +15665,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code page_width} field.
+             * The <code>page_width</code> field.
              *
              * @param pageWidth the value
              * @return this builder
@@ -15675,7 +15675,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code page_height} field.
+             * The <code>page_height</code> field.
              *
              * @param pageHeight the value
              * @return this builder
@@ -15809,7 +15809,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code document_location} field.
+       * The <code>document_location</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -15902,7 +15902,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_location} field.
+         * The <code>document_location</code> field.
          *
          * @param documentLocation the value
          * @return this builder
@@ -16070,7 +16070,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code bank_account_number} field.
+       * The <code>bank_account_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16080,7 +16080,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code bank_iban} field.
+       * The <code>bank_iban</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16090,7 +16090,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code bank_sort_code} field.
+       * The <code>bank_sort_code</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16100,7 +16100,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code bank_routing_number} field.
+       * The <code>bank_routing_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16110,7 +16110,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code bank_swift_bic} field.
+       * The <code>bank_swift_bic</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16120,7 +16120,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code bank_branch_name} field.
+       * The <code>bank_branch_name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16130,7 +16130,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code bank_branch_address} field.
+       * The <code>bank_branch_address</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16140,7 +16140,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code document_phone_number} field.
+       * The <code>document_phone_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16150,7 +16150,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code additional_names} field.
+       * The <code>additional_names</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16173,7 +16173,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code bank_account_number} field.
+         * The <code>bank_account_number</code> field.
          *
          * @param bankAccountNumber the value, or {@code null} to send JSON null
          * @return this builder
@@ -16183,7 +16183,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code bank_iban} field.
+         * The <code>bank_iban</code> field.
          *
          * @param bankIban the value, or {@code null} to send JSON null
          * @return this builder
@@ -16193,7 +16193,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code bank_sort_code} field.
+         * The <code>bank_sort_code</code> field.
          *
          * @param bankSortCode the value, or {@code null} to send JSON null
          * @return this builder
@@ -16203,7 +16203,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code bank_routing_number} field.
+         * The <code>bank_routing_number</code> field.
          *
          * @param bankRoutingNumber the value, or {@code null} to send JSON null
          * @return this builder
@@ -16213,7 +16213,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code bank_swift_bic} field.
+         * The <code>bank_swift_bic</code> field.
          *
          * @param bankSwiftBic the value, or {@code null} to send JSON null
          * @return this builder
@@ -16223,7 +16223,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code bank_branch_name} field.
+         * The <code>bank_branch_name</code> field.
          *
          * @param bankBranchName the value, or {@code null} to send JSON null
          * @return this builder
@@ -16233,7 +16233,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code bank_branch_address} field.
+         * The <code>bank_branch_address</code> field.
          *
          * @param bankBranchAddress the value, or {@code null} to send JSON null
          * @return this builder
@@ -16243,7 +16243,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_phone_number} field.
+         * The <code>document_phone_number</code> field.
          *
          * @param documentPhoneNumber the value, or {@code null} to send JSON null
          * @return this builder
@@ -16253,7 +16253,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code additional_names} field.
+         * The <code>additional_names</code> field.
          *
          * @param additionalNames the value
          * @return this builder
@@ -16325,7 +16325,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code risk} field.
+       * The <code>risk</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16335,7 +16335,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code additional_data} field.
+       * The <code>additional_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16345,7 +16345,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code log_type} field.
+       * The <code>log_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16355,7 +16355,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code short_description} field.
+       * The <code>short_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16365,7 +16365,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code long_description} field.
+       * The <code>long_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16408,7 +16408,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code risk} field.
+         * The <code>risk</code> field.
          *
          * @param risk the value
          * @return this builder
@@ -16418,7 +16418,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code additional_data} field.
+         * The <code>additional_data</code> field.
          *
          * @param additionalData the value, or {@code null} to send JSON null
          * @return this builder
@@ -16428,7 +16428,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code log_type} field.
+         * The <code>log_type</code> field.
          *
          * @param logType the value
          * @return this builder
@@ -16438,7 +16438,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code short_description} field.
+         * The <code>short_description</code> field.
          *
          * @param shortDescription the value
          * @return this builder
@@ -16448,7 +16448,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code long_description} field.
+         * The <code>long_description</code> field.
          *
          * @param longDescription the value
          * @return this builder
@@ -16624,7 +16624,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code items} field.
+     * The <code>items</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16677,7 +16677,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code items} field.
+       * The <code>items</code> field.
        *
        * @param items the value
        * @return this builder
@@ -16797,7 +16797,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16917,7 +16917,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code created_at} field.
+       * The <code>created_at</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -16940,7 +16940,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code uuid} field.
+         * The <code>uuid</code> field.
          *
          * @param uuid the value
          * @return this builder
@@ -17060,7 +17060,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code created_at} field.
+         * The <code>created_at</code> field.
          *
          * @param createdAt the value
          * @return this builder
@@ -17493,7 +17493,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code sections} field.
+     * The <code>sections</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -17636,7 +17636,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code sections} field.
+       * The <code>sections</code> field.
        *
        * @param sections the value
        * @return this builder
@@ -17727,7 +17727,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code items} field.
+       * The <code>items</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -17770,7 +17770,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code items} field.
+         * The <code>items</code> field.
          *
          * @param items the value
          * @return this builder
@@ -18141,7 +18141,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code label} field.
+           * The <code>label</code> field.
            *
            * @return the value
            * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -18151,7 +18151,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code value} field.
+           * The <code>value</code> field.
            *
            * @return the value
            * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -18184,7 +18184,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code label} field.
+             * The <code>label</code> field.
              *
              * @param label the value
              * @return this builder
@@ -18194,7 +18194,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code value} field.
+             * The <code>value</code> field.
              *
              * @param value the value
              * @return this builder
@@ -18270,7 +18270,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code value} field.
+           * The <code>value</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -18280,7 +18280,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code text} field.
+           * The <code>text</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -18290,7 +18290,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code files} field.
+           * The <code>files</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -18313,7 +18313,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code value} field.
+             * The <code>value</code> field.
              *
              * @param value the value, or {@code null} to send JSON null
              * @return this builder
@@ -18323,7 +18323,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code text} field.
+             * The <code>text</code> field.
              *
              * @param text the value, or {@code null} to send JSON null
              * @return this builder
@@ -18333,7 +18333,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code files} field.
+             * The <code>files</code> field.
              *
              * @param files the value, or {@code null} to send JSON null
              * @return this builder
@@ -18438,7 +18438,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code hits} field.
+     * The <code>hits</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -18458,7 +18458,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code screened_data} field.
+     * The <code>screened_data</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -18508,7 +18508,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code warnings} field.
+     * The <code>warnings</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -18571,7 +18571,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code hits} field.
+       * The <code>hits</code> field.
        *
        * @param hits the value
        * @return this builder
@@ -18591,7 +18591,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code screened_data} field.
+       * The <code>screened_data</code> field.
        *
        * @param screenedData the value
        * @return this builder
@@ -18641,7 +18641,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code warnings} field.
+       * The <code>warnings</code> field.
        *
        * @param warnings the value
        * @return this builder
@@ -18857,7 +18857,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code risk_view} field.
+       * The <code>risk_view</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -18877,7 +18877,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code properties} field.
+       * The <code>properties</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -18927,7 +18927,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code pep_matches} field.
+       * The <code>pep_matches</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -18937,7 +18937,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code linked_entities} field.
+       * The <code>linked_entities</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -18967,7 +18967,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code adverse_media_details} field.
+       * The <code>adverse_media_details</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -18977,7 +18977,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code adverse_media_matches} field.
+       * The <code>adverse_media_matches</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -18987,7 +18987,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code additional_information} field.
+       * The <code>additional_information</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19113,7 +19113,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code risk_view} field.
+         * The <code>risk_view</code> field.
          *
          * @param riskView the value
          * @return this builder
@@ -19133,7 +19133,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code properties} field.
+         * The <code>properties</code> field.
          *
          * @param properties the value
          * @return this builder
@@ -19183,7 +19183,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code pep_matches} field.
+         * The <code>pep_matches</code> field.
          *
          * @param pepMatches the value
          * @return this builder
@@ -19193,7 +19193,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code linked_entities} field.
+         * The <code>linked_entities</code> field.
          *
          * @param linkedEntities the value
          * @return this builder
@@ -19223,7 +19223,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code adverse_media_details} field.
+         * The <code>adverse_media_details</code> field.
          *
          * @param adverseMediaDetails the value
          * @return this builder
@@ -19233,7 +19233,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code adverse_media_matches} field.
+         * The <code>adverse_media_matches</code> field.
          *
          * @param adverseMediaMatches the value
          * @return this builder
@@ -19243,7 +19243,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code additional_information} field.
+         * The <code>additional_information</code> field.
          *
          * @param additionalInformation the value
          * @return this builder
@@ -19376,7 +19376,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code crimes} field.
+         * The <code>crimes</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19386,7 +19386,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code countries} field.
+         * The <code>countries</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19396,7 +19396,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code categories} field.
+         * The <code>categories</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19406,7 +19406,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code custom_list} field.
+         * The <code>custom_list</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19429,7 +19429,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code crimes} field.
+           * The <code>crimes</code> field.
            *
            * @param crimes the value
            * @return this builder
@@ -19439,7 +19439,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code countries} field.
+           * The <code>countries</code> field.
            *
            * @param countries the value
            * @return this builder
@@ -19449,7 +19449,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code categories} field.
+           * The <code>categories</code> field.
            *
            * @param categories the value
            * @return this builder
@@ -19459,7 +19459,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code custom_list} field.
+           * The <code>custom_list</code> field.
            *
            * @param customList the value
            * @return this builder
@@ -19520,7 +19520,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code score} field.
+           * The <code>score</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19530,7 +19530,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code weightage} field.
+           * The <code>weightage</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19540,7 +19540,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code risk_level} field.
+           * The <code>risk_level</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19550,7 +19550,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code risk_scores} field.
+           * The <code>risk_scores</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19573,7 +19573,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code score} field.
+             * The <code>score</code> field.
              *
              * @param score the value
              * @return this builder
@@ -19583,7 +19583,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code weightage} field.
+             * The <code>weightage</code> field.
              *
              * @param weightage the value
              * @return this builder
@@ -19593,7 +19593,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code risk_level} field.
+             * The <code>risk_level</code> field.
              *
              * @param riskLevel the value
              * @return this builder
@@ -19603,7 +19603,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code risk_scores} field.
+             * The <code>risk_scores</code> field.
              *
              * @param riskScores the value
              * @return this builder
@@ -19665,7 +19665,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code score} field.
+           * The <code>score</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19675,7 +19675,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code weightage} field.
+           * The <code>weightage</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19685,7 +19685,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code risk_level} field.
+           * The <code>risk_level</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19695,7 +19695,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code risk_scores} field.
+           * The <code>risk_scores</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19718,7 +19718,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code score} field.
+             * The <code>score</code> field.
              *
              * @param score the value
              * @return this builder
@@ -19728,7 +19728,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code weightage} field.
+             * The <code>weightage</code> field.
              *
              * @param weightage the value
              * @return this builder
@@ -19738,7 +19738,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code risk_level} field.
+             * The <code>risk_level</code> field.
              *
              * @param riskLevel the value
              * @return this builder
@@ -19748,7 +19748,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code risk_scores} field.
+             * The <code>risk_scores</code> field.
              *
              * @param riskScores the value
              * @return this builder
@@ -19810,7 +19810,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code score} field.
+           * The <code>score</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19820,7 +19820,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code weightage} field.
+           * The <code>weightage</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19830,7 +19830,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code risk_level} field.
+           * The <code>risk_level</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19840,7 +19840,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code risk_scores} field.
+           * The <code>risk_scores</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19863,7 +19863,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code score} field.
+             * The <code>score</code> field.
              *
              * @param score the value
              * @return this builder
@@ -19873,7 +19873,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code weightage} field.
+             * The <code>weightage</code> field.
              *
              * @param weightage the value
              * @return this builder
@@ -19883,7 +19883,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code risk_level} field.
+             * The <code>risk_level</code> field.
              *
              * @param riskLevel the value
              * @return this builder
@@ -19893,7 +19893,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code risk_scores} field.
+             * The <code>risk_scores</code> field.
              *
              * @param riskScores the value
              * @return this builder
@@ -19956,7 +19956,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19966,7 +19966,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code alias} field.
+         * The <code>alias</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19976,7 +19976,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code notes} field.
+         * The <code>notes</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19986,7 +19986,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code title} field.
+         * The <code>title</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -19996,7 +19996,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code gender} field.
+         * The <code>gender</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20006,7 +20006,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code height} field.
+         * The <code>height</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20016,7 +20016,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code topics} field.
+         * The <code>topics</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20026,7 +20026,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code weight} field.
+         * The <code>weight</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20036,7 +20036,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code address} field.
+         * The <code>address</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20046,7 +20046,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code country} field.
+         * The <code>country</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20056,7 +20056,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code website} field.
+         * The <code>website</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20066,7 +20066,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code eyeColor} field.
+         * The <code>eyeColor</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20076,7 +20076,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code keywords} field.
+         * The <code>keywords</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20086,7 +20086,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code lastName} field.
+         * The <code>lastName</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20096,7 +20096,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code position} field.
+         * The <code>position</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20106,7 +20106,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code religion} field.
+         * The <code>religion</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20116,7 +20116,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code birthDate} field.
+         * The <code>birthDate</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20126,7 +20126,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code education} field.
+         * The <code>education</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20136,7 +20136,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code ethnicity} field.
+         * The <code>ethnicity</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20146,7 +20146,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code firstName} field.
+         * The <code>firstName</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20156,7 +20156,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code hairColor} field.
+         * The <code>hairColor</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20166,7 +20166,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code weakAlias} field.
+         * The <code>weakAlias</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20176,7 +20176,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code birthPlace} field.
+         * The <code>birthPlace</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20186,7 +20186,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code modifiedAt} field.
+         * The <code>modifiedAt</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20196,7 +20196,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code wikidataId} field.
+         * The <code>wikidataId</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20206,7 +20206,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code citizenship} field.
+         * The <code>citizenship</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20216,7 +20216,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code nationality} field.
+         * The <code>nationality</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -20239,7 +20239,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code name} field.
+           * The <code>name</code> field.
            *
            * @param name the value
            * @return this builder
@@ -20249,7 +20249,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code alias} field.
+           * The <code>alias</code> field.
            *
            * @param alias the value
            * @return this builder
@@ -20259,7 +20259,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code notes} field.
+           * The <code>notes</code> field.
            *
            * @param notes the value
            * @return this builder
@@ -20269,7 +20269,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code title} field.
+           * The <code>title</code> field.
            *
            * @param title the value, or {@code null} to send JSON null
            * @return this builder
@@ -20279,7 +20279,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code gender} field.
+           * The <code>gender</code> field.
            *
            * @param gender the value
            * @return this builder
@@ -20289,7 +20289,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code height} field.
+           * The <code>height</code> field.
            *
            * @param height the value, or {@code null} to send JSON null
            * @return this builder
@@ -20299,7 +20299,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code topics} field.
+           * The <code>topics</code> field.
            *
            * @param topics the value, or {@code null} to send JSON null
            * @return this builder
@@ -20309,7 +20309,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code weight} field.
+           * The <code>weight</code> field.
            *
            * @param weight the value, or {@code null} to send JSON null
            * @return this builder
@@ -20319,7 +20319,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code address} field.
+           * The <code>address</code> field.
            *
            * @param address the value, or {@code null} to send JSON null
            * @return this builder
@@ -20329,7 +20329,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code country} field.
+           * The <code>country</code> field.
            *
            * @param country the value, or {@code null} to send JSON null
            * @return this builder
@@ -20339,7 +20339,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code website} field.
+           * The <code>website</code> field.
            *
            * @param website the value, or {@code null} to send JSON null
            * @return this builder
@@ -20349,7 +20349,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code eyeColor} field.
+           * The <code>eyeColor</code> field.
            *
            * @param eyeColor the value, or {@code null} to send JSON null
            * @return this builder
@@ -20359,7 +20359,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code keywords} field.
+           * The <code>keywords</code> field.
            *
            * @param keywords the value, or {@code null} to send JSON null
            * @return this builder
@@ -20369,7 +20369,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code lastName} field.
+           * The <code>lastName</code> field.
            *
            * @param lastName the value
            * @return this builder
@@ -20379,7 +20379,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code position} field.
+           * The <code>position</code> field.
            *
            * @param position the value, or {@code null} to send JSON null
            * @return this builder
@@ -20389,7 +20389,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code religion} field.
+           * The <code>religion</code> field.
            *
            * @param religion the value, or {@code null} to send JSON null
            * @return this builder
@@ -20399,7 +20399,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code birthDate} field.
+           * The <code>birthDate</code> field.
            *
            * @param birthDate the value
            * @return this builder
@@ -20409,7 +20409,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code education} field.
+           * The <code>education</code> field.
            *
            * @param education the value
            * @return this builder
@@ -20419,7 +20419,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code ethnicity} field.
+           * The <code>ethnicity</code> field.
            *
            * @param ethnicity the value, or {@code null} to send JSON null
            * @return this builder
@@ -20429,7 +20429,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code firstName} field.
+           * The <code>firstName</code> field.
            *
            * @param firstName the value
            * @return this builder
@@ -20439,7 +20439,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code hairColor} field.
+           * The <code>hairColor</code> field.
            *
            * @param hairColor the value, or {@code null} to send JSON null
            * @return this builder
@@ -20449,7 +20449,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code weakAlias} field.
+           * The <code>weakAlias</code> field.
            *
            * @param weakAlias the value, or {@code null} to send JSON null
            * @return this builder
@@ -20459,7 +20459,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code birthPlace} field.
+           * The <code>birthPlace</code> field.
            *
            * @param birthPlace the value
            * @return this builder
@@ -20469,7 +20469,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code modifiedAt} field.
+           * The <code>modifiedAt</code> field.
            *
            * @param modifiedAt the value, or {@code null} to send JSON null
            * @return this builder
@@ -20479,7 +20479,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code wikidataId} field.
+           * The <code>wikidataId</code> field.
            *
            * @param wikidataId the value, or {@code null} to send JSON null
            * @return this builder
@@ -20489,7 +20489,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code citizenship} field.
+           * The <code>citizenship</code> field.
            *
            * @param citizenship the value, or {@code null} to send JSON null
            * @return this builder
@@ -20499,7 +20499,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code nationality} field.
+           * The <code>nationality</code> field.
            *
            * @param nationality the value, or {@code null} to send JSON null
            * @return this builder
@@ -21022,7 +21022,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code aliases} field.
+         * The <code>aliases</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21032,7 +21032,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code education} field.
+         * The <code>education</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21042,7 +21042,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code list_name} field.
+         * The <code>list_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21052,7 +21052,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code publisher} field.
+         * The <code>publisher</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21062,7 +21062,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code source_url} field.
+         * The <code>source_url</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21072,7 +21072,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code description} field.
+         * The <code>description</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21082,7 +21082,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code matched_name} field.
+         * The <code>matched_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21092,7 +21092,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code pep_position} field.
+         * The <code>pep_position</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21102,7 +21102,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code date_of_birth} field.
+         * The <code>date_of_birth</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21112,7 +21112,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code other_sources} field.
+         * The <code>other_sources</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21122,7 +21122,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code place_of_birth} field.
+         * The <code>place_of_birth</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21145,7 +21145,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code aliases} field.
+           * The <code>aliases</code> field.
            *
            * @param aliases the value
            * @return this builder
@@ -21155,7 +21155,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code education} field.
+           * The <code>education</code> field.
            *
            * @param education the value
            * @return this builder
@@ -21165,7 +21165,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code list_name} field.
+           * The <code>list_name</code> field.
            *
            * @param listName the value
            * @return this builder
@@ -21175,7 +21175,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code publisher} field.
+           * The <code>publisher</code> field.
            *
            * @param publisher the value
            * @return this builder
@@ -21185,7 +21185,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code source_url} field.
+           * The <code>source_url</code> field.
            *
            * @param sourceUrl the value
            * @return this builder
@@ -21195,7 +21195,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code description} field.
+           * The <code>description</code> field.
            *
            * @param description the value
            * @return this builder
@@ -21205,7 +21205,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code matched_name} field.
+           * The <code>matched_name</code> field.
            *
            * @param matchedName the value
            * @return this builder
@@ -21215,7 +21215,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code pep_position} field.
+           * The <code>pep_position</code> field.
            *
            * @param pepPosition the value
            * @return this builder
@@ -21225,7 +21225,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code date_of_birth} field.
+           * The <code>date_of_birth</code> field.
            *
            * @param dateOfBirth the value
            * @return this builder
@@ -21235,7 +21235,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code other_sources} field.
+           * The <code>other_sources</code> field.
            *
            * @param otherSources the value
            * @return this builder
@@ -21245,7 +21245,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code place_of_birth} field.
+           * The <code>place_of_birth</code> field.
            *
            * @param placeOfBirth the value
            * @return this builder
@@ -21307,7 +21307,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21317,7 +21317,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code active} field.
+         * The <code>active</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21327,7 +21327,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code status} field.
+         * The <code>status</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21337,7 +21337,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code details} field.
+         * The <code>details</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21347,7 +21347,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code relation} field.
+         * The <code>relation</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21370,7 +21370,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code name} field.
+           * The <code>name</code> field.
            *
            * @param name the value
            * @return this builder
@@ -21380,7 +21380,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code active} field.
+           * The <code>active</code> field.
            *
            * @param active the value
            * @return this builder
@@ -21390,7 +21390,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code status} field.
+           * The <code>status</code> field.
            *
            * @param status the value
            * @return this builder
@@ -21400,7 +21400,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code details} field.
+           * The <code>details</code> field.
            *
            * @param details the value
            * @return this builder
@@ -21410,7 +21410,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code relation} field.
+           * The <code>relation</code> field.
            *
            * @param relation the value
            * @return this builder
@@ -21739,7 +21739,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code data} field.
+           * The <code>data</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -21762,7 +21762,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code data} field.
+             * The <code>data</code> field.
              *
              * @param data the value
              * @return this builder
@@ -22413,7 +22413,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code sentiment} field.
+         * The <code>sentiment</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22423,7 +22423,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code entity_type} field.
+         * The <code>entity_type</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22433,7 +22433,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code sentiment_score} field.
+         * The <code>sentiment_score</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22443,7 +22443,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code adverse_keywords} field.
+         * The <code>adverse_keywords</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22466,7 +22466,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code sentiment} field.
+           * The <code>sentiment</code> field.
            *
            * @param sentiment the value
            * @return this builder
@@ -22476,7 +22476,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code entity_type} field.
+           * The <code>entity_type</code> field.
            *
            * @param entityType the value
            * @return this builder
@@ -22486,7 +22486,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code sentiment_score} field.
+           * The <code>sentiment_score</code> field.
            *
            * @param sentimentScore the value
            * @return this builder
@@ -22496,7 +22496,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code adverse_keywords} field.
+           * The <code>adverse_keywords</code> field.
            *
            * @param adverseKeywords the value
            * @return this builder
@@ -22558,7 +22558,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code country} field.
+         * The <code>country</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22568,7 +22568,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code summary} field.
+         * The <code>summary</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22578,7 +22578,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code headline} field.
+         * The <code>headline</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22588,7 +22588,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code sentiment} field.
+         * The <code>sentiment</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22598,7 +22598,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code thumbnail} field.
+         * The <code>thumbnail</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22608,7 +22608,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code source_url} field.
+         * The <code>source_url</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22618,7 +22618,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code author_name} field.
+         * The <code>author_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22628,7 +22628,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code other_sources} field.
+         * The <code>other_sources</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22638,7 +22638,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code adverse_keywords} field.
+         * The <code>adverse_keywords</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22648,7 +22648,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code sentiment_score} field.
+         * The <code>sentiment_score</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22658,7 +22658,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code publication_date} field.
+         * The <code>publication_date</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22681,7 +22681,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code country} field.
+           * The <code>country</code> field.
            *
            * @param country the value
            * @return this builder
@@ -22691,7 +22691,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code summary} field.
+           * The <code>summary</code> field.
            *
            * @param summary the value
            * @return this builder
@@ -22701,7 +22701,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code headline} field.
+           * The <code>headline</code> field.
            *
            * @param headline the value
            * @return this builder
@@ -22711,7 +22711,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code sentiment} field.
+           * The <code>sentiment</code> field.
            *
            * @param sentiment the value
            * @return this builder
@@ -22721,7 +22721,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code thumbnail} field.
+           * The <code>thumbnail</code> field.
            *
            * @param thumbnail the value
            * @return this builder
@@ -22731,7 +22731,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code source_url} field.
+           * The <code>source_url</code> field.
            *
            * @param sourceUrl the value
            * @return this builder
@@ -22741,7 +22741,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code author_name} field.
+           * The <code>author_name</code> field.
            *
            * @param authorName the value, or {@code null} to send JSON null
            * @return this builder
@@ -22751,7 +22751,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code other_sources} field.
+           * The <code>other_sources</code> field.
            *
            * @param otherSources the value
            * @return this builder
@@ -22761,7 +22761,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code adverse_keywords} field.
+           * The <code>adverse_keywords</code> field.
            *
            * @param adverseKeywords the value
            * @return this builder
@@ -22771,7 +22771,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code sentiment_score} field.
+           * The <code>sentiment_score</code> field.
            *
            * @param sentimentScore the value
            * @return this builder
@@ -22781,7 +22781,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code publication_date} field.
+           * The <code>publication_date</code> field.
            *
            * @param publicationDate the value
            * @return this builder
@@ -22844,7 +22844,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code full_name} field.
+       * The <code>full_name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22854,7 +22854,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code nationality} field.
+       * The <code>nationality</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22864,7 +22864,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code date_of_birth} field.
+       * The <code>date_of_birth</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22874,7 +22874,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code document_number} field.
+       * The <code>document_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -22897,7 +22897,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code full_name} field.
+         * The <code>full_name</code> field.
          *
          * @param fullName the value
          * @return this builder
@@ -22907,7 +22907,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code nationality} field.
+         * The <code>nationality</code> field.
          *
          * @param nationality the value
          * @return this builder
@@ -22917,7 +22917,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code date_of_birth} field.
+         * The <code>date_of_birth</code> field.
          *
          * @param dateOfBirth the value
          * @return this builder
@@ -22927,7 +22927,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_number} field.
+         * The <code>document_number</code> field.
          *
          * @param documentNumber the value, or {@code null} to send JSON null
          * @return this builder
@@ -22999,7 +22999,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code risk} field.
+       * The <code>risk</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -23009,7 +23009,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code additional_data} field.
+       * The <code>additional_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -23019,7 +23019,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code log_type} field.
+       * The <code>log_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -23029,7 +23029,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code short_description} field.
+       * The <code>short_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -23039,7 +23039,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code long_description} field.
+       * The <code>long_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -23082,7 +23082,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code risk} field.
+         * The <code>risk</code> field.
          *
          * @param risk the value
          * @return this builder
@@ -23092,7 +23092,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code additional_data} field.
+         * The <code>additional_data</code> field.
          *
          * @param additionalData the value, or {@code null} to send JSON null
          * @return this builder
@@ -23102,7 +23102,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code log_type} field.
+         * The <code>log_type</code> field.
          *
          * @param logType the value
          * @return this builder
@@ -23112,7 +23112,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code short_description} field.
+         * The <code>short_description</code> field.
          *
          * @param shortDescription the value
          * @return this builder
@@ -23122,7 +23122,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code long_description} field.
+         * The <code>long_description</code> field.
          *
          * @param longDescription the value
          * @return this builder
@@ -23517,7 +23517,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code warnings} field.
+     * The <code>warnings</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -23790,7 +23790,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code warnings} field.
+       * The <code>warnings</code> field.
        *
        * @param warnings the value
        * @return this builder
@@ -23926,7 +23926,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code distance_from_id_document} field.
+       * The <code>distance_from_id_document</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -23936,7 +23936,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code distance_from_poa_document} field.
+       * The <code>distance_from_poa_document</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -23969,7 +23969,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code distance_from_id_document} field.
+         * The <code>distance_from_id_document</code> field.
          *
          * @param distanceFromIdDocument the value, or {@code null} to send JSON null
          * @return this builder
@@ -23979,7 +23979,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code distance_from_poa_document} field.
+         * The <code>distance_from_poa_document</code> field.
          *
          * @param distanceFromPoaDocument the value, or {@code null} to send JSON null
          * @return this builder
@@ -24041,7 +24041,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code latitude} field.
+         * The <code>latitude</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24051,7 +24051,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code longitude} field.
+         * The <code>longitude</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24074,7 +24074,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code latitude} field.
+           * The <code>latitude</code> field.
            *
            * @param latitude the value
            * @return this builder
@@ -24084,7 +24084,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code longitude} field.
+           * The <code>longitude</code> field.
            *
            * @param longitude the value
            * @return this builder
@@ -24160,7 +24160,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code distance_from_ip} field.
+       * The <code>distance_from_ip</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24170,7 +24170,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code distance_from_poa_document} field.
+       * The <code>distance_from_poa_document</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24203,7 +24203,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code distance_from_ip} field.
+         * The <code>distance_from_ip</code> field.
          *
          * @param distanceFromIp the value, or {@code null} to send JSON null
          * @return this builder
@@ -24213,7 +24213,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code distance_from_poa_document} field.
+         * The <code>distance_from_poa_document</code> field.
          *
          * @param distanceFromPoaDocument the value, or {@code null} to send JSON null
          * @return this builder
@@ -24275,7 +24275,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code latitude} field.
+         * The <code>latitude</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24285,7 +24285,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code longitude} field.
+         * The <code>longitude</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24308,7 +24308,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code latitude} field.
+           * The <code>latitude</code> field.
            *
            * @param latitude the value
            * @return this builder
@@ -24318,7 +24318,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code longitude} field.
+           * The <code>longitude</code> field.
            *
            * @param longitude the value
            * @return this builder
@@ -24394,7 +24394,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code distance_from_ip} field.
+       * The <code>distance_from_ip</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24404,7 +24404,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code distance_from_id_document} field.
+       * The <code>distance_from_id_document</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24437,7 +24437,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code distance_from_ip} field.
+         * The <code>distance_from_ip</code> field.
          *
          * @param distanceFromIp the value, or {@code null} to send JSON null
          * @return this builder
@@ -24447,7 +24447,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code distance_from_id_document} field.
+         * The <code>distance_from_id_document</code> field.
          *
          * @param distanceFromIdDocument the value, or {@code null} to send JSON null
          * @return this builder
@@ -24509,7 +24509,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code latitude} field.
+         * The <code>latitude</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24519,7 +24519,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code longitude} field.
+         * The <code>longitude</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24542,7 +24542,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code latitude} field.
+           * The <code>latitude</code> field.
            *
            * @param latitude the value
            * @return this builder
@@ -24552,7 +24552,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code longitude} field.
+           * The <code>longitude</code> field.
            *
            * @param longitude the value
            * @return this builder
@@ -24625,7 +24625,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code risk} field.
+       * The <code>risk</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24635,7 +24635,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code additional_data} field.
+       * The <code>additional_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24645,7 +24645,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code log_type} field.
+       * The <code>log_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24655,7 +24655,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code short_description} field.
+       * The <code>short_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24665,7 +24665,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code long_description} field.
+       * The <code>long_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24708,7 +24708,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code risk} field.
+         * The <code>risk</code> field.
          *
          * @param risk the value
          * @return this builder
@@ -24718,7 +24718,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code additional_data} field.
+         * The <code>additional_data</code> field.
          *
          * @param additionalData the value, or {@code null} to send JSON null
          * @return this builder
@@ -24728,7 +24728,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code log_type} field.
+         * The <code>log_type</code> field.
          *
          * @param logType the value
          * @return this builder
@@ -24738,7 +24738,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code short_description} field.
+         * The <code>short_description</code> field.
          *
          * @param shortDescription the value
          * @return this builder
@@ -24748,7 +24748,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code long_description} field.
+         * The <code>long_description</code> field.
          *
          * @param longDescription the value
          * @return this builder
@@ -25459,7 +25459,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code device_brand} field.
+         * The <code>device_brand</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -25469,7 +25469,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code device_model} field.
+         * The <code>device_model</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -25479,7 +25479,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code browser_family} field.
+         * The <code>browser_family</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -25489,7 +25489,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code os_family} field.
+         * The <code>os_family</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -25499,7 +25499,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code platform} field.
+         * The <code>platform</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -25509,7 +25509,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code device_fingerprint} field.
+         * The <code>device_fingerprint</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -25532,7 +25532,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code device_brand} field.
+           * The <code>device_brand</code> field.
            *
            * @param deviceBrand the value, or {@code null} to send JSON null
            * @return this builder
@@ -25542,7 +25542,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code device_model} field.
+           * The <code>device_model</code> field.
            *
            * @param deviceModel the value, or {@code null} to send JSON null
            * @return this builder
@@ -25552,7 +25552,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code browser_family} field.
+           * The <code>browser_family</code> field.
            *
            * @param browserFamily the value, or {@code null} to send JSON null
            * @return this builder
@@ -25562,7 +25562,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code os_family} field.
+           * The <code>os_family</code> field.
            *
            * @param osFamily the value, or {@code null} to send JSON null
            * @return this builder
@@ -25572,7 +25572,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code platform} field.
+           * The <code>platform</code> field.
            *
            * @param platform the value, or {@code null} to send JSON null
            * @return this builder
@@ -25582,7 +25582,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code device_fingerprint} field.
+           * The <code>device_fingerprint</code> field.
            *
            * @param deviceFingerprint the value, or {@code null} to send JSON null
            * @return this builder
@@ -25645,7 +25645,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code ip_address} field.
+         * The <code>ip_address</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -25655,7 +25655,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code ip_country} field.
+         * The <code>ip_country</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -25665,7 +25665,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code ip_country_code} field.
+         * The <code>ip_country_code</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -25675,7 +25675,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code ip_state} field.
+         * The <code>ip_state</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -25685,7 +25685,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code ip_city} field.
+         * The <code>ip_city</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -25695,7 +25695,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code is_vpn_or_tor} field.
+         * The <code>is_vpn_or_tor</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -25705,7 +25705,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code is_data_center} field.
+         * The <code>is_data_center</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -25728,7 +25728,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code ip_address} field.
+           * The <code>ip_address</code> field.
            *
            * @param ipAddress the value, or {@code null} to send JSON null
            * @return this builder
@@ -25738,7 +25738,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code ip_country} field.
+           * The <code>ip_country</code> field.
            *
            * @param ipCountry the value, or {@code null} to send JSON null
            * @return this builder
@@ -25748,7 +25748,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code ip_country_code} field.
+           * The <code>ip_country_code</code> field.
            *
            * @param ipCountryCode the value, or {@code null} to send JSON null
            * @return this builder
@@ -25758,7 +25758,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code ip_state} field.
+           * The <code>ip_state</code> field.
            *
            * @param ipState the value, or {@code null} to send JSON null
            * @return this builder
@@ -25768,7 +25768,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code ip_city} field.
+           * The <code>ip_city</code> field.
            *
            * @param ipCity the value, or {@code null} to send JSON null
            * @return this builder
@@ -25778,7 +25778,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_vpn_or_tor} field.
+           * The <code>is_vpn_or_tor</code> field.
            *
            * @param isVpnOrTor the value
            * @return this builder
@@ -25788,7 +25788,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_data_center} field.
+           * The <code>is_data_center</code> field.
            *
            * @param isDataCenter the value
            * @return this builder
@@ -26191,7 +26191,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code last_name} field.
+       * The <code>last_name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -26201,7 +26201,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code first_name} field.
+       * The <code>first_name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -26241,7 +26241,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code date_of_birth} field.
+       * The <code>date_of_birth</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -26284,7 +26284,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code last_name} field.
+         * The <code>last_name</code> field.
          *
          * @param lastName the value
          * @return this builder
@@ -26294,7 +26294,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code first_name} field.
+         * The <code>first_name</code> field.
          *
          * @param firstName the value
          * @return this builder
@@ -26334,7 +26334,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code date_of_birth} field.
+         * The <code>date_of_birth</code> field.
          *
          * @param dateOfBirth the value
          * @return this builder
@@ -26923,7 +26923,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code risk} field.
+       * The <code>risk</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -26933,7 +26933,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code additional_data} field.
+       * The <code>additional_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -26943,7 +26943,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code log_type} field.
+       * The <code>log_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -26953,7 +26953,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code short_description} field.
+       * The <code>short_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -26963,7 +26963,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code long_description} field.
+       * The <code>long_description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27006,7 +27006,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code risk} field.
+         * The <code>risk</code> field.
          *
          * @param risk the value
          * @return this builder
@@ -27016,7 +27016,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code additional_data} field.
+         * The <code>additional_data</code> field.
          *
          * @param additionalData the value, or {@code null} to send JSON null
          * @return this builder
@@ -27026,7 +27026,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code log_type} field.
+         * The <code>log_type</code> field.
          *
          * @param logType the value
          * @return this builder
@@ -27036,7 +27036,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code short_description} field.
+         * The <code>short_description</code> field.
          *
          * @param shortDescription the value
          * @return this builder
@@ -27046,7 +27046,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code long_description} field.
+         * The <code>long_description</code> field.
          *
          * @param longDescription the value
          * @return this builder
@@ -27211,7 +27211,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code new_status} field.
+     * The <code>new_status</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27221,7 +27221,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code comment} field.
+     * The <code>comment</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27231,7 +27231,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27264,7 +27264,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code new_status} field.
+       * The <code>new_status</code> field.
        *
        * @param newStatus the value
        * @return this builder
@@ -27274,7 +27274,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code comment} field.
+       * The <code>comment</code> field.
        *
        * @param comment the value
        * @return this builder
@@ -27284,7 +27284,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code created_at} field.
+       * The <code>created_at</code> field.
        *
        * @param createdAt the value
        * @return this builder
@@ -27359,7 +27359,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code node_id} field.
+     * The <code>node_id</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27369,7 +27369,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code data_resolved} field.
+     * The <code>data_resolved</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27399,7 +27399,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code warnings} field.
+     * The <code>warnings</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27432,7 +27432,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code node_id} field.
+       * The <code>node_id</code> field.
        *
        * @param nodeId the value, or {@code null} to send JSON null
        * @return this builder
@@ -27442,7 +27442,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code data_resolved} field.
+       * The <code>data_resolved</code> field.
        *
        * @param dataResolved the value
        * @return this builder
@@ -27472,7 +27472,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code warnings} field.
+       * The <code>warnings</code> field.
        *
        * @param warnings the value
        * @return this builder
@@ -27536,7 +27536,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27546,7 +27546,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code node_id} field.
+       * The <code>node_id</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27556,7 +27556,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27566,7 +27566,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code registry_status} field.
+       * The <code>registry_status</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27576,7 +27576,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code data_resolved} field.
+       * The <code>data_resolved</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27586,7 +27586,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code company_name} field.
+       * The <code>company_name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27596,7 +27596,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code registration_number} field.
+       * The <code>registration_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27626,7 +27626,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code company_type} field.
+       * The <code>company_type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27636,7 +27636,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code incorporation_date} field.
+       * The <code>incorporation_date</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27646,7 +27646,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code registered_address} field.
+       * The <code>registered_address</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27656,7 +27656,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code tax_number} field.
+       * The <code>tax_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27666,7 +27666,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code risk_level} field.
+       * The <code>risk_level</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27676,7 +27676,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code verification_status} field.
+       * The <code>verification_status</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27686,7 +27686,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code is_from_registry} field.
+       * The <code>is_from_registry</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27696,7 +27696,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code fetch_status} field.
+       * The <code>fetch_status</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27716,7 +27716,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code nature_of_business} field.
+       * The <code>nature_of_business</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27726,7 +27726,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code registered_capital} field.
+       * The <code>registered_capital</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27756,7 +27756,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code website} field.
+       * The <code>website</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27766,7 +27766,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code email} field.
+       * The <code>email</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27776,7 +27776,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code phone} field.
+       * The <code>phone</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27786,7 +27786,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code legal_entity_identifier} field.
+       * The <code>legal_entity_identifier</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27796,7 +27796,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code location_of_registration} field.
+       * The <code>location_of_registration</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27876,7 +27876,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code financial_summary} field.
+       * The <code>financial_summary</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27886,7 +27886,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code officers} field.
+       * The <code>officers</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27896,7 +27896,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code beneficial_owners} field.
+       * The <code>beneficial_owners</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27956,7 +27956,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code confirmed_by_user_at} field.
+       * The <code>confirmed_by_user_at</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27966,7 +27966,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code last_console_edit_at} field.
+       * The <code>last_console_edit_at</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -27976,7 +27976,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code is_editable} field.
+       * The <code>is_editable</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -28039,7 +28039,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code uuid} field.
+         * The <code>uuid</code> field.
          *
          * @param uuid the value
          * @return this builder
@@ -28049,7 +28049,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code node_id} field.
+         * The <code>node_id</code> field.
          *
          * @param nodeId the value, or {@code null} to send JSON null
          * @return this builder
@@ -28059,7 +28059,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code status} field.
+         * The <code>status</code> field.
          *
          * @param status the value
          * @return this builder
@@ -28069,7 +28069,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code registry_status} field.
+         * The <code>registry_status</code> field.
          *
          * @param registryStatus the value, or {@code null} to send JSON null
          * @return this builder
@@ -28079,7 +28079,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code data_resolved} field.
+         * The <code>data_resolved</code> field.
          *
          * @param dataResolved the value
          * @return this builder
@@ -28089,7 +28089,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code company_name} field.
+         * The <code>company_name</code> field.
          *
          * @param companyName the value
          * @return this builder
@@ -28099,7 +28099,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code registration_number} field.
+         * The <code>registration_number</code> field.
          *
          * @param registrationNumber the value, or {@code null} to send JSON null
          * @return this builder
@@ -28129,7 +28129,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code company_type} field.
+         * The <code>company_type</code> field.
          *
          * @param companyType the value, or {@code null} to send JSON null
          * @return this builder
@@ -28139,7 +28139,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code incorporation_date} field.
+         * The <code>incorporation_date</code> field.
          *
          * @param incorporationDate the value, or {@code null} to send JSON null
          * @return this builder
@@ -28149,7 +28149,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code registered_address} field.
+         * The <code>registered_address</code> field.
          *
          * @param registeredAddress the value, or {@code null} to send JSON null
          * @return this builder
@@ -28159,7 +28159,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code tax_number} field.
+         * The <code>tax_number</code> field.
          *
          * @param taxNumber the value, or {@code null} to send JSON null
          * @return this builder
@@ -28169,7 +28169,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code risk_level} field.
+         * The <code>risk_level</code> field.
          *
          * @param riskLevel the value, or {@code null} to send JSON null
          * @return this builder
@@ -28179,7 +28179,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code verification_status} field.
+         * The <code>verification_status</code> field.
          *
          * @param verificationStatus the value, or {@code null} to send JSON null
          * @return this builder
@@ -28189,7 +28189,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code is_from_registry} field.
+         * The <code>is_from_registry</code> field.
          *
          * @param isFromRegistry the value
          * @return this builder
@@ -28199,7 +28199,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code fetch_status} field.
+         * The <code>fetch_status</code> field.
          *
          * @param fetchStatus the value, or {@code null} to send JSON null
          * @return this builder
@@ -28219,7 +28219,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code nature_of_business} field.
+         * The <code>nature_of_business</code> field.
          *
          * @param natureOfBusiness the value, or {@code null} to send JSON null
          * @return this builder
@@ -28229,7 +28229,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code registered_capital} field.
+         * The <code>registered_capital</code> field.
          *
          * @param registeredCapital the value, or {@code null} to send JSON null
          * @return this builder
@@ -28259,7 +28259,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code website} field.
+         * The <code>website</code> field.
          *
          * @param website the value, or {@code null} to send JSON null
          * @return this builder
@@ -28269,7 +28269,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code email} field.
+         * The <code>email</code> field.
          *
          * @param email the value, or {@code null} to send JSON null
          * @return this builder
@@ -28279,7 +28279,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code phone} field.
+         * The <code>phone</code> field.
          *
          * @param phone the value, or {@code null} to send JSON null
          * @return this builder
@@ -28289,7 +28289,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code legal_entity_identifier} field.
+         * The <code>legal_entity_identifier</code> field.
          *
          * @param legalEntityIdentifier the value, or {@code null} to send JSON null
          * @return this builder
@@ -28299,7 +28299,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code location_of_registration} field.
+         * The <code>location_of_registration</code> field.
          *
          * @param locationOfRegistration the value, or {@code null} to send JSON null
          * @return this builder
@@ -28379,7 +28379,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code financial_summary} field.
+         * The <code>financial_summary</code> field.
          *
          * @param financialSummary the value, or {@code null} to send JSON null
          * @return this builder
@@ -28389,7 +28389,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code officers} field.
+         * The <code>officers</code> field.
          *
          * @param officers the value
          * @return this builder
@@ -28399,7 +28399,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code beneficial_owners} field.
+         * The <code>beneficial_owners</code> field.
          *
          * @param beneficialOwners the value
          * @return this builder
@@ -28459,7 +28459,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code confirmed_by_user_at} field.
+         * The <code>confirmed_by_user_at</code> field.
          *
          * @param confirmedByUserAt the value, or {@code null} to send JSON null
          * @return this builder
@@ -28469,7 +28469,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code last_console_edit_at} field.
+         * The <code>last_console_edit_at</code> field.
          *
          * @param lastConsoleEditAt the value, or {@code null} to send JSON null
          * @return this builder
@@ -28479,7 +28479,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code is_editable} field.
+         * The <code>is_editable</code> field.
          *
          * @param isEditable the value
          * @return this builder
@@ -28747,7 +28747,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code uuid} field.
+         * The <code>uuid</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -28757,7 +28757,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -28767,7 +28767,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code designation} field.
+         * The <code>designation</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -28777,7 +28777,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code role} field.
+         * The <code>role</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -28787,7 +28787,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code nationality} field.
+         * The <code>nationality</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -28797,7 +28797,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code is_active} field.
+         * The <code>is_active</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -28807,7 +28807,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code kyc_status} field.
+         * The <code>kyc_status</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -28817,7 +28817,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code kyc_session_url} field.
+         * The <code>kyc_session_url</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -28920,7 +28920,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code uuid} field.
+           * The <code>uuid</code> field.
            *
            * @param uuid the value
            * @return this builder
@@ -28930,7 +28930,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code name} field.
+           * The <code>name</code> field.
            *
            * @param name the value
            * @return this builder
@@ -28940,7 +28940,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code designation} field.
+           * The <code>designation</code> field.
            *
            * @param designation the value, or {@code null} to send JSON null
            * @return this builder
@@ -28950,7 +28950,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code role} field.
+           * The <code>role</code> field.
            *
            * @param role the value, or {@code null} to send JSON null
            * @return this builder
@@ -28960,7 +28960,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code nationality} field.
+           * The <code>nationality</code> field.
            *
            * @param nationality the value, or {@code null} to send JSON null
            * @return this builder
@@ -28970,7 +28970,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_active} field.
+           * The <code>is_active</code> field.
            *
            * @param isActive the value
            * @return this builder
@@ -28980,7 +28980,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code kyc_status} field.
+           * The <code>kyc_status</code> field.
            *
            * @param kycStatus the value, or {@code null} to send JSON null
            * @return this builder
@@ -28990,7 +28990,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code kyc_session_url} field.
+           * The <code>kyc_session_url</code> field.
            *
            * @param kycSessionUrl the value, or {@code null} to send JSON null
            * @return this builder
@@ -29177,7 +29177,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code uuid} field.
+         * The <code>uuid</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29187,7 +29187,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29197,7 +29197,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code first_name} field.
+         * The <code>first_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29207,7 +29207,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code last_name} field.
+         * The <code>last_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29217,7 +29217,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code entity_type} field.
+         * The <code>entity_type</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29227,7 +29227,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code roles} field.
+         * The <code>roles</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29257,7 +29257,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code is_active} field.
+         * The <code>is_active</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29267,7 +29267,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code kyc_status} field.
+         * The <code>kyc_status</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29277,7 +29277,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code kyc_session_url} field.
+         * The <code>kyc_session_url</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29287,7 +29287,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code effective_ownership_percent} field.
+         * The <code>effective_ownership_percent</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29297,7 +29297,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code company_name} field.
+         * The <code>company_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29307,7 +29307,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code registration_number} field.
+         * The <code>registration_number</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29317,7 +29317,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code country_of_birth} field.
+         * The <code>country_of_birth</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29327,7 +29327,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code email} field.
+         * The <code>email</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29337,7 +29337,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code nationality} field.
+         * The <code>nationality</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29347,7 +29347,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code designation} field.
+         * The <code>designation</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29357,7 +29357,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code voting_min_shares} field.
+         * The <code>voting_min_shares</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29367,7 +29367,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code voting_max_shares} field.
+         * The <code>voting_max_shares</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29420,7 +29420,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code uuid} field.
+           * The <code>uuid</code> field.
            *
            * @param uuid the value
            * @return this builder
@@ -29430,7 +29430,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code name} field.
+           * The <code>name</code> field.
            *
            * @param name the value
            * @return this builder
@@ -29440,7 +29440,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code first_name} field.
+           * The <code>first_name</code> field.
            *
            * @param firstName the value, or {@code null} to send JSON null
            * @return this builder
@@ -29450,7 +29450,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code last_name} field.
+           * The <code>last_name</code> field.
            *
            * @param lastName the value, or {@code null} to send JSON null
            * @return this builder
@@ -29460,7 +29460,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code entity_type} field.
+           * The <code>entity_type</code> field.
            *
            * @param entityType the value
            * @return this builder
@@ -29470,7 +29470,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code roles} field.
+           * The <code>roles</code> field.
            *
            * @param roles the value
            * @return this builder
@@ -29500,7 +29500,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_active} field.
+           * The <code>is_active</code> field.
            *
            * @param isActive the value
            * @return this builder
@@ -29510,7 +29510,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code kyc_status} field.
+           * The <code>kyc_status</code> field.
            *
            * @param kycStatus the value, or {@code null} to send JSON null
            * @return this builder
@@ -29520,7 +29520,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code kyc_session_url} field.
+           * The <code>kyc_session_url</code> field.
            *
            * @param kycSessionUrl the value, or {@code null} to send JSON null
            * @return this builder
@@ -29530,7 +29530,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code effective_ownership_percent} field.
+           * The <code>effective_ownership_percent</code> field.
            *
            * @param effectiveOwnershipPercent the value, or {@code null} to send JSON null
            * @return this builder
@@ -29540,7 +29540,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code company_name} field.
+           * The <code>company_name</code> field.
            *
            * @param companyName the value, or {@code null} to send JSON null
            * @return this builder
@@ -29550,7 +29550,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code registration_number} field.
+           * The <code>registration_number</code> field.
            *
            * @param registrationNumber the value, or {@code null} to send JSON null
            * @return this builder
@@ -29560,7 +29560,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code country_of_birth} field.
+           * The <code>country_of_birth</code> field.
            *
            * @param countryOfBirth the value, or {@code null} to send JSON null
            * @return this builder
@@ -29570,7 +29570,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code email} field.
+           * The <code>email</code> field.
            *
            * @param email the value, or {@code null} to send JSON null
            * @return this builder
@@ -29580,7 +29580,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code nationality} field.
+           * The <code>nationality</code> field.
            *
            * @param nationality the value, or {@code null} to send JSON null
            * @return this builder
@@ -29590,7 +29590,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code designation} field.
+           * The <code>designation</code> field.
            *
            * @param designation the value, or {@code null} to send JSON null
            * @return this builder
@@ -29600,7 +29600,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code voting_min_shares} field.
+           * The <code>voting_min_shares</code> field.
            *
            * @param votingMinShares the value, or {@code null} to send JSON null
            * @return this builder
@@ -29610,7 +29610,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code voting_max_shares} field.
+           * The <code>voting_max_shares</code> field.
            *
            * @param votingMaxShares the value, or {@code null} to send JSON null
            * @return this builder
@@ -29794,7 +29794,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29804,7 +29804,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code node_id} field.
+     * The <code>node_id</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29844,7 +29844,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code warnings} field.
+     * The <code>warnings</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -29867,7 +29867,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @param status the value
        * @return this builder
@@ -29877,7 +29877,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code node_id} field.
+       * The <code>node_id</code> field.
        *
        * @param nodeId the value, or {@code null} to send JSON null
        * @return this builder
@@ -29917,7 +29917,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code warnings} field.
+       * The <code>warnings</code> field.
        *
        * @param warnings the value
        * @return this builder
@@ -30083,7 +30083,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code uuid} field.
+         * The <code>uuid</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -30123,7 +30123,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code nationality} field.
+         * The <code>nationality</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -30153,7 +30153,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code is_active} field.
+         * The <code>is_active</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -30386,7 +30386,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code uuid} field.
+           * The <code>uuid</code> field.
            *
            * @param uuid the value
            * @return this builder
@@ -30426,7 +30426,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code nationality} field.
+           * The <code>nationality</code> field.
            *
            * @param nationality the value, or {@code null} to send JSON null
            * @return this builder
@@ -30456,7 +30456,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_active} field.
+           * The <code>is_active</code> field.
            *
            * @param isActive the value
            * @return this builder
@@ -31094,7 +31094,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code sanctions} field.
+           * The <code>sanctions</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31104,7 +31104,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code pep} field.
+           * The <code>pep</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31114,7 +31114,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code adverse_media} field.
+           * The <code>adverse_media</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31124,7 +31124,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code warnings} field.
+           * The <code>warnings</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31147,7 +31147,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code sanctions} field.
+             * The <code>sanctions</code> field.
              *
              * @param sanctions the value
              * @return this builder
@@ -31157,7 +31157,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code pep} field.
+             * The <code>pep</code> field.
              *
              * @param pep the value
              * @return this builder
@@ -31167,7 +31167,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code adverse_media} field.
+             * The <code>adverse_media</code> field.
              *
              * @param adverseMedia the value
              * @return this builder
@@ -31177,7 +31177,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code warnings} field.
+             * The <code>warnings</code> field.
              *
              * @param warnings the value
              * @return this builder
@@ -31408,7 +31408,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code uuid} field.
+         * The <code>uuid</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31428,7 +31428,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code first_name} field.
+         * The <code>first_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31438,7 +31438,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code last_name} field.
+         * The <code>last_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31458,7 +31458,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code country_of_birth} field.
+         * The <code>country_of_birth</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31468,7 +31468,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code email} field.
+         * The <code>email</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31478,7 +31478,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code company_name} field.
+         * The <code>company_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31488,7 +31488,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code registration_number} field.
+         * The <code>registration_number</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31498,7 +31498,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code entity_type} field.
+         * The <code>entity_type</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31508,7 +31508,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code nationality} field.
+         * The <code>nationality</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31518,7 +31518,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code designation} field.
+         * The <code>designation</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31558,7 +31558,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code is_active} field.
+         * The <code>is_active</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31738,7 +31738,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code voting_min_shares} field.
+         * The <code>voting_min_shares</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31748,7 +31748,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code voting_max_shares} field.
+         * The <code>voting_max_shares</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -31781,7 +31781,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code uuid} field.
+           * The <code>uuid</code> field.
            *
            * @param uuid the value
            * @return this builder
@@ -31801,7 +31801,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code first_name} field.
+           * The <code>first_name</code> field.
            *
            * @param firstName the value, or {@code null} to send JSON null
            * @return this builder
@@ -31811,7 +31811,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code last_name} field.
+           * The <code>last_name</code> field.
            *
            * @param lastName the value, or {@code null} to send JSON null
            * @return this builder
@@ -31831,7 +31831,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code country_of_birth} field.
+           * The <code>country_of_birth</code> field.
            *
            * @param countryOfBirth the value, or {@code null} to send JSON null
            * @return this builder
@@ -31841,7 +31841,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code email} field.
+           * The <code>email</code> field.
            *
            * @param email the value, or {@code null} to send JSON null
            * @return this builder
@@ -31851,7 +31851,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code company_name} field.
+           * The <code>company_name</code> field.
            *
            * @param companyName the value, or {@code null} to send JSON null
            * @return this builder
@@ -31861,7 +31861,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code registration_number} field.
+           * The <code>registration_number</code> field.
            *
            * @param registrationNumber the value, or {@code null} to send JSON null
            * @return this builder
@@ -31871,7 +31871,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code entity_type} field.
+           * The <code>entity_type</code> field.
            *
            * @param entityType the value
            * @return this builder
@@ -31881,7 +31881,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code nationality} field.
+           * The <code>nationality</code> field.
            *
            * @param nationality the value, or {@code null} to send JSON null
            * @return this builder
@@ -31891,7 +31891,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code designation} field.
+           * The <code>designation</code> field.
            *
            * @param designation the value, or {@code null} to send JSON null
            * @return this builder
@@ -31931,7 +31931,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_active} field.
+           * The <code>is_active</code> field.
            *
            * @param isActive the value
            * @return this builder
@@ -32111,7 +32111,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code voting_min_shares} field.
+           * The <code>voting_min_shares</code> field.
            *
            * @param votingMinShares the value, or {@code null} to send JSON null
            * @return this builder
@@ -32121,7 +32121,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code voting_max_shares} field.
+           * The <code>voting_max_shares</code> field.
            *
            * @param votingMaxShares the value, or {@code null} to send JSON null
            * @return this builder
@@ -32513,7 +32513,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code sanctions} field.
+           * The <code>sanctions</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -32523,7 +32523,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code pep} field.
+           * The <code>pep</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -32533,7 +32533,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code adverse_media} field.
+           * The <code>adverse_media</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -32543,7 +32543,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code warnings} field.
+           * The <code>warnings</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -32566,7 +32566,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code sanctions} field.
+             * The <code>sanctions</code> field.
              *
              * @param sanctions the value
              * @return this builder
@@ -32576,7 +32576,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code pep} field.
+             * The <code>pep</code> field.
              *
              * @param pep the value
              * @return this builder
@@ -32586,7 +32586,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code adverse_media} field.
+             * The <code>adverse_media</code> field.
              *
              * @param adverseMedia the value
              * @return this builder
@@ -32596,7 +32596,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code warnings} field.
+             * The <code>warnings</code> field.
              *
              * @param warnings the value
              * @return this builder
@@ -32831,7 +32831,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code parties} field.
+       * The <code>parties</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -32854,7 +32854,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code parties} field.
+         * The <code>parties</code> field.
          *
          * @param parties the value
          * @return this builder
@@ -32916,7 +32916,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code uuid} field.
+         * The <code>uuid</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -32926,7 +32926,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code entity_type} field.
+         * The <code>entity_type</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -32946,7 +32946,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -32956,7 +32956,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code first_name} field.
+         * The <code>first_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -32966,7 +32966,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code last_name} field.
+         * The <code>last_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -32976,7 +32976,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code company_name} field.
+         * The <code>company_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -32986,7 +32986,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code registration_number} field.
+         * The <code>registration_number</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -32996,7 +32996,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code email} field.
+         * The <code>email</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -33016,7 +33016,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code phone_number} field.
+         * The <code>phone_number</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -33026,7 +33026,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code date_of_birth} field.
+         * The <code>date_of_birth</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -33056,7 +33056,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code is_active} field.
+         * The <code>is_active</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -33116,7 +33116,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code kyc_session_url} field.
+         * The <code>kyc_session_url</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -33219,7 +33219,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code uuid} field.
+           * The <code>uuid</code> field.
            *
            * @param uuid the value
            * @return this builder
@@ -33229,7 +33229,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code entity_type} field.
+           * The <code>entity_type</code> field.
            *
            * @param entityType the value
            * @return this builder
@@ -33249,7 +33249,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code name} field.
+           * The <code>name</code> field.
            *
            * @param name the value
            * @return this builder
@@ -33259,7 +33259,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code first_name} field.
+           * The <code>first_name</code> field.
            *
            * @param firstName the value, or {@code null} to send JSON null
            * @return this builder
@@ -33269,7 +33269,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code last_name} field.
+           * The <code>last_name</code> field.
            *
            * @param lastName the value, or {@code null} to send JSON null
            * @return this builder
@@ -33279,7 +33279,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code company_name} field.
+           * The <code>company_name</code> field.
            *
            * @param companyName the value, or {@code null} to send JSON null
            * @return this builder
@@ -33289,7 +33289,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code registration_number} field.
+           * The <code>registration_number</code> field.
            *
            * @param registrationNumber the value, or {@code null} to send JSON null
            * @return this builder
@@ -33299,7 +33299,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code email} field.
+           * The <code>email</code> field.
            *
            * @param email the value, or {@code null} to send JSON null
            * @return this builder
@@ -33319,7 +33319,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code phone_number} field.
+           * The <code>phone_number</code> field.
            *
            * @param phoneNumber the value, or {@code null} to send JSON null
            * @return this builder
@@ -33329,7 +33329,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code date_of_birth} field.
+           * The <code>date_of_birth</code> field.
            *
            * @param dateOfBirth the value, or {@code null} to send JSON null
            * @return this builder
@@ -33359,7 +33359,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code is_active} field.
+           * The <code>is_active</code> field.
            *
            * @param isActive the value
            * @return this builder
@@ -33419,7 +33419,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code kyc_session_url} field.
+           * The <code>kyc_session_url</code> field.
            *
            * @param kycSessionUrl the value, or {@code null} to send JSON null
            * @return this builder
@@ -33642,7 +33642,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code role} field.
+           * The <code>role</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -33652,7 +33652,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code ownership_percent} field.
+           * The <code>ownership_percent</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -33662,7 +33662,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
 
           /**
-           * The {@code voting_percent} field.
+           * The <code>voting_percent</code> field.
            *
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -33685,7 +33685,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code role} field.
+             * The <code>role</code> field.
              *
              * @param role the value
              * @return this builder
@@ -33695,7 +33695,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code ownership_percent} field.
+             * The <code>ownership_percent</code> field.
              *
              * @param ownershipPercent the value, or {@code null} to send JSON null
              * @return this builder
@@ -33705,7 +33705,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code voting_percent} field.
+             * The <code>voting_percent</code> field.
              *
              * @param votingPercent the value, or {@code null} to send JSON null
              * @return this builder
@@ -34148,7 +34148,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code total} field.
+       * The <code>total</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -34158,7 +34158,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code approved} field.
+       * The <code>approved</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -34178,7 +34178,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code pending} field.
+       * The <code>pending</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -34201,7 +34201,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code total} field.
+         * The <code>total</code> field.
          *
          * @param total the value
          * @return this builder
@@ -34211,7 +34211,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code approved} field.
+         * The <code>approved</code> field.
          *
          * @param approved the value
          * @return this builder
@@ -34231,7 +34231,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code pending} field.
+         * The <code>pending</code> field.
          *
          * @param pending the value
          * @return this builder
@@ -34295,7 +34295,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -34305,7 +34305,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code node_id} field.
+     * The <code>node_id</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -34315,7 +34315,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code items} field.
+     * The <code>items</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -34335,7 +34335,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code required_groups} field.
+     * The <code>required_groups</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -34345,7 +34345,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
 
     /**
-     * The {@code warnings} field.
+     * The <code>warnings</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -34368,7 +34368,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @param status the value
        * @return this builder
@@ -34378,7 +34378,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code node_id} field.
+       * The <code>node_id</code> field.
        *
        * @param nodeId the value, or {@code null} to send JSON null
        * @return this builder
@@ -34388,7 +34388,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code items} field.
+       * The <code>items</code> field.
        *
        * @param items the value
        * @return this builder
@@ -34408,7 +34408,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code required_groups} field.
+       * The <code>required_groups</code> field.
        *
        * @param requiredGroups the value
        * @return this builder
@@ -34418,7 +34418,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code warnings} field.
+       * The <code>warnings</code> field.
        *
        * @param warnings the value
        * @return this builder
@@ -34479,7 +34479,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -34559,7 +34559,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code created_at} field.
+       * The <code>created_at</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -34609,7 +34609,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code ocr_data} field.
+       * The <code>ocr_data</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -34652,7 +34652,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code uuid} field.
+         * The <code>uuid</code> field.
          *
          * @param uuid the value
          * @return this builder
@@ -34732,7 +34732,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code created_at} field.
+         * The <code>created_at</code> field.
          *
          * @param createdAt the value
          * @return this builder
@@ -34782,7 +34782,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code ocr_data} field.
+         * The <code>ocr_data</code> field.
          *
          * @param ocrData the value, or {@code null} to send JSON null
          * @return this builder
@@ -35553,7 +35553,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code page} field.
+             * The <code>page</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -35563,7 +35563,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code x} field.
+             * The <code>x</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -35573,7 +35573,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code y} field.
+             * The <code>y</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -35583,7 +35583,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code width} field.
+             * The <code>width</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -35593,7 +35593,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code height} field.
+             * The <code>height</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -35603,7 +35603,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code page_width} field.
+             * The <code>page_width</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -35613,7 +35613,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
 
             /**
-             * The {@code page_height} field.
+             * The <code>page_height</code> field.
              *
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -35636,7 +35636,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code page} field.
+               * The <code>page</code> field.
                *
                * @param page the value
                * @return this builder
@@ -35646,7 +35646,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code x} field.
+               * The <code>x</code> field.
                *
                * @param x the value
                * @return this builder
@@ -35656,7 +35656,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code y} field.
+               * The <code>y</code> field.
                *
                * @param y the value
                * @return this builder
@@ -35666,7 +35666,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code width} field.
+               * The <code>width</code> field.
                *
                * @param width the value
                * @return this builder
@@ -35676,7 +35676,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code height} field.
+               * The <code>height</code> field.
                *
                * @param height the value
                * @return this builder
@@ -35686,7 +35686,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code page_width} field.
+               * The <code>page_width</code> field.
                *
                * @param pageWidth the value
                * @return this builder
@@ -35696,7 +35696,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
 
               /**
-               * The {@code page_height} field.
+               * The <code>page_height</code> field.
                *
                * @param pageHeight the value
                * @return this builder
@@ -35761,7 +35761,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code total} field.
+       * The <code>total</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -35771,7 +35771,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code approved} field.
+       * The <code>approved</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -35781,7 +35781,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code pending} field.
+       * The <code>pending</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -35791,7 +35791,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code declined} field.
+       * The <code>declined</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -35801,7 +35801,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code in_review} field.
+       * The <code>in_review</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -35811,7 +35811,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code other} field.
+       * The <code>other</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -35844,7 +35844,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code total} field.
+         * The <code>total</code> field.
          *
          * @param total the value
          * @return this builder
@@ -35854,7 +35854,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code approved} field.
+         * The <code>approved</code> field.
          *
          * @param approved the value
          * @return this builder
@@ -35864,7 +35864,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code pending} field.
+         * The <code>pending</code> field.
          *
          * @param pending the value
          * @return this builder
@@ -35874,7 +35874,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code declined} field.
+         * The <code>declined</code> field.
          *
          * @param declined the value
          * @return this builder
@@ -35884,7 +35884,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code in_review} field.
+         * The <code>in_review</code> field.
          *
          * @param inReview the value
          * @return this builder
@@ -35894,7 +35894,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code other} field.
+         * The <code>other</code> field.
          *
          * @param other the value
          * @return this builder
@@ -36214,7 +36214,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code node_id} field.
+       * The <code>node_id</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -36224,7 +36224,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code feature} field.
+       * The <code>feature</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -36247,7 +36247,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code node_id} field.
+         * The <code>node_id</code> field.
          *
          * @param nodeId the value
          * @return this builder
@@ -36257,7 +36257,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code feature} field.
+         * The <code>feature</code> field.
          *
          * @param feature the value
          * @return this builder
@@ -36320,7 +36320,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -36330,7 +36330,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code email} field.
+       * The <code>email</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -36340,7 +36340,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /**
-       * The {@code type} field.
+       * The <code>type</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -36363,7 +36363,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @param name the value
          * @return this builder
@@ -36373,7 +36373,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code email} field.
+         * The <code>email</code> field.
          *
          * @param email the value
          * @return this builder
@@ -36383,7 +36383,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
 
         /**
-         * The {@code type} field.
+         * The <code>type</code> field.
          *
          * @param type the value
          * @return this builder

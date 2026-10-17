@@ -49,7 +49,7 @@ public final class CaseAssignee extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -59,7 +59,7 @@ public final class CaseAssignee extends JsonModel {
   }
 
   /**
-   * The {@code full_name} field.
+   * The <code>full_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -69,7 +69,7 @@ public final class CaseAssignee extends JsonModel {
   }
 
   /**
-   * The {@code email} field.
+   * The <code>email</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class CaseAssignee extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -102,7 +102,7 @@ public final class CaseAssignee extends JsonModel {
     }
 
     /**
-     * The {@code full_name} field.
+     * The <code>full_name</code> field.
      *
      * @param fullName the value
      * @return this builder
@@ -112,7 +112,7 @@ public final class CaseAssignee extends JsonModel {
     }
 
     /**
-     * The {@code email} field.
+     * The <code>email</code> field.
      *
      * @param email the value
      * @return this builder

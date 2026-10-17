@@ -62,7 +62,7 @@ public final class AgeEstimationEstimateResponse extends JsonModel {
   }
 
   /**
-   * The {@code age_estimation} field.
+   * The <code>age_estimation</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -125,7 +125,7 @@ public final class AgeEstimationEstimateResponse extends JsonModel {
     }
 
     /**
-     * The {@code age_estimation} field.
+     * The <code>age_estimation</code> field.
      *
      * @param ageEstimation the value
      * @return this builder

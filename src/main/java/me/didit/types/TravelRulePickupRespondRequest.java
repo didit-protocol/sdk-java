@@ -50,7 +50,7 @@ public final class TravelRulePickupRespondRequest extends JsonModel {
   }
 
   /**
-   * The {@code decision} field.
+   * The <code>decision</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -83,7 +83,7 @@ public final class TravelRulePickupRespondRequest extends JsonModel {
     }
 
     /**
-     * The {@code decision} field.
+     * The <code>decision</code> field.
      *
      * @param decision the value
      * @return this builder

@@ -60,7 +60,7 @@ public final class CaseDuplicateCaseLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * The {@code entity_uuid} field.
+   * The <code>entity_uuid</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -95,7 +95,7 @@ public final class CaseDuplicateCaseLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * The {@code entity_uuid} field.
+     * The <code>entity_uuid</code> field.
      *
      * @param entityUuid the value
      * @return this builder

@@ -49,7 +49,7 @@ public final class CaseDuplicateCaseDuplicateQueryRequest extends JsonModel {
   }
 
   /**
-   * The {@code subject} field.
+   * The <code>subject</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -59,7 +59,7 @@ public final class CaseDuplicateCaseDuplicateQueryRequest extends JsonModel {
   }
 
   /**
-   * The {@code links} field.
+   * The <code>links</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -69,7 +69,7 @@ public final class CaseDuplicateCaseDuplicateQueryRequest extends JsonModel {
   }
 
   /**
-   * The {@code offset} field.
+   * The <code>offset</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class CaseDuplicateCaseDuplicateQueryRequest extends JsonModel {
     }
 
     /**
-     * The {@code subject} field.
+     * The <code>subject</code> field.
      *
      * @param subject the value
      * @return this builder
@@ -102,7 +102,7 @@ public final class CaseDuplicateCaseDuplicateQueryRequest extends JsonModel {
     }
 
     /**
-     * The {@code links} field.
+     * The <code>links</code> field.
      *
      * @param links the value
      * @return this builder
@@ -112,7 +112,7 @@ public final class CaseDuplicateCaseDuplicateQueryRequest extends JsonModel {
     }
 
     /**
-     * The {@code offset} field.
+     * The <code>offset</code> field.
      *
      * @param offset the value
      * @return this builder

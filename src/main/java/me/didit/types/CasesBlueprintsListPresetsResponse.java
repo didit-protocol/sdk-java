@@ -50,7 +50,7 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
   }
 
   /**
-   * The {@code results} field.
+   * The <code>results</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -73,7 +73,7 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
     }
 
     /**
-     * The {@code results} field.
+     * The <code>results</code> field.
      *
      * @param results the value
      * @return this builder
@@ -134,7 +134,7 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
     }
 
     /**
-     * The {@code preset_key} field.
+     * The <code>preset_key</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -144,7 +144,7 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
     }
 
     /**
-     * The {@code name} field.
+     * The <code>name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -154,7 +154,7 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
     }
 
     /**
-     * The {@code description} field.
+     * The <code>description</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -174,7 +174,7 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
     }
 
     /**
-     * The {@code installed} field.
+     * The <code>installed</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -197,7 +197,7 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
       }
 
       /**
-       * The {@code preset_key} field.
+       * The <code>preset_key</code> field.
        *
        * @param presetKey the value
        * @return this builder
@@ -207,7 +207,7 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @param name the value
        * @return this builder
@@ -217,7 +217,7 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
       }
 
       /**
-       * The {@code description} field.
+       * The <code>description</code> field.
        *
        * @param description the value
        * @return this builder
@@ -237,7 +237,7 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
       }
 
       /**
-       * The {@code installed} field.
+       * The <code>installed</code> field.
        *
        * @param installed the value
        * @return this builder

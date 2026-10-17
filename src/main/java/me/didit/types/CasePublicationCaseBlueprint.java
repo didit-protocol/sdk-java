@@ -51,7 +51,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -61,7 +61,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code name} field.
+   * The <code>name</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -71,7 +71,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code description} field.
+   * The <code>description</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code assignee_pool} field.
+   * The <code>assignee_pool</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +102,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code max_active_cases} field.
+   * The <code>max_active_cases</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,7 +112,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code escalation_enabled} field.
+   * The <code>escalation_enabled</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -122,7 +122,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code escalation_blueprint} field.
+   * The <code>escalation_blueprint</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -132,7 +132,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code escalation_blueprint_name} field.
+   * The <code>escalation_blueprint_name</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -142,7 +142,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code transfer_enabled} field.
+   * The <code>transfer_enabled</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -152,7 +152,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code four_eyes_checker_blueprint} field.
+   * The <code>four_eyes_checker_blueprint</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -162,7 +162,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code four_eyes_checker_blueprint_name} field.
+   * The <code>four_eyes_checker_blueprint_name</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -172,7 +172,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code require_resolution_note} field.
+   * The <code>require_resolution_note</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -182,7 +182,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code content_config} field.
+   * The <code>content_config</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -192,7 +192,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code version} field.
+   * The <code>version</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -202,7 +202,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code default_deadline_hours} field.
+   * The <code>default_deadline_hours</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -212,7 +212,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code is_active} field.
+   * The <code>is_active</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -222,7 +222,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code preset_key} field.
+   * The <code>preset_key</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -232,7 +232,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code creation_sources} field.
+   * The <code>creation_sources</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -242,7 +242,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code receives_escalation_from} field.
+   * The <code>receives_escalation_from</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -252,7 +252,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -262,7 +262,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The {@code updated_at} field.
+   * The <code>updated_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -285,7 +285,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -295,7 +295,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code name} field.
+     * The <code>name</code> field.
      *
      * @param name the value
      * @return this builder
@@ -305,7 +305,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code description} field.
+     * The <code>description</code> field.
      *
      * @param description the value, or {@code null} to send JSON null
      * @return this builder
@@ -326,7 +326,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code assignee_pool} field.
+     * The <code>assignee_pool</code> field.
      *
      * @param assigneePool the value
      * @return this builder
@@ -336,7 +336,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code max_active_cases} field.
+     * The <code>max_active_cases</code> field.
      *
      * @param maxActiveCases the value, or {@code null} to send JSON null
      * @return this builder
@@ -346,7 +346,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code escalation_enabled} field.
+     * The <code>escalation_enabled</code> field.
      *
      * @param escalationEnabled the value
      * @return this builder
@@ -356,7 +356,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code escalation_blueprint} field.
+     * The <code>escalation_blueprint</code> field.
      *
      * @param escalationBlueprint the value, or {@code null} to send JSON null
      * @return this builder
@@ -366,7 +366,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code escalation_blueprint_name} field.
+     * The <code>escalation_blueprint_name</code> field.
      *
      * @param escalationBlueprintName the value
      * @return this builder
@@ -376,7 +376,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code transfer_enabled} field.
+     * The <code>transfer_enabled</code> field.
      *
      * @param transferEnabled the value
      * @return this builder
@@ -386,7 +386,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code four_eyes_checker_blueprint} field.
+     * The <code>four_eyes_checker_blueprint</code> field.
      *
      * @param fourEyesCheckerBlueprint the value, or {@code null} to send JSON null
      * @return this builder
@@ -396,7 +396,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code four_eyes_checker_blueprint_name} field.
+     * The <code>four_eyes_checker_blueprint_name</code> field.
      *
      * @param fourEyesCheckerBlueprintName the value
      * @return this builder
@@ -406,7 +406,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code require_resolution_note} field.
+     * The <code>require_resolution_note</code> field.
      *
      * @param requireResolutionNote the value
      * @return this builder
@@ -416,7 +416,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code content_config} field.
+     * The <code>content_config</code> field.
      *
      * @param contentConfig the value
      * @return this builder
@@ -426,7 +426,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code version} field.
+     * The <code>version</code> field.
      *
      * @param version the value
      * @return this builder
@@ -436,7 +436,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code default_deadline_hours} field.
+     * The <code>default_deadline_hours</code> field.
      *
      * @param defaultDeadlineHours the value, or {@code null} to send JSON null
      * @return this builder
@@ -446,7 +446,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code is_active} field.
+     * The <code>is_active</code> field.
      *
      * @param isActive the value
      * @return this builder
@@ -456,7 +456,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code preset_key} field.
+     * The <code>preset_key</code> field.
      *
      * @param presetKey the value, or {@code null} to send JSON null
      * @return this builder
@@ -466,7 +466,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code creation_sources} field.
+     * The <code>creation_sources</code> field.
      *
      * @param creationSources the value
      * @return this builder
@@ -476,7 +476,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code receives_escalation_from} field.
+     * The <code>receives_escalation_from</code> field.
      *
      * @param receivesEscalationFrom the value
      * @return this builder
@@ -486,7 +486,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -496,7 +496,7 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The {@code updated_at} field.
+     * The <code>updated_at</code> field.
      *
      * @param updatedAt the value
      * @return this builder

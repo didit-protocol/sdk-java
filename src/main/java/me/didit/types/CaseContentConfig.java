@@ -52,7 +52,7 @@ public final class CaseContentConfig extends JsonModel {
   }
 
   /**
-   * The {@code checklist} field.
+   * The <code>checklist</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -62,7 +62,7 @@ public final class CaseContentConfig extends JsonModel {
   }
 
   /**
-   * The {@code aml_control} field.
+   * The <code>aml_control</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class CaseContentConfig extends JsonModel {
   }
 
   /**
-   * The {@code identity} field.
+   * The <code>identity</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class CaseContentConfig extends JsonModel {
   }
 
   /**
-   * The {@code verifications} field.
+   * The <code>verifications</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class CaseContentConfig extends JsonModel {
   }
 
   /**
-   * The {@code reporting} field.
+   * The <code>reporting</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +102,7 @@ public final class CaseContentConfig extends JsonModel {
   }
 
   /**
-   * The {@code financial} field.
+   * The <code>financial</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -125,7 +125,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code checklist} field.
+     * The <code>checklist</code> field.
      *
      * @param checklist the value
      * @return this builder
@@ -135,7 +135,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code aml_control} field.
+     * The <code>aml_control</code> field.
      *
      * @param amlControl the value
      * @return this builder
@@ -145,7 +145,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code identity} field.
+     * The <code>identity</code> field.
      *
      * @param identity the value
      * @return this builder
@@ -155,7 +155,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code verifications} field.
+     * The <code>verifications</code> field.
      *
      * @param verifications the value
      * @return this builder
@@ -165,7 +165,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code reporting} field.
+     * The <code>reporting</code> field.
      *
      * @param reporting the value
      * @return this builder
@@ -175,7 +175,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code financial} field.
+     * The <code>financial</code> field.
      *
      * @param financial the value
      * @return this builder
@@ -236,7 +236,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code enabled} field.
+     * The <code>enabled</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -256,7 +256,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code items} field.
+     * The <code>items</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -279,7 +279,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code enabled} field.
+       * The <code>enabled</code> field.
        *
        * @param enabled the value
        * @return this builder
@@ -299,7 +299,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code items} field.
+       * The <code>items</code> field.
        *
        * @param items the value
        * @return this builder
@@ -360,7 +360,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code label} field.
+       * The <code>label</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -370,7 +370,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code order} field.
+       * The <code>order</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -393,7 +393,7 @@ public final class CaseContentConfig extends JsonModel {
         }
 
         /**
-         * The {@code label} field.
+         * The <code>label</code> field.
          *
          * @param label the value
          * @return this builder
@@ -403,7 +403,7 @@ public final class CaseContentConfig extends JsonModel {
         }
 
         /**
-         * The {@code order} field.
+         * The <code>order</code> field.
          *
          * @param order the value
          * @return this builder
@@ -466,7 +466,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code enabled} field.
+     * The <code>enabled</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -476,7 +476,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code financial} field.
+     * The <code>financial</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -486,7 +486,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code identity} field.
+     * The <code>identity</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -509,7 +509,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code enabled} field.
+       * The <code>enabled</code> field.
        *
        * @param enabled the value
        * @return this builder
@@ -519,7 +519,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code financial} field.
+       * The <code>financial</code> field.
        *
        * @param financial the value
        * @return this builder
@@ -529,7 +529,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code identity} field.
+       * The <code>identity</code> field.
        *
        * @param identity the value
        * @return this builder
@@ -591,7 +591,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code enabled} field.
+     * The <code>enabled</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -601,7 +601,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code personal_information} field.
+     * The <code>personal_information</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -611,7 +611,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code applicant_tags} field.
+     * The <code>applicant_tags</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -621,7 +621,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code contact_information} field.
+     * The <code>contact_information</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -631,7 +631,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code risk_overview} field.
+     * The <code>risk_overview</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -641,7 +641,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code poi_documents} field.
+     * The <code>poi_documents</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -651,7 +651,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code poa_documents} field.
+     * The <code>poa_documents</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -674,7 +674,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code enabled} field.
+       * The <code>enabled</code> field.
        *
        * @param enabled the value
        * @return this builder
@@ -684,7 +684,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code personal_information} field.
+       * The <code>personal_information</code> field.
        *
        * @param personalInformation the value
        * @return this builder
@@ -694,7 +694,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code applicant_tags} field.
+       * The <code>applicant_tags</code> field.
        *
        * @param applicantTags the value
        * @return this builder
@@ -704,7 +704,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code contact_information} field.
+       * The <code>contact_information</code> field.
        *
        * @param contactInformation the value
        * @return this builder
@@ -714,7 +714,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code risk_overview} field.
+       * The <code>risk_overview</code> field.
        *
        * @param riskOverview the value
        * @return this builder
@@ -724,7 +724,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code poi_documents} field.
+       * The <code>poi_documents</code> field.
        *
        * @param poiDocuments the value
        * @return this builder
@@ -734,7 +734,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code poa_documents} field.
+       * The <code>poa_documents</code> field.
        *
        * @param poaDocuments the value
        * @return this builder
@@ -796,7 +796,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code enabled} field.
+     * The <code>enabled</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -806,7 +806,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code summary} field.
+     * The <code>summary</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -829,7 +829,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code enabled} field.
+       * The <code>enabled</code> field.
        *
        * @param enabled the value
        * @return this builder
@@ -839,7 +839,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code summary} field.
+       * The <code>summary</code> field.
        *
        * @param summary the value
        * @return this builder
@@ -901,7 +901,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code enabled} field.
+     * The <code>enabled</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -911,7 +911,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code fiu_reports} field.
+     * The <code>fiu_reports</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -934,7 +934,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code enabled} field.
+       * The <code>enabled</code> field.
        *
        * @param enabled the value
        * @return this builder
@@ -944,7 +944,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code fiu_reports} field.
+       * The <code>fiu_reports</code> field.
        *
        * @param fiuReports the value
        * @return this builder
@@ -1006,7 +1006,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code enabled} field.
+     * The <code>enabled</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1016,7 +1016,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code payment_methods} field.
+     * The <code>payment_methods</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1026,7 +1026,7 @@ public final class CaseContentConfig extends JsonModel {
     }
 
     /**
-     * The {@code transactions} field.
+     * The <code>transactions</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1049,7 +1049,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code enabled} field.
+       * The <code>enabled</code> field.
        *
        * @param enabled the value
        * @return this builder
@@ -1059,7 +1059,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code payment_methods} field.
+       * The <code>payment_methods</code> field.
        *
        * @param paymentMethods the value
        * @return this builder
@@ -1069,7 +1069,7 @@ public final class CaseContentConfig extends JsonModel {
       }
 
       /**
-       * The {@code transactions} field.
+       * The <code>transactions</code> field.
        *
        * @param transactions the value
        * @return this builder

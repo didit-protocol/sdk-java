@@ -105,7 +105,7 @@ public final class CasesBlueprintsInstallPresetsResponse extends MultiStatusResp
     }
 
     /**
-     * The {@code created} field.
+     * The <code>created</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -128,7 +128,7 @@ public final class CasesBlueprintsInstallPresetsResponse extends MultiStatusResp
       }
 
       /**
-       * The {@code created} field.
+       * The <code>created</code> field.
        *
        * @param created the value
        * @return this builder
@@ -190,7 +190,7 @@ public final class CasesBlueprintsInstallPresetsResponse extends MultiStatusResp
     }
 
     /**
-     * The {@code created} field.
+     * The <code>created</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -213,7 +213,7 @@ public final class CasesBlueprintsInstallPresetsResponse extends MultiStatusResp
       }
 
       /**
-       * The {@code created} field.
+       * The <code>created</code> field.
        *
        * @param created the value
        * @return this builder

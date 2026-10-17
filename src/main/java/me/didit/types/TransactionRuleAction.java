@@ -255,7 +255,7 @@ public final class TransactionRuleAction extends JsonUnion {
     }
 
     /**
-     * The {@code type} field.
+     * The <code>type</code> field.
      *
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -288,7 +288,7 @@ public final class TransactionRuleAction extends JsonUnion {
       }
 
       /**
-       * The {@code type} field.
+       * The <code>type</code> field.
        *
        * @param type the value
        * @return this builder
@@ -403,7 +403,7 @@ public final class TransactionRuleAction extends JsonUnion {
     }
 
     /**
-     * The {@code type} field.
+     * The <code>type</code> field.
      *
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -446,7 +446,7 @@ public final class TransactionRuleAction extends JsonUnion {
       }
 
       /**
-       * The {@code type} field.
+       * The <code>type</code> field.
        *
        * @param type the value
        * @return this builder
@@ -620,7 +620,7 @@ public final class TransactionRuleAction extends JsonUnion {
     }
 
     /**
-     * The {@code type} field.
+     * The <code>type</code> field.
      *
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -673,7 +673,7 @@ public final class TransactionRuleAction extends JsonUnion {
       }
 
       /**
-       * The {@code type} field.
+       * The <code>type</code> field.
        *
        * @param type the value
        * @return this builder
@@ -807,7 +807,7 @@ public final class TransactionRuleAction extends JsonUnion {
     }
 
     /**
-     * The {@code type} field.
+     * The <code>type</code> field.
      *
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -840,7 +840,7 @@ public final class TransactionRuleAction extends JsonUnion {
       }
 
       /**
-       * The {@code type} field.
+       * The <code>type</code> field.
        *
        * @param type the value
        * @return this builder
@@ -955,7 +955,7 @@ public final class TransactionRuleAction extends JsonUnion {
     }
 
     /**
-     * The {@code type} field.
+     * The <code>type</code> field.
      *
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -988,7 +988,7 @@ public final class TransactionRuleAction extends JsonUnion {
       }
 
       /**
-       * The {@code type} field.
+       * The <code>type</code> field.
        *
        * @param type the value
        * @return this builder
@@ -1105,7 +1105,7 @@ public final class TransactionRuleAction extends JsonUnion {
     }
 
     /**
-     * The {@code type} field.
+     * The <code>type</code> field.
      *
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -1158,7 +1158,7 @@ public final class TransactionRuleAction extends JsonUnion {
       }
 
       /**
-       * The {@code type} field.
+       * The <code>type</code> field.
        *
        * @param type the value
        * @return this builder

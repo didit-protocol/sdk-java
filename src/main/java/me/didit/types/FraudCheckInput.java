@@ -76,7 +76,7 @@ public final class FraudCheckInput extends JsonModel {
   }
 
   /**
-   * The {@code namespace} field.
+   * The <code>namespace</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -86,7 +86,7 @@ public final class FraudCheckInput extends JsonModel {
   }
 
   /**
-   * The {@code quality} field.
+   * The <code>quality</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -96,7 +96,7 @@ public final class FraudCheckInput extends JsonModel {
   }
 
   /**
-   * The {@code normalization} field.
+   * The <code>normalization</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -162,7 +162,7 @@ public final class FraudCheckInput extends JsonModel {
     }
 
     /**
-     * The {@code namespace} field.
+     * The <code>namespace</code> field.
      *
      * @param namespace the value
      * @return this builder
@@ -172,7 +172,7 @@ public final class FraudCheckInput extends JsonModel {
     }
 
     /**
-     * The {@code quality} field.
+     * The <code>quality</code> field.
      *
      * @param quality the value
      * @return this builder
@@ -182,7 +182,7 @@ public final class FraudCheckInput extends JsonModel {
     }
 
     /**
-     * The {@code normalization} field.
+     * The <code>normalization</code> field.
      *
      * @param normalization the value
      * @return this builder

@@ -49,7 +49,7 @@ public final class CustomerMessagingCaseCustomerResponseResult extends JsonModel
   }
 
   /**
-   * The {@code responded_at} field.
+   * The <code>responded_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -72,7 +72,7 @@ public final class CustomerMessagingCaseCustomerResponseResult extends JsonModel
     }
 
     /**
-     * The {@code responded_at} field.
+     * The <code>responded_at</code> field.
      *
      * @param respondedAt the value
      * @return this builder

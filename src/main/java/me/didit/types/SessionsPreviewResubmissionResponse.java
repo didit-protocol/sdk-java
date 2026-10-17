@@ -49,7 +49,7 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
   }
 
   /**
-   * The {@code recipient} field.
+   * The <code>recipient</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -59,7 +59,7 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
   }
 
   /**
-   * The {@code sender} field.
+   * The <code>sender</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -69,7 +69,7 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
   }
 
   /**
-   * The {@code subject} field.
+   * The <code>subject</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -89,7 +89,7 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
   }
 
   /**
-   * The {@code nodes_to_resubmit} field.
+   * The <code>nodes_to_resubmit</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -132,7 +132,7 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
     }
 
     /**
-     * The {@code recipient} field.
+     * The <code>recipient</code> field.
      *
      * @param recipient the value
      * @return this builder
@@ -142,7 +142,7 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
     }
 
     /**
-     * The {@code sender} field.
+     * The <code>sender</code> field.
      *
      * @param sender the value
      * @return this builder
@@ -152,7 +152,7 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
     }
 
     /**
-     * The {@code subject} field.
+     * The <code>subject</code> field.
      *
      * @param subject the value
      * @return this builder
@@ -172,7 +172,7 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
     }
 
     /**
-     * The {@code nodes_to_resubmit} field.
+     * The <code>nodes_to_resubmit</code> field.
      *
      * @param nodesToResubmit the value
      * @return this builder

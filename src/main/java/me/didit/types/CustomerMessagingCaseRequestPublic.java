@@ -51,7 +51,7 @@ public final class CustomerMessagingCaseRequestPublic extends JsonModel {
   }
 
   /**
-   * The {@code request_id} field.
+   * The <code>request_id</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -87,7 +87,7 @@ public final class CustomerMessagingCaseRequestPublic extends JsonModel {
   }
 
   /**
-   * The {@code expires_at} field.
+   * The <code>expires_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -97,7 +97,7 @@ public final class CustomerMessagingCaseRequestPublic extends JsonModel {
   }
 
   /**
-   * The {@code responded_at} field.
+   * The <code>responded_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -107,7 +107,7 @@ public final class CustomerMessagingCaseRequestPublic extends JsonModel {
   }
 
   /**
-   * The {@code copy} field.
+   * The <code>copy</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -117,7 +117,7 @@ public final class CustomerMessagingCaseRequestPublic extends JsonModel {
   }
 
   /**
-   * The {@code organization_name} field.
+   * The <code>organization_name</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -127,7 +127,7 @@ public final class CustomerMessagingCaseRequestPublic extends JsonModel {
   }
 
   /**
-   * The {@code is_white_label} field.
+   * The <code>is_white_label</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -137,7 +137,7 @@ public final class CustomerMessagingCaseRequestPublic extends JsonModel {
   }
 
   /**
-   * The {@code customization} field.
+   * The <code>customization</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -160,7 +160,7 @@ public final class CustomerMessagingCaseRequestPublic extends JsonModel {
     }
 
     /**
-     * The {@code request_id} field.
+     * The <code>request_id</code> field.
      *
      * @param requestId the value
      * @return this builder
@@ -196,7 +196,7 @@ public final class CustomerMessagingCaseRequestPublic extends JsonModel {
     }
 
     /**
-     * The {@code expires_at} field.
+     * The <code>expires_at</code> field.
      *
      * @param expiresAt the value
      * @return this builder
@@ -206,7 +206,7 @@ public final class CustomerMessagingCaseRequestPublic extends JsonModel {
     }
 
     /**
-     * The {@code responded_at} field.
+     * The <code>responded_at</code> field.
      *
      * @param respondedAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -216,7 +216,7 @@ public final class CustomerMessagingCaseRequestPublic extends JsonModel {
     }
 
     /**
-     * The {@code copy} field.
+     * The <code>copy</code> field.
      *
      * @param copy the value
      * @return this builder
@@ -226,7 +226,7 @@ public final class CustomerMessagingCaseRequestPublic extends JsonModel {
     }
 
     /**
-     * The {@code organization_name} field.
+     * The <code>organization_name</code> field.
      *
      * @param organizationName the value
      * @return this builder
@@ -236,7 +236,7 @@ public final class CustomerMessagingCaseRequestPublic extends JsonModel {
     }
 
     /**
-     * The {@code is_white_label} field.
+     * The <code>is_white_label</code> field.
      *
      * @param isWhiteLabel the value
      * @return this builder
@@ -246,7 +246,7 @@ public final class CustomerMessagingCaseRequestPublic extends JsonModel {
     }
 
     /**
-     * The {@code customization} field.
+     * The <code>customization</code> field.
      *
      * @param customization the value, or {@code null} to send JSON null
      * @return this builder

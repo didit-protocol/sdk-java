@@ -51,7 +51,7 @@ public final class NetworkMap extends JsonModel {
   }
 
   /**
-   * The {@code network} field.
+   * The <code>network</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -71,7 +71,7 @@ public final class NetworkMap extends JsonModel {
   }
 
   /**
-   * The {@code countries} field.
+   * The <code>countries</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -81,7 +81,7 @@ public final class NetworkMap extends JsonModel {
   }
 
   /**
-   * The {@code points} field.
+   * The <code>points</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -104,7 +104,7 @@ public final class NetworkMap extends JsonModel {
     }
 
     /**
-     * The {@code network} field.
+     * The <code>network</code> field.
      *
      * @param network the value
      * @return this builder
@@ -124,7 +124,7 @@ public final class NetworkMap extends JsonModel {
     }
 
     /**
-     * The {@code countries} field.
+     * The <code>countries</code> field.
      *
      * @param countries the value
      * @return this builder
@@ -134,7 +134,7 @@ public final class NetworkMap extends JsonModel {
     }
 
     /**
-     * The {@code points} field.
+     * The <code>points</code> field.
      *
      * @param points the value
      * @return this builder
@@ -195,7 +195,7 @@ public final class NetworkMap extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -205,7 +205,7 @@ public final class NetworkMap extends JsonModel {
     }
 
     /**
-     * The {@code country} field.
+     * The <code>country</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -215,7 +215,7 @@ public final class NetworkMap extends JsonModel {
     }
 
     /**
-     * The {@code country_code} field.
+     * The <code>country_code</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -225,7 +225,7 @@ public final class NetworkMap extends JsonModel {
     }
 
     /**
-     * The {@code city} field.
+     * The <code>city</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -235,7 +235,7 @@ public final class NetworkMap extends JsonModel {
     }
 
     /**
-     * The {@code latitude} field.
+     * The <code>latitude</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -245,7 +245,7 @@ public final class NetworkMap extends JsonModel {
     }
 
     /**
-     * The {@code longitude} field.
+     * The <code>longitude</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -255,7 +255,7 @@ public final class NetworkMap extends JsonModel {
     }
 
     /**
-     * The {@code observed_at} field.
+     * The <code>observed_at</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -278,7 +278,7 @@ public final class NetworkMap extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @param uuid the value
        * @return this builder
@@ -288,7 +288,7 @@ public final class NetworkMap extends JsonModel {
       }
 
       /**
-       * The {@code country} field.
+       * The <code>country</code> field.
        *
        * @param country the value, or {@code null} to send JSON null
        * @return this builder
@@ -298,7 +298,7 @@ public final class NetworkMap extends JsonModel {
       }
 
       /**
-       * The {@code country_code} field.
+       * The <code>country_code</code> field.
        *
        * @param countryCode the value, or {@code null} to send JSON null
        * @return this builder
@@ -308,7 +308,7 @@ public final class NetworkMap extends JsonModel {
       }
 
       /**
-       * The {@code city} field.
+       * The <code>city</code> field.
        *
        * @param city the value, or {@code null} to send JSON null
        * @return this builder
@@ -318,7 +318,7 @@ public final class NetworkMap extends JsonModel {
       }
 
       /**
-       * The {@code latitude} field.
+       * The <code>latitude</code> field.
        *
        * @param latitude the value, or {@code null} to send JSON null
        * @return this builder
@@ -328,7 +328,7 @@ public final class NetworkMap extends JsonModel {
       }
 
       /**
-       * The {@code longitude} field.
+       * The <code>longitude</code> field.
        *
        * @param longitude the value, or {@code null} to send JSON null
        * @return this builder
@@ -338,7 +338,7 @@ public final class NetworkMap extends JsonModel {
       }
 
       /**
-       * The {@code observed_at} field.
+       * The <code>observed_at</code> field.
        *
        * @param observedAt the value, or {@code null} to send JSON null
        * @return this builder

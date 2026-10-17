@@ -51,7 +51,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
   }
 
   /**
-   * The {@code library_key} field.
+   * The <code>library_key</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -61,7 +61,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
   }
 
   /**
-   * The {@code title} field.
+   * The <code>title</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -71,7 +71,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
   }
 
   /**
-   * The {@code description} field.
+   * The <code>description</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -81,7 +81,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
   }
 
   /**
-   * The {@code category} field.
+   * The <code>category</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -91,7 +91,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
   }
 
   /**
-   * The {@code evaluation_mode} field.
+   * The <code>evaluation_mode</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -111,7 +111,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
   }
 
   /**
-   * The {@code conditions} field.
+   * The <code>conditions</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -121,7 +121,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
   }
 
   /**
-   * The {@code aggregation} field.
+   * The <code>aggregation</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -131,7 +131,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
   }
 
   /**
-   * The {@code actions} field.
+   * The <code>actions</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -141,7 +141,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
   }
 
   /**
-   * The {@code metadata} field.
+   * The <code>metadata</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -161,7 +161,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
   }
 
   /**
-   * The {@code tags} field.
+   * The <code>tags</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -171,7 +171,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
   }
 
   /**
-   * The {@code industries} field.
+   * The <code>industries</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -181,7 +181,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
   }
 
   /**
-   * The {@code source} field.
+   * The <code>source</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -214,7 +214,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
     }
 
     /**
-     * The {@code library_key} field.
+     * The <code>library_key</code> field.
      *
      * @param libraryKey the value
      * @return this builder
@@ -224,7 +224,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
     }
 
     /**
-     * The {@code title} field.
+     * The <code>title</code> field.
      *
      * @param title the value
      * @return this builder
@@ -234,7 +234,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
     }
 
     /**
-     * The {@code description} field.
+     * The <code>description</code> field.
      *
      * @param description the value, or {@code null} to send JSON null
      * @return this builder
@@ -244,7 +244,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
     }
 
     /**
-     * The {@code category} field.
+     * The <code>category</code> field.
      *
      * @param category the value
      * @return this builder
@@ -254,7 +254,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
     }
 
     /**
-     * The {@code evaluation_mode} field.
+     * The <code>evaluation_mode</code> field.
      *
      * @param evaluationMode the value
      * @return this builder
@@ -274,7 +274,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
     }
 
     /**
-     * The {@code conditions} field.
+     * The <code>conditions</code> field.
      *
      * @param conditions the value
      * @return this builder
@@ -284,7 +284,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
     }
 
     /**
-     * The {@code aggregation} field.
+     * The <code>aggregation</code> field.
      *
      * @param aggregation the value
      * @return this builder
@@ -294,7 +294,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
     }
 
     /**
-     * The {@code actions} field.
+     * The <code>actions</code> field.
      *
      * @param actions the value
      * @return this builder
@@ -304,7 +304,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
     }
 
     /**
-     * The {@code metadata} field.
+     * The <code>metadata</code> field.
      *
      * @param metadata the value
      * @return this builder
@@ -324,7 +324,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
     }
 
     /**
-     * The {@code tags} field.
+     * The <code>tags</code> field.
      *
      * @param tags the value
      * @return this builder
@@ -334,7 +334,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
     }
 
     /**
-     * The {@code industries} field.
+     * The <code>industries</code> field.
      *
      * @param industries the value
      * @return this builder
@@ -344,7 +344,7 @@ public final class TransactionRuleLibraryEntry extends JsonModel {
     }
 
     /**
-     * The {@code source} field.
+     * The <code>source</code> field.
      *
      * @param source the value
      * @return this builder

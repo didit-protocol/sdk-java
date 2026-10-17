@@ -81,7 +81,7 @@ public final class SimpleQuestionnaireElement extends JsonModel {
   }
 
   /**
-   * The {@code description} field.
+   * The <code>description</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -91,7 +91,7 @@ public final class SimpleQuestionnaireElement extends JsonModel {
   }
 
   /**
-   * The {@code placeholder} field.
+   * The <code>placeholder</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -101,7 +101,7 @@ public final class SimpleQuestionnaireElement extends JsonModel {
   }
 
   /**
-   * The {@code is_required} field.
+   * The <code>is_required</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -184,7 +184,7 @@ public final class SimpleQuestionnaireElement extends JsonModel {
     }
 
     /**
-     * The {@code description} field.
+     * The <code>description</code> field.
      *
      * @param description the value, or {@code null} to send JSON null
      * @return this builder
@@ -194,7 +194,7 @@ public final class SimpleQuestionnaireElement extends JsonModel {
     }
 
     /**
-     * The {@code placeholder} field.
+     * The <code>placeholder</code> field.
      *
      * @param placeholder the value, or {@code null} to send JSON null
      * @return this builder
@@ -204,7 +204,7 @@ public final class SimpleQuestionnaireElement extends JsonModel {
     }
 
     /**
-     * The {@code is_required} field.
+     * The <code>is_required</code> field.
      *
      * @param isRequired the value
      * @return this builder
@@ -392,7 +392,7 @@ public final class SimpleQuestionnaireElement extends JsonModel {
     }
 
     /**
-     * The {@code value} field.
+     * The <code>value</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -402,7 +402,7 @@ public final class SimpleQuestionnaireElement extends JsonModel {
     }
 
     /**
-     * The {@code label} field.
+     * The <code>label</code> field.
      *
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -425,7 +425,7 @@ public final class SimpleQuestionnaireElement extends JsonModel {
       }
 
       /**
-       * The {@code value} field.
+       * The <code>value</code> field.
        *
        * @param value the value
        * @return this builder
@@ -435,7 +435,7 @@ public final class SimpleQuestionnaireElement extends JsonModel {
       }
 
       /**
-       * The {@code label} field.
+       * The <code>label</code> field.
        *
        * @param label the value
        * @return this builder

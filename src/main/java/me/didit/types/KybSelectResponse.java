@@ -113,7 +113,7 @@ public final class KybSelectResponse extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -196,7 +196,7 @@ public final class KybSelectResponse extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -360,7 +360,7 @@ public final class KybSelectResponse extends JsonModel {
     }
 
     /**
-     * The {@code node_id} field.
+     * The <code>node_id</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -400,7 +400,7 @@ public final class KybSelectResponse extends JsonModel {
     }
 
     /**
-     * The {@code company_name} field.
+     * The <code>company_name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -410,7 +410,7 @@ public final class KybSelectResponse extends JsonModel {
     }
 
     /**
-     * The {@code registration_number} field.
+     * The <code>registration_number</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -440,7 +440,7 @@ public final class KybSelectResponse extends JsonModel {
     }
 
     /**
-     * The {@code company_type} field.
+     * The <code>company_type</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -450,7 +450,7 @@ public final class KybSelectResponse extends JsonModel {
     }
 
     /**
-     * The {@code incorporation_date} field.
+     * The <code>incorporation_date</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -460,7 +460,7 @@ public final class KybSelectResponse extends JsonModel {
     }
 
     /**
-     * The {@code registered_address} field.
+     * The <code>registered_address</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -470,7 +470,7 @@ public final class KybSelectResponse extends JsonModel {
     }
 
     /**
-     * The {@code tax_number} field.
+     * The <code>tax_number</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -540,7 +540,7 @@ public final class KybSelectResponse extends JsonModel {
     }
 
     /**
-     * The {@code registered_capital} field.
+     * The <code>registered_capital</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -570,7 +570,7 @@ public final class KybSelectResponse extends JsonModel {
     }
 
     /**
-     * The {@code website} field.
+     * The <code>website</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -580,7 +580,7 @@ public final class KybSelectResponse extends JsonModel {
     }
 
     /**
-     * The {@code email} field.
+     * The <code>email</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -590,7 +590,7 @@ public final class KybSelectResponse extends JsonModel {
     }
 
     /**
-     * The {@code phone} field.
+     * The <code>phone</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -863,7 +863,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code node_id} field.
+       * The <code>node_id</code> field.
        *
        * @param nodeId the value
        * @return this builder
@@ -903,7 +903,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code company_name} field.
+       * The <code>company_name</code> field.
        *
        * @param companyName the value
        * @return this builder
@@ -913,7 +913,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code registration_number} field.
+       * The <code>registration_number</code> field.
        *
        * @param registrationNumber the value, or {@code null} to send JSON null
        * @return this builder
@@ -943,7 +943,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code company_type} field.
+       * The <code>company_type</code> field.
        *
        * @param companyType the value, or {@code null} to send JSON null
        * @return this builder
@@ -953,7 +953,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code incorporation_date} field.
+       * The <code>incorporation_date</code> field.
        *
        * @param incorporationDate the value, or {@code null} to send JSON null
        * @return this builder
@@ -963,7 +963,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code registered_address} field.
+       * The <code>registered_address</code> field.
        *
        * @param registeredAddress the value, or {@code null} to send JSON null
        * @return this builder
@@ -973,7 +973,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code tax_number} field.
+       * The <code>tax_number</code> field.
        *
        * @param taxNumber the value, or {@code null} to send JSON null
        * @return this builder
@@ -1043,7 +1043,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code registered_capital} field.
+       * The <code>registered_capital</code> field.
        *
        * @param registeredCapital the value, or {@code null} to send JSON null
        * @return this builder
@@ -1073,7 +1073,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code website} field.
+       * The <code>website</code> field.
        *
        * @param website the value, or {@code null} to send JSON null
        * @return this builder
@@ -1083,7 +1083,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code email} field.
+       * The <code>email</code> field.
        *
        * @param email the value, or {@code null} to send JSON null
        * @return this builder
@@ -1093,7 +1093,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code phone} field.
+       * The <code>phone</code> field.
        *
        * @param phone the value, or {@code null} to send JSON null
        * @return this builder
@@ -1678,7 +1678,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1688,7 +1688,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1718,7 +1718,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code nationality} field.
+       * The <code>nationality</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1851,7 +1851,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code uuid} field.
+         * The <code>uuid</code> field.
          *
          * @param uuid the value
          * @return this builder
@@ -1861,7 +1861,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @param name the value
          * @return this builder
@@ -1891,7 +1891,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code nationality} field.
+         * The <code>nationality</code> field.
          *
          * @param nationality the value, or {@code null} to send JSON null
          * @return this builder
@@ -2197,7 +2197,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2207,7 +2207,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2217,7 +2217,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code first_name} field.
+       * The <code>first_name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2227,7 +2227,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code last_name} field.
+       * The <code>last_name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2277,7 +2277,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code is_active} field.
+       * The <code>is_active</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2287,7 +2287,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code kyc_status} field.
+       * The <code>kyc_status</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2297,7 +2297,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code kyc_session_url} field.
+       * The <code>kyc_session_url</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2317,7 +2317,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code company_name} field.
+       * The <code>company_name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2327,7 +2327,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code registration_number} field.
+       * The <code>registration_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2337,7 +2337,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code country_of_birth} field.
+       * The <code>country_of_birth</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2347,7 +2347,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code email} field.
+       * The <code>email</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2357,7 +2357,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code nationality} field.
+       * The <code>nationality</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2367,7 +2367,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code designation} field.
+       * The <code>designation</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2377,7 +2377,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code voting_min_shares} field.
+       * The <code>voting_min_shares</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2387,7 +2387,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * The {@code voting_max_shares} field.
+       * The <code>voting_max_shares</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2440,7 +2440,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code uuid} field.
+         * The <code>uuid</code> field.
          *
          * @param uuid the value
          * @return this builder
@@ -2450,7 +2450,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @param name the value
          * @return this builder
@@ -2460,7 +2460,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code first_name} field.
+         * The <code>first_name</code> field.
          *
          * @param firstName the value, or {@code null} to send JSON null
          * @return this builder
@@ -2470,7 +2470,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code last_name} field.
+         * The <code>last_name</code> field.
          *
          * @param lastName the value, or {@code null} to send JSON null
          * @return this builder
@@ -2520,7 +2520,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code is_active} field.
+         * The <code>is_active</code> field.
          *
          * @param isActive the value
          * @return this builder
@@ -2530,7 +2530,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code kyc_status} field.
+         * The <code>kyc_status</code> field.
          *
          * @param kycStatus the value, or {@code null} to send JSON null
          * @return this builder
@@ -2540,7 +2540,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code kyc_session_url} field.
+         * The <code>kyc_session_url</code> field.
          *
          * @param kycSessionUrl the value, or {@code null} to send JSON null
          * @return this builder
@@ -2560,7 +2560,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code company_name} field.
+         * The <code>company_name</code> field.
          *
          * @param companyName the value, or {@code null} to send JSON null
          * @return this builder
@@ -2570,7 +2570,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code registration_number} field.
+         * The <code>registration_number</code> field.
          *
          * @param registrationNumber the value, or {@code null} to send JSON null
          * @return this builder
@@ -2580,7 +2580,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code country_of_birth} field.
+         * The <code>country_of_birth</code> field.
          *
          * @param countryOfBirth the value, or {@code null} to send JSON null
          * @return this builder
@@ -2590,7 +2590,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code email} field.
+         * The <code>email</code> field.
          *
          * @param email the value, or {@code null} to send JSON null
          * @return this builder
@@ -2600,7 +2600,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code nationality} field.
+         * The <code>nationality</code> field.
          *
          * @param nationality the value, or {@code null} to send JSON null
          * @return this builder
@@ -2610,7 +2610,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code designation} field.
+         * The <code>designation</code> field.
          *
          * @param designation the value, or {@code null} to send JSON null
          * @return this builder
@@ -2620,7 +2620,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code voting_min_shares} field.
+         * The <code>voting_min_shares</code> field.
          *
          * @param votingMinShares the value, or {@code null} to send JSON null
          * @return this builder
@@ -2630,7 +2630,7 @@ public final class KybSelectResponse extends JsonModel {
         }
 
         /**
-         * The {@code voting_max_shares} field.
+         * The <code>voting_max_shares</code> field.
          *
          * @param votingMaxShares the value, or {@code null} to send JSON null
          * @return this builder

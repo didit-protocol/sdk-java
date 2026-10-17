@@ -51,7 +51,7 @@ public final class SessionImportError extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -61,7 +61,7 @@ public final class SessionImportError extends JsonModel {
   }
 
   /**
-   * The {@code row_number} field.
+   * The <code>row_number</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -71,7 +71,7 @@ public final class SessionImportError extends JsonModel {
   }
 
   /**
-   * The {@code external_id} field.
+   * The <code>external_id</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -81,7 +81,7 @@ public final class SessionImportError extends JsonModel {
   }
 
   /**
-   * The {@code error} field.
+   * The <code>error</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -91,7 +91,7 @@ public final class SessionImportError extends JsonModel {
   }
 
   /**
-   * The {@code raw_row} field.
+   * The <code>raw_row</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -101,7 +101,7 @@ public final class SessionImportError extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -124,7 +124,7 @@ public final class SessionImportError extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -134,7 +134,7 @@ public final class SessionImportError extends JsonModel {
     }
 
     /**
-     * The {@code row_number} field.
+     * The <code>row_number</code> field.
      *
      * @param rowNumber the value
      * @return this builder
@@ -144,7 +144,7 @@ public final class SessionImportError extends JsonModel {
     }
 
     /**
-     * The {@code external_id} field.
+     * The <code>external_id</code> field.
      *
      * @param externalId the value, or {@code null} to send JSON null
      * @return this builder
@@ -154,7 +154,7 @@ public final class SessionImportError extends JsonModel {
     }
 
     /**
-     * The {@code error} field.
+     * The <code>error</code> field.
      *
      * @param error the value
      * @return this builder
@@ -164,7 +164,7 @@ public final class SessionImportError extends JsonModel {
     }
 
     /**
-     * The {@code raw_row} field.
+     * The <code>raw_row</code> field.
      *
      * @param rawRow the value
      * @return this builder
@@ -174,7 +174,7 @@ public final class SessionImportError extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder

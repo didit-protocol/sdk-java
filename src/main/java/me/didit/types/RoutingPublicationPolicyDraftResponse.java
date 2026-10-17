@@ -50,7 +50,7 @@ public final class RoutingPublicationPolicyDraftResponse extends JsonModel {
   }
 
   /**
-   * The {@code draft} field.
+   * The <code>draft</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -73,7 +73,7 @@ public final class RoutingPublicationPolicyDraftResponse extends JsonModel {
     }
 
     /**
-     * The {@code draft} field.
+     * The <code>draft</code> field.
      *
      * @param draft the value, or {@code null} to send JSON null
      * @return this builder

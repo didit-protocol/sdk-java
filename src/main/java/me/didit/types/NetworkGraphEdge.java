@@ -52,7 +52,7 @@ public final class NetworkGraphEdge extends JsonModel {
   }
 
   /**
-   * The {@code id} field.
+   * The <code>id</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class NetworkGraphEdge extends JsonModel {
   }
 
   /**
-   * The {@code subject_kind} field.
+   * The <code>subject_kind</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class NetworkGraphEdge extends JsonModel {
   }
 
   /**
-   * The {@code signal_type} field.
+   * The <code>signal_type</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,7 +112,7 @@ public final class NetworkGraphEdge extends JsonModel {
   }
 
   /**
-   * The {@code observation_count} field.
+   * The <code>observation_count</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -122,7 +122,7 @@ public final class NetworkGraphEdge extends JsonModel {
   }
 
   /**
-   * The {@code first_seen_at} field.
+   * The <code>first_seen_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -132,7 +132,7 @@ public final class NetworkGraphEdge extends JsonModel {
   }
 
   /**
-   * The {@code last_seen_at} field.
+   * The <code>last_seen_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -155,7 +155,7 @@ public final class NetworkGraphEdge extends JsonModel {
     }
 
     /**
-     * The {@code id} field.
+     * The <code>id</code> field.
      *
      * @param id the value
      * @return this builder
@@ -185,7 +185,7 @@ public final class NetworkGraphEdge extends JsonModel {
     }
 
     /**
-     * The {@code subject_kind} field.
+     * The <code>subject_kind</code> field.
      *
      * @param subjectKind the value
      * @return this builder
@@ -195,7 +195,7 @@ public final class NetworkGraphEdge extends JsonModel {
     }
 
     /**
-     * The {@code signal_type} field.
+     * The <code>signal_type</code> field.
      *
      * @param signalType the value
      * @return this builder
@@ -215,7 +215,7 @@ public final class NetworkGraphEdge extends JsonModel {
     }
 
     /**
-     * The {@code observation_count} field.
+     * The <code>observation_count</code> field.
      *
      * @param observationCount the value
      * @return this builder
@@ -225,7 +225,7 @@ public final class NetworkGraphEdge extends JsonModel {
     }
 
     /**
-     * The {@code first_seen_at} field.
+     * The <code>first_seen_at</code> field.
      *
      * @param firstSeenAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -235,7 +235,7 @@ public final class NetworkGraphEdge extends JsonModel {
     }
 
     /**
-     * The {@code last_seen_at} field.
+     * The <code>last_seen_at</code> field.
      *
      * @param lastSeenAt the value, or {@code null} to send JSON null
      * @return this builder

@@ -49,7 +49,7 @@ public final class NetworksNotesCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code comment} field.
+   * The <code>comment</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -59,7 +59,7 @@ public final class NetworksNotesCreateParams extends JsonModel {
   }
 
   /**
-   * The {@code client_reference} field.
+   * The <code>client_reference</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -82,7 +82,7 @@ public final class NetworksNotesCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code comment} field.
+     * The <code>comment</code> field.
      *
      * @param comment the value
      * @return this builder
@@ -92,7 +92,7 @@ public final class NetworksNotesCreateParams extends JsonModel {
     }
 
     /**
-     * The {@code client_reference} field.
+     * The <code>client_reference</code> field.
      *
      * @param clientReference the value
      * @return this builder

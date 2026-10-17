@@ -49,7 +49,7 @@ public final class FraudCheckModuleSelectionRequest extends JsonModel {
   }
 
   /**
-   * The {@code include} field.
+   * The <code>include</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -59,7 +59,7 @@ public final class FraudCheckModuleSelectionRequest extends JsonModel {
   }
 
   /**
-   * The {@code exclude} field.
+   * The <code>exclude</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class FraudCheckModuleSelectionRequest extends JsonModel {
     }
 
     /**
-     * The {@code include} field.
+     * The <code>include</code> field.
      *
      * @param include the value
      * @return this builder
@@ -92,7 +92,7 @@ public final class FraudCheckModuleSelectionRequest extends JsonModel {
     }
 
     /**
-     * The {@code exclude} field.
+     * The <code>exclude</code> field.
      *
      * @param exclude the value
      * @return this builder

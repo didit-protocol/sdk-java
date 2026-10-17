@@ -62,7 +62,7 @@ public final class FaceSearchSearchResponse extends JsonModel {
   }
 
   /**
-   * The {@code face_search} field.
+   * The <code>face_search</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -125,7 +125,7 @@ public final class FaceSearchSearchResponse extends JsonModel {
     }
 
     /**
-     * The {@code face_search} field.
+     * The <code>face_search</code> field.
      *
      * @param faceSearch the value
      * @return this builder
@@ -819,7 +819,7 @@ public final class FaceSearchSearchResponse extends JsonModel {
         }
 
         /**
-         * The {@code full_name} field.
+         * The <code>full_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -829,7 +829,7 @@ public final class FaceSearchSearchResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_type} field.
+         * The <code>document_type</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -839,7 +839,7 @@ public final class FaceSearchSearchResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_number} field.
+         * The <code>document_number</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -862,7 +862,7 @@ public final class FaceSearchSearchResponse extends JsonModel {
           }
 
           /**
-           * The {@code full_name} field.
+           * The <code>full_name</code> field.
            *
            * @param fullName the value, or {@code null} to send JSON null
            * @return this builder
@@ -872,7 +872,7 @@ public final class FaceSearchSearchResponse extends JsonModel {
           }
 
           /**
-           * The {@code document_type} field.
+           * The <code>document_type</code> field.
            *
            * @param documentType the value, or {@code null} to send JSON null
            * @return this builder
@@ -882,7 +882,7 @@ public final class FaceSearchSearchResponse extends JsonModel {
           }
 
           /**
-           * The {@code document_number} field.
+           * The <code>document_number</code> field.
            *
            * @param documentNumber the value, or {@code null} to send JSON null
            * @return this builder

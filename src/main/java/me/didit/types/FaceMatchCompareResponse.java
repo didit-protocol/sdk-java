@@ -62,7 +62,7 @@ public final class FaceMatchCompareResponse extends JsonModel {
   }
 
   /**
-   * The {@code face_match} field.
+   * The <code>face_match</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -125,7 +125,7 @@ public final class FaceMatchCompareResponse extends JsonModel {
     }
 
     /**
-     * The {@code face_match} field.
+     * The <code>face_match</code> field.
      *
      * @param faceMatch the value
      * @return this builder
@@ -705,7 +705,7 @@ public final class FaceMatchCompareResponse extends JsonModel {
       }
 
       /**
-       * The {@code best_angle} field.
+       * The <code>best_angle</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -738,7 +738,7 @@ public final class FaceMatchCompareResponse extends JsonModel {
         }
 
         /**
-         * The {@code best_angle} field.
+         * The <code>best_angle</code> field.
          *
          * @param bestAngle the value
          * @return this builder

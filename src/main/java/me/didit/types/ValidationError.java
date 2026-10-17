@@ -155,7 +155,7 @@ public final class ValidationError extends JsonUnion {
     }
 
     /**
-     * The {@code detail} field.
+     * The <code>detail</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -178,7 +178,7 @@ public final class ValidationError extends JsonUnion {
       }
 
       /**
-       * The {@code detail} field.
+       * The <code>detail</code> field.
        *
        * @param detail the value
        * @return this builder

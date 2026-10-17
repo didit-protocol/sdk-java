@@ -48,7 +48,7 @@ public final class CaseDuplicateCaseFraudSourceContext extends JsonModel {
   }
 
   /**
-   * The {@code check_id} field.
+   * The <code>check_id</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -58,7 +58,7 @@ public final class CaseDuplicateCaseFraudSourceContext extends JsonModel {
   }
 
   /**
-   * The {@code request_id} field.
+   * The <code>request_id</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -68,7 +68,7 @@ public final class CaseDuplicateCaseFraudSourceContext extends JsonModel {
   }
 
   /**
-   * The {@code source_section} field.
+   * The <code>source_section</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -91,7 +91,7 @@ public final class CaseDuplicateCaseFraudSourceContext extends JsonModel {
     }
 
     /**
-     * The {@code check_id} field.
+     * The <code>check_id</code> field.
      *
      * @param checkId the value
      * @return this builder
@@ -101,7 +101,7 @@ public final class CaseDuplicateCaseFraudSourceContext extends JsonModel {
     }
 
     /**
-     * The {@code request_id} field.
+     * The <code>request_id</code> field.
      *
      * @param requestId the value
      * @return this builder
@@ -111,7 +111,7 @@ public final class CaseDuplicateCaseFraudSourceContext extends JsonModel {
     }
 
     /**
-     * The {@code source_section} field.
+     * The <code>source_section</code> field.
      *
      * @param sourceSection the value
      * @return this builder

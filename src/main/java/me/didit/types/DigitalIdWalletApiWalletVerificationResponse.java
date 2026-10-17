@@ -52,7 +52,7 @@ public final class DigitalIdWalletApiWalletVerificationResponse extends JsonMode
   }
 
   /**
-   * The {@code request_id} field.
+   * The <code>request_id</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -62,7 +62,7 @@ public final class DigitalIdWalletApiWalletVerificationResponse extends JsonMode
   }
 
   /**
-   * The {@code wallet_verification} field.
+   * The <code>wallet_verification</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -72,7 +72,7 @@ public final class DigitalIdWalletApiWalletVerificationResponse extends JsonMode
   }
 
   /**
-   * The {@code vendor_data} field.
+   * The <code>vendor_data</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class DigitalIdWalletApiWalletVerificationResponse extends JsonMode
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -115,7 +115,7 @@ public final class DigitalIdWalletApiWalletVerificationResponse extends JsonMode
     }
 
     /**
-     * The {@code request_id} field.
+     * The <code>request_id</code> field.
      *
      * @param requestId the value
      * @return this builder
@@ -125,7 +125,7 @@ public final class DigitalIdWalletApiWalletVerificationResponse extends JsonMode
     }
 
     /**
-     * The {@code wallet_verification} field.
+     * The <code>wallet_verification</code> field.
      *
      * @param walletVerification the value
      * @return this builder
@@ -135,7 +135,7 @@ public final class DigitalIdWalletApiWalletVerificationResponse extends JsonMode
     }
 
     /**
-     * The {@code vendor_data} field.
+     * The <code>vendor_data</code> field.
      *
      * @param vendorData the value, or {@code null} to send JSON null
      * @return this builder
@@ -155,7 +155,7 @@ public final class DigitalIdWalletApiWalletVerificationResponse extends JsonMode
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder

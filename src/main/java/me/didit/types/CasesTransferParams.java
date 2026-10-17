@@ -49,7 +49,7 @@ public final class CasesTransferParams extends JsonModel {
   }
 
   /**
-   * The {@code target_blueprint} field.
+   * The <code>target_blueprint</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -72,7 +72,7 @@ public final class CasesTransferParams extends JsonModel {
     }
 
     /**
-     * The {@code target_blueprint} field.
+     * The <code>target_blueprint</code> field.
      *
      * @param targetBlueprint the value
      * @return this builder

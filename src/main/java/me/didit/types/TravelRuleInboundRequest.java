@@ -280,7 +280,7 @@ public final class TravelRuleInboundRequest extends JsonModel {
     }
 
     /**
-     * The {@code name} field.
+     * The <code>name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -290,7 +290,7 @@ public final class TravelRuleInboundRequest extends JsonModel {
     }
 
     /**
-     * The {@code lei} field.
+     * The <code>lei</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -323,7 +323,7 @@ public final class TravelRuleInboundRequest extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @param name the value
        * @return this builder
@@ -333,7 +333,7 @@ public final class TravelRuleInboundRequest extends JsonModel {
       }
 
       /**
-       * The {@code lei} field.
+       * The <code>lei</code> field.
        *
        * @param lei the value
        * @return this builder

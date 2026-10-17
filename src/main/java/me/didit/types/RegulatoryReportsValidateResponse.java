@@ -50,7 +50,7 @@ public final class RegulatoryReportsValidateResponse extends JsonModel {
   }
 
   /**
-   * The {@code status} field.
+   * The <code>status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -60,7 +60,7 @@ public final class RegulatoryReportsValidateResponse extends JsonModel {
   }
 
   /**
-   * The {@code is_valid} field.
+   * The <code>is_valid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -93,7 +93,7 @@ public final class RegulatoryReportsValidateResponse extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @param status the value
      * @return this builder
@@ -103,7 +103,7 @@ public final class RegulatoryReportsValidateResponse extends JsonModel {
     }
 
     /**
-     * The {@code is_valid} field.
+     * The <code>is_valid</code> field.
      *
      * @param isValid the value
      * @return this builder
@@ -219,7 +219,7 @@ public final class RegulatoryReportsValidateResponse extends JsonModel {
     }
 
     /**
-     * The {@code field} field.
+     * The <code>field</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -229,7 +229,7 @@ public final class RegulatoryReportsValidateResponse extends JsonModel {
     }
 
     /**
-     * The {@code message} field.
+     * The <code>message</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -252,7 +252,7 @@ public final class RegulatoryReportsValidateResponse extends JsonModel {
       }
 
       /**
-       * The {@code field} field.
+       * The <code>field</code> field.
        *
        * @param field the value
        * @return this builder
@@ -262,7 +262,7 @@ public final class RegulatoryReportsValidateResponse extends JsonModel {
       }
 
       /**
-       * The {@code message} field.
+       * The <code>message</code> field.
        *
        * @param message the value
        * @return this builder

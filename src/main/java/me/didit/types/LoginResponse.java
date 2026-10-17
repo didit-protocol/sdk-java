@@ -59,7 +59,7 @@ public final class LoginResponse extends JsonModel {
   }
 
   /**
-   * The {@code refresh_token} field.
+   * The <code>refresh_token</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -79,7 +79,7 @@ public final class LoginResponse extends JsonModel {
   }
 
   /**
-   * The {@code message} field.
+   * The <code>message</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,7 +112,7 @@ public final class LoginResponse extends JsonModel {
     }
 
     /**
-     * The {@code refresh_token} field.
+     * The <code>refresh_token</code> field.
      *
      * @param refreshToken the value
      * @return this builder
@@ -132,7 +132,7 @@ public final class LoginResponse extends JsonModel {
     }
 
     /**
-     * The {@code message} field.
+     * The <code>message</code> field.
      *
      * @param message the value
      * @return this builder

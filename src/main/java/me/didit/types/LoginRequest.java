@@ -48,7 +48,7 @@ public final class LoginRequest extends JsonModel {
   }
 
   /**
-   * The {@code email} field.
+   * The <code>email</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -58,7 +58,7 @@ public final class LoginRequest extends JsonModel {
   }
 
   /**
-   * The {@code password} field.
+   * The <code>password</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -81,7 +81,7 @@ public final class LoginRequest extends JsonModel {
     }
 
     /**
-     * The {@code email} field.
+     * The <code>email</code> field.
      *
      * @param email the value
      * @return this builder
@@ -91,7 +91,7 @@ public final class LoginRequest extends JsonModel {
     }
 
     /**
-     * The {@code password} field.
+     * The <code>password</code> field.
      *
      * @param password the value
      * @return this builder

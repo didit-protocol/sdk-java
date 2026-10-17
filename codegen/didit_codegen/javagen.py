@@ -240,7 +240,7 @@ def emit_model(cls: JClass, ctx: Ctx, indent: str) -> str:
 def prop_doc(prop: Prop, extra: list[str], indent: str) -> str:
     lines = javadoc.render(prop.description)
     if not lines:
-        lines = [f"The {{@code {javadoc.escape(prop.json_name)}}} field."]
+        lines = [f"The <code>{javadoc.escape(prop.json_name)}</code> field."]
     lines += extra
     if prop.deprecated:
         lines += deprecated_lines()

@@ -49,7 +49,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
   }
 
   /**
-   * The {@code receipt} field.
+   * The <code>receipt</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -70,7 +70,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
   }
 
   /**
-   * The {@code entity_uuid} field.
+   * The <code>entity_uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -80,7 +80,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
   }
 
   /**
-   * The {@code action} field.
+   * The <code>action</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -90,7 +90,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
   }
 
   /**
-   * The {@code previous_status} field.
+   * The <code>previous_status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -100,7 +100,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
   }
 
   /**
-   * The {@code new_status} field.
+   * The <code>new_status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -110,7 +110,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
   }
 
   /**
-   * The {@code tags_added} field.
+   * The <code>tags_added</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -120,7 +120,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
   }
 
   /**
-   * The {@code comment_uuid} field.
+   * The <code>comment_uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -130,7 +130,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
   }
 
   /**
-   * The {@code blocklisted} field.
+   * The <code>blocklisted</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -153,7 +153,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
     }
 
     /**
-     * The {@code receipt} field.
+     * The <code>receipt</code> field.
      *
      * @param receipt the value
      * @return this builder
@@ -174,7 +174,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
     }
 
     /**
-     * The {@code entity_uuid} field.
+     * The <code>entity_uuid</code> field.
      *
      * @param entityUuid the value
      * @return this builder
@@ -184,7 +184,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
     }
 
     /**
-     * The {@code action} field.
+     * The <code>action</code> field.
      *
      * @param action the value
      * @return this builder
@@ -194,7 +194,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
     }
 
     /**
-     * The {@code previous_status} field.
+     * The <code>previous_status</code> field.
      *
      * @param previousStatus the value
      * @return this builder
@@ -204,7 +204,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
     }
 
     /**
-     * The {@code new_status} field.
+     * The <code>new_status</code> field.
      *
      * @param newStatus the value
      * @return this builder
@@ -214,7 +214,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
     }
 
     /**
-     * The {@code tags_added} field.
+     * The <code>tags_added</code> field.
      *
      * @param tagsAdded the value
      * @return this builder
@@ -224,7 +224,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
     }
 
     /**
-     * The {@code comment_uuid} field.
+     * The <code>comment_uuid</code> field.
      *
      * @param commentUuid the value
      * @return this builder
@@ -234,7 +234,7 @@ public final class CaseActionCaseEntityActionResult extends JsonModel {
     }
 
     /**
-     * The {@code blocklisted} field.
+     * The <code>blocklisted</code> field.
      *
      * @param blocklisted the value
      * @return this builder

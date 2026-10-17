@@ -49,7 +49,7 @@ public final class CasesNotesRetrieveAttachmentUrlResponse extends JsonModel {
   }
 
   /**
-   * The {@code s3_key} field.
+   * The <code>s3_key</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -59,7 +59,7 @@ public final class CasesNotesRetrieveAttachmentUrlResponse extends JsonModel {
   }
 
   /**
-   * The {@code url} field.
+   * The <code>url</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -69,7 +69,7 @@ public final class CasesNotesRetrieveAttachmentUrlResponse extends JsonModel {
   }
 
   /**
-   * The {@code filename} field.
+   * The <code>filename</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class CasesNotesRetrieveAttachmentUrlResponse extends JsonModel {
     }
 
     /**
-     * The {@code s3_key} field.
+     * The <code>s3_key</code> field.
      *
      * @param s3Key the value
      * @return this builder
@@ -102,7 +102,7 @@ public final class CasesNotesRetrieveAttachmentUrlResponse extends JsonModel {
     }
 
     /**
-     * The {@code url} field.
+     * The <code>url</code> field.
      *
      * @param url the value
      * @return this builder
@@ -112,7 +112,7 @@ public final class CasesNotesRetrieveAttachmentUrlResponse extends JsonModel {
     }
 
     /**
-     * The {@code filename} field.
+     * The <code>filename</code> field.
      *
      * @param filename the value
      * @return this builder

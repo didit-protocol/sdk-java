@@ -69,7 +69,7 @@ public final class FraudCheckPlannedModule extends JsonModel {
   }
 
   /**
-   * The {@code available} field.
+   * The <code>available</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -79,7 +79,7 @@ public final class FraudCheckPlannedModule extends JsonModel {
   }
 
   /**
-   * The {@code availability_reason} field.
+   * The <code>availability_reason</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -89,7 +89,7 @@ public final class FraudCheckPlannedModule extends JsonModel {
   }
 
   /**
-   * The {@code will_run} field.
+   * The <code>will_run</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -99,7 +99,7 @@ public final class FraudCheckPlannedModule extends JsonModel {
   }
 
   /**
-   * The {@code selection_reason} field.
+   * The <code>selection_reason</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -109,7 +109,7 @@ public final class FraudCheckPlannedModule extends JsonModel {
   }
 
   /**
-   * The {@code estimated_price} field.
+   * The <code>estimated_price</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -151,7 +151,7 @@ public final class FraudCheckPlannedModule extends JsonModel {
     }
 
     /**
-     * The {@code available} field.
+     * The <code>available</code> field.
      *
      * @param available the value
      * @return this builder
@@ -161,7 +161,7 @@ public final class FraudCheckPlannedModule extends JsonModel {
     }
 
     /**
-     * The {@code availability_reason} field.
+     * The <code>availability_reason</code> field.
      *
      * @param availabilityReason the value, or {@code null} to send JSON null
      * @return this builder
@@ -171,7 +171,7 @@ public final class FraudCheckPlannedModule extends JsonModel {
     }
 
     /**
-     * The {@code will_run} field.
+     * The <code>will_run</code> field.
      *
      * @param willRun the value
      * @return this builder
@@ -181,7 +181,7 @@ public final class FraudCheckPlannedModule extends JsonModel {
     }
 
     /**
-     * The {@code selection_reason} field.
+     * The <code>selection_reason</code> field.
      *
      * @param selectionReason the value, or {@code null} to send JSON null
      * @return this builder
@@ -191,7 +191,7 @@ public final class FraudCheckPlannedModule extends JsonModel {
     }
 
     /**
-     * The {@code estimated_price} field.
+     * The <code>estimated_price</code> field.
      *
      * @param estimatedPrice the value, or {@code null} to send JSON null
      * @return this builder

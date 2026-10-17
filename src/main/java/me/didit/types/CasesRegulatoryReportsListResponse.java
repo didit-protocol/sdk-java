@@ -60,7 +60,7 @@ public final class CasesRegulatoryReportsListResponse extends JsonModel {
   }
 
   /**
-   * The {@code next} field.
+   * The <code>next</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -70,7 +70,7 @@ public final class CasesRegulatoryReportsListResponse extends JsonModel {
   }
 
   /**
-   * The {@code previous} field.
+   * The <code>previous</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -80,7 +80,7 @@ public final class CasesRegulatoryReportsListResponse extends JsonModel {
   }
 
   /**
-   * The {@code results} field.
+   * The <code>results</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -113,7 +113,7 @@ public final class CasesRegulatoryReportsListResponse extends JsonModel {
     }
 
     /**
-     * The {@code next} field.
+     * The <code>next</code> field.
      *
      * @param next the value, or {@code null} to send JSON null
      * @return this builder
@@ -123,7 +123,7 @@ public final class CasesRegulatoryReportsListResponse extends JsonModel {
     }
 
     /**
-     * The {@code previous} field.
+     * The <code>previous</code> field.
      *
      * @param previous the value, or {@code null} to send JSON null
      * @return this builder
@@ -133,7 +133,7 @@ public final class CasesRegulatoryReportsListResponse extends JsonModel {
     }
 
     /**
-     * The {@code results} field.
+     * The <code>results</code> field.
      *
      * @param results the value
      * @return this builder

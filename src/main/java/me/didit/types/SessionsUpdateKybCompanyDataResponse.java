@@ -106,7 +106,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code company_name} field.
+   * The <code>company_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -116,7 +116,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code registration_number} field.
+   * The <code>registration_number</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -136,7 +136,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code region} field.
+   * The <code>region</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -146,7 +146,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code company_type} field.
+   * The <code>company_type</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -156,7 +156,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code incorporation_date} field.
+   * The <code>incorporation_date</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -176,7 +176,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code tax_number} field.
+   * The <code>tax_number</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -186,7 +186,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code risk_level} field.
+   * The <code>risk_level</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -236,7 +236,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code nature_of_business} field.
+   * The <code>nature_of_business</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -246,7 +246,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code registered_capital} field.
+   * The <code>registered_capital</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -276,7 +276,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code website} field.
+   * The <code>website</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -286,7 +286,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code email} field.
+   * The <code>email</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -296,7 +296,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code phone} field.
+   * The <code>phone</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -306,7 +306,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code legal_entity_identifier} field.
+   * The <code>legal_entity_identifier</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -316,7 +316,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code location_of_registration} field.
+   * The <code>location_of_registration</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -396,7 +396,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * The {@code financial_summary} field.
+   * The <code>financial_summary</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -569,7 +569,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code company_name} field.
+     * The <code>company_name</code> field.
      *
      * @param companyName the value, or {@code null} to send JSON null
      * @return this builder
@@ -579,7 +579,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code registration_number} field.
+     * The <code>registration_number</code> field.
      *
      * @param registrationNumber the value, or {@code null} to send JSON null
      * @return this builder
@@ -599,7 +599,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code region} field.
+     * The <code>region</code> field.
      *
      * @param region the value, or {@code null} to send JSON null
      * @return this builder
@@ -609,7 +609,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code company_type} field.
+     * The <code>company_type</code> field.
      *
      * @param companyType the value, or {@code null} to send JSON null
      * @return this builder
@@ -619,7 +619,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code incorporation_date} field.
+     * The <code>incorporation_date</code> field.
      *
      * @param incorporationDate the value, or {@code null} to send JSON null
      * @return this builder
@@ -639,7 +639,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code tax_number} field.
+     * The <code>tax_number</code> field.
      *
      * @param taxNumber the value, or {@code null} to send JSON null
      * @return this builder
@@ -649,7 +649,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code risk_level} field.
+     * The <code>risk_level</code> field.
      *
      * @param riskLevel the value, or {@code null} to send JSON null
      * @return this builder
@@ -699,7 +699,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code nature_of_business} field.
+     * The <code>nature_of_business</code> field.
      *
      * @param natureOfBusiness the value, or {@code null} to send JSON null
      * @return this builder
@@ -709,7 +709,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code registered_capital} field.
+     * The <code>registered_capital</code> field.
      *
      * @param registeredCapital the value, or {@code null} to send JSON null
      * @return this builder
@@ -739,7 +739,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code website} field.
+     * The <code>website</code> field.
      *
      * @param website the value, or {@code null} to send JSON null
      * @return this builder
@@ -749,7 +749,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code email} field.
+     * The <code>email</code> field.
      *
      * @param email the value, or {@code null} to send JSON null
      * @return this builder
@@ -759,7 +759,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code phone} field.
+     * The <code>phone</code> field.
      *
      * @param phone the value, or {@code null} to send JSON null
      * @return this builder
@@ -769,7 +769,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code legal_entity_identifier} field.
+     * The <code>legal_entity_identifier</code> field.
      *
      * @param legalEntityIdentifier the value, or {@code null} to send JSON null
      * @return this builder
@@ -779,7 +779,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code location_of_registration} field.
+     * The <code>location_of_registration</code> field.
      *
      * @param locationOfRegistration the value, or {@code null} to send JSON null
      * @return this builder
@@ -859,7 +859,7 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * The {@code financial_summary} field.
+     * The <code>financial_summary</code> field.
      *
      * @param financialSummary the value, or {@code null} to send JSON null
      * @return this builder

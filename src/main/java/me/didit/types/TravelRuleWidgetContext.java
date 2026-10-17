@@ -62,7 +62,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
   }
 
   /**
-   * The {@code wallet_address} field.
+   * The <code>wallet_address</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
   }
 
   /**
-   * The {@code chain} field.
+   * The <code>chain</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
   }
 
   /**
-   * The {@code holder_name} field.
+   * The <code>holder_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -122,7 +122,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
   }
 
   /**
-   * The {@code expires_at} field.
+   * The <code>expires_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -142,7 +142,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
   }
 
   /**
-   * The {@code proofs} field.
+   * The <code>proofs</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -185,7 +185,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
     }
 
     /**
-     * The {@code wallet_address} field.
+     * The <code>wallet_address</code> field.
      *
      * @param walletAddress the value
      * @return this builder
@@ -195,7 +195,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
     }
 
     /**
-     * The {@code chain} field.
+     * The <code>chain</code> field.
      *
      * @param chain the value
      * @return this builder
@@ -205,7 +205,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
     }
 
     /**
-     * The {@code holder_name} field.
+     * The <code>holder_name</code> field.
      *
      * @param holderName the value
      * @return this builder
@@ -245,7 +245,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
     }
 
     /**
-     * The {@code expires_at} field.
+     * The <code>expires_at</code> field.
      *
      * @param expiresAt the value
      * @return this builder
@@ -265,7 +265,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
     }
 
     /**
-     * The {@code proofs} field.
+     * The <code>proofs</code> field.
      *
      * @param proofs the value
      * @return this builder

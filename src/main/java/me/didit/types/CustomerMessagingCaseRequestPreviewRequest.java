@@ -49,7 +49,7 @@ public final class CustomerMessagingCaseRequestPreviewRequest extends JsonModel 
   }
 
   /**
-   * The {@code contact_id} field.
+   * The <code>contact_id</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -73,7 +73,7 @@ public final class CustomerMessagingCaseRequestPreviewRequest extends JsonModel 
   }
 
   /**
-   * The {@code language} field.
+   * The <code>language</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -96,7 +96,7 @@ public final class CustomerMessagingCaseRequestPreviewRequest extends JsonModel 
     }
 
     /**
-     * The {@code contact_id} field.
+     * The <code>contact_id</code> field.
      *
      * @param contactId the value
      * @return this builder
@@ -120,7 +120,7 @@ public final class CustomerMessagingCaseRequestPreviewRequest extends JsonModel 
     }
 
     /**
-     * The {@code language} field.
+     * The <code>language</code> field.
      *
      * @param language the value
      * @return this builder

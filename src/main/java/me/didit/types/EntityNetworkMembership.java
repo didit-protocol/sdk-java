@@ -52,7 +52,7 @@ public final class EntityNetworkMembership extends JsonModel {
   }
 
   /**
-   * The {@code network} field.
+   * The <code>network</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -62,7 +62,7 @@ public final class EntityNetworkMembership extends JsonModel {
   }
 
   /**
-   * The {@code subject} field.
+   * The <code>subject</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class EntityNetworkMembership extends JsonModel {
   }
 
   /**
-   * The {@code signal_types} field.
+   * The <code>signal_types</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class EntityNetworkMembership extends JsonModel {
   }
 
   /**
-   * The {@code signal_count} field.
+   * The <code>signal_count</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class EntityNetworkMembership extends JsonModel {
   }
 
   /**
-   * The {@code joined_at} field.
+   * The <code>joined_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +102,7 @@ public final class EntityNetworkMembership extends JsonModel {
   }
 
   /**
-   * The {@code last_seen_at} field.
+   * The <code>last_seen_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -125,7 +125,7 @@ public final class EntityNetworkMembership extends JsonModel {
     }
 
     /**
-     * The {@code network} field.
+     * The <code>network</code> field.
      *
      * @param network the value
      * @return this builder
@@ -135,7 +135,7 @@ public final class EntityNetworkMembership extends JsonModel {
     }
 
     /**
-     * The {@code subject} field.
+     * The <code>subject</code> field.
      *
      * @param subject the value
      * @return this builder
@@ -145,7 +145,7 @@ public final class EntityNetworkMembership extends JsonModel {
     }
 
     /**
-     * The {@code signal_types} field.
+     * The <code>signal_types</code> field.
      *
      * @param signalTypes the value
      * @return this builder
@@ -155,7 +155,7 @@ public final class EntityNetworkMembership extends JsonModel {
     }
 
     /**
-     * The {@code signal_count} field.
+     * The <code>signal_count</code> field.
      *
      * @param signalCount the value
      * @return this builder
@@ -165,7 +165,7 @@ public final class EntityNetworkMembership extends JsonModel {
     }
 
     /**
-     * The {@code joined_at} field.
+     * The <code>joined_at</code> field.
      *
      * @param joinedAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -175,7 +175,7 @@ public final class EntityNetworkMembership extends JsonModel {
     }
 
     /**
-     * The {@code last_seen_at} field.
+     * The <code>last_seen_at</code> field.
      *
      * @param lastSeenAt the value, or {@code null} to send JSON null
      * @return this builder

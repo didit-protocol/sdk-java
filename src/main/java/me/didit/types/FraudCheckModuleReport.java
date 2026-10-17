@@ -82,7 +82,7 @@ public final class FraudCheckModuleReport extends JsonModel {
   }
 
   /**
-   * The {@code reason} field.
+   * The <code>reason</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class FraudCheckModuleReport extends JsonModel {
   }
 
   /**
-   * The {@code latency_ms} field.
+   * The <code>latency_ms</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -102,7 +102,7 @@ public final class FraudCheckModuleReport extends JsonModel {
   }
 
   /**
-   * The {@code freshness} field.
+   * The <code>freshness</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,7 +112,7 @@ public final class FraudCheckModuleReport extends JsonModel {
   }
 
   /**
-   * The {@code billable_units} field.
+   * The <code>billable_units</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -167,7 +167,7 @@ public final class FraudCheckModuleReport extends JsonModel {
     }
 
     /**
-     * The {@code reason} field.
+     * The <code>reason</code> field.
      *
      * @param reason the value, or {@code null} to send JSON null
      * @return this builder
@@ -177,7 +177,7 @@ public final class FraudCheckModuleReport extends JsonModel {
     }
 
     /**
-     * The {@code latency_ms} field.
+     * The <code>latency_ms</code> field.
      *
      * @param latencyMs the value
      * @return this builder
@@ -187,7 +187,7 @@ public final class FraudCheckModuleReport extends JsonModel {
     }
 
     /**
-     * The {@code freshness} field.
+     * The <code>freshness</code> field.
      *
      * @param freshness the value, or {@code null} to send JSON null
      * @return this builder
@@ -197,7 +197,7 @@ public final class FraudCheckModuleReport extends JsonModel {
     }
 
     /**
-     * The {@code billable_units} field.
+     * The <code>billable_units</code> field.
      *
      * @param billableUnits the value
      * @return this builder

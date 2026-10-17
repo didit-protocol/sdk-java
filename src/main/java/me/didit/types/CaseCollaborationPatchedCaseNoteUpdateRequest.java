@@ -49,7 +49,7 @@ public final class CaseCollaborationPatchedCaseNoteUpdateRequest extends JsonMod
   }
 
   /**
-   * The {@code is_pinned} field.
+   * The <code>is_pinned</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class CaseCollaborationPatchedCaseNoteUpdateRequest extends JsonMod
     }
 
     /**
-     * The {@code is_pinned} field.
+     * The <code>is_pinned</code> field.
      *
      * @param isPinned the value
      * @return this builder

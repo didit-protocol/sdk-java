@@ -82,7 +82,7 @@ public final class NetworkMember extends JsonModel {
   }
 
   /**
-   * The {@code tags} field.
+   * The <code>tags</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class NetworkMember extends JsonModel {
   }
 
   /**
-   * The {@code risk} field.
+   * The <code>risk</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +102,7 @@ public final class NetworkMember extends JsonModel {
   }
 
   /**
-   * The {@code signal_coverage} field.
+   * The <code>signal_coverage</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,7 +112,7 @@ public final class NetworkMember extends JsonModel {
   }
 
   /**
-   * The {@code shared_infrastructure} field.
+   * The <code>shared_infrastructure</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -122,7 +122,7 @@ public final class NetworkMember extends JsonModel {
   }
 
   /**
-   * The {@code joined_at} field.
+   * The <code>joined_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -132,7 +132,7 @@ public final class NetworkMember extends JsonModel {
   }
 
   /**
-   * The {@code last_seen_at} field.
+   * The <code>last_seen_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -142,7 +142,7 @@ public final class NetworkMember extends JsonModel {
   }
 
   /**
-   * The {@code provenance} field.
+   * The <code>provenance</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -195,7 +195,7 @@ public final class NetworkMember extends JsonModel {
     }
 
     /**
-     * The {@code tags} field.
+     * The <code>tags</code> field.
      *
      * @param tags the value
      * @return this builder
@@ -205,7 +205,7 @@ public final class NetworkMember extends JsonModel {
     }
 
     /**
-     * The {@code risk} field.
+     * The <code>risk</code> field.
      *
      * @param risk the value
      * @return this builder
@@ -215,7 +215,7 @@ public final class NetworkMember extends JsonModel {
     }
 
     /**
-     * The {@code signal_coverage} field.
+     * The <code>signal_coverage</code> field.
      *
      * @param signalCoverage the value
      * @return this builder
@@ -225,7 +225,7 @@ public final class NetworkMember extends JsonModel {
     }
 
     /**
-     * The {@code shared_infrastructure} field.
+     * The <code>shared_infrastructure</code> field.
      *
      * @param sharedInfrastructure the value
      * @return this builder
@@ -235,7 +235,7 @@ public final class NetworkMember extends JsonModel {
     }
 
     /**
-     * The {@code joined_at} field.
+     * The <code>joined_at</code> field.
      *
      * @param joinedAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -245,7 +245,7 @@ public final class NetworkMember extends JsonModel {
     }
 
     /**
-     * The {@code last_seen_at} field.
+     * The <code>last_seen_at</code> field.
      *
      * @param lastSeenAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -255,7 +255,7 @@ public final class NetworkMember extends JsonModel {
     }
 
     /**
-     * The {@code provenance} field.
+     * The <code>provenance</code> field.
      *
      * @param provenance the value
      * @return this builder
@@ -371,7 +371,7 @@ public final class NetworkMember extends JsonModel {
     }
 
     /**
-     * The {@code session_ids} field.
+     * The <code>session_ids</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -381,7 +381,7 @@ public final class NetworkMember extends JsonModel {
     }
 
     /**
-     * The {@code business_session_ids} field.
+     * The <code>business_session_ids</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -391,7 +391,7 @@ public final class NetworkMember extends JsonModel {
     }
 
     /**
-     * The {@code transaction_ids} field.
+     * The <code>transaction_ids</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -414,7 +414,7 @@ public final class NetworkMember extends JsonModel {
       }
 
       /**
-       * The {@code session_ids} field.
+       * The <code>session_ids</code> field.
        *
        * @param sessionIds the value
        * @return this builder
@@ -424,7 +424,7 @@ public final class NetworkMember extends JsonModel {
       }
 
       /**
-       * The {@code business_session_ids} field.
+       * The <code>business_session_ids</code> field.
        *
        * @param businessSessionIds the value
        * @return this builder
@@ -434,7 +434,7 @@ public final class NetworkMember extends JsonModel {
       }
 
       /**
-       * The {@code transaction_ids} field.
+       * The <code>transaction_ids</code> field.
        *
        * @param transactionIds the value
        * @return this builder

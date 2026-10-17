@@ -48,7 +48,7 @@ public final class CustomerMessagingCaseRequestOptions extends JsonModel {
   }
 
   /**
-   * The {@code contacts} field.
+   * The <code>contacts</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -58,7 +58,7 @@ public final class CustomerMessagingCaseRequestOptions extends JsonModel {
   }
 
   /**
-   * The {@code purposes} field.
+   * The <code>purposes</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -68,7 +68,7 @@ public final class CustomerMessagingCaseRequestOptions extends JsonModel {
   }
 
   /**
-   * The {@code languages} field.
+   * The <code>languages</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -91,7 +91,7 @@ public final class CustomerMessagingCaseRequestOptions extends JsonModel {
     }
 
     /**
-     * The {@code contacts} field.
+     * The <code>contacts</code> field.
      *
      * @param contacts the value
      * @return this builder
@@ -101,7 +101,7 @@ public final class CustomerMessagingCaseRequestOptions extends JsonModel {
     }
 
     /**
-     * The {@code purposes} field.
+     * The <code>purposes</code> field.
      *
      * @param purposes the value
      * @return this builder
@@ -111,7 +111,7 @@ public final class CustomerMessagingCaseRequestOptions extends JsonModel {
     }
 
     /**
-     * The {@code languages} field.
+     * The <code>languages</code> field.
      *
      * @param languages the value
      * @return this builder

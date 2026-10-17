@@ -53,7 +53,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code color_primary} field.
+   * The <code>color_primary</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -63,7 +63,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code color_secondary} field.
+   * The <code>color_secondary</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -73,7 +73,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code color_background} field.
+   * The <code>color_background</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -83,7 +83,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code color_panel} field.
+   * The <code>color_panel</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -93,7 +93,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code color_panel_10} field.
+   * The <code>color_panel_10</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -103,7 +103,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code color_on_panel_1} field.
+   * The <code>color_on_panel_1</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -113,7 +113,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code color_on_panel_2} field.
+   * The <code>color_on_panel_2</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -123,7 +123,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code color_on_background} field.
+   * The <code>color_on_background</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -133,7 +133,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code color_button_1} field.
+   * The <code>color_button_1</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -143,7 +143,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code color_button_2} field.
+   * The <code>color_button_2</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -153,7 +153,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code color_button_text_1} field.
+   * The <code>color_button_text_1</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -163,7 +163,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code color_button_text_2} field.
+   * The <code>color_button_text_2</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -173,7 +173,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code color_pill_text} field.
+   * The <code>color_pill_text</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -183,7 +183,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code border_radius_panel} field.
+   * The <code>border_radius_panel</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -193,7 +193,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code border_radius_buttons} field.
+   * The <code>border_radius_buttons</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -203,7 +203,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code font_family} field.
+   * The <code>font_family</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -213,7 +213,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code font_weight} field.
+   * The <code>font_weight</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -263,7 +263,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code app_public_name} field.
+   * The <code>app_public_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -273,7 +273,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code privacy_policy_url} field.
+   * The <code>privacy_policy_url</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -283,7 +283,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code skip_welcome_screen} field.
+   * The <code>skip_welcome_screen</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -293,7 +293,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code disable_login_with_didit} field.
+   * The <code>disable_login_with_didit</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -303,7 +303,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code hide_progress_bar} field.
+   * The <code>hide_progress_bar</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -313,7 +313,7 @@ public final class BrandingCustomization extends JsonModel {
   }
 
   /**
-   * The {@code callback_seconds} field.
+   * The <code>callback_seconds</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -336,7 +336,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code color_primary} field.
+     * The <code>color_primary</code> field.
      *
      * @param colorPrimary the value
      * @return this builder
@@ -346,7 +346,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code color_secondary} field.
+     * The <code>color_secondary</code> field.
      *
      * @param colorSecondary the value
      * @return this builder
@@ -356,7 +356,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code color_background} field.
+     * The <code>color_background</code> field.
      *
      * @param colorBackground the value
      * @return this builder
@@ -366,7 +366,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code color_panel} field.
+     * The <code>color_panel</code> field.
      *
      * @param colorPanel the value
      * @return this builder
@@ -376,7 +376,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code color_panel_10} field.
+     * The <code>color_panel_10</code> field.
      *
      * @param colorPanel10 the value
      * @return this builder
@@ -386,7 +386,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code color_on_panel_1} field.
+     * The <code>color_on_panel_1</code> field.
      *
      * @param colorOnPanel1 the value
      * @return this builder
@@ -396,7 +396,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code color_on_panel_2} field.
+     * The <code>color_on_panel_2</code> field.
      *
      * @param colorOnPanel2 the value
      * @return this builder
@@ -406,7 +406,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code color_on_background} field.
+     * The <code>color_on_background</code> field.
      *
      * @param colorOnBackground the value
      * @return this builder
@@ -416,7 +416,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code color_button_1} field.
+     * The <code>color_button_1</code> field.
      *
      * @param colorButton1 the value
      * @return this builder
@@ -426,7 +426,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code color_button_2} field.
+     * The <code>color_button_2</code> field.
      *
      * @param colorButton2 the value
      * @return this builder
@@ -436,7 +436,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code color_button_text_1} field.
+     * The <code>color_button_text_1</code> field.
      *
      * @param colorButtonText1 the value
      * @return this builder
@@ -446,7 +446,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code color_button_text_2} field.
+     * The <code>color_button_text_2</code> field.
      *
      * @param colorButtonText2 the value
      * @return this builder
@@ -456,7 +456,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code color_pill_text} field.
+     * The <code>color_pill_text</code> field.
      *
      * @param colorPillText the value
      * @return this builder
@@ -466,7 +466,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code border_radius_panel} field.
+     * The <code>border_radius_panel</code> field.
      *
      * @param borderRadiusPanel the value
      * @return this builder
@@ -476,7 +476,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code border_radius_buttons} field.
+     * The <code>border_radius_buttons</code> field.
      *
      * @param borderRadiusButtons the value
      * @return this builder
@@ -486,7 +486,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code font_family} field.
+     * The <code>font_family</code> field.
      *
      * @param fontFamily the value
      * @return this builder
@@ -496,7 +496,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code font_weight} field.
+     * The <code>font_weight</code> field.
      *
      * @param fontWeight the value
      * @return this builder
@@ -546,7 +546,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code app_public_name} field.
+     * The <code>app_public_name</code> field.
      *
      * @param appPublicName the value, or {@code null} to send JSON null
      * @return this builder
@@ -556,7 +556,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code privacy_policy_url} field.
+     * The <code>privacy_policy_url</code> field.
      *
      * @param privacyPolicyUrl the value, or {@code null} to send JSON null
      * @return this builder
@@ -566,7 +566,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code skip_welcome_screen} field.
+     * The <code>skip_welcome_screen</code> field.
      *
      * @param skipWelcomeScreen the value
      * @return this builder
@@ -576,7 +576,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code disable_login_with_didit} field.
+     * The <code>disable_login_with_didit</code> field.
      *
      * @param disableLoginWithDidit the value
      * @return this builder
@@ -586,7 +586,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code hide_progress_bar} field.
+     * The <code>hide_progress_bar</code> field.
      *
      * @param hideProgressBar the value
      * @return this builder
@@ -596,7 +596,7 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
-     * The {@code callback_seconds} field.
+     * The <code>callback_seconds</code> field.
      *
      * @param callbackSeconds the value
      * @return this builder

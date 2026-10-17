@@ -50,7 +50,7 @@ public final class BiometricTemplatesDeleteResponse extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -60,7 +60,7 @@ public final class BiometricTemplatesDeleteResponse extends JsonModel {
   }
 
   /**
-   * The {@code outcome} field.
+   * The <code>outcome</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -83,7 +83,7 @@ public final class BiometricTemplatesDeleteResponse extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -93,7 +93,7 @@ public final class BiometricTemplatesDeleteResponse extends JsonModel {
     }
 
     /**
-     * The {@code outcome} field.
+     * The <code>outcome</code> field.
      *
      * @param outcome the value
      * @return this builder

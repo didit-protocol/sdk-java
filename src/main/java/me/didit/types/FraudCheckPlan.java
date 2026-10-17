@@ -50,7 +50,7 @@ public final class FraudCheckPlan extends JsonModel {
   }
 
   /**
-   * The {@code profile_id} field.
+   * The <code>profile_id</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -60,7 +60,7 @@ public final class FraudCheckPlan extends JsonModel {
   }
 
   /**
-   * The {@code profile_version} field.
+   * The <code>profile_version</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -70,7 +70,7 @@ public final class FraudCheckPlan extends JsonModel {
   }
 
   /**
-   * The {@code modules} field.
+   * The <code>modules</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -80,7 +80,7 @@ public final class FraudCheckPlan extends JsonModel {
   }
 
   /**
-   * The {@code estimated_price} field.
+   * The <code>estimated_price</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -90,7 +90,7 @@ public final class FraudCheckPlan extends JsonModel {
   }
 
   /**
-   * The {@code currency} field.
+   * The <code>currency</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -100,7 +100,7 @@ public final class FraudCheckPlan extends JsonModel {
   }
 
   /**
-   * The {@code is_sandbox} field.
+   * The <code>is_sandbox</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -110,7 +110,7 @@ public final class FraudCheckPlan extends JsonModel {
   }
 
   /**
-   * The {@code can_afford} field.
+   * The <code>can_afford</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -133,7 +133,7 @@ public final class FraudCheckPlan extends JsonModel {
     }
 
     /**
-     * The {@code profile_id} field.
+     * The <code>profile_id</code> field.
      *
      * @param profileId the value
      * @return this builder
@@ -143,7 +143,7 @@ public final class FraudCheckPlan extends JsonModel {
     }
 
     /**
-     * The {@code profile_version} field.
+     * The <code>profile_version</code> field.
      *
      * @param profileVersion the value
      * @return this builder
@@ -153,7 +153,7 @@ public final class FraudCheckPlan extends JsonModel {
     }
 
     /**
-     * The {@code modules} field.
+     * The <code>modules</code> field.
      *
      * @param modules the value
      * @return this builder
@@ -163,7 +163,7 @@ public final class FraudCheckPlan extends JsonModel {
     }
 
     /**
-     * The {@code estimated_price} field.
+     * The <code>estimated_price</code> field.
      *
      * @param estimatedPrice the value, or {@code null} to send JSON null
      * @return this builder
@@ -173,7 +173,7 @@ public final class FraudCheckPlan extends JsonModel {
     }
 
     /**
-     * The {@code currency} field.
+     * The <code>currency</code> field.
      *
      * @param currency the value, or {@code null} to send JSON null
      * @return this builder
@@ -183,7 +183,7 @@ public final class FraudCheckPlan extends JsonModel {
     }
 
     /**
-     * The {@code is_sandbox} field.
+     * The <code>is_sandbox</code> field.
      *
      * @param isSandbox the value
      * @return this builder
@@ -193,7 +193,7 @@ public final class FraudCheckPlan extends JsonModel {
     }
 
     /**
-     * The {@code can_afford} field.
+     * The <code>can_afford</code> field.
      *
      * @param canAfford the value
      * @return this builder

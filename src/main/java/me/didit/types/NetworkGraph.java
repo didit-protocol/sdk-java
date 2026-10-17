@@ -50,7 +50,7 @@ public final class NetworkGraph extends JsonModel {
   }
 
   /**
-   * The {@code network} field.
+   * The <code>network</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -80,7 +80,7 @@ public final class NetworkGraph extends JsonModel {
   }
 
   /**
-   * The {@code nodes} field.
+   * The <code>nodes</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -90,7 +90,7 @@ public final class NetworkGraph extends JsonModel {
   }
 
   /**
-   * The {@code edges} field.
+   * The <code>edges</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -100,7 +100,7 @@ public final class NetworkGraph extends JsonModel {
   }
 
   /**
-   * The {@code metrics} field.
+   * The <code>metrics</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -123,7 +123,7 @@ public final class NetworkGraph extends JsonModel {
     }
 
     /**
-     * The {@code network} field.
+     * The <code>network</code> field.
      *
      * @param network the value
      * @return this builder
@@ -153,7 +153,7 @@ public final class NetworkGraph extends JsonModel {
     }
 
     /**
-     * The {@code nodes} field.
+     * The <code>nodes</code> field.
      *
      * @param nodes the value
      * @return this builder
@@ -163,7 +163,7 @@ public final class NetworkGraph extends JsonModel {
     }
 
     /**
-     * The {@code edges} field.
+     * The <code>edges</code> field.
      *
      * @param edges the value
      * @return this builder
@@ -173,7 +173,7 @@ public final class NetworkGraph extends JsonModel {
     }
 
     /**
-     * The {@code metrics} field.
+     * The <code>metrics</code> field.
      *
      * @param metrics the value
      * @return this builder
@@ -234,7 +234,7 @@ public final class NetworkGraph extends JsonModel {
     }
 
     /**
-     * The {@code node_count} field.
+     * The <code>node_count</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -244,7 +244,7 @@ public final class NetworkGraph extends JsonModel {
     }
 
     /**
-     * The {@code edge_count} field.
+     * The <code>edge_count</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -254,7 +254,7 @@ public final class NetworkGraph extends JsonModel {
     }
 
     /**
-     * The {@code hub_signal_count} field.
+     * The <code>hub_signal_count</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -277,7 +277,7 @@ public final class NetworkGraph extends JsonModel {
       }
 
       /**
-       * The {@code node_count} field.
+       * The <code>node_count</code> field.
        *
        * @param nodeCount the value
        * @return this builder
@@ -287,7 +287,7 @@ public final class NetworkGraph extends JsonModel {
       }
 
       /**
-       * The {@code edge_count} field.
+       * The <code>edge_count</code> field.
        *
        * @param edgeCount the value
        * @return this builder
@@ -297,7 +297,7 @@ public final class NetworkGraph extends JsonModel {
       }
 
       /**
-       * The {@code hub_signal_count} field.
+       * The <code>hub_signal_count</code> field.
        *
        * @param hubSignalCount the value
        * @return this builder

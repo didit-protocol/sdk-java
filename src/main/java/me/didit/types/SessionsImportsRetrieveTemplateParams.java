@@ -51,7 +51,7 @@ public final class SessionsImportsRetrieveTemplateParams extends JsonModel {
   }
 
   /**
-   * The {@code import_type} field.
+   * The <code>import_type</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -74,7 +74,7 @@ public final class SessionsImportsRetrieveTemplateParams extends JsonModel {
     }
 
     /**
-     * The {@code import_type} field.
+     * The <code>import_type</code> field.
      *
      * @param importType the value
      * @return this builder

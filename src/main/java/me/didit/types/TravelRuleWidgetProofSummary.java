@@ -52,7 +52,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
   }
 
   /**
-   * The {@code proof_id} field.
+   * The <code>proof_id</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -62,7 +62,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
   }
 
   /**
-   * The {@code method} field.
+   * The <code>method</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
   }
 
   /**
-   * The {@code wallet_address} field.
+   * The <code>wallet_address</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
   }
 
   /**
-   * The {@code chain} field.
+   * The <code>chain</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -142,7 +142,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -165,7 +165,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
     }
 
     /**
-     * The {@code proof_id} field.
+     * The <code>proof_id</code> field.
      *
      * @param proofId the value
      * @return this builder
@@ -175,7 +175,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
     }
 
     /**
-     * The {@code method} field.
+     * The <code>method</code> field.
      *
      * @param method the value
      * @return this builder
@@ -195,7 +195,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
     }
 
     /**
-     * The {@code wallet_address} field.
+     * The <code>wallet_address</code> field.
      *
      * @param walletAddress the value
      * @return this builder
@@ -205,7 +205,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
     }
 
     /**
-     * The {@code chain} field.
+     * The <code>chain</code> field.
      *
      * @param chain the value
      * @return this builder
@@ -255,7 +255,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder

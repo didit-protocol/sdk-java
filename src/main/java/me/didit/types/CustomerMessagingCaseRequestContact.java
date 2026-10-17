@@ -49,7 +49,7 @@ public final class CustomerMessagingCaseRequestContact extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -59,7 +59,7 @@ public final class CustomerMessagingCaseRequestContact extends JsonModel {
   }
 
   /**
-   * The {@code email} field.
+   * The <code>email</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -69,7 +69,7 @@ public final class CustomerMessagingCaseRequestContact extends JsonModel {
   }
 
   /**
-   * The {@code verified_at} field.
+   * The <code>verified_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -92,7 +92,7 @@ public final class CustomerMessagingCaseRequestContact extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -102,7 +102,7 @@ public final class CustomerMessagingCaseRequestContact extends JsonModel {
     }
 
     /**
-     * The {@code email} field.
+     * The <code>email</code> field.
      *
      * @param email the value
      * @return this builder
@@ -112,7 +112,7 @@ public final class CustomerMessagingCaseRequestContact extends JsonModel {
     }
 
     /**
-     * The {@code verified_at} field.
+     * The <code>verified_at</code> field.
      *
      * @param verifiedAt the value
      * @return this builder

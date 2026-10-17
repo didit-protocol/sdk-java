@@ -60,7 +60,7 @@ public final class DigitalIdWalletApiWallet extends JsonModel {
   }
 
   /**
-   * The {@code name} field.
+   * The <code>name</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -70,7 +70,7 @@ public final class DigitalIdWalletApiWallet extends JsonModel {
   }
 
   /**
-   * The {@code issuing_authority} field.
+   * The <code>issuing_authority</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -103,7 +103,7 @@ public final class DigitalIdWalletApiWallet extends JsonModel {
     }
 
     /**
-     * The {@code name} field.
+     * The <code>name</code> field.
      *
      * @param name the value
      * @return this builder
@@ -113,7 +113,7 @@ public final class DigitalIdWalletApiWallet extends JsonModel {
     }
 
     /**
-     * The {@code issuing_authority} field.
+     * The <code>issuing_authority</code> field.
      *
      * @param issuingAuthority the value, or {@code null} to send JSON null
      * @return this builder

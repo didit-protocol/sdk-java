@@ -62,7 +62,7 @@ public final class AmlScreenResponse extends JsonModel {
   }
 
   /**
-   * The {@code aml} field.
+   * The <code>aml</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class AmlScreenResponse extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -125,7 +125,7 @@ public final class AmlScreenResponse extends JsonModel {
     }
 
     /**
-     * The {@code aml} field.
+     * The <code>aml</code> field.
      *
      * @param aml the value
      * @return this builder
@@ -155,7 +155,7 @@ public final class AmlScreenResponse extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -246,7 +246,7 @@ public final class AmlScreenResponse extends JsonModel {
     }
 
     /**
-     * The {@code hits} field.
+     * The <code>hits</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -329,7 +329,7 @@ public final class AmlScreenResponse extends JsonModel {
       }
 
       /**
-       * The {@code hits} field.
+       * The <code>hits</code> field.
        *
        * @param hits the value
        * @return this builder
@@ -572,7 +572,7 @@ public final class AmlScreenResponse extends JsonModel {
       }
 
       /**
-       * The {@code target} field.
+       * The <code>target</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -602,7 +602,7 @@ public final class AmlScreenResponse extends JsonModel {
       }
 
       /**
-       * The {@code features} field.
+       * The <code>features</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -825,7 +825,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code target} field.
+         * The <code>target</code> field.
          *
          * @param target the value, or {@code null} to send JSON null
          * @return this builder
@@ -855,7 +855,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code features} field.
+         * The <code>features</code> field.
          *
          * @param features the value, or {@code null} to send JSON null
          * @return this builder
@@ -1056,7 +1056,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code list_name} field.
+         * The <code>list_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1066,7 +1066,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code publisher} field.
+         * The <code>publisher</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1076,7 +1076,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code source_url} field.
+         * The <code>source_url</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1086,7 +1086,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code description} field.
+         * The <code>description</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1096,7 +1096,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code matched_name} field.
+         * The <code>matched_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1106,7 +1106,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code pep_position} field.
+         * The <code>pep_position</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1116,7 +1116,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code date_of_birth} field.
+         * The <code>date_of_birth</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1126,7 +1126,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code place_of_birth} field.
+         * The <code>place_of_birth</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1136,7 +1136,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code aliases} field.
+         * The <code>aliases</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1146,7 +1146,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code education} field.
+         * The <code>education</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1156,7 +1156,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code other_sources} field.
+         * The <code>other_sources</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1179,7 +1179,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code list_name} field.
+           * The <code>list_name</code> field.
            *
            * @param listName the value
            * @return this builder
@@ -1189,7 +1189,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code publisher} field.
+           * The <code>publisher</code> field.
            *
            * @param publisher the value
            * @return this builder
@@ -1199,7 +1199,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code source_url} field.
+           * The <code>source_url</code> field.
            *
            * @param sourceUrl the value
            * @return this builder
@@ -1209,7 +1209,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code description} field.
+           * The <code>description</code> field.
            *
            * @param description the value
            * @return this builder
@@ -1219,7 +1219,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code matched_name} field.
+           * The <code>matched_name</code> field.
            *
            * @param matchedName the value
            * @return this builder
@@ -1229,7 +1229,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code pep_position} field.
+           * The <code>pep_position</code> field.
            *
            * @param pepPosition the value
            * @return this builder
@@ -1239,7 +1239,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code date_of_birth} field.
+           * The <code>date_of_birth</code> field.
            *
            * @param dateOfBirth the value
            * @return this builder
@@ -1249,7 +1249,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code place_of_birth} field.
+           * The <code>place_of_birth</code> field.
            *
            * @param placeOfBirth the value
            * @return this builder
@@ -1259,7 +1259,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code aliases} field.
+           * The <code>aliases</code> field.
            *
            * @param aliases the value
            * @return this builder
@@ -1269,7 +1269,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code education} field.
+           * The <code>education</code> field.
            *
            * @param education the value
            * @return this builder
@@ -1279,7 +1279,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code other_sources} field.
+           * The <code>other_sources</code> field.
            *
            * @param otherSources the value
            * @return this builder
@@ -1341,7 +1341,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code headline} field.
+         * The <code>headline</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1351,7 +1351,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code summary} field.
+         * The <code>summary</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1361,7 +1361,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code sentiment} field.
+         * The <code>sentiment</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1371,7 +1371,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code sentiment_score} field.
+         * The <code>sentiment_score</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1381,7 +1381,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code source_url} field.
+         * The <code>source_url</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1391,7 +1391,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code thumbnail} field.
+         * The <code>thumbnail</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1401,7 +1401,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code country} field.
+         * The <code>country</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1411,7 +1411,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code author_name} field.
+         * The <code>author_name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1421,7 +1421,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code publication_date} field.
+         * The <code>publication_date</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1431,7 +1431,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code adverse_keywords} field.
+         * The <code>adverse_keywords</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1441,7 +1441,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code other_sources} field.
+         * The <code>other_sources</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1464,7 +1464,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code headline} field.
+           * The <code>headline</code> field.
            *
            * @param headline the value
            * @return this builder
@@ -1474,7 +1474,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code summary} field.
+           * The <code>summary</code> field.
            *
            * @param summary the value
            * @return this builder
@@ -1484,7 +1484,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code sentiment} field.
+           * The <code>sentiment</code> field.
            *
            * @param sentiment the value
            * @return this builder
@@ -1494,7 +1494,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code sentiment_score} field.
+           * The <code>sentiment_score</code> field.
            *
            * @param sentimentScore the value
            * @return this builder
@@ -1504,7 +1504,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code source_url} field.
+           * The <code>source_url</code> field.
            *
            * @param sourceUrl the value
            * @return this builder
@@ -1514,7 +1514,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code thumbnail} field.
+           * The <code>thumbnail</code> field.
            *
            * @param thumbnail the value, or {@code null} to send JSON null
            * @return this builder
@@ -1524,7 +1524,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code country} field.
+           * The <code>country</code> field.
            *
            * @param country the value, or {@code null} to send JSON null
            * @return this builder
@@ -1534,7 +1534,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code author_name} field.
+           * The <code>author_name</code> field.
            *
            * @param authorName the value, or {@code null} to send JSON null
            * @return this builder
@@ -1544,7 +1544,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code publication_date} field.
+           * The <code>publication_date</code> field.
            *
            * @param publicationDate the value, or {@code null} to send JSON null
            * @return this builder
@@ -1554,7 +1554,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code adverse_keywords} field.
+           * The <code>adverse_keywords</code> field.
            *
            * @param adverseKeywords the value
            * @return this builder
@@ -1564,7 +1564,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code other_sources} field.
+           * The <code>other_sources</code> field.
            *
            * @param otherSources the value
            * @return this builder
@@ -1626,7 +1626,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1636,7 +1636,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code relation} field.
+         * The <code>relation</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1646,7 +1646,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code status} field.
+         * The <code>status</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1656,7 +1656,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code details} field.
+         * The <code>details</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1666,7 +1666,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code active} field.
+         * The <code>active</code> field.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1689,7 +1689,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code name} field.
+           * The <code>name</code> field.
            *
            * @param name the value
            * @return this builder
@@ -1699,7 +1699,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code relation} field.
+           * The <code>relation</code> field.
            *
            * @param relation the value
            * @return this builder
@@ -1709,7 +1709,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code status} field.
+           * The <code>status</code> field.
            *
            * @param status the value
            * @return this builder
@@ -1719,7 +1719,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code details} field.
+           * The <code>details</code> field.
            *
            * @param details the value
            * @return this builder
@@ -1729,7 +1729,7 @@ public final class AmlScreenResponse extends JsonModel {
           }
 
           /**
-           * The {@code active} field.
+           * The <code>active</code> field.
            *
            * @param active the value
            * @return this builder
@@ -2258,7 +2258,7 @@ public final class AmlScreenResponse extends JsonModel {
       }
 
       /**
-       * The {@code full_name} field.
+       * The <code>full_name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2268,7 +2268,7 @@ public final class AmlScreenResponse extends JsonModel {
       }
 
       /**
-       * The {@code date_of_birth} field.
+       * The <code>date_of_birth</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2278,7 +2278,7 @@ public final class AmlScreenResponse extends JsonModel {
       }
 
       /**
-       * The {@code nationality} field.
+       * The <code>nationality</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2288,7 +2288,7 @@ public final class AmlScreenResponse extends JsonModel {
       }
 
       /**
-       * The {@code document_number} field.
+       * The <code>document_number</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2311,7 +2311,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code full_name} field.
+         * The <code>full_name</code> field.
          *
          * @param fullName the value
          * @return this builder
@@ -2321,7 +2321,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code date_of_birth} field.
+         * The <code>date_of_birth</code> field.
          *
          * @param dateOfBirth the value, or {@code null} to send JSON null
          * @return this builder
@@ -2331,7 +2331,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code nationality} field.
+         * The <code>nationality</code> field.
          *
          * @param nationality the value, or {@code null} to send JSON null
          * @return this builder
@@ -2341,7 +2341,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * The {@code document_number} field.
+         * The <code>document_number</code> field.
          *
          * @param documentNumber the value, or {@code null} to send JSON null
          * @return this builder

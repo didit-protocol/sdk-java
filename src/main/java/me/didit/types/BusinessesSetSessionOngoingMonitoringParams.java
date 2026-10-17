@@ -81,7 +81,7 @@ public final class BusinessesSetSessionOngoingMonitoringParams extends JsonModel
   }
 
   /**
-   * The {@code filter_search} field.
+   * The <code>filter_search</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -91,7 +91,7 @@ public final class BusinessesSetSessionOngoingMonitoringParams extends JsonModel
   }
 
   /**
-   * The {@code filter_status} field.
+   * The <code>filter_status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -101,7 +101,7 @@ public final class BusinessesSetSessionOngoingMonitoringParams extends JsonModel
   }
 
   /**
-   * The {@code filter_country} field.
+   * The <code>filter_country</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -111,7 +111,7 @@ public final class BusinessesSetSessionOngoingMonitoringParams extends JsonModel
   }
 
   /**
-   * The {@code filter_date_from} field.
+   * The <code>filter_date_from</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -121,7 +121,7 @@ public final class BusinessesSetSessionOngoingMonitoringParams extends JsonModel
   }
 
   /**
-   * The {@code filter_date_to} field.
+   * The <code>filter_date_to</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -151,7 +151,7 @@ public final class BusinessesSetSessionOngoingMonitoringParams extends JsonModel
   }
 
   /**
-   * The {@code filter_workflow_id} field.
+   * The <code>filter_workflow_id</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -204,7 +204,7 @@ public final class BusinessesSetSessionOngoingMonitoringParams extends JsonModel
     }
 
     /**
-     * The {@code filter_search} field.
+     * The <code>filter_search</code> field.
      *
      * @param filterSearch the value
      * @return this builder
@@ -214,7 +214,7 @@ public final class BusinessesSetSessionOngoingMonitoringParams extends JsonModel
     }
 
     /**
-     * The {@code filter_status} field.
+     * The <code>filter_status</code> field.
      *
      * @param filterStatus the value
      * @return this builder
@@ -224,7 +224,7 @@ public final class BusinessesSetSessionOngoingMonitoringParams extends JsonModel
     }
 
     /**
-     * The {@code filter_country} field.
+     * The <code>filter_country</code> field.
      *
      * @param filterCountry the value
      * @return this builder
@@ -234,7 +234,7 @@ public final class BusinessesSetSessionOngoingMonitoringParams extends JsonModel
     }
 
     /**
-     * The {@code filter_date_from} field.
+     * The <code>filter_date_from</code> field.
      *
      * @param filterDateFrom the value
      * @return this builder
@@ -244,7 +244,7 @@ public final class BusinessesSetSessionOngoingMonitoringParams extends JsonModel
     }
 
     /**
-     * The {@code filter_date_to} field.
+     * The <code>filter_date_to</code> field.
      *
      * @param filterDateTo the value
      * @return this builder
@@ -274,7 +274,7 @@ public final class BusinessesSetSessionOngoingMonitoringParams extends JsonModel
     }
 
     /**
-     * The {@code filter_workflow_id} field.
+     * The <code>filter_workflow_id</code> field.
      *
      * @param filterWorkflowId the value
      * @return this builder

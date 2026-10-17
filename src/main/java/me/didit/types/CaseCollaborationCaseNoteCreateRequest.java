@@ -50,7 +50,7 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
   }
 
   /**
-   * The {@code comment} field.
+   * The <code>comment</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -60,7 +60,7 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
   }
 
   /**
-   * The {@code reply_to} field.
+   * The <code>reply_to</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -70,7 +70,7 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
   }
 
   /**
-   * The {@code client_reference} field.
+   * The <code>client_reference</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -80,7 +80,7 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
   }
 
   /**
-   * The {@code mentioned_emails} field.
+   * The <code>mentioned_emails</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -90,7 +90,7 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
   }
 
   /**
-   * The {@code is_internal} field.
+   * The <code>is_internal</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -100,7 +100,7 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
   }
 
   /**
-   * The {@code attachments} field.
+   * The <code>attachments</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -110,7 +110,7 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
   }
 
   /**
-   * The {@code tags} field.
+   * The <code>tags</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -133,7 +133,7 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
     }
 
     /**
-     * The {@code comment} field.
+     * The <code>comment</code> field.
      *
      * @param comment the value
      * @return this builder
@@ -143,7 +143,7 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
     }
 
     /**
-     * The {@code reply_to} field.
+     * The <code>reply_to</code> field.
      *
      * @param replyTo the value, or {@code null} to send JSON null
      * @return this builder
@@ -153,7 +153,7 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
     }
 
     /**
-     * The {@code client_reference} field.
+     * The <code>client_reference</code> field.
      *
      * @param clientReference the value, or {@code null} to send JSON null
      * @return this builder
@@ -163,7 +163,7 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
     }
 
     /**
-     * The {@code mentioned_emails} field.
+     * The <code>mentioned_emails</code> field.
      *
      * @param mentionedEmails the value
      * @return this builder
@@ -173,7 +173,7 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
     }
 
     /**
-     * The {@code is_internal} field.
+     * The <code>is_internal</code> field.
      *
      * @param isInternal the value
      * @return this builder
@@ -183,7 +183,7 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
     }
 
     /**
-     * The {@code attachments} field.
+     * The <code>attachments</code> field.
      *
      * @param attachments the value
      * @return this builder
@@ -193,7 +193,7 @@ public final class CaseCollaborationCaseNoteCreateRequest extends JsonModel {
     }
 
     /**
-     * The {@code tags} field.
+     * The <code>tags</code> field.
      *
      * @param tags the value
      * @return this builder

@@ -49,7 +49,7 @@ public final class SessionsUpdateFeatureStatusResponse extends JsonModel {
   }
 
   /**
-   * The {@code session_id} field.
+   * The <code>session_id</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -59,7 +59,7 @@ public final class SessionsUpdateFeatureStatusResponse extends JsonModel {
   }
 
   /**
-   * The {@code node_id} field.
+   * The <code>node_id</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -79,7 +79,7 @@ public final class SessionsUpdateFeatureStatusResponse extends JsonModel {
   }
 
   /**
-   * The {@code new_status} field.
+   * The <code>new_status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +102,7 @@ public final class SessionsUpdateFeatureStatusResponse extends JsonModel {
     }
 
     /**
-     * The {@code session_id} field.
+     * The <code>session_id</code> field.
      *
      * @param sessionId the value
      * @return this builder
@@ -112,7 +112,7 @@ public final class SessionsUpdateFeatureStatusResponse extends JsonModel {
     }
 
     /**
-     * The {@code node_id} field.
+     * The <code>node_id</code> field.
      *
      * @param nodeId the value
      * @return this builder
@@ -132,7 +132,7 @@ public final class SessionsUpdateFeatureStatusResponse extends JsonModel {
     }
 
     /**
-     * The {@code new_status} field.
+     * The <code>new_status</code> field.
      *
      * @param newStatus the value
      * @return this builder

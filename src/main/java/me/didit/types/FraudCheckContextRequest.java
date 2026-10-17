@@ -49,7 +49,7 @@ public final class FraudCheckContextRequest extends JsonModel {
   }
 
   /**
-   * The {@code ip_address} field.
+   * The <code>ip_address</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -59,7 +59,7 @@ public final class FraudCheckContextRequest extends JsonModel {
   }
 
   /**
-   * The {@code user_agent} field.
+   * The <code>user_agent</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -79,7 +79,7 @@ public final class FraudCheckContextRequest extends JsonModel {
   }
 
   /**
-   * The {@code purpose} field.
+   * The <code>purpose</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -89,7 +89,7 @@ public final class FraudCheckContextRequest extends JsonModel {
   }
 
   /**
-   * The {@code consent_obtained} field.
+   * The <code>consent_obtained</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,7 +112,7 @@ public final class FraudCheckContextRequest extends JsonModel {
     }
 
     /**
-     * The {@code ip_address} field.
+     * The <code>ip_address</code> field.
      *
      * @param ipAddress the value
      * @return this builder
@@ -122,7 +122,7 @@ public final class FraudCheckContextRequest extends JsonModel {
     }
 
     /**
-     * The {@code user_agent} field.
+     * The <code>user_agent</code> field.
      *
      * @param userAgent the value
      * @return this builder
@@ -142,7 +142,7 @@ public final class FraudCheckContextRequest extends JsonModel {
     }
 
     /**
-     * The {@code purpose} field.
+     * The <code>purpose</code> field.
      *
      * @param purpose the value
      * @return this builder
@@ -152,7 +152,7 @@ public final class FraudCheckContextRequest extends JsonModel {
     }
 
     /**
-     * The {@code consent_obtained} field.
+     * The <code>consent_obtained</code> field.
      *
      * @param consentObtained the value
      * @return this builder

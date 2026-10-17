@@ -52,7 +52,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code title} field.
+   * The <code>title</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code status} field.
+   * The <code>status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code resolution} field.
+   * The <code>resolution</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +102,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code priority} field.
+   * The <code>priority</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,7 +112,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code source} field.
+   * The <code>source</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -122,7 +122,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code tags} field.
+   * The <code>tags</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -142,7 +142,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code assigned_to} field.
+   * The <code>assigned_to</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -152,7 +152,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code assigned_at} field.
+   * The <code>assigned_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -162,7 +162,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code due_at} field.
+   * The <code>due_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -172,7 +172,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code resolved_at} field.
+   * The <code>resolved_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -182,7 +182,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code created_by_email} field.
+   * The <code>created_by_email</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -192,7 +192,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code created_by_name} field.
+   * The <code>created_by_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -202,7 +202,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code blueprint} field.
+   * The <code>blueprint</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -212,7 +212,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code links_count} field.
+   * The <code>links_count</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -222,7 +222,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code notes_count} field.
+   * The <code>notes_count</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -232,7 +232,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -242,7 +242,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code updated_at} field.
+   * The <code>updated_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -252,7 +252,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code application_id} field.
+   * The <code>application_id</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -262,7 +262,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code application_name} field.
+   * The <code>application_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -272,7 +272,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code organization_id} field.
+   * The <code>organization_id</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -282,7 +282,7 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
-   * The {@code organization_name} field.
+   * The <code>organization_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -305,7 +305,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -325,7 +325,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code title} field.
+     * The <code>title</code> field.
      *
      * @param title the value
      * @return this builder
@@ -335,7 +335,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @param status the value
      * @return this builder
@@ -345,7 +345,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code resolution} field.
+     * The <code>resolution</code> field.
      *
      * @param resolution the value, or {@code null} to send JSON null
      * @return this builder
@@ -355,7 +355,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code priority} field.
+     * The <code>priority</code> field.
      *
      * @param priority the value
      * @return this builder
@@ -365,7 +365,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code source} field.
+     * The <code>source</code> field.
      *
      * @param source the value
      * @return this builder
@@ -375,7 +375,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code tags} field.
+     * The <code>tags</code> field.
      *
      * @param tags the value
      * @return this builder
@@ -395,7 +395,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code assigned_to} field.
+     * The <code>assigned_to</code> field.
      *
      * @param assignedTo the value, or {@code null} to send JSON null
      * @return this builder
@@ -405,7 +405,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code assigned_at} field.
+     * The <code>assigned_at</code> field.
      *
      * @param assignedAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -415,7 +415,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code due_at} field.
+     * The <code>due_at</code> field.
      *
      * @param dueAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -425,7 +425,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code resolved_at} field.
+     * The <code>resolved_at</code> field.
      *
      * @param resolvedAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -435,7 +435,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code created_by_email} field.
+     * The <code>created_by_email</code> field.
      *
      * @param createdByEmail the value, or {@code null} to send JSON null
      * @return this builder
@@ -445,7 +445,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code created_by_name} field.
+     * The <code>created_by_name</code> field.
      *
      * @param createdByName the value, or {@code null} to send JSON null
      * @return this builder
@@ -455,7 +455,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code blueprint} field.
+     * The <code>blueprint</code> field.
      *
      * @param blueprint the value, or {@code null} to send JSON null
      * @return this builder
@@ -465,7 +465,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code links_count} field.
+     * The <code>links_count</code> field.
      *
      * @param linksCount the value
      * @return this builder
@@ -475,7 +475,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code notes_count} field.
+     * The <code>notes_count</code> field.
      *
      * @param notesCount the value
      * @return this builder
@@ -485,7 +485,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -495,7 +495,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code updated_at} field.
+     * The <code>updated_at</code> field.
      *
      * @param updatedAt the value
      * @return this builder
@@ -505,7 +505,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code application_id} field.
+     * The <code>application_id</code> field.
      *
      * @param applicationId the value
      * @return this builder
@@ -515,7 +515,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code application_name} field.
+     * The <code>application_name</code> field.
      *
      * @param applicationName the value
      * @return this builder
@@ -525,7 +525,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code organization_id} field.
+     * The <code>organization_id</code> field.
      *
      * @param organizationId the value
      * @return this builder
@@ -535,7 +535,7 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
-     * The {@code organization_name} field.
+     * The <code>organization_name</code> field.
      *
      * @param organizationName the value
      * @return this builder

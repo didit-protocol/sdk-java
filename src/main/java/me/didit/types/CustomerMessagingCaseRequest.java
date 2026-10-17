@@ -51,7 +51,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -61,7 +61,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
   }
 
   /**
-   * The {@code purpose} field.
+   * The <code>purpose</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -71,7 +71,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
   }
 
   /**
-   * The {@code language} field.
+   * The <code>language</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -81,7 +81,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
   }
 
   /**
-   * The {@code recipient} field.
+   * The <code>recipient</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -91,7 +91,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
   }
 
   /**
-   * The {@code expires_at} field.
+   * The <code>expires_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -101,7 +101,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
   }
 
   /**
-   * The {@code actor_email} field.
+   * The <code>actor_email</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -111,7 +111,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
   }
 
   /**
-   * The {@code delivery_status} field.
+   * The <code>delivery_status</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -121,7 +121,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
   }
 
   /**
-   * The {@code delivered_at} field.
+   * The <code>delivered_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -131,7 +131,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
   }
 
   /**
-   * The {@code cancelled_at} field.
+   * The <code>cancelled_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -141,7 +141,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
   }
 
   /**
-   * The {@code responded_at} field.
+   * The <code>responded_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -151,7 +151,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
   }
 
   /**
-   * The {@code response} field.
+   * The <code>response</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -161,7 +161,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
   }
 
   /**
-   * The {@code has_attachment} field.
+   * The <code>has_attachment</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -171,7 +171,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -194,7 +194,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -204,7 +204,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
     }
 
     /**
-     * The {@code purpose} field.
+     * The <code>purpose</code> field.
      *
      * @param purpose the value
      * @return this builder
@@ -214,7 +214,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
     }
 
     /**
-     * The {@code language} field.
+     * The <code>language</code> field.
      *
      * @param language the value
      * @return this builder
@@ -224,7 +224,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
     }
 
     /**
-     * The {@code recipient} field.
+     * The <code>recipient</code> field.
      *
      * @param recipient the value
      * @return this builder
@@ -234,7 +234,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
     }
 
     /**
-     * The {@code expires_at} field.
+     * The <code>expires_at</code> field.
      *
      * @param expiresAt the value
      * @return this builder
@@ -244,7 +244,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
     }
 
     /**
-     * The {@code actor_email} field.
+     * The <code>actor_email</code> field.
      *
      * @param actorEmail the value, or {@code null} to send JSON null
      * @return this builder
@@ -254,7 +254,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
     }
 
     /**
-     * The {@code delivery_status} field.
+     * The <code>delivery_status</code> field.
      *
      * @param deliveryStatus the value
      * @return this builder
@@ -264,7 +264,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
     }
 
     /**
-     * The {@code delivered_at} field.
+     * The <code>delivered_at</code> field.
      *
      * @param deliveredAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -274,7 +274,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
     }
 
     /**
-     * The {@code cancelled_at} field.
+     * The <code>cancelled_at</code> field.
      *
      * @param cancelledAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -284,7 +284,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
     }
 
     /**
-     * The {@code responded_at} field.
+     * The <code>responded_at</code> field.
      *
      * @param respondedAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -294,7 +294,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
     }
 
     /**
-     * The {@code response} field.
+     * The <code>response</code> field.
      *
      * @param response the value, or {@code null} to send JSON null
      * @return this builder
@@ -304,7 +304,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
     }
 
     /**
-     * The {@code has_attachment} field.
+     * The <code>has_attachment</code> field.
      *
      * @param hasAttachment the value
      * @return this builder
@@ -314,7 +314,7 @@ public final class CustomerMessagingCaseRequest extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder

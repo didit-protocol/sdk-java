@@ -61,7 +61,7 @@ public final class FraudCheckIdentityRelationship extends JsonModel {
   }
 
   /**
-   * The {@code reference_type} field.
+   * The <code>reference_type</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -71,7 +71,7 @@ public final class FraudCheckIdentityRelationship extends JsonModel {
   }
 
   /**
-   * The {@code country} field.
+   * The <code>country</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -96,7 +96,7 @@ public final class FraudCheckIdentityRelationship extends JsonModel {
   }
 
   /**
-   * The {@code reason_codes} field.
+   * The <code>reason_codes</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -132,7 +132,7 @@ public final class FraudCheckIdentityRelationship extends JsonModel {
     }
 
     /**
-     * The {@code reference_type} field.
+     * The <code>reference_type</code> field.
      *
      * @param referenceType the value
      * @return this builder
@@ -142,7 +142,7 @@ public final class FraudCheckIdentityRelationship extends JsonModel {
     }
 
     /**
-     * The {@code country} field.
+     * The <code>country</code> field.
      *
      * @param country the value
      * @return this builder
@@ -167,7 +167,7 @@ public final class FraudCheckIdentityRelationship extends JsonModel {
     }
 
     /**
-     * The {@code reason_codes} field.
+     * The <code>reason_codes</code> field.
      *
      * @param reasonCodes the value
      * @return this builder

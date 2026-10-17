@@ -50,7 +50,7 @@ public final class CasePublicationPolicyDraftWriteRequest extends JsonModel {
   }
 
   /**
-   * The {@code expected_version} field.
+   * The <code>expected_version</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -60,7 +60,7 @@ public final class CasePublicationPolicyDraftWriteRequest extends JsonModel {
   }
 
   /**
-   * The {@code expected_revision} field.
+   * The <code>expected_revision</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -70,7 +70,7 @@ public final class CasePublicationPolicyDraftWriteRequest extends JsonModel {
   }
 
   /**
-   * The {@code changes} field.
+   * The <code>changes</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -93,7 +93,7 @@ public final class CasePublicationPolicyDraftWriteRequest extends JsonModel {
     }
 
     /**
-     * The {@code expected_version} field.
+     * The <code>expected_version</code> field.
      *
      * @param expectedVersion the value
      * @return this builder
@@ -103,7 +103,7 @@ public final class CasePublicationPolicyDraftWriteRequest extends JsonModel {
     }
 
     /**
-     * The {@code expected_revision} field.
+     * The <code>expected_revision</code> field.
      *
      * @param expectedRevision the value, or {@code null} to send JSON null
      * @return this builder
@@ -113,7 +113,7 @@ public final class CasePublicationPolicyDraftWriteRequest extends JsonModel {
     }
 
     /**
-     * The {@code changes} field.
+     * The <code>changes</code> field.
      *
      * @param changes the value
      * @return this builder

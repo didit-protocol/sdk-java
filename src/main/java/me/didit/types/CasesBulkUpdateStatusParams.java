@@ -52,7 +52,7 @@ public final class CasesBulkUpdateStatusParams extends JsonModel {
   }
 
   /**
-   * The {@code case_uuids} field.
+   * The <code>case_uuids</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -62,7 +62,7 @@ public final class CasesBulkUpdateStatusParams extends JsonModel {
   }
 
   /**
-   * The {@code status} field.
+   * The <code>status</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -82,7 +82,7 @@ public final class CasesBulkUpdateStatusParams extends JsonModel {
   }
 
   /**
-   * The {@code note} field.
+   * The <code>note</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -105,7 +105,7 @@ public final class CasesBulkUpdateStatusParams extends JsonModel {
     }
 
     /**
-     * The {@code case_uuids} field.
+     * The <code>case_uuids</code> field.
      *
      * @param caseUuids the value
      * @return this builder
@@ -115,7 +115,7 @@ public final class CasesBulkUpdateStatusParams extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @param status the value
      * @return this builder
@@ -135,7 +135,7 @@ public final class CasesBulkUpdateStatusParams extends JsonModel {
     }
 
     /**
-     * The {@code note} field.
+     * The <code>note</code> field.
      *
      * @param note the value, or {@code null} to send JSON null
      * @return this builder

@@ -50,7 +50,7 @@ public final class TravelRuleWidgetSessionResponse extends JsonModel {
   }
 
   /**
-   * The {@code widget_session_id} field.
+   * The <code>widget_session_id</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -80,7 +80,7 @@ public final class TravelRuleWidgetSessionResponse extends JsonModel {
   }
 
   /**
-   * The {@code expires_at} field.
+   * The <code>expires_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -103,7 +103,7 @@ public final class TravelRuleWidgetSessionResponse extends JsonModel {
     }
 
     /**
-     * The {@code widget_session_id} field.
+     * The <code>widget_session_id</code> field.
      *
      * @param widgetSessionId the value
      * @return this builder
@@ -133,7 +133,7 @@ public final class TravelRuleWidgetSessionResponse extends JsonModel {
     }
 
     /**
-     * The {@code expires_at} field.
+     * The <code>expires_at</code> field.
      *
      * @param expiresAt the value
      * @return this builder

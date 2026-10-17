@@ -51,7 +51,7 @@ public final class CaseRoutingRule extends JsonModel {
   }
 
   /**
-   * The {@code name} field.
+   * The <code>name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -61,7 +61,7 @@ public final class CaseRoutingRule extends JsonModel {
   }
 
   /**
-   * The {@code description} field.
+   * The <code>description</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -71,7 +71,7 @@ public final class CaseRoutingRule extends JsonModel {
   }
 
   /**
-   * The {@code priority} field.
+   * The <code>priority</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -81,7 +81,7 @@ public final class CaseRoutingRule extends JsonModel {
   }
 
   /**
-   * The {@code conditions} field.
+   * The <code>conditions</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -91,7 +91,7 @@ public final class CaseRoutingRule extends JsonModel {
   }
 
   /**
-   * The {@code required_skills} field.
+   * The <code>required_skills</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -101,7 +101,7 @@ public final class CaseRoutingRule extends JsonModel {
   }
 
   /**
-   * The {@code blueprint} field.
+   * The <code>blueprint</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -111,7 +111,7 @@ public final class CaseRoutingRule extends JsonModel {
   }
 
   /**
-   * The {@code team} field.
+   * The <code>team</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -121,7 +121,7 @@ public final class CaseRoutingRule extends JsonModel {
   }
 
   /**
-   * The {@code is_active} field.
+   * The <code>is_active</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -131,7 +131,7 @@ public final class CaseRoutingRule extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -141,7 +141,7 @@ public final class CaseRoutingRule extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -151,7 +151,7 @@ public final class CaseRoutingRule extends JsonModel {
   }
 
   /**
-   * The {@code updated_at} field.
+   * The <code>updated_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -161,7 +161,7 @@ public final class CaseRoutingRule extends JsonModel {
   }
 
   /**
-   * The {@code version} field.
+   * The <code>version</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -171,7 +171,7 @@ public final class CaseRoutingRule extends JsonModel {
   }
 
   /**
-   * The {@code blueprint_name} field.
+   * The <code>blueprint_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -181,7 +181,7 @@ public final class CaseRoutingRule extends JsonModel {
   }
 
   /**
-   * The {@code team_name} field.
+   * The <code>team_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -204,7 +204,7 @@ public final class CaseRoutingRule extends JsonModel {
     }
 
     /**
-     * The {@code name} field.
+     * The <code>name</code> field.
      *
      * @param name the value
      * @return this builder
@@ -214,7 +214,7 @@ public final class CaseRoutingRule extends JsonModel {
     }
 
     /**
-     * The {@code description} field.
+     * The <code>description</code> field.
      *
      * @param description the value
      * @return this builder
@@ -224,7 +224,7 @@ public final class CaseRoutingRule extends JsonModel {
     }
 
     /**
-     * The {@code priority} field.
+     * The <code>priority</code> field.
      *
      * @param priority the value
      * @return this builder
@@ -234,7 +234,7 @@ public final class CaseRoutingRule extends JsonModel {
     }
 
     /**
-     * The {@code conditions} field.
+     * The <code>conditions</code> field.
      *
      * @param conditions the value
      * @return this builder
@@ -244,7 +244,7 @@ public final class CaseRoutingRule extends JsonModel {
     }
 
     /**
-     * The {@code required_skills} field.
+     * The <code>required_skills</code> field.
      *
      * @param requiredSkills the value
      * @return this builder
@@ -254,7 +254,7 @@ public final class CaseRoutingRule extends JsonModel {
     }
 
     /**
-     * The {@code blueprint} field.
+     * The <code>blueprint</code> field.
      *
      * @param blueprint the value
      * @return this builder
@@ -264,7 +264,7 @@ public final class CaseRoutingRule extends JsonModel {
     }
 
     /**
-     * The {@code team} field.
+     * The <code>team</code> field.
      *
      * @param team the value, or {@code null} to send JSON null
      * @return this builder
@@ -274,7 +274,7 @@ public final class CaseRoutingRule extends JsonModel {
     }
 
     /**
-     * The {@code is_active} field.
+     * The <code>is_active</code> field.
      *
      * @param isActive the value
      * @return this builder
@@ -284,7 +284,7 @@ public final class CaseRoutingRule extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -294,7 +294,7 @@ public final class CaseRoutingRule extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -304,7 +304,7 @@ public final class CaseRoutingRule extends JsonModel {
     }
 
     /**
-     * The {@code updated_at} field.
+     * The <code>updated_at</code> field.
      *
      * @param updatedAt the value
      * @return this builder
@@ -314,7 +314,7 @@ public final class CaseRoutingRule extends JsonModel {
     }
 
     /**
-     * The {@code version} field.
+     * The <code>version</code> field.
      *
      * @param version the value
      * @return this builder
@@ -324,7 +324,7 @@ public final class CaseRoutingRule extends JsonModel {
     }
 
     /**
-     * The {@code blueprint_name} field.
+     * The <code>blueprint_name</code> field.
      *
      * @param blueprintName the value
      * @return this builder
@@ -334,7 +334,7 @@ public final class CaseRoutingRule extends JsonModel {
     }
 
     /**
-     * The {@code team_name} field.
+     * The <code>team_name</code> field.
      *
      * @param teamName the value, or {@code null} to send JSON null
      * @return this builder

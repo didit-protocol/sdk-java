@@ -52,7 +52,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code description} field.
+   * The <code>description</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -122,7 +122,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code conditions} field.
+   * The <code>conditions</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -132,7 +132,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code aggregation} field.
+   * The <code>aggregation</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -142,7 +142,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code actions} field.
+   * The <code>actions</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -192,7 +192,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code latest_triggered_at} field.
+   * The <code>latest_triggered_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -212,7 +212,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code approved_count} field.
+   * The <code>approved_count</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -222,7 +222,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code reviewed_count} field.
+   * The <code>reviewed_count</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -232,7 +232,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code declined_count} field.
+   * The <code>declined_count</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -242,7 +242,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code awaiting_user_count} field.
+   * The <code>awaiting_user_count</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -252,7 +252,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code approved_pct} field.
+   * The <code>approved_pct</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -262,7 +262,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code reviewed_pct} field.
+   * The <code>reviewed_pct</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -272,7 +272,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code declined_pct} field.
+   * The <code>declined_pct</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -282,7 +282,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -292,7 +292,7 @@ public final class TransactionRuleDetail extends JsonModel {
   }
 
   /**
-   * The {@code updated_at} field.
+   * The <code>updated_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -315,7 +315,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -335,7 +335,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code description} field.
+     * The <code>description</code> field.
      *
      * @param description the value, or {@code null} to send JSON null
      * @return this builder
@@ -385,7 +385,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code conditions} field.
+     * The <code>conditions</code> field.
      *
      * @param conditions the value
      * @return this builder
@@ -395,7 +395,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code aggregation} field.
+     * The <code>aggregation</code> field.
      *
      * @param aggregation the value
      * @return this builder
@@ -405,7 +405,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code actions} field.
+     * The <code>actions</code> field.
      *
      * @param actions the value
      * @return this builder
@@ -455,7 +455,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code latest_triggered_at} field.
+     * The <code>latest_triggered_at</code> field.
      *
      * @param latestTriggeredAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -475,7 +475,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code approved_count} field.
+     * The <code>approved_count</code> field.
      *
      * @param approvedCount the value
      * @return this builder
@@ -485,7 +485,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code reviewed_count} field.
+     * The <code>reviewed_count</code> field.
      *
      * @param reviewedCount the value
      * @return this builder
@@ -495,7 +495,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code declined_count} field.
+     * The <code>declined_count</code> field.
      *
      * @param declinedCount the value
      * @return this builder
@@ -505,7 +505,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code awaiting_user_count} field.
+     * The <code>awaiting_user_count</code> field.
      *
      * @param awaitingUserCount the value
      * @return this builder
@@ -515,7 +515,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code approved_pct} field.
+     * The <code>approved_pct</code> field.
      *
      * @param approvedPct the value
      * @return this builder
@@ -525,7 +525,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code reviewed_pct} field.
+     * The <code>reviewed_pct</code> field.
      *
      * @param reviewedPct the value
      * @return this builder
@@ -535,7 +535,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code declined_pct} field.
+     * The <code>declined_pct</code> field.
      *
      * @param declinedPct the value
      * @return this builder
@@ -545,7 +545,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -555,7 +555,7 @@ public final class TransactionRuleDetail extends JsonModel {
     }
 
     /**
-     * The {@code updated_at} field.
+     * The <code>updated_at</code> field.
      *
      * @param updatedAt the value
      * @return this builder

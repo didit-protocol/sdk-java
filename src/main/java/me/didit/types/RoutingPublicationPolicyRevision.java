@@ -51,7 +51,7 @@ public final class RoutingPublicationPolicyRevision extends JsonModel {
   }
 
   /**
-   * The {@code version} field.
+   * The <code>version</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -61,7 +61,7 @@ public final class RoutingPublicationPolicyRevision extends JsonModel {
   }
 
   /**
-   * The {@code snapshot} field.
+   * The <code>snapshot</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -71,7 +71,7 @@ public final class RoutingPublicationPolicyRevision extends JsonModel {
   }
 
   /**
-   * The {@code actor_email} field.
+   * The <code>actor_email</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -81,7 +81,7 @@ public final class RoutingPublicationPolicyRevision extends JsonModel {
   }
 
   /**
-   * The {@code published_at} field.
+   * The <code>published_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -104,7 +104,7 @@ public final class RoutingPublicationPolicyRevision extends JsonModel {
     }
 
     /**
-     * The {@code version} field.
+     * The <code>version</code> field.
      *
      * @param version the value
      * @return this builder
@@ -114,7 +114,7 @@ public final class RoutingPublicationPolicyRevision extends JsonModel {
     }
 
     /**
-     * The {@code snapshot} field.
+     * The <code>snapshot</code> field.
      *
      * @param snapshot the value
      * @return this builder
@@ -124,7 +124,7 @@ public final class RoutingPublicationPolicyRevision extends JsonModel {
     }
 
     /**
-     * The {@code actor_email} field.
+     * The <code>actor_email</code> field.
      *
      * @param actorEmail the value, or {@code null} to send JSON null
      * @return this builder
@@ -134,7 +134,7 @@ public final class RoutingPublicationPolicyRevision extends JsonModel {
     }
 
     /**
-     * The {@code published_at} field.
+     * The <code>published_at</code> field.
      *
      * @param publishedAt the value
      * @return this builder

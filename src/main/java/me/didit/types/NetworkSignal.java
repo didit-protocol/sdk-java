@@ -52,7 +52,7 @@ public final class NetworkSignal extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -62,7 +62,7 @@ public final class NetworkSignal extends JsonModel {
   }
 
   /**
-   * The {@code signal_type} field.
+   * The <code>signal_type</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class NetworkSignal extends JsonModel {
   }
 
   /**
-   * The {@code subject_count} field.
+   * The <code>subject_count</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class NetworkSignal extends JsonModel {
   }
 
   /**
-   * The {@code coverage} field.
+   * The <code>coverage</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +102,7 @@ public final class NetworkSignal extends JsonModel {
   }
 
   /**
-   * The {@code is_datacenter_ip} field.
+   * The <code>is_datacenter_ip</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,7 +112,7 @@ public final class NetworkSignal extends JsonModel {
   }
 
   /**
-   * The {@code is_high_collision_device} field.
+   * The <code>is_high_collision_device</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -122,7 +122,7 @@ public final class NetworkSignal extends JsonModel {
   }
 
   /**
-   * The {@code node_status} field.
+   * The <code>node_status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -132,7 +132,7 @@ public final class NetworkSignal extends JsonModel {
   }
 
   /**
-   * The {@code tags} field.
+   * The <code>tags</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -142,7 +142,7 @@ public final class NetworkSignal extends JsonModel {
   }
 
   /**
-   * The {@code risk_evidence} field.
+   * The <code>risk_evidence</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -152,7 +152,7 @@ public final class NetworkSignal extends JsonModel {
   }
 
   /**
-   * The {@code first_seen_at} field.
+   * The <code>first_seen_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -162,7 +162,7 @@ public final class NetworkSignal extends JsonModel {
   }
 
   /**
-   * The {@code last_seen_at} field.
+   * The <code>last_seen_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -185,7 +185,7 @@ public final class NetworkSignal extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -195,7 +195,7 @@ public final class NetworkSignal extends JsonModel {
     }
 
     /**
-     * The {@code signal_type} field.
+     * The <code>signal_type</code> field.
      *
      * @param signalType the value
      * @return this builder
@@ -205,7 +205,7 @@ public final class NetworkSignal extends JsonModel {
     }
 
     /**
-     * The {@code subject_count} field.
+     * The <code>subject_count</code> field.
      *
      * @param subjectCount the value
      * @return this builder
@@ -215,7 +215,7 @@ public final class NetworkSignal extends JsonModel {
     }
 
     /**
-     * The {@code coverage} field.
+     * The <code>coverage</code> field.
      *
      * @param coverage the value
      * @return this builder
@@ -235,7 +235,7 @@ public final class NetworkSignal extends JsonModel {
     }
 
     /**
-     * The {@code is_datacenter_ip} field.
+     * The <code>is_datacenter_ip</code> field.
      *
      * @param isDatacenterIp the value
      * @return this builder
@@ -245,7 +245,7 @@ public final class NetworkSignal extends JsonModel {
     }
 
     /**
-     * The {@code is_high_collision_device} field.
+     * The <code>is_high_collision_device</code> field.
      *
      * @param isHighCollisionDevice the value
      * @return this builder
@@ -255,7 +255,7 @@ public final class NetworkSignal extends JsonModel {
     }
 
     /**
-     * The {@code node_status} field.
+     * The <code>node_status</code> field.
      *
      * @param nodeStatus the value
      * @return this builder
@@ -265,7 +265,7 @@ public final class NetworkSignal extends JsonModel {
     }
 
     /**
-     * The {@code tags} field.
+     * The <code>tags</code> field.
      *
      * @param tags the value
      * @return this builder
@@ -275,7 +275,7 @@ public final class NetworkSignal extends JsonModel {
     }
 
     /**
-     * The {@code risk_evidence} field.
+     * The <code>risk_evidence</code> field.
      *
      * @param riskEvidence the value
      * @return this builder
@@ -285,7 +285,7 @@ public final class NetworkSignal extends JsonModel {
     }
 
     /**
-     * The {@code first_seen_at} field.
+     * The <code>first_seen_at</code> field.
      *
      * @param firstSeenAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -295,7 +295,7 @@ public final class NetworkSignal extends JsonModel {
     }
 
     /**
-     * The {@code last_seen_at} field.
+     * The <code>last_seen_at</code> field.
      *
      * @param lastSeenAt the value, or {@code null} to send JSON null
      * @return this builder

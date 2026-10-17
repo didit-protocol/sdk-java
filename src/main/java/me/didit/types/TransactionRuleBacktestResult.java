@@ -79,7 +79,7 @@ public final class TransactionRuleBacktestResult extends JsonModel {
   }
 
   /**
-   * The {@code period_days} field.
+   * The <code>period_days</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -132,7 +132,7 @@ public final class TransactionRuleBacktestResult extends JsonModel {
     }
 
     /**
-     * The {@code period_days} field.
+     * The <code>period_days</code> field.
      *
      * @param periodDays the value
      * @return this builder

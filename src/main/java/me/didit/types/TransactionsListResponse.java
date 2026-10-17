@@ -92,7 +92,7 @@ public final class TransactionsListResponse extends JsonModel {
   }
 
   /**
-   * The {@code results} field.
+   * The <code>results</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -155,7 +155,7 @@ public final class TransactionsListResponse extends JsonModel {
     }
 
     /**
-     * The {@code results} field.
+     * The <code>results</code> field.
      *
      * @param results the value
      * @return this builder
@@ -944,7 +944,7 @@ public final class TransactionsListResponse extends JsonModel {
       }
 
       /**
-       * The {@code uuid} field.
+       * The <code>uuid</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -954,7 +954,7 @@ public final class TransactionsListResponse extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -964,7 +964,7 @@ public final class TransactionsListResponse extends JsonModel {
       }
 
       /**
-       * The {@code color} field.
+       * The <code>color</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -974,7 +974,7 @@ public final class TransactionsListResponse extends JsonModel {
       }
 
       /**
-       * The {@code description} field.
+       * The <code>description</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1007,7 +1007,7 @@ public final class TransactionsListResponse extends JsonModel {
         }
 
         /**
-         * The {@code uuid} field.
+         * The <code>uuid</code> field.
          *
          * @param uuid the value
          * @return this builder
@@ -1017,7 +1017,7 @@ public final class TransactionsListResponse extends JsonModel {
         }
 
         /**
-         * The {@code name} field.
+         * The <code>name</code> field.
          *
          * @param name the value
          * @return this builder
@@ -1027,7 +1027,7 @@ public final class TransactionsListResponse extends JsonModel {
         }
 
         /**
-         * The {@code color} field.
+         * The <code>color</code> field.
          *
          * @param color the value
          * @return this builder
@@ -1037,7 +1037,7 @@ public final class TransactionsListResponse extends JsonModel {
         }
 
         /**
-         * The {@code description} field.
+         * The <code>description</code> field.
          *
          * @param description the value, or {@code null} to send JSON null
          * @return this builder

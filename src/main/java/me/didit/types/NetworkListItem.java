@@ -52,7 +52,7 @@ public final class NetworkListItem extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class NetworkListItem extends JsonModel {
   }
 
   /**
-   * The {@code name} field.
+   * The <code>name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class NetworkListItem extends JsonModel {
   }
 
   /**
-   * The {@code risk} field.
+   * The <code>risk</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -152,7 +152,7 @@ public final class NetworkListItem extends JsonModel {
   }
 
   /**
-   * The {@code first_activity_at} field.
+   * The <code>first_activity_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -162,7 +162,7 @@ public final class NetworkListItem extends JsonModel {
   }
 
   /**
-   * The {@code last_activity_at} field.
+   * The <code>last_activity_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -185,7 +185,7 @@ public final class NetworkListItem extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -205,7 +205,7 @@ public final class NetworkListItem extends JsonModel {
     }
 
     /**
-     * The {@code name} field.
+     * The <code>name</code> field.
      *
      * @param name the value, or {@code null} to send JSON null
      * @return this builder
@@ -225,7 +225,7 @@ public final class NetworkListItem extends JsonModel {
     }
 
     /**
-     * The {@code risk} field.
+     * The <code>risk</code> field.
      *
      * @param risk the value
      * @return this builder
@@ -285,7 +285,7 @@ public final class NetworkListItem extends JsonModel {
     }
 
     /**
-     * The {@code first_activity_at} field.
+     * The <code>first_activity_at</code> field.
      *
      * @param firstActivityAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -295,7 +295,7 @@ public final class NetworkListItem extends JsonModel {
     }
 
     /**
-     * The {@code last_activity_at} field.
+     * The <code>last_activity_at</code> field.
      *
      * @param lastActivityAt the value, or {@code null} to send JSON null
      * @return this builder

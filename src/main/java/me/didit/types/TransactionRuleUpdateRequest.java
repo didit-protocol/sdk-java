@@ -64,7 +64,7 @@ public final class TransactionRuleUpdateRequest extends JsonModel {
   }
 
   /**
-   * The {@code description} field.
+   * The <code>description</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -114,7 +114,7 @@ public final class TransactionRuleUpdateRequest extends JsonModel {
   }
 
   /**
-   * The {@code conditions} field.
+   * The <code>conditions</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -124,7 +124,7 @@ public final class TransactionRuleUpdateRequest extends JsonModel {
   }
 
   /**
-   * The {@code aggregation} field.
+   * The <code>aggregation</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -134,7 +134,7 @@ public final class TransactionRuleUpdateRequest extends JsonModel {
   }
 
   /**
-   * The {@code actions} field.
+   * The <code>actions</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -177,7 +177,7 @@ public final class TransactionRuleUpdateRequest extends JsonModel {
     }
 
     /**
-     * The {@code description} field.
+     * The <code>description</code> field.
      *
      * @param description the value, or {@code null} to send JSON null
      * @return this builder
@@ -227,7 +227,7 @@ public final class TransactionRuleUpdateRequest extends JsonModel {
     }
 
     /**
-     * The {@code conditions} field.
+     * The <code>conditions</code> field.
      *
      * @param conditions the value
      * @return this builder
@@ -237,7 +237,7 @@ public final class TransactionRuleUpdateRequest extends JsonModel {
     }
 
     /**
-     * The {@code aggregation} field.
+     * The <code>aggregation</code> field.
      *
      * @param aggregation the value
      * @return this builder
@@ -247,7 +247,7 @@ public final class TransactionRuleUpdateRequest extends JsonModel {
     }
 
     /**
-     * The {@code actions} field.
+     * The <code>actions</code> field.
      *
      * @param actions the value
      * @return this builder

@@ -50,7 +50,7 @@ public final class CasesNotesCreateAttachmentUploadParams extends JsonModel {
   }
 
   /**
-   * The {@code file} field.
+   * The <code>file</code> field.
    *
    * @return the file to upload, if set
    */
@@ -72,7 +72,7 @@ public final class CasesNotesCreateAttachmentUploadParams extends JsonModel {
     }
 
     /**
-     * The {@code file} field.
+     * The <code>file</code> field.
      *
      * @param file the value
      * @return this builder

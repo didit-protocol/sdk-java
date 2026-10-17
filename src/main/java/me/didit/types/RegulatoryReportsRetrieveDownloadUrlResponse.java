@@ -50,7 +50,7 @@ public final class RegulatoryReportsRetrieveDownloadUrlResponse extends JsonMode
   }
 
   /**
-   * The {@code download_url} field.
+   * The <code>download_url</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -60,7 +60,7 @@ public final class RegulatoryReportsRetrieveDownloadUrlResponse extends JsonMode
   }
 
   /**
-   * The {@code file} field.
+   * The <code>file</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -83,7 +83,7 @@ public final class RegulatoryReportsRetrieveDownloadUrlResponse extends JsonMode
     }
 
     /**
-     * The {@code download_url} field.
+     * The <code>download_url</code> field.
      *
      * @param downloadUrl the value
      * @return this builder
@@ -93,7 +93,7 @@ public final class RegulatoryReportsRetrieveDownloadUrlResponse extends JsonMode
     }
 
     /**
-     * The {@code file} field.
+     * The <code>file</code> field.
      *
      * @param file the value
      * @return this builder

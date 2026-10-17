@@ -50,7 +50,7 @@ public final class NetworksListResponse extends JsonModel {
   }
 
   /**
-   * The {@code count} field.
+   * The <code>count</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -70,7 +70,7 @@ public final class NetworksListResponse extends JsonModel {
   }
 
   /**
-   * The {@code previous} field.
+   * The <code>previous</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -80,7 +80,7 @@ public final class NetworksListResponse extends JsonModel {
   }
 
   /**
-   * The {@code results} field.
+   * The <code>results</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -113,7 +113,7 @@ public final class NetworksListResponse extends JsonModel {
     }
 
     /**
-     * The {@code count} field.
+     * The <code>count</code> field.
      *
      * @param count the value
      * @return this builder
@@ -133,7 +133,7 @@ public final class NetworksListResponse extends JsonModel {
     }
 
     /**
-     * The {@code previous} field.
+     * The <code>previous</code> field.
      *
      * @param previous the value, or {@code null} to send JSON null
      * @return this builder
@@ -143,7 +143,7 @@ public final class NetworksListResponse extends JsonModel {
     }
 
     /**
-     * The {@code results} field.
+     * The <code>results</code> field.
      *
      * @param results the value
      * @return this builder
@@ -215,7 +215,7 @@ public final class NetworksListResponse extends JsonModel {
     }
 
     /**
-     * The {@code active} field.
+     * The <code>active</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -225,7 +225,7 @@ public final class NetworksListResponse extends JsonModel {
     }
 
     /**
-     * The {@code in_review} field.
+     * The <code>in_review</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -235,7 +235,7 @@ public final class NetworksListResponse extends JsonModel {
     }
 
     /**
-     * The {@code applicants_involved} field.
+     * The <code>applicants_involved</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -245,7 +245,7 @@ public final class NetworksListResponse extends JsonModel {
     }
 
     /**
-     * The {@code detected_this_period} field.
+     * The <code>detected_this_period</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -255,7 +255,7 @@ public final class NetworksListResponse extends JsonModel {
     }
 
     /**
-     * The {@code false_positive_rate} field.
+     * The <code>false_positive_rate</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -278,7 +278,7 @@ public final class NetworksListResponse extends JsonModel {
       }
 
       /**
-       * The {@code active} field.
+       * The <code>active</code> field.
        *
        * @param active the value
        * @return this builder
@@ -288,7 +288,7 @@ public final class NetworksListResponse extends JsonModel {
       }
 
       /**
-       * The {@code in_review} field.
+       * The <code>in_review</code> field.
        *
        * @param inReview the value
        * @return this builder
@@ -298,7 +298,7 @@ public final class NetworksListResponse extends JsonModel {
       }
 
       /**
-       * The {@code applicants_involved} field.
+       * The <code>applicants_involved</code> field.
        *
        * @param applicantsInvolved the value
        * @return this builder
@@ -308,7 +308,7 @@ public final class NetworksListResponse extends JsonModel {
       }
 
       /**
-       * The {@code detected_this_period} field.
+       * The <code>detected_this_period</code> field.
        *
        * @param detectedThisPeriod the value
        * @return this builder
@@ -318,7 +318,7 @@ public final class NetworksListResponse extends JsonModel {
       }
 
       /**
-       * The {@code false_positive_rate} field.
+       * The <code>false_positive_rate</code> field.
        *
        * @param falsePositiveRate the value
        * @return this builder

@@ -52,7 +52,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -62,7 +62,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
   }
 
   /**
-   * The {@code label} field.
+   * The <code>label</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
   }
 
   /**
-   * The {@code url} field.
+   * The <code>url</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
   }
 
   /**
-   * The {@code enabled} field.
+   * The <code>enabled</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
   }
 
   /**
-   * The {@code webhook_version} field.
+   * The <code>webhook_version</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +102,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
   }
 
   /**
-   * The {@code secret_shared_key} field.
+   * The <code>secret_shared_key</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -122,7 +122,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -132,7 +132,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
   }
 
   /**
-   * The {@code updated_at} field.
+   * The <code>updated_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -142,7 +142,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
   }
 
   /**
-   * The {@code summary} field.
+   * The <code>summary</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -165,7 +165,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -175,7 +175,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code label} field.
+     * The <code>label</code> field.
      *
      * @param label the value
      * @return this builder
@@ -185,7 +185,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code url} field.
+     * The <code>url</code> field.
      *
      * @param url the value
      * @return this builder
@@ -195,7 +195,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code enabled} field.
+     * The <code>enabled</code> field.
      *
      * @param enabled the value
      * @return this builder
@@ -205,7 +205,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code webhook_version} field.
+     * The <code>webhook_version</code> field.
      *
      * @param webhookVersion the value
      * @return this builder
@@ -215,7 +215,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code secret_shared_key} field.
+     * The <code>secret_shared_key</code> field.
      *
      * @param secretSharedKey the value
      * @return this builder
@@ -235,7 +235,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -245,7 +245,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code updated_at} field.
+     * The <code>updated_at</code> field.
      *
      * @param updatedAt the value
      * @return this builder
@@ -255,7 +255,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code summary} field.
+     * The <code>summary</code> field.
      *
      * @param summary the value
      * @return this builder
@@ -361,7 +361,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code total_deliveries} field.
+     * The <code>total_deliveries</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -371,7 +371,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code failed_deliveries} field.
+     * The <code>failed_deliveries</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -381,7 +381,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code error_rate_percentage} field.
+     * The <code>error_rate_percentage</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -391,7 +391,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code min_response_time_ms} field.
+     * The <code>min_response_time_ms</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -401,7 +401,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code avg_response_time_ms} field.
+     * The <code>avg_response_time_ms</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -411,7 +411,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code max_response_time_ms} field.
+     * The <code>max_response_time_ms</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -421,7 +421,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The {@code last_delivery_at} field.
+     * The <code>last_delivery_at</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -444,7 +444,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
       }
 
       /**
-       * The {@code total_deliveries} field.
+       * The <code>total_deliveries</code> field.
        *
        * @param totalDeliveries the value
        * @return this builder
@@ -454,7 +454,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
       }
 
       /**
-       * The {@code failed_deliveries} field.
+       * The <code>failed_deliveries</code> field.
        *
        * @param failedDeliveries the value
        * @return this builder
@@ -464,7 +464,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
       }
 
       /**
-       * The {@code error_rate_percentage} field.
+       * The <code>error_rate_percentage</code> field.
        *
        * @param errorRatePercentage the value
        * @return this builder
@@ -474,7 +474,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
       }
 
       /**
-       * The {@code min_response_time_ms} field.
+       * The <code>min_response_time_ms</code> field.
        *
        * @param minResponseTimeMs the value, or {@code null} to send JSON null
        * @return this builder
@@ -484,7 +484,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
       }
 
       /**
-       * The {@code avg_response_time_ms} field.
+       * The <code>avg_response_time_ms</code> field.
        *
        * @param avgResponseTimeMs the value, or {@code null} to send JSON null
        * @return this builder
@@ -494,7 +494,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
       }
 
       /**
-       * The {@code max_response_time_ms} field.
+       * The <code>max_response_time_ms</code> field.
        *
        * @param maxResponseTimeMs the value, or {@code null} to send JSON null
        * @return this builder
@@ -504,7 +504,7 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
       }
 
       /**
-       * The {@code last_delivery_at} field.
+       * The <code>last_delivery_at</code> field.
        *
        * @param lastDeliveryAt the value, or {@code null} to send JSON null
        * @return this builder

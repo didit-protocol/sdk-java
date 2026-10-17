@@ -64,7 +64,7 @@ public final class FraudCheckRisk extends JsonModel {
   }
 
   /**
-   * The {@code score} field.
+   * The <code>score</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,7 +112,7 @@ public final class FraudCheckRisk extends JsonModel {
   }
 
   /**
-   * The {@code reason_codes} field.
+   * The <code>reason_codes</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -122,7 +122,7 @@ public final class FraudCheckRisk extends JsonModel {
   }
 
   /**
-   * The {@code evidence_indexes} field.
+   * The <code>evidence_indexes</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -159,7 +159,7 @@ public final class FraudCheckRisk extends JsonModel {
     }
 
     /**
-     * The {@code score} field.
+     * The <code>score</code> field.
      *
      * @param score the value, or {@code null} to send JSON null
      * @return this builder
@@ -207,7 +207,7 @@ public final class FraudCheckRisk extends JsonModel {
     }
 
     /**
-     * The {@code reason_codes} field.
+     * The <code>reason_codes</code> field.
      *
      * @param reasonCodes the value
      * @return this builder
@@ -217,7 +217,7 @@ public final class FraudCheckRisk extends JsonModel {
     }
 
     /**
-     * The {@code evidence_indexes} field.
+     * The <code>evidence_indexes</code> field.
      *
      * @param evidenceIndexes the value
      * @return this builder

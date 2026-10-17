@@ -61,7 +61,7 @@ public final class NetworkTimelineEvent extends JsonModel {
   }
 
   /**
-   * The {@code occurred_at} field.
+   * The <code>occurred_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -71,7 +71,7 @@ public final class NetworkTimelineEvent extends JsonModel {
   }
 
   /**
-   * The {@code label} field.
+   * The <code>label</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -81,7 +81,7 @@ public final class NetworkTimelineEvent extends JsonModel {
   }
 
   /**
-   * The {@code metadata} field.
+   * The <code>metadata</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -114,7 +114,7 @@ public final class NetworkTimelineEvent extends JsonModel {
     }
 
     /**
-     * The {@code occurred_at} field.
+     * The <code>occurred_at</code> field.
      *
      * @param occurredAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -124,7 +124,7 @@ public final class NetworkTimelineEvent extends JsonModel {
     }
 
     /**
-     * The {@code label} field.
+     * The <code>label</code> field.
      *
      * @param label the value
      * @return this builder
@@ -134,7 +134,7 @@ public final class NetworkTimelineEvent extends JsonModel {
     }
 
     /**
-     * The {@code metadata} field.
+     * The <code>metadata</code> field.
      *
      * @param metadata the value
      * @return this builder

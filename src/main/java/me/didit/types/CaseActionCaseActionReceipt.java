@@ -51,7 +51,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -61,7 +61,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
   }
 
   /**
-   * The {@code client_reference} field.
+   * The <code>client_reference</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -71,7 +71,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
   }
 
   /**
-   * The {@code action} field.
+   * The <code>action</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -92,7 +92,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
   }
 
   /**
-   * The {@code result} field.
+   * The <code>result</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +102,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
   }
 
   /**
-   * The {@code error} field.
+   * The <code>error</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,7 +112,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
   }
 
   /**
-   * The {@code actor_email} field.
+   * The <code>actor_email</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -122,7 +122,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
   }
 
   /**
-   * The {@code attempts} field.
+   * The <code>attempts</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -132,7 +132,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -142,7 +142,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
   }
 
   /**
-   * The {@code updated_at} field.
+   * The <code>updated_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -165,7 +165,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -175,7 +175,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
     }
 
     /**
-     * The {@code client_reference} field.
+     * The <code>client_reference</code> field.
      *
      * @param clientReference the value
      * @return this builder
@@ -185,7 +185,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
     }
 
     /**
-     * The {@code action} field.
+     * The <code>action</code> field.
      *
      * @param action the value
      * @return this builder
@@ -206,7 +206,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
     }
 
     /**
-     * The {@code result} field.
+     * The <code>result</code> field.
      *
      * @param result the value
      * @return this builder
@@ -216,7 +216,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
     }
 
     /**
-     * The {@code error} field.
+     * The <code>error</code> field.
      *
      * @param error the value
      * @return this builder
@@ -226,7 +226,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
     }
 
     /**
-     * The {@code actor_email} field.
+     * The <code>actor_email</code> field.
      *
      * @param actorEmail the value, or {@code null} to send JSON null
      * @return this builder
@@ -236,7 +236,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
     }
 
     /**
-     * The {@code attempts} field.
+     * The <code>attempts</code> field.
      *
      * @param attempts the value
      * @return this builder
@@ -246,7 +246,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -256,7 +256,7 @@ public final class CaseActionCaseActionReceipt extends JsonModel {
     }
 
     /**
-     * The {@code updated_at} field.
+     * The <code>updated_at</code> field.
      *
      * @param updatedAt the value
      * @return this builder

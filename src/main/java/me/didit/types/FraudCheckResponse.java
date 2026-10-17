@@ -51,7 +51,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code check_id} field.
+   * The <code>check_id</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -71,7 +71,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code client_reference} field.
+   * The <code>client_reference</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -94,7 +94,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code profile_id} field.
+   * The <code>profile_id</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -104,7 +104,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code profile_version} field.
+   * The <code>profile_version</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -114,7 +114,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -124,7 +124,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code completed_at} field.
+   * The <code>completed_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -134,7 +134,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code inputs} field.
+   * The <code>inputs</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -144,7 +144,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code modules} field.
+   * The <code>modules</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -154,7 +154,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code attribute_evidence} field.
+   * The <code>attribute_evidence</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -164,7 +164,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code compound_evidence} field.
+   * The <code>compound_evidence</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -174,7 +174,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code risk} field.
+   * The <code>risk</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -184,7 +184,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code network} field.
+   * The <code>network</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -194,7 +194,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code enrichment} field.
+   * The <code>enrichment</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -204,7 +204,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code identity_relationship} field.
+   * The <code>identity_relationship</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -239,7 +239,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code decision_reasons} field.
+   * The <code>decision_reasons</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -249,7 +249,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code coverage} field.
+   * The <code>coverage</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -259,7 +259,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code usage} field.
+   * The <code>usage</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -269,7 +269,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code vendor_data} field.
+   * The <code>vendor_data</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -279,7 +279,7 @@ public final class FraudCheckResponse extends JsonModel {
   }
 
   /**
-   * The {@code metadata} field.
+   * The <code>metadata</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -302,7 +302,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code check_id} field.
+     * The <code>check_id</code> field.
      *
      * @param checkId the value
      * @return this builder
@@ -322,7 +322,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code client_reference} field.
+     * The <code>client_reference</code> field.
      *
      * @param clientReference the value, or {@code null} to send JSON null
      * @return this builder
@@ -345,7 +345,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code profile_id} field.
+     * The <code>profile_id</code> field.
      *
      * @param profileId the value
      * @return this builder
@@ -355,7 +355,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code profile_version} field.
+     * The <code>profile_version</code> field.
      *
      * @param profileVersion the value
      * @return this builder
@@ -365,7 +365,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -375,7 +375,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code completed_at} field.
+     * The <code>completed_at</code> field.
      *
      * @param completedAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -385,7 +385,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code inputs} field.
+     * The <code>inputs</code> field.
      *
      * @param inputs the value
      * @return this builder
@@ -395,7 +395,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code modules} field.
+     * The <code>modules</code> field.
      *
      * @param modules the value
      * @return this builder
@@ -405,7 +405,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code attribute_evidence} field.
+     * The <code>attribute_evidence</code> field.
      *
      * @param attributeEvidence the value
      * @return this builder
@@ -415,7 +415,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code compound_evidence} field.
+     * The <code>compound_evidence</code> field.
      *
      * @param compoundEvidence the value
      * @return this builder
@@ -425,7 +425,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code risk} field.
+     * The <code>risk</code> field.
      *
      * @param risk the value
      * @return this builder
@@ -435,7 +435,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code network} field.
+     * The <code>network</code> field.
      *
      * @param network the value
      * @return this builder
@@ -445,7 +445,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code enrichment} field.
+     * The <code>enrichment</code> field.
      *
      * @param enrichment the value
      * @return this builder
@@ -455,7 +455,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code identity_relationship} field.
+     * The <code>identity_relationship</code> field.
      *
      * @param identityRelationship the value, or {@code null} to send JSON null
      * @return this builder
@@ -490,7 +490,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code decision_reasons} field.
+     * The <code>decision_reasons</code> field.
      *
      * @param decisionReasons the value
      * @return this builder
@@ -500,7 +500,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code coverage} field.
+     * The <code>coverage</code> field.
      *
      * @param coverage the value
      * @return this builder
@@ -510,7 +510,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code usage} field.
+     * The <code>usage</code> field.
      *
      * @param usage the value
      * @return this builder
@@ -520,7 +520,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code vendor_data} field.
+     * The <code>vendor_data</code> field.
      *
      * @param vendorData the value, or {@code null} to send JSON null
      * @return this builder
@@ -530,7 +530,7 @@ public final class FraudCheckResponse extends JsonModel {
     }
 
     /**
-     * The {@code metadata} field.
+     * The <code>metadata</code> field.
      *
      * @param metadata the value, or {@code null} to send JSON null
      * @return this builder

@@ -49,7 +49,7 @@ public final class CasesPrintResponse extends JsonModel {
   }
 
   /**
-   * The {@code url} field.
+   * The <code>url</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class CasesPrintResponse extends JsonModel {
     }
 
     /**
-     * The {@code url} field.
+     * The <code>url</code> field.
      *
      * @param url the value
      * @return this builder

@@ -52,7 +52,7 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * The {@code name} field.
+   * The <code>name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -62,7 +62,7 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * The {@code lei} field.
+   * The <code>lei</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * The {@code jurisdiction} field.
+   * The <code>jurisdiction</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * The {@code dd_status} field.
+   * The <code>dd_status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * The {@code dd_score} field.
+   * The <code>dd_score</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +102,7 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * The {@code reachable_rails} field.
+   * The <code>reachable_rails</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -155,7 +155,7 @@ public final class VaspDirectoryEntry extends JsonModel {
     }
 
     /**
-     * The {@code name} field.
+     * The <code>name</code> field.
      *
      * @param name the value
      * @return this builder
@@ -165,7 +165,7 @@ public final class VaspDirectoryEntry extends JsonModel {
     }
 
     /**
-     * The {@code lei} field.
+     * The <code>lei</code> field.
      *
      * @param lei the value
      * @return this builder
@@ -175,7 +175,7 @@ public final class VaspDirectoryEntry extends JsonModel {
     }
 
     /**
-     * The {@code jurisdiction} field.
+     * The <code>jurisdiction</code> field.
      *
      * @param jurisdiction the value
      * @return this builder
@@ -185,7 +185,7 @@ public final class VaspDirectoryEntry extends JsonModel {
     }
 
     /**
-     * The {@code dd_status} field.
+     * The <code>dd_status</code> field.
      *
      * @param ddStatus the value
      * @return this builder
@@ -195,7 +195,7 @@ public final class VaspDirectoryEntry extends JsonModel {
     }
 
     /**
-     * The {@code dd_score} field.
+     * The <code>dd_score</code> field.
      *
      * @param ddScore the value
      * @return this builder
@@ -205,7 +205,7 @@ public final class VaspDirectoryEntry extends JsonModel {
     }
 
     /**
-     * The {@code reachable_rails} field.
+     * The <code>reachable_rails</code> field.
      *
      * @param reachableRails the value
      * @return this builder

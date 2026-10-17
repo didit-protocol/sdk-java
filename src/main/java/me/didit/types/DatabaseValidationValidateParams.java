@@ -1654,7 +1654,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
       }
 
       /**
-       * The {@code street_1} field.
+       * The <code>street_1</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1664,7 +1664,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
       }
 
       /**
-       * The {@code street_2} field.
+       * The <code>street_2</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1674,7 +1674,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
       }
 
       /**
-       * The {@code city} field.
+       * The <code>city</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1684,7 +1684,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
       }
 
       /**
-       * The {@code region} field.
+       * The <code>region</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1694,7 +1694,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
       }
 
       /**
-       * The {@code postal_code} field.
+       * The <code>postal_code</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1704,7 +1704,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
       }
 
       /**
-       * The {@code country} field.
+       * The <code>country</code> field.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1727,7 +1727,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
         }
 
         /**
-         * The {@code street_1} field.
+         * The <code>street_1</code> field.
          *
          * @param street1 the value
          * @return this builder
@@ -1737,7 +1737,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
         }
 
         /**
-         * The {@code street_2} field.
+         * The <code>street_2</code> field.
          *
          * @param street2 the value
          * @return this builder
@@ -1747,7 +1747,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
         }
 
         /**
-         * The {@code city} field.
+         * The <code>city</code> field.
          *
          * @param city the value
          * @return this builder
@@ -1757,7 +1757,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
         }
 
         /**
-         * The {@code region} field.
+         * The <code>region</code> field.
          *
          * @param region the value
          * @return this builder
@@ -1767,7 +1767,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
         }
 
         /**
-         * The {@code postal_code} field.
+         * The <code>postal_code</code> field.
          *
          * @param postalCode the value
          * @return this builder
@@ -1777,7 +1777,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
         }
 
         /**
-         * The {@code country} field.
+         * The <code>country</code> field.
          *
          * @param country the value
          * @return this builder

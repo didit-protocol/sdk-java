@@ -52,7 +52,7 @@ public final class CaseEvent extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -62,7 +62,7 @@ public final class CaseEvent extends JsonModel {
   }
 
   /**
-   * The {@code event_type} field.
+   * The <code>event_type</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class CaseEvent extends JsonModel {
   }
 
   /**
-   * The {@code actor_email} field.
+   * The <code>actor_email</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class CaseEvent extends JsonModel {
   }
 
   /**
-   * The {@code actor_name} field.
+   * The <code>actor_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class CaseEvent extends JsonModel {
   }
 
   /**
-   * The {@code previous_status} field.
+   * The <code>previous_status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +102,7 @@ public final class CaseEvent extends JsonModel {
   }
 
   /**
-   * The {@code new_status} field.
+   * The <code>new_status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,7 +112,7 @@ public final class CaseEvent extends JsonModel {
   }
 
   /**
-   * The {@code metadata} field.
+   * The <code>metadata</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -122,7 +122,7 @@ public final class CaseEvent extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -145,7 +145,7 @@ public final class CaseEvent extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -155,7 +155,7 @@ public final class CaseEvent extends JsonModel {
     }
 
     /**
-     * The {@code event_type} field.
+     * The <code>event_type</code> field.
      *
      * @param eventType the value
      * @return this builder
@@ -165,7 +165,7 @@ public final class CaseEvent extends JsonModel {
     }
 
     /**
-     * The {@code actor_email} field.
+     * The <code>actor_email</code> field.
      *
      * @param actorEmail the value, or {@code null} to send JSON null
      * @return this builder
@@ -175,7 +175,7 @@ public final class CaseEvent extends JsonModel {
     }
 
     /**
-     * The {@code actor_name} field.
+     * The <code>actor_name</code> field.
      *
      * @param actorName the value, or {@code null} to send JSON null
      * @return this builder
@@ -185,7 +185,7 @@ public final class CaseEvent extends JsonModel {
     }
 
     /**
-     * The {@code previous_status} field.
+     * The <code>previous_status</code> field.
      *
      * @param previousStatus the value, or {@code null} to send JSON null
      * @return this builder
@@ -195,7 +195,7 @@ public final class CaseEvent extends JsonModel {
     }
 
     /**
-     * The {@code new_status} field.
+     * The <code>new_status</code> field.
      *
      * @param newStatus the value, or {@code null} to send JSON null
      * @return this builder
@@ -205,7 +205,7 @@ public final class CaseEvent extends JsonModel {
     }
 
     /**
-     * The {@code metadata} field.
+     * The <code>metadata</code> field.
      *
      * @param metadata the value
      * @return this builder
@@ -215,7 +215,7 @@ public final class CaseEvent extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder

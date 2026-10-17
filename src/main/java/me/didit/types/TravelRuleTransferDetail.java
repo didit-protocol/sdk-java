@@ -55,7 +55,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The {@code uuid} field.
+   * The <code>uuid</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -65,7 +65,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The {@code status} field.
+   * The <code>status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -75,7 +75,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The {@code direction} field.
+   * The <code>direction</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -85,7 +85,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The {@code rail} field.
+   * The <code>rail</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -95,7 +95,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The {@code protocol} field.
+   * The <code>protocol</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -105,7 +105,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The {@code ivms_version} field.
+   * The <code>ivms_version</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -115,7 +115,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The {@code required} field.
+   * The <code>required</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -125,7 +125,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The {@code ownership_confirmed} field.
+   * The <code>ownership_confirmed</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -135,7 +135,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The {@code deadline_at} field.
+   * The <code>deadline_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -145,7 +145,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The {@code timeline} field.
+   * The <code>timeline</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -155,7 +155,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The {@code counterparty_vasp} field.
+   * The <code>counterparty_vasp</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -165,7 +165,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The {@code originator_data} field.
+   * The <code>originator_data</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -175,7 +175,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The {@code beneficiary_data} field.
+   * The <code>beneficiary_data</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -185,7 +185,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The {@code created_at} field.
+   * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -208,7 +208,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code uuid} field.
+     * The <code>uuid</code> field.
      *
      * @param uuid the value
      * @return this builder
@@ -218,7 +218,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @param status the value
      * @return this builder
@@ -228,7 +228,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code direction} field.
+     * The <code>direction</code> field.
      *
      * @param direction the value
      * @return this builder
@@ -238,7 +238,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code rail} field.
+     * The <code>rail</code> field.
      *
      * @param rail the value, or {@code null} to send JSON null
      * @return this builder
@@ -248,7 +248,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code protocol} field.
+     * The <code>protocol</code> field.
      *
      * @param protocol the value, or {@code null} to send JSON null
      * @return this builder
@@ -258,7 +258,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code ivms_version} field.
+     * The <code>ivms_version</code> field.
      *
      * @param ivmsVersion the value
      * @return this builder
@@ -268,7 +268,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code required} field.
+     * The <code>required</code> field.
      *
      * @param required the value
      * @return this builder
@@ -278,7 +278,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code ownership_confirmed} field.
+     * The <code>ownership_confirmed</code> field.
      *
      * @param ownershipConfirmed the value, or {@code null} to send JSON null
      * @return this builder
@@ -288,7 +288,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code deadline_at} field.
+     * The <code>deadline_at</code> field.
      *
      * @param deadlineAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -298,7 +298,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code timeline} field.
+     * The <code>timeline</code> field.
      *
      * @param timeline the value
      * @return this builder
@@ -308,7 +308,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code counterparty_vasp} field.
+     * The <code>counterparty_vasp</code> field.
      *
      * @param counterpartyVasp the value, or {@code null} to send JSON null
      * @return this builder
@@ -318,7 +318,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code originator_data} field.
+     * The <code>originator_data</code> field.
      *
      * @param originatorData the value
      * @return this builder
@@ -328,7 +328,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code beneficiary_data} field.
+     * The <code>beneficiary_data</code> field.
      *
      * @param beneficiaryData the value
      * @return this builder
@@ -338,7 +338,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code created_at} field.
+     * The <code>created_at</code> field.
      *
      * @param createdAt the value
      * @return this builder
@@ -564,7 +564,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -574,7 +574,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code at} field.
+     * The <code>at</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -584,7 +584,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code detail} field.
+     * The <code>detail</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -607,7 +607,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
       }
 
       /**
-       * The {@code status} field.
+       * The <code>status</code> field.
        *
        * @param status the value
        * @return this builder
@@ -617,7 +617,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
       }
 
       /**
-       * The {@code at} field.
+       * The <code>at</code> field.
        *
        * @param at the value
        * @return this builder
@@ -627,7 +627,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
       }
 
       /**
-       * The {@code detail} field.
+       * The <code>detail</code> field.
        *
        * @param detail the value
        * @return this builder
@@ -689,7 +689,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code name} field.
+     * The <code>name</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -699,7 +699,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code lei} field.
+     * The <code>lei</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -709,7 +709,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The {@code dd_score} field.
+     * The <code>dd_score</code> field.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -732,7 +732,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
       }
 
       /**
-       * The {@code name} field.
+       * The <code>name</code> field.
        *
        * @param name the value
        * @return this builder
@@ -742,7 +742,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
       }
 
       /**
-       * The {@code lei} field.
+       * The <code>lei</code> field.
        *
        * @param lei the value
        * @return this builder
@@ -752,7 +752,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
       }
 
       /**
-       * The {@code dd_score} field.
+       * The <code>dd_score</code> field.
        *
        * @param ddScore the value
        * @return this builder

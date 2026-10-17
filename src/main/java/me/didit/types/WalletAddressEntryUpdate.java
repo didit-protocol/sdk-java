@@ -52,7 +52,7 @@ public final class WalletAddressEntryUpdate extends JsonModel {
   }
 
   /**
-   * The {@code holder_name} field.
+   * The <code>holder_name</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -62,7 +62,7 @@ public final class WalletAddressEntryUpdate extends JsonModel {
   }
 
   /**
-   * The {@code holder_vendor_data} field.
+   * The <code>holder_vendor_data</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -72,7 +72,7 @@ public final class WalletAddressEntryUpdate extends JsonModel {
   }
 
   /**
-   * The {@code entity_type} field.
+   * The <code>entity_type</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +82,7 @@ public final class WalletAddressEntryUpdate extends JsonModel {
   }
 
   /**
-   * The {@code travel_address} field.
+   * The <code>travel_address</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -105,7 +105,7 @@ public final class WalletAddressEntryUpdate extends JsonModel {
     }
 
     /**
-     * The {@code holder_name} field.
+     * The <code>holder_name</code> field.
      *
      * @param holderName the value
      * @return this builder
@@ -115,7 +115,7 @@ public final class WalletAddressEntryUpdate extends JsonModel {
     }
 
     /**
-     * The {@code holder_vendor_data} field.
+     * The <code>holder_vendor_data</code> field.
      *
      * @param holderVendorData the value
      * @return this builder
@@ -125,7 +125,7 @@ public final class WalletAddressEntryUpdate extends JsonModel {
     }
 
     /**
-     * The {@code entity_type} field.
+     * The <code>entity_type</code> field.
      *
      * @param entityType the value
      * @return this builder
@@ -135,7 +135,7 @@ public final class WalletAddressEntryUpdate extends JsonModel {
     }
 
     /**
-     * The {@code travel_address} field.
+     * The <code>travel_address</code> field.
      *
      * @param travelAddress the value
      * @return this builder

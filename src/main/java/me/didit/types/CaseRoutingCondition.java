@@ -54,7 +54,7 @@ public final class CaseRoutingCondition extends JsonModel {
   }
 
   /**
-   * The {@code field} field.
+   * The <code>field</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -64,7 +64,7 @@ public final class CaseRoutingCondition extends JsonModel {
   }
 
   /**
-   * The {@code operator} field.
+   * The <code>operator</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -74,7 +74,7 @@ public final class CaseRoutingCondition extends JsonModel {
   }
 
   /**
-   * The {@code value} field.
+   * The <code>value</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -97,7 +97,7 @@ public final class CaseRoutingCondition extends JsonModel {
     }
 
     /**
-     * The {@code field} field.
+     * The <code>field</code> field.
      *
      * @param field the value
      * @return this builder
@@ -107,7 +107,7 @@ public final class CaseRoutingCondition extends JsonModel {
     }
 
     /**
-     * The {@code operator} field.
+     * The <code>operator</code> field.
      *
      * @param operator the value
      * @return this builder
@@ -117,7 +117,7 @@ public final class CaseRoutingCondition extends JsonModel {
     }
 
     /**
-     * The {@code value} field.
+     * The <code>value</code> field.
      *
      * @param value the value
      * @return this builder

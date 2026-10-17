@@ -73,7 +73,7 @@ public final class RoutingPublicationRoutingCondition extends JsonModel {
   }
 
   /**
-   * The {@code value} field.
+   * The <code>value</code> field.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -120,7 +120,7 @@ public final class RoutingPublicationRoutingCondition extends JsonModel {
     }
 
     /**
-     * The {@code value} field.
+     * The <code>value</code> field.
      *
      * @param value the value
      * @return this builder

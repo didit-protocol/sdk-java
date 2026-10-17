@@ -50,7 +50,7 @@ public final class CaseActionCaseEntityActionRequest extends JsonModel {
   }
 
   /**
-   * The {@code client_reference} field.
+   * The <code>client_reference</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -60,7 +60,7 @@ public final class CaseActionCaseEntityActionRequest extends JsonModel {
   }
 
   /**
-   * The {@code retry} field.
+   * The <code>retry</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -83,7 +83,7 @@ public final class CaseActionCaseEntityActionRequest extends JsonModel {
   }
 
   /**
-   * The {@code status} field.
+   * The <code>status</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -93,7 +93,7 @@ public final class CaseActionCaseEntityActionRequest extends JsonModel {
   }
 
   /**
-   * The {@code tags} field.
+   * The <code>tags</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -103,7 +103,7 @@ public final class CaseActionCaseEntityActionRequest extends JsonModel {
   }
 
   /**
-   * The {@code note} field.
+   * The <code>note</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -126,7 +126,7 @@ public final class CaseActionCaseEntityActionRequest extends JsonModel {
     }
 
     /**
-     * The {@code client_reference} field.
+     * The <code>client_reference</code> field.
      *
      * @param clientReference the value
      * @return this builder
@@ -136,7 +136,7 @@ public final class CaseActionCaseEntityActionRequest extends JsonModel {
     }
 
     /**
-     * The {@code retry} field.
+     * The <code>retry</code> field.
      *
      * @param retry the value
      * @return this builder
@@ -159,7 +159,7 @@ public final class CaseActionCaseEntityActionRequest extends JsonModel {
     }
 
     /**
-     * The {@code status} field.
+     * The <code>status</code> field.
      *
      * @param status the value, or {@code null} to send JSON null
      * @return this builder
@@ -169,7 +169,7 @@ public final class CaseActionCaseEntityActionRequest extends JsonModel {
     }
 
     /**
-     * The {@code tags} field.
+     * The <code>tags</code> field.
      *
      * @param tags the value
      * @return this builder
@@ -179,7 +179,7 @@ public final class CaseActionCaseEntityActionRequest extends JsonModel {
     }
 
     /**
-     * The {@code note} field.
+     * The <code>note</code> field.
      *
      * @param note the value, or {@code null} to send JSON null
      * @return this builder
