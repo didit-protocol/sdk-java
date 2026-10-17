@@ -110,8 +110,8 @@ public abstract class Conv<T> {
       };
 
   /**
-   * ISO 8601 date-times. A value without an offset is read as UTC; a number is read as unix
-   * seconds.
+   * ISO 8601 date-times. A value without an offset is read as UTC, a space may separate the date
+   * and the time, and a number is read as unix seconds.
    */
   public static final Conv<OffsetDateTime> DATE_TIME =
       new Conv<>() {
@@ -124,7 +124,10 @@ public abstract class Conv<T> {
           if (!node.isTextual()) {
             throw mismatch("a date-time string", node);
           }
-          String text = node.asText();
+          String text = node.asText().trim();
+          if (text.length() > 10 && text.charAt(10) == ' ') {
+            text = text.substring(0, 10) + 'T' + text.substring(11); // Python str(datetime)
+          }
           try {
             return OffsetDateTime.parse(text);
           } catch (DateTimeParseException e) {

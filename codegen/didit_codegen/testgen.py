@@ -343,6 +343,8 @@ def synthetic_response(t: TypeRef | None, depth: int = 0) -> Any:
         cls = t.cls
         if cls.kind == "enum":
             return cls.values[0] if cls.values else "value"
+        if cls.kind == "status":
+            return synthetic_response(cls.variants[0].type, depth + 1)
         if cls.kind == "union":
             v = synthetic_response(cls.variants[0].type, depth + 1)
             if isinstance(v, dict):
@@ -488,6 +490,7 @@ def emit_test(om: OpModel, ctx: Ctx) -> str:
             synthetic = synthetic_response(r.type) if r.kind in ("json", "page") else {"ok": True}
             if r.kind == "page":
                 synthetic = {"count": 0, "next": None, "previous": None, "results": []}
+            example = synthetic
             text = json.dumps(synthetic, separators=(",", ":"), sort_keys=True)
             lines.append(f"    JsonNode example = TestJson.parse({java_string(text)});")
         ctx.use("com.fasterxml.jackson.databind.JsonNode")
@@ -554,8 +557,6 @@ def emit_test(om: OpModel, ctx: Ctx) -> str:
 
 def _response_readable(om: OpModel, example: Any, status: str) -> bool:
     r = om.response
-    if example is None:
-        return True
     if r.kind == "page":
         assert r.type is not None
         items = example.get("results") if isinstance(example, dict) else None

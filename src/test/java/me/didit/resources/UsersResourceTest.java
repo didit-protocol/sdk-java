@@ -117,7 +117,7 @@ final class UsersResourceTest {
   @Test
   void setAmlMonitoring() {
     UsersSetAmlMonitoringParams params = UsersSetAmlMonitoringParams.builder().isEnabled(true).estimateOnly(true).vendorDataList(List.of("value-vendor-data-list")).diditInternalIdList(List.of("00000000-0000-4000-8000-0000000068ce")).build();
-    JsonNode example = TestJson.parse("{}");
+    JsonNode example = TestJson.parse("{\"already_enabled\":1,\"balance_sufficient\":true,\"estimated_annual_monitoring_cost_usd\":1.5,\"estimated_screening_cost_usd\":1.5,\"needing_screening\":1,\"skipped_blocked\":1,\"skipped_no_identity_data\":1,\"unmatched\":[],\"users_total\":1,\"with_existing_aml\":1}");
     transport.respondJson(200, example);
     var result = client.users().setAmlMonitoring(params);
     RecordedRequest request = transport.only();
