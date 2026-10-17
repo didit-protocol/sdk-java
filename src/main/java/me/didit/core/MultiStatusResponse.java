@@ -42,6 +42,8 @@ public abstract class MultiStatusResponse {
     return json.deepCopy();
   }
 
+  // Two generated types with the same JSON are still different values.
+  @SuppressWarnings("EqualsGetClass")
   @Override
   public final boolean equals(@Nullable Object other) {
     if (other == null || other.getClass() != getClass()) {

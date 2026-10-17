@@ -29,6 +29,8 @@ public abstract class JsonUnion {
     return json.deepCopy();
   }
 
+  // Two generated types with the same JSON are still different values.
+  @SuppressWarnings("EqualsGetClass")
   @Override
   public final boolean equals(@Nullable Object other) {
     return other != null && other.getClass() == getClass() && json.equals(((JsonUnion) other).json);

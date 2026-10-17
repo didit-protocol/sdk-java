@@ -88,6 +88,8 @@ public abstract class JsonModel {
     return Optional.ofNullable(files.get(field));
   }
 
+  // Two generated types with the same JSON are still different values.
+  @SuppressWarnings("EqualsGetClass")
   @Override
   public final boolean equals(@Nullable Object other) {
     if (this == other) {

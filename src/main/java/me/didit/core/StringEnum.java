@@ -56,6 +56,8 @@ public abstract class StringEnum {
    */
   public abstract boolean isKnown();
 
+  // Two generated types with the same JSON are still different values.
+  @SuppressWarnings("EqualsGetClass")
   @Override
   public final boolean equals(@Nullable Object other) {
     return other != null
