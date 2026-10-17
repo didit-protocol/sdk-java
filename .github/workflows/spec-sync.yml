@@ -39,16 +39,22 @@ jobs:
           persist-credentials: false
       - name: Leave branches with people's commits alone
         id: guard
+        shell: bash
         env:
           GH_TOKEN: ${{ secrets.SPEC_SYNC_TOKEN || github.token }}
         run: |
-          head=$(git ls-remote "https://github.com/${GITHUB_REPOSITORY}.git" "refs/heads/${BRANCH}" | cut -f1)
+          set -euo pipefail
+          # The checkout keeps no credentials and the repository may be private, so read with the
+          # token; a failed read stops the job instead of looking like a missing branch.
+          remote="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          head=$(git ls-remote --heads "$remote" "refs/heads/${BRANCH}" | cut -f1)
           echo "head=${head}" >> "$GITHUB_OUTPUT"
           if [ -z "$head" ]; then exit 0; fi
           pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
           if [ -z "$pr" ]; then exit 0; fi
-          git fetch --quiet origin "$BRANCH"
-          others=$(git log --format='%ae%n%ce' "origin/main..origin/${BRANCH}" | sort -u | grep -vxF "$BOT_EMAIL" || true)
+          git fetch --quiet "$remote" "+refs/heads/${BRANCH}:refs/remotes/origin/${BRANCH}"
+          authors=$(git log --format='%ae%n%ce' "origin/main..origin/${BRANCH}")
+          others=$(printf '%s\n' "$authors" | sort -u | grep -vxF -e "$BOT_EMAIL" -e '' || true)
           if [ -n "$others" ]; then
             echo "::notice::Pull request #${pr} has commits by people; this run does not touch it."
             echo "skip=true" >> "$GITHUB_OUTPUT"
