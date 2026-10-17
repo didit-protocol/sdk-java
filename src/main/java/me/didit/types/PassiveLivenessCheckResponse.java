@@ -261,8 +261,8 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<PassiveLivenessCheckResponse.Liveness.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(PassiveLivenessCheckResponse.Liveness.WarningsItem::fromJson)));
+    public Optional<List<PassiveLivenessCheckResponse.Liveness.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(PassiveLivenessCheckResponse.Liveness.Warnings::fromJson)));
     }
 
     /**
@@ -344,8 +344,8 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<PassiveLivenessCheckResponse.Liveness.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(PassiveLivenessCheckResponse.Liveness.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<PassiveLivenessCheckResponse.Liveness.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(PassiveLivenessCheckResponse.Liveness.Warnings::fromJson)), warnings);
       }
 
       /**
@@ -509,8 +509,8 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<PassiveLivenessCheckResponse.Liveness.UserImage.EntitiesItem>> entities() {
-        return Json.optional(json, "entities", Conv.list(Conv.model(PassiveLivenessCheckResponse.Liveness.UserImage.EntitiesItem::fromJson)));
+      public Optional<List<PassiveLivenessCheckResponse.Liveness.UserImage.Entities>> entities() {
+        return Json.optional(json, "entities", Conv.list(Conv.model(PassiveLivenessCheckResponse.Liveness.UserImage.Entities::fromJson)));
       }
 
       /**
@@ -542,8 +542,8 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
          * @param entities the value
          * @return this builder
          */
-        public Builder entities(List<PassiveLivenessCheckResponse.Liveness.UserImage.EntitiesItem> entities) {
-          return set("entities", Conv.list(Conv.model(PassiveLivenessCheckResponse.Liveness.UserImage.EntitiesItem::fromJson)), entities);
+        public Builder entities(List<PassiveLivenessCheckResponse.Liveness.UserImage.Entities> entities) {
+          return set("entities", Conv.list(Conv.model(PassiveLivenessCheckResponse.Liveness.UserImage.Entities::fromJson)), entities);
         }
 
         /**
@@ -571,22 +571,22 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
         }
       }
 
-      public static final class EntitiesItem extends JsonModel {
+      public static final class Entities extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("bbox", "confidence", "age", "gender", "race");
 
-        private EntitiesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private Entities(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code EntitiesItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code Entities} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static EntitiesItem fromJson(JsonNode json) {
-          return new EntitiesItem(Json.copyObject(json), Map.of());
+        public static Entities fromJson(JsonNode json) {
+          return new Entities(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -662,11 +662,11 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link EntitiesItem}. */
+        /** Builds a {@link Entities}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(EntitiesItem from) {
+          private Builder(Entities from) {
             super(from);
           }
 
@@ -723,10 +723,10 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code EntitiesItem}
+           * @return a new immutable {@code Entities}
            */
-          public EntitiesItem build() {
-            return new EntitiesItem(buildJson(), buildFiles());
+          public Entities build() {
+            return new Entities(buildJson(), buildFiles());
           }
 
           @Override
@@ -737,22 +737,22 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("risk", "feature", "additional_data", "log_type", "short_description", "long_description");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -779,8 +779,8 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<PassiveLivenessCheckResponse.Liveness.WarningsItem.Risk> risk() {
-        return Json.optional(json, "risk", Conv.enumeration(PassiveLivenessCheckResponse.Liveness.WarningsItem.Risk::of));
+      public Optional<PassiveLivenessCheckResponse.Liveness.Warnings.Risk> risk() {
+        return Json.optional(json, "risk", Conv.enumeration(PassiveLivenessCheckResponse.Liveness.Warnings.Risk::of));
       }
 
       /**
@@ -789,8 +789,8 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<PassiveLivenessCheckResponse.Liveness.WarningsItem.Feature> feature() {
-        return Json.optional(json, "feature", Conv.enumeration(PassiveLivenessCheckResponse.Liveness.WarningsItem.Feature::of));
+      public Optional<PassiveLivenessCheckResponse.Liveness.Warnings.Feature> feature() {
+        return Json.optional(json, "feature", Conv.enumeration(PassiveLivenessCheckResponse.Liveness.Warnings.Feature::of));
       }
 
       /**
@@ -809,8 +809,8 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<PassiveLivenessCheckResponse.Liveness.WarningsItem.LogType> logType() {
-        return Json.optional(json, "log_type", Conv.enumeration(PassiveLivenessCheckResponse.Liveness.WarningsItem.LogType::of));
+      public Optional<PassiveLivenessCheckResponse.Liveness.Warnings.LogType> logType() {
+        return Json.optional(json, "log_type", Conv.enumeration(PassiveLivenessCheckResponse.Liveness.Warnings.LogType::of));
       }
 
       /**
@@ -838,11 +838,11 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -852,8 +852,8 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
          * @param risk the value
          * @return this builder
          */
-        public Builder risk(PassiveLivenessCheckResponse.Liveness.WarningsItem.Risk risk) {
-          return set("risk", Conv.enumeration(PassiveLivenessCheckResponse.Liveness.WarningsItem.Risk::of), risk);
+        public Builder risk(PassiveLivenessCheckResponse.Liveness.Warnings.Risk risk) {
+          return set("risk", Conv.enumeration(PassiveLivenessCheckResponse.Liveness.Warnings.Risk::of), risk);
         }
 
         /**
@@ -862,8 +862,8 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
          * @param feature the value
          * @return this builder
          */
-        public Builder feature(PassiveLivenessCheckResponse.Liveness.WarningsItem.Feature feature) {
-          return set("feature", Conv.enumeration(PassiveLivenessCheckResponse.Liveness.WarningsItem.Feature::of), feature);
+        public Builder feature(PassiveLivenessCheckResponse.Liveness.Warnings.Feature feature) {
+          return set("feature", Conv.enumeration(PassiveLivenessCheckResponse.Liveness.Warnings.Feature::of), feature);
         }
 
         /**
@@ -882,8 +882,8 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
          * @param logType the value
          * @return this builder
          */
-        public Builder logType(PassiveLivenessCheckResponse.Liveness.WarningsItem.LogType logType) {
-          return set("log_type", Conv.enumeration(PassiveLivenessCheckResponse.Liveness.WarningsItem.LogType::of), logType);
+        public Builder logType(PassiveLivenessCheckResponse.Liveness.Warnings.LogType logType) {
+          return set("log_type", Conv.enumeration(PassiveLivenessCheckResponse.Liveness.Warnings.LogType::of), logType);
         }
 
         /**
@@ -909,10 +909,10 @@ public final class PassiveLivenessCheckResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override

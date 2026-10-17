@@ -75,7 +75,7 @@ public final class BusinessesSetAmlMonitoringResponse extends MultiStatusRespons
   /**
    *
    * <p>One of: {@code CostPreview}, {@code Variant2}. Check with the {@code is...}
-   * methods and read with the {@code as...} methods.
+   * methods and read with the {@code as...} methods; the fields every variant has are readable directly.
    */
   public static final class Ok extends JsonUnion {
     private Ok(JsonNode json) {
@@ -90,6 +90,16 @@ public final class BusinessesSetAmlMonitoringResponse extends MultiStatusRespons
      */
     public static Ok fromJson(JsonNode json) {
       return new Ok(json.deepCopy());
+    }
+
+    /**
+     * Identifiers of the request that matched no profile in this application, exactly as sent.
+     *
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+     */
+    public List<String> unmatched() {
+      return Json.required(json, "unmatched", Conv.list(Conv.STRING));
     }
 
     /**
@@ -539,8 +549,8 @@ public final class BusinessesSetAmlMonitoringResponse extends MultiStatusRespons
        * @return the value
        * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
        */
-      public List<BusinessesSetAmlMonitoringResponse.Ok.Variant2.ResultsItem> results() {
-        return Json.required(json, "results", Conv.list(Conv.model(BusinessesSetAmlMonitoringResponse.Ok.Variant2.ResultsItem::fromJson)));
+      public List<BusinessesSetAmlMonitoringResponse.Ok.Variant2.Results> results() {
+        return Json.required(json, "results", Conv.list(Conv.model(BusinessesSetAmlMonitoringResponse.Ok.Variant2.Results::fromJson)));
       }
 
       /**
@@ -682,8 +692,8 @@ public final class BusinessesSetAmlMonitoringResponse extends MultiStatusRespons
          * @param results the value
          * @return this builder
          */
-        public Builder results(List<BusinessesSetAmlMonitoringResponse.Ok.Variant2.ResultsItem> results) {
-          return set("results", Conv.list(Conv.model(BusinessesSetAmlMonitoringResponse.Ok.Variant2.ResultsItem::fromJson)), results);
+        public Builder results(List<BusinessesSetAmlMonitoringResponse.Ok.Variant2.Results> results) {
+          return set("results", Conv.list(Conv.model(BusinessesSetAmlMonitoringResponse.Ok.Variant2.Results::fromJson)), results);
         }
 
         /**
@@ -1104,22 +1114,22 @@ public final class BusinessesSetAmlMonitoringResponse extends MultiStatusRespons
         }
       }
 
-      public static final class ResultsItem extends JsonModel {
+      public static final class Results extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("didit_internal_id", "vendor_data", "outcome");
 
-        private ResultsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private Results(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code ResultsItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code Results} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static ResultsItem fromJson(JsonNode json) {
-          return new ResultsItem(Json.copyObject(json), Map.of());
+        public static Results fromJson(JsonNode json) {
+          return new Results(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -1166,8 +1176,8 @@ public final class BusinessesSetAmlMonitoringResponse extends MultiStatusRespons
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<BusinessesSetAmlMonitoringResponse.Ok.Variant2.ResultsItem.Outcome> outcome() {
-          return Json.optional(json, "outcome", Conv.enumeration(BusinessesSetAmlMonitoringResponse.Ok.Variant2.ResultsItem.Outcome::of));
+        public Optional<BusinessesSetAmlMonitoringResponse.Ok.Variant2.Results.Outcome> outcome() {
+          return Json.optional(json, "outcome", Conv.enumeration(BusinessesSetAmlMonitoringResponse.Ok.Variant2.Results.Outcome::of));
         }
 
         @Override
@@ -1175,11 +1185,11 @@ public final class BusinessesSetAmlMonitoringResponse extends MultiStatusRespons
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link ResultsItem}. */
+        /** Builds a {@link Results}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(ResultsItem from) {
+          private Builder(Results from) {
             super(from);
           }
 
@@ -1209,17 +1219,17 @@ public final class BusinessesSetAmlMonitoringResponse extends MultiStatusRespons
            * @param outcome the value
            * @return this builder
            */
-          public Builder outcome(BusinessesSetAmlMonitoringResponse.Ok.Variant2.ResultsItem.Outcome outcome) {
-            return set("outcome", Conv.enumeration(BusinessesSetAmlMonitoringResponse.Ok.Variant2.ResultsItem.Outcome::of), outcome);
+          public Builder outcome(BusinessesSetAmlMonitoringResponse.Ok.Variant2.Results.Outcome outcome) {
+            return set("outcome", Conv.enumeration(BusinessesSetAmlMonitoringResponse.Ok.Variant2.Results.Outcome::of), outcome);
           }
 
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code ResultsItem}
+           * @return a new immutable {@code Results}
            */
-          public ResultsItem build() {
-            return new ResultsItem(buildJson(), buildFiles());
+          public Results build() {
+            return new Results(buildJson(), buildFiles());
           }
 
           @Override
@@ -1652,8 +1662,8 @@ public final class BusinessesSetAmlMonitoringResponse extends MultiStatusRespons
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<BusinessesSetAmlMonitoringResponse.Accepted.ResultsItem>> results() {
-      return Json.optional(json, "results", Conv.list(Conv.model(BusinessesSetAmlMonitoringResponse.Accepted.ResultsItem::fromJson)));
+    public Optional<List<BusinessesSetAmlMonitoringResponse.Accepted.Results>> results() {
+      return Json.optional(json, "results", Conv.list(Conv.model(BusinessesSetAmlMonitoringResponse.Accepted.Results::fromJson)));
     }
 
     /**
@@ -1795,8 +1805,8 @@ public final class BusinessesSetAmlMonitoringResponse extends MultiStatusRespons
        * @param results the value
        * @return this builder
        */
-      public Builder results(List<BusinessesSetAmlMonitoringResponse.Accepted.ResultsItem> results) {
-        return set("results", Conv.list(Conv.model(BusinessesSetAmlMonitoringResponse.Accepted.ResultsItem::fromJson)), results);
+      public Builder results(List<BusinessesSetAmlMonitoringResponse.Accepted.Results> results) {
+        return set("results", Conv.list(Conv.model(BusinessesSetAmlMonitoringResponse.Accepted.Results::fromJson)), results);
       }
 
       /**
@@ -2203,22 +2213,22 @@ public final class BusinessesSetAmlMonitoringResponse extends MultiStatusRespons
       }
     }
 
-    public static final class ResultsItem extends JsonModel {
+    public static final class Results extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("didit_internal_id", "vendor_data", "outcome");
 
-      private ResultsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Results(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code ResultsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Results} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static ResultsItem fromJson(JsonNode json) {
-        return new ResultsItem(Json.copyObject(json), Map.of());
+      public static Results fromJson(JsonNode json) {
+        return new Results(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -2265,8 +2275,8 @@ public final class BusinessesSetAmlMonitoringResponse extends MultiStatusRespons
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<BusinessesSetAmlMonitoringResponse.Accepted.ResultsItem.Outcome> outcome() {
-        return Json.optional(json, "outcome", Conv.enumeration(BusinessesSetAmlMonitoringResponse.Accepted.ResultsItem.Outcome::of));
+      public Optional<BusinessesSetAmlMonitoringResponse.Accepted.Results.Outcome> outcome() {
+        return Json.optional(json, "outcome", Conv.enumeration(BusinessesSetAmlMonitoringResponse.Accepted.Results.Outcome::of));
       }
 
       @Override
@@ -2274,11 +2284,11 @@ public final class BusinessesSetAmlMonitoringResponse extends MultiStatusRespons
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link ResultsItem}. */
+      /** Builds a {@link Results}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(ResultsItem from) {
+        private Builder(Results from) {
           super(from);
         }
 
@@ -2308,17 +2318,17 @@ public final class BusinessesSetAmlMonitoringResponse extends MultiStatusRespons
          * @param outcome the value
          * @return this builder
          */
-        public Builder outcome(BusinessesSetAmlMonitoringResponse.Accepted.ResultsItem.Outcome outcome) {
-          return set("outcome", Conv.enumeration(BusinessesSetAmlMonitoringResponse.Accepted.ResultsItem.Outcome::of), outcome);
+        public Builder outcome(BusinessesSetAmlMonitoringResponse.Accepted.Results.Outcome outcome) {
+          return set("outcome", Conv.enumeration(BusinessesSetAmlMonitoringResponse.Accepted.Results.Outcome::of), outcome);
         }
 
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code ResultsItem}
+         * @return a new immutable {@code Results}
          */
-        public ResultsItem build() {
-          return new ResultsItem(buildJson(), buildFiles());
+        public Results build() {
+          return new Results(buildJson(), buildFiles());
         }
 
         @Override

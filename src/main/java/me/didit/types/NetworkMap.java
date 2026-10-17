@@ -86,8 +86,8 @@ public final class NetworkMap extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<NetworkMap.PointsItem>> points() {
-    return Json.optional(json, "points", Conv.list(Conv.model(NetworkMap.PointsItem::fromJson)));
+  public Optional<List<NetworkMap.Points>> points() {
+    return Json.optional(json, "points", Conv.list(Conv.model(NetworkMap.Points::fromJson)));
   }
 
   @Override
@@ -139,8 +139,8 @@ public final class NetworkMap extends JsonModel {
      * @param points the value
      * @return this builder
      */
-    public Builder points(List<NetworkMap.PointsItem> points) {
-      return set("points", Conv.list(Conv.model(NetworkMap.PointsItem::fromJson)), points);
+    public Builder points(List<NetworkMap.Points> points) {
+      return set("points", Conv.list(Conv.model(NetworkMap.Points::fromJson)), points);
     }
 
     /**
@@ -158,22 +158,22 @@ public final class NetworkMap extends JsonModel {
     }
   }
 
-  public static final class PointsItem extends JsonModel {
+  public static final class Points extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "country", "country_code", "city", "latitude", "longitude", "observed_at");
 
-    private PointsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Points(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code PointsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Points} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static PointsItem fromJson(JsonNode json) {
-      return new PointsItem(Json.copyObject(json), Map.of());
+    public static Points fromJson(JsonNode json) {
+      return new Points(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -269,11 +269,11 @@ public final class NetworkMap extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link PointsItem}. */
+    /** Builds a {@link Points}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(PointsItem from) {
+      private Builder(Points from) {
         super(from);
       }
 
@@ -350,10 +350,10 @@ public final class NetworkMap extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code PointsItem}
+       * @return a new immutable {@code Points}
        */
-      public PointsItem build() {
-        return new PointsItem(buildJson(), buildFiles());
+      public Points build() {
+        return new Points(buildJson(), buildFiles());
       }
 
       @Override

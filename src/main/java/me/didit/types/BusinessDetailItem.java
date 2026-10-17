@@ -187,8 +187,8 @@ public final class BusinessDetailItem extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<BusinessListItem.FeaturesListItem>> featuresList() {
-    return Json.optional(json, "features_list", Conv.list(Conv.model(BusinessListItem.FeaturesListItem::fromJson)));
+  public Optional<List<BusinessListItem.FeaturesList>> featuresList() {
+    return Json.optional(json, "features_list", Conv.list(Conv.model(BusinessListItem.FeaturesList::fromJson)));
   }
 
   /**
@@ -227,8 +227,8 @@ public final class BusinessDetailItem extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<BusinessListItem.TagsItem>> tags() {
-    return Json.optional(json, "tags", Conv.list(Conv.model(BusinessListItem.TagsItem::fromJson)));
+  public Optional<List<BusinessListItem.Tags>> tags() {
+    return Json.optional(json, "tags", Conv.list(Conv.model(BusinessListItem.Tags::fromJson)));
   }
 
   /**
@@ -410,8 +410,8 @@ public final class BusinessDetailItem extends JsonModel {
      * @param featuresList the value
      * @return this builder
      */
-    public Builder featuresList(List<BusinessListItem.FeaturesListItem> featuresList) {
-      return set("features_list", Conv.list(Conv.model(BusinessListItem.FeaturesListItem::fromJson)), featuresList);
+    public Builder featuresList(List<BusinessListItem.FeaturesList> featuresList) {
+      return set("features_list", Conv.list(Conv.model(BusinessListItem.FeaturesList::fromJson)), featuresList);
     }
 
     /**
@@ -450,8 +450,8 @@ public final class BusinessDetailItem extends JsonModel {
      * @param tags the value
      * @return this builder
      */
-    public Builder tags(List<BusinessListItem.TagsItem> tags) {
-      return set("tags", Conv.list(Conv.model(BusinessListItem.TagsItem::fromJson)), tags);
+    public Builder tags(List<BusinessListItem.Tags> tags) {
+      return set("tags", Conv.list(Conv.model(BusinessListItem.Tags::fromJson)), tags);
     }
 
     /**

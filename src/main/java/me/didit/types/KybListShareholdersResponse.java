@@ -705,8 +705,8 @@ public final class KybListShareholdersResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<KybListShareholdersResponse.KybRegistry.OfficersItem>> officers() {
-      return Json.optional(json, "officers", Conv.list(Conv.model(KybListShareholdersResponse.KybRegistry.OfficersItem::fromJson)));
+    public Optional<List<KybListShareholdersResponse.KybRegistry.Officers>> officers() {
+      return Json.optional(json, "officers", Conv.list(Conv.model(KybListShareholdersResponse.KybRegistry.Officers::fromJson)));
     }
 
     /**
@@ -715,8 +715,8 @@ public final class KybListShareholdersResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<KybListShareholdersResponse.KybRegistry.BeneficialOwnersItem>> beneficialOwners() {
-      return Json.optional(json, "beneficial_owners", Conv.list(Conv.model(KybListShareholdersResponse.KybRegistry.BeneficialOwnersItem::fromJson)));
+    public Optional<List<KybListShareholdersResponse.KybRegistry.BeneficialOwners>> beneficialOwners() {
+      return Json.optional(json, "beneficial_owners", Conv.list(Conv.model(KybListShareholdersResponse.KybRegistry.BeneficialOwners::fromJson)));
     }
 
     /**
@@ -1208,8 +1208,8 @@ public final class KybListShareholdersResponse extends JsonModel {
        * @param officers the value
        * @return this builder
        */
-      public Builder officers(List<KybListShareholdersResponse.KybRegistry.OfficersItem> officers) {
-        return set("officers", Conv.list(Conv.model(KybListShareholdersResponse.KybRegistry.OfficersItem::fromJson)), officers);
+      public Builder officers(List<KybListShareholdersResponse.KybRegistry.Officers> officers) {
+        return set("officers", Conv.list(Conv.model(KybListShareholdersResponse.KybRegistry.Officers::fromJson)), officers);
       }
 
       /**
@@ -1218,8 +1218,8 @@ public final class KybListShareholdersResponse extends JsonModel {
        * @param beneficialOwners the value
        * @return this builder
        */
-      public Builder beneficialOwners(List<KybListShareholdersResponse.KybRegistry.BeneficialOwnersItem> beneficialOwners) {
-        return set("beneficial_owners", Conv.list(Conv.model(KybListShareholdersResponse.KybRegistry.BeneficialOwnersItem::fromJson)), beneficialOwners);
+      public Builder beneficialOwners(List<KybListShareholdersResponse.KybRegistry.BeneficialOwners> beneficialOwners) {
+        return set("beneficial_owners", Conv.list(Conv.model(KybListShareholdersResponse.KybRegistry.BeneficialOwners::fromJson)), beneficialOwners);
       }
 
       /**
@@ -1641,22 +1641,22 @@ public final class KybListShareholdersResponse extends JsonModel {
       }
     }
 
-    public static final class OfficersItem extends JsonModel {
+    public static final class Officers extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "designation", "role", "nationality", "is_active", "kyc_status", "kyc_session_url", "first_name", "last_name", "address", "appointment_date", "termination_date", "date_of_birth", "date_of_birth_year", "date_of_birth_month");
 
-      private OfficersItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Officers(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code OfficersItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Officers} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static OfficersItem fromJson(JsonNode json) {
-        return new OfficersItem(Json.copyObject(json), Map.of());
+      public static Officers fromJson(JsonNode json) {
+        return new Officers(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -1713,8 +1713,8 @@ public final class KybListShareholdersResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<KybListShareholdersResponse.KybRegistry.OfficersItem.Role> role() {
-        return Json.optional(json, "role", Conv.enumeration(KybListShareholdersResponse.KybRegistry.OfficersItem.Role::of));
+      public Optional<KybListShareholdersResponse.KybRegistry.Officers.Role> role() {
+        return Json.optional(json, "role", Conv.enumeration(KybListShareholdersResponse.KybRegistry.Officers.Role::of));
       }
 
       /**
@@ -1743,8 +1743,8 @@ public final class KybListShareholdersResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<KybListShareholdersResponse.KybRegistry.OfficersItem.KycStatus> kycStatus() {
-        return Json.optional(json, "kyc_status", Conv.enumeration(KybListShareholdersResponse.KybRegistry.OfficersItem.KycStatus::of));
+      public Optional<KybListShareholdersResponse.KybRegistry.Officers.KycStatus> kycStatus() {
+        return Json.optional(json, "kyc_status", Conv.enumeration(KybListShareholdersResponse.KybRegistry.Officers.KycStatus::of));
       }
 
       /**
@@ -1842,11 +1842,11 @@ public final class KybListShareholdersResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link OfficersItem}. */
+      /** Builds a {@link Officers}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(OfficersItem from) {
+        private Builder(Officers from) {
           super(from);
         }
 
@@ -1886,8 +1886,8 @@ public final class KybListShareholdersResponse extends JsonModel {
          * @param role the value
          * @return this builder
          */
-        public Builder role(KybListShareholdersResponse.KybRegistry.OfficersItem.Role role) {
-          return set("role", Conv.enumeration(KybListShareholdersResponse.KybRegistry.OfficersItem.Role::of), role);
+        public Builder role(KybListShareholdersResponse.KybRegistry.Officers.Role role) {
+          return set("role", Conv.enumeration(KybListShareholdersResponse.KybRegistry.Officers.Role::of), role);
         }
 
         /**
@@ -1916,8 +1916,8 @@ public final class KybListShareholdersResponse extends JsonModel {
          * @param kycStatus the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder kycStatus(KybListShareholdersResponse.KybRegistry.OfficersItem.@Nullable KycStatus kycStatus) {
-          return setNullable("kyc_status", Conv.enumeration(KybListShareholdersResponse.KybRegistry.OfficersItem.KycStatus::of), kycStatus);
+        public Builder kycStatus(KybListShareholdersResponse.KybRegistry.Officers.@Nullable KycStatus kycStatus) {
+          return setNullable("kyc_status", Conv.enumeration(KybListShareholdersResponse.KybRegistry.Officers.KycStatus::of), kycStatus);
         }
 
         /**
@@ -2013,10 +2013,10 @@ public final class KybListShareholdersResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code OfficersItem}
+         * @return a new immutable {@code Officers}
          */
-        public OfficersItem build() {
-          return new OfficersItem(buildJson(), buildFiles());
+        public Officers build() {
+          return new Officers(buildJson(), buildFiles());
         }
 
         @Override
@@ -2160,22 +2160,22 @@ public final class KybListShareholdersResponse extends JsonModel {
       }
     }
 
-    public static final class BeneficialOwnersItem extends JsonModel {
+    public static final class BeneficialOwners extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "first_name", "last_name", "entity_type", "roles", "ownership_min_shares", "ownership_max_shares", "is_active", "kyc_status", "kyc_session_url", "effective_ownership_percent", "company_name", "registration_number", "country_of_birth", "email", "nationality", "designation", "voting_min_shares", "voting_max_shares", "date_of_birth", "appointment_date", "shareholding");
 
-      private BeneficialOwnersItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private BeneficialOwners(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code BeneficialOwnersItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code BeneficialOwners} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static BeneficialOwnersItem fromJson(JsonNode json) {
-        return new BeneficialOwnersItem(Json.copyObject(json), Map.of());
+      public static BeneficialOwners fromJson(JsonNode json) {
+        return new BeneficialOwners(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -2242,8 +2242,8 @@ public final class KybListShareholdersResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<KybListShareholdersResponse.KybRegistry.BeneficialOwnersItem.EntityType> entityType() {
-        return Json.optional(json, "entity_type", Conv.enumeration(KybListShareholdersResponse.KybRegistry.BeneficialOwnersItem.EntityType::of));
+      public Optional<KybListShareholdersResponse.KybRegistry.BeneficialOwners.EntityType> entityType() {
+        return Json.optional(json, "entity_type", Conv.enumeration(KybListShareholdersResponse.KybRegistry.BeneficialOwners.EntityType::of));
       }
 
       /**
@@ -2292,8 +2292,8 @@ public final class KybListShareholdersResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<KybListShareholdersResponse.KybRegistry.BeneficialOwnersItem.KycStatus> kycStatus() {
-        return Json.optional(json, "kyc_status", Conv.enumeration(KybListShareholdersResponse.KybRegistry.BeneficialOwnersItem.KycStatus::of));
+      public Optional<KybListShareholdersResponse.KybRegistry.BeneficialOwners.KycStatus> kycStatus() {
+        return Json.optional(json, "kyc_status", Conv.enumeration(KybListShareholdersResponse.KybRegistry.BeneficialOwners.KycStatus::of));
       }
 
       /**
@@ -2431,11 +2431,11 @@ public final class KybListShareholdersResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link BeneficialOwnersItem}. */
+      /** Builds a {@link BeneficialOwners}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(BeneficialOwnersItem from) {
+        private Builder(BeneficialOwners from) {
           super(from);
         }
 
@@ -2485,8 +2485,8 @@ public final class KybListShareholdersResponse extends JsonModel {
          * @param entityType the value
          * @return this builder
          */
-        public Builder entityType(KybListShareholdersResponse.KybRegistry.BeneficialOwnersItem.EntityType entityType) {
-          return set("entity_type", Conv.enumeration(KybListShareholdersResponse.KybRegistry.BeneficialOwnersItem.EntityType::of), entityType);
+        public Builder entityType(KybListShareholdersResponse.KybRegistry.BeneficialOwners.EntityType entityType) {
+          return set("entity_type", Conv.enumeration(KybListShareholdersResponse.KybRegistry.BeneficialOwners.EntityType::of), entityType);
         }
 
         /**
@@ -2535,8 +2535,8 @@ public final class KybListShareholdersResponse extends JsonModel {
          * @param kycStatus the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder kycStatus(KybListShareholdersResponse.KybRegistry.BeneficialOwnersItem.@Nullable KycStatus kycStatus) {
-          return setNullable("kyc_status", Conv.enumeration(KybListShareholdersResponse.KybRegistry.BeneficialOwnersItem.KycStatus::of), kycStatus);
+        public Builder kycStatus(KybListShareholdersResponse.KybRegistry.BeneficialOwners.@Nullable KycStatus kycStatus) {
+          return setNullable("kyc_status", Conv.enumeration(KybListShareholdersResponse.KybRegistry.BeneficialOwners.KycStatus::of), kycStatus);
         }
 
         /**
@@ -2672,10 +2672,10 @@ public final class KybListShareholdersResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code BeneficialOwnersItem}
+         * @return a new immutable {@code BeneficialOwners}
          */
-        public BeneficialOwnersItem build() {
-          return new BeneficialOwnersItem(buildJson(), buildFiles());
+        public BeneficialOwners build() {
+          return new BeneficialOwners(buildJson(), buildFiles());
         }
 
         @Override

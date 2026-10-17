@@ -55,8 +55,8 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<CasesBlueprintsListPresetsResponse.ResultsItem>> results() {
-    return Json.optional(json, "results", Conv.list(Conv.model(CasesBlueprintsListPresetsResponse.ResultsItem::fromJson)));
+  public Optional<List<CasesBlueprintsListPresetsResponse.Results>> results() {
+    return Json.optional(json, "results", Conv.list(Conv.model(CasesBlueprintsListPresetsResponse.Results::fromJson)));
   }
 
   @Override
@@ -78,8 +78,8 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
      * @param results the value
      * @return this builder
      */
-    public Builder results(List<CasesBlueprintsListPresetsResponse.ResultsItem> results) {
-      return set("results", Conv.list(Conv.model(CasesBlueprintsListPresetsResponse.ResultsItem::fromJson)), results);
+    public Builder results(List<CasesBlueprintsListPresetsResponse.Results> results) {
+      return set("results", Conv.list(Conv.model(CasesBlueprintsListPresetsResponse.Results::fromJson)), results);
     }
 
     /**
@@ -97,22 +97,22 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
     }
   }
 
-  public static final class ResultsItem extends JsonModel {
+  public static final class Results extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("preset_key", "name", "description", "content_config", "installed");
 
-    private ResultsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Results(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code ResultsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Results} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static ResultsItem fromJson(JsonNode json) {
-      return new ResultsItem(Json.copyObject(json), Map.of());
+    public static Results fromJson(JsonNode json) {
+      return new Results(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -139,8 +139,8 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<CasesBlueprintsListPresetsResponse.ResultsItem.PresetKey> presetKey() {
-      return Json.optional(json, "preset_key", Conv.enumeration(CasesBlueprintsListPresetsResponse.ResultsItem.PresetKey::of));
+    public Optional<CasesBlueprintsListPresetsResponse.Results.PresetKey> presetKey() {
+      return Json.optional(json, "preset_key", Conv.enumeration(CasesBlueprintsListPresetsResponse.Results.PresetKey::of));
     }
 
     /**
@@ -188,11 +188,11 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link ResultsItem}. */
+    /** Builds a {@link Results}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(ResultsItem from) {
+      private Builder(Results from) {
         super(from);
       }
 
@@ -202,8 +202,8 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
        * @param presetKey the value
        * @return this builder
        */
-      public Builder presetKey(CasesBlueprintsListPresetsResponse.ResultsItem.PresetKey presetKey) {
-        return set("preset_key", Conv.enumeration(CasesBlueprintsListPresetsResponse.ResultsItem.PresetKey::of), presetKey);
+      public Builder presetKey(CasesBlueprintsListPresetsResponse.Results.PresetKey presetKey) {
+        return set("preset_key", Conv.enumeration(CasesBlueprintsListPresetsResponse.Results.PresetKey::of), presetKey);
       }
 
       /**
@@ -249,10 +249,10 @@ public final class CasesBlueprintsListPresetsResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code ResultsItem}
+       * @return a new immutable {@code Results}
        */
-      public ResultsItem build() {
-        return new ResultsItem(buildJson(), buildFiles());
+      public Results build() {
+        return new Results(buildJson(), buildFiles());
       }
 
       @Override

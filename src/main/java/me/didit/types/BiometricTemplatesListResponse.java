@@ -87,8 +87,8 @@ public final class BiometricTemplatesListResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<BiometricTemplatesListResponse.ResultsItem>> results() {
-    return Json.optional(json, "results", Conv.list(Conv.model(BiometricTemplatesListResponse.ResultsItem::fromJson)));
+  public Optional<List<BiometricTemplatesListResponse.Results>> results() {
+    return Json.optional(json, "results", Conv.list(Conv.model(BiometricTemplatesListResponse.Results::fromJson)));
   }
 
   @Override
@@ -140,8 +140,8 @@ public final class BiometricTemplatesListResponse extends JsonModel {
      * @param results the value
      * @return this builder
      */
-    public Builder results(List<BiometricTemplatesListResponse.ResultsItem> results) {
-      return set("results", Conv.list(Conv.model(BiometricTemplatesListResponse.ResultsItem::fromJson)), results);
+    public Builder results(List<BiometricTemplatesListResponse.Results> results) {
+      return set("results", Conv.list(Conv.model(BiometricTemplatesListResponse.Results::fromJson)), results);
     }
 
     /**
@@ -159,22 +159,22 @@ public final class BiometricTemplatesListResponse extends JsonModel {
     }
   }
 
-  public static final class ResultsItem extends JsonModel {
+  public static final class Results extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "vendor_user_uuid", "vendor_data", "source_type", "provenance_reference", "retention_policy", "retention_override", "retained_at", "expires_at", "retained_by", "retained_by_type", "instruction_class", "instruction_source", "instruction_id", "held_out_of_use", "status", "purged_at");
 
-    private ResultsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Results(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code ResultsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Results} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static ResultsItem fromJson(JsonNode json) {
-      return new ResultsItem(Json.copyObject(json), Map.of());
+    public static Results fromJson(JsonNode json) {
+      return new Results(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -231,8 +231,8 @@ public final class BiometricTemplatesListResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<BiometricTemplatesListResponse.ResultsItem.SourceType> sourceType() {
-      return Json.optional(json, "source_type", Conv.enumeration(BiometricTemplatesListResponse.ResultsItem.SourceType::of));
+    public Optional<BiometricTemplatesListResponse.Results.SourceType> sourceType() {
+      return Json.optional(json, "source_type", Conv.enumeration(BiometricTemplatesListResponse.Results.SourceType::of));
     }
 
     /**
@@ -251,8 +251,8 @@ public final class BiometricTemplatesListResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<BiometricTemplatesListResponse.ResultsItem.RetentionPolicy> retentionPolicy() {
-      return Json.optional(json, "retention_policy", Conv.enumeration(BiometricTemplatesListResponse.ResultsItem.RetentionPolicy::of));
+    public Optional<BiometricTemplatesListResponse.Results.RetentionPolicy> retentionPolicy() {
+      return Json.optional(json, "retention_policy", Conv.enumeration(BiometricTemplatesListResponse.Results.RetentionPolicy::of));
     }
 
     /**
@@ -301,8 +301,8 @@ public final class BiometricTemplatesListResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<BiometricTemplatesListResponse.ResultsItem.RetainedByType> retainedByType() {
-      return Json.optional(json, "retained_by_type", Conv.enumeration(BiometricTemplatesListResponse.ResultsItem.RetainedByType::of));
+    public Optional<BiometricTemplatesListResponse.Results.RetainedByType> retainedByType() {
+      return Json.optional(json, "retained_by_type", Conv.enumeration(BiometricTemplatesListResponse.Results.RetainedByType::of));
     }
 
     /**
@@ -311,8 +311,8 @@ public final class BiometricTemplatesListResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<BiometricTemplatesListResponse.ResultsItem.InstructionClass> instructionClass() {
-      return Json.optional(json, "instruction_class", Conv.enumeration(BiometricTemplatesListResponse.ResultsItem.InstructionClass::of));
+    public Optional<BiometricTemplatesListResponse.Results.InstructionClass> instructionClass() {
+      return Json.optional(json, "instruction_class", Conv.enumeration(BiometricTemplatesListResponse.Results.InstructionClass::of));
     }
 
     /**
@@ -321,8 +321,8 @@ public final class BiometricTemplatesListResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<BiometricTemplatesListResponse.ResultsItem.InstructionSource> instructionSource() {
-      return Json.optional(json, "instruction_source", Conv.enumeration(BiometricTemplatesListResponse.ResultsItem.InstructionSource::of));
+    public Optional<BiometricTemplatesListResponse.Results.InstructionSource> instructionSource() {
+      return Json.optional(json, "instruction_source", Conv.enumeration(BiometricTemplatesListResponse.Results.InstructionSource::of));
     }
 
     /**
@@ -351,8 +351,8 @@ public final class BiometricTemplatesListResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<BiometricTemplatesListResponse.ResultsItem.Status> status() {
-      return Json.optional(json, "status", Conv.enumeration(BiometricTemplatesListResponse.ResultsItem.Status::of));
+    public Optional<BiometricTemplatesListResponse.Results.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(BiometricTemplatesListResponse.Results.Status::of));
     }
 
     /**
@@ -370,11 +370,11 @@ public final class BiometricTemplatesListResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link ResultsItem}. */
+    /** Builds a {@link Results}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(ResultsItem from) {
+      private Builder(Results from) {
         super(from);
       }
 
@@ -414,8 +414,8 @@ public final class BiometricTemplatesListResponse extends JsonModel {
        * @param sourceType the value
        * @return this builder
        */
-      public Builder sourceType(BiometricTemplatesListResponse.ResultsItem.SourceType sourceType) {
-        return set("source_type", Conv.enumeration(BiometricTemplatesListResponse.ResultsItem.SourceType::of), sourceType);
+      public Builder sourceType(BiometricTemplatesListResponse.Results.SourceType sourceType) {
+        return set("source_type", Conv.enumeration(BiometricTemplatesListResponse.Results.SourceType::of), sourceType);
       }
 
       /**
@@ -434,8 +434,8 @@ public final class BiometricTemplatesListResponse extends JsonModel {
        * @param retentionPolicy the value
        * @return this builder
        */
-      public Builder retentionPolicy(BiometricTemplatesListResponse.ResultsItem.RetentionPolicy retentionPolicy) {
-        return set("retention_policy", Conv.enumeration(BiometricTemplatesListResponse.ResultsItem.RetentionPolicy::of), retentionPolicy);
+      public Builder retentionPolicy(BiometricTemplatesListResponse.Results.RetentionPolicy retentionPolicy) {
+        return set("retention_policy", Conv.enumeration(BiometricTemplatesListResponse.Results.RetentionPolicy::of), retentionPolicy);
       }
 
       /**
@@ -484,8 +484,8 @@ public final class BiometricTemplatesListResponse extends JsonModel {
        * @param retainedByType the value
        * @return this builder
        */
-      public Builder retainedByType(BiometricTemplatesListResponse.ResultsItem.RetainedByType retainedByType) {
-        return set("retained_by_type", Conv.enumeration(BiometricTemplatesListResponse.ResultsItem.RetainedByType::of), retainedByType);
+      public Builder retainedByType(BiometricTemplatesListResponse.Results.RetainedByType retainedByType) {
+        return set("retained_by_type", Conv.enumeration(BiometricTemplatesListResponse.Results.RetainedByType::of), retainedByType);
       }
 
       /**
@@ -494,8 +494,8 @@ public final class BiometricTemplatesListResponse extends JsonModel {
        * @param instructionClass the value
        * @return this builder
        */
-      public Builder instructionClass(BiometricTemplatesListResponse.ResultsItem.InstructionClass instructionClass) {
-        return set("instruction_class", Conv.enumeration(BiometricTemplatesListResponse.ResultsItem.InstructionClass::of), instructionClass);
+      public Builder instructionClass(BiometricTemplatesListResponse.Results.InstructionClass instructionClass) {
+        return set("instruction_class", Conv.enumeration(BiometricTemplatesListResponse.Results.InstructionClass::of), instructionClass);
       }
 
       /**
@@ -504,8 +504,8 @@ public final class BiometricTemplatesListResponse extends JsonModel {
        * @param instructionSource the value
        * @return this builder
        */
-      public Builder instructionSource(BiometricTemplatesListResponse.ResultsItem.InstructionSource instructionSource) {
-        return set("instruction_source", Conv.enumeration(BiometricTemplatesListResponse.ResultsItem.InstructionSource::of), instructionSource);
+      public Builder instructionSource(BiometricTemplatesListResponse.Results.InstructionSource instructionSource) {
+        return set("instruction_source", Conv.enumeration(BiometricTemplatesListResponse.Results.InstructionSource::of), instructionSource);
       }
 
       /**
@@ -534,8 +534,8 @@ public final class BiometricTemplatesListResponse extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(BiometricTemplatesListResponse.ResultsItem.Status status) {
-        return set("status", Conv.enumeration(BiometricTemplatesListResponse.ResultsItem.Status::of), status);
+      public Builder status(BiometricTemplatesListResponse.Results.Status status) {
+        return set("status", Conv.enumeration(BiometricTemplatesListResponse.Results.Status::of), status);
       }
 
       /**
@@ -551,10 +551,10 @@ public final class BiometricTemplatesListResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code ResultsItem}
+       * @return a new immutable {@code Results}
        */
-      public ResultsItem build() {
-        return new ResultsItem(buildJson(), buildFiles());
+      public Results build() {
+        return new Results(buildJson(), buildFiles());
       }
 
       @Override

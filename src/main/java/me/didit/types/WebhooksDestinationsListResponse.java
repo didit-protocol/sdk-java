@@ -15,22 +15,22 @@ import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
-public final class WebhooksDestinationsListResponseItem extends JsonModel {
+public final class WebhooksDestinationsListResponse extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "label", "url", "enabled", "webhook_version", "subscribed_events", "subscribed_events_count", "deliveries_count", "failed_deliveries_count", "average_response_time_ms", "error_rate_percentage", "last_delivery_at", "created_at", "updated_at");
 
-  private WebhooksDestinationsListResponseItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+  private WebhooksDestinationsListResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
   }
 
   /**
-   * Reads a {@code WebhooksDestinationsListResponseItem} from JSON. Unknown fields are kept and readable
+   * Reads a {@code WebhooksDestinationsListResponse} from JSON. Unknown fields are kept and readable
    * through {@link #_additionalProperties()}.
    *
    * @param json a JSON object
    * @return the parsed value
    */
-  public static WebhooksDestinationsListResponseItem fromJson(JsonNode json) {
-    return new WebhooksDestinationsListResponseItem(Json.copyObject(json), Map.of());
+  public static WebhooksDestinationsListResponse fromJson(JsonNode json) {
+    return new WebhooksDestinationsListResponse(Json.copyObject(json), Map.of());
   }
 
   /**
@@ -97,8 +97,8 @@ public final class WebhooksDestinationsListResponseItem extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<WebhooksDestinationsListResponseItem.WebhookVersion> webhookVersion() {
-    return Json.optional(json, "webhook_version", Conv.enumeration(WebhooksDestinationsListResponseItem.WebhookVersion::of));
+  public Optional<WebhooksDestinationsListResponse.WebhookVersion> webhookVersion() {
+    return Json.optional(json, "webhook_version", Conv.enumeration(WebhooksDestinationsListResponse.WebhookVersion::of));
   }
 
   /**
@@ -196,11 +196,11 @@ public final class WebhooksDestinationsListResponseItem extends JsonModel {
     return KNOWN_FIELDS;
   }
 
-  /** Builds a {@link WebhooksDestinationsListResponseItem}. */
+  /** Builds a {@link WebhooksDestinationsListResponse}. */
   public static final class Builder extends JsonModel.BaseBuilder<Builder> {
     private Builder() {}
 
-    private Builder(WebhooksDestinationsListResponseItem from) {
+    private Builder(WebhooksDestinationsListResponse from) {
       super(from);
     }
 
@@ -250,8 +250,8 @@ public final class WebhooksDestinationsListResponseItem extends JsonModel {
      * @param webhookVersion the value
      * @return this builder
      */
-    public Builder webhookVersion(WebhooksDestinationsListResponseItem.WebhookVersion webhookVersion) {
-      return set("webhook_version", Conv.enumeration(WebhooksDestinationsListResponseItem.WebhookVersion::of), webhookVersion);
+    public Builder webhookVersion(WebhooksDestinationsListResponse.WebhookVersion webhookVersion) {
+      return set("webhook_version", Conv.enumeration(WebhooksDestinationsListResponse.WebhookVersion::of), webhookVersion);
     }
 
     /**
@@ -347,10 +347,10 @@ public final class WebhooksDestinationsListResponseItem extends JsonModel {
     /**
      * Builds the value.
      *
-     * @return a new immutable {@code WebhooksDestinationsListResponseItem}
+     * @return a new immutable {@code WebhooksDestinationsListResponse}
      */
-    public WebhooksDestinationsListResponseItem build() {
-      return new WebhooksDestinationsListResponseItem(buildJson(), buildFiles());
+    public WebhooksDestinationsListResponse build() {
+      return new WebhooksDestinationsListResponse(buildJson(), buildFiles());
     }
 
     @Override

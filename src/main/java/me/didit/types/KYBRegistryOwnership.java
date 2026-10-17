@@ -109,8 +109,8 @@ public final class KYBRegistryOwnership extends JsonModel {
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public List<KYBRegistryOwnership.UnresolvedItem> unresolved() {
-    return Json.required(json, "unresolved", Conv.list(Conv.model(KYBRegistryOwnership.UnresolvedItem::fromJson)));
+  public List<KYBRegistryOwnership.Unresolved> unresolved() {
+    return Json.required(json, "unresolved", Conv.list(Conv.model(KYBRegistryOwnership.Unresolved::fromJson)));
   }
 
   @Override
@@ -182,8 +182,8 @@ public final class KYBRegistryOwnership extends JsonModel {
      * @param unresolved the value
      * @return this builder
      */
-    public Builder unresolved(List<KYBRegistryOwnership.UnresolvedItem> unresolved) {
-      return set("unresolved", Conv.list(Conv.model(KYBRegistryOwnership.UnresolvedItem::fromJson)), unresolved);
+    public Builder unresolved(List<KYBRegistryOwnership.Unresolved> unresolved) {
+      return set("unresolved", Conv.list(Conv.model(KYBRegistryOwnership.Unresolved::fromJson)), unresolved);
     }
 
     /**
@@ -413,22 +413,22 @@ public final class KYBRegistryOwnership extends JsonModel {
     }
   }
 
-  public static final class UnresolvedItem extends JsonModel {
+  public static final class Unresolved extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("reason", "section");
 
-    private UnresolvedItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Unresolved(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code UnresolvedItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Unresolved} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static UnresolvedItem fromJson(JsonNode json) {
-      return new UnresolvedItem(Json.copyObject(json), Map.of());
+    public static Unresolved fromJson(JsonNode json) {
+      return new Unresolved(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -474,11 +474,11 @@ public final class KYBRegistryOwnership extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link UnresolvedItem}. */
+    /** Builds a {@link Unresolved}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(UnresolvedItem from) {
+      private Builder(Unresolved from) {
         super(from);
       }
 
@@ -505,10 +505,10 @@ public final class KYBRegistryOwnership extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code UnresolvedItem}
+       * @return a new immutable {@code Unresolved}
        */
-      public UnresolvedItem build() {
-        return new UnresolvedItem(buildJson(), buildFiles());
+      public Unresolved build() {
+        return new Unresolved(buildJson(), buildFiles());
       }
 
       @Override

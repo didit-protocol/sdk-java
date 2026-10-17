@@ -107,8 +107,8 @@ public final class NetworkListItem extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<NetworkListItem.PatternTypesItem>> patternTypes() {
-    return Json.optional(json, "pattern_types", Conv.list(Conv.enumeration(NetworkListItem.PatternTypesItem::of)));
+  public Optional<List<NetworkListItem.PatternTypes>> patternTypes() {
+    return Json.optional(json, "pattern_types", Conv.list(Conv.enumeration(NetworkListItem.PatternTypes::of)));
   }
 
   /**
@@ -117,8 +117,8 @@ public final class NetworkListItem extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<NetworkListItem.SignalTypesItem>> signalTypes() {
-    return Json.optional(json, "signal_types", Conv.list(Conv.enumeration(NetworkListItem.SignalTypesItem::of)));
+  public Optional<List<NetworkListItem.SignalTypes>> signalTypes() {
+    return Json.optional(json, "signal_types", Conv.list(Conv.enumeration(NetworkListItem.SignalTypes::of)));
   }
 
   /**
@@ -240,8 +240,8 @@ public final class NetworkListItem extends JsonModel {
      * @param patternTypes the value
      * @return this builder
      */
-    public Builder patternTypes(List<NetworkListItem.PatternTypesItem> patternTypes) {
-      return set("pattern_types", Conv.list(Conv.enumeration(NetworkListItem.PatternTypesItem::of)), patternTypes);
+    public Builder patternTypes(List<NetworkListItem.PatternTypes> patternTypes) {
+      return set("pattern_types", Conv.list(Conv.enumeration(NetworkListItem.PatternTypes::of)), patternTypes);
     }
 
     /**
@@ -250,8 +250,8 @@ public final class NetworkListItem extends JsonModel {
      * @param signalTypes the value
      * @return this builder
      */
-    public Builder signalTypes(List<NetworkListItem.SignalTypesItem> signalTypes) {
-      return set("signal_types", Conv.list(Conv.enumeration(NetworkListItem.SignalTypesItem::of)), signalTypes);
+    public Builder signalTypes(List<NetworkListItem.SignalTypes> signalTypes) {
+      return set("signal_types", Conv.list(Conv.enumeration(NetworkListItem.SignalTypes::of)), signalTypes);
     }
 
     /**
@@ -372,37 +372,37 @@ public final class NetworkListItem extends JsonModel {
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
-  public static final class PatternTypesItem extends StringEnum {
+  public static final class PatternTypes extends StringEnum {
     /** The value {@code "exact_same_device"}. */
-    public static final PatternTypesItem EXACT_SAME_DEVICE = new PatternTypesItem("exact_same_device");
+    public static final PatternTypes EXACT_SAME_DEVICE = new PatternTypes("exact_same_device");
 
     /** The value {@code "similar_device"}. */
-    public static final PatternTypesItem SIMILAR_DEVICE = new PatternTypesItem("similar_device");
+    public static final PatternTypes SIMILAR_DEVICE = new PatternTypes("similar_device");
 
     /** The value {@code "same_ip_address"}. */
-    public static final PatternTypesItem SAME_IP_ADDRESS = new PatternTypesItem("same_ip_address");
+    public static final PatternTypes SAME_IP_ADDRESS = new PatternTypes("same_ip_address");
 
     /** The value {@code "same_address"}. */
-    public static final PatternTypesItem SAME_ADDRESS = new PatternTypesItem("same_address");
+    public static final PatternTypes SAME_ADDRESS = new PatternTypes("same_address");
 
     /** The value {@code "similar_selfie_backgrounds"}. */
-    public static final PatternTypesItem SIMILAR_SELFIE_BACKGROUNDS = new PatternTypesItem("similar_selfie_backgrounds");
+    public static final PatternTypes SIMILAR_SELFIE_BACKGROUNDS = new PatternTypes("similar_selfie_backgrounds");
 
     /** The value {@code "similar_poa_documents"}. */
-    public static final PatternTypesItem SIMILAR_POA_DOCUMENTS = new PatternTypesItem("similar_poa_documents");
+    public static final PatternTypes SIMILAR_POA_DOCUMENTS = new PatternTypes("similar_poa_documents");
 
     /** The value {@code "same_document_number"}. */
-    public static final PatternTypesItem SAME_DOCUMENT_NUMBER = new PatternTypesItem("same_document_number");
+    public static final PatternTypes SAME_DOCUMENT_NUMBER = new PatternTypes("same_document_number");
 
     /** The value {@code "same_phone_number"}. */
-    public static final PatternTypesItem SAME_PHONE_NUMBER = new PatternTypesItem("same_phone_number");
+    public static final PatternTypes SAME_PHONE_NUMBER = new PatternTypes("same_phone_number");
 
     /** The value {@code "same_email"}. */
-    public static final PatternTypesItem SAME_EMAIL = new PatternTypesItem("same_email");
+    public static final PatternTypes SAME_EMAIL = new PatternTypes("same_email");
 
-    private static final List<PatternTypesItem> KNOWN_VALUES = List.of(EXACT_SAME_DEVICE, SIMILAR_DEVICE, SAME_IP_ADDRESS, SAME_ADDRESS, SIMILAR_SELFIE_BACKGROUNDS, SIMILAR_POA_DOCUMENTS, SAME_DOCUMENT_NUMBER, SAME_PHONE_NUMBER, SAME_EMAIL);
+    private static final List<PatternTypes> KNOWN_VALUES = List.of(EXACT_SAME_DEVICE, SIMILAR_DEVICE, SAME_IP_ADDRESS, SAME_ADDRESS, SIMILAR_SELFIE_BACKGROUNDS, SIMILAR_POA_DOCUMENTS, SAME_DOCUMENT_NUMBER, SAME_PHONE_NUMBER, SAME_EMAIL);
 
-    private PatternTypesItem(String value) {
+    private PatternTypes(String value) {
       super(value);
     }
 
@@ -412,8 +412,8 @@ public final class NetworkListItem extends JsonModel {
      * @param value the string value
      * @return the enum value
      */
-    public static PatternTypesItem of(String value) {
-      return StringEnum.lookup(KNOWN_VALUES, value, PatternTypesItem::new);
+    public static PatternTypes of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, PatternTypes::new);
     }
 
     /**
@@ -421,7 +421,7 @@ public final class NetworkListItem extends JsonModel {
      *
      * @return the known values
      */
-    public static List<PatternTypesItem> knownValues() {
+    public static List<PatternTypes> knownValues() {
       return KNOWN_VALUES;
     }
 
@@ -435,31 +435,31 @@ public final class NetworkListItem extends JsonModel {
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
-  public static final class SignalTypesItem extends StringEnum {
+  public static final class SignalTypes extends StringEnum {
     /** The value {@code "ip_address"}. */
-    public static final SignalTypesItem IP_ADDRESS = new SignalTypesItem("ip_address");
+    public static final SignalTypes IP_ADDRESS = new SignalTypes("ip_address");
 
     /** The value {@code "device"}. */
-    public static final SignalTypesItem DEVICE = new SignalTypesItem("device");
+    public static final SignalTypes DEVICE = new SignalTypes("device");
 
     /** The value {@code "face"}. */
-    public static final SignalTypesItem FACE = new SignalTypesItem("face");
+    public static final SignalTypes FACE = new SignalTypes("face");
 
     /** The value {@code "document_number"}. */
-    public static final SignalTypesItem DOCUMENT_NUMBER = new SignalTypesItem("document_number");
+    public static final SignalTypes DOCUMENT_NUMBER = new SignalTypes("document_number");
 
     /** The value {@code "phone"}. */
-    public static final SignalTypesItem PHONE = new SignalTypesItem("phone");
+    public static final SignalTypes PHONE = new SignalTypes("phone");
 
     /** The value {@code "email"}. */
-    public static final SignalTypesItem EMAIL = new SignalTypesItem("email");
+    public static final SignalTypes EMAIL = new SignalTypes("email");
 
     /** The value {@code "address"}. */
-    public static final SignalTypesItem ADDRESS = new SignalTypesItem("address");
+    public static final SignalTypes ADDRESS = new SignalTypes("address");
 
-    private static final List<SignalTypesItem> KNOWN_VALUES = List.of(IP_ADDRESS, DEVICE, FACE, DOCUMENT_NUMBER, PHONE, EMAIL, ADDRESS);
+    private static final List<SignalTypes> KNOWN_VALUES = List.of(IP_ADDRESS, DEVICE, FACE, DOCUMENT_NUMBER, PHONE, EMAIL, ADDRESS);
 
-    private SignalTypesItem(String value) {
+    private SignalTypes(String value) {
       super(value);
     }
 
@@ -469,8 +469,8 @@ public final class NetworkListItem extends JsonModel {
      * @param value the string value
      * @return the enum value
      */
-    public static SignalTypesItem of(String value) {
-      return StringEnum.lookup(KNOWN_VALUES, value, SignalTypesItem::new);
+    public static SignalTypes of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, SignalTypes::new);
     }
 
     /**
@@ -478,7 +478,7 @@ public final class NetworkListItem extends JsonModel {
      *
      * @return the known values
      */
-    public static List<SignalTypesItem> knownValues() {
+    public static List<SignalTypes> knownValues() {
       return KNOWN_VALUES;
     }
 

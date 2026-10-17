@@ -107,8 +107,8 @@ public final class VaspDirectoryEntry extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<VaspDirectoryEntry.ReachableRailsItem>> reachableRails() {
-    return Json.optional(json, "reachable_rails", Conv.list(Conv.enumeration(VaspDirectoryEntry.ReachableRailsItem::of)));
+  public Optional<List<VaspDirectoryEntry.ReachableRails>> reachableRails() {
+    return Json.optional(json, "reachable_rails", Conv.list(Conv.enumeration(VaspDirectoryEntry.ReachableRails::of)));
   }
 
   /**
@@ -210,8 +210,8 @@ public final class VaspDirectoryEntry extends JsonModel {
      * @param reachableRails the value
      * @return this builder
      */
-    public Builder reachableRails(List<VaspDirectoryEntry.ReachableRailsItem> reachableRails) {
-      return set("reachable_rails", Conv.list(Conv.enumeration(VaspDirectoryEntry.ReachableRailsItem::of)), reachableRails);
+    public Builder reachableRails(List<VaspDirectoryEntry.ReachableRails> reachableRails) {
+      return set("reachable_rails", Conv.list(Conv.enumeration(VaspDirectoryEntry.ReachableRails::of)), reachableRails);
     }
 
     /**
@@ -311,22 +311,22 @@ public final class VaspDirectoryEntry extends JsonModel {
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
-  public static final class ReachableRailsItem extends StringEnum {
+  public static final class ReachableRails extends StringEnum {
     /** The value {@code "INTERNAL"}. */
-    public static final ReachableRailsItem INTERNAL = new ReachableRailsItem("INTERNAL");
+    public static final ReachableRails INTERNAL = new ReachableRails("INTERNAL");
 
     /** The value {@code "TRP"}. */
-    public static final ReachableRailsItem TRP = new ReachableRailsItem("TRP");
+    public static final ReachableRails TRP = new ReachableRails("TRP");
 
     /** The value {@code "GTR"}. */
-    public static final ReachableRailsItem GTR = new ReachableRailsItem("GTR");
+    public static final ReachableRails GTR = new ReachableRails("GTR");
 
     /** The value {@code "EMAIL"}. */
-    public static final ReachableRailsItem EMAIL = new ReachableRailsItem("EMAIL");
+    public static final ReachableRails EMAIL = new ReachableRails("EMAIL");
 
-    private static final List<ReachableRailsItem> KNOWN_VALUES = List.of(INTERNAL, TRP, GTR, EMAIL);
+    private static final List<ReachableRails> KNOWN_VALUES = List.of(INTERNAL, TRP, GTR, EMAIL);
 
-    private ReachableRailsItem(String value) {
+    private ReachableRails(String value) {
       super(value);
     }
 
@@ -336,8 +336,8 @@ public final class VaspDirectoryEntry extends JsonModel {
      * @param value the string value
      * @return the enum value
      */
-    public static ReachableRailsItem of(String value) {
-      return StringEnum.lookup(KNOWN_VALUES, value, ReachableRailsItem::new);
+    public static ReachableRails of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, ReachableRails::new);
     }
 
     /**
@@ -345,7 +345,7 @@ public final class VaspDirectoryEntry extends JsonModel {
      *
      * @return the known values
      */
-    public static List<ReachableRailsItem> knownValues() {
+    public static List<ReachableRails> knownValues() {
       return KNOWN_VALUES;
     }
 

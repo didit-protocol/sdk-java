@@ -66,8 +66,8 @@ public final class TransactionRuleScope extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<TransactionRuleScope.DirectionsItem>> directions() {
-    return Json.optional(json, "directions", Conv.list(Conv.enumeration(TransactionRuleScope.DirectionsItem::of)));
+  public Optional<List<TransactionRuleScope.Directions>> directions() {
+    return Json.optional(json, "directions", Conv.list(Conv.enumeration(TransactionRuleScope.Directions::of)));
   }
 
   /**
@@ -109,8 +109,8 @@ public final class TransactionRuleScope extends JsonModel {
      * @param directions the value
      * @return this builder
      */
-    public Builder directions(List<TransactionRuleScope.DirectionsItem> directions) {
-      return set("directions", Conv.list(Conv.enumeration(TransactionRuleScope.DirectionsItem::of)), directions);
+    public Builder directions(List<TransactionRuleScope.Directions> directions) {
+      return set("directions", Conv.list(Conv.enumeration(TransactionRuleScope.Directions::of)), directions);
     }
 
     /**
@@ -142,16 +142,16 @@ public final class TransactionRuleScope extends JsonModel {
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
-  public static final class DirectionsItem extends StringEnum {
+  public static final class Directions extends StringEnum {
     /** The value {@code "INBOUND"}. */
-    public static final DirectionsItem INBOUND = new DirectionsItem("INBOUND");
+    public static final Directions INBOUND = new Directions("INBOUND");
 
     /** The value {@code "OUTBOUND"}. */
-    public static final DirectionsItem OUTBOUND = new DirectionsItem("OUTBOUND");
+    public static final Directions OUTBOUND = new Directions("OUTBOUND");
 
-    private static final List<DirectionsItem> KNOWN_VALUES = List.of(INBOUND, OUTBOUND);
+    private static final List<Directions> KNOWN_VALUES = List.of(INBOUND, OUTBOUND);
 
-    private DirectionsItem(String value) {
+    private Directions(String value) {
       super(value);
     }
 
@@ -161,8 +161,8 @@ public final class TransactionRuleScope extends JsonModel {
      * @param value the string value
      * @return the enum value
      */
-    public static DirectionsItem of(String value) {
-      return StringEnum.lookup(KNOWN_VALUES, value, DirectionsItem::new);
+    public static Directions of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Directions::new);
     }
 
     /**
@@ -170,7 +170,7 @@ public final class TransactionRuleScope extends JsonModel {
      *
      * @return the known values
      */
-    public static List<DirectionsItem> knownValues() {
+    public static List<Directions> knownValues() {
       return KNOWN_VALUES;
     }
 

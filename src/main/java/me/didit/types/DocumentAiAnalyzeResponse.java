@@ -251,8 +251,8 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<DocumentAiAnalyzeResponse.DocumentAi.FieldsItem>> fields() {
-      return Json.optional(json, "fields", Conv.list(Conv.model(DocumentAiAnalyzeResponse.DocumentAi.FieldsItem::fromJson)));
+    public Optional<List<DocumentAiAnalyzeResponse.DocumentAi.Fields>> fields() {
+      return Json.optional(json, "fields", Conv.list(Conv.model(DocumentAiAnalyzeResponse.DocumentAi.Fields::fromJson)));
     }
 
     /**
@@ -281,8 +281,8 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<DocumentAiAnalyzeResponse.DocumentAi.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(DocumentAiAnalyzeResponse.DocumentAi.WarningsItem::fromJson)));
+    public Optional<List<DocumentAiAnalyzeResponse.DocumentAi.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(DocumentAiAnalyzeResponse.DocumentAi.Warnings::fromJson)));
     }
 
     @Override
@@ -334,8 +334,8 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
        * @param fields the value
        * @return this builder
        */
-      public Builder fields(List<DocumentAiAnalyzeResponse.DocumentAi.FieldsItem> fields) {
-        return set("fields", Conv.list(Conv.model(DocumentAiAnalyzeResponse.DocumentAi.FieldsItem::fromJson)), fields);
+      public Builder fields(List<DocumentAiAnalyzeResponse.DocumentAi.Fields> fields) {
+        return set("fields", Conv.list(Conv.model(DocumentAiAnalyzeResponse.DocumentAi.Fields::fromJson)), fields);
       }
 
       /**
@@ -364,8 +364,8 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<DocumentAiAnalyzeResponse.DocumentAi.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(DocumentAiAnalyzeResponse.DocumentAi.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<DocumentAiAnalyzeResponse.DocumentAi.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(DocumentAiAnalyzeResponse.DocumentAi.Warnings::fromJson)), warnings);
       }
 
       /**
@@ -429,22 +429,22 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
       }
     }
 
-    public static final class FieldsItem extends JsonModel {
+    public static final class Fields extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("key", "name", "instruction", "type", "required", "is_full_name");
 
-      private FieldsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Fields(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code FieldsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Fields} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static FieldsItem fromJson(JsonNode json) {
-        return new FieldsItem(Json.copyObject(json), Map.of());
+      public static Fields fromJson(JsonNode json) {
+        return new Fields(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -501,8 +501,8 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<DocumentAiAnalyzeResponse.DocumentAi.FieldsItem.Type> type() {
-        return Json.optional(json, "type", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.FieldsItem.Type::of));
+      public Optional<DocumentAiAnalyzeResponse.DocumentAi.Fields.Type> type() {
+        return Json.optional(json, "type", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.Fields.Type::of));
       }
 
       /**
@@ -530,11 +530,11 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link FieldsItem}. */
+      /** Builds a {@link Fields}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(FieldsItem from) {
+        private Builder(Fields from) {
           super(from);
         }
 
@@ -574,8 +574,8 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
          * @param type the value
          * @return this builder
          */
-        public Builder type(DocumentAiAnalyzeResponse.DocumentAi.FieldsItem.Type type) {
-          return set("type", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.FieldsItem.Type::of), type);
+        public Builder type(DocumentAiAnalyzeResponse.DocumentAi.Fields.Type type) {
+          return set("type", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.Fields.Type::of), type);
         }
 
         /**
@@ -601,10 +601,10 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code FieldsItem}
+         * @return a new immutable {@code Fields}
          */
-        public FieldsItem build() {
-          return new FieldsItem(buildJson(), buildFiles());
+        public Fields build() {
+          return new Fields(buildJson(), buildFiles());
         }
 
         @Override
@@ -659,22 +659,22 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("risk", "feature", "additional_data", "log_type", "short_description", "long_description");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -701,8 +701,8 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<DocumentAiAnalyzeResponse.DocumentAi.WarningsItem.Risk> risk() {
-        return Json.optional(json, "risk", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.WarningsItem.Risk::of));
+      public Optional<DocumentAiAnalyzeResponse.DocumentAi.Warnings.Risk> risk() {
+        return Json.optional(json, "risk", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.Warnings.Risk::of));
       }
 
       /**
@@ -711,8 +711,8 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<DocumentAiAnalyzeResponse.DocumentAi.WarningsItem.Feature> feature() {
-        return Json.optional(json, "feature", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.WarningsItem.Feature::of));
+      public Optional<DocumentAiAnalyzeResponse.DocumentAi.Warnings.Feature> feature() {
+        return Json.optional(json, "feature", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.Warnings.Feature::of));
       }
 
       /**
@@ -731,8 +731,8 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<DocumentAiAnalyzeResponse.DocumentAi.WarningsItem.LogType> logType() {
-        return Json.optional(json, "log_type", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.WarningsItem.LogType::of));
+      public Optional<DocumentAiAnalyzeResponse.DocumentAi.Warnings.LogType> logType() {
+        return Json.optional(json, "log_type", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.Warnings.LogType::of));
       }
 
       /**
@@ -760,11 +760,11 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -774,8 +774,8 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
          * @param risk the value
          * @return this builder
          */
-        public Builder risk(DocumentAiAnalyzeResponse.DocumentAi.WarningsItem.Risk risk) {
-          return set("risk", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.WarningsItem.Risk::of), risk);
+        public Builder risk(DocumentAiAnalyzeResponse.DocumentAi.Warnings.Risk risk) {
+          return set("risk", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.Warnings.Risk::of), risk);
         }
 
         /**
@@ -784,8 +784,8 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
          * @param feature the value
          * @return this builder
          */
-        public Builder feature(DocumentAiAnalyzeResponse.DocumentAi.WarningsItem.Feature feature) {
-          return set("feature", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.WarningsItem.Feature::of), feature);
+        public Builder feature(DocumentAiAnalyzeResponse.DocumentAi.Warnings.Feature feature) {
+          return set("feature", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.Warnings.Feature::of), feature);
         }
 
         /**
@@ -804,8 +804,8 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
          * @param logType the value
          * @return this builder
          */
-        public Builder logType(DocumentAiAnalyzeResponse.DocumentAi.WarningsItem.LogType logType) {
-          return set("log_type", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.WarningsItem.LogType::of), logType);
+        public Builder logType(DocumentAiAnalyzeResponse.DocumentAi.Warnings.LogType logType) {
+          return set("log_type", Conv.enumeration(DocumentAiAnalyzeResponse.DocumentAi.Warnings.LogType::of), logType);
         }
 
         /**
@@ -831,10 +831,10 @@ public final class DocumentAiAnalyzeResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override

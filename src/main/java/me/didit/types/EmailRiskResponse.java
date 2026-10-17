@@ -323,8 +323,8 @@ public final class EmailRiskResponse extends JsonModel {
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
      */
-    public List<EmailRiskResponse.Email.BreachesItem> breaches() {
-      return Json.required(json, "breaches", Conv.list(Conv.model(EmailRiskResponse.Email.BreachesItem::fromJson)));
+    public List<EmailRiskResponse.Email.Breaches> breaches() {
+      return Json.required(json, "breaches", Conv.list(Conv.model(EmailRiskResponse.Email.Breaches::fromJson)));
     }
 
     /**
@@ -476,8 +476,8 @@ public final class EmailRiskResponse extends JsonModel {
        * @param breaches the value
        * @return this builder
        */
-      public Builder breaches(List<EmailRiskResponse.Email.BreachesItem> breaches) {
-        return set("breaches", Conv.list(Conv.model(EmailRiskResponse.Email.BreachesItem::fromJson)), breaches);
+      public Builder breaches(List<EmailRiskResponse.Email.Breaches> breaches) {
+        return set("breaches", Conv.list(Conv.model(EmailRiskResponse.Email.Breaches::fromJson)), breaches);
       }
 
       /**
@@ -648,22 +648,22 @@ public final class EmailRiskResponse extends JsonModel {
       }
     }
 
-    public static final class BreachesItem extends JsonModel {
+    public static final class Breaches extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("name", "domain", "breach_date", "breach_emails_count", "description", "logo_path", "data_classes", "is_verified");
 
-      private BreachesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Breaches(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code BreachesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Breaches} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static BreachesItem fromJson(JsonNode json) {
-        return new BreachesItem(Json.copyObject(json), Map.of());
+      public static Breaches fromJson(JsonNode json) {
+        return new Breaches(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -769,11 +769,11 @@ public final class EmailRiskResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link BreachesItem}. */
+      /** Builds a {@link Breaches}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(BreachesItem from) {
+        private Builder(Breaches from) {
           super(from);
         }
 
@@ -860,10 +860,10 @@ public final class EmailRiskResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code BreachesItem}
+         * @return a new immutable {@code Breaches}
          */
-        public BreachesItem build() {
-          return new BreachesItem(buildJson(), buildFiles());
+        public Breaches build() {
+          return new Breaches(buildJson(), buildFiles());
         }
 
         @Override

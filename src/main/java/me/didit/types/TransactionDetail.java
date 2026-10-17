@@ -332,8 +332,8 @@ public final class TransactionDetail extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<TransactionDetail.TagsItem>> tags() {
-    return Json.optional(json, "tags", Conv.list(Conv.model(TransactionDetail.TagsItem::fromJson)));
+  public Optional<List<TransactionDetail.Tags>> tags() {
+    return Json.optional(json, "tags", Conv.list(Conv.model(TransactionDetail.Tags::fromJson)));
   }
 
   /**
@@ -342,8 +342,8 @@ public final class TransactionDetail extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<TransactionDetail.PartiesItem>> parties() {
-    return Json.optional(json, "parties", Conv.list(Conv.model(TransactionDetail.PartiesItem::fromJson)));
+  public Optional<List<TransactionDetail.Parties>> parties() {
+    return Json.optional(json, "parties", Conv.list(Conv.model(TransactionDetail.Parties::fromJson)));
   }
 
   /**
@@ -352,8 +352,8 @@ public final class TransactionDetail extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<TransactionDetail.PaymentMethodsItem>> paymentMethods() {
-    return Json.optional(json, "payment_methods", Conv.list(Conv.model(TransactionDetail.PaymentMethodsItem::fromJson)));
+  public Optional<List<TransactionDetail.PaymentMethods>> paymentMethods() {
+    return Json.optional(json, "payment_methods", Conv.list(Conv.model(TransactionDetail.PaymentMethods::fromJson)));
   }
 
   /**
@@ -362,8 +362,8 @@ public final class TransactionDetail extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<TransactionDetail.DocumentsItem>> documents() {
-    return Json.optional(json, "documents", Conv.list(Conv.model(TransactionDetail.DocumentsItem::fromJson)));
+  public Optional<List<TransactionDetail.Documents>> documents() {
+    return Json.optional(json, "documents", Conv.list(Conv.model(TransactionDetail.Documents::fromJson)));
   }
 
   /**
@@ -372,8 +372,8 @@ public final class TransactionDetail extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<TransactionDetail.ActivitiesItem>> activities() {
-    return Json.optional(json, "activities", Conv.list(Conv.model(TransactionDetail.ActivitiesItem::fromJson)));
+  public Optional<List<TransactionDetail.Activities>> activities() {
+    return Json.optional(json, "activities", Conv.list(Conv.model(TransactionDetail.Activities::fromJson)));
   }
 
   /**
@@ -382,8 +382,8 @@ public final class TransactionDetail extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<TransactionDetail.AlertsItem>> alerts() {
-    return Json.optional(json, "alerts", Conv.list(Conv.model(TransactionDetail.AlertsItem::fromJson)));
+  public Optional<List<TransactionDetail.Alerts>> alerts() {
+    return Json.optional(json, "alerts", Conv.list(Conv.model(TransactionDetail.Alerts::fromJson)));
   }
 
   /**
@@ -392,8 +392,8 @@ public final class TransactionDetail extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<TransactionDetail.RuleRunsItem>> ruleRuns() {
-    return Json.optional(json, "rule_runs", Conv.list(Conv.model(TransactionDetail.RuleRunsItem::fromJson)));
+  public Optional<List<TransactionDetail.RuleRuns>> ruleRuns() {
+    return Json.optional(json, "rule_runs", Conv.list(Conv.model(TransactionDetail.RuleRuns::fromJson)));
   }
 
   /**
@@ -402,8 +402,8 @@ public final class TransactionDetail extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<TransactionDetail.ProviderResultsItem>> providerResults() {
-    return Json.optional(json, "provider_results", Conv.list(Conv.model(TransactionDetail.ProviderResultsItem::fromJson)));
+  public Optional<List<TransactionDetail.ProviderResults>> providerResults() {
+    return Json.optional(json, "provider_results", Conv.list(Conv.model(TransactionDetail.ProviderResults::fromJson)));
   }
 
   /**
@@ -745,8 +745,8 @@ public final class TransactionDetail extends JsonModel {
      * @param tags the value
      * @return this builder
      */
-    public Builder tags(List<TransactionDetail.TagsItem> tags) {
-      return set("tags", Conv.list(Conv.model(TransactionDetail.TagsItem::fromJson)), tags);
+    public Builder tags(List<TransactionDetail.Tags> tags) {
+      return set("tags", Conv.list(Conv.model(TransactionDetail.Tags::fromJson)), tags);
     }
 
     /**
@@ -755,8 +755,8 @@ public final class TransactionDetail extends JsonModel {
      * @param parties the value
      * @return this builder
      */
-    public Builder parties(List<TransactionDetail.PartiesItem> parties) {
-      return set("parties", Conv.list(Conv.model(TransactionDetail.PartiesItem::fromJson)), parties);
+    public Builder parties(List<TransactionDetail.Parties> parties) {
+      return set("parties", Conv.list(Conv.model(TransactionDetail.Parties::fromJson)), parties);
     }
 
     /**
@@ -765,8 +765,8 @@ public final class TransactionDetail extends JsonModel {
      * @param paymentMethods the value
      * @return this builder
      */
-    public Builder paymentMethods(List<TransactionDetail.PaymentMethodsItem> paymentMethods) {
-      return set("payment_methods", Conv.list(Conv.model(TransactionDetail.PaymentMethodsItem::fromJson)), paymentMethods);
+    public Builder paymentMethods(List<TransactionDetail.PaymentMethods> paymentMethods) {
+      return set("payment_methods", Conv.list(Conv.model(TransactionDetail.PaymentMethods::fromJson)), paymentMethods);
     }
 
     /**
@@ -775,8 +775,8 @@ public final class TransactionDetail extends JsonModel {
      * @param documents the value
      * @return this builder
      */
-    public Builder documents(List<TransactionDetail.DocumentsItem> documents) {
-      return set("documents", Conv.list(Conv.model(TransactionDetail.DocumentsItem::fromJson)), documents);
+    public Builder documents(List<TransactionDetail.Documents> documents) {
+      return set("documents", Conv.list(Conv.model(TransactionDetail.Documents::fromJson)), documents);
     }
 
     /**
@@ -785,8 +785,8 @@ public final class TransactionDetail extends JsonModel {
      * @param activities the value
      * @return this builder
      */
-    public Builder activities(List<TransactionDetail.ActivitiesItem> activities) {
-      return set("activities", Conv.list(Conv.model(TransactionDetail.ActivitiesItem::fromJson)), activities);
+    public Builder activities(List<TransactionDetail.Activities> activities) {
+      return set("activities", Conv.list(Conv.model(TransactionDetail.Activities::fromJson)), activities);
     }
 
     /**
@@ -795,8 +795,8 @@ public final class TransactionDetail extends JsonModel {
      * @param alerts the value
      * @return this builder
      */
-    public Builder alerts(List<TransactionDetail.AlertsItem> alerts) {
-      return set("alerts", Conv.list(Conv.model(TransactionDetail.AlertsItem::fromJson)), alerts);
+    public Builder alerts(List<TransactionDetail.Alerts> alerts) {
+      return set("alerts", Conv.list(Conv.model(TransactionDetail.Alerts::fromJson)), alerts);
     }
 
     /**
@@ -805,8 +805,8 @@ public final class TransactionDetail extends JsonModel {
      * @param ruleRuns the value
      * @return this builder
      */
-    public Builder ruleRuns(List<TransactionDetail.RuleRunsItem> ruleRuns) {
-      return set("rule_runs", Conv.list(Conv.model(TransactionDetail.RuleRunsItem::fromJson)), ruleRuns);
+    public Builder ruleRuns(List<TransactionDetail.RuleRuns> ruleRuns) {
+      return set("rule_runs", Conv.list(Conv.model(TransactionDetail.RuleRuns::fromJson)), ruleRuns);
     }
 
     /**
@@ -815,8 +815,8 @@ public final class TransactionDetail extends JsonModel {
      * @param providerResults the value
      * @return this builder
      */
-    public Builder providerResults(List<TransactionDetail.ProviderResultsItem> providerResults) {
-      return set("provider_results", Conv.list(Conv.model(TransactionDetail.ProviderResultsItem::fromJson)), providerResults);
+    public Builder providerResults(List<TransactionDetail.ProviderResults> providerResults) {
+      return set("provider_results", Conv.list(Conv.model(TransactionDetail.ProviderResults::fromJson)), providerResults);
     }
 
     /**
@@ -1114,22 +1114,22 @@ public final class TransactionDetail extends JsonModel {
     }
   }
 
-  public static final class TagsItem extends JsonModel {
+  public static final class Tags extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "color", "description", "source");
 
-    private TagsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Tags(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code TagsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Tags} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static TagsItem fromJson(JsonNode json) {
-      return new TagsItem(Json.copyObject(json), Map.of());
+    public static Tags fromJson(JsonNode json) {
+      return new Tags(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -1196,8 +1196,8 @@ public final class TransactionDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionDetail.TagsItem.Source> source() {
-      return Json.optional(json, "source", Conv.enumeration(TransactionDetail.TagsItem.Source::of));
+    public Optional<TransactionDetail.Tags.Source> source() {
+      return Json.optional(json, "source", Conv.enumeration(TransactionDetail.Tags.Source::of));
     }
 
     @Override
@@ -1205,11 +1205,11 @@ public final class TransactionDetail extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link TagsItem}. */
+    /** Builds a {@link Tags}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(TagsItem from) {
+      private Builder(Tags from) {
         super(from);
       }
 
@@ -1259,17 +1259,17 @@ public final class TransactionDetail extends JsonModel {
        * @param source the value
        * @return this builder
        */
-      public Builder source(TransactionDetail.TagsItem.Source source) {
-        return set("source", Conv.enumeration(TransactionDetail.TagsItem.Source::of), source);
+      public Builder source(TransactionDetail.Tags.Source source) {
+        return set("source", Conv.enumeration(TransactionDetail.Tags.Source::of), source);
       }
 
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code TagsItem}
+       * @return a new immutable {@code Tags}
        */
-      public TagsItem build() {
-        return new TagsItem(buildJson(), buildFiles());
+      public Tags build() {
+        return new Tags(buildJson(), buildFiles());
       }
 
       @Override
@@ -1322,22 +1322,22 @@ public final class TransactionDetail extends JsonModel {
     }
   }
 
-  public static final class PartiesItem extends JsonModel {
+  public static final class Parties extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "role", "entity_type", "kind", "vendor_data", "full_name", "first_name", "last_name", "country_code", "dob", "address", "institution_info", "device", "external_party_snapshot");
 
-    private PartiesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Parties(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code PartiesItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Parties} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static PartiesItem fromJson(JsonNode json) {
-      return new PartiesItem(Json.copyObject(json), Map.of());
+    public static Parties fromJson(JsonNode json) {
+      return new Parties(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -1374,8 +1374,8 @@ public final class TransactionDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionDetail.PartiesItem.Role> role() {
-      return Json.optional(json, "role", Conv.enumeration(TransactionDetail.PartiesItem.Role::of));
+    public Optional<TransactionDetail.Parties.Role> role() {
+      return Json.optional(json, "role", Conv.enumeration(TransactionDetail.Parties.Role::of));
     }
 
     /**
@@ -1384,8 +1384,8 @@ public final class TransactionDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionDetail.PartiesItem.EntityType> entityType() {
-      return Json.optional(json, "entity_type", Conv.enumeration(TransactionDetail.PartiesItem.EntityType::of));
+    public Optional<TransactionDetail.Parties.EntityType> entityType() {
+      return Json.optional(json, "entity_type", Conv.enumeration(TransactionDetail.Parties.EntityType::of));
     }
 
     /**
@@ -1394,8 +1394,8 @@ public final class TransactionDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionDetail.PartiesItem.Kind> kind() {
-      return Json.optional(json, "kind", Conv.enumeration(TransactionDetail.PartiesItem.Kind::of));
+    public Optional<TransactionDetail.Parties.Kind> kind() {
+      return Json.optional(json, "kind", Conv.enumeration(TransactionDetail.Parties.Kind::of));
     }
 
     /**
@@ -1484,8 +1484,8 @@ public final class TransactionDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionDetail.PartiesItem.Device> device() {
-      return Json.optional(json, "device", Conv.model(TransactionDetail.PartiesItem.Device::fromJson));
+    public Optional<TransactionDetail.Parties.Device> device() {
+      return Json.optional(json, "device", Conv.model(TransactionDetail.Parties.Device::fromJson));
     }
 
     /**
@@ -1503,11 +1503,11 @@ public final class TransactionDetail extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link PartiesItem}. */
+    /** Builds a {@link Parties}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(PartiesItem from) {
+      private Builder(Parties from) {
         super(from);
       }
 
@@ -1527,8 +1527,8 @@ public final class TransactionDetail extends JsonModel {
        * @param role the value
        * @return this builder
        */
-      public Builder role(TransactionDetail.PartiesItem.Role role) {
-        return set("role", Conv.enumeration(TransactionDetail.PartiesItem.Role::of), role);
+      public Builder role(TransactionDetail.Parties.Role role) {
+        return set("role", Conv.enumeration(TransactionDetail.Parties.Role::of), role);
       }
 
       /**
@@ -1537,8 +1537,8 @@ public final class TransactionDetail extends JsonModel {
        * @param entityType the value
        * @return this builder
        */
-      public Builder entityType(TransactionDetail.PartiesItem.EntityType entityType) {
-        return set("entity_type", Conv.enumeration(TransactionDetail.PartiesItem.EntityType::of), entityType);
+      public Builder entityType(TransactionDetail.Parties.EntityType entityType) {
+        return set("entity_type", Conv.enumeration(TransactionDetail.Parties.EntityType::of), entityType);
       }
 
       /**
@@ -1547,8 +1547,8 @@ public final class TransactionDetail extends JsonModel {
        * @param kind the value
        * @return this builder
        */
-      public Builder kind(TransactionDetail.PartiesItem.Kind kind) {
-        return set("kind", Conv.enumeration(TransactionDetail.PartiesItem.Kind::of), kind);
+      public Builder kind(TransactionDetail.Parties.Kind kind) {
+        return set("kind", Conv.enumeration(TransactionDetail.Parties.Kind::of), kind);
       }
 
       /**
@@ -1637,8 +1637,8 @@ public final class TransactionDetail extends JsonModel {
        * @param device the value
        * @return this builder
        */
-      public Builder device(TransactionDetail.PartiesItem.Device device) {
-        return set("device", Conv.model(TransactionDetail.PartiesItem.Device::fromJson), device);
+      public Builder device(TransactionDetail.Parties.Device device) {
+        return set("device", Conv.model(TransactionDetail.Parties.Device::fromJson), device);
       }
 
       /**
@@ -1654,10 +1654,10 @@ public final class TransactionDetail extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code PartiesItem}
+       * @return a new immutable {@code Parties}
        */
-      public PartiesItem build() {
-        return new PartiesItem(buildJson(), buildFiles());
+      public Parties build() {
+        return new Parties(buildJson(), buildFiles());
       }
 
       @Override
@@ -1964,8 +1964,8 @@ public final class TransactionDetail extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<TransactionDetail.PartiesItem.Device.NetworkContext> networkContext() {
-        return Json.optional(json, "network_context", Conv.model(TransactionDetail.PartiesItem.Device.NetworkContext::fromJson));
+      public Optional<TransactionDetail.Parties.Device.NetworkContext> networkContext() {
+        return Json.optional(json, "network_context", Conv.model(TransactionDetail.Parties.Device.NetworkContext::fromJson));
       }
 
       @Override
@@ -2097,8 +2097,8 @@ public final class TransactionDetail extends JsonModel {
          * @param networkContext the value
          * @return this builder
          */
-        public Builder networkContext(TransactionDetail.PartiesItem.Device.NetworkContext networkContext) {
-          return set("network_context", Conv.model(TransactionDetail.PartiesItem.Device.NetworkContext::fromJson), networkContext);
+        public Builder networkContext(TransactionDetail.Parties.Device.NetworkContext networkContext) {
+          return set("network_context", Conv.model(TransactionDetail.Parties.Device.NetworkContext::fromJson), networkContext);
         }
 
         /**
@@ -2264,22 +2264,22 @@ public final class TransactionDetail extends JsonModel {
     }
   }
 
-  public static final class PaymentMethodsItem extends JsonModel {
+  public static final class PaymentMethods extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "payment_method_type", "label", "fingerprint", "account_id", "issuing_country", "owner_kind", "vendor_data", "owner_name", "institution_info", "details", "external_owner_snapshot", "role");
 
-    private PaymentMethodsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private PaymentMethods(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code PaymentMethodsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code PaymentMethods} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static PaymentMethodsItem fromJson(JsonNode json) {
-      return new PaymentMethodsItem(Json.copyObject(json), Map.of());
+    public static PaymentMethods fromJson(JsonNode json) {
+      return new PaymentMethods(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -2316,8 +2316,8 @@ public final class TransactionDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionDetail.PaymentMethodsItem.PaymentMethodType> paymentMethodType() {
-      return Json.optional(json, "payment_method_type", Conv.enumeration(TransactionDetail.PaymentMethodsItem.PaymentMethodType::of));
+    public Optional<TransactionDetail.PaymentMethods.PaymentMethodType> paymentMethodType() {
+      return Json.optional(json, "payment_method_type", Conv.enumeration(TransactionDetail.PaymentMethods.PaymentMethodType::of));
     }
 
     /**
@@ -2366,8 +2366,8 @@ public final class TransactionDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionDetail.PaymentMethodsItem.OwnerKind> ownerKind() {
-      return Json.optional(json, "owner_kind", Conv.enumeration(TransactionDetail.PaymentMethodsItem.OwnerKind::of));
+    public Optional<TransactionDetail.PaymentMethods.OwnerKind> ownerKind() {
+      return Json.optional(json, "owner_kind", Conv.enumeration(TransactionDetail.PaymentMethods.OwnerKind::of));
     }
 
     /**
@@ -2426,8 +2426,8 @@ public final class TransactionDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionDetail.PaymentMethodsItem.Role> role() {
-      return Json.optional(json, "role", Conv.enumeration(TransactionDetail.PaymentMethodsItem.Role::of));
+    public Optional<TransactionDetail.PaymentMethods.Role> role() {
+      return Json.optional(json, "role", Conv.enumeration(TransactionDetail.PaymentMethods.Role::of));
     }
 
     @Override
@@ -2435,11 +2435,11 @@ public final class TransactionDetail extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link PaymentMethodsItem}. */
+    /** Builds a {@link PaymentMethods}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(PaymentMethodsItem from) {
+      private Builder(PaymentMethods from) {
         super(from);
       }
 
@@ -2459,8 +2459,8 @@ public final class TransactionDetail extends JsonModel {
        * @param paymentMethodType the value
        * @return this builder
        */
-      public Builder paymentMethodType(TransactionDetail.PaymentMethodsItem.PaymentMethodType paymentMethodType) {
-        return set("payment_method_type", Conv.enumeration(TransactionDetail.PaymentMethodsItem.PaymentMethodType::of), paymentMethodType);
+      public Builder paymentMethodType(TransactionDetail.PaymentMethods.PaymentMethodType paymentMethodType) {
+        return set("payment_method_type", Conv.enumeration(TransactionDetail.PaymentMethods.PaymentMethodType::of), paymentMethodType);
       }
 
       /**
@@ -2509,8 +2509,8 @@ public final class TransactionDetail extends JsonModel {
        * @param ownerKind the value
        * @return this builder
        */
-      public Builder ownerKind(TransactionDetail.PaymentMethodsItem.OwnerKind ownerKind) {
-        return set("owner_kind", Conv.enumeration(TransactionDetail.PaymentMethodsItem.OwnerKind::of), ownerKind);
+      public Builder ownerKind(TransactionDetail.PaymentMethods.OwnerKind ownerKind) {
+        return set("owner_kind", Conv.enumeration(TransactionDetail.PaymentMethods.OwnerKind::of), ownerKind);
       }
 
       /**
@@ -2569,17 +2569,17 @@ public final class TransactionDetail extends JsonModel {
        * @param role the value
        * @return this builder
        */
-      public Builder role(TransactionDetail.PaymentMethodsItem.Role role) {
-        return set("role", Conv.enumeration(TransactionDetail.PaymentMethodsItem.Role::of), role);
+      public Builder role(TransactionDetail.PaymentMethods.Role role) {
+        return set("role", Conv.enumeration(TransactionDetail.PaymentMethods.Role::of), role);
       }
 
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code PaymentMethodsItem}
+       * @return a new immutable {@code PaymentMethods}
        */
-      public PaymentMethodsItem build() {
-        return new PaymentMethodsItem(buildJson(), buildFiles());
+      public PaymentMethods build() {
+        return new PaymentMethods(buildJson(), buildFiles());
       }
 
       @Override
@@ -2737,22 +2737,22 @@ public final class TransactionDetail extends JsonModel {
     }
   }
 
-  public static final class DocumentsItem extends JsonModel {
+  public static final class Documents extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "label", "note", "uploaded_by", "created_at", "files");
 
-    private DocumentsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Documents(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code DocumentsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Documents} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static DocumentsItem fromJson(JsonNode json) {
-      return new DocumentsItem(Json.copyObject(json), Map.of());
+    public static Documents fromJson(JsonNode json) {
+      return new Documents(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -2829,8 +2829,8 @@ public final class TransactionDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<TransactionDetail.DocumentsItem.FilesItem>> files() {
-      return Json.optional(json, "files", Conv.list(Conv.model(TransactionDetail.DocumentsItem.FilesItem::fromJson)));
+    public Optional<List<TransactionDetail.Documents.Files>> files() {
+      return Json.optional(json, "files", Conv.list(Conv.model(TransactionDetail.Documents.Files::fromJson)));
     }
 
     @Override
@@ -2838,11 +2838,11 @@ public final class TransactionDetail extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link DocumentsItem}. */
+    /** Builds a {@link Documents}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(DocumentsItem from) {
+      private Builder(Documents from) {
         super(from);
       }
 
@@ -2902,17 +2902,17 @@ public final class TransactionDetail extends JsonModel {
        * @param files the value
        * @return this builder
        */
-      public Builder files(List<TransactionDetail.DocumentsItem.FilesItem> files) {
-        return set("files", Conv.list(Conv.model(TransactionDetail.DocumentsItem.FilesItem::fromJson)), files);
+      public Builder files(List<TransactionDetail.Documents.Files> files) {
+        return set("files", Conv.list(Conv.model(TransactionDetail.Documents.Files::fromJson)), files);
       }
 
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code DocumentsItem}
+       * @return a new immutable {@code Documents}
        */
-      public DocumentsItem build() {
-        return new DocumentsItem(buildJson(), buildFiles());
+      public Documents build() {
+        return new Documents(buildJson(), buildFiles());
       }
 
       @Override
@@ -2921,22 +2921,22 @@ public final class TransactionDetail extends JsonModel {
       }
     }
 
-    public static final class FilesItem extends JsonModel {
+    public static final class Files extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "file_url", "original_filename", "file_size");
 
-      private FilesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Files(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code FilesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Files} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static FilesItem fromJson(JsonNode json) {
-        return new FilesItem(Json.copyObject(json), Map.of());
+      public static Files fromJson(JsonNode json) {
+        return new Files(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -3002,11 +3002,11 @@ public final class TransactionDetail extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link FilesItem}. */
+      /** Builds a {@link Files}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(FilesItem from) {
+        private Builder(Files from) {
           super(from);
         }
 
@@ -3053,10 +3053,10 @@ public final class TransactionDetail extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code FilesItem}
+         * @return a new immutable {@code Files}
          */
-        public FilesItem build() {
-          return new FilesItem(buildJson(), buildFiles());
+        public Files build() {
+          return new Files(buildJson(), buildFiles());
         }
 
         @Override
@@ -3067,22 +3067,22 @@ public final class TransactionDetail extends JsonModel {
     }
   }
 
-  public static final class ActivitiesItem extends JsonModel {
+  public static final class Activities extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "activity_type", "source", "status", "title", "description", "metadata", "occurred_at");
 
-    private ActivitiesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Activities(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code ActivitiesItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Activities} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static ActivitiesItem fromJson(JsonNode json) {
-      return new ActivitiesItem(Json.copyObject(json), Map.of());
+    public static Activities fromJson(JsonNode json) {
+      return new Activities(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -3188,11 +3188,11 @@ public final class TransactionDetail extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link ActivitiesItem}. */
+    /** Builds a {@link Activities}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(ActivitiesItem from) {
+      private Builder(Activities from) {
         super(from);
       }
 
@@ -3279,10 +3279,10 @@ public final class TransactionDetail extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code ActivitiesItem}
+       * @return a new immutable {@code Activities}
        */
-      public ActivitiesItem build() {
-        return new ActivitiesItem(buildJson(), buildFiles());
+      public Activities build() {
+        return new Activities(buildJson(), buildFiles());
       }
 
       @Override
@@ -3292,22 +3292,22 @@ public final class TransactionDetail extends JsonModel {
     }
   }
 
-  public static final class AlertsItem extends JsonModel {
+  public static final class Alerts extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "title", "description", "severity", "status", "source", "metadata", "created_at", "due_at");
 
-    private AlertsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Alerts(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code AlertsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Alerts} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static AlertsItem fromJson(JsonNode json) {
-      return new AlertsItem(Json.copyObject(json), Map.of());
+    public static Alerts fromJson(JsonNode json) {
+      return new Alerts(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -3364,8 +3364,8 @@ public final class TransactionDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionDetail.AlertsItem.Severity> severity() {
-      return Json.optional(json, "severity", Conv.enumeration(TransactionDetail.AlertsItem.Severity::of));
+    public Optional<TransactionDetail.Alerts.Severity> severity() {
+      return Json.optional(json, "severity", Conv.enumeration(TransactionDetail.Alerts.Severity::of));
     }
 
     /**
@@ -3374,8 +3374,8 @@ public final class TransactionDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionDetail.AlertsItem.Status> status() {
-      return Json.optional(json, "status", Conv.enumeration(TransactionDetail.AlertsItem.Status::of));
+    public Optional<TransactionDetail.Alerts.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(TransactionDetail.Alerts.Status::of));
     }
 
     /**
@@ -3384,8 +3384,8 @@ public final class TransactionDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionDetail.AlertsItem.Source> source() {
-      return Json.optional(json, "source", Conv.enumeration(TransactionDetail.AlertsItem.Source::of));
+    public Optional<TransactionDetail.Alerts.Source> source() {
+      return Json.optional(json, "source", Conv.enumeration(TransactionDetail.Alerts.Source::of));
     }
 
     /**
@@ -3423,11 +3423,11 @@ public final class TransactionDetail extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link AlertsItem}. */
+    /** Builds a {@link Alerts}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(AlertsItem from) {
+      private Builder(Alerts from) {
         super(from);
       }
 
@@ -3467,8 +3467,8 @@ public final class TransactionDetail extends JsonModel {
        * @param severity the value
        * @return this builder
        */
-      public Builder severity(TransactionDetail.AlertsItem.Severity severity) {
-        return set("severity", Conv.enumeration(TransactionDetail.AlertsItem.Severity::of), severity);
+      public Builder severity(TransactionDetail.Alerts.Severity severity) {
+        return set("severity", Conv.enumeration(TransactionDetail.Alerts.Severity::of), severity);
       }
 
       /**
@@ -3477,8 +3477,8 @@ public final class TransactionDetail extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(TransactionDetail.AlertsItem.Status status) {
-        return set("status", Conv.enumeration(TransactionDetail.AlertsItem.Status::of), status);
+      public Builder status(TransactionDetail.Alerts.Status status) {
+        return set("status", Conv.enumeration(TransactionDetail.Alerts.Status::of), status);
       }
 
       /**
@@ -3487,8 +3487,8 @@ public final class TransactionDetail extends JsonModel {
        * @param source the value
        * @return this builder
        */
-      public Builder source(TransactionDetail.AlertsItem.Source source) {
-        return set("source", Conv.enumeration(TransactionDetail.AlertsItem.Source::of), source);
+      public Builder source(TransactionDetail.Alerts.Source source) {
+        return set("source", Conv.enumeration(TransactionDetail.Alerts.Source::of), source);
       }
 
       /**
@@ -3524,10 +3524,10 @@ public final class TransactionDetail extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code AlertsItem}
+       * @return a new immutable {@code Alerts}
        */
-      public AlertsItem build() {
-        return new AlertsItem(buildJson(), buildFiles());
+      public Alerts build() {
+        return new Alerts(buildJson(), buildFiles());
       }
 
       @Override
@@ -3690,22 +3690,22 @@ public final class TransactionDetail extends JsonModel {
     }
   }
 
-  public static final class RuleRunsItem extends JsonModel {
+  public static final class RuleRuns extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "rule", "rule_title", "rule_description", "rule_category", "matched", "is_test", "mode", "severity", "score_delta", "status_target", "action_summary", "metadata", "created_at");
 
-    private RuleRunsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private RuleRuns(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code RuleRunsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code RuleRuns} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static RuleRunsItem fromJson(JsonNode json) {
-      return new RuleRunsItem(Json.copyObject(json), Map.of());
+    public static RuleRuns fromJson(JsonNode json) {
+      return new RuleRuns(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -3802,8 +3802,8 @@ public final class TransactionDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionDetail.RuleRunsItem.Mode> mode() {
-      return Json.optional(json, "mode", Conv.enumeration(TransactionDetail.RuleRunsItem.Mode::of));
+    public Optional<TransactionDetail.RuleRuns.Mode> mode() {
+      return Json.optional(json, "mode", Conv.enumeration(TransactionDetail.RuleRuns.Mode::of));
     }
 
     /**
@@ -3871,11 +3871,11 @@ public final class TransactionDetail extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link RuleRunsItem}. */
+    /** Builds a {@link RuleRuns}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(RuleRunsItem from) {
+      private Builder(RuleRuns from) {
         super(from);
       }
 
@@ -3955,8 +3955,8 @@ public final class TransactionDetail extends JsonModel {
        * @param mode the value
        * @return this builder
        */
-      public Builder mode(TransactionDetail.RuleRunsItem.Mode mode) {
-        return set("mode", Conv.enumeration(TransactionDetail.RuleRunsItem.Mode::of), mode);
+      public Builder mode(TransactionDetail.RuleRuns.Mode mode) {
+        return set("mode", Conv.enumeration(TransactionDetail.RuleRuns.Mode::of), mode);
       }
 
       /**
@@ -4022,10 +4022,10 @@ public final class TransactionDetail extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code RuleRunsItem}
+       * @return a new immutable {@code RuleRuns}
        */
-      public RuleRunsItem build() {
-        return new RuleRunsItem(buildJson(), buildFiles());
+      public RuleRuns build() {
+        return new RuleRuns(buildJson(), buildFiles());
       }
 
       @Override
@@ -4080,22 +4080,22 @@ public final class TransactionDetail extends JsonModel {
     }
   }
 
-  public static final class ProviderResultsItem extends JsonModel {
+  public static final class ProviderResults extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "provider", "result_type", "status", "severity", "score", "summary", "payload", "created_at");
 
-    private ProviderResultsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private ProviderResults(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code ProviderResultsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code ProviderResults} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static ProviderResultsItem fromJson(JsonNode json) {
-      return new ProviderResultsItem(Json.copyObject(json), Map.of());
+    public static ProviderResults fromJson(JsonNode json) {
+      return new ProviderResults(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -4142,8 +4142,8 @@ public final class TransactionDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionDetail.ProviderResultsItem.ResultType> resultType() {
-      return Json.optional(json, "result_type", Conv.enumeration(TransactionDetail.ProviderResultsItem.ResultType::of));
+    public Optional<TransactionDetail.ProviderResults.ResultType> resultType() {
+      return Json.optional(json, "result_type", Conv.enumeration(TransactionDetail.ProviderResults.ResultType::of));
     }
 
     /**
@@ -4211,11 +4211,11 @@ public final class TransactionDetail extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link ProviderResultsItem}. */
+    /** Builds a {@link ProviderResults}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(ProviderResultsItem from) {
+      private Builder(ProviderResults from) {
         super(from);
       }
 
@@ -4245,8 +4245,8 @@ public final class TransactionDetail extends JsonModel {
        * @param resultType the value
        * @return this builder
        */
-      public Builder resultType(TransactionDetail.ProviderResultsItem.ResultType resultType) {
-        return set("result_type", Conv.enumeration(TransactionDetail.ProviderResultsItem.ResultType::of), resultType);
+      public Builder resultType(TransactionDetail.ProviderResults.ResultType resultType) {
+        return set("result_type", Conv.enumeration(TransactionDetail.ProviderResults.ResultType::of), resultType);
       }
 
       /**
@@ -4312,10 +4312,10 @@ public final class TransactionDetail extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code ProviderResultsItem}
+       * @return a new immutable {@code ProviderResults}
        */
-      public ProviderResultsItem build() {
-        return new ProviderResultsItem(buildJson(), buildFiles());
+      public ProviderResults build() {
+        return new ProviderResults(buildJson(), buildFiles());
       }
 
       @Override
@@ -4907,7 +4907,7 @@ public final class TransactionDetail extends JsonModel {
    * Pending end-user action required to complete this transaction, or null when there is none. The Didit SDKs auto-launch the action by default and refresh the transaction when it finishes. Two variants, discriminated by <code>type</code>: <code>verification_session</code> (a hosted verification session created by a rule action) and <code>wallet_ownership</code> (a wallet-ownership widget session auto-minted for a Travel Rule transfer that needs proof of wallet control, gated by the <code>auto_wallet_verification</code> Travel Rule setting). When both could apply, <code>wallet_ownership</code> takes precedence because it blocks the Travel Rule exchange.
    *
    * <p>One of: {@code VerificationSession}, {@code WalletOwnership}. Check with the {@code is...}
-   * methods and read with the {@code as...} methods.
+   * methods and read with the {@code as...} methods; the fields every variant has are readable directly.
    */
   public static final class ActionRequired extends JsonUnion {
     private ActionRequired(JsonNode json) {
@@ -4922,6 +4922,26 @@ public final class TransactionDetail extends JsonModel {
      */
     public static ActionRequired fromJson(JsonNode json) {
       return new ActionRequired(json.deepCopy());
+    }
+
+    /**
+     * The <code>type</code> field.
+     *
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+     */
+    public String type() {
+      return Json.required(json, "type", Conv.STRING);
+    }
+
+    /**
+     * Hosted verification URL to open for the end user.
+     *
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+     */
+    public String url() {
+      return Json.required(json, "url", Conv.STRING);
     }
 
     /**

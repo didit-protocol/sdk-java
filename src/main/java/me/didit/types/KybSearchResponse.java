@@ -221,8 +221,8 @@ public final class KybSearchResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<KybSearchResponse.KybRegistry.CompaniesItem>> companies() {
-      return Json.optional(json, "companies", Conv.list(Conv.model(KybSearchResponse.KybRegistry.CompaniesItem::fromJson)));
+    public Optional<List<KybSearchResponse.KybRegistry.Companies>> companies() {
+      return Json.optional(json, "companies", Conv.list(Conv.model(KybSearchResponse.KybRegistry.Companies::fromJson)));
     }
 
     /**
@@ -274,8 +274,8 @@ public final class KybSearchResponse extends JsonModel {
        * @param companies the value
        * @return this builder
        */
-      public Builder companies(List<KybSearchResponse.KybRegistry.CompaniesItem> companies) {
-        return set("companies", Conv.list(Conv.model(KybSearchResponse.KybRegistry.CompaniesItem::fromJson)), companies);
+      public Builder companies(List<KybSearchResponse.KybRegistry.Companies> companies) {
+        return set("companies", Conv.list(Conv.model(KybSearchResponse.KybRegistry.Companies::fromJson)), companies);
       }
 
       /**
@@ -323,22 +323,22 @@ public final class KybSearchResponse extends JsonModel {
       }
     }
 
-    public static final class CompaniesItem extends JsonModel {
+    public static final class Companies extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("kyb_response_id", "name", "registration_number", "status", "type", "risk_level", "fetch_status");
 
-      private CompaniesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Companies(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code CompaniesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Companies} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static CompaniesItem fromJson(JsonNode json) {
-        return new CompaniesItem(Json.copyObject(json), Map.of());
+      public static Companies fromJson(JsonNode json) {
+        return new Companies(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -434,11 +434,11 @@ public final class KybSearchResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link CompaniesItem}. */
+      /** Builds a {@link Companies}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(CompaniesItem from) {
+        private Builder(Companies from) {
           super(from);
         }
 
@@ -515,10 +515,10 @@ public final class KybSearchResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code CompaniesItem}
+         * @return a new immutable {@code Companies}
          */
-        public CompaniesItem build() {
-          return new CompaniesItem(buildJson(), buildFiles());
+        public Companies build() {
+          return new Companies(buildJson(), buildFiles());
         }
 
         @Override

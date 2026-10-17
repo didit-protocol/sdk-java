@@ -31,17 +31,11 @@ import me.didit.errors.UnexpectedResponseException;
  * @param <T> the item type
  */
 public final class Page<T> implements Iterable<T> {
-  enum Style {
-    NEXT_LINK,
-    NEXT_OFFSET
-  }
-
   private final ApiClient client;
   private final ApiRequest request;
   private final RequestOptions options;
   private final ObjectNode json;
   private final Conv<T> item;
-  private final Style style;
   private final Set<String> seen;
   private final List<T> results;
 
@@ -51,21 +45,19 @@ public final class Page<T> implements Iterable<T> {
       RequestOptions options,
       ObjectNode json,
       Conv<T> item,
-      Style style,
       Set<String> seen) {
     this.client = client;
     this.request = request;
     this.options = options;
     this.json = json;
     this.item = item;
-    this.style = style;
     this.seen = seen;
     JsonNode results = json.get("results");
     this.results =
         results == null || results.isNull() ? List.of() : Conv.list(item).read(results);
   }
 
-  static <T> Page<T> first(SuccessResponse response, Conv<T> item, Style style) {
+  static <T> Page<T> first(SuccessResponse response, Conv<T> item) {
     JsonNode json = response.json();
     if (!json.isObject()) {
       throw new UnexpectedResponseException(
@@ -79,7 +71,6 @@ public final class Page<T> implements Iterable<T> {
         response.options,
         (ObjectNode) json,
         item,
-        style,
         seen);
   }
 
@@ -125,15 +116,6 @@ public final class Page<T> implements Iterable<T> {
   }
 
   /**
-   * The offset of the next page, for lists that report {@code next_offset}.
-   *
-   * @return the offset, if there is a next page
-   */
-  public Optional<Long> nextOffset() {
-    return Json.optional(json, "next_offset", Conv.LONG);
-  }
-
-  /**
    * The whole page body, including fields other than the standard ones (for example {@code
    * total_transactions}).
    *
@@ -149,9 +131,6 @@ public final class Page<T> implements Iterable<T> {
    * @return true when {@link #nextPage()} returns a page
    */
   public boolean hasNextPage() {
-    if (style == Style.NEXT_OFFSET) {
-      return nextOffset().isPresent() && !results.isEmpty();
-    }
     return next().filter(s -> !s.isEmpty()).isPresent();
   }
 
@@ -176,19 +155,13 @@ public final class Page<T> implements Iterable<T> {
     if (!hasNextPage()) {
       return CompletableFuture.failedFuture(new NoSuchElementException("No next page"));
     }
-    ApiClient.PageTarget target;
+    URI target;
     String key;
     try {
-      if (style == Style.NEXT_OFFSET) {
-        long offset = nextOffset().orElseThrow();
-        target = ApiClient.PageTarget.offset(offset);
-        key = "offset=" + offset;
-      } else {
-        URI link = new URI(next().orElseThrow());
-        URI resolved = ApiClient.Paths.sameOrigin(client.baseFor(request), link);
-        target = ApiClient.PageTarget.uri(resolved);
-        key = key(resolved);
-      }
+      URI link = new URI(next().orElseThrow());
+      URI resolved = ApiClient.Paths.sameOrigin(client.baseFor(request), link);
+      target = resolved;
+      key = key(resolved);
     } catch (URISyntaxException e) {
       return CompletableFuture.failedFuture(
           new UnexpectedResponseException("The next page link is not a valid URL", e));
@@ -208,7 +181,7 @@ public final class Page<T> implements Iterable<T> {
           if (!body.isObject()) {
             throw new UnexpectedResponseException("The next page is not a JSON object");
           }
-          return new Page<>(client, request, options, (ObjectNode) body, item, style, nextSeen);
+          return new Page<>(client, request, options, (ObjectNode) body, item, nextSeen);
         };
     return client.send(request, options, handler, target).thenApply(RawResponse::data);
   }

@@ -52,7 +52,7 @@ public final class BiometricTemplatesResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public Page<BiometricTemplatesListResponse.ResultsItem> list(BiometricTemplatesListParams params, RequestOptions options) {
+  public Page<BiometricTemplatesListResponse.Results> list(BiometricTemplatesListParams params, RequestOptions options) {
     return client.execute(listRequest(params), options, LIST_RESPONSE).data();
   }
 
@@ -70,7 +70,7 @@ public final class BiometricTemplatesResource {
    * @param options per-request options that override the client options
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<BiometricTemplatesListResponse.ResultsItem>> listAsync(BiometricTemplatesListParams params, RequestOptions options) {
+  public CompletableFuture<Page<BiometricTemplatesListResponse.Results>> listAsync(BiometricTemplatesListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -87,7 +87,7 @@ public final class BiometricTemplatesResource {
    * @param params the request parameters
    * @return the response body
    */
-  public Page<BiometricTemplatesListResponse.ResultsItem> list(BiometricTemplatesListParams params) {
+  public Page<BiometricTemplatesListResponse.Results> list(BiometricTemplatesListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
@@ -104,7 +104,7 @@ public final class BiometricTemplatesResource {
    * @param params the request parameters
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<BiometricTemplatesListResponse.ResultsItem>> listAsync(BiometricTemplatesListParams params) {
+  public CompletableFuture<Page<BiometricTemplatesListResponse.Results>> listAsync(BiometricTemplatesListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -121,7 +121,7 @@ public final class BiometricTemplatesResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public Page<BiometricTemplatesListResponse.ResultsItem> list(RequestOptions options) {
+  public Page<BiometricTemplatesListResponse.Results> list(RequestOptions options) {
     return client.execute(listRequest(BiometricTemplatesListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
@@ -138,7 +138,7 @@ public final class BiometricTemplatesResource {
    * @param options per-request options that override the client options
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<BiometricTemplatesListResponse.ResultsItem>> listAsync(RequestOptions options) {
+  public CompletableFuture<Page<BiometricTemplatesListResponse.Results>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(BiometricTemplatesListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -154,7 +154,7 @@ public final class BiometricTemplatesResource {
    *
    * @return the response body
    */
-  public Page<BiometricTemplatesListResponse.ResultsItem> list() {
+  public Page<BiometricTemplatesListResponse.Results> list() {
     return client.execute(listRequest(BiometricTemplatesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
@@ -170,7 +170,7 @@ public final class BiometricTemplatesResource {
    *
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<BiometricTemplatesListResponse.ResultsItem>> listAsync() {
+  public CompletableFuture<Page<BiometricTemplatesListResponse.Results>> listAsync() {
     return client.executeAsync(listRequest(BiometricTemplatesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -594,7 +594,7 @@ public final class BiometricTemplatesResource {
     return client.executeAsync(batchDeleteRequest(BiometricTemplatesBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE).thenApply(RawResponse::data);
   }
 
-  private static final ResponseHandler<Page<BiometricTemplatesListResponse.ResultsItem>> LIST_RESPONSE = Responses.page(Conv.model(BiometricTemplatesListResponse.ResultsItem::fromJson));
+  private static final ResponseHandler<Page<BiometricTemplatesListResponse.Results>> LIST_RESPONSE = Responses.page(Conv.model(BiometricTemplatesListResponse.Results::fromJson));
 
   private static ApiRequest listRequest(BiometricTemplatesListParams params) {
     return ApiRequest.builder("GET", "/v3/biometric-templates/")
@@ -659,7 +659,7 @@ public final class BiometricTemplatesResource {
      * @param options per-request options that override the client options
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<BiometricTemplatesListResponse.ResultsItem>> list(BiometricTemplatesListParams params, RequestOptions options) {
+    public RawResponse<Page<BiometricTemplatesListResponse.Results>> list(BiometricTemplatesListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
@@ -677,7 +677,7 @@ public final class BiometricTemplatesResource {
      * @param options per-request options that override the client options
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<BiometricTemplatesListResponse.ResultsItem>>> listAsync(BiometricTemplatesListParams params, RequestOptions options) {
+    public CompletableFuture<RawResponse<Page<BiometricTemplatesListResponse.Results>>> listAsync(BiometricTemplatesListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
@@ -694,7 +694,7 @@ public final class BiometricTemplatesResource {
      * @param params the request parameters
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<BiometricTemplatesListResponse.ResultsItem>> list(BiometricTemplatesListParams params) {
+    public RawResponse<Page<BiometricTemplatesListResponse.Results>> list(BiometricTemplatesListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
@@ -711,7 +711,7 @@ public final class BiometricTemplatesResource {
      * @param params the request parameters
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<BiometricTemplatesListResponse.ResultsItem>>> listAsync(BiometricTemplatesListParams params) {
+    public CompletableFuture<RawResponse<Page<BiometricTemplatesListResponse.Results>>> listAsync(BiometricTemplatesListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
@@ -728,7 +728,7 @@ public final class BiometricTemplatesResource {
      * @param options per-request options that override the client options
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<BiometricTemplatesListResponse.ResultsItem>> list(RequestOptions options) {
+    public RawResponse<Page<BiometricTemplatesListResponse.Results>> list(RequestOptions options) {
       return client.execute(listRequest(BiometricTemplatesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
@@ -745,7 +745,7 @@ public final class BiometricTemplatesResource {
      * @param options per-request options that override the client options
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<BiometricTemplatesListResponse.ResultsItem>>> listAsync(RequestOptions options) {
+    public CompletableFuture<RawResponse<Page<BiometricTemplatesListResponse.Results>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(BiometricTemplatesListParams.builder().build()), options, LIST_RESPONSE);
     }
 
@@ -761,7 +761,7 @@ public final class BiometricTemplatesResource {
      *
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<BiometricTemplatesListResponse.ResultsItem>> list() {
+    public RawResponse<Page<BiometricTemplatesListResponse.Results>> list() {
       return client.execute(listRequest(BiometricTemplatesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
@@ -777,7 +777,7 @@ public final class BiometricTemplatesResource {
      *
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<BiometricTemplatesListResponse.ResultsItem>>> listAsync() {
+    public CompletableFuture<RawResponse<Page<BiometricTemplatesListResponse.Results>>> listAsync() {
       return client.executeAsync(listRequest(BiometricTemplatesListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 

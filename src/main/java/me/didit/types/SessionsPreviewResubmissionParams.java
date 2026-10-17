@@ -56,8 +56,8 @@ public final class SessionsPreviewResubmissionParams extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsPreviewResubmissionParams.NodesToResubmitItem>> nodesToResubmit() {
-    return Json.optional(json, "nodes_to_resubmit", Conv.list(Conv.model(SessionsPreviewResubmissionParams.NodesToResubmitItem::fromJson)));
+  public Optional<List<SessionsPreviewResubmissionParams.NodesToResubmit>> nodesToResubmit() {
+    return Json.optional(json, "nodes_to_resubmit", Conv.list(Conv.model(SessionsPreviewResubmissionParams.NodesToResubmit::fromJson)));
   }
 
   /**
@@ -99,8 +99,8 @@ public final class SessionsPreviewResubmissionParams extends JsonModel {
      * @param nodesToResubmit the value
      * @return this builder
      */
-    public Builder nodesToResubmit(List<SessionsPreviewResubmissionParams.NodesToResubmitItem> nodesToResubmit) {
-      return set("nodes_to_resubmit", Conv.list(Conv.model(SessionsPreviewResubmissionParams.NodesToResubmitItem::fromJson)), nodesToResubmit);
+    public Builder nodesToResubmit(List<SessionsPreviewResubmissionParams.NodesToResubmit> nodesToResubmit) {
+      return set("nodes_to_resubmit", Conv.list(Conv.model(SessionsPreviewResubmissionParams.NodesToResubmit::fromJson)), nodesToResubmit);
     }
 
     /**
@@ -140,22 +140,22 @@ public final class SessionsPreviewResubmissionParams extends JsonModel {
     }
   }
 
-  public static final class NodesToResubmitItem extends JsonModel {
+  public static final class NodesToResubmit extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "feature");
 
-    private NodesToResubmitItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private NodesToResubmit(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code NodesToResubmitItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code NodesToResubmit} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static NodesToResubmitItem fromJson(JsonNode json) {
-      return new NodesToResubmitItem(Json.copyObject(json), Map.of());
+    public static NodesToResubmit fromJson(JsonNode json) {
+      return new NodesToResubmit(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -192,8 +192,8 @@ public final class SessionsPreviewResubmissionParams extends JsonModel {
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
      */
-    public SessionsPreviewResubmissionParams.NodesToResubmitItem.Feature feature() {
-      return Json.required(json, "feature", Conv.enumeration(SessionsPreviewResubmissionParams.NodesToResubmitItem.Feature::of));
+    public SessionsPreviewResubmissionParams.NodesToResubmit.Feature feature() {
+      return Json.required(json, "feature", Conv.enumeration(SessionsPreviewResubmissionParams.NodesToResubmit.Feature::of));
     }
 
     @Override
@@ -201,11 +201,11 @@ public final class SessionsPreviewResubmissionParams extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link NodesToResubmitItem}. */
+    /** Builds a {@link NodesToResubmit}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(NodesToResubmitItem from) {
+      private Builder(NodesToResubmit from) {
         super(from);
       }
 
@@ -225,20 +225,20 @@ public final class SessionsPreviewResubmissionParams extends JsonModel {
        * @param feature the value
        * @return this builder
        */
-      public Builder feature(SessionsPreviewResubmissionParams.NodesToResubmitItem.Feature feature) {
-        return set("feature", Conv.enumeration(SessionsPreviewResubmissionParams.NodesToResubmitItem.Feature::of), feature);
+      public Builder feature(SessionsPreviewResubmissionParams.NodesToResubmit.Feature feature) {
+        return set("feature", Conv.enumeration(SessionsPreviewResubmissionParams.NodesToResubmit.Feature::of), feature);
       }
 
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code NodesToResubmitItem}
+       * @return a new immutable {@code NodesToResubmit}
        * @throws IllegalStateException when a required field is missing
        */
-      public NodesToResubmitItem build() {
+      public NodesToResubmit build() {
         require("node_id", false);
         require("feature", false);
-        return new NodesToResubmitItem(buildJson(), buildFiles());
+        return new NodesToResubmit(buildJson(), buildFiles());
       }
 
       @Override

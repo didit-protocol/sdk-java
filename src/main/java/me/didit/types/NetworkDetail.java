@@ -106,8 +106,8 @@ public final class NetworkDetail extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<NetworkListItem.PatternTypesItem>> patternTypes() {
-    return Json.optional(json, "pattern_types", Conv.list(Conv.enumeration(NetworkListItem.PatternTypesItem::of)));
+  public Optional<List<NetworkListItem.PatternTypes>> patternTypes() {
+    return Json.optional(json, "pattern_types", Conv.list(Conv.enumeration(NetworkListItem.PatternTypes::of)));
   }
 
   /**
@@ -116,8 +116,8 @@ public final class NetworkDetail extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<NetworkListItem.SignalTypesItem>> signalTypes() {
-    return Json.optional(json, "signal_types", Conv.list(Conv.enumeration(NetworkListItem.SignalTypesItem::of)));
+  public Optional<List<NetworkListItem.SignalTypes>> signalTypes() {
+    return Json.optional(json, "signal_types", Conv.list(Conv.enumeration(NetworkListItem.SignalTypes::of)));
   }
 
   /**
@@ -309,8 +309,8 @@ public final class NetworkDetail extends JsonModel {
      * @param patternTypes the value
      * @return this builder
      */
-    public Builder patternTypes(List<NetworkListItem.PatternTypesItem> patternTypes) {
-      return set("pattern_types", Conv.list(Conv.enumeration(NetworkListItem.PatternTypesItem::of)), patternTypes);
+    public Builder patternTypes(List<NetworkListItem.PatternTypes> patternTypes) {
+      return set("pattern_types", Conv.list(Conv.enumeration(NetworkListItem.PatternTypes::of)), patternTypes);
     }
 
     /**
@@ -319,8 +319,8 @@ public final class NetworkDetail extends JsonModel {
      * @param signalTypes the value
      * @return this builder
      */
-    public Builder signalTypes(List<NetworkListItem.SignalTypesItem> signalTypes) {
-      return set("signal_types", Conv.list(Conv.enumeration(NetworkListItem.SignalTypesItem::of)), signalTypes);
+    public Builder signalTypes(List<NetworkListItem.SignalTypes> signalTypes) {
+      return set("signal_types", Conv.list(Conv.enumeration(NetworkListItem.SignalTypes::of)), signalTypes);
     }
 
     /**

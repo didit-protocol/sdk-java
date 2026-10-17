@@ -101,7 +101,7 @@ public final class ApiClient {
       ApiRequest request,
       RequestOptions requestOptions,
       ResponseHandler<T> handler,
-      @Nullable PageTarget target) {
+      @Nullable URI target) {
     Prepared prepared;
     try {
       prepared = prepare(request, requestOptions, handler.streaming(), target);
@@ -142,25 +142,6 @@ public final class ApiClient {
 
   // -- preparation -------------------------------------------------------------
 
-  /** A next-page request: an absolute URL from the API, or the same request at another offset. */
-  static final class PageTarget {
-    final @Nullable URI uri;
-    final @Nullable Long offset;
-
-    private PageTarget(@Nullable URI uri, @Nullable Long offset) {
-      this.uri = uri;
-      this.offset = offset;
-    }
-
-    static PageTarget uri(URI uri) {
-      return new PageTarget(uri, null);
-    }
-
-    static PageTarget offset(long offset) {
-      return new PageTarget(null, offset);
-    }
-  }
-
   static final class Prepared {
     final String method;
     final URI uri;
@@ -196,7 +177,7 @@ public final class ApiClient {
   }
 
   Prepared prepare(
-      ApiRequest request, RequestOptions ro, boolean streaming, @Nullable PageTarget target) {
+      ApiRequest request, RequestOptions ro, boolean streaming, @Nullable URI target) {
     URI base = baseFor(request);
     Map<String, List<String>> headers = new LinkedHashMap<>();
     put(headers, "Accept", request.accept == null ? "application/json" : request.accept + ", application/json");
@@ -247,17 +228,13 @@ public final class ApiClient {
         addQuery(query, field, value);
       }
     }
-    if (target != null && target.offset != null) {
-      query.removeIf(pair -> pair[0].equals("offset"));
-      query.add(new String[] {"offset", Long.toString(target.offset)});
-    }
     for (Map.Entry<String, String> extra : ro.queryParams().entrySet()) {
       query.add(new String[] {extra.getKey(), extra.getValue()});
     }
 
     URI uri;
-    if (target != null && target.uri != null) {
-      uri = Paths.sameOrigin(base, target.uri);
+    if (target != null) {
+      uri = Paths.sameOrigin(base, target);
     } else {
       uri = URI.create(base.toString() + path + Paths.queryString(query));
     }

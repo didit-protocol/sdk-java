@@ -55,8 +55,8 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<CasesRetrieveStatisticsResponse.SeriesItem>> series() {
-    return Json.optional(json, "series", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.SeriesItem::fromJson)));
+  public Optional<List<CasesRetrieveStatisticsResponse.Series>> series() {
+    return Json.optional(json, "series", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Series::fromJson)));
   }
 
   /**
@@ -108,8 +108,8 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
      * @param series the value
      * @return this builder
      */
-    public Builder series(List<CasesRetrieveStatisticsResponse.SeriesItem> series) {
-      return set("series", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.SeriesItem::fromJson)), series);
+    public Builder series(List<CasesRetrieveStatisticsResponse.Series> series) {
+      return set("series", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Series::fromJson)), series);
     }
 
     /**
@@ -157,22 +157,22 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
     }
   }
 
-  public static final class SeriesItem extends JsonModel {
+  public static final class Series extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("date", "created", "reviewed");
 
-    private SeriesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Series(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code SeriesItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Series} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static SeriesItem fromJson(JsonNode json) {
-      return new SeriesItem(Json.copyObject(json), Map.of());
+    public static Series fromJson(JsonNode json) {
+      return new Series(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -228,11 +228,11 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link SeriesItem}. */
+    /** Builds a {@link Series}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(SeriesItem from) {
+      private Builder(Series from) {
         super(from);
       }
 
@@ -269,10 +269,10 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code SeriesItem}
+       * @return a new immutable {@code Series}
        */
-      public SeriesItem build() {
-        return new SeriesItem(buildJson(), buildFiles());
+      public Series build() {
+        return new Series(buildJson(), buildFiles());
       }
 
       @Override
@@ -324,8 +324,8 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<CasesRetrieveStatisticsResponse.Tables.OfficerItem>> officer() {
-      return Json.optional(json, "officer", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.OfficerItem::fromJson)));
+    public Optional<List<CasesRetrieveStatisticsResponse.Tables.Officer>> officer() {
+      return Json.optional(json, "officer", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.Officer::fromJson)));
     }
 
     /**
@@ -334,8 +334,8 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<CasesRetrieveStatisticsResponse.Tables.BlueprintItem>> blueprint() {
-      return Json.optional(json, "blueprint", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.BlueprintItem::fromJson)));
+    public Optional<List<CasesRetrieveStatisticsResponse.Tables.Blueprint>> blueprint() {
+      return Json.optional(json, "blueprint", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.Blueprint::fromJson)));
     }
 
     /**
@@ -344,8 +344,8 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<CasesRetrieveStatisticsResponse.Tables.SourceItem>> source() {
-      return Json.optional(json, "source", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.SourceItem::fromJson)));
+    public Optional<List<CasesRetrieveStatisticsResponse.Tables.Source>> source() {
+      return Json.optional(json, "source", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.Source::fromJson)));
     }
 
     /**
@@ -354,8 +354,8 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<CasesRetrieveStatisticsResponse.Tables.StatusItem>> status() {
-      return Json.optional(json, "status", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.StatusItem::fromJson)));
+    public Optional<List<CasesRetrieveStatisticsResponse.Tables.Status>> status() {
+      return Json.optional(json, "status", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.Status::fromJson)));
     }
 
     @Override
@@ -377,8 +377,8 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
        * @param officer the value
        * @return this builder
        */
-      public Builder officer(List<CasesRetrieveStatisticsResponse.Tables.OfficerItem> officer) {
-        return set("officer", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.OfficerItem::fromJson)), officer);
+      public Builder officer(List<CasesRetrieveStatisticsResponse.Tables.Officer> officer) {
+        return set("officer", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.Officer::fromJson)), officer);
       }
 
       /**
@@ -387,8 +387,8 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
        * @param blueprint the value
        * @return this builder
        */
-      public Builder blueprint(List<CasesRetrieveStatisticsResponse.Tables.BlueprintItem> blueprint) {
-        return set("blueprint", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.BlueprintItem::fromJson)), blueprint);
+      public Builder blueprint(List<CasesRetrieveStatisticsResponse.Tables.Blueprint> blueprint) {
+        return set("blueprint", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.Blueprint::fromJson)), blueprint);
       }
 
       /**
@@ -397,8 +397,8 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
        * @param source the value
        * @return this builder
        */
-      public Builder source(List<CasesRetrieveStatisticsResponse.Tables.SourceItem> source) {
-        return set("source", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.SourceItem::fromJson)), source);
+      public Builder source(List<CasesRetrieveStatisticsResponse.Tables.Source> source) {
+        return set("source", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.Source::fromJson)), source);
       }
 
       /**
@@ -407,8 +407,8 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(List<CasesRetrieveStatisticsResponse.Tables.StatusItem> status) {
-        return set("status", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.StatusItem::fromJson)), status);
+      public Builder status(List<CasesRetrieveStatisticsResponse.Tables.Status> status) {
+        return set("status", Conv.list(Conv.model(CasesRetrieveStatisticsResponse.Tables.Status::fromJson)), status);
       }
 
       /**
@@ -426,22 +426,22 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
     }
 
-    public static final class OfficerItem extends JsonModel {
+    public static final class Officer extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("key", "created", "assigned", "resolved", "threat_rate", "false_positive_rate", "unresolved", "reassignment_rate", "escalation_rate", "avg_assign_hours", "avg_resolve_hours", "avg_handling_hours");
 
-      private OfficerItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Officer(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code OfficerItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Officer} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static OfficerItem fromJson(JsonNode json) {
-        return new OfficerItem(Json.copyObject(json), Map.of());
+      public static Officer fromJson(JsonNode json) {
+        return new Officer(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -587,11 +587,11 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link OfficerItem}. */
+      /** Builds a {@link Officer}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(OfficerItem from) {
+        private Builder(Officer from) {
           super(from);
         }
 
@@ -718,10 +718,10 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code OfficerItem}
+         * @return a new immutable {@code Officer}
          */
-        public OfficerItem build() {
-          return new OfficerItem(buildJson(), buildFiles());
+        public Officer build() {
+          return new Officer(buildJson(), buildFiles());
         }
 
         @Override
@@ -731,22 +731,22 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
     }
 
-    public static final class BlueprintItem extends JsonModel {
+    public static final class Blueprint extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("key", "created", "assigned", "resolved", "threat_rate", "false_positive_rate", "unresolved", "reassignment_rate", "escalation_rate", "avg_assign_hours", "avg_resolve_hours", "avg_handling_hours");
 
-      private BlueprintItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Blueprint(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code BlueprintItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Blueprint} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static BlueprintItem fromJson(JsonNode json) {
-        return new BlueprintItem(Json.copyObject(json), Map.of());
+      public static Blueprint fromJson(JsonNode json) {
+        return new Blueprint(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -892,11 +892,11 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link BlueprintItem}. */
+      /** Builds a {@link Blueprint}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(BlueprintItem from) {
+        private Builder(Blueprint from) {
           super(from);
         }
 
@@ -1023,10 +1023,10 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code BlueprintItem}
+         * @return a new immutable {@code Blueprint}
          */
-        public BlueprintItem build() {
-          return new BlueprintItem(buildJson(), buildFiles());
+        public Blueprint build() {
+          return new Blueprint(buildJson(), buildFiles());
         }
 
         @Override
@@ -1036,22 +1036,22 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
     }
 
-    public static final class SourceItem extends JsonModel {
+    public static final class Source extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("key", "created", "assigned", "resolved", "threat_rate", "false_positive_rate", "unresolved", "reassignment_rate", "escalation_rate", "avg_assign_hours", "avg_resolve_hours", "avg_handling_hours");
 
-      private SourceItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Source(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code SourceItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Source} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static SourceItem fromJson(JsonNode json) {
-        return new SourceItem(Json.copyObject(json), Map.of());
+      public static Source fromJson(JsonNode json) {
+        return new Source(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -1197,11 +1197,11 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link SourceItem}. */
+      /** Builds a {@link Source}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(SourceItem from) {
+        private Builder(Source from) {
           super(from);
         }
 
@@ -1328,10 +1328,10 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code SourceItem}
+         * @return a new immutable {@code Source}
          */
-        public SourceItem build() {
-          return new SourceItem(buildJson(), buildFiles());
+        public Source build() {
+          return new Source(buildJson(), buildFiles());
         }
 
         @Override
@@ -1341,22 +1341,22 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
       }
     }
 
-    public static final class StatusItem extends JsonModel {
+    public static final class Status extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("key", "created", "assigned", "resolved", "threat_rate", "false_positive_rate", "unresolved", "reassignment_rate", "escalation_rate", "avg_assign_hours", "avg_resolve_hours", "avg_handling_hours");
 
-      private StatusItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Status(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code StatusItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Status} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static StatusItem fromJson(JsonNode json) {
-        return new StatusItem(Json.copyObject(json), Map.of());
+      public static Status fromJson(JsonNode json) {
+        return new Status(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -1502,11 +1502,11 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link StatusItem}. */
+      /** Builds a {@link Status}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(StatusItem from) {
+        private Builder(Status from) {
           super(from);
         }
 
@@ -1633,10 +1633,10 @@ public final class CasesRetrieveStatisticsResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code StatusItem}
+         * @return a new immutable {@code Status}
          */
-        public StatusItem build() {
-          return new StatusItem(buildJson(), buildFiles());
+        public Status build() {
+          return new Status(buildJson(), buildFiles());
         }
 
         @Override

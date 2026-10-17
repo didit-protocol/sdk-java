@@ -317,8 +317,8 @@ public final class RegulatoryReportDetail extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<RegulatoryReportDetail.ValidationErrorsItem>> validationErrors() {
-    return Json.optional(json, "validation_errors", Conv.list(Conv.model(RegulatoryReportDetail.ValidationErrorsItem::fromJson)));
+  public Optional<List<RegulatoryReportDetail.ValidationErrors>> validationErrors() {
+    return Json.optional(json, "validation_errors", Conv.list(Conv.model(RegulatoryReportDetail.ValidationErrors::fromJson)));
   }
 
   /**
@@ -660,8 +660,8 @@ public final class RegulatoryReportDetail extends JsonModel {
      * @param validationErrors the value
      * @return this builder
      */
-    public Builder validationErrors(List<RegulatoryReportDetail.ValidationErrorsItem> validationErrors) {
-      return set("validation_errors", Conv.list(Conv.model(RegulatoryReportDetail.ValidationErrorsItem::fromJson)), validationErrors);
+    public Builder validationErrors(List<RegulatoryReportDetail.ValidationErrors> validationErrors) {
+      return set("validation_errors", Conv.list(Conv.model(RegulatoryReportDetail.ValidationErrors::fromJson)), validationErrors);
     }
 
     /**
@@ -1072,22 +1072,22 @@ public final class RegulatoryReportDetail extends JsonModel {
     }
   }
 
-  public static final class ValidationErrorsItem extends JsonModel {
+  public static final class ValidationErrors extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("field", "message");
 
-    private ValidationErrorsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private ValidationErrors(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code ValidationErrorsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code ValidationErrors} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static ValidationErrorsItem fromJson(JsonNode json) {
-      return new ValidationErrorsItem(Json.copyObject(json), Map.of());
+    public static ValidationErrors fromJson(JsonNode json) {
+      return new ValidationErrors(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -1133,11 +1133,11 @@ public final class RegulatoryReportDetail extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link ValidationErrorsItem}. */
+    /** Builds a {@link ValidationErrors}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(ValidationErrorsItem from) {
+      private Builder(ValidationErrors from) {
         super(from);
       }
 
@@ -1164,10 +1164,10 @@ public final class RegulatoryReportDetail extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code ValidationErrorsItem}
+       * @return a new immutable {@code ValidationErrors}
        */
-      public ValidationErrorsItem build() {
-        return new ValidationErrorsItem(buildJson(), buildFiles());
+      public ValidationErrors build() {
+        return new ValidationErrors(buildJson(), buildFiles());
       }
 
       @Override

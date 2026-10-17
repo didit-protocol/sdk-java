@@ -219,8 +219,8 @@ public final class UserDetailItem extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<UserListItem.FeaturesListItem>> featuresList() {
-    return Json.optional(json, "features_list", Conv.list(Conv.model(UserListItem.FeaturesListItem::fromJson)));
+  public Optional<List<UserListItem.FeaturesList>> featuresList() {
+    return Json.optional(json, "features_list", Conv.list(Conv.model(UserListItem.FeaturesList::fromJson)));
   }
 
   /**
@@ -279,8 +279,8 @@ public final class UserDetailItem extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<UserDetailItem.TagsItem>> tags() {
-    return Json.optional(json, "tags", Conv.list(Conv.model(UserDetailItem.TagsItem::fromJson)));
+  public Optional<List<UserDetailItem.Tags>> tags() {
+    return Json.optional(json, "tags", Conv.list(Conv.model(UserDetailItem.Tags::fromJson)));
   }
 
   /**
@@ -289,8 +289,8 @@ public final class UserDetailItem extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<UserDetailItem.CommentsItem>> comments() {
-    return Json.optional(json, "comments", Conv.list(Conv.model(UserDetailItem.CommentsItem::fromJson)));
+  public Optional<List<UserDetailItem.Comments>> comments() {
+    return Json.optional(json, "comments", Conv.list(Conv.model(UserDetailItem.Comments::fromJson)));
   }
 
   /**
@@ -482,8 +482,8 @@ public final class UserDetailItem extends JsonModel {
      * @param featuresList the value
      * @return this builder
      */
-    public Builder featuresList(List<UserListItem.FeaturesListItem> featuresList) {
-      return set("features_list", Conv.list(Conv.model(UserListItem.FeaturesListItem::fromJson)), featuresList);
+    public Builder featuresList(List<UserListItem.FeaturesList> featuresList) {
+      return set("features_list", Conv.list(Conv.model(UserListItem.FeaturesList::fromJson)), featuresList);
     }
 
     /**
@@ -542,8 +542,8 @@ public final class UserDetailItem extends JsonModel {
      * @param tags the value
      * @return this builder
      */
-    public Builder tags(List<UserDetailItem.TagsItem> tags) {
-      return set("tags", Conv.list(Conv.model(UserDetailItem.TagsItem::fromJson)), tags);
+    public Builder tags(List<UserDetailItem.Tags> tags) {
+      return set("tags", Conv.list(Conv.model(UserDetailItem.Tags::fromJson)), tags);
     }
 
     /**
@@ -552,8 +552,8 @@ public final class UserDetailItem extends JsonModel {
      * @param comments the value
      * @return this builder
      */
-    public Builder comments(List<UserDetailItem.CommentsItem> comments) {
-      return set("comments", Conv.list(Conv.model(UserDetailItem.CommentsItem::fromJson)), comments);
+    public Builder comments(List<UserDetailItem.Comments> comments) {
+      return set("comments", Conv.list(Conv.model(UserDetailItem.Comments::fromJson)), comments);
     }
 
     /**
@@ -581,22 +581,22 @@ public final class UserDetailItem extends JsonModel {
     }
   }
 
-  public static final class TagsItem extends JsonModel {
+  public static final class Tags extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "tag", "added_by_email", "added_by_name", "created_at");
 
-    private TagsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Tags(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code TagsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Tags} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static TagsItem fromJson(JsonNode json) {
-      return new TagsItem(Json.copyObject(json), Map.of());
+    public static Tags fromJson(JsonNode json) {
+      return new Tags(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -633,8 +633,8 @@ public final class UserDetailItem extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<UserDetailItem.TagsItem.Tag> tag() {
-      return Json.optional(json, "tag", Conv.model(UserDetailItem.TagsItem.Tag::fromJson));
+    public Optional<UserDetailItem.Tags.Tag> tag() {
+      return Json.optional(json, "tag", Conv.model(UserDetailItem.Tags.Tag::fromJson));
     }
 
     /**
@@ -672,11 +672,11 @@ public final class UserDetailItem extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link TagsItem}. */
+    /** Builds a {@link Tags}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(TagsItem from) {
+      private Builder(Tags from) {
         super(from);
       }
 
@@ -696,8 +696,8 @@ public final class UserDetailItem extends JsonModel {
        * @param tag the value
        * @return this builder
        */
-      public Builder tag(UserDetailItem.TagsItem.Tag tag) {
-        return set("tag", Conv.model(UserDetailItem.TagsItem.Tag::fromJson), tag);
+      public Builder tag(UserDetailItem.Tags.Tag tag) {
+        return set("tag", Conv.model(UserDetailItem.Tags.Tag::fromJson), tag);
       }
 
       /**
@@ -733,10 +733,10 @@ public final class UserDetailItem extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code TagsItem}
+       * @return a new immutable {@code Tags}
        */
-      public TagsItem build() {
-        return new TagsItem(buildJson(), buildFiles());
+      public Tags build() {
+        return new Tags(buildJson(), buildFiles());
       }
 
       @Override
@@ -827,8 +827,8 @@ public final class UserDetailItem extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<UserDetailItem.TagsItem.Tag.Source> source() {
-        return Json.optional(json, "source", Conv.enumeration(UserDetailItem.TagsItem.Tag.Source::of));
+      public Optional<UserDetailItem.Tags.Tag.Source> source() {
+        return Json.optional(json, "source", Conv.enumeration(UserDetailItem.Tags.Tag.Source::of));
       }
 
       /**
@@ -910,8 +910,8 @@ public final class UserDetailItem extends JsonModel {
          * @param source the value
          * @return this builder
          */
-        public Builder source(UserDetailItem.TagsItem.Tag.Source source) {
-          return set("source", Conv.enumeration(UserDetailItem.TagsItem.Tag.Source::of), source);
+        public Builder source(UserDetailItem.Tags.Tag.Source source) {
+          return set("source", Conv.enumeration(UserDetailItem.Tags.Tag.Source::of), source);
         }
 
         /**
@@ -993,22 +993,22 @@ public final class UserDetailItem extends JsonModel {
     }
   }
 
-  public static final class CommentsItem extends JsonModel {
+  public static final class Comments extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "comment_type", "comment", "actor_email", "actor_name", "previous_status", "new_status", "previous_value", "new_value", "changed_fields", "metadata", "mentioned_emails", "created_at");
 
-    private CommentsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Comments(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code CommentsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Comments} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static CommentsItem fromJson(JsonNode json) {
-      return new CommentsItem(Json.copyObject(json), Map.of());
+    public static Comments fromJson(JsonNode json) {
+      return new Comments(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -1045,8 +1045,8 @@ public final class UserDetailItem extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<UserDetailItem.CommentsItem.CommentType> commentType() {
-      return Json.optional(json, "comment_type", Conv.enumeration(UserDetailItem.CommentsItem.CommentType::of));
+    public Optional<UserDetailItem.Comments.CommentType> commentType() {
+      return Json.optional(json, "comment_type", Conv.enumeration(UserDetailItem.Comments.CommentType::of));
     }
 
     /**
@@ -1085,8 +1085,8 @@ public final class UserDetailItem extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<UserDetailItem.CommentsItem.PreviousStatus> previousStatus() {
-      return Json.optional(json, "previous_status", Conv.enumeration(UserDetailItem.CommentsItem.PreviousStatus::of));
+    public Optional<UserDetailItem.Comments.PreviousStatus> previousStatus() {
+      return Json.optional(json, "previous_status", Conv.enumeration(UserDetailItem.Comments.PreviousStatus::of));
     }
 
     /**
@@ -1095,8 +1095,8 @@ public final class UserDetailItem extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<UserDetailItem.CommentsItem.NewStatus> newStatus() {
-      return Json.optional(json, "new_status", Conv.enumeration(UserDetailItem.CommentsItem.NewStatus::of));
+    public Optional<UserDetailItem.Comments.NewStatus> newStatus() {
+      return Json.optional(json, "new_status", Conv.enumeration(UserDetailItem.Comments.NewStatus::of));
     }
 
     /**
@@ -1164,11 +1164,11 @@ public final class UserDetailItem extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link CommentsItem}. */
+    /** Builds a {@link Comments}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(CommentsItem from) {
+      private Builder(Comments from) {
         super(from);
       }
 
@@ -1188,8 +1188,8 @@ public final class UserDetailItem extends JsonModel {
        * @param commentType the value
        * @return this builder
        */
-      public Builder commentType(UserDetailItem.CommentsItem.CommentType commentType) {
-        return set("comment_type", Conv.enumeration(UserDetailItem.CommentsItem.CommentType::of), commentType);
+      public Builder commentType(UserDetailItem.Comments.CommentType commentType) {
+        return set("comment_type", Conv.enumeration(UserDetailItem.Comments.CommentType::of), commentType);
       }
 
       /**
@@ -1228,8 +1228,8 @@ public final class UserDetailItem extends JsonModel {
        * @param previousStatus the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder previousStatus(UserDetailItem.CommentsItem.@Nullable PreviousStatus previousStatus) {
-        return setNullable("previous_status", Conv.enumeration(UserDetailItem.CommentsItem.PreviousStatus::of), previousStatus);
+      public Builder previousStatus(UserDetailItem.Comments.@Nullable PreviousStatus previousStatus) {
+        return setNullable("previous_status", Conv.enumeration(UserDetailItem.Comments.PreviousStatus::of), previousStatus);
       }
 
       /**
@@ -1238,8 +1238,8 @@ public final class UserDetailItem extends JsonModel {
        * @param newStatus the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder newStatus(UserDetailItem.CommentsItem.@Nullable NewStatus newStatus) {
-        return setNullable("new_status", Conv.enumeration(UserDetailItem.CommentsItem.NewStatus::of), newStatus);
+      public Builder newStatus(UserDetailItem.Comments.@Nullable NewStatus newStatus) {
+        return setNullable("new_status", Conv.enumeration(UserDetailItem.Comments.NewStatus::of), newStatus);
       }
 
       /**
@@ -1305,10 +1305,10 @@ public final class UserDetailItem extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code CommentsItem}
+       * @return a new immutable {@code Comments}
        */
-      public CommentsItem build() {
-        return new CommentsItem(buildJson(), buildFiles());
+      public Comments build() {
+        return new Comments(buildJson(), buildFiles());
       }
 
       @Override

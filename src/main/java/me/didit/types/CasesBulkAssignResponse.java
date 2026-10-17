@@ -64,8 +64,8 @@ public final class CasesBulkAssignResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<CasesBulkAssignResponse.FailuresItem>> failures() {
-    return Json.optional(json, "failures", Conv.list(Conv.model(CasesBulkAssignResponse.FailuresItem::fromJson)));
+  public Optional<List<CasesBulkAssignResponse.Failures>> failures() {
+    return Json.optional(json, "failures", Conv.list(Conv.model(CasesBulkAssignResponse.Failures::fromJson)));
   }
 
   @Override
@@ -97,8 +97,8 @@ public final class CasesBulkAssignResponse extends JsonModel {
      * @param failures the value
      * @return this builder
      */
-    public Builder failures(List<CasesBulkAssignResponse.FailuresItem> failures) {
-      return set("failures", Conv.list(Conv.model(CasesBulkAssignResponse.FailuresItem::fromJson)), failures);
+    public Builder failures(List<CasesBulkAssignResponse.Failures> failures) {
+      return set("failures", Conv.list(Conv.model(CasesBulkAssignResponse.Failures::fromJson)), failures);
     }
 
     /**
@@ -116,22 +116,22 @@ public final class CasesBulkAssignResponse extends JsonModel {
     }
   }
 
-  public static final class FailuresItem extends JsonModel {
+  public static final class Failures extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("case_uuid", "detail");
 
-    private FailuresItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Failures(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code FailuresItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Failures} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static FailuresItem fromJson(JsonNode json) {
-      return new FailuresItem(Json.copyObject(json), Map.of());
+    public static Failures fromJson(JsonNode json) {
+      return new Failures(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -177,11 +177,11 @@ public final class CasesBulkAssignResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link FailuresItem}. */
+    /** Builds a {@link Failures}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(FailuresItem from) {
+      private Builder(Failures from) {
         super(from);
       }
 
@@ -208,10 +208,10 @@ public final class CasesBulkAssignResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code FailuresItem}
+       * @return a new immutable {@code Failures}
        */
-      public FailuresItem build() {
-        return new FailuresItem(buildJson(), buildFiles());
+      public Failures build() {
+        return new Failures(buildJson(), buildFiles());
       }
 
       @Override

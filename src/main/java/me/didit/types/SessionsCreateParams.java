@@ -1029,8 +1029,8 @@ public final class SessionsCreateParams extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsCreateParams.ExpectedDetails.ExpectedDocumentTypesItem>> expectedDocumentTypes() {
-      return Json.optional(json, "expected_document_types", Conv.list(Conv.enumeration(SessionsCreateParams.ExpectedDetails.ExpectedDocumentTypesItem::of)));
+    public Optional<List<SessionsCreateParams.ExpectedDetails.ExpectedDocumentTypes>> expectedDocumentTypes() {
+      return Json.optional(json, "expected_document_types", Conv.list(Conv.enumeration(SessionsCreateParams.ExpectedDetails.ExpectedDocumentTypes::of)));
     }
 
     /**
@@ -1192,8 +1192,8 @@ public final class SessionsCreateParams extends JsonModel {
        * @param expectedDocumentTypes the value
        * @return this builder
        */
-      public Builder expectedDocumentTypes(List<SessionsCreateParams.ExpectedDetails.ExpectedDocumentTypesItem> expectedDocumentTypes) {
-        return set("expected_document_types", Conv.list(Conv.enumeration(SessionsCreateParams.ExpectedDetails.ExpectedDocumentTypesItem::of)), expectedDocumentTypes);
+      public Builder expectedDocumentTypes(List<SessionsCreateParams.ExpectedDetails.ExpectedDocumentTypes> expectedDocumentTypes) {
+        return set("expected_document_types", Conv.list(Conv.enumeration(SessionsCreateParams.ExpectedDetails.ExpectedDocumentTypes::of)), expectedDocumentTypes);
       }
 
       /**
@@ -1288,31 +1288,31 @@ public final class SessionsCreateParams extends JsonModel {
      *
      * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
      */
-    public static final class ExpectedDocumentTypesItem extends StringEnum {
+    public static final class ExpectedDocumentTypes extends StringEnum {
       /** The value {@code "P"}. */
-      public static final ExpectedDocumentTypesItem P = new ExpectedDocumentTypesItem("P");
+      public static final ExpectedDocumentTypes P = new ExpectedDocumentTypes("P");
 
       /** The value {@code "ID"}. */
-      public static final ExpectedDocumentTypesItem ID = new ExpectedDocumentTypesItem("ID");
+      public static final ExpectedDocumentTypes ID = new ExpectedDocumentTypes("ID");
 
       /** The value {@code "DL"}. */
-      public static final ExpectedDocumentTypesItem DL = new ExpectedDocumentTypesItem("DL");
+      public static final ExpectedDocumentTypes DL = new ExpectedDocumentTypes("DL");
 
       /** The value {@code "RP"}. */
-      public static final ExpectedDocumentTypesItem RP = new ExpectedDocumentTypesItem("RP");
+      public static final ExpectedDocumentTypes RP = new ExpectedDocumentTypes("RP");
 
       /** The value {@code "HIC"}. */
-      public static final ExpectedDocumentTypesItem HIC = new ExpectedDocumentTypesItem("HIC");
+      public static final ExpectedDocumentTypes HIC = new ExpectedDocumentTypes("HIC");
 
       /** The value {@code "TC"}. */
-      public static final ExpectedDocumentTypesItem TC = new ExpectedDocumentTypesItem("TC");
+      public static final ExpectedDocumentTypes TC = new ExpectedDocumentTypes("TC");
 
       /** The value {@code "SSC"}. */
-      public static final ExpectedDocumentTypesItem SSC = new ExpectedDocumentTypesItem("SSC");
+      public static final ExpectedDocumentTypes SSC = new ExpectedDocumentTypes("SSC");
 
-      private static final List<ExpectedDocumentTypesItem> KNOWN_VALUES = List.of(P, ID, DL, RP, HIC, TC, SSC);
+      private static final List<ExpectedDocumentTypes> KNOWN_VALUES = List.of(P, ID, DL, RP, HIC, TC, SSC);
 
-      private ExpectedDocumentTypesItem(String value) {
+      private ExpectedDocumentTypes(String value) {
         super(value);
       }
 
@@ -1322,8 +1322,8 @@ public final class SessionsCreateParams extends JsonModel {
        * @param value the string value
        * @return the enum value
        */
-      public static ExpectedDocumentTypesItem of(String value) {
-        return StringEnum.lookup(KNOWN_VALUES, value, ExpectedDocumentTypesItem::new);
+      public static ExpectedDocumentTypes of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, ExpectedDocumentTypes::new);
       }
 
       /**
@@ -1331,7 +1331,7 @@ public final class SessionsCreateParams extends JsonModel {
        *
        * @return the known values
        */
-      public static List<ExpectedDocumentTypesItem> knownValues() {
+      public static List<ExpectedDocumentTypes> knownValues() {
         return KNOWN_VALUES;
       }
 

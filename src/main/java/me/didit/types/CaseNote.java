@@ -116,8 +116,8 @@ public final class CaseNote extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<CaseNote.AttachmentsItem>> attachments() {
-    return Json.optional(json, "attachments", Conv.list(Conv.model(CaseNote.AttachmentsItem::fromJson)));
+  public Optional<List<CaseNote.Attachments>> attachments() {
+    return Json.optional(json, "attachments", Conv.list(Conv.model(CaseNote.Attachments::fromJson)));
   }
 
   /**
@@ -219,8 +219,8 @@ public final class CaseNote extends JsonModel {
      * @param attachments the value
      * @return this builder
      */
-    public Builder attachments(List<CaseNote.AttachmentsItem> attachments) {
-      return set("attachments", Conv.list(Conv.model(CaseNote.AttachmentsItem::fromJson)), attachments);
+    public Builder attachments(List<CaseNote.Attachments> attachments) {
+      return set("attachments", Conv.list(Conv.model(CaseNote.Attachments::fromJson)), attachments);
     }
 
     /**
@@ -258,22 +258,22 @@ public final class CaseNote extends JsonModel {
     }
   }
 
-  public static final class AttachmentsItem extends JsonModel {
+  public static final class Attachments extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("s3_key", "filename", "file_size", "url");
 
-    private AttachmentsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Attachments(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code AttachmentsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Attachments} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static AttachmentsItem fromJson(JsonNode json) {
-      return new AttachmentsItem(Json.copyObject(json), Map.of());
+    public static Attachments fromJson(JsonNode json) {
+      return new Attachments(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -339,11 +339,11 @@ public final class CaseNote extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link AttachmentsItem}. */
+    /** Builds a {@link Attachments}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(AttachmentsItem from) {
+      private Builder(Attachments from) {
         super(from);
       }
 
@@ -390,10 +390,10 @@ public final class CaseNote extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code AttachmentsItem}
+       * @return a new immutable {@code Attachments}
        */
-      public AttachmentsItem build() {
-        return new AttachmentsItem(buildJson(), buildFiles());
+      public Attachments build() {
+        return new Attachments(buildJson(), buildFiles());
       }
 
       @Override

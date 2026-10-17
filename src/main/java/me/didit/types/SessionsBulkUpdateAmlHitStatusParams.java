@@ -56,8 +56,8 @@ public final class SessionsBulkUpdateAmlHitStatusParams extends JsonModel {
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public List<SessionsBulkUpdateAmlHitStatusParams.HitUpdatesItem> hitUpdates() {
-    return Json.required(json, "hit_updates", Conv.list(Conv.model(SessionsBulkUpdateAmlHitStatusParams.HitUpdatesItem::fromJson)));
+  public List<SessionsBulkUpdateAmlHitStatusParams.HitUpdates> hitUpdates() {
+    return Json.required(json, "hit_updates", Conv.list(Conv.model(SessionsBulkUpdateAmlHitStatusParams.HitUpdates::fromJson)));
   }
 
   /**
@@ -89,8 +89,8 @@ public final class SessionsBulkUpdateAmlHitStatusParams extends JsonModel {
      * @param hitUpdates the value
      * @return this builder
      */
-    public Builder hitUpdates(List<SessionsBulkUpdateAmlHitStatusParams.HitUpdatesItem> hitUpdates) {
-      return set("hit_updates", Conv.list(Conv.model(SessionsBulkUpdateAmlHitStatusParams.HitUpdatesItem::fromJson)), hitUpdates);
+    public Builder hitUpdates(List<SessionsBulkUpdateAmlHitStatusParams.HitUpdates> hitUpdates) {
+      return set("hit_updates", Conv.list(Conv.model(SessionsBulkUpdateAmlHitStatusParams.HitUpdates::fromJson)), hitUpdates);
     }
 
     /**
@@ -120,22 +120,22 @@ public final class SessionsBulkUpdateAmlHitStatusParams extends JsonModel {
     }
   }
 
-  public static final class HitUpdatesItem extends JsonModel {
+  public static final class HitUpdates extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("hit_id", "review_status");
 
-    private HitUpdatesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private HitUpdates(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code HitUpdatesItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code HitUpdates} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static HitUpdatesItem fromJson(JsonNode json) {
-      return new HitUpdatesItem(Json.copyObject(json), Map.of());
+    public static HitUpdates fromJson(JsonNode json) {
+      return new HitUpdates(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -172,8 +172,8 @@ public final class SessionsBulkUpdateAmlHitStatusParams extends JsonModel {
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
      */
-    public SessionsBulkUpdateAmlHitStatusParams.HitUpdatesItem.ReviewStatus reviewStatus() {
-      return Json.required(json, "review_status", Conv.enumeration(SessionsBulkUpdateAmlHitStatusParams.HitUpdatesItem.ReviewStatus::of));
+    public SessionsBulkUpdateAmlHitStatusParams.HitUpdates.ReviewStatus reviewStatus() {
+      return Json.required(json, "review_status", Conv.enumeration(SessionsBulkUpdateAmlHitStatusParams.HitUpdates.ReviewStatus::of));
     }
 
     @Override
@@ -181,11 +181,11 @@ public final class SessionsBulkUpdateAmlHitStatusParams extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link HitUpdatesItem}. */
+    /** Builds a {@link HitUpdates}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(HitUpdatesItem from) {
+      private Builder(HitUpdates from) {
         super(from);
       }
 
@@ -205,20 +205,20 @@ public final class SessionsBulkUpdateAmlHitStatusParams extends JsonModel {
        * @param reviewStatus the value
        * @return this builder
        */
-      public Builder reviewStatus(SessionsBulkUpdateAmlHitStatusParams.HitUpdatesItem.ReviewStatus reviewStatus) {
-        return set("review_status", Conv.enumeration(SessionsBulkUpdateAmlHitStatusParams.HitUpdatesItem.ReviewStatus::of), reviewStatus);
+      public Builder reviewStatus(SessionsBulkUpdateAmlHitStatusParams.HitUpdates.ReviewStatus reviewStatus) {
+        return set("review_status", Conv.enumeration(SessionsBulkUpdateAmlHitStatusParams.HitUpdates.ReviewStatus::of), reviewStatus);
       }
 
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code HitUpdatesItem}
+       * @return a new immutable {@code HitUpdates}
        * @throws IllegalStateException when a required field is missing
        */
-      public HitUpdatesItem build() {
+      public HitUpdates build() {
         require("hit_id", false);
         require("review_status", false);
-        return new HitUpdatesItem(buildJson(), buildFiles());
+        return new HitUpdates(buildJson(), buildFiles());
       }
 
       @Override

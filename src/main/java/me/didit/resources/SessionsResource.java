@@ -978,7 +978,7 @@ public final class SessionsResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public Page<SessionsListResponse.ResultsItem> list(SessionsListParams params, RequestOptions options) {
+  public Page<SessionsListResponse.Results> list(SessionsListParams params, RequestOptions options) {
     return client.execute(listRequest(params), options, LIST_RESPONSE).data();
   }
 
@@ -1013,7 +1013,7 @@ public final class SessionsResource {
    * @param options per-request options that override the client options
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<SessionsListResponse.ResultsItem>> listAsync(SessionsListParams params, RequestOptions options) {
+  public CompletableFuture<Page<SessionsListResponse.Results>> listAsync(SessionsListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -1047,7 +1047,7 @@ public final class SessionsResource {
    * @param params the request parameters
    * @return the response body
    */
-  public Page<SessionsListResponse.ResultsItem> list(SessionsListParams params) {
+  public Page<SessionsListResponse.Results> list(SessionsListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
@@ -1081,7 +1081,7 @@ public final class SessionsResource {
    * @param params the request parameters
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<SessionsListResponse.ResultsItem>> listAsync(SessionsListParams params) {
+  public CompletableFuture<Page<SessionsListResponse.Results>> listAsync(SessionsListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -1115,7 +1115,7 @@ public final class SessionsResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public Page<SessionsListResponse.ResultsItem> list(RequestOptions options) {
+  public Page<SessionsListResponse.Results> list(RequestOptions options) {
     return client.execute(listRequest(SessionsListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
@@ -1149,7 +1149,7 @@ public final class SessionsResource {
    * @param options per-request options that override the client options
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<SessionsListResponse.ResultsItem>> listAsync(RequestOptions options) {
+  public CompletableFuture<Page<SessionsListResponse.Results>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(SessionsListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -1182,7 +1182,7 @@ public final class SessionsResource {
    *
    * @return the response body
    */
-  public Page<SessionsListResponse.ResultsItem> list() {
+  public Page<SessionsListResponse.Results> list() {
     return client.execute(listRequest(SessionsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
@@ -1215,7 +1215,7 @@ public final class SessionsResource {
    *
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<SessionsListResponse.ResultsItem>> listAsync() {
+  public CompletableFuture<Page<SessionsListResponse.Results>> listAsync() {
     return client.executeAsync(listRequest(SessionsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -2865,7 +2865,7 @@ public final class SessionsResource {
         .build();
   }
 
-  private static final ResponseHandler<Page<SessionsListResponse.ResultsItem>> LIST_RESPONSE = Responses.page(Conv.union(SessionsListResponse.ResultsItem::fromJson));
+  private static final ResponseHandler<Page<SessionsListResponse.Results>> LIST_RESPONSE = Responses.page(Conv.union(SessionsListResponse.Results::fromJson));
 
   private static ApiRequest listRequest(SessionsListParams params) {
     return ApiRequest.builder("GET", "/v3/sessions/")
@@ -3905,7 +3905,7 @@ public final class SessionsResource {
      * @param options per-request options that override the client options
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<SessionsListResponse.ResultsItem>> list(SessionsListParams params, RequestOptions options) {
+    public RawResponse<Page<SessionsListResponse.Results>> list(SessionsListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
@@ -3940,7 +3940,7 @@ public final class SessionsResource {
      * @param options per-request options that override the client options
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<SessionsListResponse.ResultsItem>>> listAsync(SessionsListParams params, RequestOptions options) {
+    public CompletableFuture<RawResponse<Page<SessionsListResponse.Results>>> listAsync(SessionsListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
@@ -3974,7 +3974,7 @@ public final class SessionsResource {
      * @param params the request parameters
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<SessionsListResponse.ResultsItem>> list(SessionsListParams params) {
+    public RawResponse<Page<SessionsListResponse.Results>> list(SessionsListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
@@ -4008,7 +4008,7 @@ public final class SessionsResource {
      * @param params the request parameters
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<SessionsListResponse.ResultsItem>>> listAsync(SessionsListParams params) {
+    public CompletableFuture<RawResponse<Page<SessionsListResponse.Results>>> listAsync(SessionsListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
@@ -4042,7 +4042,7 @@ public final class SessionsResource {
      * @param options per-request options that override the client options
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<SessionsListResponse.ResultsItem>> list(RequestOptions options) {
+    public RawResponse<Page<SessionsListResponse.Results>> list(RequestOptions options) {
       return client.execute(listRequest(SessionsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
@@ -4076,7 +4076,7 @@ public final class SessionsResource {
      * @param options per-request options that override the client options
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<SessionsListResponse.ResultsItem>>> listAsync(RequestOptions options) {
+    public CompletableFuture<RawResponse<Page<SessionsListResponse.Results>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(SessionsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
@@ -4109,7 +4109,7 @@ public final class SessionsResource {
      *
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<SessionsListResponse.ResultsItem>> list() {
+    public RawResponse<Page<SessionsListResponse.Results>> list() {
       return client.execute(listRequest(SessionsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
@@ -4142,7 +4142,7 @@ public final class SessionsResource {
      *
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<SessionsListResponse.ResultsItem>>> listAsync() {
+    public CompletableFuture<RawResponse<Page<SessionsListResponse.Results>>> listAsync() {
       return client.executeAsync(listRequest(SessionsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 

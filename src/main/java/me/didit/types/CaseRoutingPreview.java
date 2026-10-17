@@ -125,8 +125,8 @@ public final class CaseRoutingPreview extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<CaseRoutingPreview.CandidatesItem>> candidates() {
-    return Json.optional(json, "candidates", Conv.list(Conv.model(CaseRoutingPreview.CandidatesItem::fromJson)));
+  public Optional<List<CaseRoutingPreview.Candidates>> candidates() {
+    return Json.optional(json, "candidates", Conv.list(Conv.model(CaseRoutingPreview.Candidates::fromJson)));
   }
 
   /**
@@ -135,8 +135,8 @@ public final class CaseRoutingPreview extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<CaseRoutingPreview.MatchedRulesItem>> matchedRules() {
-    return Json.optional(json, "matched_rules", Conv.list(Conv.model(CaseRoutingPreview.MatchedRulesItem::fromJson)));
+  public Optional<List<CaseRoutingPreview.MatchedRules>> matchedRules() {
+    return Json.optional(json, "matched_rules", Conv.list(Conv.model(CaseRoutingPreview.MatchedRules::fromJson)));
   }
 
   @Override
@@ -228,8 +228,8 @@ public final class CaseRoutingPreview extends JsonModel {
      * @param candidates the value
      * @return this builder
      */
-    public Builder candidates(List<CaseRoutingPreview.CandidatesItem> candidates) {
-      return set("candidates", Conv.list(Conv.model(CaseRoutingPreview.CandidatesItem::fromJson)), candidates);
+    public Builder candidates(List<CaseRoutingPreview.Candidates> candidates) {
+      return set("candidates", Conv.list(Conv.model(CaseRoutingPreview.Candidates::fromJson)), candidates);
     }
 
     /**
@@ -238,8 +238,8 @@ public final class CaseRoutingPreview extends JsonModel {
      * @param matchedRules the value
      * @return this builder
      */
-    public Builder matchedRules(List<CaseRoutingPreview.MatchedRulesItem> matchedRules) {
-      return set("matched_rules", Conv.list(Conv.model(CaseRoutingPreview.MatchedRulesItem::fromJson)), matchedRules);
+    public Builder matchedRules(List<CaseRoutingPreview.MatchedRules> matchedRules) {
+      return set("matched_rules", Conv.list(Conv.model(CaseRoutingPreview.MatchedRules::fromJson)), matchedRules);
     }
 
     /**
@@ -257,22 +257,22 @@ public final class CaseRoutingPreview extends JsonModel {
     }
   }
 
-  public static final class CandidatesItem extends JsonModel {
+  public static final class Candidates extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("user_id", "eligible", "active_cases", "reason");
 
-    private CandidatesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Candidates(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code CandidatesItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Candidates} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static CandidatesItem fromJson(JsonNode json) {
-      return new CandidatesItem(Json.copyObject(json), Map.of());
+    public static Candidates fromJson(JsonNode json) {
+      return new Candidates(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -338,11 +338,11 @@ public final class CaseRoutingPreview extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link CandidatesItem}. */
+    /** Builds a {@link Candidates}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(CandidatesItem from) {
+      private Builder(Candidates from) {
         super(from);
       }
 
@@ -389,10 +389,10 @@ public final class CaseRoutingPreview extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code CandidatesItem}
+       * @return a new immutable {@code Candidates}
        */
-      public CandidatesItem build() {
-        return new CandidatesItem(buildJson(), buildFiles());
+      public Candidates build() {
+        return new Candidates(buildJson(), buildFiles());
       }
 
       @Override
@@ -402,22 +402,22 @@ public final class CaseRoutingPreview extends JsonModel {
     }
   }
 
-  public static final class MatchedRulesItem extends JsonModel {
+  public static final class MatchedRules extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "priority");
 
-    private MatchedRulesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private MatchedRules(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code MatchedRulesItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code MatchedRules} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static MatchedRulesItem fromJson(JsonNode json) {
-      return new MatchedRulesItem(Json.copyObject(json), Map.of());
+    public static MatchedRules fromJson(JsonNode json) {
+      return new MatchedRules(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -473,11 +473,11 @@ public final class CaseRoutingPreview extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link MatchedRulesItem}. */
+    /** Builds a {@link MatchedRules}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(MatchedRulesItem from) {
+      private Builder(MatchedRules from) {
         super(from);
       }
 
@@ -514,10 +514,10 @@ public final class CaseRoutingPreview extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code MatchedRulesItem}
+       * @return a new immutable {@code MatchedRules}
        */
-      public MatchedRulesItem build() {
-        return new MatchedRulesItem(buildJson(), buildFiles());
+      public MatchedRules build() {
+        return new MatchedRules(buildJson(), buildFiles());
       }
 
       @Override

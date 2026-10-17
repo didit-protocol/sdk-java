@@ -241,8 +241,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<FaceSearchSearchResponse.FaceSearch.MatchesItem>> matches() {
-      return Json.optional(json, "matches", Conv.list(Conv.model(FaceSearchSearchResponse.FaceSearch.MatchesItem::fromJson)));
+    public Optional<List<FaceSearchSearchResponse.FaceSearch.Matches>> matches() {
+      return Json.optional(json, "matches", Conv.list(Conv.model(FaceSearchSearchResponse.FaceSearch.Matches::fromJson)));
     }
 
     /**
@@ -261,8 +261,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<FaceSearchSearchResponse.FaceSearch.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(FaceSearchSearchResponse.FaceSearch.WarningsItem::fromJson)));
+    public Optional<List<FaceSearchSearchResponse.FaceSearch.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(FaceSearchSearchResponse.FaceSearch.Warnings::fromJson)));
     }
 
     @Override
@@ -304,8 +304,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
        * @param matches the value
        * @return this builder
        */
-      public Builder matches(List<FaceSearchSearchResponse.FaceSearch.MatchesItem> matches) {
-        return set("matches", Conv.list(Conv.model(FaceSearchSearchResponse.FaceSearch.MatchesItem::fromJson)), matches);
+      public Builder matches(List<FaceSearchSearchResponse.FaceSearch.Matches> matches) {
+        return set("matches", Conv.list(Conv.model(FaceSearchSearchResponse.FaceSearch.Matches::fromJson)), matches);
       }
 
       /**
@@ -324,8 +324,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<FaceSearchSearchResponse.FaceSearch.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(FaceSearchSearchResponse.FaceSearch.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<FaceSearchSearchResponse.FaceSearch.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(FaceSearchSearchResponse.FaceSearch.Warnings::fromJson)), warnings);
       }
 
       /**
@@ -386,22 +386,22 @@ public final class FaceSearchSearchResponse extends JsonModel {
       }
     }
 
-    public static final class MatchesItem extends JsonModel {
+    public static final class Matches extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_number", "similarity_percentage", "source", "vendor_data", "vendor_user_id", "biometric_template_id", "verification_date", "user_details", "match_image_url", "status", "is_blocklisted", "is_allowlisted", "api_service");
 
-      private MatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Matches(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code MatchesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Matches} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static MatchesItem fromJson(JsonNode json) {
-        return new MatchesItem(Json.copyObject(json), Map.of());
+      public static Matches fromJson(JsonNode json) {
+        return new Matches(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -458,8 +458,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<FaceSearchSearchResponse.FaceSearch.MatchesItem.Source> source() {
-        return Json.optional(json, "source", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.MatchesItem.Source::of));
+      public Optional<FaceSearchSearchResponse.FaceSearch.Matches.Source> source() {
+        return Json.optional(json, "source", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.Matches.Source::of));
       }
 
       /**
@@ -508,8 +508,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<FaceSearchSearchResponse.FaceSearch.MatchesItem.UserDetails> userDetails() {
-        return Json.optional(json, "user_details", Conv.model(FaceSearchSearchResponse.FaceSearch.MatchesItem.UserDetails::fromJson));
+      public Optional<FaceSearchSearchResponse.FaceSearch.Matches.UserDetails> userDetails() {
+        return Json.optional(json, "user_details", Conv.model(FaceSearchSearchResponse.FaceSearch.Matches.UserDetails::fromJson));
       }
 
       /**
@@ -567,11 +567,11 @@ public final class FaceSearchSearchResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link MatchesItem}. */
+      /** Builds a {@link Matches}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(MatchesItem from) {
+        private Builder(Matches from) {
           super(from);
         }
 
@@ -611,8 +611,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
          * @param source the value
          * @return this builder
          */
-        public Builder source(FaceSearchSearchResponse.FaceSearch.MatchesItem.Source source) {
-          return set("source", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.MatchesItem.Source::of), source);
+        public Builder source(FaceSearchSearchResponse.FaceSearch.Matches.Source source) {
+          return set("source", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.Matches.Source::of), source);
         }
 
         /**
@@ -661,8 +661,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
          * @param userDetails the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder userDetails(FaceSearchSearchResponse.FaceSearch.MatchesItem.@Nullable UserDetails userDetails) {
-          return setNullable("user_details", Conv.model(FaceSearchSearchResponse.FaceSearch.MatchesItem.UserDetails::fromJson), userDetails);
+        public Builder userDetails(FaceSearchSearchResponse.FaceSearch.Matches.@Nullable UserDetails userDetails) {
+          return setNullable("user_details", Conv.model(FaceSearchSearchResponse.FaceSearch.Matches.UserDetails::fromJson), userDetails);
         }
 
         /**
@@ -718,10 +718,10 @@ public final class FaceSearchSearchResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code MatchesItem}
+         * @return a new immutable {@code Matches}
          */
-        public MatchesItem build() {
-          return new MatchesItem(buildJson(), buildFiles());
+        public Matches build() {
+          return new Matches(buildJson(), buildFiles());
         }
 
         @Override
@@ -953,8 +953,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<FaceSearchSearchResponse.FaceSearch.UserImage.EntitiesItem>> entities() {
-        return Json.optional(json, "entities", Conv.list(Conv.model(FaceSearchSearchResponse.FaceSearch.UserImage.EntitiesItem::fromJson)));
+      public Optional<List<FaceSearchSearchResponse.FaceSearch.UserImage.Entities>> entities() {
+        return Json.optional(json, "entities", Conv.list(Conv.model(FaceSearchSearchResponse.FaceSearch.UserImage.Entities::fromJson)));
       }
 
       /**
@@ -986,8 +986,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
          * @param entities the value
          * @return this builder
          */
-        public Builder entities(List<FaceSearchSearchResponse.FaceSearch.UserImage.EntitiesItem> entities) {
-          return set("entities", Conv.list(Conv.model(FaceSearchSearchResponse.FaceSearch.UserImage.EntitiesItem::fromJson)), entities);
+        public Builder entities(List<FaceSearchSearchResponse.FaceSearch.UserImage.Entities> entities) {
+          return set("entities", Conv.list(Conv.model(FaceSearchSearchResponse.FaceSearch.UserImage.Entities::fromJson)), entities);
         }
 
         /**
@@ -1015,22 +1015,22 @@ public final class FaceSearchSearchResponse extends JsonModel {
         }
       }
 
-      public static final class EntitiesItem extends JsonModel {
+      public static final class Entities extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("bbox", "confidence");
 
-        private EntitiesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private Entities(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code EntitiesItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code Entities} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static EntitiesItem fromJson(JsonNode json) {
-          return new EntitiesItem(Json.copyObject(json), Map.of());
+        public static Entities fromJson(JsonNode json) {
+          return new Entities(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -1076,11 +1076,11 @@ public final class FaceSearchSearchResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link EntitiesItem}. */
+        /** Builds a {@link Entities}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(EntitiesItem from) {
+          private Builder(Entities from) {
             super(from);
           }
 
@@ -1107,10 +1107,10 @@ public final class FaceSearchSearchResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code EntitiesItem}
+           * @return a new immutable {@code Entities}
            */
-          public EntitiesItem build() {
-            return new EntitiesItem(buildJson(), buildFiles());
+          public Entities build() {
+            return new Entities(buildJson(), buildFiles());
           }
 
           @Override
@@ -1121,22 +1121,22 @@ public final class FaceSearchSearchResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("risk", "feature", "additional_data", "log_type", "short_description", "long_description");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -1163,8 +1163,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<FaceSearchSearchResponse.FaceSearch.WarningsItem.Risk> risk() {
-        return Json.optional(json, "risk", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.WarningsItem.Risk::of));
+      public Optional<FaceSearchSearchResponse.FaceSearch.Warnings.Risk> risk() {
+        return Json.optional(json, "risk", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.Warnings.Risk::of));
       }
 
       /**
@@ -1173,8 +1173,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<FaceSearchSearchResponse.FaceSearch.WarningsItem.Feature> feature() {
-        return Json.optional(json, "feature", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.WarningsItem.Feature::of));
+      public Optional<FaceSearchSearchResponse.FaceSearch.Warnings.Feature> feature() {
+        return Json.optional(json, "feature", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.Warnings.Feature::of));
       }
 
       /**
@@ -1193,8 +1193,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<FaceSearchSearchResponse.FaceSearch.WarningsItem.LogType> logType() {
-        return Json.optional(json, "log_type", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.WarningsItem.LogType::of));
+      public Optional<FaceSearchSearchResponse.FaceSearch.Warnings.LogType> logType() {
+        return Json.optional(json, "log_type", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.Warnings.LogType::of));
       }
 
       /**
@@ -1222,11 +1222,11 @@ public final class FaceSearchSearchResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -1236,8 +1236,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
          * @param risk the value
          * @return this builder
          */
-        public Builder risk(FaceSearchSearchResponse.FaceSearch.WarningsItem.Risk risk) {
-          return set("risk", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.WarningsItem.Risk::of), risk);
+        public Builder risk(FaceSearchSearchResponse.FaceSearch.Warnings.Risk risk) {
+          return set("risk", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.Warnings.Risk::of), risk);
         }
 
         /**
@@ -1246,8 +1246,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
          * @param feature the value
          * @return this builder
          */
-        public Builder feature(FaceSearchSearchResponse.FaceSearch.WarningsItem.Feature feature) {
-          return set("feature", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.WarningsItem.Feature::of), feature);
+        public Builder feature(FaceSearchSearchResponse.FaceSearch.Warnings.Feature feature) {
+          return set("feature", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.Warnings.Feature::of), feature);
         }
 
         /**
@@ -1266,8 +1266,8 @@ public final class FaceSearchSearchResponse extends JsonModel {
          * @param logType the value
          * @return this builder
          */
-        public Builder logType(FaceSearchSearchResponse.FaceSearch.WarningsItem.LogType logType) {
-          return set("log_type", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.WarningsItem.LogType::of), logType);
+        public Builder logType(FaceSearchSearchResponse.FaceSearch.Warnings.LogType logType) {
+          return set("log_type", Conv.enumeration(FaceSearchSearchResponse.FaceSearch.Warnings.LogType::of), logType);
         }
 
         /**
@@ -1293,10 +1293,10 @@ public final class FaceSearchSearchResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override

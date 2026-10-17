@@ -77,8 +77,8 @@ public final class EntityNetworkMembership extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<EntityNetworkMembership.SignalTypesItem>> signalTypes() {
-    return Json.optional(json, "signal_types", Conv.list(Conv.enumeration(EntityNetworkMembership.SignalTypesItem::of)));
+  public Optional<List<EntityNetworkMembership.SignalTypes>> signalTypes() {
+    return Json.optional(json, "signal_types", Conv.list(Conv.enumeration(EntityNetworkMembership.SignalTypes::of)));
   }
 
   /**
@@ -150,8 +150,8 @@ public final class EntityNetworkMembership extends JsonModel {
      * @param signalTypes the value
      * @return this builder
      */
-    public Builder signalTypes(List<EntityNetworkMembership.SignalTypesItem> signalTypes) {
-      return set("signal_types", Conv.list(Conv.enumeration(EntityNetworkMembership.SignalTypesItem::of)), signalTypes);
+    public Builder signalTypes(List<EntityNetworkMembership.SignalTypes> signalTypes) {
+      return set("signal_types", Conv.list(Conv.enumeration(EntityNetworkMembership.SignalTypes::of)), signalTypes);
     }
 
     /**
@@ -203,31 +203,31 @@ public final class EntityNetworkMembership extends JsonModel {
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
-  public static final class SignalTypesItem extends StringEnum {
+  public static final class SignalTypes extends StringEnum {
     /** The value {@code "ip_address"}. */
-    public static final SignalTypesItem IP_ADDRESS = new SignalTypesItem("ip_address");
+    public static final SignalTypes IP_ADDRESS = new SignalTypes("ip_address");
 
     /** The value {@code "device"}. */
-    public static final SignalTypesItem DEVICE = new SignalTypesItem("device");
+    public static final SignalTypes DEVICE = new SignalTypes("device");
 
     /** The value {@code "face"}. */
-    public static final SignalTypesItem FACE = new SignalTypesItem("face");
+    public static final SignalTypes FACE = new SignalTypes("face");
 
     /** The value {@code "document_number"}. */
-    public static final SignalTypesItem DOCUMENT_NUMBER = new SignalTypesItem("document_number");
+    public static final SignalTypes DOCUMENT_NUMBER = new SignalTypes("document_number");
 
     /** The value {@code "phone"}. */
-    public static final SignalTypesItem PHONE = new SignalTypesItem("phone");
+    public static final SignalTypes PHONE = new SignalTypes("phone");
 
     /** The value {@code "email"}. */
-    public static final SignalTypesItem EMAIL = new SignalTypesItem("email");
+    public static final SignalTypes EMAIL = new SignalTypes("email");
 
     /** The value {@code "address"}. */
-    public static final SignalTypesItem ADDRESS = new SignalTypesItem("address");
+    public static final SignalTypes ADDRESS = new SignalTypes("address");
 
-    private static final List<SignalTypesItem> KNOWN_VALUES = List.of(IP_ADDRESS, DEVICE, FACE, DOCUMENT_NUMBER, PHONE, EMAIL, ADDRESS);
+    private static final List<SignalTypes> KNOWN_VALUES = List.of(IP_ADDRESS, DEVICE, FACE, DOCUMENT_NUMBER, PHONE, EMAIL, ADDRESS);
 
-    private SignalTypesItem(String value) {
+    private SignalTypes(String value) {
       super(value);
     }
 
@@ -237,8 +237,8 @@ public final class EntityNetworkMembership extends JsonModel {
      * @param value the string value
      * @return the enum value
      */
-    public static SignalTypesItem of(String value) {
-      return StringEnum.lookup(KNOWN_VALUES, value, SignalTypesItem::new);
+    public static SignalTypes of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, SignalTypes::new);
     }
 
     /**
@@ -246,7 +246,7 @@ public final class EntityNetworkMembership extends JsonModel {
      *
      * @return the known values
      */
-    public static List<SignalTypesItem> knownValues() {
+    public static List<SignalTypes> knownValues() {
       return KNOWN_VALUES;
     }
 

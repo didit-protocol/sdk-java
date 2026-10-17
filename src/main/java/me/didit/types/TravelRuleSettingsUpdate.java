@@ -206,8 +206,8 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<TravelRuleSettingsUpdate.DisabledNetworksItem>> disabledNetworks() {
-    return Json.optional(json, "disabled_networks", Conv.list(Conv.enumeration(TravelRuleSettingsUpdate.DisabledNetworksItem::of)));
+  public Optional<List<TravelRuleSettingsUpdate.DisabledNetworks>> disabledNetworks() {
+    return Json.optional(json, "disabled_networks", Conv.list(Conv.enumeration(TravelRuleSettingsUpdate.DisabledNetworks::of)));
   }
 
   @Override
@@ -379,8 +379,8 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
      * @param disabledNetworks the value
      * @return this builder
      */
-    public Builder disabledNetworks(List<TravelRuleSettingsUpdate.DisabledNetworksItem> disabledNetworks) {
-      return set("disabled_networks", Conv.list(Conv.enumeration(TravelRuleSettingsUpdate.DisabledNetworksItem::of)), disabledNetworks);
+    public Builder disabledNetworks(List<TravelRuleSettingsUpdate.DisabledNetworks> disabledNetworks) {
+      return set("disabled_networks", Conv.list(Conv.enumeration(TravelRuleSettingsUpdate.DisabledNetworks::of)), disabledNetworks);
     }
 
     /**
@@ -495,22 +495,22 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
-  public static final class DisabledNetworksItem extends StringEnum {
+  public static final class DisabledNetworks extends StringEnum {
     /** The value {@code "GTR"}. */
-    public static final DisabledNetworksItem GTR = new DisabledNetworksItem("GTR");
+    public static final DisabledNetworks GTR = new DisabledNetworks("GTR");
 
     /** The value {@code "TRUST"}. */
-    public static final DisabledNetworksItem TRUST = new DisabledNetworksItem("TRUST");
+    public static final DisabledNetworks TRUST = new DisabledNetworks("TRUST");
 
     /** The value {@code "VERIFYVASP"}. */
-    public static final DisabledNetworksItem VERIFYVASP = new DisabledNetworksItem("VERIFYVASP");
+    public static final DisabledNetworks VERIFYVASP = new DisabledNetworks("VERIFYVASP");
 
     /** The value {@code "SYGNA"}. */
-    public static final DisabledNetworksItem SYGNA = new DisabledNetworksItem("SYGNA");
+    public static final DisabledNetworks SYGNA = new DisabledNetworks("SYGNA");
 
-    private static final List<DisabledNetworksItem> KNOWN_VALUES = List.of(GTR, TRUST, VERIFYVASP, SYGNA);
+    private static final List<DisabledNetworks> KNOWN_VALUES = List.of(GTR, TRUST, VERIFYVASP, SYGNA);
 
-    private DisabledNetworksItem(String value) {
+    private DisabledNetworks(String value) {
       super(value);
     }
 
@@ -520,8 +520,8 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
      * @param value the string value
      * @return the enum value
      */
-    public static DisabledNetworksItem of(String value) {
-      return StringEnum.lookup(KNOWN_VALUES, value, DisabledNetworksItem::new);
+    public static DisabledNetworks of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, DisabledNetworks::new);
     }
 
     /**
@@ -529,7 +529,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
      *
      * @return the known values
      */
-    public static List<DisabledNetworksItem> knownValues() {
+    public static List<DisabledNetworks> knownValues() {
       return KNOWN_VALUES;
     }
 

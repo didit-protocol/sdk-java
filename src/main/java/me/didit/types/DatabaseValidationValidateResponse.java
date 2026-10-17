@@ -282,8 +282,8 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<DatabaseValidationValidateResponse.DatabaseValidation.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(DatabaseValidationValidateResponse.DatabaseValidation.WarningsItem::fromJson)));
+    public Optional<List<DatabaseValidationValidateResponse.DatabaseValidation.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(DatabaseValidationValidateResponse.DatabaseValidation.Warnings::fromJson)));
     }
 
     /**
@@ -292,8 +292,8 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<DatabaseValidationValidateResponse.DatabaseValidation.ErrorsItem>> errors() {
-      return Json.optional(json, "errors", Conv.list(Conv.model(DatabaseValidationValidateResponse.DatabaseValidation.ErrorsItem::fromJson)));
+    public Optional<List<DatabaseValidationValidateResponse.DatabaseValidation.Errors>> errors() {
+      return Json.optional(json, "errors", Conv.list(Conv.model(DatabaseValidationValidateResponse.DatabaseValidation.Errors::fromJson)));
     }
 
     /**
@@ -395,8 +395,8 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<DatabaseValidationValidateResponse.DatabaseValidation.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(DatabaseValidationValidateResponse.DatabaseValidation.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<DatabaseValidationValidateResponse.DatabaseValidation.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(DatabaseValidationValidateResponse.DatabaseValidation.Warnings::fromJson)), warnings);
       }
 
       /**
@@ -405,8 +405,8 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
        * @param errors the value
        * @return this builder
        */
-      public Builder errors(List<DatabaseValidationValidateResponse.DatabaseValidation.ErrorsItem> errors) {
-        return set("errors", Conv.list(Conv.model(DatabaseValidationValidateResponse.DatabaseValidation.ErrorsItem::fromJson)), errors);
+      public Builder errors(List<DatabaseValidationValidateResponse.DatabaseValidation.Errors> errors) {
+        return set("errors", Conv.list(Conv.model(DatabaseValidationValidateResponse.DatabaseValidation.Errors::fromJson)), errors);
       }
 
       /**
@@ -606,8 +606,8 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
        * @param value the value
        * @return the union
        */
-      public static Validations ofList(List<DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListItem> value) {
-        return new Validations(Conv.list(Conv.model(DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListItem::fromJson)).write(value));
+      public static Validations ofList(List<DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListValue> value) {
+        return new Validations(Conv.list(Conv.model(DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListValue::fromJson)).write(value));
       }
 
       /**
@@ -624,8 +624,8 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
        *
        * @return the value, or empty when {@link #isList()} is false
        */
-      public Optional<List<DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListItem>> asList() {
-        return isList() ? Optional.of(Conv.list(Conv.model(DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListItem::fromJson)).read(json)) : Optional.empty();
+      public Optional<List<DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListValue>> asList() {
+        return isList() ? Optional.of(Conv.list(Conv.model(DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListValue::fromJson)).read(json)) : Optional.empty();
       }
 
       /**
@@ -661,22 +661,22 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
       /**
        * Per-service validation result (returned when <code>save_api_request=true</code>, the default).
        */
-      public static final class ListItem extends JsonModel {
+      public static final class ListValue extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("service_id", "service_name", "validation", "outcome_code", "outcome_detail", "source_data");
 
-        private ListItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private ListValue(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code ListItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code ListValue} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static ListItem fromJson(JsonNode json) {
-          return new ListItem(Json.copyObject(json), Map.of());
+        public static ListValue fromJson(JsonNode json) {
+          return new ListValue(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -723,8 +723,8 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<Map<String, DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListItem.ValidationValue>> validation() {
-          return Json.optional(json, "validation", Conv.map(Conv.enumeration(DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListItem.ValidationValue::of)));
+        public Optional<Map<String, DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListValue.ValidationValue>> validation() {
+          return Json.optional(json, "validation", Conv.map(Conv.enumeration(DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListValue.ValidationValue::of)));
         }
 
         /**
@@ -733,8 +733,8 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListItem.OutcomeCode> outcomeCode() {
-          return Json.optional(json, "outcome_code", Conv.enumeration(DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListItem.OutcomeCode::of));
+        public Optional<DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListValue.OutcomeCode> outcomeCode() {
+          return Json.optional(json, "outcome_code", Conv.enumeration(DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListValue.OutcomeCode::of));
         }
 
         /**
@@ -762,11 +762,11 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link ListItem}. */
+        /** Builds a {@link ListValue}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(ListItem from) {
+          private Builder(ListValue from) {
             super(from);
           }
 
@@ -796,8 +796,8 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
            * @param validation the value
            * @return this builder
            */
-          public Builder validation(Map<String, DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListItem.ValidationValue> validation) {
-            return set("validation", Conv.map(Conv.enumeration(DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListItem.ValidationValue::of)), validation);
+          public Builder validation(Map<String, DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListValue.ValidationValue> validation) {
+            return set("validation", Conv.map(Conv.enumeration(DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListValue.ValidationValue::of)), validation);
           }
 
           /**
@@ -806,8 +806,8 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
            * @param outcomeCode the value
            * @return this builder
            */
-          public Builder outcomeCode(DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListItem.OutcomeCode outcomeCode) {
-            return set("outcome_code", Conv.enumeration(DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListItem.OutcomeCode::of), outcomeCode);
+          public Builder outcomeCode(DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListValue.OutcomeCode outcomeCode) {
+            return set("outcome_code", Conv.enumeration(DatabaseValidationValidateResponse.DatabaseValidation.Validations.ListValue.OutcomeCode::of), outcomeCode);
           }
 
           /**
@@ -833,10 +833,10 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code ListItem}
+           * @return a new immutable {@code ListValue}
            */
-          public ListItem build() {
-            return new ListItem(buildJson(), buildFiles());
+          public ListValue build() {
+            return new ListValue(buildJson(), buildFiles());
           }
 
           @Override
@@ -1016,22 +1016,22 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("feature", "risk", "additional_data", "log_type", "short_description", "long_description");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -1117,11 +1117,11 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -1188,10 +1188,10 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override
@@ -1201,22 +1201,22 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
       }
     }
 
-    public static final class ErrorsItem extends JsonModel {
+    public static final class Errors extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("service_id", "code", "message", "retryable");
 
-      private ErrorsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Errors(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code ErrorsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Errors} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static ErrorsItem fromJson(JsonNode json) {
-        return new ErrorsItem(Json.copyObject(json), Map.of());
+      public static Errors fromJson(JsonNode json) {
+        return new Errors(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -1282,11 +1282,11 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link ErrorsItem}. */
+      /** Builds a {@link Errors}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(ErrorsItem from) {
+        private Builder(Errors from) {
           super(from);
         }
 
@@ -1333,10 +1333,10 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code ErrorsItem}
+         * @return a new immutable {@code Errors}
          */
-        public ErrorsItem build() {
-          return new ErrorsItem(buildJson(), buildFiles());
+        public Errors build() {
+          return new Errors(buildJson(), buildFiles());
         }
 
         @Override

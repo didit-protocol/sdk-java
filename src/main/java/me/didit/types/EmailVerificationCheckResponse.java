@@ -344,8 +344,8 @@ public final class EmailVerificationCheckResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<EmailVerificationCheckResponse.Email.BreachesItem>> breaches() {
-      return Json.optional(json, "breaches", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.BreachesItem::fromJson)));
+    public Optional<List<EmailVerificationCheckResponse.Email.Breaches>> breaches() {
+      return Json.optional(json, "breaches", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.Breaches::fromJson)));
     }
 
     /**
@@ -394,8 +394,8 @@ public final class EmailVerificationCheckResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<EmailVerificationCheckResponse.Email.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.WarningsItem::fromJson)));
+    public Optional<List<EmailVerificationCheckResponse.Email.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.Warnings::fromJson)));
     }
 
     /**
@@ -404,8 +404,8 @@ public final class EmailVerificationCheckResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<EmailVerificationCheckResponse.Email.LifecycleItem>> lifecycle() {
-      return Json.optional(json, "lifecycle", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.LifecycleItem::fromJson)));
+    public Optional<List<EmailVerificationCheckResponse.Email.Lifecycle>> lifecycle() {
+      return Json.optional(json, "lifecycle", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.Lifecycle::fromJson)));
     }
 
     /**
@@ -414,8 +414,8 @@ public final class EmailVerificationCheckResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<EmailVerificationCheckResponse.Email.MatchesItem>> matches() {
-      return Json.optional(json, "matches", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.MatchesItem::fromJson)));
+    public Optional<List<EmailVerificationCheckResponse.Email.Matches>> matches() {
+      return Json.optional(json, "matches", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.Matches::fromJson)));
     }
 
     /**
@@ -477,8 +477,8 @@ public final class EmailVerificationCheckResponse extends JsonModel {
        * @param breaches the value
        * @return this builder
        */
-      public Builder breaches(List<EmailVerificationCheckResponse.Email.BreachesItem> breaches) {
-        return set("breaches", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.BreachesItem::fromJson)), breaches);
+      public Builder breaches(List<EmailVerificationCheckResponse.Email.Breaches> breaches) {
+        return set("breaches", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.Breaches::fromJson)), breaches);
       }
 
       /**
@@ -527,8 +527,8 @@ public final class EmailVerificationCheckResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<EmailVerificationCheckResponse.Email.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<EmailVerificationCheckResponse.Email.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.Warnings::fromJson)), warnings);
       }
 
       /**
@@ -537,8 +537,8 @@ public final class EmailVerificationCheckResponse extends JsonModel {
        * @param lifecycle the value
        * @return this builder
        */
-      public Builder lifecycle(List<EmailVerificationCheckResponse.Email.LifecycleItem> lifecycle) {
-        return set("lifecycle", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.LifecycleItem::fromJson)), lifecycle);
+      public Builder lifecycle(List<EmailVerificationCheckResponse.Email.Lifecycle> lifecycle) {
+        return set("lifecycle", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.Lifecycle::fromJson)), lifecycle);
       }
 
       /**
@@ -547,8 +547,8 @@ public final class EmailVerificationCheckResponse extends JsonModel {
        * @param matches the value
        * @return this builder
        */
-      public Builder matches(List<EmailVerificationCheckResponse.Email.MatchesItem> matches) {
-        return set("matches", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.MatchesItem::fromJson)), matches);
+      public Builder matches(List<EmailVerificationCheckResponse.Email.Matches> matches) {
+        return set("matches", Conv.list(Conv.model(EmailVerificationCheckResponse.Email.Matches::fromJson)), matches);
       }
 
       /**
@@ -628,22 +628,22 @@ public final class EmailVerificationCheckResponse extends JsonModel {
       }
     }
 
-    public static final class BreachesItem extends JsonModel {
+    public static final class Breaches extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("name", "domain", "breach_date", "breach_emails_count", "description", "logo_path", "data_classes", "is_verified");
 
-      private BreachesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Breaches(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code BreachesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Breaches} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static BreachesItem fromJson(JsonNode json) {
-        return new BreachesItem(Json.copyObject(json), Map.of());
+      public static Breaches fromJson(JsonNode json) {
+        return new Breaches(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -749,11 +749,11 @@ public final class EmailVerificationCheckResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link BreachesItem}. */
+      /** Builds a {@link Breaches}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(BreachesItem from) {
+        private Builder(Breaches from) {
           super(from);
         }
 
@@ -840,10 +840,10 @@ public final class EmailVerificationCheckResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code BreachesItem}
+         * @return a new immutable {@code Breaches}
          */
-        public BreachesItem build() {
-          return new BreachesItem(buildJson(), buildFiles());
+        public Breaches build() {
+          return new Breaches(buildJson(), buildFiles());
         }
 
         @Override
@@ -853,22 +853,22 @@ public final class EmailVerificationCheckResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("feature", "risk", "additional_data", "log_type", "short_description", "long_description");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -925,8 +925,8 @@ public final class EmailVerificationCheckResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<EmailVerificationCheckResponse.Email.WarningsItem.LogType> logType() {
-        return Json.optional(json, "log_type", Conv.enumeration(EmailVerificationCheckResponse.Email.WarningsItem.LogType::of));
+      public Optional<EmailVerificationCheckResponse.Email.Warnings.LogType> logType() {
+        return Json.optional(json, "log_type", Conv.enumeration(EmailVerificationCheckResponse.Email.Warnings.LogType::of));
       }
 
       /**
@@ -954,11 +954,11 @@ public final class EmailVerificationCheckResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -998,8 +998,8 @@ public final class EmailVerificationCheckResponse extends JsonModel {
          * @param logType the value
          * @return this builder
          */
-        public Builder logType(EmailVerificationCheckResponse.Email.WarningsItem.LogType logType) {
-          return set("log_type", Conv.enumeration(EmailVerificationCheckResponse.Email.WarningsItem.LogType::of), logType);
+        public Builder logType(EmailVerificationCheckResponse.Email.Warnings.LogType logType) {
+          return set("log_type", Conv.enumeration(EmailVerificationCheckResponse.Email.Warnings.LogType::of), logType);
         }
 
         /**
@@ -1025,10 +1025,10 @@ public final class EmailVerificationCheckResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override
@@ -1084,22 +1084,22 @@ public final class EmailVerificationCheckResponse extends JsonModel {
       }
     }
 
-    public static final class LifecycleItem extends JsonModel {
+    public static final class Lifecycle extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("type", "timestamp", "details", "fee");
 
-      private LifecycleItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Lifecycle(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code LifecycleItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Lifecycle} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static LifecycleItem fromJson(JsonNode json) {
-        return new LifecycleItem(Json.copyObject(json), Map.of());
+      public static Lifecycle fromJson(JsonNode json) {
+        return new Lifecycle(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -1165,11 +1165,11 @@ public final class EmailVerificationCheckResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link LifecycleItem}. */
+      /** Builds a {@link Lifecycle}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(LifecycleItem from) {
+        private Builder(Lifecycle from) {
           super(from);
         }
 
@@ -1216,10 +1216,10 @@ public final class EmailVerificationCheckResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code LifecycleItem}
+         * @return a new immutable {@code Lifecycle}
          */
-        public LifecycleItem build() {
-          return new LifecycleItem(buildJson(), buildFiles());
+        public Lifecycle build() {
+          return new Lifecycle(buildJson(), buildFiles());
         }
 
         @Override
@@ -1229,22 +1229,22 @@ public final class EmailVerificationCheckResponse extends JsonModel {
       }
     }
 
-    public static final class MatchesItem extends JsonModel {
+    public static final class Matches extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_number", "vendor_data", "verification_date", "email", "status", "is_blocklisted", "api_service", "source");
 
-      private MatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Matches(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code MatchesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Matches} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static MatchesItem fromJson(JsonNode json) {
-        return new MatchesItem(Json.copyObject(json), Map.of());
+      public static Matches fromJson(JsonNode json) {
+        return new Matches(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -1360,11 +1360,11 @@ public final class EmailVerificationCheckResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link MatchesItem}. */
+      /** Builds a {@link Matches}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(MatchesItem from) {
+        private Builder(Matches from) {
           super(from);
         }
 
@@ -1461,10 +1461,10 @@ public final class EmailVerificationCheckResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code MatchesItem}
+         * @return a new immutable {@code Matches}
          */
-        public MatchesItem build() {
-          return new MatchesItem(buildJson(), buildFiles());
+        public Matches build() {
+          return new Matches(buildJson(), buildFiles());
         }
 
         @Override

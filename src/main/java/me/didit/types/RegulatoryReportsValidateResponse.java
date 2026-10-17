@@ -75,8 +75,8 @@ public final class RegulatoryReportsValidateResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<RegulatoryReportsValidateResponse.ErrorsItem>> errors() {
-    return Json.optional(json, "errors", Conv.list(Conv.model(RegulatoryReportsValidateResponse.ErrorsItem::fromJson)));
+  public Optional<List<RegulatoryReportsValidateResponse.Errors>> errors() {
+    return Json.optional(json, "errors", Conv.list(Conv.model(RegulatoryReportsValidateResponse.Errors::fromJson)));
   }
 
   @Override
@@ -118,8 +118,8 @@ public final class RegulatoryReportsValidateResponse extends JsonModel {
      * @param errors the value
      * @return this builder
      */
-    public Builder errors(List<RegulatoryReportsValidateResponse.ErrorsItem> errors) {
-      return set("errors", Conv.list(Conv.model(RegulatoryReportsValidateResponse.ErrorsItem::fromJson)), errors);
+    public Builder errors(List<RegulatoryReportsValidateResponse.Errors> errors) {
+      return set("errors", Conv.list(Conv.model(RegulatoryReportsValidateResponse.Errors::fromJson)), errors);
     }
 
     /**
@@ -182,22 +182,22 @@ public final class RegulatoryReportsValidateResponse extends JsonModel {
     }
   }
 
-  public static final class ErrorsItem extends JsonModel {
+  public static final class Errors extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("field", "message");
 
-    private ErrorsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Errors(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code ErrorsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Errors} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static ErrorsItem fromJson(JsonNode json) {
-      return new ErrorsItem(Json.copyObject(json), Map.of());
+    public static Errors fromJson(JsonNode json) {
+      return new Errors(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -243,11 +243,11 @@ public final class RegulatoryReportsValidateResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link ErrorsItem}. */
+    /** Builds a {@link Errors}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(ErrorsItem from) {
+      private Builder(Errors from) {
         super(from);
       }
 
@@ -274,10 +274,10 @@ public final class RegulatoryReportsValidateResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code ErrorsItem}
+       * @return a new immutable {@code Errors}
        */
-      public ErrorsItem build() {
-        return new ErrorsItem(buildJson(), buildFiles());
+      public Errors build() {
+        return new Errors(buildJson(), buildFiles());
       }
 
       @Override

@@ -84,18 +84,6 @@ public final class Responses {
    * @return the handler
    */
   public static <T> ResponseHandler<Page<T>> page(Conv<T> item) {
-    return response -> Page.first(response, item, Page.Style.NEXT_LINK);
-  }
-
-  /**
-   * A list page with {@code count}, {@code next_offset} and {@code results}; the next page is the
-   * same request at {@code next_offset}.
-   *
-   * @param <T> the item type
-   * @param item the item converter
-   * @return the handler
-   */
-  public static <T> ResponseHandler<Page<T>> offsetPage(Conv<T> item) {
-    return response -> Page.first(response, item, Page.Style.NEXT_OFFSET);
+    return response -> Page.first(response, item);
   }
 }

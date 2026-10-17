@@ -261,8 +261,8 @@ public final class CaseContentConfig extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<CaseContentConfig.Checklist.ItemsItem>> items() {
-      return Json.optional(json, "items", Conv.list(Conv.model(CaseContentConfig.Checklist.ItemsItem::fromJson)));
+    public Optional<List<CaseContentConfig.Checklist.Items>> items() {
+      return Json.optional(json, "items", Conv.list(Conv.model(CaseContentConfig.Checklist.Items::fromJson)));
     }
 
     @Override
@@ -304,8 +304,8 @@ public final class CaseContentConfig extends JsonModel {
        * @param items the value
        * @return this builder
        */
-      public Builder items(List<CaseContentConfig.Checklist.ItemsItem> items) {
-        return set("items", Conv.list(Conv.model(CaseContentConfig.Checklist.ItemsItem::fromJson)), items);
+      public Builder items(List<CaseContentConfig.Checklist.Items> items) {
+        return set("items", Conv.list(Conv.model(CaseContentConfig.Checklist.Items::fromJson)), items);
       }
 
       /**
@@ -323,22 +323,22 @@ public final class CaseContentConfig extends JsonModel {
       }
     }
 
-    public static final class ItemsItem extends JsonModel {
+    public static final class Items extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("label", "order");
 
-      private ItemsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Items(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code ItemsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Items} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static ItemsItem fromJson(JsonNode json) {
-        return new ItemsItem(Json.copyObject(json), Map.of());
+      public static Items fromJson(JsonNode json) {
+        return new Items(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -384,11 +384,11 @@ public final class CaseContentConfig extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link ItemsItem}. */
+      /** Builds a {@link Items}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(ItemsItem from) {
+        private Builder(Items from) {
           super(from);
         }
 
@@ -415,10 +415,10 @@ public final class CaseContentConfig extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code ItemsItem}
+         * @return a new immutable {@code Items}
          */
-        public ItemsItem build() {
-          return new ItemsItem(buildJson(), buildFiles());
+        public Items build() {
+          return new Items(buildJson(), buildFiles());
         }
 
         @Override

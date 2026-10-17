@@ -10,7 +10,7 @@ import me.didit.core.JsonUnion;
 /**
  *
  * <p>One of: {@code DigitalIdWalletApiClientCredentialsForbiddenErrorMessage}, {@code DigitalIdWalletApiWalletVerificationError}. Check with the {@code is...}
- * methods and read with the {@code as...} methods.
+ * methods and read with the {@code as...} methods; the fields every variant has are readable directly.
  */
 public final class DigitalIdWalletApiWalletVerificationStartForbidden extends JsonUnion {
   private DigitalIdWalletApiWalletVerificationStartForbidden(JsonNode json) {
@@ -25,6 +25,16 @@ public final class DigitalIdWalletApiWalletVerificationStartForbidden extends Js
    */
   public static DigitalIdWalletApiWalletVerificationStartForbidden fromJson(JsonNode json) {
     return new DigitalIdWalletApiWalletVerificationStartForbidden(json.deepCopy());
+  }
+
+  /**
+   * The <code>detail</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> detail() {
+    return Json.optional(json, "detail", Conv.STRING);
   }
 
   /**

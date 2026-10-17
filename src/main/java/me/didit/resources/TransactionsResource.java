@@ -72,7 +72,7 @@ public final class TransactionsResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public Page<TransactionsListResponse.ResultsItem> list(TransactionsListParams params, RequestOptions options) {
+  public Page<TransactionsListResponse.Results> list(TransactionsListParams params, RequestOptions options) {
     return client.execute(listRequest(params), options, LIST_RESPONSE).data();
   }
 
@@ -88,7 +88,7 @@ public final class TransactionsResource {
    * @param options per-request options that override the client options
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<TransactionsListResponse.ResultsItem>> listAsync(TransactionsListParams params, RequestOptions options) {
+  public CompletableFuture<Page<TransactionsListResponse.Results>> listAsync(TransactionsListParams params, RequestOptions options) {
     return client.executeAsync(listRequest(params), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -103,7 +103,7 @@ public final class TransactionsResource {
    * @param params the request parameters
    * @return the response body
    */
-  public Page<TransactionsListResponse.ResultsItem> list(TransactionsListParams params) {
+  public Page<TransactionsListResponse.Results> list(TransactionsListParams params) {
     return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
@@ -118,7 +118,7 @@ public final class TransactionsResource {
    * @param params the request parameters
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<TransactionsListResponse.ResultsItem>> listAsync(TransactionsListParams params) {
+  public CompletableFuture<Page<TransactionsListResponse.Results>> listAsync(TransactionsListParams params) {
     return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -133,7 +133,7 @@ public final class TransactionsResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public Page<TransactionsListResponse.ResultsItem> list(RequestOptions options) {
+  public Page<TransactionsListResponse.Results> list(RequestOptions options) {
     return client.execute(listRequest(TransactionsListParams.builder().build()), options, LIST_RESPONSE).data();
   }
 
@@ -148,7 +148,7 @@ public final class TransactionsResource {
    * @param options per-request options that override the client options
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<TransactionsListResponse.ResultsItem>> listAsync(RequestOptions options) {
+  public CompletableFuture<Page<TransactionsListResponse.Results>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(TransactionsListParams.builder().build()), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -162,7 +162,7 @@ public final class TransactionsResource {
    *
    * @return the response body
    */
-  public Page<TransactionsListResponse.ResultsItem> list() {
+  public Page<TransactionsListResponse.Results> list() {
     return client.execute(listRequest(TransactionsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
@@ -176,7 +176,7 @@ public final class TransactionsResource {
    *
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<TransactionsListResponse.ResultsItem>> listAsync() {
+  public CompletableFuture<Page<TransactionsListResponse.Results>> listAsync() {
     return client.executeAsync(listRequest(TransactionsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -482,7 +482,7 @@ public final class TransactionsResource {
     return client.executeAsync(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), RequestOptions.none(), LIST_PARTY_NETWORKS_RESPONSE).thenApply(RawResponse::data);
   }
 
-  private static final ResponseHandler<Page<TransactionsListResponse.ResultsItem>> LIST_RESPONSE = Responses.page(Conv.model(TransactionsListResponse.ResultsItem::fromJson));
+  private static final ResponseHandler<Page<TransactionsListResponse.Results>> LIST_RESPONSE = Responses.page(Conv.model(TransactionsListResponse.Results::fromJson));
 
   private static ApiRequest listRequest(TransactionsListParams params) {
     return ApiRequest.builder("GET", "/v3/transactions/")
@@ -556,7 +556,7 @@ public final class TransactionsResource {
      * @param options per-request options that override the client options
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<TransactionsListResponse.ResultsItem>> list(TransactionsListParams params, RequestOptions options) {
+    public RawResponse<Page<TransactionsListResponse.Results>> list(TransactionsListParams params, RequestOptions options) {
       return client.execute(listRequest(params), options, LIST_RESPONSE);
     }
 
@@ -572,7 +572,7 @@ public final class TransactionsResource {
      * @param options per-request options that override the client options
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<TransactionsListResponse.ResultsItem>>> listAsync(TransactionsListParams params, RequestOptions options) {
+    public CompletableFuture<RawResponse<Page<TransactionsListResponse.Results>>> listAsync(TransactionsListParams params, RequestOptions options) {
       return client.executeAsync(listRequest(params), options, LIST_RESPONSE);
     }
 
@@ -587,7 +587,7 @@ public final class TransactionsResource {
      * @param params the request parameters
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<TransactionsListResponse.ResultsItem>> list(TransactionsListParams params) {
+    public RawResponse<Page<TransactionsListResponse.Results>> list(TransactionsListParams params) {
       return client.execute(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
@@ -602,7 +602,7 @@ public final class TransactionsResource {
      * @param params the request parameters
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<TransactionsListResponse.ResultsItem>>> listAsync(TransactionsListParams params) {
+    public CompletableFuture<RawResponse<Page<TransactionsListResponse.Results>>> listAsync(TransactionsListParams params) {
       return client.executeAsync(listRequest(params), RequestOptions.none(), LIST_RESPONSE);
     }
 
@@ -617,7 +617,7 @@ public final class TransactionsResource {
      * @param options per-request options that override the client options
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<TransactionsListResponse.ResultsItem>> list(RequestOptions options) {
+    public RawResponse<Page<TransactionsListResponse.Results>> list(RequestOptions options) {
       return client.execute(listRequest(TransactionsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
@@ -632,7 +632,7 @@ public final class TransactionsResource {
      * @param options per-request options that override the client options
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<TransactionsListResponse.ResultsItem>>> listAsync(RequestOptions options) {
+    public CompletableFuture<RawResponse<Page<TransactionsListResponse.Results>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(TransactionsListParams.builder().build()), options, LIST_RESPONSE);
     }
 
@@ -646,7 +646,7 @@ public final class TransactionsResource {
      *
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<TransactionsListResponse.ResultsItem>> list() {
+    public RawResponse<Page<TransactionsListResponse.Results>> list() {
       return client.execute(listRequest(TransactionsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 
@@ -660,7 +660,7 @@ public final class TransactionsResource {
      *
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<TransactionsListResponse.ResultsItem>>> listAsync() {
+    public CompletableFuture<RawResponse<Page<TransactionsListResponse.Results>>> listAsync() {
       return client.executeAsync(listRequest(TransactionsListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
     }
 

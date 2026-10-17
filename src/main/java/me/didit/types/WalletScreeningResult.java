@@ -226,8 +226,8 @@ public final class WalletScreeningResult extends JsonModel {
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public List<WalletScreeningResult.SourceOfFundsItem> sourceOfFunds() {
-    return Json.required(json, "source_of_funds", Conv.list(Conv.model(WalletScreeningResult.SourceOfFundsItem::fromJson)));
+  public List<WalletScreeningResult.SourceOfFunds> sourceOfFunds() {
+    return Json.required(json, "source_of_funds", Conv.list(Conv.model(WalletScreeningResult.SourceOfFunds::fromJson)));
   }
 
   /**
@@ -236,8 +236,8 @@ public final class WalletScreeningResult extends JsonModel {
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public List<WalletScreeningResult.DestinationOfFundsItem> destinationOfFunds() {
-    return Json.required(json, "destination_of_funds", Conv.list(Conv.model(WalletScreeningResult.DestinationOfFundsItem::fromJson)));
+  public List<WalletScreeningResult.DestinationOfFunds> destinationOfFunds() {
+    return Json.required(json, "destination_of_funds", Conv.list(Conv.model(WalletScreeningResult.DestinationOfFunds::fromJson)));
   }
 
   /**
@@ -246,8 +246,8 @@ public final class WalletScreeningResult extends JsonModel {
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public List<WalletScreeningResult.CounterpartyConnectionsItem> counterpartyConnections() {
-    return Json.required(json, "counterparty_connections", Conv.list(Conv.model(WalletScreeningResult.CounterpartyConnectionsItem::fromJson)));
+  public List<WalletScreeningResult.CounterpartyConnections> counterpartyConnections() {
+    return Json.required(json, "counterparty_connections", Conv.list(Conv.model(WalletScreeningResult.CounterpartyConnections::fromJson)));
   }
 
   /**
@@ -306,8 +306,8 @@ public final class WalletScreeningResult extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<WalletScreeningResult.RiskFactorsItem>> riskFactors() {
-    return Json.optional(json, "risk_factors", Conv.list(Conv.model(WalletScreeningResult.RiskFactorsItem::fromJson)));
+  public Optional<List<WalletScreeningResult.RiskFactors>> riskFactors() {
+    return Json.optional(json, "risk_factors", Conv.list(Conv.model(WalletScreeningResult.RiskFactors::fromJson)));
   }
 
   /**
@@ -519,8 +519,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @param sourceOfFunds the value
      * @return this builder
      */
-    public Builder sourceOfFunds(List<WalletScreeningResult.SourceOfFundsItem> sourceOfFunds) {
-      return set("source_of_funds", Conv.list(Conv.model(WalletScreeningResult.SourceOfFundsItem::fromJson)), sourceOfFunds);
+    public Builder sourceOfFunds(List<WalletScreeningResult.SourceOfFunds> sourceOfFunds) {
+      return set("source_of_funds", Conv.list(Conv.model(WalletScreeningResult.SourceOfFunds::fromJson)), sourceOfFunds);
     }
 
     /**
@@ -529,8 +529,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @param destinationOfFunds the value
      * @return this builder
      */
-    public Builder destinationOfFunds(List<WalletScreeningResult.DestinationOfFundsItem> destinationOfFunds) {
-      return set("destination_of_funds", Conv.list(Conv.model(WalletScreeningResult.DestinationOfFundsItem::fromJson)), destinationOfFunds);
+    public Builder destinationOfFunds(List<WalletScreeningResult.DestinationOfFunds> destinationOfFunds) {
+      return set("destination_of_funds", Conv.list(Conv.model(WalletScreeningResult.DestinationOfFunds::fromJson)), destinationOfFunds);
     }
 
     /**
@@ -539,8 +539,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @param counterpartyConnections the value
      * @return this builder
      */
-    public Builder counterpartyConnections(List<WalletScreeningResult.CounterpartyConnectionsItem> counterpartyConnections) {
-      return set("counterparty_connections", Conv.list(Conv.model(WalletScreeningResult.CounterpartyConnectionsItem::fromJson)), counterpartyConnections);
+    public Builder counterpartyConnections(List<WalletScreeningResult.CounterpartyConnections> counterpartyConnections) {
+      return set("counterparty_connections", Conv.list(Conv.model(WalletScreeningResult.CounterpartyConnections::fromJson)), counterpartyConnections);
     }
 
     /**
@@ -599,8 +599,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @param riskFactors the value
      * @return this builder
      */
-    public Builder riskFactors(List<WalletScreeningResult.RiskFactorsItem> riskFactors) {
-      return set("risk_factors", Conv.list(Conv.model(WalletScreeningResult.RiskFactorsItem::fromJson)), riskFactors);
+    public Builder riskFactors(List<WalletScreeningResult.RiskFactors> riskFactors) {
+      return set("risk_factors", Conv.list(Conv.model(WalletScreeningResult.RiskFactors::fromJson)), riskFactors);
     }
 
     /**
@@ -791,22 +791,22 @@ public final class WalletScreeningResult extends JsonModel {
     }
   }
 
-  public static final class SourceOfFundsItem extends JsonModel {
+  public static final class SourceOfFunds extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("category", "percentage", "amount_usd", "entity_name", "entity_type", "entity_subtype", "hops", "description", "is_direct", "exposure_direction", "exposure_type", "provider_entity_id", "provider_entity_type_id", "provider_entity_subtype_id", "country", "raw_amount", "raw_currency");
 
-    private SourceOfFundsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private SourceOfFunds(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code SourceOfFundsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code SourceOfFunds} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static SourceOfFundsItem fromJson(JsonNode json) {
-      return new SourceOfFundsItem(Json.copyObject(json), Map.of());
+    public static SourceOfFunds fromJson(JsonNode json) {
+      return new SourceOfFunds(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -923,8 +923,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<WalletScreeningResult.SourceOfFundsItem.ExposureDirection> exposureDirection() {
-      return Json.optional(json, "exposure_direction", Conv.enumeration(WalletScreeningResult.SourceOfFundsItem.ExposureDirection::of));
+    public Optional<WalletScreeningResult.SourceOfFunds.ExposureDirection> exposureDirection() {
+      return Json.optional(json, "exposure_direction", Conv.enumeration(WalletScreeningResult.SourceOfFunds.ExposureDirection::of));
     }
 
     /**
@@ -933,8 +933,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<WalletScreeningResult.SourceOfFundsItem.ExposureType> exposureType() {
-      return Json.optional(json, "exposure_type", Conv.enumeration(WalletScreeningResult.SourceOfFundsItem.ExposureType::of));
+    public Optional<WalletScreeningResult.SourceOfFunds.ExposureType> exposureType() {
+      return Json.optional(json, "exposure_type", Conv.enumeration(WalletScreeningResult.SourceOfFunds.ExposureType::of));
     }
 
     /**
@@ -1002,11 +1002,11 @@ public final class WalletScreeningResult extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link SourceOfFundsItem}. */
+    /** Builds a {@link SourceOfFunds}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(SourceOfFundsItem from) {
+      private Builder(SourceOfFunds from) {
         super(from);
       }
 
@@ -1106,8 +1106,8 @@ public final class WalletScreeningResult extends JsonModel {
        * @param exposureDirection the value
        * @return this builder
        */
-      public Builder exposureDirection(WalletScreeningResult.SourceOfFundsItem.ExposureDirection exposureDirection) {
-        return set("exposure_direction", Conv.enumeration(WalletScreeningResult.SourceOfFundsItem.ExposureDirection::of), exposureDirection);
+      public Builder exposureDirection(WalletScreeningResult.SourceOfFunds.ExposureDirection exposureDirection) {
+        return set("exposure_direction", Conv.enumeration(WalletScreeningResult.SourceOfFunds.ExposureDirection::of), exposureDirection);
       }
 
       /**
@@ -1116,8 +1116,8 @@ public final class WalletScreeningResult extends JsonModel {
        * @param exposureType the value
        * @return this builder
        */
-      public Builder exposureType(WalletScreeningResult.SourceOfFundsItem.ExposureType exposureType) {
-        return set("exposure_type", Conv.enumeration(WalletScreeningResult.SourceOfFundsItem.ExposureType::of), exposureType);
+      public Builder exposureType(WalletScreeningResult.SourceOfFunds.ExposureType exposureType) {
+        return set("exposure_type", Conv.enumeration(WalletScreeningResult.SourceOfFunds.ExposureType::of), exposureType);
       }
 
       /**
@@ -1183,10 +1183,10 @@ public final class WalletScreeningResult extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code SourceOfFundsItem}
+       * @return a new immutable {@code SourceOfFunds}
        */
-      public SourceOfFundsItem build() {
-        return new SourceOfFundsItem(buildJson(), buildFiles());
+      public SourceOfFunds build() {
+        return new SourceOfFunds(buildJson(), buildFiles());
       }
 
       @Override
@@ -1285,22 +1285,22 @@ public final class WalletScreeningResult extends JsonModel {
     }
   }
 
-  public static final class DestinationOfFundsItem extends JsonModel {
+  public static final class DestinationOfFunds extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("category", "percentage", "amount_usd", "entity_name", "entity_type", "entity_subtype", "hops", "description", "is_direct", "exposure_direction", "exposure_type", "provider_entity_id", "provider_entity_type_id", "provider_entity_subtype_id", "country", "raw_amount", "raw_currency");
 
-    private DestinationOfFundsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private DestinationOfFunds(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code DestinationOfFundsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code DestinationOfFunds} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static DestinationOfFundsItem fromJson(JsonNode json) {
-      return new DestinationOfFundsItem(Json.copyObject(json), Map.of());
+    public static DestinationOfFunds fromJson(JsonNode json) {
+      return new DestinationOfFunds(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -1417,8 +1417,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<WalletScreeningResult.DestinationOfFundsItem.ExposureDirection> exposureDirection() {
-      return Json.optional(json, "exposure_direction", Conv.enumeration(WalletScreeningResult.DestinationOfFundsItem.ExposureDirection::of));
+    public Optional<WalletScreeningResult.DestinationOfFunds.ExposureDirection> exposureDirection() {
+      return Json.optional(json, "exposure_direction", Conv.enumeration(WalletScreeningResult.DestinationOfFunds.ExposureDirection::of));
     }
 
     /**
@@ -1427,8 +1427,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<WalletScreeningResult.DestinationOfFundsItem.ExposureType> exposureType() {
-      return Json.optional(json, "exposure_type", Conv.enumeration(WalletScreeningResult.DestinationOfFundsItem.ExposureType::of));
+    public Optional<WalletScreeningResult.DestinationOfFunds.ExposureType> exposureType() {
+      return Json.optional(json, "exposure_type", Conv.enumeration(WalletScreeningResult.DestinationOfFunds.ExposureType::of));
     }
 
     /**
@@ -1496,11 +1496,11 @@ public final class WalletScreeningResult extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link DestinationOfFundsItem}. */
+    /** Builds a {@link DestinationOfFunds}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(DestinationOfFundsItem from) {
+      private Builder(DestinationOfFunds from) {
         super(from);
       }
 
@@ -1600,8 +1600,8 @@ public final class WalletScreeningResult extends JsonModel {
        * @param exposureDirection the value
        * @return this builder
        */
-      public Builder exposureDirection(WalletScreeningResult.DestinationOfFundsItem.ExposureDirection exposureDirection) {
-        return set("exposure_direction", Conv.enumeration(WalletScreeningResult.DestinationOfFundsItem.ExposureDirection::of), exposureDirection);
+      public Builder exposureDirection(WalletScreeningResult.DestinationOfFunds.ExposureDirection exposureDirection) {
+        return set("exposure_direction", Conv.enumeration(WalletScreeningResult.DestinationOfFunds.ExposureDirection::of), exposureDirection);
       }
 
       /**
@@ -1610,8 +1610,8 @@ public final class WalletScreeningResult extends JsonModel {
        * @param exposureType the value
        * @return this builder
        */
-      public Builder exposureType(WalletScreeningResult.DestinationOfFundsItem.ExposureType exposureType) {
-        return set("exposure_type", Conv.enumeration(WalletScreeningResult.DestinationOfFundsItem.ExposureType::of), exposureType);
+      public Builder exposureType(WalletScreeningResult.DestinationOfFunds.ExposureType exposureType) {
+        return set("exposure_type", Conv.enumeration(WalletScreeningResult.DestinationOfFunds.ExposureType::of), exposureType);
       }
 
       /**
@@ -1677,10 +1677,10 @@ public final class WalletScreeningResult extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code DestinationOfFundsItem}
+       * @return a new immutable {@code DestinationOfFunds}
        */
-      public DestinationOfFundsItem build() {
-        return new DestinationOfFundsItem(buildJson(), buildFiles());
+      public DestinationOfFunds build() {
+        return new DestinationOfFunds(buildJson(), buildFiles());
       }
 
       @Override
@@ -1779,22 +1779,22 @@ public final class WalletScreeningResult extends JsonModel {
     }
   }
 
-  public static final class CounterpartyConnectionsItem extends JsonModel {
+  public static final class CounterpartyConnections extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("entity_name", "entity_type", "entity_subtype", "risk_level", "categories", "received_usd", "sent_usd", "received_hops", "sent_hops", "percentage", "is_direct", "country", "provider_entity_id");
 
-    private CounterpartyConnectionsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private CounterpartyConnections(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code CounterpartyConnectionsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code CounterpartyConnections} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static CounterpartyConnectionsItem fromJson(JsonNode json) {
-      return new CounterpartyConnectionsItem(Json.copyObject(json), Map.of());
+    public static CounterpartyConnections fromJson(JsonNode json) {
+      return new CounterpartyConnections(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -1950,11 +1950,11 @@ public final class WalletScreeningResult extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link CounterpartyConnectionsItem}. */
+    /** Builds a {@link CounterpartyConnections}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(CounterpartyConnectionsItem from) {
+      private Builder(CounterpartyConnections from) {
         super(from);
       }
 
@@ -2091,10 +2091,10 @@ public final class WalletScreeningResult extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code CounterpartyConnectionsItem}
+       * @return a new immutable {@code CounterpartyConnections}
        */
-      public CounterpartyConnectionsItem build() {
-        return new CounterpartyConnectionsItem(buildJson(), buildFiles());
+      public CounterpartyConnections build() {
+        return new CounterpartyConnections(buildJson(), buildFiles());
       }
 
       @Override
@@ -2104,22 +2104,22 @@ public final class WalletScreeningResult extends JsonModel {
     }
   }
 
-  public static final class RiskFactorsItem extends JsonModel {
+  public static final class RiskFactors extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("source", "category", "label", "entity_name", "direction", "exposure_type", "amount_usd", "percentage", "is_high_risk", "description");
 
-    private RiskFactorsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private RiskFactors(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code RiskFactorsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code RiskFactors} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static RiskFactorsItem fromJson(JsonNode json) {
-      return new RiskFactorsItem(Json.copyObject(json), Map.of());
+    public static RiskFactors fromJson(JsonNode json) {
+      return new RiskFactors(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -2146,8 +2146,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<WalletScreeningResult.RiskFactorsItem.Source> source() {
-      return Json.optional(json, "source", Conv.enumeration(WalletScreeningResult.RiskFactorsItem.Source::of));
+    public Optional<WalletScreeningResult.RiskFactors.Source> source() {
+      return Json.optional(json, "source", Conv.enumeration(WalletScreeningResult.RiskFactors.Source::of));
     }
 
     /**
@@ -2186,8 +2186,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<WalletScreeningResult.RiskFactorsItem.Direction> direction() {
-      return Json.optional(json, "direction", Conv.enumeration(WalletScreeningResult.RiskFactorsItem.Direction::of));
+    public Optional<WalletScreeningResult.RiskFactors.Direction> direction() {
+      return Json.optional(json, "direction", Conv.enumeration(WalletScreeningResult.RiskFactors.Direction::of));
     }
 
     /**
@@ -2196,8 +2196,8 @@ public final class WalletScreeningResult extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<WalletScreeningResult.RiskFactorsItem.ExposureType> exposureType() {
-      return Json.optional(json, "exposure_type", Conv.enumeration(WalletScreeningResult.RiskFactorsItem.ExposureType::of));
+    public Optional<WalletScreeningResult.RiskFactors.ExposureType> exposureType() {
+      return Json.optional(json, "exposure_type", Conv.enumeration(WalletScreeningResult.RiskFactors.ExposureType::of));
     }
 
     /**
@@ -2245,11 +2245,11 @@ public final class WalletScreeningResult extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link RiskFactorsItem}. */
+    /** Builds a {@link RiskFactors}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(RiskFactorsItem from) {
+      private Builder(RiskFactors from) {
         super(from);
       }
 
@@ -2259,8 +2259,8 @@ public final class WalletScreeningResult extends JsonModel {
        * @param source the value
        * @return this builder
        */
-      public Builder source(WalletScreeningResult.RiskFactorsItem.Source source) {
-        return set("source", Conv.enumeration(WalletScreeningResult.RiskFactorsItem.Source::of), source);
+      public Builder source(WalletScreeningResult.RiskFactors.Source source) {
+        return set("source", Conv.enumeration(WalletScreeningResult.RiskFactors.Source::of), source);
       }
 
       /**
@@ -2299,8 +2299,8 @@ public final class WalletScreeningResult extends JsonModel {
        * @param direction the value
        * @return this builder
        */
-      public Builder direction(WalletScreeningResult.RiskFactorsItem.Direction direction) {
-        return set("direction", Conv.enumeration(WalletScreeningResult.RiskFactorsItem.Direction::of), direction);
+      public Builder direction(WalletScreeningResult.RiskFactors.Direction direction) {
+        return set("direction", Conv.enumeration(WalletScreeningResult.RiskFactors.Direction::of), direction);
       }
 
       /**
@@ -2309,8 +2309,8 @@ public final class WalletScreeningResult extends JsonModel {
        * @param exposureType the value
        * @return this builder
        */
-      public Builder exposureType(WalletScreeningResult.RiskFactorsItem.ExposureType exposureType) {
-        return set("exposure_type", Conv.enumeration(WalletScreeningResult.RiskFactorsItem.ExposureType::of), exposureType);
+      public Builder exposureType(WalletScreeningResult.RiskFactors.ExposureType exposureType) {
+        return set("exposure_type", Conv.enumeration(WalletScreeningResult.RiskFactors.ExposureType::of), exposureType);
       }
 
       /**
@@ -2356,10 +2356,10 @@ public final class WalletScreeningResult extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code RiskFactorsItem}
+       * @return a new immutable {@code RiskFactors}
        */
-      public RiskFactorsItem build() {
-        return new RiskFactorsItem(buildJson(), buildFiles());
+      public RiskFactors build() {
+        return new RiskFactors(buildJson(), buildFiles());
       }
 
       @Override

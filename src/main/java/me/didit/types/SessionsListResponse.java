@@ -88,8 +88,8 @@ public final class SessionsListResponse extends JsonModel {
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public List<SessionsListResponse.ResultsItem> results() {
-    return Json.required(json, "results", Conv.list(Conv.union(SessionsListResponse.ResultsItem::fromJson)));
+  public List<SessionsListResponse.Results> results() {
+    return Json.required(json, "results", Conv.list(Conv.union(SessionsListResponse.Results::fromJson)));
   }
 
   @Override
@@ -141,8 +141,8 @@ public final class SessionsListResponse extends JsonModel {
      * @param results the value
      * @return this builder
      */
-    public Builder results(List<SessionsListResponse.ResultsItem> results) {
-      return set("results", Conv.list(Conv.union(SessionsListResponse.ResultsItem::fromJson)), results);
+    public Builder results(List<SessionsListResponse.Results> results) {
+      return set("results", Conv.list(Conv.union(SessionsListResponse.Results::fromJson)), results);
     }
 
     /**
@@ -168,21 +168,91 @@ public final class SessionsListResponse extends JsonModel {
   /**
    *
    * <p>One of: {@code User}, {@code Business}. Check with the {@code is...}
-   * methods and read with the {@code as...} methods.
+   * methods and read with the {@code as...} methods; the fields every variant has are readable directly.
    */
-  public static final class ResultsItem extends JsonUnion {
-    private ResultsItem(JsonNode json) {
+  public static final class Results extends JsonUnion {
+    private Results(JsonNode json) {
       super(json);
     }
 
     /**
-     * Reads a {@code ResultsItem} from JSON.
+     * Reads a {@code Results} from JSON.
      *
      * @param json any JSON value
      * @return the union
      */
-    public static ResultsItem fromJson(JsonNode json) {
-      return new ResultsItem(json.deepCopy());
+    public static Results fromJson(JsonNode json) {
+      return new Results(json.deepCopy());
+    }
+
+    /**
+     * Unique identifier of the verification session. Use it with <code>GET /v3/session/{sessionId}/decision/</code> to fetch the full decision payload.
+     *
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+     */
+    public String sessionId() {
+      return Json.required(json, "session_id", Conv.STRING);
+    }
+
+    /**
+     * Row discriminator. Always <code>"user"</code> for KYC rows; Business Verification (KYB) rows have <code>"business"</code> and a different shape.
+     *
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+     */
+    public String sessionKind() {
+      return Json.required(json, "session_kind", Conv.STRING);
+    }
+
+    /**
+     * Human-friendly sequential number of the session within your application. Also matched by the <code>search</code> parameter.
+     *
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+     */
+    public long sessionNumber() {
+      return Json.required(json, "session_number", Conv.LONG);
+    }
+
+    /**
+     * ISO 3166-1 alpha-3 country associated with the session, resolved in order: ID document issuing state, database-validation issuing state, proof-of-address issuing state, expected details, then the verified phone's country. May differ from nationality.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> country() {
+      return Json.optional(json, "country", Conv.STRING);
+    }
+
+    /**
+     * Overall session status. See the [Verification Statuses](/integration/verification-statuses) page for the lifecycle.
+     *
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+     */
+    public String status() {
+      return Json.required(json, "status", Conv.STRING);
+    }
+
+    /**
+     * Your own identifier for the end user, echoed back exactly as sent at session creation.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> vendorData() {
+      return Json.optional(json, "vendor_data", Conv.STRING);
+    }
+
+    /**
+     * UTC timestamp when the session was created.
+     *
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+     */
+    public OffsetDateTime createdAt() {
+      return Json.required(json, "created_at", Conv.DATE_TIME);
     }
 
     /**
@@ -191,8 +261,8 @@ public final class SessionsListResponse extends JsonModel {
      * @param value the value
      * @return the union
      */
-    public static ResultsItem ofUser(SessionsListResponse.ResultsItem.User value) {
-      return new ResultsItem(Conv.model(SessionsListResponse.ResultsItem.User::fromJson).write(value));
+    public static Results ofUser(SessionsListResponse.Results.User value) {
+      return new Results(Conv.model(SessionsListResponse.Results.User::fromJson).write(value));
     }
 
     /**
@@ -211,8 +281,8 @@ public final class SessionsListResponse extends JsonModel {
      *
      * @return the value, or empty when {@link #isUser()} is false
      */
-    public Optional<SessionsListResponse.ResultsItem.User> asUser() {
-      return isUser() ? Optional.of(Conv.model(SessionsListResponse.ResultsItem.User::fromJson).read(json)) : Optional.empty();
+    public Optional<SessionsListResponse.Results.User> asUser() {
+      return isUser() ? Optional.of(Conv.model(SessionsListResponse.Results.User::fromJson).read(json)) : Optional.empty();
     }
 
     /**
@@ -221,8 +291,8 @@ public final class SessionsListResponse extends JsonModel {
      * @param value the value
      * @return the union
      */
-    public static ResultsItem ofBusiness(SessionsListResponse.ResultsItem.Business value) {
-      return new ResultsItem(Conv.model(SessionsListResponse.ResultsItem.Business::fromJson).write(value));
+    public static Results ofBusiness(SessionsListResponse.Results.Business value) {
+      return new Results(Conv.model(SessionsListResponse.Results.Business::fromJson).write(value));
     }
 
     /**
@@ -241,8 +311,8 @@ public final class SessionsListResponse extends JsonModel {
      *
      * @return the value, or empty when {@link #isBusiness()} is false
      */
-    public Optional<SessionsListResponse.ResultsItem.Business> asBusiness() {
-      return isBusiness() ? Optional.of(Conv.model(SessionsListResponse.ResultsItem.Business::fromJson).read(json)) : Optional.empty();
+    public Optional<SessionsListResponse.Results.Business> asBusiness() {
+      return isBusiness() ? Optional.of(Conv.model(SessionsListResponse.Results.Business::fromJson).read(json)) : Optional.empty();
     }
 
     /**
@@ -300,8 +370,8 @@ public final class SessionsListResponse extends JsonModel {
        * @return the value
        * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
        */
-      public SessionsListResponse.ResultsItem.User.SessionKind sessionKind() {
-        return Json.required(json, "session_kind", Conv.enumeration(SessionsListResponse.ResultsItem.User.SessionKind::of));
+      public SessionsListResponse.Results.User.SessionKind sessionKind() {
+        return Json.required(json, "session_kind", Conv.enumeration(SessionsListResponse.Results.User.SessionKind::of));
       }
 
       /**
@@ -340,8 +410,8 @@ public final class SessionsListResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsListResponse.ResultsItem.User.DocumentType> documentType() {
-        return Json.optional(json, "document_type", Conv.enumeration(SessionsListResponse.ResultsItem.User.DocumentType::of));
+      public Optional<SessionsListResponse.Results.User.DocumentType> documentType() {
+        return Json.optional(json, "document_type", Conv.enumeration(SessionsListResponse.Results.User.DocumentType::of));
       }
 
       /**
@@ -370,8 +440,8 @@ public final class SessionsListResponse extends JsonModel {
        * @return the value
        * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
        */
-      public SessionsListResponse.ResultsItem.User.Status status() {
-        return Json.required(json, "status", Conv.enumeration(SessionsListResponse.ResultsItem.User.Status::of));
+      public SessionsListResponse.Results.User.Status status() {
+        return Json.required(json, "status", Conv.enumeration(SessionsListResponse.Results.User.Status::of));
       }
 
       /**
@@ -410,8 +480,8 @@ public final class SessionsListResponse extends JsonModel {
        * @return the value
        * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
        */
-      public List<SessionsListResponse.ResultsItem.User.FeaturesItem> features() {
-        return Json.required(json, "features", Conv.list(Conv.model(SessionsListResponse.ResultsItem.User.FeaturesItem::fromJson)));
+      public List<SessionsListResponse.Results.User.Features> features() {
+        return Json.required(json, "features", Conv.list(Conv.model(SessionsListResponse.Results.User.Features::fromJson)));
       }
 
       /**
@@ -420,8 +490,8 @@ public final class SessionsListResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsListResponse.ResultsItem.User.PhoneNumber> phoneNumber() {
-        return Json.optional(json, "phone_number", Conv.model(SessionsListResponse.ResultsItem.User.PhoneNumber::fromJson));
+      public Optional<SessionsListResponse.Results.User.PhoneNumber> phoneNumber() {
+        return Json.optional(json, "phone_number", Conv.model(SessionsListResponse.Results.User.PhoneNumber::fromJson));
       }
 
       /**
@@ -430,8 +500,8 @@ public final class SessionsListResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsListResponse.ResultsItem.User.EmailAddress> emailAddress() {
-        return Json.optional(json, "email_address", Conv.model(SessionsListResponse.ResultsItem.User.EmailAddress::fromJson));
+      public Optional<SessionsListResponse.Results.User.EmailAddress> emailAddress() {
+        return Json.optional(json, "email_address", Conv.model(SessionsListResponse.Results.User.EmailAddress::fromJson));
       }
 
       /**
@@ -440,8 +510,8 @@ public final class SessionsListResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsListResponse.ResultsItem.User.AdditionalDetails> additionalDetails() {
-        return Json.optional(json, "additional_details", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails::fromJson));
+      public Optional<SessionsListResponse.Results.User.AdditionalDetails> additionalDetails() {
+        return Json.optional(json, "additional_details", Conv.model(SessionsListResponse.Results.User.AdditionalDetails::fromJson));
       }
 
       @Override
@@ -473,8 +543,8 @@ public final class SessionsListResponse extends JsonModel {
          * @param sessionKind the value
          * @return this builder
          */
-        public Builder sessionKind(SessionsListResponse.ResultsItem.User.SessionKind sessionKind) {
-          return set("session_kind", Conv.enumeration(SessionsListResponse.ResultsItem.User.SessionKind::of), sessionKind);
+        public Builder sessionKind(SessionsListResponse.Results.User.SessionKind sessionKind) {
+          return set("session_kind", Conv.enumeration(SessionsListResponse.Results.User.SessionKind::of), sessionKind);
         }
 
         /**
@@ -513,8 +583,8 @@ public final class SessionsListResponse extends JsonModel {
          * @param documentType the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder documentType(SessionsListResponse.ResultsItem.User.@Nullable DocumentType documentType) {
-          return setNullable("document_type", Conv.enumeration(SessionsListResponse.ResultsItem.User.DocumentType::of), documentType);
+        public Builder documentType(SessionsListResponse.Results.User.@Nullable DocumentType documentType) {
+          return setNullable("document_type", Conv.enumeration(SessionsListResponse.Results.User.DocumentType::of), documentType);
         }
 
         /**
@@ -543,8 +613,8 @@ public final class SessionsListResponse extends JsonModel {
          * @param status the value
          * @return this builder
          */
-        public Builder status(SessionsListResponse.ResultsItem.User.Status status) {
-          return set("status", Conv.enumeration(SessionsListResponse.ResultsItem.User.Status::of), status);
+        public Builder status(SessionsListResponse.Results.User.Status status) {
+          return set("status", Conv.enumeration(SessionsListResponse.Results.User.Status::of), status);
         }
 
         /**
@@ -583,8 +653,8 @@ public final class SessionsListResponse extends JsonModel {
          * @param features the value
          * @return this builder
          */
-        public Builder features(List<SessionsListResponse.ResultsItem.User.FeaturesItem> features) {
-          return set("features", Conv.list(Conv.model(SessionsListResponse.ResultsItem.User.FeaturesItem::fromJson)), features);
+        public Builder features(List<SessionsListResponse.Results.User.Features> features) {
+          return set("features", Conv.list(Conv.model(SessionsListResponse.Results.User.Features::fromJson)), features);
         }
 
         /**
@@ -593,8 +663,8 @@ public final class SessionsListResponse extends JsonModel {
          * @param phoneNumber the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder phoneNumber(SessionsListResponse.ResultsItem.User.@Nullable PhoneNumber phoneNumber) {
-          return setNullable("phone_number", Conv.model(SessionsListResponse.ResultsItem.User.PhoneNumber::fromJson), phoneNumber);
+        public Builder phoneNumber(SessionsListResponse.Results.User.@Nullable PhoneNumber phoneNumber) {
+          return setNullable("phone_number", Conv.model(SessionsListResponse.Results.User.PhoneNumber::fromJson), phoneNumber);
         }
 
         /**
@@ -603,8 +673,8 @@ public final class SessionsListResponse extends JsonModel {
          * @param emailAddress the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder emailAddress(SessionsListResponse.ResultsItem.User.@Nullable EmailAddress emailAddress) {
-          return setNullable("email_address", Conv.model(SessionsListResponse.ResultsItem.User.EmailAddress::fromJson), emailAddress);
+        public Builder emailAddress(SessionsListResponse.Results.User.@Nullable EmailAddress emailAddress) {
+          return setNullable("email_address", Conv.model(SessionsListResponse.Results.User.EmailAddress::fromJson), emailAddress);
         }
 
         /**
@@ -613,8 +683,8 @@ public final class SessionsListResponse extends JsonModel {
          * @param additionalDetails the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder additionalDetails(SessionsListResponse.ResultsItem.User.@Nullable AdditionalDetails additionalDetails) {
-          return setNullable("additional_details", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails::fromJson), additionalDetails);
+        public Builder additionalDetails(SessionsListResponse.Results.User.@Nullable AdditionalDetails additionalDetails) {
+          return setNullable("additional_details", Conv.model(SessionsListResponse.Results.User.AdditionalDetails::fromJson), additionalDetails);
         }
 
         /**
@@ -811,22 +881,22 @@ public final class SessionsListResponse extends JsonModel {
         }
       }
 
-      public static final class FeaturesItem extends JsonModel {
+      public static final class Features extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("feature", "status");
 
-        private FeaturesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private Features(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code FeaturesItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code Features} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static FeaturesItem fromJson(JsonNode json) {
-          return new FeaturesItem(Json.copyObject(json), Map.of());
+        public static Features fromJson(JsonNode json) {
+          return new Features(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -853,8 +923,8 @@ public final class SessionsListResponse extends JsonModel {
          * @return the value
          * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
          */
-        public SessionsListResponse.ResultsItem.User.FeaturesItem.Feature feature() {
-          return Json.required(json, "feature", Conv.enumeration(SessionsListResponse.ResultsItem.User.FeaturesItem.Feature::of));
+        public SessionsListResponse.Results.User.Features.Feature feature() {
+          return Json.required(json, "feature", Conv.enumeration(SessionsListResponse.Results.User.Features.Feature::of));
         }
 
         /**
@@ -863,8 +933,8 @@ public final class SessionsListResponse extends JsonModel {
          * @return the value
          * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
          */
-        public SessionsListResponse.ResultsItem.User.FeaturesItem.Status status() {
-          return Json.required(json, "status", Conv.enumeration(SessionsListResponse.ResultsItem.User.FeaturesItem.Status::of));
+        public SessionsListResponse.Results.User.Features.Status status() {
+          return Json.required(json, "status", Conv.enumeration(SessionsListResponse.Results.User.Features.Status::of));
         }
 
         @Override
@@ -872,11 +942,11 @@ public final class SessionsListResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link FeaturesItem}. */
+        /** Builds a {@link Features}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(FeaturesItem from) {
+          private Builder(Features from) {
             super(from);
           }
 
@@ -886,8 +956,8 @@ public final class SessionsListResponse extends JsonModel {
            * @param feature the value
            * @return this builder
            */
-          public Builder feature(SessionsListResponse.ResultsItem.User.FeaturesItem.Feature feature) {
-            return set("feature", Conv.enumeration(SessionsListResponse.ResultsItem.User.FeaturesItem.Feature::of), feature);
+          public Builder feature(SessionsListResponse.Results.User.Features.Feature feature) {
+            return set("feature", Conv.enumeration(SessionsListResponse.Results.User.Features.Feature::of), feature);
           }
 
           /**
@@ -896,20 +966,20 @@ public final class SessionsListResponse extends JsonModel {
            * @param status the value
            * @return this builder
            */
-          public Builder status(SessionsListResponse.ResultsItem.User.FeaturesItem.Status status) {
-            return set("status", Conv.enumeration(SessionsListResponse.ResultsItem.User.FeaturesItem.Status::of), status);
+          public Builder status(SessionsListResponse.Results.User.Features.Status status) {
+            return set("status", Conv.enumeration(SessionsListResponse.Results.User.Features.Status::of), status);
           }
 
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code FeaturesItem}
+           * @return a new immutable {@code Features}
            * @throws IllegalStateException when a required field is missing
            */
-          public FeaturesItem build() {
+          public Features build() {
             require("feature", false);
             require("status", false);
-            return new FeaturesItem(buildJson(), buildFiles());
+            return new Features(buildJson(), buildFiles());
           }
 
           @Override
@@ -1311,8 +1381,8 @@ public final class SessionsListResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsListResponse.ResultsItem.User.AdditionalDetails.Aml> aml() {
-          return Json.optional(json, "aml", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.Aml::fromJson));
+        public Optional<SessionsListResponse.Results.User.AdditionalDetails.Aml> aml() {
+          return Json.optional(json, "aml", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.Aml::fromJson));
         }
 
         /**
@@ -1321,8 +1391,8 @@ public final class SessionsListResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsListResponse.ResultsItem.User.AdditionalDetails.DatabaseValidation> databaseValidation() {
-          return Json.optional(json, "database_validation", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.DatabaseValidation::fromJson));
+        public Optional<SessionsListResponse.Results.User.AdditionalDetails.DatabaseValidation> databaseValidation() {
+          return Json.optional(json, "database_validation", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.DatabaseValidation::fromJson));
         }
 
         /**
@@ -1331,8 +1401,8 @@ public final class SessionsListResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsListResponse.ResultsItem.User.AdditionalDetails.Poa> poa() {
-          return Json.optional(json, "poa", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.Poa::fromJson));
+        public Optional<SessionsListResponse.Results.User.AdditionalDetails.Poa> poa() {
+          return Json.optional(json, "poa", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.Poa::fromJson));
         }
 
         /**
@@ -1341,8 +1411,8 @@ public final class SessionsListResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsListResponse.ResultsItem.User.AdditionalDetails.Liveness> liveness() {
-          return Json.optional(json, "liveness", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.Liveness::fromJson));
+        public Optional<SessionsListResponse.Results.User.AdditionalDetails.Liveness> liveness() {
+          return Json.optional(json, "liveness", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.Liveness::fromJson));
         }
 
         /**
@@ -1351,8 +1421,8 @@ public final class SessionsListResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsListResponse.ResultsItem.User.AdditionalDetails.FaceMatch> faceMatch() {
-          return Json.optional(json, "face_match", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.FaceMatch::fromJson));
+        public Optional<SessionsListResponse.Results.User.AdditionalDetails.FaceMatch> faceMatch() {
+          return Json.optional(json, "face_match", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.FaceMatch::fromJson));
         }
 
         /**
@@ -1361,8 +1431,8 @@ public final class SessionsListResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsListResponse.ResultsItem.User.AdditionalDetails.PhoneVerification> phoneVerification() {
-          return Json.optional(json, "phone_verification", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.PhoneVerification::fromJson));
+        public Optional<SessionsListResponse.Results.User.AdditionalDetails.PhoneVerification> phoneVerification() {
+          return Json.optional(json, "phone_verification", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.PhoneVerification::fromJson));
         }
 
         /**
@@ -1371,8 +1441,8 @@ public final class SessionsListResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsListResponse.ResultsItem.User.AdditionalDetails.EmailVerification> emailVerification() {
-          return Json.optional(json, "email_verification", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.EmailVerification::fromJson));
+        public Optional<SessionsListResponse.Results.User.AdditionalDetails.EmailVerification> emailVerification() {
+          return Json.optional(json, "email_verification", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.EmailVerification::fromJson));
         }
 
         @Override
@@ -1394,8 +1464,8 @@ public final class SessionsListResponse extends JsonModel {
            * @param aml the value
            * @return this builder
            */
-          public Builder aml(SessionsListResponse.ResultsItem.User.AdditionalDetails.Aml aml) {
-            return set("aml", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.Aml::fromJson), aml);
+          public Builder aml(SessionsListResponse.Results.User.AdditionalDetails.Aml aml) {
+            return set("aml", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.Aml::fromJson), aml);
           }
 
           /**
@@ -1404,8 +1474,8 @@ public final class SessionsListResponse extends JsonModel {
            * @param databaseValidation the value
            * @return this builder
            */
-          public Builder databaseValidation(SessionsListResponse.ResultsItem.User.AdditionalDetails.DatabaseValidation databaseValidation) {
-            return set("database_validation", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.DatabaseValidation::fromJson), databaseValidation);
+          public Builder databaseValidation(SessionsListResponse.Results.User.AdditionalDetails.DatabaseValidation databaseValidation) {
+            return set("database_validation", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.DatabaseValidation::fromJson), databaseValidation);
           }
 
           /**
@@ -1414,8 +1484,8 @@ public final class SessionsListResponse extends JsonModel {
            * @param poa the value
            * @return this builder
            */
-          public Builder poa(SessionsListResponse.ResultsItem.User.AdditionalDetails.Poa poa) {
-            return set("poa", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.Poa::fromJson), poa);
+          public Builder poa(SessionsListResponse.Results.User.AdditionalDetails.Poa poa) {
+            return set("poa", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.Poa::fromJson), poa);
           }
 
           /**
@@ -1424,8 +1494,8 @@ public final class SessionsListResponse extends JsonModel {
            * @param liveness the value
            * @return this builder
            */
-          public Builder liveness(SessionsListResponse.ResultsItem.User.AdditionalDetails.Liveness liveness) {
-            return set("liveness", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.Liveness::fromJson), liveness);
+          public Builder liveness(SessionsListResponse.Results.User.AdditionalDetails.Liveness liveness) {
+            return set("liveness", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.Liveness::fromJson), liveness);
           }
 
           /**
@@ -1434,8 +1504,8 @@ public final class SessionsListResponse extends JsonModel {
            * @param faceMatch the value
            * @return this builder
            */
-          public Builder faceMatch(SessionsListResponse.ResultsItem.User.AdditionalDetails.FaceMatch faceMatch) {
-            return set("face_match", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.FaceMatch::fromJson), faceMatch);
+          public Builder faceMatch(SessionsListResponse.Results.User.AdditionalDetails.FaceMatch faceMatch) {
+            return set("face_match", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.FaceMatch::fromJson), faceMatch);
           }
 
           /**
@@ -1444,8 +1514,8 @@ public final class SessionsListResponse extends JsonModel {
            * @param phoneVerification the value
            * @return this builder
            */
-          public Builder phoneVerification(SessionsListResponse.ResultsItem.User.AdditionalDetails.PhoneVerification phoneVerification) {
-            return set("phone_verification", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.PhoneVerification::fromJson), phoneVerification);
+          public Builder phoneVerification(SessionsListResponse.Results.User.AdditionalDetails.PhoneVerification phoneVerification) {
+            return set("phone_verification", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.PhoneVerification::fromJson), phoneVerification);
           }
 
           /**
@@ -1454,8 +1524,8 @@ public final class SessionsListResponse extends JsonModel {
            * @param emailVerification the value
            * @return this builder
            */
-          public Builder emailVerification(SessionsListResponse.ResultsItem.User.AdditionalDetails.EmailVerification emailVerification) {
-            return set("email_verification", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.EmailVerification::fromJson), emailVerification);
+          public Builder emailVerification(SessionsListResponse.Results.User.AdditionalDetails.EmailVerification emailVerification) {
+            return set("email_verification", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.EmailVerification::fromJson), emailVerification);
           }
 
           /**
@@ -1546,8 +1616,8 @@ public final class SessionsListResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsListResponse.ResultsItem.User.AdditionalDetails.Aml.ScreenedData> screenedData() {
-            return Json.optional(json, "screened_data", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.Aml.ScreenedData::fromJson));
+          public Optional<SessionsListResponse.Results.User.AdditionalDetails.Aml.ScreenedData> screenedData() {
+            return Json.optional(json, "screened_data", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.Aml.ScreenedData::fromJson));
           }
 
           @Override
@@ -1599,8 +1669,8 @@ public final class SessionsListResponse extends JsonModel {
              * @param screenedData the value
              * @return this builder
              */
-            public Builder screenedData(SessionsListResponse.ResultsItem.User.AdditionalDetails.Aml.ScreenedData screenedData) {
-              return set("screened_data", Conv.model(SessionsListResponse.ResultsItem.User.AdditionalDetails.Aml.ScreenedData::fromJson), screenedData);
+            public Builder screenedData(SessionsListResponse.Results.User.AdditionalDetails.Aml.ScreenedData screenedData) {
+              return set("screened_data", Conv.model(SessionsListResponse.Results.User.AdditionalDetails.Aml.ScreenedData::fromJson), screenedData);
             }
 
             /**
@@ -2598,8 +2668,8 @@ public final class SessionsListResponse extends JsonModel {
        * @return the value
        * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
        */
-      public SessionsListResponse.ResultsItem.Business.SessionKind sessionKind() {
-        return Json.required(json, "session_kind", Conv.enumeration(SessionsListResponse.ResultsItem.Business.SessionKind::of));
+      public SessionsListResponse.Results.Business.SessionKind sessionKind() {
+        return Json.required(json, "session_kind", Conv.enumeration(SessionsListResponse.Results.Business.SessionKind::of));
       }
 
       /**
@@ -2618,8 +2688,8 @@ public final class SessionsListResponse extends JsonModel {
        * @return the value
        * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
        */
-      public SessionsListResponse.ResultsItem.Business.Status status() {
-        return Json.required(json, "status", Conv.enumeration(SessionsListResponse.ResultsItem.Business.Status::of));
+      public SessionsListResponse.Results.Business.Status status() {
+        return Json.required(json, "status", Conv.enumeration(SessionsListResponse.Results.Business.Status::of));
       }
 
       /**
@@ -2731,8 +2801,8 @@ public final class SessionsListResponse extends JsonModel {
          * @param sessionKind the value
          * @return this builder
          */
-        public Builder sessionKind(SessionsListResponse.ResultsItem.Business.SessionKind sessionKind) {
-          return set("session_kind", Conv.enumeration(SessionsListResponse.ResultsItem.Business.SessionKind::of), sessionKind);
+        public Builder sessionKind(SessionsListResponse.Results.Business.SessionKind sessionKind) {
+          return set("session_kind", Conv.enumeration(SessionsListResponse.Results.Business.SessionKind::of), sessionKind);
         }
 
         /**
@@ -2751,8 +2821,8 @@ public final class SessionsListResponse extends JsonModel {
          * @param status the value
          * @return this builder
          */
-        public Builder status(SessionsListResponse.ResultsItem.Business.Status status) {
-          return set("status", Conv.enumeration(SessionsListResponse.ResultsItem.Business.Status::of), status);
+        public Builder status(SessionsListResponse.Results.Business.Status status) {
+          return set("status", Conv.enumeration(SessionsListResponse.Results.Business.Status::of), status);
         }
 
         /**

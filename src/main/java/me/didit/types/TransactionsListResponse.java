@@ -97,8 +97,8 @@ public final class TransactionsListResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<TransactionsListResponse.ResultsItem>> results() {
-    return Json.optional(json, "results", Conv.list(Conv.model(TransactionsListResponse.ResultsItem::fromJson)));
+  public Optional<List<TransactionsListResponse.Results>> results() {
+    return Json.optional(json, "results", Conv.list(Conv.model(TransactionsListResponse.Results::fromJson)));
   }
 
   @Override
@@ -160,8 +160,8 @@ public final class TransactionsListResponse extends JsonModel {
      * @param results the value
      * @return this builder
      */
-    public Builder results(List<TransactionsListResponse.ResultsItem> results) {
-      return set("results", Conv.list(Conv.model(TransactionsListResponse.ResultsItem::fromJson)), results);
+    public Builder results(List<TransactionsListResponse.Results> results) {
+      return set("results", Conv.list(Conv.model(TransactionsListResponse.Results::fromJson)), results);
     }
 
     /**
@@ -179,22 +179,22 @@ public final class TransactionsListResponse extends JsonModel {
     }
   }
 
-  public static final class ResultsItem extends JsonModel {
+  public static final class Results extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "transaction_number", "txn_id", "transaction_type", "action_type", "status", "direction", "amount", "currency", "preferred_currency_amount", "preferred_currency_code", "payment_details", "score", "severity", "subject_name", "subject_vendor_data", "subject_country", "counterparty_name", "counterparty_vendor_data", "counterparty_country", "tags", "txn_date", "created_at", "decision_reason_code", "decision_reason_label", "assigned_to_name");
 
-    private ResultsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Results(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code ResultsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Results} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static ResultsItem fromJson(JsonNode json) {
-      return new ResultsItem(Json.copyObject(json), Map.of());
+    public static Results fromJson(JsonNode json) {
+      return new Results(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -271,8 +271,8 @@ public final class TransactionsListResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionsListResponse.ResultsItem.Status> status() {
-      return Json.optional(json, "status", Conv.enumeration(TransactionsListResponse.ResultsItem.Status::of));
+    public Optional<TransactionsListResponse.Results.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(TransactionsListResponse.Results.Status::of));
     }
 
     /**
@@ -281,8 +281,8 @@ public final class TransactionsListResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionsListResponse.ResultsItem.Direction> direction() {
-      return Json.optional(json, "direction", Conv.enumeration(TransactionsListResponse.ResultsItem.Direction::of));
+    public Optional<TransactionsListResponse.Results.Direction> direction() {
+      return Json.optional(json, "direction", Conv.enumeration(TransactionsListResponse.Results.Direction::of));
     }
 
     /**
@@ -351,8 +351,8 @@ public final class TransactionsListResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionsListResponse.ResultsItem.Severity> severity() {
-      return Json.optional(json, "severity", Conv.enumeration(TransactionsListResponse.ResultsItem.Severity::of));
+    public Optional<TransactionsListResponse.Results.Severity> severity() {
+      return Json.optional(json, "severity", Conv.enumeration(TransactionsListResponse.Results.Severity::of));
     }
 
     /**
@@ -421,8 +421,8 @@ public final class TransactionsListResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<TransactionsListResponse.ResultsItem.TagsItem>> tags() {
-      return Json.optional(json, "tags", Conv.list(Conv.model(TransactionsListResponse.ResultsItem.TagsItem::fromJson)));
+    public Optional<List<TransactionsListResponse.Results.Tags>> tags() {
+      return Json.optional(json, "tags", Conv.list(Conv.model(TransactionsListResponse.Results.Tags::fromJson)));
     }
 
     /**
@@ -480,11 +480,11 @@ public final class TransactionsListResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link ResultsItem}. */
+    /** Builds a {@link Results}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(ResultsItem from) {
+      private Builder(Results from) {
         super(from);
       }
 
@@ -544,8 +544,8 @@ public final class TransactionsListResponse extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(TransactionsListResponse.ResultsItem.Status status) {
-        return set("status", Conv.enumeration(TransactionsListResponse.ResultsItem.Status::of), status);
+      public Builder status(TransactionsListResponse.Results.Status status) {
+        return set("status", Conv.enumeration(TransactionsListResponse.Results.Status::of), status);
       }
 
       /**
@@ -554,8 +554,8 @@ public final class TransactionsListResponse extends JsonModel {
        * @param direction the value
        * @return this builder
        */
-      public Builder direction(TransactionsListResponse.ResultsItem.Direction direction) {
-        return set("direction", Conv.enumeration(TransactionsListResponse.ResultsItem.Direction::of), direction);
+      public Builder direction(TransactionsListResponse.Results.Direction direction) {
+        return set("direction", Conv.enumeration(TransactionsListResponse.Results.Direction::of), direction);
       }
 
       /**
@@ -624,8 +624,8 @@ public final class TransactionsListResponse extends JsonModel {
        * @param severity the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder severity(TransactionsListResponse.ResultsItem.@Nullable Severity severity) {
-        return setNullable("severity", Conv.enumeration(TransactionsListResponse.ResultsItem.Severity::of), severity);
+      public Builder severity(TransactionsListResponse.Results.@Nullable Severity severity) {
+        return setNullable("severity", Conv.enumeration(TransactionsListResponse.Results.Severity::of), severity);
       }
 
       /**
@@ -694,8 +694,8 @@ public final class TransactionsListResponse extends JsonModel {
        * @param tags the value
        * @return this builder
        */
-      public Builder tags(List<TransactionsListResponse.ResultsItem.TagsItem> tags) {
-        return set("tags", Conv.list(Conv.model(TransactionsListResponse.ResultsItem.TagsItem::fromJson)), tags);
+      public Builder tags(List<TransactionsListResponse.Results.Tags> tags) {
+        return set("tags", Conv.list(Conv.model(TransactionsListResponse.Results.Tags::fromJson)), tags);
       }
 
       /**
@@ -751,10 +751,10 @@ public final class TransactionsListResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code ResultsItem}
+       * @return a new immutable {@code Results}
        */
-      public ResultsItem build() {
-        return new ResultsItem(buildJson(), buildFiles());
+      public Results build() {
+        return new Results(buildJson(), buildFiles());
       }
 
       @Override
@@ -907,22 +907,22 @@ public final class TransactionsListResponse extends JsonModel {
       }
     }
 
-    public static final class TagsItem extends JsonModel {
+    public static final class Tags extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "color", "description", "source");
 
-      private TagsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Tags(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code TagsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Tags} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static TagsItem fromJson(JsonNode json) {
-        return new TagsItem(Json.copyObject(json), Map.of());
+      public static Tags fromJson(JsonNode json) {
+        return new Tags(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -989,8 +989,8 @@ public final class TransactionsListResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<TransactionsListResponse.ResultsItem.TagsItem.Source> source() {
-        return Json.optional(json, "source", Conv.enumeration(TransactionsListResponse.ResultsItem.TagsItem.Source::of));
+      public Optional<TransactionsListResponse.Results.Tags.Source> source() {
+        return Json.optional(json, "source", Conv.enumeration(TransactionsListResponse.Results.Tags.Source::of));
       }
 
       @Override
@@ -998,11 +998,11 @@ public final class TransactionsListResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link TagsItem}. */
+      /** Builds a {@link Tags}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(TagsItem from) {
+        private Builder(Tags from) {
           super(from);
         }
 
@@ -1052,17 +1052,17 @@ public final class TransactionsListResponse extends JsonModel {
          * @param source the value
          * @return this builder
          */
-        public Builder source(TransactionsListResponse.ResultsItem.TagsItem.Source source) {
-          return set("source", Conv.enumeration(TransactionsListResponse.ResultsItem.TagsItem.Source::of), source);
+        public Builder source(TransactionsListResponse.Results.Tags.Source source) {
+          return set("source", Conv.enumeration(TransactionsListResponse.Results.Tags.Source::of), source);
         }
 
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code TagsItem}
+         * @return a new immutable {@code Tags}
          */
-        public TagsItem build() {
-          return new TagsItem(buildJson(), buildFiles());
+        public Tags build() {
+          return new Tags(buildJson(), buildFiles());
         }
 
         @Override

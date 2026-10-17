@@ -97,8 +97,8 @@ public final class TravelRuleWidgetContext extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<TravelRuleWidgetContext.AllowedMethodsItem>> allowedMethods() {
-    return Json.optional(json, "allowed_methods", Conv.list(Conv.enumeration(TravelRuleWidgetContext.AllowedMethodsItem::of)));
+  public Optional<List<TravelRuleWidgetContext.AllowedMethods>> allowedMethods() {
+    return Json.optional(json, "allowed_methods", Conv.list(Conv.enumeration(TravelRuleWidgetContext.AllowedMethods::of)));
   }
 
   /**
@@ -220,8 +220,8 @@ public final class TravelRuleWidgetContext extends JsonModel {
      * @param allowedMethods the value
      * @return this builder
      */
-    public Builder allowedMethods(List<TravelRuleWidgetContext.AllowedMethodsItem> allowedMethods) {
-      return set("allowed_methods", Conv.list(Conv.enumeration(TravelRuleWidgetContext.AllowedMethodsItem::of)), allowedMethods);
+    public Builder allowedMethods(List<TravelRuleWidgetContext.AllowedMethods> allowedMethods) {
+      return set("allowed_methods", Conv.list(Conv.enumeration(TravelRuleWidgetContext.AllowedMethods::of)), allowedMethods);
     }
 
     /**
@@ -303,22 +303,22 @@ public final class TravelRuleWidgetContext extends JsonModel {
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
-  public static final class AllowedMethodsItem extends StringEnum {
+  public static final class AllowedMethods extends StringEnum {
     /** The value {@code "MESSAGE_SIGNING"}. */
-    public static final AllowedMethodsItem MESSAGE_SIGNING = new AllowedMethodsItem("MESSAGE_SIGNING");
+    public static final AllowedMethods MESSAGE_SIGNING = new AllowedMethods("MESSAGE_SIGNING");
 
     /** The value {@code "SCREENSHOT"}. */
-    public static final AllowedMethodsItem SCREENSHOT = new AllowedMethodsItem("SCREENSHOT");
+    public static final AllowedMethods SCREENSHOT = new AllowedMethods("SCREENSHOT");
 
     /** The value {@code "SATOSHI_TEST"}. */
-    public static final AllowedMethodsItem SATOSHI_TEST = new AllowedMethodsItem("SATOSHI_TEST");
+    public static final AllowedMethods SATOSHI_TEST = new AllowedMethods("SATOSHI_TEST");
 
     /** The value {@code "SELF_DECLARATION"}. */
-    public static final AllowedMethodsItem SELF_DECLARATION = new AllowedMethodsItem("SELF_DECLARATION");
+    public static final AllowedMethods SELF_DECLARATION = new AllowedMethods("SELF_DECLARATION");
 
-    private static final List<AllowedMethodsItem> KNOWN_VALUES = List.of(MESSAGE_SIGNING, SCREENSHOT, SATOSHI_TEST, SELF_DECLARATION);
+    private static final List<AllowedMethods> KNOWN_VALUES = List.of(MESSAGE_SIGNING, SCREENSHOT, SATOSHI_TEST, SELF_DECLARATION);
 
-    private AllowedMethodsItem(String value) {
+    private AllowedMethods(String value) {
       super(value);
     }
 
@@ -328,8 +328,8 @@ public final class TravelRuleWidgetContext extends JsonModel {
      * @param value the string value
      * @return the enum value
      */
-    public static AllowedMethodsItem of(String value) {
-      return StringEnum.lookup(KNOWN_VALUES, value, AllowedMethodsItem::new);
+    public static AllowedMethods of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, AllowedMethods::new);
     }
 
     /**
@@ -337,7 +337,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
      *
      * @return the known values
      */
-    public static List<AllowedMethodsItem> knownValues() {
+    public static List<AllowedMethods> knownValues() {
       return KNOWN_VALUES;
     }
 

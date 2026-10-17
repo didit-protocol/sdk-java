@@ -542,8 +542,8 @@ public final class IdVerificationVerifyResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<IdVerificationVerifyResponse.IdVerification.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(IdVerificationVerifyResponse.IdVerification.WarningsItem::fromJson)));
+    public Optional<List<IdVerificationVerifyResponse.IdVerification.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(IdVerificationVerifyResponse.IdVerification.Warnings::fromJson)));
     }
 
     /**
@@ -552,8 +552,8 @@ public final class IdVerificationVerifyResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<IdVerificationVerifyResponse.IdVerification.BarcodesItem>> barcodes() {
-      return Json.optional(json, "barcodes", Conv.list(Conv.model(IdVerificationVerifyResponse.IdVerification.BarcodesItem::fromJson)));
+    public Optional<List<IdVerificationVerifyResponse.IdVerification.Barcodes>> barcodes() {
+      return Json.optional(json, "barcodes", Conv.list(Conv.model(IdVerificationVerifyResponse.IdVerification.Barcodes::fromJson)));
     }
 
     @Override
@@ -895,8 +895,8 @@ public final class IdVerificationVerifyResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<IdVerificationVerifyResponse.IdVerification.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(IdVerificationVerifyResponse.IdVerification.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<IdVerificationVerifyResponse.IdVerification.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(IdVerificationVerifyResponse.IdVerification.Warnings::fromJson)), warnings);
       }
 
       /**
@@ -905,8 +905,8 @@ public final class IdVerificationVerifyResponse extends JsonModel {
        * @param barcodes the value
        * @return this builder
        */
-      public Builder barcodes(List<IdVerificationVerifyResponse.IdVerification.BarcodesItem> barcodes) {
-        return set("barcodes", Conv.list(Conv.model(IdVerificationVerifyResponse.IdVerification.BarcodesItem::fromJson)), barcodes);
+      public Builder barcodes(List<IdVerificationVerifyResponse.IdVerification.Barcodes> barcodes) {
+        return set("barcodes", Conv.list(Conv.model(IdVerificationVerifyResponse.IdVerification.Barcodes::fromJson)), barcodes);
       }
 
       /**
@@ -2265,22 +2265,22 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("risk", "feature", "additional_data", "log_type", "short_description", "long_description");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -2317,8 +2317,8 @@ public final class IdVerificationVerifyResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<IdVerificationVerifyResponse.IdVerification.WarningsItem.Feature> feature() {
-        return Json.optional(json, "feature", Conv.enumeration(IdVerificationVerifyResponse.IdVerification.WarningsItem.Feature::of));
+      public Optional<IdVerificationVerifyResponse.IdVerification.Warnings.Feature> feature() {
+        return Json.optional(json, "feature", Conv.enumeration(IdVerificationVerifyResponse.IdVerification.Warnings.Feature::of));
       }
 
       /**
@@ -2337,8 +2337,8 @@ public final class IdVerificationVerifyResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<IdVerificationVerifyResponse.IdVerification.WarningsItem.LogType> logType() {
-        return Json.optional(json, "log_type", Conv.enumeration(IdVerificationVerifyResponse.IdVerification.WarningsItem.LogType::of));
+      public Optional<IdVerificationVerifyResponse.IdVerification.Warnings.LogType> logType() {
+        return Json.optional(json, "log_type", Conv.enumeration(IdVerificationVerifyResponse.IdVerification.Warnings.LogType::of));
       }
 
       /**
@@ -2366,11 +2366,11 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -2390,8 +2390,8 @@ public final class IdVerificationVerifyResponse extends JsonModel {
          * @param feature the value
          * @return this builder
          */
-        public Builder feature(IdVerificationVerifyResponse.IdVerification.WarningsItem.Feature feature) {
-          return set("feature", Conv.enumeration(IdVerificationVerifyResponse.IdVerification.WarningsItem.Feature::of), feature);
+        public Builder feature(IdVerificationVerifyResponse.IdVerification.Warnings.Feature feature) {
+          return set("feature", Conv.enumeration(IdVerificationVerifyResponse.IdVerification.Warnings.Feature::of), feature);
         }
 
         /**
@@ -2410,8 +2410,8 @@ public final class IdVerificationVerifyResponse extends JsonModel {
          * @param logType the value
          * @return this builder
          */
-        public Builder logType(IdVerificationVerifyResponse.IdVerification.WarningsItem.LogType logType) {
-          return set("log_type", Conv.enumeration(IdVerificationVerifyResponse.IdVerification.WarningsItem.LogType::of), logType);
+        public Builder logType(IdVerificationVerifyResponse.IdVerification.Warnings.LogType logType) {
+          return set("log_type", Conv.enumeration(IdVerificationVerifyResponse.IdVerification.Warnings.LogType::of), logType);
         }
 
         /**
@@ -2437,10 +2437,10 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override
@@ -2536,22 +2536,22 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
     }
 
-    public static final class BarcodesItem extends JsonModel {
+    public static final class Barcodes extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("type", "position", "data", "data_raw", "side");
 
-      private BarcodesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Barcodes(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code BarcodesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Barcodes} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static BarcodesItem fromJson(JsonNode json) {
-        return new BarcodesItem(Json.copyObject(json), Map.of());
+      public static Barcodes fromJson(JsonNode json) {
+        return new Barcodes(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -2627,11 +2627,11 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link BarcodesItem}. */
+      /** Builds a {@link Barcodes}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(BarcodesItem from) {
+        private Builder(Barcodes from) {
           super(from);
         }
 
@@ -2688,10 +2688,10 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code BarcodesItem}
+         * @return a new immutable {@code Barcodes}
          */
-        public BarcodesItem build() {
-          return new BarcodesItem(buildJson(), buildFiles());
+        public Barcodes build() {
+          return new Barcodes(buildJson(), buildFiles());
         }
 
         @Override

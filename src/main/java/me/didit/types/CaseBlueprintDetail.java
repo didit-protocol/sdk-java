@@ -227,8 +227,8 @@ public final class CaseBlueprintDetail extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<CaseBlueprintDetail.CreationSourcesItem>> creationSources() {
-    return Json.optional(json, "creation_sources", Conv.list(Conv.model(CaseBlueprintDetail.CreationSourcesItem::fromJson)));
+  public Optional<List<CaseBlueprintDetail.CreationSources>> creationSources() {
+    return Json.optional(json, "creation_sources", Conv.list(Conv.model(CaseBlueprintDetail.CreationSources::fromJson)));
   }
 
   /**
@@ -237,8 +237,8 @@ public final class CaseBlueprintDetail extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<CaseBlueprintDetail.ReceivesEscalationFromItem>> receivesEscalationFrom() {
-    return Json.optional(json, "receives_escalation_from", Conv.list(Conv.model(CaseBlueprintDetail.ReceivesEscalationFromItem::fromJson)));
+  public Optional<List<CaseBlueprintDetail.ReceivesEscalationFrom>> receivesEscalationFrom() {
+    return Json.optional(json, "receives_escalation_from", Conv.list(Conv.model(CaseBlueprintDetail.ReceivesEscalationFrom::fromJson)));
   }
 
   /**
@@ -460,8 +460,8 @@ public final class CaseBlueprintDetail extends JsonModel {
      * @param creationSources the value
      * @return this builder
      */
-    public Builder creationSources(List<CaseBlueprintDetail.CreationSourcesItem> creationSources) {
-      return set("creation_sources", Conv.list(Conv.model(CaseBlueprintDetail.CreationSourcesItem::fromJson)), creationSources);
+    public Builder creationSources(List<CaseBlueprintDetail.CreationSources> creationSources) {
+      return set("creation_sources", Conv.list(Conv.model(CaseBlueprintDetail.CreationSources::fromJson)), creationSources);
     }
 
     /**
@@ -470,8 +470,8 @@ public final class CaseBlueprintDetail extends JsonModel {
      * @param receivesEscalationFrom the value
      * @return this builder
      */
-    public Builder receivesEscalationFrom(List<CaseBlueprintDetail.ReceivesEscalationFromItem> receivesEscalationFrom) {
-      return set("receives_escalation_from", Conv.list(Conv.model(CaseBlueprintDetail.ReceivesEscalationFromItem::fromJson)), receivesEscalationFrom);
+    public Builder receivesEscalationFrom(List<CaseBlueprintDetail.ReceivesEscalationFrom> receivesEscalationFrom) {
+      return set("receives_escalation_from", Conv.list(Conv.model(CaseBlueprintDetail.ReceivesEscalationFrom::fromJson)), receivesEscalationFrom);
     }
 
     /**
@@ -810,8 +810,8 @@ public final class CaseBlueprintDetail extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<CaseBlueprintDetail.ContentConfig.Checklist.ItemsItem>> items() {
-        return Json.optional(json, "items", Conv.list(Conv.model(CaseBlueprintDetail.ContentConfig.Checklist.ItemsItem::fromJson)));
+      public Optional<List<CaseBlueprintDetail.ContentConfig.Checklist.Items>> items() {
+        return Json.optional(json, "items", Conv.list(Conv.model(CaseBlueprintDetail.ContentConfig.Checklist.Items::fromJson)));
       }
 
       @Override
@@ -853,8 +853,8 @@ public final class CaseBlueprintDetail extends JsonModel {
          * @param items the value
          * @return this builder
          */
-        public Builder items(List<CaseBlueprintDetail.ContentConfig.Checklist.ItemsItem> items) {
-          return set("items", Conv.list(Conv.model(CaseBlueprintDetail.ContentConfig.Checklist.ItemsItem::fromJson)), items);
+        public Builder items(List<CaseBlueprintDetail.ContentConfig.Checklist.Items> items) {
+          return set("items", Conv.list(Conv.model(CaseBlueprintDetail.ContentConfig.Checklist.Items::fromJson)), items);
         }
 
         /**
@@ -872,22 +872,22 @@ public final class CaseBlueprintDetail extends JsonModel {
         }
       }
 
-      public static final class ItemsItem extends JsonModel {
+      public static final class Items extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("label", "order");
 
-        private ItemsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private Items(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code ItemsItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code Items} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static ItemsItem fromJson(JsonNode json) {
-          return new ItemsItem(Json.copyObject(json), Map.of());
+        public static Items fromJson(JsonNode json) {
+          return new Items(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -933,11 +933,11 @@ public final class CaseBlueprintDetail extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link ItemsItem}. */
+        /** Builds a {@link Items}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(ItemsItem from) {
+          private Builder(Items from) {
             super(from);
           }
 
@@ -964,10 +964,10 @@ public final class CaseBlueprintDetail extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code ItemsItem}
+           * @return a new immutable {@code Items}
            */
-          public ItemsItem build() {
-            return new ItemsItem(buildJson(), buildFiles());
+          public Items build() {
+            return new Items(buildJson(), buildFiles());
           }
 
           @Override
@@ -1644,22 +1644,22 @@ public final class CaseBlueprintDetail extends JsonModel {
     }
   }
 
-  public static final class CreationSourcesItem extends JsonModel {
+  public static final class CreationSources extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("kind", "id", "name");
 
-    private CreationSourcesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private CreationSources(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code CreationSourcesItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code CreationSources} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static CreationSourcesItem fromJson(JsonNode json) {
-      return new CreationSourcesItem(Json.copyObject(json), Map.of());
+    public static CreationSources fromJson(JsonNode json) {
+      return new CreationSources(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -1686,8 +1686,8 @@ public final class CaseBlueprintDetail extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<CaseBlueprintDetail.CreationSourcesItem.Kind> kind() {
-      return Json.optional(json, "kind", Conv.enumeration(CaseBlueprintDetail.CreationSourcesItem.Kind::of));
+    public Optional<CaseBlueprintDetail.CreationSources.Kind> kind() {
+      return Json.optional(json, "kind", Conv.enumeration(CaseBlueprintDetail.CreationSources.Kind::of));
     }
 
     /**
@@ -1715,11 +1715,11 @@ public final class CaseBlueprintDetail extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link CreationSourcesItem}. */
+    /** Builds a {@link CreationSources}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(CreationSourcesItem from) {
+      private Builder(CreationSources from) {
         super(from);
       }
 
@@ -1729,8 +1729,8 @@ public final class CaseBlueprintDetail extends JsonModel {
        * @param kind the value
        * @return this builder
        */
-      public Builder kind(CaseBlueprintDetail.CreationSourcesItem.Kind kind) {
-        return set("kind", Conv.enumeration(CaseBlueprintDetail.CreationSourcesItem.Kind::of), kind);
+      public Builder kind(CaseBlueprintDetail.CreationSources.Kind kind) {
+        return set("kind", Conv.enumeration(CaseBlueprintDetail.CreationSources.Kind::of), kind);
       }
 
       /**
@@ -1756,10 +1756,10 @@ public final class CaseBlueprintDetail extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code CreationSourcesItem}
+       * @return a new immutable {@code CreationSources}
        */
-      public CreationSourcesItem build() {
-        return new CreationSourcesItem(buildJson(), buildFiles());
+      public CreationSources build() {
+        return new CreationSources(buildJson(), buildFiles());
       }
 
       @Override
@@ -1814,22 +1814,22 @@ public final class CaseBlueprintDetail extends JsonModel {
     }
   }
 
-  public static final class ReceivesEscalationFromItem extends JsonModel {
+  public static final class ReceivesEscalationFrom extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("id", "name");
 
-    private ReceivesEscalationFromItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private ReceivesEscalationFrom(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code ReceivesEscalationFromItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code ReceivesEscalationFrom} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static ReceivesEscalationFromItem fromJson(JsonNode json) {
-      return new ReceivesEscalationFromItem(Json.copyObject(json), Map.of());
+    public static ReceivesEscalationFrom fromJson(JsonNode json) {
+      return new ReceivesEscalationFrom(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -1875,11 +1875,11 @@ public final class CaseBlueprintDetail extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link ReceivesEscalationFromItem}. */
+    /** Builds a {@link ReceivesEscalationFrom}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(ReceivesEscalationFromItem from) {
+      private Builder(ReceivesEscalationFrom from) {
         super(from);
       }
 
@@ -1906,10 +1906,10 @@ public final class CaseBlueprintDetail extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code ReceivesEscalationFromItem}
+       * @return a new immutable {@code ReceivesEscalationFrom}
        */
-      public ReceivesEscalationFromItem build() {
-        return new ReceivesEscalationFromItem(buildJson(), buildFiles());
+      public ReceivesEscalationFrom build() {
+        return new ReceivesEscalationFrom(buildJson(), buildFiles());
       }
 
       @Override

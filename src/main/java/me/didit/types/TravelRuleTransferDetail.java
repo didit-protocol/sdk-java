@@ -150,8 +150,8 @@ public final class TravelRuleTransferDetail extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<TravelRuleTransferDetail.TimelineItem>> timeline() {
-    return Json.optional(json, "timeline", Conv.list(Conv.model(TravelRuleTransferDetail.TimelineItem::fromJson)));
+  public Optional<List<TravelRuleTransferDetail.Timeline>> timeline() {
+    return Json.optional(json, "timeline", Conv.list(Conv.model(TravelRuleTransferDetail.Timeline::fromJson)));
   }
 
   /**
@@ -303,8 +303,8 @@ public final class TravelRuleTransferDetail extends JsonModel {
      * @param timeline the value
      * @return this builder
      */
-    public Builder timeline(List<TravelRuleTransferDetail.TimelineItem> timeline) {
-      return set("timeline", Conv.list(Conv.model(TravelRuleTransferDetail.TimelineItem::fromJson)), timeline);
+    public Builder timeline(List<TravelRuleTransferDetail.Timeline> timeline) {
+      return set("timeline", Conv.list(Conv.model(TravelRuleTransferDetail.Timeline::fromJson)), timeline);
     }
 
     /**
@@ -527,22 +527,22 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
   }
 
-  public static final class TimelineItem extends JsonModel {
+  public static final class Timeline extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("status", "at", "detail");
 
-    private TimelineItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Timeline(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code TimelineItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Timeline} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static TimelineItem fromJson(JsonNode json) {
-      return new TimelineItem(Json.copyObject(json), Map.of());
+    public static Timeline fromJson(JsonNode json) {
+      return new Timeline(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -598,11 +598,11 @@ public final class TravelRuleTransferDetail extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link TimelineItem}. */
+    /** Builds a {@link Timeline}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(TimelineItem from) {
+      private Builder(Timeline from) {
         super(from);
       }
 
@@ -639,10 +639,10 @@ public final class TravelRuleTransferDetail extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code TimelineItem}
+       * @return a new immutable {@code Timeline}
        */
-      public TimelineItem build() {
-        return new TimelineItem(buildJson(), buildFiles());
+      public Timeline build() {
+        return new Timeline(buildJson(), buildFiles());
       }
 
       @Override

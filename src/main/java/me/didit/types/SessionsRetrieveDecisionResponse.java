@@ -178,8 +178,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.IdVerificationsItem>> idVerifications() {
-    return Json.optional(json, "id_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.IdVerifications>> idVerifications() {
+    return Json.optional(json, "id_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerifications::fromJson)));
   }
 
   /**
@@ -198,8 +198,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.NfcVerificationsItem>> nfcVerifications() {
-    return Json.optional(json, "nfc_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.NfcVerificationsItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.NfcVerifications>> nfcVerifications() {
+    return Json.optional(json, "nfc_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.NfcVerifications::fromJson)));
   }
 
   /**
@@ -208,8 +208,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.LivenessChecksItem>> livenessChecks() {
-    return Json.optional(json, "liveness_checks", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.LivenessChecksItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.LivenessChecks>> livenessChecks() {
+    return Json.optional(json, "liveness_checks", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.LivenessChecks::fromJson)));
   }
 
   /**
@@ -218,8 +218,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.FaceMatchesItem>> faceMatches() {
-    return Json.optional(json, "face_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.FaceMatchesItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.FaceMatches>> faceMatches() {
+    return Json.optional(json, "face_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.FaceMatches::fromJson)));
   }
 
   /**
@@ -228,8 +228,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.PhoneVerificationsItem>> phoneVerifications() {
-    return Json.optional(json, "phone_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerificationsItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.PhoneVerifications>> phoneVerifications() {
+    return Json.optional(json, "phone_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerifications::fromJson)));
   }
 
   /**
@@ -238,8 +238,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.EmailVerificationsItem>> emailVerifications() {
-    return Json.optional(json, "email_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerificationsItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.EmailVerifications>> emailVerifications() {
+    return Json.optional(json, "email_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerifications::fromJson)));
   }
 
   /**
@@ -248,8 +248,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.PoaVerificationsItem>> poaVerifications() {
-    return Json.optional(json, "poa_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.PoaVerifications>> poaVerifications() {
+    return Json.optional(json, "poa_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications::fromJson)));
   }
 
   /**
@@ -258,8 +258,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem>> documentAiDocuments() {
-    return Json.optional(json, "document_ai_documents", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.DocumentAiDocuments>> documentAiDocuments() {
+    return Json.optional(json, "document_ai_documents", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentAiDocuments::fromJson)));
   }
 
   /**
@@ -268,8 +268,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem>> questionnaireResponses() {
-    return Json.optional(json, "questionnaire_responses", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.QuestionnaireResponses>> questionnaireResponses() {
+    return Json.optional(json, "questionnaire_responses", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponses::fromJson)));
   }
 
   /**
@@ -278,8 +278,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.AmlScreeningsItem>> amlScreenings() {
-    return Json.optional(json, "aml_screenings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.AmlScreenings>> amlScreenings() {
+    return Json.optional(json, "aml_screenings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings::fromJson)));
   }
 
   /**
@@ -288,8 +288,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.IpAnalysesItem>> ipAnalyses() {
-    return Json.optional(json, "ip_analyses", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.IpAnalyses>> ipAnalyses() {
+    return Json.optional(json, "ip_analyses", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses::fromJson)));
   }
 
   /**
@@ -334,8 +334,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.DatabaseValidationsItem>> databaseValidations() {
-    return Json.optional(json, "database_validations", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidationsItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.DatabaseValidations>> databaseValidations() {
+    return Json.optional(json, "database_validations", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidations::fromJson)));
   }
 
   /**
@@ -344,8 +344,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.ReviewsItem>> reviews() {
-    return Json.optional(json, "reviews", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.ReviewsItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.Reviews>> reviews() {
+    return Json.optional(json, "reviews", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.Reviews::fromJson)));
   }
 
   /**
@@ -374,8 +374,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.RegistryChecksItem>> registryChecks() {
-    return Json.optional(json, "registry_checks", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.RegistryChecksItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.RegistryChecks>> registryChecks() {
+    return Json.optional(json, "registry_checks", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.RegistryChecks::fromJson)));
   }
 
   /**
@@ -384,8 +384,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem>> keyPeopleChecks() {
-    return Json.optional(json, "key_people_checks", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecks>> keyPeopleChecks() {
+    return Json.optional(json, "key_people_checks", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks::fromJson)));
   }
 
   /**
@@ -394,8 +394,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.DocumentVerificationsItem>> documentVerifications() {
-    return Json.optional(json, "document_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerificationsItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.DocumentVerifications>> documentVerifications() {
+    return Json.optional(json, "document_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerifications::fromJson)));
   }
 
   /**
@@ -414,8 +414,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SessionsRetrieveDecisionResponse.ResubmissionsItem>> resubmissions() {
-    return Json.optional(json, "resubmissions", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.ResubmissionsItem::fromJson)));
+  public Optional<List<SessionsRetrieveDecisionResponse.Resubmissions>> resubmissions() {
+    return Json.optional(json, "resubmissions", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.Resubmissions::fromJson)));
   }
 
   @Override
@@ -557,8 +557,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param idVerifications the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder idVerifications(@Nullable List<SessionsRetrieveDecisionResponse.IdVerificationsItem> idVerifications) {
-      return setNullable("id_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem::fromJson)), idVerifications);
+    public Builder idVerifications(@Nullable List<SessionsRetrieveDecisionResponse.IdVerifications> idVerifications) {
+      return setNullable("id_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerifications::fromJson)), idVerifications);
     }
 
     /**
@@ -577,8 +577,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param nfcVerifications the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder nfcVerifications(@Nullable List<SessionsRetrieveDecisionResponse.NfcVerificationsItem> nfcVerifications) {
-      return setNullable("nfc_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.NfcVerificationsItem::fromJson)), nfcVerifications);
+    public Builder nfcVerifications(@Nullable List<SessionsRetrieveDecisionResponse.NfcVerifications> nfcVerifications) {
+      return setNullable("nfc_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.NfcVerifications::fromJson)), nfcVerifications);
     }
 
     /**
@@ -587,8 +587,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param livenessChecks the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder livenessChecks(@Nullable List<SessionsRetrieveDecisionResponse.LivenessChecksItem> livenessChecks) {
-      return setNullable("liveness_checks", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.LivenessChecksItem::fromJson)), livenessChecks);
+    public Builder livenessChecks(@Nullable List<SessionsRetrieveDecisionResponse.LivenessChecks> livenessChecks) {
+      return setNullable("liveness_checks", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.LivenessChecks::fromJson)), livenessChecks);
     }
 
     /**
@@ -597,8 +597,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param faceMatches the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder faceMatches(@Nullable List<SessionsRetrieveDecisionResponse.FaceMatchesItem> faceMatches) {
-      return setNullable("face_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.FaceMatchesItem::fromJson)), faceMatches);
+    public Builder faceMatches(@Nullable List<SessionsRetrieveDecisionResponse.FaceMatches> faceMatches) {
+      return setNullable("face_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.FaceMatches::fromJson)), faceMatches);
     }
 
     /**
@@ -607,8 +607,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param phoneVerifications the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder phoneVerifications(@Nullable List<SessionsRetrieveDecisionResponse.PhoneVerificationsItem> phoneVerifications) {
-      return setNullable("phone_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerificationsItem::fromJson)), phoneVerifications);
+    public Builder phoneVerifications(@Nullable List<SessionsRetrieveDecisionResponse.PhoneVerifications> phoneVerifications) {
+      return setNullable("phone_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerifications::fromJson)), phoneVerifications);
     }
 
     /**
@@ -617,8 +617,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param emailVerifications the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder emailVerifications(@Nullable List<SessionsRetrieveDecisionResponse.EmailVerificationsItem> emailVerifications) {
-      return setNullable("email_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerificationsItem::fromJson)), emailVerifications);
+    public Builder emailVerifications(@Nullable List<SessionsRetrieveDecisionResponse.EmailVerifications> emailVerifications) {
+      return setNullable("email_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerifications::fromJson)), emailVerifications);
     }
 
     /**
@@ -627,8 +627,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param poaVerifications the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder poaVerifications(@Nullable List<SessionsRetrieveDecisionResponse.PoaVerificationsItem> poaVerifications) {
-      return setNullable("poa_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem::fromJson)), poaVerifications);
+    public Builder poaVerifications(@Nullable List<SessionsRetrieveDecisionResponse.PoaVerifications> poaVerifications) {
+      return setNullable("poa_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications::fromJson)), poaVerifications);
     }
 
     /**
@@ -637,8 +637,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param documentAiDocuments the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder documentAiDocuments(@Nullable List<SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem> documentAiDocuments) {
-      return setNullable("document_ai_documents", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem::fromJson)), documentAiDocuments);
+    public Builder documentAiDocuments(@Nullable List<SessionsRetrieveDecisionResponse.DocumentAiDocuments> documentAiDocuments) {
+      return setNullable("document_ai_documents", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentAiDocuments::fromJson)), documentAiDocuments);
     }
 
     /**
@@ -647,8 +647,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param questionnaireResponses the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder questionnaireResponses(@Nullable List<SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem> questionnaireResponses) {
-      return setNullable("questionnaire_responses", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem::fromJson)), questionnaireResponses);
+    public Builder questionnaireResponses(@Nullable List<SessionsRetrieveDecisionResponse.QuestionnaireResponses> questionnaireResponses) {
+      return setNullable("questionnaire_responses", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponses::fromJson)), questionnaireResponses);
     }
 
     /**
@@ -657,8 +657,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param amlScreenings the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder amlScreenings(@Nullable List<SessionsRetrieveDecisionResponse.AmlScreeningsItem> amlScreenings) {
-      return setNullable("aml_screenings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem::fromJson)), amlScreenings);
+    public Builder amlScreenings(@Nullable List<SessionsRetrieveDecisionResponse.AmlScreenings> amlScreenings) {
+      return setNullable("aml_screenings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings::fromJson)), amlScreenings);
     }
 
     /**
@@ -667,8 +667,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param ipAnalyses the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder ipAnalyses(@Nullable List<SessionsRetrieveDecisionResponse.IpAnalysesItem> ipAnalyses) {
-      return setNullable("ip_analyses", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem::fromJson)), ipAnalyses);
+    public Builder ipAnalyses(@Nullable List<SessionsRetrieveDecisionResponse.IpAnalyses> ipAnalyses) {
+      return setNullable("ip_analyses", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses::fromJson)), ipAnalyses);
     }
 
     /**
@@ -713,8 +713,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param databaseValidations the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder databaseValidations(@Nullable List<SessionsRetrieveDecisionResponse.DatabaseValidationsItem> databaseValidations) {
-      return setNullable("database_validations", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidationsItem::fromJson)), databaseValidations);
+    public Builder databaseValidations(@Nullable List<SessionsRetrieveDecisionResponse.DatabaseValidations> databaseValidations) {
+      return setNullable("database_validations", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidations::fromJson)), databaseValidations);
     }
 
     /**
@@ -723,8 +723,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param reviews the value
      * @return this builder
      */
-    public Builder reviews(List<SessionsRetrieveDecisionResponse.ReviewsItem> reviews) {
-      return set("reviews", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.ReviewsItem::fromJson)), reviews);
+    public Builder reviews(List<SessionsRetrieveDecisionResponse.Reviews> reviews) {
+      return set("reviews", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.Reviews::fromJson)), reviews);
     }
 
     /**
@@ -753,8 +753,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param registryChecks the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder registryChecks(@Nullable List<SessionsRetrieveDecisionResponse.RegistryChecksItem> registryChecks) {
-      return setNullable("registry_checks", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.RegistryChecksItem::fromJson)), registryChecks);
+    public Builder registryChecks(@Nullable List<SessionsRetrieveDecisionResponse.RegistryChecks> registryChecks) {
+      return setNullable("registry_checks", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.RegistryChecks::fromJson)), registryChecks);
     }
 
     /**
@@ -763,8 +763,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param keyPeopleChecks the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder keyPeopleChecks(@Nullable List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem> keyPeopleChecks) {
-      return setNullable("key_people_checks", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem::fromJson)), keyPeopleChecks);
+    public Builder keyPeopleChecks(@Nullable List<SessionsRetrieveDecisionResponse.KeyPeopleChecks> keyPeopleChecks) {
+      return setNullable("key_people_checks", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks::fromJson)), keyPeopleChecks);
     }
 
     /**
@@ -773,8 +773,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param documentVerifications the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder documentVerifications(@Nullable List<SessionsRetrieveDecisionResponse.DocumentVerificationsItem> documentVerifications) {
-      return setNullable("document_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerificationsItem::fromJson)), documentVerifications);
+    public Builder documentVerifications(@Nullable List<SessionsRetrieveDecisionResponse.DocumentVerifications> documentVerifications) {
+      return setNullable("document_verifications", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerifications::fromJson)), documentVerifications);
     }
 
     /**
@@ -793,8 +793,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @param resubmissions the value
      * @return this builder
      */
-    public Builder resubmissions(List<SessionsRetrieveDecisionResponse.ResubmissionsItem> resubmissions) {
-      return set("resubmissions", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.ResubmissionsItem::fromJson)), resubmissions);
+    public Builder resubmissions(List<SessionsRetrieveDecisionResponse.Resubmissions> resubmissions) {
+      return set("resubmissions", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.Resubmissions::fromJson)), resubmissions);
     }
 
     /**
@@ -1057,8 +1057,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.ExpectedDetails.ExpectedDocumentTypesItem>> expectedDocumentTypes() {
-      return Json.optional(json, "expected_document_types", Conv.list(Conv.enumeration(SessionsRetrieveDecisionResponse.ExpectedDetails.ExpectedDocumentTypesItem::of)));
+    public Optional<List<SessionsRetrieveDecisionResponse.ExpectedDetails.ExpectedDocumentTypes>> expectedDocumentTypes() {
+      return Json.optional(json, "expected_document_types", Conv.list(Conv.enumeration(SessionsRetrieveDecisionResponse.ExpectedDetails.ExpectedDocumentTypes::of)));
     }
 
     /**
@@ -1220,8 +1220,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param expectedDocumentTypes the value
        * @return this builder
        */
-      public Builder expectedDocumentTypes(List<SessionsRetrieveDecisionResponse.ExpectedDetails.ExpectedDocumentTypesItem> expectedDocumentTypes) {
-        return set("expected_document_types", Conv.list(Conv.enumeration(SessionsRetrieveDecisionResponse.ExpectedDetails.ExpectedDocumentTypesItem::of)), expectedDocumentTypes);
+      public Builder expectedDocumentTypes(List<SessionsRetrieveDecisionResponse.ExpectedDetails.ExpectedDocumentTypes> expectedDocumentTypes) {
+        return set("expected_document_types", Conv.list(Conv.enumeration(SessionsRetrieveDecisionResponse.ExpectedDetails.ExpectedDocumentTypes::of)), expectedDocumentTypes);
       }
 
       /**
@@ -1336,31 +1336,31 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      *
      * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
      */
-    public static final class ExpectedDocumentTypesItem extends StringEnum {
+    public static final class ExpectedDocumentTypes extends StringEnum {
       /** The value {@code "P"}. */
-      public static final ExpectedDocumentTypesItem P = new ExpectedDocumentTypesItem("P");
+      public static final ExpectedDocumentTypes P = new ExpectedDocumentTypes("P");
 
       /** The value {@code "ID"}. */
-      public static final ExpectedDocumentTypesItem ID = new ExpectedDocumentTypesItem("ID");
+      public static final ExpectedDocumentTypes ID = new ExpectedDocumentTypes("ID");
 
       /** The value {@code "DL"}. */
-      public static final ExpectedDocumentTypesItem DL = new ExpectedDocumentTypesItem("DL");
+      public static final ExpectedDocumentTypes DL = new ExpectedDocumentTypes("DL");
 
       /** The value {@code "RP"}. */
-      public static final ExpectedDocumentTypesItem RP = new ExpectedDocumentTypesItem("RP");
+      public static final ExpectedDocumentTypes RP = new ExpectedDocumentTypes("RP");
 
       /** The value {@code "HIC"}. */
-      public static final ExpectedDocumentTypesItem HIC = new ExpectedDocumentTypesItem("HIC");
+      public static final ExpectedDocumentTypes HIC = new ExpectedDocumentTypes("HIC");
 
       /** The value {@code "TC"}. */
-      public static final ExpectedDocumentTypesItem TC = new ExpectedDocumentTypesItem("TC");
+      public static final ExpectedDocumentTypes TC = new ExpectedDocumentTypes("TC");
 
       /** The value {@code "SSC"}. */
-      public static final ExpectedDocumentTypesItem SSC = new ExpectedDocumentTypesItem("SSC");
+      public static final ExpectedDocumentTypes SSC = new ExpectedDocumentTypes("SSC");
 
-      private static final List<ExpectedDocumentTypesItem> KNOWN_VALUES = List.of(P, ID, DL, RP, HIC, TC, SSC);
+      private static final List<ExpectedDocumentTypes> KNOWN_VALUES = List.of(P, ID, DL, RP, HIC, TC, SSC);
 
-      private ExpectedDocumentTypesItem(String value) {
+      private ExpectedDocumentTypes(String value) {
         super(value);
       }
 
@@ -1370,8 +1370,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param value the string value
        * @return the enum value
        */
-      public static ExpectedDocumentTypesItem of(String value) {
-        return StringEnum.lookup(KNOWN_VALUES, value, ExpectedDocumentTypesItem::new);
+      public static ExpectedDocumentTypes of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, ExpectedDocumentTypes::new);
       }
 
       /**
@@ -1379,7 +1379,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        *
        * @return the known values
        */
-      public static List<ExpectedDocumentTypesItem> knownValues() {
+      public static List<ExpectedDocumentTypes> knownValues() {
         return KNOWN_VALUES;
       }
 
@@ -1541,22 +1541,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
   /**
    * One ID verification report - the full report for a single ID Verification step. <code>verification_method</code> says which of the three methods produced it (document capture, non-doc lookup or wallet sign-in) and the method-specific evidence block is populated accordingly.
    */
-  public static final class IdVerificationsItem extends JsonModel {
+  public static final class IdVerifications extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "verification_method", "assurance", "wallet_provider", "fallback_from", "id_lookup", "wallet_verification", "status", "document_type", "document_subtype", "document_number", "personal_number", "portrait_image", "front_image", "front_video", "back_image", "back_video", "full_front_image", "full_back_image", "front_image_camera_front", "back_image_camera_front", "date_of_birth", "age", "expiration_date", "date_of_issue", "issuing_state", "issuing_state_name", "first_name", "last_name", "full_name", "gender", "address", "formatted_address", "place_of_birth", "marital_status", "nationality", "extra_fields", "mrz", "parsed_address", "extra_files", "front_image_camera_front_face_match_score", "back_image_camera_front_face_match_score", "document_selfie_face_matches", "front_image_quality_score", "back_image_quality_score", "warnings", "matches", "document_liveness");
 
-    private IdVerificationsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private IdVerifications(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code IdVerificationsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code IdVerifications} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static IdVerificationsItem fromJson(JsonNode json) {
-      return new IdVerificationsItem(Json.copyObject(json), Map.of());
+    public static IdVerifications fromJson(JsonNode json) {
+      return new IdVerifications(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -1593,8 +1593,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.VerificationMethod> verificationMethod() {
-      return Json.optional(json, "verification_method", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.VerificationMethod::of));
+    public Optional<SessionsRetrieveDecisionResponse.IdVerifications.VerificationMethod> verificationMethod() {
+      return Json.optional(json, "verification_method", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.VerificationMethod::of));
     }
 
     /**
@@ -1603,8 +1603,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.Assurance> assurance() {
-      return Json.optional(json, "assurance", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.Assurance::of));
+    public Optional<SessionsRetrieveDecisionResponse.IdVerifications.Assurance> assurance() {
+      return Json.optional(json, "assurance", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.Assurance::of));
     }
 
     /**
@@ -1623,8 +1623,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.FallbackFrom> fallbackFrom() {
-      return Json.optional(json, "fallback_from", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.FallbackFrom::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.IdVerifications.FallbackFrom> fallbackFrom() {
+      return Json.optional(json, "fallback_from", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.FallbackFrom::fromJson));
     }
 
     /**
@@ -1633,8 +1633,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup> idLookup() {
-      return Json.optional(json, "id_lookup", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.IdVerifications.IdLookup> idLookup() {
+      return Json.optional(json, "id_lookup", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.IdLookup::fromJson));
     }
 
     /**
@@ -1643,8 +1643,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.WalletVerification> walletVerification() {
-      return Json.optional(json, "wallet_verification", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.WalletVerification::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.IdVerifications.WalletVerification> walletVerification() {
+      return Json.optional(json, "wallet_verification", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.WalletVerification::fromJson));
     }
 
     /**
@@ -1653,8 +1653,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.Status> status() {
-      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.Status::of));
+    public Optional<SessionsRetrieveDecisionResponse.IdVerifications.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.Status::of));
     }
 
     /**
@@ -1943,8 +1943,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.ExtraFields> extraFields() {
-      return Json.optional(json, "extra_fields", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ExtraFields::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.IdVerifications.ExtraFields> extraFields() {
+      return Json.optional(json, "extra_fields", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ExtraFields::fromJson));
     }
 
     /**
@@ -1953,8 +1953,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.Mrz> mrz() {
-      return Json.optional(json, "mrz", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.Mrz::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.IdVerifications.Mrz> mrz() {
+      return Json.optional(json, "mrz", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.Mrz::fromJson));
     }
 
     /**
@@ -1963,8 +1963,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress> parsedAddress() {
-      return Json.optional(json, "parsed_address", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress> parsedAddress() {
+      return Json.optional(json, "parsed_address", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress::fromJson));
     }
 
     /**
@@ -2003,8 +2003,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem>> documentSelfieFaceMatches() {
-      return Json.optional(json, "document_selfie_face_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.IdVerifications.DocumentSelfieFaceMatches>> documentSelfieFaceMatches() {
+      return Json.optional(json, "document_selfie_face_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.DocumentSelfieFaceMatches::fromJson)));
     }
 
     /**
@@ -2013,8 +2013,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.FrontImageQualityScore> frontImageQualityScore() {
-      return Json.optional(json, "front_image_quality_score", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.FrontImageQualityScore::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.IdVerifications.FrontImageQualityScore> frontImageQualityScore() {
+      return Json.optional(json, "front_image_quality_score", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.FrontImageQualityScore::fromJson));
     }
 
     /**
@@ -2023,8 +2023,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.BackImageQualityScore> backImageQualityScore() {
-      return Json.optional(json, "back_image_quality_score", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.BackImageQualityScore::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.IdVerifications.BackImageQualityScore> backImageQualityScore() {
+      return Json.optional(json, "back_image_quality_score", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.BackImageQualityScore::fromJson));
     }
 
     /**
@@ -2033,8 +2033,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.IdVerificationsItem.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.WarningsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.IdVerifications.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.Warnings::fromJson)));
     }
 
     /**
@@ -2043,8 +2043,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.IdVerificationsItem.MatchesItem>> matches() {
-      return Json.optional(json, "matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.MatchesItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.IdVerifications.Matches>> matches() {
+      return Json.optional(json, "matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.Matches::fromJson)));
     }
 
     /**
@@ -2053,8 +2053,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness> documentLiveness() {
-      return Json.optional(json, "document_liveness", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness> documentLiveness() {
+      return Json.optional(json, "document_liveness", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness::fromJson));
     }
 
     @Override
@@ -2062,11 +2062,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link IdVerificationsItem}. */
+    /** Builds a {@link IdVerifications}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(IdVerificationsItem from) {
+      private Builder(IdVerifications from) {
         super(from);
       }
 
@@ -2086,8 +2086,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param verificationMethod the value
        * @return this builder
        */
-      public Builder verificationMethod(SessionsRetrieveDecisionResponse.IdVerificationsItem.VerificationMethod verificationMethod) {
-        return set("verification_method", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.VerificationMethod::of), verificationMethod);
+      public Builder verificationMethod(SessionsRetrieveDecisionResponse.IdVerifications.VerificationMethod verificationMethod) {
+        return set("verification_method", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.VerificationMethod::of), verificationMethod);
       }
 
       /**
@@ -2096,8 +2096,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param assurance the value
        * @return this builder
        */
-      public Builder assurance(SessionsRetrieveDecisionResponse.IdVerificationsItem.Assurance assurance) {
-        return set("assurance", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.Assurance::of), assurance);
+      public Builder assurance(SessionsRetrieveDecisionResponse.IdVerifications.Assurance assurance) {
+        return set("assurance", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.Assurance::of), assurance);
       }
 
       /**
@@ -2116,8 +2116,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param fallbackFrom the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder fallbackFrom(SessionsRetrieveDecisionResponse.IdVerificationsItem.@Nullable FallbackFrom fallbackFrom) {
-        return setNullable("fallback_from", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.FallbackFrom::fromJson), fallbackFrom);
+      public Builder fallbackFrom(SessionsRetrieveDecisionResponse.IdVerifications.@Nullable FallbackFrom fallbackFrom) {
+        return setNullable("fallback_from", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.FallbackFrom::fromJson), fallbackFrom);
       }
 
       /**
@@ -2126,8 +2126,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param idLookup the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder idLookup(SessionsRetrieveDecisionResponse.IdVerificationsItem.@Nullable IdLookup idLookup) {
-        return setNullable("id_lookup", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup::fromJson), idLookup);
+      public Builder idLookup(SessionsRetrieveDecisionResponse.IdVerifications.@Nullable IdLookup idLookup) {
+        return setNullable("id_lookup", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.IdLookup::fromJson), idLookup);
       }
 
       /**
@@ -2136,8 +2136,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param walletVerification the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder walletVerification(SessionsRetrieveDecisionResponse.IdVerificationsItem.@Nullable WalletVerification walletVerification) {
-        return setNullable("wallet_verification", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.WalletVerification::fromJson), walletVerification);
+      public Builder walletVerification(SessionsRetrieveDecisionResponse.IdVerifications.@Nullable WalletVerification walletVerification) {
+        return setNullable("wallet_verification", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.WalletVerification::fromJson), walletVerification);
       }
 
       /**
@@ -2146,8 +2146,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(SessionsRetrieveDecisionResponse.IdVerificationsItem.Status status) {
-        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.Status::of), status);
+      public Builder status(SessionsRetrieveDecisionResponse.IdVerifications.Status status) {
+        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.Status::of), status);
       }
 
       /**
@@ -2436,8 +2436,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param extraFields the value
        * @return this builder
        */
-      public Builder extraFields(SessionsRetrieveDecisionResponse.IdVerificationsItem.ExtraFields extraFields) {
-        return set("extra_fields", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ExtraFields::fromJson), extraFields);
+      public Builder extraFields(SessionsRetrieveDecisionResponse.IdVerifications.ExtraFields extraFields) {
+        return set("extra_fields", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ExtraFields::fromJson), extraFields);
       }
 
       /**
@@ -2446,8 +2446,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param mrz the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder mrz(SessionsRetrieveDecisionResponse.IdVerificationsItem.@Nullable Mrz mrz) {
-        return setNullable("mrz", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.Mrz::fromJson), mrz);
+      public Builder mrz(SessionsRetrieveDecisionResponse.IdVerifications.@Nullable Mrz mrz) {
+        return setNullable("mrz", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.Mrz::fromJson), mrz);
       }
 
       /**
@@ -2456,8 +2456,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param parsedAddress the value
        * @return this builder
        */
-      public Builder parsedAddress(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress parsedAddress) {
-        return set("parsed_address", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress::fromJson), parsedAddress);
+      public Builder parsedAddress(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress parsedAddress) {
+        return set("parsed_address", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress::fromJson), parsedAddress);
       }
 
       /**
@@ -2496,8 +2496,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param documentSelfieFaceMatches the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder documentSelfieFaceMatches(@Nullable List<SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem> documentSelfieFaceMatches) {
-        return setNullable("document_selfie_face_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem::fromJson)), documentSelfieFaceMatches);
+      public Builder documentSelfieFaceMatches(@Nullable List<SessionsRetrieveDecisionResponse.IdVerifications.DocumentSelfieFaceMatches> documentSelfieFaceMatches) {
+        return setNullable("document_selfie_face_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.DocumentSelfieFaceMatches::fromJson)), documentSelfieFaceMatches);
       }
 
       /**
@@ -2506,8 +2506,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param frontImageQualityScore the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder frontImageQualityScore(SessionsRetrieveDecisionResponse.IdVerificationsItem.@Nullable FrontImageQualityScore frontImageQualityScore) {
-        return setNullable("front_image_quality_score", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.FrontImageQualityScore::fromJson), frontImageQualityScore);
+      public Builder frontImageQualityScore(SessionsRetrieveDecisionResponse.IdVerifications.@Nullable FrontImageQualityScore frontImageQualityScore) {
+        return setNullable("front_image_quality_score", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.FrontImageQualityScore::fromJson), frontImageQualityScore);
       }
 
       /**
@@ -2516,8 +2516,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param backImageQualityScore the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder backImageQualityScore(SessionsRetrieveDecisionResponse.IdVerificationsItem.@Nullable BackImageQualityScore backImageQualityScore) {
-        return setNullable("back_image_quality_score", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.BackImageQualityScore::fromJson), backImageQualityScore);
+      public Builder backImageQualityScore(SessionsRetrieveDecisionResponse.IdVerifications.@Nullable BackImageQualityScore backImageQualityScore) {
+        return setNullable("back_image_quality_score", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.BackImageQualityScore::fromJson), backImageQualityScore);
       }
 
       /**
@@ -2526,8 +2526,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<SessionsRetrieveDecisionResponse.IdVerificationsItem.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<SessionsRetrieveDecisionResponse.IdVerifications.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.Warnings::fromJson)), warnings);
       }
 
       /**
@@ -2536,8 +2536,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param matches the value
        * @return this builder
        */
-      public Builder matches(List<SessionsRetrieveDecisionResponse.IdVerificationsItem.MatchesItem> matches) {
-        return set("matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.MatchesItem::fromJson)), matches);
+      public Builder matches(List<SessionsRetrieveDecisionResponse.IdVerifications.Matches> matches) {
+        return set("matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.Matches::fromJson)), matches);
       }
 
       /**
@@ -2546,17 +2546,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param documentLiveness the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder documentLiveness(SessionsRetrieveDecisionResponse.IdVerificationsItem.@Nullable DocumentLiveness documentLiveness) {
-        return setNullable("document_liveness", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness::fromJson), documentLiveness);
+      public Builder documentLiveness(SessionsRetrieveDecisionResponse.IdVerifications.@Nullable DocumentLiveness documentLiveness) {
+        return setNullable("document_liveness", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness::fromJson), documentLiveness);
       }
 
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code IdVerificationsItem}
+       * @return a new immutable {@code IdVerifications}
        */
-      public IdVerificationsItem build() {
-        return new IdVerificationsItem(buildJson(), buildFiles());
+      public IdVerifications build() {
+        return new IdVerifications(buildJson(), buildFiles());
       }
 
       @Override
@@ -2702,8 +2702,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.FallbackFrom.Method> method() {
-        return Json.optional(json, "method", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.FallbackFrom.Method::of));
+      public Optional<SessionsRetrieveDecisionResponse.IdVerifications.FallbackFrom.Method> method() {
+        return Json.optional(json, "method", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.FallbackFrom.Method::of));
       }
 
       /**
@@ -2745,8 +2745,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param method the value
          * @return this builder
          */
-        public Builder method(SessionsRetrieveDecisionResponse.IdVerificationsItem.FallbackFrom.Method method) {
-          return set("method", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.FallbackFrom.Method::of), method);
+        public Builder method(SessionsRetrieveDecisionResponse.IdVerifications.FallbackFrom.Method method) {
+          return set("method", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.FallbackFrom.Method::of), method);
         }
 
         /**
@@ -2913,8 +2913,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.Outcome> outcome() {
-        return Json.optional(json, "outcome", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.Outcome::of));
+      public Optional<SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Outcome> outcome() {
+        return Json.optional(json, "outcome", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Outcome::of));
       }
 
       /**
@@ -2923,8 +2923,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.ComparisonItem>> comparison() {
-        return Json.optional(json, "comparison", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.ComparisonItem::fromJson)));
+      public Optional<List<SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Comparison>> comparison() {
+        return Json.optional(json, "comparison", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Comparison::fromJson)));
       }
 
       /**
@@ -3006,8 +3006,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param outcome the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder outcome(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.@Nullable Outcome outcome) {
-          return setNullable("outcome", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.Outcome::of), outcome);
+        public Builder outcome(SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.@Nullable Outcome outcome) {
+          return setNullable("outcome", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Outcome::of), outcome);
         }
 
         /**
@@ -3016,8 +3016,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param comparison the value
          * @return this builder
          */
-        public Builder comparison(List<SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.ComparisonItem> comparison) {
-          return set("comparison", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.ComparisonItem::fromJson)), comparison);
+        public Builder comparison(List<SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Comparison> comparison) {
+          return set("comparison", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Comparison::fromJson)), comparison);
         }
 
         /**
@@ -3107,22 +3107,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
       }
 
-      public static final class ComparisonItem extends JsonModel {
+      public static final class Comparison extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("field", "label", "provided", "record", "result");
 
-        private ComparisonItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private Comparison(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code ComparisonItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code Comparison} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static ComparisonItem fromJson(JsonNode json) {
-          return new ComparisonItem(Json.copyObject(json), Map.of());
+        public static Comparison fromJson(JsonNode json) {
+          return new Comparison(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -3149,8 +3149,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value
          * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
          */
-        public SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.ComparisonItem.Field field() {
-          return Json.required(json, "field", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.ComparisonItem.Field::of));
+        public SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Comparison.Field field() {
+          return Json.required(json, "field", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Comparison.Field::of));
         }
 
         /**
@@ -3189,8 +3189,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value
          * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
          */
-        public SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.ComparisonItem.Result result() {
-          return Json.required(json, "result", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.ComparisonItem.Result::of));
+        public SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Comparison.Result result() {
+          return Json.required(json, "result", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Comparison.Result::of));
         }
 
         @Override
@@ -3198,11 +3198,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link ComparisonItem}. */
+        /** Builds a {@link Comparison}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(ComparisonItem from) {
+          private Builder(Comparison from) {
             super(from);
           }
 
@@ -3212,8 +3212,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param field the value
            * @return this builder
            */
-          public Builder field(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.ComparisonItem.Field field) {
-            return set("field", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.ComparisonItem.Field::of), field);
+          public Builder field(SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Comparison.Field field) {
+            return set("field", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Comparison.Field::of), field);
           }
 
           /**
@@ -3252,23 +3252,23 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param result the value
            * @return this builder
            */
-          public Builder result(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.ComparisonItem.Result result) {
-            return set("result", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.IdLookup.ComparisonItem.Result::of), result);
+          public Builder result(SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Comparison.Result result) {
+            return set("result", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.IdLookup.Comparison.Result::of), result);
           }
 
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code ComparisonItem}
+           * @return a new immutable {@code Comparison}
            * @throws IllegalStateException when a required field is missing
            */
-          public ComparisonItem build() {
+          public Comparison build() {
             require("field", false);
             require("label", false);
             require("provided", true);
             require("record", true);
             require("result", false);
-            return new ComparisonItem(buildJson(), buildFiles());
+            return new Comparison(buildJson(), buildFiles());
           }
 
           @Override
@@ -3475,8 +3475,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.WalletVerification.LevelOfAssurance> levelOfAssurance() {
-        return Json.optional(json, "level_of_assurance", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.WalletVerification.LevelOfAssurance::of));
+      public Optional<SessionsRetrieveDecisionResponse.IdVerifications.WalletVerification.LevelOfAssurance> levelOfAssurance() {
+        return Json.optional(json, "level_of_assurance", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.WalletVerification.LevelOfAssurance::of));
       }
 
       /**
@@ -3598,8 +3598,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param levelOfAssurance the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder levelOfAssurance(SessionsRetrieveDecisionResponse.IdVerificationsItem.WalletVerification.@Nullable LevelOfAssurance levelOfAssurance) {
-          return setNullable("level_of_assurance", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.WalletVerification.LevelOfAssurance::of), levelOfAssurance);
+        public Builder levelOfAssurance(SessionsRetrieveDecisionResponse.IdVerifications.WalletVerification.@Nullable LevelOfAssurance levelOfAssurance) {
+          return setNullable("level_of_assurance", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.WalletVerification.LevelOfAssurance::of), levelOfAssurance);
         }
 
         /**
@@ -4735,8 +4735,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults> rawResults() {
-        return Json.optional(json, "raw_results", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults> rawResults() {
+        return Json.optional(json, "raw_results", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults::fromJson));
       }
 
       /**
@@ -4755,8 +4755,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.DocumentLocation> documentLocation() {
-        return Json.optional(json, "document_location", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.DocumentLocation::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.DocumentLocation> documentLocation() {
+        return Json.optional(json, "document_location", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.DocumentLocation::fromJson));
       }
 
       /**
@@ -4878,8 +4878,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param rawResults the value
          * @return this builder
          */
-        public Builder rawResults(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults rawResults) {
-          return set("raw_results", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults::fromJson), rawResults);
+        public Builder rawResults(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults rawResults) {
+          return set("raw_results", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults::fromJson), rawResults);
         }
 
         /**
@@ -4898,8 +4898,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param documentLocation the value
          * @return this builder
          */
-        public Builder documentLocation(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.DocumentLocation documentLocation) {
-          return set("document_location", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.DocumentLocation::fromJson), documentLocation);
+        public Builder documentLocation(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.DocumentLocation documentLocation) {
+          return set("document_location", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.DocumentLocation::fromJson), documentLocation);
         }
 
         /**
@@ -4979,8 +4979,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry> geometry() {
-          return Json.optional(json, "geometry", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry::fromJson));
+        public Optional<SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry> geometry() {
+          return Json.optional(json, "geometry", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry::fromJson));
         }
 
         /**
@@ -5009,8 +5009,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<List<SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.NavigationPointsItem>> navigationPoints() {
-          return Json.optional(json, "navigation_points", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.NavigationPointsItem::fromJson)));
+        public Optional<List<SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.NavigationPoints>> navigationPoints() {
+          return Json.optional(json, "navigation_points", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.NavigationPoints::fromJson)));
         }
 
         /**
@@ -5019,8 +5019,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<List<SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.AddressComponentsItem>> addressComponents() {
-          return Json.optional(json, "address_components", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.AddressComponentsItem::fromJson)));
+        public Optional<List<SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.AddressComponents>> addressComponents() {
+          return Json.optional(json, "address_components", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.AddressComponents::fromJson)));
         }
 
         @Override
@@ -5052,8 +5052,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param geometry the value
            * @return this builder
            */
-          public Builder geometry(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry geometry) {
-            return set("geometry", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry::fromJson), geometry);
+          public Builder geometry(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry geometry) {
+            return set("geometry", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry::fromJson), geometry);
           }
 
           /**
@@ -5082,8 +5082,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param navigationPoints the value
            * @return this builder
            */
-          public Builder navigationPoints(List<SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.NavigationPointsItem> navigationPoints) {
-            return set("navigation_points", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.NavigationPointsItem::fromJson)), navigationPoints);
+          public Builder navigationPoints(List<SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.NavigationPoints> navigationPoints) {
+            return set("navigation_points", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.NavigationPoints::fromJson)), navigationPoints);
           }
 
           /**
@@ -5092,8 +5092,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param addressComponents the value
            * @return this builder
            */
-          public Builder addressComponents(List<SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.AddressComponentsItem> addressComponents) {
-            return set("address_components", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.AddressComponentsItem::fromJson)), addressComponents);
+          public Builder addressComponents(List<SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.AddressComponents> addressComponents) {
+            return set("address_components", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.AddressComponents::fromJson)), addressComponents);
           }
 
           /**
@@ -5153,8 +5153,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Location> location() {
-            return Json.optional(json, "location", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Location::fromJson));
+          public Optional<SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Location> location() {
+            return Json.optional(json, "location", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Location::fromJson));
           }
 
           /**
@@ -5163,8 +5163,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Viewport> viewport() {
-            return Json.optional(json, "viewport", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Viewport::fromJson));
+          public Optional<SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Viewport> viewport() {
+            return Json.optional(json, "viewport", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Viewport::fromJson));
           }
 
           /**
@@ -5196,8 +5196,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param location the value
              * @return this builder
              */
-            public Builder location(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Location location) {
-              return set("location", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Location::fromJson), location);
+            public Builder location(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Location location) {
+              return set("location", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Location::fromJson), location);
             }
 
             /**
@@ -5206,8 +5206,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param viewport the value
              * @return this builder
              */
-            public Builder viewport(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Viewport viewport) {
-              return set("viewport", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Viewport::fromJson), viewport);
+            public Builder viewport(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Viewport viewport) {
+              return set("viewport", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Viewport::fromJson), viewport);
             }
 
             /**
@@ -5382,8 +5382,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
              */
-            public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Viewport.Northeast> northeast() {
-              return Json.optional(json, "northeast", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Viewport.Northeast::fromJson));
+            public Optional<SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Viewport.Northeast> northeast() {
+              return Json.optional(json, "northeast", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Viewport.Northeast::fromJson));
             }
 
             /**
@@ -5392,8 +5392,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
              */
-            public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Viewport.Southwest> southwest() {
-              return Json.optional(json, "southwest", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Viewport.Southwest::fromJson));
+            public Optional<SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Viewport.Southwest> southwest() {
+              return Json.optional(json, "southwest", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Viewport.Southwest::fromJson));
             }
 
             @Override
@@ -5415,8 +5415,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
                * @param northeast the value
                * @return this builder
                */
-              public Builder northeast(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Viewport.Northeast northeast) {
-                return set("northeast", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Viewport.Northeast::fromJson), northeast);
+              public Builder northeast(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Viewport.Northeast northeast) {
+                return set("northeast", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Viewport.Northeast::fromJson), northeast);
               }
 
               /**
@@ -5425,8 +5425,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
                * @param southwest the value
                * @return this builder
                */
-              public Builder southwest(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Viewport.Southwest southwest) {
-                return set("southwest", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.Geometry.Viewport.Southwest::fromJson), southwest);
+              public Builder southwest(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Viewport.Southwest southwest) {
+                return set("southwest", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.Geometry.Viewport.Southwest::fromJson), southwest);
               }
 
               /**
@@ -5656,22 +5656,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
         }
 
-        public static final class NavigationPointsItem extends JsonModel {
+        public static final class NavigationPoints extends JsonModel {
           private static final Set<String> KNOWN_FIELDS = Set.of("location");
 
-          private NavigationPointsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+          private NavigationPoints(ObjectNode json, Map<String, List<FileUpload>> files) {
             super(json, files);
           }
 
           /**
-           * Reads a {@code NavigationPointsItem} from JSON. Unknown fields are kept and readable
+           * Reads a {@code NavigationPoints} from JSON. Unknown fields are kept and readable
            * through {@link #_additionalProperties()}.
            *
            * @param json a JSON object
            * @return the parsed value
            */
-          public static NavigationPointsItem fromJson(JsonNode json) {
-            return new NavigationPointsItem(Json.copyObject(json), Map.of());
+          public static NavigationPoints fromJson(JsonNode json) {
+            return new NavigationPoints(Json.copyObject(json), Map.of());
           }
 
           /**
@@ -5698,8 +5698,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.NavigationPointsItem.Location> location() {
-            return Json.optional(json, "location", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.NavigationPointsItem.Location::fromJson));
+          public Optional<SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.NavigationPoints.Location> location() {
+            return Json.optional(json, "location", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.NavigationPoints.Location::fromJson));
           }
 
           @Override
@@ -5707,11 +5707,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             return KNOWN_FIELDS;
           }
 
-          /** Builds a {@link NavigationPointsItem}. */
+          /** Builds a {@link NavigationPoints}. */
           public static final class Builder extends JsonModel.BaseBuilder<Builder> {
             private Builder() {}
 
-            private Builder(NavigationPointsItem from) {
+            private Builder(NavigationPoints from) {
               super(from);
             }
 
@@ -5721,17 +5721,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param location the value
              * @return this builder
              */
-            public Builder location(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.NavigationPointsItem.Location location) {
-              return set("location", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.ParsedAddress.RawResults.NavigationPointsItem.Location::fromJson), location);
+            public Builder location(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.NavigationPoints.Location location) {
+              return set("location", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.ParsedAddress.RawResults.NavigationPoints.Location::fromJson), location);
             }
 
             /**
              * Builds the value.
              *
-             * @return a new immutable {@code NavigationPointsItem}
+             * @return a new immutable {@code NavigationPoints}
              */
-            public NavigationPointsItem build() {
-              return new NavigationPointsItem(buildJson(), buildFiles());
+            public NavigationPoints build() {
+              return new NavigationPoints(buildJson(), buildFiles());
             }
 
             @Override
@@ -5846,22 +5846,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
         }
 
-        public static final class AddressComponentsItem extends JsonModel {
+        public static final class AddressComponents extends JsonModel {
           private static final Set<String> KNOWN_FIELDS = Set.of("types", "long_name", "short_name");
 
-          private AddressComponentsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+          private AddressComponents(ObjectNode json, Map<String, List<FileUpload>> files) {
             super(json, files);
           }
 
           /**
-           * Reads a {@code AddressComponentsItem} from JSON. Unknown fields are kept and readable
+           * Reads a {@code AddressComponents} from JSON. Unknown fields are kept and readable
            * through {@link #_additionalProperties()}.
            *
            * @param json a JSON object
            * @return the parsed value
            */
-          public static AddressComponentsItem fromJson(JsonNode json) {
-            return new AddressComponentsItem(Json.copyObject(json), Map.of());
+          public static AddressComponents fromJson(JsonNode json) {
+            return new AddressComponents(Json.copyObject(json), Map.of());
           }
 
           /**
@@ -5917,11 +5917,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             return KNOWN_FIELDS;
           }
 
-          /** Builds a {@link AddressComponentsItem}. */
+          /** Builds a {@link AddressComponents}. */
           public static final class Builder extends JsonModel.BaseBuilder<Builder> {
             private Builder() {}
 
-            private Builder(AddressComponentsItem from) {
+            private Builder(AddressComponents from) {
               super(from);
             }
 
@@ -5958,10 +5958,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             /**
              * Builds the value.
              *
-             * @return a new immutable {@code AddressComponentsItem}
+             * @return a new immutable {@code AddressComponents}
              */
-            public AddressComponentsItem build() {
-              return new AddressComponentsItem(buildJson(), buildFiles());
+            public AddressComponents build() {
+              return new AddressComponents(buildJson(), buildFiles());
             }
 
             @Override
@@ -6078,22 +6078,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class DocumentSelfieFaceMatchesItem extends JsonModel {
+    public static final class DocumentSelfieFaceMatches extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_number", "similarity_percentage", "vendor_data", "vendor_user_id", "biometric_template_id", "verification_date", "user_details", "match_image_url", "status", "is_blocklisted", "is_allowlisted", "api_service", "source");
 
-      private DocumentSelfieFaceMatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private DocumentSelfieFaceMatches(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code DocumentSelfieFaceMatchesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code DocumentSelfieFaceMatches} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static DocumentSelfieFaceMatchesItem fromJson(JsonNode json) {
-        return new DocumentSelfieFaceMatchesItem(Json.copyObject(json), Map.of());
+      public static DocumentSelfieFaceMatches fromJson(JsonNode json) {
+        return new DocumentSelfieFaceMatches(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -6190,8 +6190,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem.UserDetails> userDetails() {
-        return Json.optional(json, "user_details", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem.UserDetails::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.IdVerifications.DocumentSelfieFaceMatches.UserDetails> userDetails() {
+        return Json.optional(json, "user_details", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.DocumentSelfieFaceMatches.UserDetails::fromJson));
       }
 
       /**
@@ -6250,8 +6250,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem.Source> source() {
-        return Json.optional(json, "source", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem.Source::of));
+      public Optional<SessionsRetrieveDecisionResponse.IdVerifications.DocumentSelfieFaceMatches.Source> source() {
+        return Json.optional(json, "source", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.DocumentSelfieFaceMatches.Source::of));
       }
 
       @Override
@@ -6259,11 +6259,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link DocumentSelfieFaceMatchesItem}. */
+      /** Builds a {@link DocumentSelfieFaceMatches}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(DocumentSelfieFaceMatchesItem from) {
+        private Builder(DocumentSelfieFaceMatches from) {
           super(from);
         }
 
@@ -6343,8 +6343,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param userDetails the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder userDetails(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem.@Nullable UserDetails userDetails) {
-          return setNullable("user_details", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem.UserDetails::fromJson), userDetails);
+        public Builder userDetails(SessionsRetrieveDecisionResponse.IdVerifications.DocumentSelfieFaceMatches.@Nullable UserDetails userDetails) {
+          return setNullable("user_details", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.DocumentSelfieFaceMatches.UserDetails::fromJson), userDetails);
         }
 
         /**
@@ -6403,17 +6403,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param source the value
          * @return this builder
          */
-        public Builder source(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem.Source source) {
-          return set("source", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentSelfieFaceMatchesItem.Source::of), source);
+        public Builder source(SessionsRetrieveDecisionResponse.IdVerifications.DocumentSelfieFaceMatches.Source source) {
+          return set("source", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.DocumentSelfieFaceMatches.Source::of), source);
         }
 
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code DocumentSelfieFaceMatchesItem}
+         * @return a new immutable {@code DocumentSelfieFaceMatches}
          */
-        public DocumentSelfieFaceMatchesItem build() {
-          return new DocumentSelfieFaceMatchesItem(buildJson(), buildFiles());
+        public DocumentSelfieFaceMatches build() {
+          return new DocumentSelfieFaceMatches(buildJson(), buildFiles());
         }
 
         @Override
@@ -6663,8 +6663,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.FrontImageQualityScore.BrightnessIssue> brightnessIssue() {
-        return Json.optional(json, "brightness_issue", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.FrontImageQualityScore.BrightnessIssue::of));
+      public Optional<SessionsRetrieveDecisionResponse.IdVerifications.FrontImageQualityScore.BrightnessIssue> brightnessIssue() {
+        return Json.optional(json, "brightness_issue", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.FrontImageQualityScore.BrightnessIssue::of));
       }
 
       /**
@@ -6736,8 +6736,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param brightnessIssue the value
          * @return this builder
          */
-        public Builder brightnessIssue(SessionsRetrieveDecisionResponse.IdVerificationsItem.FrontImageQualityScore.BrightnessIssue brightnessIssue) {
-          return set("brightness_issue", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.FrontImageQualityScore.BrightnessIssue::of), brightnessIssue);
+        public Builder brightnessIssue(SessionsRetrieveDecisionResponse.IdVerifications.FrontImageQualityScore.BrightnessIssue brightnessIssue) {
+          return set("brightness_issue", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.FrontImageQualityScore.BrightnessIssue::of), brightnessIssue);
         }
 
         /**
@@ -6895,8 +6895,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.BackImageQualityScore.BrightnessIssue> brightnessIssue() {
-        return Json.optional(json, "brightness_issue", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.BackImageQualityScore.BrightnessIssue::of));
+      public Optional<SessionsRetrieveDecisionResponse.IdVerifications.BackImageQualityScore.BrightnessIssue> brightnessIssue() {
+        return Json.optional(json, "brightness_issue", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.BackImageQualityScore.BrightnessIssue::of));
       }
 
       /**
@@ -6968,8 +6968,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param brightnessIssue the value
          * @return this builder
          */
-        public Builder brightnessIssue(SessionsRetrieveDecisionResponse.IdVerificationsItem.BackImageQualityScore.BrightnessIssue brightnessIssue) {
-          return set("brightness_issue", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.BackImageQualityScore.BrightnessIssue::of), brightnessIssue);
+        public Builder brightnessIssue(SessionsRetrieveDecisionResponse.IdVerifications.BackImageQualityScore.BrightnessIssue brightnessIssue) {
+          return set("brightness_issue", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.BackImageQualityScore.BrightnessIssue::of), brightnessIssue);
         }
 
         /**
@@ -7064,22 +7064,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("feature", "risk", "additional_data", "log_type", "short_description", "long_description", "node_id");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -7106,8 +7106,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.WarningsItem.Feature> feature() {
-        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.WarningsItem.Feature::of));
+      public Optional<SessionsRetrieveDecisionResponse.IdVerifications.Warnings.Feature> feature() {
+        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.Warnings.Feature::of));
       }
 
       /**
@@ -7175,11 +7175,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -7189,8 +7189,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param feature the value
          * @return this builder
          */
-        public Builder feature(SessionsRetrieveDecisionResponse.IdVerificationsItem.WarningsItem.Feature feature) {
-          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.WarningsItem.Feature::of), feature);
+        public Builder feature(SessionsRetrieveDecisionResponse.IdVerifications.Warnings.Feature feature) {
+          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.Warnings.Feature::of), feature);
         }
 
         /**
@@ -7256,10 +7256,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override
@@ -7351,22 +7351,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class MatchesItem extends JsonModel {
+    public static final class Matches extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_number", "vendor_data", "verification_date", "user_details", "status", "is_blocklisted", "api_service", "front_image_url");
 
-      private MatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Matches(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code MatchesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Matches} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static MatchesItem fromJson(JsonNode json) {
-        return new MatchesItem(Json.copyObject(json), Map.of());
+      public static Matches fromJson(JsonNode json) {
+        return new Matches(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -7433,8 +7433,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.MatchesItem.UserDetails> userDetails() {
-        return Json.optional(json, "user_details", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.MatchesItem.UserDetails::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.IdVerifications.Matches.UserDetails> userDetails() {
+        return Json.optional(json, "user_details", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.Matches.UserDetails::fromJson));
       }
 
       /**
@@ -7482,11 +7482,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link MatchesItem}. */
+      /** Builds a {@link Matches}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(MatchesItem from) {
+        private Builder(Matches from) {
           super(from);
         }
 
@@ -7536,8 +7536,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param userDetails the value
          * @return this builder
          */
-        public Builder userDetails(SessionsRetrieveDecisionResponse.IdVerificationsItem.MatchesItem.UserDetails userDetails) {
-          return set("user_details", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.MatchesItem.UserDetails::fromJson), userDetails);
+        public Builder userDetails(SessionsRetrieveDecisionResponse.IdVerifications.Matches.UserDetails userDetails) {
+          return set("user_details", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.Matches.UserDetails::fromJson), userDetails);
         }
 
         /**
@@ -7583,10 +7583,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code MatchesItem}
+         * @return a new immutable {@code Matches}
          */
-        public MatchesItem build() {
-          return new MatchesItem(buildJson(), buildFiles());
+        public Matches build() {
+          return new Matches(buildJson(), buildFiles());
         }
 
         @Override
@@ -7766,8 +7766,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PortraitReplace> portraitReplace() {
-        return Json.optional(json, "portrait_replace", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PortraitReplace::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.PortraitReplace> portraitReplace() {
+        return Json.optional(json, "portrait_replace", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.PortraitReplace::fromJson));
       }
 
       /**
@@ -7776,8 +7776,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PrintedCopy> printedCopy() {
-        return Json.optional(json, "printed_copy", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PrintedCopy::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.PrintedCopy> printedCopy() {
+        return Json.optional(json, "printed_copy", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.PrintedCopy::fromJson));
       }
 
       /**
@@ -7786,8 +7786,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.ScreenReplay> screenReplay() {
-        return Json.optional(json, "screen_replay", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.ScreenReplay::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.ScreenReplay> screenReplay() {
+        return Json.optional(json, "screen_replay", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.ScreenReplay::fromJson));
       }
 
       @Override
@@ -7809,8 +7809,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param portraitReplace the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder portraitReplace(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.@Nullable PortraitReplace portraitReplace) {
-          return setNullable("portrait_replace", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PortraitReplace::fromJson), portraitReplace);
+        public Builder portraitReplace(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.@Nullable PortraitReplace portraitReplace) {
+          return setNullable("portrait_replace", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.PortraitReplace::fromJson), portraitReplace);
         }
 
         /**
@@ -7819,8 +7819,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param printedCopy the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder printedCopy(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.@Nullable PrintedCopy printedCopy) {
-          return setNullable("printed_copy", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PrintedCopy::fromJson), printedCopy);
+        public Builder printedCopy(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.@Nullable PrintedCopy printedCopy) {
+          return setNullable("printed_copy", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.PrintedCopy::fromJson), printedCopy);
         }
 
         /**
@@ -7829,8 +7829,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param screenReplay the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder screenReplay(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.@Nullable ScreenReplay screenReplay) {
-          return setNullable("screen_replay", Conv.model(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.ScreenReplay::fromJson), screenReplay);
+        public Builder screenReplay(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.@Nullable ScreenReplay screenReplay) {
+          return setNullable("screen_replay", Conv.model(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.ScreenReplay::fromJson), screenReplay);
         }
 
         /**
@@ -7940,8 +7940,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PortraitReplace.Bucket> bucket() {
-          return Json.optional(json, "bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PortraitReplace.Bucket::of));
+        public Optional<SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.PortraitReplace.Bucket> bucket() {
+          return Json.optional(json, "bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.PortraitReplace.Bucket::of));
         }
 
         @Override
@@ -8013,8 +8013,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param bucket the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder bucket(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PortraitReplace.@Nullable Bucket bucket) {
-            return setNullable("bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PortraitReplace.Bucket::of), bucket);
+          public Builder bucket(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.PortraitReplace.@Nullable Bucket bucket) {
+            return setNullable("bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.PortraitReplace.Bucket::of), bucket);
           }
 
           /**
@@ -8171,8 +8171,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PrintedCopy.Bucket> bucket() {
-          return Json.optional(json, "bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PrintedCopy.Bucket::of));
+        public Optional<SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.PrintedCopy.Bucket> bucket() {
+          return Json.optional(json, "bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.PrintedCopy.Bucket::of));
         }
 
         @Override
@@ -8244,8 +8244,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param bucket the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder bucket(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PrintedCopy.@Nullable Bucket bucket) {
-            return setNullable("bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.PrintedCopy.Bucket::of), bucket);
+          public Builder bucket(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.PrintedCopy.@Nullable Bucket bucket) {
+            return setNullable("bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.PrintedCopy.Bucket::of), bucket);
           }
 
           /**
@@ -8402,8 +8402,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.ScreenReplay.Bucket> bucket() {
-          return Json.optional(json, "bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.ScreenReplay.Bucket::of));
+        public Optional<SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.ScreenReplay.Bucket> bucket() {
+          return Json.optional(json, "bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.ScreenReplay.Bucket::of));
         }
 
         @Override
@@ -8475,8 +8475,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param bucket the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder bucket(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.ScreenReplay.@Nullable Bucket bucket) {
-            return setNullable("bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerificationsItem.DocumentLiveness.ScreenReplay.Bucket::of), bucket);
+          public Builder bucket(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.ScreenReplay.@Nullable Bucket bucket) {
+            return setNullable("bucket", Conv.enumeration(SessionsRetrieveDecisionResponse.IdVerifications.DocumentLiveness.ScreenReplay.Bucket::of), bucket);
           }
 
           /**
@@ -8599,22 +8599,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
   }
 
   /** One NFC report — the full report for a single ePassport chip read. */
-  public static final class NfcVerificationsItem extends JsonModel {
+  public static final class NfcVerifications extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "is_nfc_skipped", "skip_reason", "portrait_image", "signature_image", "chip_data", "authenticity", "certificate_summary", "warnings");
 
-    private NfcVerificationsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private NfcVerifications(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code NfcVerificationsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code NfcVerifications} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static NfcVerificationsItem fromJson(JsonNode json) {
-      return new NfcVerificationsItem(Json.copyObject(json), Map.of());
+    public static NfcVerifications fromJson(JsonNode json) {
+      return new NfcVerifications(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -8651,8 +8651,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.NfcVerificationsItem.Status> status() {
-      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.NfcVerificationsItem.Status::of));
+    public Optional<SessionsRetrieveDecisionResponse.NfcVerifications.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.NfcVerifications.Status::of));
     }
 
     /**
@@ -8671,8 +8671,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.NfcVerificationsItem.SkipReason> skipReason() {
-      return Json.optional(json, "skip_reason", Conv.enumeration(SessionsRetrieveDecisionResponse.NfcVerificationsItem.SkipReason::of));
+    public Optional<SessionsRetrieveDecisionResponse.NfcVerifications.SkipReason> skipReason() {
+      return Json.optional(json, "skip_reason", Conv.enumeration(SessionsRetrieveDecisionResponse.NfcVerifications.SkipReason::of));
     }
 
     /**
@@ -8701,8 +8701,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.NfcVerificationsItem.ChipData> chipData() {
-      return Json.optional(json, "chip_data", Conv.model(SessionsRetrieveDecisionResponse.NfcVerificationsItem.ChipData::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.NfcVerifications.ChipData> chipData() {
+      return Json.optional(json, "chip_data", Conv.model(SessionsRetrieveDecisionResponse.NfcVerifications.ChipData::fromJson));
     }
 
     /**
@@ -8711,8 +8711,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.NfcVerificationsItem.Authenticity> authenticity() {
-      return Json.optional(json, "authenticity", Conv.model(SessionsRetrieveDecisionResponse.NfcVerificationsItem.Authenticity::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.NfcVerifications.Authenticity> authenticity() {
+      return Json.optional(json, "authenticity", Conv.model(SessionsRetrieveDecisionResponse.NfcVerifications.Authenticity::fromJson));
     }
 
     /**
@@ -8721,8 +8721,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.NfcVerificationsItem.CertificateSummary> certificateSummary() {
-      return Json.optional(json, "certificate_summary", Conv.model(SessionsRetrieveDecisionResponse.NfcVerificationsItem.CertificateSummary::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.NfcVerifications.CertificateSummary> certificateSummary() {
+      return Json.optional(json, "certificate_summary", Conv.model(SessionsRetrieveDecisionResponse.NfcVerifications.CertificateSummary::fromJson));
     }
 
     /**
@@ -8731,8 +8731,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.NfcVerificationsItem.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.NfcVerificationsItem.WarningsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.NfcVerifications.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.NfcVerifications.Warnings::fromJson)));
     }
 
     @Override
@@ -8740,11 +8740,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link NfcVerificationsItem}. */
+    /** Builds a {@link NfcVerifications}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(NfcVerificationsItem from) {
+      private Builder(NfcVerifications from) {
         super(from);
       }
 
@@ -8764,8 +8764,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(SessionsRetrieveDecisionResponse.NfcVerificationsItem.Status status) {
-        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.NfcVerificationsItem.Status::of), status);
+      public Builder status(SessionsRetrieveDecisionResponse.NfcVerifications.Status status) {
+        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.NfcVerifications.Status::of), status);
       }
 
       /**
@@ -8784,8 +8784,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param skipReason the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder skipReason(SessionsRetrieveDecisionResponse.NfcVerificationsItem.@Nullable SkipReason skipReason) {
-        return setNullable("skip_reason", Conv.enumeration(SessionsRetrieveDecisionResponse.NfcVerificationsItem.SkipReason::of), skipReason);
+      public Builder skipReason(SessionsRetrieveDecisionResponse.NfcVerifications.@Nullable SkipReason skipReason) {
+        return setNullable("skip_reason", Conv.enumeration(SessionsRetrieveDecisionResponse.NfcVerifications.SkipReason::of), skipReason);
       }
 
       /**
@@ -8814,8 +8814,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param chipData the value
        * @return this builder
        */
-      public Builder chipData(SessionsRetrieveDecisionResponse.NfcVerificationsItem.ChipData chipData) {
-        return set("chip_data", Conv.model(SessionsRetrieveDecisionResponse.NfcVerificationsItem.ChipData::fromJson), chipData);
+      public Builder chipData(SessionsRetrieveDecisionResponse.NfcVerifications.ChipData chipData) {
+        return set("chip_data", Conv.model(SessionsRetrieveDecisionResponse.NfcVerifications.ChipData::fromJson), chipData);
       }
 
       /**
@@ -8824,8 +8824,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param authenticity the value
        * @return this builder
        */
-      public Builder authenticity(SessionsRetrieveDecisionResponse.NfcVerificationsItem.Authenticity authenticity) {
-        return set("authenticity", Conv.model(SessionsRetrieveDecisionResponse.NfcVerificationsItem.Authenticity::fromJson), authenticity);
+      public Builder authenticity(SessionsRetrieveDecisionResponse.NfcVerifications.Authenticity authenticity) {
+        return set("authenticity", Conv.model(SessionsRetrieveDecisionResponse.NfcVerifications.Authenticity::fromJson), authenticity);
       }
 
       /**
@@ -8834,8 +8834,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param certificateSummary the value
        * @return this builder
        */
-      public Builder certificateSummary(SessionsRetrieveDecisionResponse.NfcVerificationsItem.CertificateSummary certificateSummary) {
-        return set("certificate_summary", Conv.model(SessionsRetrieveDecisionResponse.NfcVerificationsItem.CertificateSummary::fromJson), certificateSummary);
+      public Builder certificateSummary(SessionsRetrieveDecisionResponse.NfcVerifications.CertificateSummary certificateSummary) {
+        return set("certificate_summary", Conv.model(SessionsRetrieveDecisionResponse.NfcVerifications.CertificateSummary::fromJson), certificateSummary);
       }
 
       /**
@@ -8844,17 +8844,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<SessionsRetrieveDecisionResponse.NfcVerificationsItem.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.NfcVerificationsItem.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<SessionsRetrieveDecisionResponse.NfcVerifications.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.NfcVerifications.Warnings::fromJson)), warnings);
       }
 
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code NfcVerificationsItem}
+       * @return a new immutable {@code NfcVerifications}
        */
-      public NfcVerificationsItem build() {
-        return new NfcVerificationsItem(buildJson(), buildFiles());
+      public NfcVerifications build() {
+        return new NfcVerifications(buildJson(), buildFiles());
       }
 
       @Override
@@ -9525,22 +9525,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("feature", "risk", "additional_data", "log_type", "short_description", "long_description", "node_id");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -9567,8 +9567,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.NfcVerificationsItem.WarningsItem.Feature> feature() {
-        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.NfcVerificationsItem.WarningsItem.Feature::of));
+      public Optional<SessionsRetrieveDecisionResponse.NfcVerifications.Warnings.Feature> feature() {
+        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.NfcVerifications.Warnings.Feature::of));
       }
 
       /**
@@ -9636,11 +9636,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -9650,8 +9650,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param feature the value
          * @return this builder
          */
-        public Builder feature(SessionsRetrieveDecisionResponse.NfcVerificationsItem.WarningsItem.Feature feature) {
-          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.NfcVerificationsItem.WarningsItem.Feature::of), feature);
+        public Builder feature(SessionsRetrieveDecisionResponse.NfcVerifications.Warnings.Feature feature) {
+          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.NfcVerifications.Warnings.Feature::of), feature);
         }
 
         /**
@@ -9717,10 +9717,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override
@@ -9814,22 +9814,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
   }
 
   /** One liveness report — the full report for a single liveness pass. */
-  public static final class LivenessChecksItem extends JsonModel {
+  public static final class LivenessChecks extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "method", "score", "reference_image", "video_url", "age_estimation", "matches", "warnings", "face_quality", "face_luminance");
 
-    private LivenessChecksItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private LivenessChecks(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code LivenessChecksItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code LivenessChecks} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static LivenessChecksItem fromJson(JsonNode json) {
-      return new LivenessChecksItem(Json.copyObject(json), Map.of());
+    public static LivenessChecks fromJson(JsonNode json) {
+      return new LivenessChecks(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -9866,8 +9866,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.LivenessChecksItem.Status> status() {
-      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.LivenessChecksItem.Status::of));
+    public Optional<SessionsRetrieveDecisionResponse.LivenessChecks.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.LivenessChecks.Status::of));
     }
 
     /**
@@ -9926,8 +9926,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem>> matches() {
-      return Json.optional(json, "matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.LivenessChecks.Matches>> matches() {
+      return Json.optional(json, "matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.LivenessChecks.Matches::fromJson)));
     }
 
     /**
@@ -9936,8 +9936,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.LivenessChecksItem.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.LivenessChecksItem.WarningsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.LivenessChecks.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.LivenessChecks.Warnings::fromJson)));
     }
 
     /**
@@ -9965,11 +9965,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link LivenessChecksItem}. */
+    /** Builds a {@link LivenessChecks}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(LivenessChecksItem from) {
+      private Builder(LivenessChecks from) {
         super(from);
       }
 
@@ -9989,8 +9989,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(SessionsRetrieveDecisionResponse.LivenessChecksItem.Status status) {
-        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.LivenessChecksItem.Status::of), status);
+      public Builder status(SessionsRetrieveDecisionResponse.LivenessChecks.Status status) {
+        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.LivenessChecks.Status::of), status);
       }
 
       /**
@@ -10049,8 +10049,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param matches the value
        * @return this builder
        */
-      public Builder matches(List<SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem> matches) {
-        return set("matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem::fromJson)), matches);
+      public Builder matches(List<SessionsRetrieveDecisionResponse.LivenessChecks.Matches> matches) {
+        return set("matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.LivenessChecks.Matches::fromJson)), matches);
       }
 
       /**
@@ -10059,8 +10059,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<SessionsRetrieveDecisionResponse.LivenessChecksItem.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.LivenessChecksItem.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<SessionsRetrieveDecisionResponse.LivenessChecks.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.LivenessChecks.Warnings::fromJson)), warnings);
       }
 
       /**
@@ -10086,10 +10086,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code LivenessChecksItem}
+       * @return a new immutable {@code LivenessChecks}
        */
-      public LivenessChecksItem build() {
-        return new LivenessChecksItem(buildJson(), buildFiles());
+      public LivenessChecks build() {
+        return new LivenessChecks(buildJson(), buildFiles());
       }
 
       @Override
@@ -10150,22 +10150,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class MatchesItem extends JsonModel {
+    public static final class Matches extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_number", "similarity_percentage", "vendor_data", "vendor_user_id", "biometric_template_id", "verification_date", "user_details", "match_image_url", "status", "is_blocklisted", "is_allowlisted", "api_service", "source");
 
-      private MatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Matches(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code MatchesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Matches} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static MatchesItem fromJson(JsonNode json) {
-        return new MatchesItem(Json.copyObject(json), Map.of());
+      public static Matches fromJson(JsonNode json) {
+        return new Matches(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -10262,8 +10262,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem.UserDetails> userDetails() {
-        return Json.optional(json, "user_details", Conv.model(SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem.UserDetails::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.LivenessChecks.Matches.UserDetails> userDetails() {
+        return Json.optional(json, "user_details", Conv.model(SessionsRetrieveDecisionResponse.LivenessChecks.Matches.UserDetails::fromJson));
       }
 
       /**
@@ -10322,8 +10322,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem.Source> source() {
-        return Json.optional(json, "source", Conv.enumeration(SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem.Source::of));
+      public Optional<SessionsRetrieveDecisionResponse.LivenessChecks.Matches.Source> source() {
+        return Json.optional(json, "source", Conv.enumeration(SessionsRetrieveDecisionResponse.LivenessChecks.Matches.Source::of));
       }
 
       @Override
@@ -10331,11 +10331,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link MatchesItem}. */
+      /** Builds a {@link Matches}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(MatchesItem from) {
+        private Builder(Matches from) {
           super(from);
         }
 
@@ -10415,8 +10415,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param userDetails the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder userDetails(SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem.@Nullable UserDetails userDetails) {
-          return setNullable("user_details", Conv.model(SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem.UserDetails::fromJson), userDetails);
+        public Builder userDetails(SessionsRetrieveDecisionResponse.LivenessChecks.Matches.@Nullable UserDetails userDetails) {
+          return setNullable("user_details", Conv.model(SessionsRetrieveDecisionResponse.LivenessChecks.Matches.UserDetails::fromJson), userDetails);
         }
 
         /**
@@ -10475,17 +10475,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param source the value
          * @return this builder
          */
-        public Builder source(SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem.Source source) {
-          return set("source", Conv.enumeration(SessionsRetrieveDecisionResponse.LivenessChecksItem.MatchesItem.Source::of), source);
+        public Builder source(SessionsRetrieveDecisionResponse.LivenessChecks.Matches.Source source) {
+          return set("source", Conv.enumeration(SessionsRetrieveDecisionResponse.LivenessChecks.Matches.Source::of), source);
         }
 
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code MatchesItem}
+         * @return a new immutable {@code Matches}
          */
-        public MatchesItem build() {
-          return new MatchesItem(buildJson(), buildFiles());
+        public Matches build() {
+          return new Matches(buildJson(), buildFiles());
         }
 
         @Override
@@ -10672,22 +10672,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("feature", "risk", "additional_data", "log_type", "short_description", "long_description", "node_id");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -10714,8 +10714,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.LivenessChecksItem.WarningsItem.Feature> feature() {
-        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.LivenessChecksItem.WarningsItem.Feature::of));
+      public Optional<SessionsRetrieveDecisionResponse.LivenessChecks.Warnings.Feature> feature() {
+        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.LivenessChecks.Warnings.Feature::of));
       }
 
       /**
@@ -10783,11 +10783,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -10797,8 +10797,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param feature the value
          * @return this builder
          */
-        public Builder feature(SessionsRetrieveDecisionResponse.LivenessChecksItem.WarningsItem.Feature feature) {
-          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.LivenessChecksItem.WarningsItem.Feature::of), feature);
+        public Builder feature(SessionsRetrieveDecisionResponse.LivenessChecks.Warnings.Feature feature) {
+          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.LivenessChecks.Warnings.Feature::of), feature);
         }
 
         /**
@@ -10864,10 +10864,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override
@@ -10961,22 +10961,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
   }
 
   /** One face-match report — the full report. */
-  public static final class FaceMatchesItem extends JsonModel {
+  public static final class FaceMatches extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "score", "source_image_session_id", "source_image", "target_image", "warnings");
 
-    private FaceMatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private FaceMatches(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code FaceMatchesItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code FaceMatches} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static FaceMatchesItem fromJson(JsonNode json) {
-      return new FaceMatchesItem(Json.copyObject(json), Map.of());
+    public static FaceMatches fromJson(JsonNode json) {
+      return new FaceMatches(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -11013,8 +11013,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.FaceMatchesItem.Status> status() {
-      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.FaceMatchesItem.Status::of));
+    public Optional<SessionsRetrieveDecisionResponse.FaceMatches.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.FaceMatches.Status::of));
     }
 
     /**
@@ -11063,8 +11063,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.FaceMatchesItem.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.FaceMatchesItem.WarningsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.FaceMatches.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.FaceMatches.Warnings::fromJson)));
     }
 
     @Override
@@ -11072,11 +11072,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link FaceMatchesItem}. */
+    /** Builds a {@link FaceMatches}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(FaceMatchesItem from) {
+      private Builder(FaceMatches from) {
         super(from);
       }
 
@@ -11096,8 +11096,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(SessionsRetrieveDecisionResponse.FaceMatchesItem.Status status) {
-        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.FaceMatchesItem.Status::of), status);
+      public Builder status(SessionsRetrieveDecisionResponse.FaceMatches.Status status) {
+        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.FaceMatches.Status::of), status);
       }
 
       /**
@@ -11146,17 +11146,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<SessionsRetrieveDecisionResponse.FaceMatchesItem.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.FaceMatchesItem.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<SessionsRetrieveDecisionResponse.FaceMatches.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.FaceMatches.Warnings::fromJson)), warnings);
       }
 
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code FaceMatchesItem}
+       * @return a new immutable {@code FaceMatches}
        */
-      public FaceMatchesItem build() {
-        return new FaceMatchesItem(buildJson(), buildFiles());
+      public FaceMatches build() {
+        return new FaceMatches(buildJson(), buildFiles());
       }
 
       @Override
@@ -11217,22 +11217,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("feature", "risk", "additional_data", "log_type", "short_description", "long_description", "node_id");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -11259,8 +11259,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.FaceMatchesItem.WarningsItem.Feature> feature() {
-        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.FaceMatchesItem.WarningsItem.Feature::of));
+      public Optional<SessionsRetrieveDecisionResponse.FaceMatches.Warnings.Feature> feature() {
+        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.FaceMatches.Warnings.Feature::of));
       }
 
       /**
@@ -11328,11 +11328,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -11342,8 +11342,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param feature the value
          * @return this builder
          */
-        public Builder feature(SessionsRetrieveDecisionResponse.FaceMatchesItem.WarningsItem.Feature feature) {
-          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.FaceMatchesItem.WarningsItem.Feature::of), feature);
+        public Builder feature(SessionsRetrieveDecisionResponse.FaceMatches.Warnings.Feature feature) {
+          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.FaceMatches.Warnings.Feature::of), feature);
         }
 
         /**
@@ -11409,10 +11409,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override
@@ -11505,22 +11505,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
   }
 
-  public static final class PhoneVerificationsItem extends JsonModel {
+  public static final class PhoneVerifications extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "phone_number_prefix", "phone_number", "full_number", "country_code", "country_name", "carrier", "is_disposable", "is_virtual", "verification_method", "verification_attempts", "verified_at", "lifecycle", "warnings", "matches");
 
-    private PhoneVerificationsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private PhoneVerifications(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code PhoneVerificationsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code PhoneVerifications} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static PhoneVerificationsItem fromJson(JsonNode json) {
-      return new PhoneVerificationsItem(Json.copyObject(json), Map.of());
+    public static PhoneVerifications fromJson(JsonNode json) {
+      return new PhoneVerifications(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -11557,8 +11557,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.PhoneVerificationsItem.Status> status() {
-      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.Status::of));
+    public Optional<SessionsRetrieveDecisionResponse.PhoneVerifications.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.PhoneVerifications.Status::of));
     }
 
     /**
@@ -11617,8 +11617,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.PhoneVerificationsItem.Carrier> carrier() {
-      return Json.optional(json, "carrier", Conv.model(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.Carrier::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.PhoneVerifications.Carrier> carrier() {
+      return Json.optional(json, "carrier", Conv.model(SessionsRetrieveDecisionResponse.PhoneVerifications.Carrier::fromJson));
     }
 
     /**
@@ -11677,8 +11677,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.PhoneVerificationsItem.LifecycleItem>> lifecycle() {
-      return Json.optional(json, "lifecycle", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.LifecycleItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.PhoneVerifications.Lifecycle>> lifecycle() {
+      return Json.optional(json, "lifecycle", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerifications.Lifecycle::fromJson)));
     }
 
     /**
@@ -11687,8 +11687,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.PhoneVerificationsItem.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.WarningsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.PhoneVerifications.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerifications.Warnings::fromJson)));
     }
 
     /**
@@ -11697,8 +11697,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.PhoneVerificationsItem.MatchesItem>> matches() {
-      return Json.optional(json, "matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.MatchesItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.PhoneVerifications.Matches>> matches() {
+      return Json.optional(json, "matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerifications.Matches::fromJson)));
     }
 
     @Override
@@ -11706,11 +11706,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link PhoneVerificationsItem}. */
+    /** Builds a {@link PhoneVerifications}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(PhoneVerificationsItem from) {
+      private Builder(PhoneVerifications from) {
         super(from);
       }
 
@@ -11730,8 +11730,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.Status status) {
-        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.Status::of), status);
+      public Builder status(SessionsRetrieveDecisionResponse.PhoneVerifications.Status status) {
+        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.PhoneVerifications.Status::of), status);
       }
 
       /**
@@ -11790,8 +11790,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param carrier the value
        * @return this builder
        */
-      public Builder carrier(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.Carrier carrier) {
-        return set("carrier", Conv.model(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.Carrier::fromJson), carrier);
+      public Builder carrier(SessionsRetrieveDecisionResponse.PhoneVerifications.Carrier carrier) {
+        return set("carrier", Conv.model(SessionsRetrieveDecisionResponse.PhoneVerifications.Carrier::fromJson), carrier);
       }
 
       /**
@@ -11850,8 +11850,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param lifecycle the value
        * @return this builder
        */
-      public Builder lifecycle(List<SessionsRetrieveDecisionResponse.PhoneVerificationsItem.LifecycleItem> lifecycle) {
-        return set("lifecycle", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.LifecycleItem::fromJson)), lifecycle);
+      public Builder lifecycle(List<SessionsRetrieveDecisionResponse.PhoneVerifications.Lifecycle> lifecycle) {
+        return set("lifecycle", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerifications.Lifecycle::fromJson)), lifecycle);
       }
 
       /**
@@ -11860,8 +11860,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<SessionsRetrieveDecisionResponse.PhoneVerificationsItem.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<SessionsRetrieveDecisionResponse.PhoneVerifications.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerifications.Warnings::fromJson)), warnings);
       }
 
       /**
@@ -11870,17 +11870,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param matches the value
        * @return this builder
        */
-      public Builder matches(List<SessionsRetrieveDecisionResponse.PhoneVerificationsItem.MatchesItem> matches) {
-        return set("matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.MatchesItem::fromJson)), matches);
+      public Builder matches(List<SessionsRetrieveDecisionResponse.PhoneVerifications.Matches> matches) {
+        return set("matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PhoneVerifications.Matches::fromJson)), matches);
       }
 
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code PhoneVerificationsItem}
+       * @return a new immutable {@code PhoneVerifications}
        */
-      public PhoneVerificationsItem build() {
-        return new PhoneVerificationsItem(buildJson(), buildFiles());
+      public PhoneVerifications build() {
+        return new PhoneVerifications(buildJson(), buildFiles());
       }
 
       @Override
@@ -12046,22 +12046,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class LifecycleItem extends JsonModel {
+    public static final class Lifecycle extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("type", "timestamp", "details", "fee");
 
-      private LifecycleItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Lifecycle(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code LifecycleItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Lifecycle} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static LifecycleItem fromJson(JsonNode json) {
-        return new LifecycleItem(Json.copyObject(json), Map.of());
+      public static Lifecycle fromJson(JsonNode json) {
+        return new Lifecycle(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -12108,8 +12108,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.PhoneVerificationsItem.LifecycleItem.Details> details() {
-        return Json.optional(json, "details", Conv.model(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.LifecycleItem.Details::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.PhoneVerifications.Lifecycle.Details> details() {
+        return Json.optional(json, "details", Conv.model(SessionsRetrieveDecisionResponse.PhoneVerifications.Lifecycle.Details::fromJson));
       }
 
       /**
@@ -12127,11 +12127,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link LifecycleItem}. */
+      /** Builds a {@link Lifecycle}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(LifecycleItem from) {
+        private Builder(Lifecycle from) {
           super(from);
         }
 
@@ -12161,8 +12161,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param details the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder details(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.LifecycleItem.@Nullable Details details) {
-          return setNullable("details", Conv.model(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.LifecycleItem.Details::fromJson), details);
+        public Builder details(SessionsRetrieveDecisionResponse.PhoneVerifications.Lifecycle.@Nullable Details details) {
+          return setNullable("details", Conv.model(SessionsRetrieveDecisionResponse.PhoneVerifications.Lifecycle.Details::fromJson), details);
         }
 
         /**
@@ -12178,10 +12178,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code LifecycleItem}
+         * @return a new immutable {@code Lifecycle}
          */
-        public LifecycleItem build() {
-          return new LifecycleItem(buildJson(), buildFiles());
+        public Lifecycle build() {
+          return new Lifecycle(buildJson(), buildFiles());
         }
 
         @Override
@@ -12359,22 +12359,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("feature", "risk", "additional_data", "log_type", "short_description", "long_description", "node_id");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -12401,8 +12401,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.PhoneVerificationsItem.WarningsItem.Feature> feature() {
-        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.WarningsItem.Feature::of));
+      public Optional<SessionsRetrieveDecisionResponse.PhoneVerifications.Warnings.Feature> feature() {
+        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.PhoneVerifications.Warnings.Feature::of));
       }
 
       /**
@@ -12470,11 +12470,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -12484,8 +12484,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param feature the value
          * @return this builder
          */
-        public Builder feature(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.WarningsItem.Feature feature) {
-          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.WarningsItem.Feature::of), feature);
+        public Builder feature(SessionsRetrieveDecisionResponse.PhoneVerifications.Warnings.Feature feature) {
+          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.PhoneVerifications.Warnings.Feature::of), feature);
         }
 
         /**
@@ -12551,10 +12551,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override
@@ -12646,22 +12646,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class MatchesItem extends JsonModel {
+    public static final class Matches extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_number", "vendor_data", "verification_date", "phone_number", "status", "is_blocklisted", "api_service", "source");
 
-      private MatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Matches(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code MatchesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Matches} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static MatchesItem fromJson(JsonNode json) {
-        return new MatchesItem(Json.copyObject(json), Map.of());
+      public static Matches fromJson(JsonNode json) {
+        return new Matches(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -12768,8 +12768,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.PhoneVerificationsItem.MatchesItem.Source> source() {
-        return Json.optional(json, "source", Conv.enumeration(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.MatchesItem.Source::of));
+      public Optional<SessionsRetrieveDecisionResponse.PhoneVerifications.Matches.Source> source() {
+        return Json.optional(json, "source", Conv.enumeration(SessionsRetrieveDecisionResponse.PhoneVerifications.Matches.Source::of));
       }
 
       @Override
@@ -12777,11 +12777,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link MatchesItem}. */
+      /** Builds a {@link Matches}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(MatchesItem from) {
+        private Builder(Matches from) {
           super(from);
         }
 
@@ -12871,17 +12871,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param source the value
          * @return this builder
          */
-        public Builder source(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.MatchesItem.Source source) {
-          return set("source", Conv.enumeration(SessionsRetrieveDecisionResponse.PhoneVerificationsItem.MatchesItem.Source::of), source);
+        public Builder source(SessionsRetrieveDecisionResponse.PhoneVerifications.Matches.Source source) {
+          return set("source", Conv.enumeration(SessionsRetrieveDecisionResponse.PhoneVerifications.Matches.Source::of), source);
         }
 
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code MatchesItem}
+         * @return a new immutable {@code Matches}
          */
-        public MatchesItem build() {
-          return new MatchesItem(buildJson(), buildFiles());
+        public Matches build() {
+          return new Matches(buildJson(), buildFiles());
         }
 
         @Override
@@ -12935,22 +12935,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
   }
 
-  public static final class EmailVerificationsItem extends JsonModel {
+  public static final class EmailVerifications extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "email", "is_breached", "breaches", "is_disposable", "is_undeliverable", "verification_attempts", "verified_at", "warnings", "lifecycle", "matches");
 
-    private EmailVerificationsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private EmailVerifications(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code EmailVerificationsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code EmailVerifications} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static EmailVerificationsItem fromJson(JsonNode json) {
-      return new EmailVerificationsItem(Json.copyObject(json), Map.of());
+    public static EmailVerifications fromJson(JsonNode json) {
+      return new EmailVerifications(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -12987,8 +12987,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.EmailVerificationsItem.Status> status() {
-      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.EmailVerificationsItem.Status::of));
+    public Optional<SessionsRetrieveDecisionResponse.EmailVerifications.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.EmailVerifications.Status::of));
     }
 
     /**
@@ -13017,8 +13017,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.EmailVerificationsItem.BreachesItem>> breaches() {
-      return Json.optional(json, "breaches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerificationsItem.BreachesItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.EmailVerifications.Breaches>> breaches() {
+      return Json.optional(json, "breaches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerifications.Breaches::fromJson)));
     }
 
     /**
@@ -13067,8 +13067,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.EmailVerificationsItem.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerificationsItem.WarningsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.EmailVerifications.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerifications.Warnings::fromJson)));
     }
 
     /**
@@ -13077,8 +13077,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.EmailVerificationsItem.LifecycleItem>> lifecycle() {
-      return Json.optional(json, "lifecycle", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerificationsItem.LifecycleItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.EmailVerifications.Lifecycle>> lifecycle() {
+      return Json.optional(json, "lifecycle", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerifications.Lifecycle::fromJson)));
     }
 
     /**
@@ -13087,8 +13087,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.EmailVerificationsItem.MatchesItem>> matches() {
-      return Json.optional(json, "matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerificationsItem.MatchesItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.EmailVerifications.Matches>> matches() {
+      return Json.optional(json, "matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerifications.Matches::fromJson)));
     }
 
     @Override
@@ -13096,11 +13096,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link EmailVerificationsItem}. */
+    /** Builds a {@link EmailVerifications}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(EmailVerificationsItem from) {
+      private Builder(EmailVerifications from) {
         super(from);
       }
 
@@ -13120,8 +13120,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(SessionsRetrieveDecisionResponse.EmailVerificationsItem.Status status) {
-        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.EmailVerificationsItem.Status::of), status);
+      public Builder status(SessionsRetrieveDecisionResponse.EmailVerifications.Status status) {
+        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.EmailVerifications.Status::of), status);
       }
 
       /**
@@ -13150,8 +13150,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param breaches the value
        * @return this builder
        */
-      public Builder breaches(List<SessionsRetrieveDecisionResponse.EmailVerificationsItem.BreachesItem> breaches) {
-        return set("breaches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerificationsItem.BreachesItem::fromJson)), breaches);
+      public Builder breaches(List<SessionsRetrieveDecisionResponse.EmailVerifications.Breaches> breaches) {
+        return set("breaches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerifications.Breaches::fromJson)), breaches);
       }
 
       /**
@@ -13200,8 +13200,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<SessionsRetrieveDecisionResponse.EmailVerificationsItem.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerificationsItem.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<SessionsRetrieveDecisionResponse.EmailVerifications.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerifications.Warnings::fromJson)), warnings);
       }
 
       /**
@@ -13210,8 +13210,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param lifecycle the value
        * @return this builder
        */
-      public Builder lifecycle(List<SessionsRetrieveDecisionResponse.EmailVerificationsItem.LifecycleItem> lifecycle) {
-        return set("lifecycle", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerificationsItem.LifecycleItem::fromJson)), lifecycle);
+      public Builder lifecycle(List<SessionsRetrieveDecisionResponse.EmailVerifications.Lifecycle> lifecycle) {
+        return set("lifecycle", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerifications.Lifecycle::fromJson)), lifecycle);
       }
 
       /**
@@ -13220,17 +13220,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param matches the value
        * @return this builder
        */
-      public Builder matches(List<SessionsRetrieveDecisionResponse.EmailVerificationsItem.MatchesItem> matches) {
-        return set("matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerificationsItem.MatchesItem::fromJson)), matches);
+      public Builder matches(List<SessionsRetrieveDecisionResponse.EmailVerifications.Matches> matches) {
+        return set("matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.EmailVerifications.Matches::fromJson)), matches);
       }
 
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code EmailVerificationsItem}
+       * @return a new immutable {@code EmailVerifications}
        */
-      public EmailVerificationsItem build() {
-        return new EmailVerificationsItem(buildJson(), buildFiles());
+      public EmailVerifications build() {
+        return new EmailVerifications(buildJson(), buildFiles());
       }
 
       @Override
@@ -13291,22 +13291,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class BreachesItem extends JsonModel {
+    public static final class Breaches extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("name", "domain", "logo_path", "breach_date", "description", "is_verified", "data_classes", "breach_emails_count");
 
-      private BreachesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Breaches(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code BreachesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Breaches} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static BreachesItem fromJson(JsonNode json) {
-        return new BreachesItem(Json.copyObject(json), Map.of());
+      public static Breaches fromJson(JsonNode json) {
+        return new Breaches(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -13412,11 +13412,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link BreachesItem}. */
+      /** Builds a {@link Breaches}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(BreachesItem from) {
+        private Builder(Breaches from) {
           super(from);
         }
 
@@ -13503,10 +13503,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code BreachesItem}
+         * @return a new immutable {@code Breaches}
          */
-        public BreachesItem build() {
-          return new BreachesItem(buildJson(), buildFiles());
+        public Breaches build() {
+          return new Breaches(buildJson(), buildFiles());
         }
 
         @Override
@@ -13516,22 +13516,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("feature", "risk", "additional_data", "log_type", "short_description", "long_description", "node_id");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -13558,8 +13558,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.EmailVerificationsItem.WarningsItem.Feature> feature() {
-        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.EmailVerificationsItem.WarningsItem.Feature::of));
+      public Optional<SessionsRetrieveDecisionResponse.EmailVerifications.Warnings.Feature> feature() {
+        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.EmailVerifications.Warnings.Feature::of));
       }
 
       /**
@@ -13627,11 +13627,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -13641,8 +13641,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param feature the value
          * @return this builder
          */
-        public Builder feature(SessionsRetrieveDecisionResponse.EmailVerificationsItem.WarningsItem.Feature feature) {
-          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.EmailVerificationsItem.WarningsItem.Feature::of), feature);
+        public Builder feature(SessionsRetrieveDecisionResponse.EmailVerifications.Warnings.Feature feature) {
+          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.EmailVerifications.Warnings.Feature::of), feature);
         }
 
         /**
@@ -13708,10 +13708,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override
@@ -13803,22 +13803,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class LifecycleItem extends JsonModel {
+    public static final class Lifecycle extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("type", "timestamp", "details", "fee");
 
-      private LifecycleItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Lifecycle(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code LifecycleItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Lifecycle} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static LifecycleItem fromJson(JsonNode json) {
-        return new LifecycleItem(Json.copyObject(json), Map.of());
+      public static Lifecycle fromJson(JsonNode json) {
+        return new Lifecycle(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -13865,8 +13865,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.EmailVerificationsItem.LifecycleItem.Details> details() {
-        return Json.optional(json, "details", Conv.model(SessionsRetrieveDecisionResponse.EmailVerificationsItem.LifecycleItem.Details::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.EmailVerifications.Lifecycle.Details> details() {
+        return Json.optional(json, "details", Conv.model(SessionsRetrieveDecisionResponse.EmailVerifications.Lifecycle.Details::fromJson));
       }
 
       /**
@@ -13884,11 +13884,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link LifecycleItem}. */
+      /** Builds a {@link Lifecycle}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(LifecycleItem from) {
+        private Builder(Lifecycle from) {
           super(from);
         }
 
@@ -13918,8 +13918,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param details the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder details(SessionsRetrieveDecisionResponse.EmailVerificationsItem.LifecycleItem.@Nullable Details details) {
-          return setNullable("details", Conv.model(SessionsRetrieveDecisionResponse.EmailVerificationsItem.LifecycleItem.Details::fromJson), details);
+        public Builder details(SessionsRetrieveDecisionResponse.EmailVerifications.Lifecycle.@Nullable Details details) {
+          return setNullable("details", Conv.model(SessionsRetrieveDecisionResponse.EmailVerifications.Lifecycle.Details::fromJson), details);
         }
 
         /**
@@ -13935,10 +13935,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code LifecycleItem}
+         * @return a new immutable {@code Lifecycle}
          */
-        public LifecycleItem build() {
-          return new LifecycleItem(buildJson(), buildFiles());
+        public Lifecycle build() {
+          return new Lifecycle(buildJson(), buildFiles());
         }
 
         @Override
@@ -14076,22 +14076,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class MatchesItem extends JsonModel {
+    public static final class Matches extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_number", "vendor_data", "verification_date", "email", "status", "is_blocklisted", "api_service", "source");
 
-      private MatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Matches(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code MatchesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Matches} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static MatchesItem fromJson(JsonNode json) {
-        return new MatchesItem(Json.copyObject(json), Map.of());
+      public static Matches fromJson(JsonNode json) {
+        return new Matches(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -14198,8 +14198,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.EmailVerificationsItem.MatchesItem.Source> source() {
-        return Json.optional(json, "source", Conv.enumeration(SessionsRetrieveDecisionResponse.EmailVerificationsItem.MatchesItem.Source::of));
+      public Optional<SessionsRetrieveDecisionResponse.EmailVerifications.Matches.Source> source() {
+        return Json.optional(json, "source", Conv.enumeration(SessionsRetrieveDecisionResponse.EmailVerifications.Matches.Source::of));
       }
 
       @Override
@@ -14207,11 +14207,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link MatchesItem}. */
+      /** Builds a {@link Matches}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(MatchesItem from) {
+        private Builder(Matches from) {
           super(from);
         }
 
@@ -14301,17 +14301,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param source the value
          * @return this builder
          */
-        public Builder source(SessionsRetrieveDecisionResponse.EmailVerificationsItem.MatchesItem.Source source) {
-          return set("source", Conv.enumeration(SessionsRetrieveDecisionResponse.EmailVerificationsItem.MatchesItem.Source::of), source);
+        public Builder source(SessionsRetrieveDecisionResponse.EmailVerifications.Matches.Source source) {
+          return set("source", Conv.enumeration(SessionsRetrieveDecisionResponse.EmailVerifications.Matches.Source::of), source);
         }
 
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code MatchesItem}
+         * @return a new immutable {@code Matches}
          */
-        public MatchesItem build() {
-          return new MatchesItem(buildJson(), buildFiles());
+        public Matches build() {
+          return new Matches(buildJson(), buildFiles());
         }
 
         @Override
@@ -14365,22 +14365,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
   }
 
-  public static final class PoaVerificationsItem extends JsonModel {
+  public static final class PoaVerifications extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "document_file", "issuing_state", "document_type", "document_subtype", "document_language", "document_metadata", "issuer", "issue_date", "expiration_date", "poa_address", "poa_formatted_address", "poa_parsed_address", "name_on_document", "name_match_score_expected_details", "name_match_score_id_verification", "expected_details_address", "expected_details_formatted_address", "expected_details_parsed_address", "extra_fields", "extra_files", "warnings", "detected_codes");
 
-    private PoaVerificationsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private PoaVerifications(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code PoaVerificationsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code PoaVerifications} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static PoaVerificationsItem fromJson(JsonNode json) {
-      return new PoaVerificationsItem(Json.copyObject(json), Map.of());
+    public static PoaVerifications fromJson(JsonNode json) {
+      return new PoaVerifications(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -14417,8 +14417,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.PoaVerificationsItem.Status> status() {
-      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.PoaVerificationsItem.Status::of));
+    public Optional<SessionsRetrieveDecisionResponse.PoaVerifications.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.PoaVerifications.Status::of));
     }
 
     /**
@@ -14477,8 +14477,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata> documentMetadata() {
-      return Json.optional(json, "document_metadata", Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.PoaVerifications.DocumentMetadata> documentMetadata() {
+      return Json.optional(json, "document_metadata", Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications.DocumentMetadata::fromJson));
     }
 
     /**
@@ -14537,8 +14537,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.PoaVerificationsItem.PoaParsedAddress> poaParsedAddress() {
-      return Json.optional(json, "poa_parsed_address", Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.PoaParsedAddress::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.PoaVerifications.PoaParsedAddress> poaParsedAddress() {
+      return Json.optional(json, "poa_parsed_address", Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications.PoaParsedAddress::fromJson));
     }
 
     /**
@@ -14607,8 +14607,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.PoaVerificationsItem.ExtraFields> extraFields() {
-      return Json.optional(json, "extra_fields", Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.ExtraFields::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.PoaVerifications.ExtraFields> extraFields() {
+      return Json.optional(json, "extra_fields", Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications.ExtraFields::fromJson));
     }
 
     /**
@@ -14627,8 +14627,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.PoaVerificationsItem.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.WarningsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.PoaVerifications.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications.Warnings::fromJson)));
     }
 
     /**
@@ -14646,11 +14646,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link PoaVerificationsItem}. */
+    /** Builds a {@link PoaVerifications}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(PoaVerificationsItem from) {
+      private Builder(PoaVerifications from) {
         super(from);
       }
 
@@ -14670,8 +14670,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(SessionsRetrieveDecisionResponse.PoaVerificationsItem.Status status) {
-        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.PoaVerificationsItem.Status::of), status);
+      public Builder status(SessionsRetrieveDecisionResponse.PoaVerifications.Status status) {
+        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.PoaVerifications.Status::of), status);
       }
 
       /**
@@ -14730,8 +14730,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param documentMetadata the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder documentMetadata(SessionsRetrieveDecisionResponse.PoaVerificationsItem.@Nullable DocumentMetadata documentMetadata) {
-        return setNullable("document_metadata", Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata::fromJson), documentMetadata);
+      public Builder documentMetadata(SessionsRetrieveDecisionResponse.PoaVerifications.@Nullable DocumentMetadata documentMetadata) {
+        return setNullable("document_metadata", Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications.DocumentMetadata::fromJson), documentMetadata);
       }
 
       /**
@@ -14790,8 +14790,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param poaParsedAddress the value
        * @return this builder
        */
-      public Builder poaParsedAddress(SessionsRetrieveDecisionResponse.PoaVerificationsItem.PoaParsedAddress poaParsedAddress) {
-        return set("poa_parsed_address", Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.PoaParsedAddress::fromJson), poaParsedAddress);
+      public Builder poaParsedAddress(SessionsRetrieveDecisionResponse.PoaVerifications.PoaParsedAddress poaParsedAddress) {
+        return set("poa_parsed_address", Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications.PoaParsedAddress::fromJson), poaParsedAddress);
       }
 
       /**
@@ -14860,8 +14860,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param extraFields the value
        * @return this builder
        */
-      public Builder extraFields(SessionsRetrieveDecisionResponse.PoaVerificationsItem.ExtraFields extraFields) {
-        return set("extra_fields", Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.ExtraFields::fromJson), extraFields);
+      public Builder extraFields(SessionsRetrieveDecisionResponse.PoaVerifications.ExtraFields extraFields) {
+        return set("extra_fields", Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications.ExtraFields::fromJson), extraFields);
       }
 
       /**
@@ -14880,8 +14880,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<SessionsRetrieveDecisionResponse.PoaVerificationsItem.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<SessionsRetrieveDecisionResponse.PoaVerifications.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications.Warnings::fromJson)), warnings);
       }
 
       /**
@@ -14897,10 +14897,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code PoaVerificationsItem}
+       * @return a new immutable {@code PoaVerifications}
        */
-      public PoaVerificationsItem build() {
-        return new PoaVerificationsItem(buildJson(), buildFiles());
+      public PoaVerifications build() {
+        return new PoaVerifications(buildJson(), buildFiles());
       }
 
       @Override
@@ -15046,8 +15046,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata.OverlayManipulation> overlayManipulation() {
-        return Json.optional(json, "overlay_manipulation", Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata.OverlayManipulation::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.PoaVerifications.DocumentMetadata.OverlayManipulation> overlayManipulation() {
+        return Json.optional(json, "overlay_manipulation", Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications.DocumentMetadata.OverlayManipulation::fromJson));
       }
 
       /**
@@ -15219,8 +15219,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param overlayManipulation the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder overlayManipulation(SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata.@Nullable OverlayManipulation overlayManipulation) {
-          return setNullable("overlay_manipulation", Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata.OverlayManipulation::fromJson), overlayManipulation);
+        public Builder overlayManipulation(SessionsRetrieveDecisionResponse.PoaVerifications.DocumentMetadata.@Nullable OverlayManipulation overlayManipulation) {
+          return setNullable("overlay_manipulation", Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications.DocumentMetadata.OverlayManipulation::fromJson), overlayManipulation);
         }
 
         /**
@@ -15423,8 +15423,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<List<SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata.OverlayManipulation.ManipulatedRegionsItem>> manipulatedRegions() {
-          return Json.optional(json, "manipulated_regions", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata.OverlayManipulation.ManipulatedRegionsItem::fromJson)));
+        public Optional<List<SessionsRetrieveDecisionResponse.PoaVerifications.DocumentMetadata.OverlayManipulation.ManipulatedRegions>> manipulatedRegions() {
+          return Json.optional(json, "manipulated_regions", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications.DocumentMetadata.OverlayManipulation.ManipulatedRegions::fromJson)));
         }
 
         @Override
@@ -15476,8 +15476,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param manipulatedRegions the value
            * @return this builder
            */
-          public Builder manipulatedRegions(List<SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata.OverlayManipulation.ManipulatedRegionsItem> manipulatedRegions) {
-            return set("manipulated_regions", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.DocumentMetadata.OverlayManipulation.ManipulatedRegionsItem::fromJson)), manipulatedRegions);
+          public Builder manipulatedRegions(List<SessionsRetrieveDecisionResponse.PoaVerifications.DocumentMetadata.OverlayManipulation.ManipulatedRegions> manipulatedRegions) {
+            return set("manipulated_regions", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications.DocumentMetadata.OverlayManipulation.ManipulatedRegions::fromJson)), manipulatedRegions);
           }
 
           /**
@@ -15495,22 +15495,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
         }
 
-        public static final class ManipulatedRegionsItem extends JsonModel {
+        public static final class ManipulatedRegions extends JsonModel {
           private static final Set<String> KNOWN_FIELDS = Set.of("page", "x", "y", "width", "height", "page_width", "page_height");
 
-          private ManipulatedRegionsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+          private ManipulatedRegions(ObjectNode json, Map<String, List<FileUpload>> files) {
             super(json, files);
           }
 
           /**
-           * Reads a {@code ManipulatedRegionsItem} from JSON. Unknown fields are kept and readable
+           * Reads a {@code ManipulatedRegions} from JSON. Unknown fields are kept and readable
            * through {@link #_additionalProperties()}.
            *
            * @param json a JSON object
            * @return the parsed value
            */
-          public static ManipulatedRegionsItem fromJson(JsonNode json) {
-            return new ManipulatedRegionsItem(Json.copyObject(json), Map.of());
+          public static ManipulatedRegions fromJson(JsonNode json) {
+            return new ManipulatedRegions(Json.copyObject(json), Map.of());
           }
 
           /**
@@ -15606,11 +15606,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             return KNOWN_FIELDS;
           }
 
-          /** Builds a {@link ManipulatedRegionsItem}. */
+          /** Builds a {@link ManipulatedRegions}. */
           public static final class Builder extends JsonModel.BaseBuilder<Builder> {
             private Builder() {}
 
-            private Builder(ManipulatedRegionsItem from) {
+            private Builder(ManipulatedRegions from) {
               super(from);
             }
 
@@ -15687,10 +15687,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             /**
              * Builds the value.
              *
-             * @return a new immutable {@code ManipulatedRegionsItem}
+             * @return a new immutable {@code ManipulatedRegions}
              */
-            public ManipulatedRegionsItem build() {
-              return new ManipulatedRegionsItem(buildJson(), buildFiles());
+            public ManipulatedRegions build() {
+              return new ManipulatedRegions(buildJson(), buildFiles());
             }
 
             @Override
@@ -15814,8 +15814,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.PoaVerificationsItem.PoaParsedAddress.DocumentLocation> documentLocation() {
-        return Json.optional(json, "document_location", Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.PoaParsedAddress.DocumentLocation::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.PoaVerifications.PoaParsedAddress.DocumentLocation> documentLocation() {
+        return Json.optional(json, "document_location", Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications.PoaParsedAddress.DocumentLocation::fromJson));
       }
 
       @Override
@@ -15907,8 +15907,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param documentLocation the value
          * @return this builder
          */
-        public Builder documentLocation(SessionsRetrieveDecisionResponse.PoaVerificationsItem.PoaParsedAddress.DocumentLocation documentLocation) {
-          return set("document_location", Conv.model(SessionsRetrieveDecisionResponse.PoaVerificationsItem.PoaParsedAddress.DocumentLocation::fromJson), documentLocation);
+        public Builder documentLocation(SessionsRetrieveDecisionResponse.PoaVerifications.PoaParsedAddress.DocumentLocation documentLocation) {
+          return set("document_location", Conv.model(SessionsRetrieveDecisionResponse.PoaVerifications.PoaParsedAddress.DocumentLocation::fromJson), documentLocation);
         }
 
         /**
@@ -16278,22 +16278,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("feature", "risk", "additional_data", "log_type", "short_description", "long_description", "node_id");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -16320,8 +16320,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.PoaVerificationsItem.WarningsItem.Feature> feature() {
-        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.PoaVerificationsItem.WarningsItem.Feature::of));
+      public Optional<SessionsRetrieveDecisionResponse.PoaVerifications.Warnings.Feature> feature() {
+        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.PoaVerifications.Warnings.Feature::of));
       }
 
       /**
@@ -16389,11 +16389,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -16403,8 +16403,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param feature the value
          * @return this builder
          */
-        public Builder feature(SessionsRetrieveDecisionResponse.PoaVerificationsItem.WarningsItem.Feature feature) {
-          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.PoaVerificationsItem.WarningsItem.Feature::of), feature);
+        public Builder feature(SessionsRetrieveDecisionResponse.PoaVerifications.Warnings.Feature feature) {
+          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.PoaVerifications.Warnings.Feature::of), feature);
         }
 
         /**
@@ -16470,10 +16470,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override
@@ -16567,22 +16567,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
   }
 
   /** Document AI results grouped by workflow node. */
-  public static final class DocumentAiDocumentsItem extends JsonModel {
+  public static final class DocumentAiDocuments extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("status", "node_id", "items", "warnings");
 
-    private DocumentAiDocumentsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private DocumentAiDocuments(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code DocumentAiDocumentsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code DocumentAiDocuments} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static DocumentAiDocumentsItem fromJson(JsonNode json) {
-      return new DocumentAiDocumentsItem(Json.copyObject(json), Map.of());
+    public static DocumentAiDocuments fromJson(JsonNode json) {
+      return new DocumentAiDocuments(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -16609,8 +16609,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.Status> status() {
-      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.Status::of));
+    public Optional<SessionsRetrieveDecisionResponse.DocumentAiDocuments.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentAiDocuments.Status::of));
     }
 
     /**
@@ -16629,8 +16629,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem>> items() {
-      return Json.optional(json, "items", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items>> items() {
+      return Json.optional(json, "items", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items::fromJson)));
     }
 
     /**
@@ -16648,11 +16648,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link DocumentAiDocumentsItem}. */
+    /** Builds a {@link DocumentAiDocuments}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(DocumentAiDocumentsItem from) {
+      private Builder(DocumentAiDocuments from) {
         super(from);
       }
 
@@ -16662,8 +16662,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.Status status) {
-        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.Status::of), status);
+      public Builder status(SessionsRetrieveDecisionResponse.DocumentAiDocuments.Status status) {
+        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentAiDocuments.Status::of), status);
       }
 
       /**
@@ -16682,8 +16682,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param items the value
        * @return this builder
        */
-      public Builder items(List<SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem> items) {
-        return set("items", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem::fromJson)), items);
+      public Builder items(List<SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items> items) {
+        return set("items", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items::fromJson)), items);
       }
 
       /**
@@ -16699,10 +16699,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code DocumentAiDocumentsItem}
+       * @return a new immutable {@code DocumentAiDocuments}
        */
-      public DocumentAiDocumentsItem build() {
-        return new DocumentAiDocumentsItem(buildJson(), buildFiles());
+      public DocumentAiDocuments build() {
+        return new DocumentAiDocuments(buildJson(), buildFiles());
       }
 
       @Override
@@ -16760,22 +16760,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class ItemsItem extends JsonModel {
+    public static final class Items extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "node_id", "document_key", "original_filename", "file_size", "file_url", "status", "extracted_data", "detected_codes", "fields", "document_metadata", "cross_check_result", "created_at");
 
-      private ItemsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Items(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code ItemsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Items} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static ItemsItem fromJson(JsonNode json) {
-        return new ItemsItem(Json.copyObject(json), Map.of());
+      public static Items fromJson(JsonNode json) {
+        return new Items(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -16862,8 +16862,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem.Status> status() {
-        return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem.Status::of));
+      public Optional<SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items.Status> status() {
+        return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items.Status::of));
       }
 
       /**
@@ -16892,8 +16892,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem.FieldsItem>> fields() {
-        return Json.optional(json, "fields", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem.FieldsItem::fromJson)));
+      public Optional<List<SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items.Fields>> fields() {
+        return Json.optional(json, "fields", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items.Fields::fromJson)));
       }
 
       /**
@@ -16931,11 +16931,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link ItemsItem}. */
+      /** Builds a {@link Items}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(ItemsItem from) {
+        private Builder(Items from) {
           super(from);
         }
 
@@ -17005,8 +17005,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param status the value
          * @return this builder
          */
-        public Builder status(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem.Status status) {
-          return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem.Status::of), status);
+        public Builder status(SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items.Status status) {
+          return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items.Status::of), status);
         }
 
         /**
@@ -17035,8 +17035,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param fields the value
          * @return this builder
          */
-        public Builder fields(List<SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem.FieldsItem> fields) {
-          return set("fields", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem.FieldsItem::fromJson)), fields);
+        public Builder fields(List<SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items.Fields> fields) {
+          return set("fields", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items.Fields::fromJson)), fields);
         }
 
         /**
@@ -17072,10 +17072,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code ItemsItem}
+         * @return a new immutable {@code Items}
          */
-        public ItemsItem build() {
-          return new ItemsItem(buildJson(), buildFiles());
+        public Items build() {
+          return new Items(buildJson(), buildFiles());
         }
 
         @Override
@@ -17133,22 +17133,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
       }
 
-      public static final class FieldsItem extends JsonModel {
+      public static final class Fields extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("key", "name", "instruction", "type", "required");
 
-        private FieldsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private Fields(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code FieldsItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code Fields} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static FieldsItem fromJson(JsonNode json) {
-          return new FieldsItem(Json.copyObject(json), Map.of());
+        public static Fields fromJson(JsonNode json) {
+          return new Fields(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -17205,8 +17205,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem.FieldsItem.Type> type() {
-          return Json.optional(json, "type", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem.FieldsItem.Type::of));
+        public Optional<SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items.Fields.Type> type() {
+          return Json.optional(json, "type", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items.Fields.Type::of));
         }
 
         /**
@@ -17224,11 +17224,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link FieldsItem}. */
+        /** Builds a {@link Fields}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(FieldsItem from) {
+          private Builder(Fields from) {
             super(from);
           }
 
@@ -17268,8 +17268,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param type the value
            * @return this builder
            */
-          public Builder type(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem.FieldsItem.Type type) {
-            return set("type", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentAiDocumentsItem.ItemsItem.FieldsItem.Type::of), type);
+          public Builder type(SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items.Fields.Type type) {
+            return set("type", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentAiDocuments.Items.Fields.Type::of), type);
           }
 
           /**
@@ -17285,10 +17285,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code FieldsItem}
+           * @return a new immutable {@code Fields}
            */
-          public FieldsItem build() {
-            return new FieldsItem(buildJson(), buildFiles());
+          public Fields build() {
+            return new Fields(buildJson(), buildFiles());
           }
 
           @Override
@@ -17346,22 +17346,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
   }
 
-  public static final class QuestionnaireResponsesItem extends JsonModel {
+  public static final class QuestionnaireResponses extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "questionnaire_id", "title", "description", "languages", "default_language", "is_active", "is_simple_questionnaire", "questionnaire_group_id", "version", "published_at", "sections", "status");
 
-    private QuestionnaireResponsesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private QuestionnaireResponses(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code QuestionnaireResponsesItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code QuestionnaireResponses} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static QuestionnaireResponsesItem fromJson(JsonNode json) {
-      return new QuestionnaireResponsesItem(Json.copyObject(json), Map.of());
+    public static QuestionnaireResponses fromJson(JsonNode json) {
+      return new QuestionnaireResponses(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -17498,8 +17498,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem>> sections() {
-      return Json.optional(json, "sections", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections>> sections() {
+      return Json.optional(json, "sections", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections::fromJson)));
     }
 
     /**
@@ -17517,11 +17517,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link QuestionnaireResponsesItem}. */
+    /** Builds a {@link QuestionnaireResponses}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(QuestionnaireResponsesItem from) {
+      private Builder(QuestionnaireResponses from) {
         super(from);
       }
 
@@ -17641,8 +17641,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param sections the value
        * @return this builder
        */
-      public Builder sections(List<SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem> sections) {
-        return set("sections", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem::fromJson)), sections);
+      public Builder sections(List<SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections> sections) {
+        return set("sections", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections::fromJson)), sections);
       }
 
       /**
@@ -17658,10 +17658,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code QuestionnaireResponsesItem}
+       * @return a new immutable {@code QuestionnaireResponses}
        */
-      public QuestionnaireResponsesItem build() {
-        return new QuestionnaireResponsesItem(buildJson(), buildFiles());
+      public QuestionnaireResponses build() {
+        return new QuestionnaireResponses(buildJson(), buildFiles());
       }
 
       @Override
@@ -17670,22 +17670,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class SectionsItem extends JsonModel {
+    public static final class Sections extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("title", "description", "items");
 
-      private SectionsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Sections(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code SectionsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Sections} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static SectionsItem fromJson(JsonNode json) {
-        return new SectionsItem(Json.copyObject(json), Map.of());
+      public static Sections fromJson(JsonNode json) {
+        return new Sections(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -17732,8 +17732,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem.ItemsItem>> items() {
-        return Json.optional(json, "items", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem.ItemsItem::fromJson)));
+      public Optional<List<SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections.Items>> items() {
+        return Json.optional(json, "items", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections.Items::fromJson)));
       }
 
       @Override
@@ -17741,11 +17741,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link SectionsItem}. */
+      /** Builds a {@link Sections}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(SectionsItem from) {
+        private Builder(Sections from) {
           super(from);
         }
 
@@ -17775,17 +17775,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param items the value
          * @return this builder
          */
-        public Builder items(List<SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem.ItemsItem> items) {
-          return set("items", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem.ItemsItem::fromJson)), items);
+        public Builder items(List<SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections.Items> items) {
+          return set("items", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections.Items::fromJson)), items);
         }
 
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code SectionsItem}
+         * @return a new immutable {@code Sections}
          */
-        public SectionsItem build() {
-          return new SectionsItem(buildJson(), buildFiles());
+        public Sections build() {
+          return new Sections(buildJson(), buildFiles());
         }
 
         @Override
@@ -17794,22 +17794,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
       }
 
-      public static final class ItemsItem extends JsonModel {
+      public static final class Items extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "value", "element_type", "is_required", "title", "description", "placeholder", "choices", "max_files", "answer", "required_if", "repeatable_config");
 
-        private ItemsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private Items(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code ItemsItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code Items} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static ItemsItem fromJson(JsonNode json) {
-          return new ItemsItem(Json.copyObject(json), Map.of());
+        public static Items fromJson(JsonNode json) {
+          return new Items(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -17906,8 +17906,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<List<SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem.ItemsItem.ChoicesItem>> choices() {
-          return Json.optional(json, "choices", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem.ItemsItem.ChoicesItem::fromJson)));
+        public Optional<List<SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections.Items.Choices>> choices() {
+          return Json.optional(json, "choices", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections.Items.Choices::fromJson)));
         }
 
         /**
@@ -17926,8 +17926,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem.ItemsItem.Answer> answer() {
-          return Json.optional(json, "answer", Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem.ItemsItem.Answer::fromJson));
+        public Optional<SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections.Items.Answer> answer() {
+          return Json.optional(json, "answer", Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections.Items.Answer::fromJson));
         }
 
         /**
@@ -17955,11 +17955,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link ItemsItem}. */
+        /** Builds a {@link Items}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(ItemsItem from) {
+          private Builder(Items from) {
             super(from);
           }
 
@@ -18039,8 +18039,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param choices the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder choices(@Nullable List<SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem.ItemsItem.ChoicesItem> choices) {
-            return setNullable("choices", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem.ItemsItem.ChoicesItem::fromJson)), choices);
+          public Builder choices(@Nullable List<SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections.Items.Choices> choices) {
+            return setNullable("choices", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections.Items.Choices::fromJson)), choices);
           }
 
           /**
@@ -18059,8 +18059,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param answer the value
            * @return this builder
            */
-          public Builder answer(SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem.ItemsItem.Answer answer) {
-            return set("answer", Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponsesItem.SectionsItem.ItemsItem.Answer::fromJson), answer);
+          public Builder answer(SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections.Items.Answer answer) {
+            return set("answer", Conv.model(SessionsRetrieveDecisionResponse.QuestionnaireResponses.Sections.Items.Answer::fromJson), answer);
           }
 
           /**
@@ -18086,16 +18086,16 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code ItemsItem}
+           * @return a new immutable {@code Items}
            * @throws IllegalStateException when a required field is missing
            */
-          public ItemsItem build() {
+          public Items build() {
             require("uuid", false);
             require("value", true);
             require("element_type", false);
             require("is_required", false);
             require("title", false);
-            return new ItemsItem(buildJson(), buildFiles());
+            return new Items(buildJson(), buildFiles());
           }
 
           @Override
@@ -18104,22 +18104,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
         }
 
-        public static final class ChoicesItem extends JsonModel {
+        public static final class Choices extends JsonModel {
           private static final Set<String> KNOWN_FIELDS = Set.of("label", "value", "requires_text_input");
 
-          private ChoicesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+          private Choices(ObjectNode json, Map<String, List<FileUpload>> files) {
             super(json, files);
           }
 
           /**
-           * Reads a {@code ChoicesItem} from JSON. Unknown fields are kept and readable
+           * Reads a {@code Choices} from JSON. Unknown fields are kept and readable
            * through {@link #_additionalProperties()}.
            *
            * @param json a JSON object
            * @return the parsed value
            */
-          public static ChoicesItem fromJson(JsonNode json) {
-            return new ChoicesItem(Json.copyObject(json), Map.of());
+          public static Choices fromJson(JsonNode json) {
+            return new Choices(Json.copyObject(json), Map.of());
           }
 
           /**
@@ -18175,11 +18175,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             return KNOWN_FIELDS;
           }
 
-          /** Builds a {@link ChoicesItem}. */
+          /** Builds a {@link Choices}. */
           public static final class Builder extends JsonModel.BaseBuilder<Builder> {
             private Builder() {}
 
-            private Builder(ChoicesItem from) {
+            private Builder(Choices from) {
               super(from);
             }
 
@@ -18216,13 +18216,13 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             /**
              * Builds the value.
              *
-             * @return a new immutable {@code ChoicesItem}
+             * @return a new immutable {@code Choices}
              * @throws IllegalStateException when a required field is missing
              */
-            public ChoicesItem build() {
+            public Choices build() {
               require("label", false);
               require("value", false);
-              return new ChoicesItem(buildJson(), buildFiles());
+              return new Choices(buildJson(), buildFiles());
             }
 
             @Override
@@ -18361,22 +18361,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
   }
 
-  public static final class AmlScreeningsItem extends JsonModel {
+  public static final class AmlScreenings extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "total_hits", "entity_type", "hits", "score", "screened_data", "is_ongoing_monitoring_enabled", "next_ongoing_monitoring_bill_date", "last_ongoing_screening_at", "last_ongoing_screening_datasets_updated_at", "warnings");
 
-    private AmlScreeningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private AmlScreenings(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code AmlScreeningsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code AmlScreenings} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static AmlScreeningsItem fromJson(JsonNode json) {
-      return new AmlScreeningsItem(Json.copyObject(json), Map.of());
+    public static AmlScreenings fromJson(JsonNode json) {
+      return new AmlScreenings(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -18413,8 +18413,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.Status> status() {
-      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreeningsItem.Status::of));
+    public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreenings.Status::of));
     }
 
     /**
@@ -18443,8 +18443,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem>> hits() {
-      return Json.optional(json, "hits", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits>> hits() {
+      return Json.optional(json, "hits", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits::fromJson)));
     }
 
     /**
@@ -18463,8 +18463,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.ScreenedData> screenedData() {
-      return Json.optional(json, "screened_data", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.ScreenedData::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.ScreenedData> screenedData() {
+      return Json.optional(json, "screened_data", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.ScreenedData::fromJson));
     }
 
     /**
@@ -18513,8 +18513,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.WarningsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.AmlScreenings.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Warnings::fromJson)));
     }
 
     @Override
@@ -18522,11 +18522,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link AmlScreeningsItem}. */
+    /** Builds a {@link AmlScreenings}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(AmlScreeningsItem from) {
+      private Builder(AmlScreenings from) {
         super(from);
       }
 
@@ -18546,8 +18546,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(SessionsRetrieveDecisionResponse.AmlScreeningsItem.Status status) {
-        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreeningsItem.Status::of), status);
+      public Builder status(SessionsRetrieveDecisionResponse.AmlScreenings.Status status) {
+        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreenings.Status::of), status);
       }
 
       /**
@@ -18576,8 +18576,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param hits the value
        * @return this builder
        */
-      public Builder hits(List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem> hits) {
-        return set("hits", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem::fromJson)), hits);
+      public Builder hits(List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits> hits) {
+        return set("hits", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits::fromJson)), hits);
       }
 
       /**
@@ -18596,8 +18596,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param screenedData the value
        * @return this builder
        */
-      public Builder screenedData(SessionsRetrieveDecisionResponse.AmlScreeningsItem.ScreenedData screenedData) {
-        return set("screened_data", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.ScreenedData::fromJson), screenedData);
+      public Builder screenedData(SessionsRetrieveDecisionResponse.AmlScreenings.ScreenedData screenedData) {
+        return set("screened_data", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.ScreenedData::fromJson), screenedData);
       }
 
       /**
@@ -18646,17 +18646,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<SessionsRetrieveDecisionResponse.AmlScreenings.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Warnings::fromJson)), warnings);
       }
 
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code AmlScreeningsItem}
+       * @return a new immutable {@code AmlScreenings}
        */
-      public AmlScreeningsItem build() {
-        return new AmlScreeningsItem(buildJson(), buildFiles());
+      public AmlScreenings build() {
+        return new AmlScreenings(buildJson(), buildFiles());
       }
 
       @Override
@@ -18717,22 +18717,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class HitsItem extends JsonModel {
+    public static final class Hits extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("id", "url", "match", "score", "target", "caption", "datasets", "features", "rca_name", "last_seen", "risk_view", "first_seen", "properties", "match_score", "risk_score", "review_status", "score_breakdown", "pep_matches", "linked_entities", "warning_matches", "sanction_matches", "adverse_media_details", "adverse_media_matches", "additional_information");
 
-      private HitsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Hits(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code HitsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Hits} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static HitsItem fromJson(JsonNode json) {
-        return new HitsItem(Json.copyObject(json), Map.of());
+      public static Hits fromJson(JsonNode json) {
+        return new Hits(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -18822,8 +18822,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.DatasetsItem>> datasets() {
-        return Json.optional(json, "datasets", Conv.list(Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.DatasetsItem::of)));
+      public Optional<List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.Datasets>> datasets() {
+        return Json.optional(json, "datasets", Conv.list(Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.Datasets::of)));
       }
 
       /**
@@ -18862,8 +18862,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView> riskView() {
-        return Json.optional(json, "risk_view", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView> riskView() {
+        return Json.optional(json, "risk_view", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView::fromJson));
       }
 
       /**
@@ -18882,8 +18882,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.Properties> properties() {
-        return Json.optional(json, "properties", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.Properties::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.Properties> properties() {
+        return Json.optional(json, "properties", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.Properties::fromJson));
       }
 
       /**
@@ -18912,8 +18912,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.ReviewStatus> reviewStatus() {
-        return Json.optional(json, "review_status", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.ReviewStatus::of));
+      public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.ReviewStatus> reviewStatus() {
+        return Json.optional(json, "review_status", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.ReviewStatus::of));
       }
 
       /**
@@ -18922,8 +18922,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.ScoreBreakdown> scoreBreakdown() {
-        return Json.optional(json, "score_breakdown", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.ScoreBreakdown::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.ScoreBreakdown> scoreBreakdown() {
+        return Json.optional(json, "score_breakdown", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.ScoreBreakdown::fromJson));
       }
 
       /**
@@ -18932,8 +18932,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.PepMatchesItem>> pepMatches() {
-        return Json.optional(json, "pep_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.PepMatchesItem::fromJson)));
+      public Optional<List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.PepMatches>> pepMatches() {
+        return Json.optional(json, "pep_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.PepMatches::fromJson)));
       }
 
       /**
@@ -18942,8 +18942,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.LinkedEntitiesItem>> linkedEntities() {
-        return Json.optional(json, "linked_entities", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.LinkedEntitiesItem::fromJson)));
+      public Optional<List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.LinkedEntities>> linkedEntities() {
+        return Json.optional(json, "linked_entities", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.LinkedEntities::fromJson)));
       }
 
       /**
@@ -18952,8 +18952,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem>> warningMatches() {
-        return Json.optional(json, "warning_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem::fromJson)));
+      public Optional<List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches>> warningMatches() {
+        return Json.optional(json, "warning_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches::fromJson)));
       }
 
       /**
@@ -18962,8 +18962,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.SanctionMatchesItem>> sanctionMatches() {
-        return Json.optional(json, "sanction_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.SanctionMatchesItem::fromJson)));
+      public Optional<List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.SanctionMatches>> sanctionMatches() {
+        return Json.optional(json, "sanction_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.SanctionMatches::fromJson)));
       }
 
       /**
@@ -18972,8 +18972,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.AdverseMediaDetails> adverseMediaDetails() {
-        return Json.optional(json, "adverse_media_details", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.AdverseMediaDetails::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.AdverseMediaDetails> adverseMediaDetails() {
+        return Json.optional(json, "adverse_media_details", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.AdverseMediaDetails::fromJson));
       }
 
       /**
@@ -18982,8 +18982,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.AdverseMediaMatchesItem>> adverseMediaMatches() {
-        return Json.optional(json, "adverse_media_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.AdverseMediaMatchesItem::fromJson)));
+      public Optional<List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.AdverseMediaMatches>> adverseMediaMatches() {
+        return Json.optional(json, "adverse_media_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.AdverseMediaMatches::fromJson)));
       }
 
       /**
@@ -19001,11 +19001,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link HitsItem}. */
+      /** Builds a {@link Hits}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(HitsItem from) {
+        private Builder(Hits from) {
           super(from);
         }
 
@@ -19078,8 +19078,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param datasets the value
          * @return this builder
          */
-        public Builder datasets(List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.DatasetsItem> datasets) {
-          return set("datasets", Conv.list(Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.DatasetsItem::of)), datasets);
+        public Builder datasets(List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.Datasets> datasets) {
+          return set("datasets", Conv.list(Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.Datasets::of)), datasets);
         }
 
         /**
@@ -19118,8 +19118,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param riskView the value
          * @return this builder
          */
-        public Builder riskView(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView riskView) {
-          return set("risk_view", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView::fromJson), riskView);
+        public Builder riskView(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView riskView) {
+          return set("risk_view", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView::fromJson), riskView);
         }
 
         /**
@@ -19138,8 +19138,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param properties the value
          * @return this builder
          */
-        public Builder properties(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.Properties properties) {
-          return set("properties", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.Properties::fromJson), properties);
+        public Builder properties(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.Properties properties) {
+          return set("properties", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.Properties::fromJson), properties);
         }
 
         /**
@@ -19168,8 +19168,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param reviewStatus the value
          * @return this builder
          */
-        public Builder reviewStatus(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.ReviewStatus reviewStatus) {
-          return set("review_status", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.ReviewStatus::of), reviewStatus);
+        public Builder reviewStatus(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.ReviewStatus reviewStatus) {
+          return set("review_status", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.ReviewStatus::of), reviewStatus);
         }
 
         /**
@@ -19178,8 +19178,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param scoreBreakdown the value
          * @return this builder
          */
-        public Builder scoreBreakdown(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.ScoreBreakdown scoreBreakdown) {
-          return set("score_breakdown", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.ScoreBreakdown::fromJson), scoreBreakdown);
+        public Builder scoreBreakdown(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.ScoreBreakdown scoreBreakdown) {
+          return set("score_breakdown", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.ScoreBreakdown::fromJson), scoreBreakdown);
         }
 
         /**
@@ -19188,8 +19188,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param pepMatches the value
          * @return this builder
          */
-        public Builder pepMatches(List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.PepMatchesItem> pepMatches) {
-          return set("pep_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.PepMatchesItem::fromJson)), pepMatches);
+        public Builder pepMatches(List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.PepMatches> pepMatches) {
+          return set("pep_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.PepMatches::fromJson)), pepMatches);
         }
 
         /**
@@ -19198,8 +19198,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param linkedEntities the value
          * @return this builder
          */
-        public Builder linkedEntities(List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.LinkedEntitiesItem> linkedEntities) {
-          return set("linked_entities", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.LinkedEntitiesItem::fromJson)), linkedEntities);
+        public Builder linkedEntities(List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.LinkedEntities> linkedEntities) {
+          return set("linked_entities", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.LinkedEntities::fromJson)), linkedEntities);
         }
 
         /**
@@ -19208,8 +19208,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param warningMatches the value
          * @return this builder
          */
-        public Builder warningMatches(List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem> warningMatches) {
-          return set("warning_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem::fromJson)), warningMatches);
+        public Builder warningMatches(List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches> warningMatches) {
+          return set("warning_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches::fromJson)), warningMatches);
         }
 
         /**
@@ -19218,8 +19218,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param sanctionMatches the value
          * @return this builder
          */
-        public Builder sanctionMatches(List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.SanctionMatchesItem> sanctionMatches) {
-          return set("sanction_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.SanctionMatchesItem::fromJson)), sanctionMatches);
+        public Builder sanctionMatches(List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.SanctionMatches> sanctionMatches) {
+          return set("sanction_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.SanctionMatches::fromJson)), sanctionMatches);
         }
 
         /**
@@ -19228,8 +19228,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param adverseMediaDetails the value
          * @return this builder
          */
-        public Builder adverseMediaDetails(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.AdverseMediaDetails adverseMediaDetails) {
-          return set("adverse_media_details", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.AdverseMediaDetails::fromJson), adverseMediaDetails);
+        public Builder adverseMediaDetails(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.AdverseMediaDetails adverseMediaDetails) {
+          return set("adverse_media_details", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.AdverseMediaDetails::fromJson), adverseMediaDetails);
         }
 
         /**
@@ -19238,8 +19238,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param adverseMediaMatches the value
          * @return this builder
          */
-        public Builder adverseMediaMatches(List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.AdverseMediaMatchesItem> adverseMediaMatches) {
-          return set("adverse_media_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.AdverseMediaMatchesItem::fromJson)), adverseMediaMatches);
+        public Builder adverseMediaMatches(List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.AdverseMediaMatches> adverseMediaMatches) {
+          return set("adverse_media_matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.AdverseMediaMatches::fromJson)), adverseMediaMatches);
         }
 
         /**
@@ -19255,10 +19255,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code HitsItem}
+         * @return a new immutable {@code Hits}
          */
-        public HitsItem build() {
-          return new HitsItem(buildJson(), buildFiles());
+        public Hits build() {
+          return new Hits(buildJson(), buildFiles());
         }
 
         @Override
@@ -19271,46 +19271,46 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        *
        * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
        */
-      public static final class DatasetsItem extends StringEnum {
+      public static final class Datasets extends StringEnum {
         /** The value {@code "PEP"}. */
-        public static final DatasetsItem PEP = new DatasetsItem("PEP");
+        public static final Datasets PEP = new Datasets("PEP");
 
         /** The value {@code "PEP Level 1"}. */
-        public static final DatasetsItem PEP_LEVEL_1 = new DatasetsItem("PEP Level 1");
+        public static final Datasets PEP_LEVEL_1 = new Datasets("PEP Level 1");
 
         /** The value {@code "PEP Level 2"}. */
-        public static final DatasetsItem PEP_LEVEL_2 = new DatasetsItem("PEP Level 2");
+        public static final Datasets PEP_LEVEL_2 = new Datasets("PEP Level 2");
 
         /** The value {@code "PEP Level 3"}. */
-        public static final DatasetsItem PEP_LEVEL_3 = new DatasetsItem("PEP Level 3");
+        public static final Datasets PEP_LEVEL_3 = new Datasets("PEP Level 3");
 
         /** The value {@code "PEP Level 4"}. */
-        public static final DatasetsItem PEP_LEVEL_4 = new DatasetsItem("PEP Level 4");
+        public static final Datasets PEP_LEVEL_4 = new Datasets("PEP Level 4");
 
         /** The value {@code "Sanctions"}. */
-        public static final DatasetsItem SANCTIONS = new DatasetsItem("Sanctions");
+        public static final Datasets SANCTIONS = new Datasets("Sanctions");
 
         /** The value {@code "Adverse Media"}. */
-        public static final DatasetsItem ADVERSE_MEDIA = new DatasetsItem("Adverse Media");
+        public static final Datasets ADVERSE_MEDIA = new Datasets("Adverse Media");
 
         /** The value {@code "Warnings and Regulatory Enforcement"}. */
-        public static final DatasetsItem WARNINGS_AND_REGULATORY_ENFORCEMENT = new DatasetsItem("Warnings and Regulatory Enforcement");
+        public static final Datasets WARNINGS_AND_REGULATORY_ENFORCEMENT = new Datasets("Warnings and Regulatory Enforcement");
 
         /** The value {@code "Fitness and Probity"}. */
-        public static final DatasetsItem FITNESS_AND_PROBITY = new DatasetsItem("Fitness and Probity");
+        public static final Datasets FITNESS_AND_PROBITY = new Datasets("Fitness and Probity");
 
         /** The value {@code "SIP"}. */
-        public static final DatasetsItem SIP = new DatasetsItem("SIP");
+        public static final Datasets SIP = new Datasets("SIP");
 
         /** The value {@code "SIE"}. */
-        public static final DatasetsItem SIE = new DatasetsItem("SIE");
+        public static final Datasets SIE = new Datasets("SIE");
 
         /** The value {@code "Insolvency"}. */
-        public static final DatasetsItem INSOLVENCY = new DatasetsItem("Insolvency");
+        public static final Datasets INSOLVENCY = new Datasets("Insolvency");
 
-        private static final List<DatasetsItem> KNOWN_VALUES = List.of(PEP, PEP_LEVEL_1, PEP_LEVEL_2, PEP_LEVEL_3, PEP_LEVEL_4, SANCTIONS, ADVERSE_MEDIA, WARNINGS_AND_REGULATORY_ENFORCEMENT, FITNESS_AND_PROBITY, SIP, SIE, INSOLVENCY);
+        private static final List<Datasets> KNOWN_VALUES = List.of(PEP, PEP_LEVEL_1, PEP_LEVEL_2, PEP_LEVEL_3, PEP_LEVEL_4, SANCTIONS, ADVERSE_MEDIA, WARNINGS_AND_REGULATORY_ENFORCEMENT, FITNESS_AND_PROBITY, SIP, SIE, INSOLVENCY);
 
-        private DatasetsItem(String value) {
+        private Datasets(String value) {
           super(value);
         }
 
@@ -19320,8 +19320,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param value the string value
          * @return the enum value
          */
-        public static DatasetsItem of(String value) {
-          return StringEnum.lookup(KNOWN_VALUES, value, DatasetsItem::new);
+        public static Datasets of(String value) {
+          return StringEnum.lookup(KNOWN_VALUES, value, Datasets::new);
         }
 
         /**
@@ -19329,7 +19329,7 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          *
          * @return the known values
          */
-        public static List<DatasetsItem> knownValues() {
+        public static List<Datasets> knownValues() {
           return KNOWN_VALUES;
         }
 
@@ -19381,8 +19381,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView.Crimes> crimes() {
-          return Json.optional(json, "crimes", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView.Crimes::fromJson));
+        public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView.Crimes> crimes() {
+          return Json.optional(json, "crimes", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView.Crimes::fromJson));
         }
 
         /**
@@ -19391,8 +19391,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView.Countries> countries() {
-          return Json.optional(json, "countries", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView.Countries::fromJson));
+        public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView.Countries> countries() {
+          return Json.optional(json, "countries", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView.Countries::fromJson));
         }
 
         /**
@@ -19401,8 +19401,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView.Categories> categories() {
-          return Json.optional(json, "categories", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView.Categories::fromJson));
+        public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView.Categories> categories() {
+          return Json.optional(json, "categories", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView.Categories::fromJson));
         }
 
         /**
@@ -19434,8 +19434,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param crimes the value
            * @return this builder
            */
-          public Builder crimes(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView.Crimes crimes) {
-            return set("crimes", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView.Crimes::fromJson), crimes);
+          public Builder crimes(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView.Crimes crimes) {
+            return set("crimes", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView.Crimes::fromJson), crimes);
           }
 
           /**
@@ -19444,8 +19444,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param countries the value
            * @return this builder
            */
-          public Builder countries(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView.Countries countries) {
-            return set("countries", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView.Countries::fromJson), countries);
+          public Builder countries(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView.Countries countries) {
+            return set("countries", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView.Countries::fromJson), countries);
           }
 
           /**
@@ -19454,8 +19454,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param categories the value
            * @return this builder
            */
-          public Builder categories(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView.Categories categories) {
-            return set("categories", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.RiskView.Categories::fromJson), categories);
+          public Builder categories(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView.Categories categories) {
+            return set("categories", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.RiskView.Categories::fromJson), categories);
           }
 
           /**
@@ -20736,8 +20736,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.ScoreBreakdown.DocumentNumberMatchType> documentNumberMatchType() {
-          return Json.optional(json, "document_number_match_type", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.ScoreBreakdown.DocumentNumberMatchType::of));
+        public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.ScoreBreakdown.DocumentNumberMatchType> documentNumberMatchType() {
+          return Json.optional(json, "document_number_match_type", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.ScoreBreakdown.DocumentNumberMatchType::of));
         }
 
         /**
@@ -20899,8 +20899,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param documentNumberMatchType the value
            * @return this builder
            */
-          public Builder documentNumberMatchType(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.ScoreBreakdown.DocumentNumberMatchType documentNumberMatchType) {
-            return set("document_number_match_type", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.ScoreBreakdown.DocumentNumberMatchType::of), documentNumberMatchType);
+          public Builder documentNumberMatchType(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.ScoreBreakdown.DocumentNumberMatchType documentNumberMatchType) {
+            return set("document_number_match_type", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.ScoreBreakdown.DocumentNumberMatchType::of), documentNumberMatchType);
           }
 
           /**
@@ -20985,22 +20985,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
       }
 
-      public static final class PepMatchesItem extends JsonModel {
+      public static final class PepMatches extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("aliases", "education", "list_name", "publisher", "source_url", "description", "matched_name", "pep_position", "date_of_birth", "other_sources", "place_of_birth");
 
-        private PepMatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private PepMatches(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code PepMatchesItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code PepMatches} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static PepMatchesItem fromJson(JsonNode json) {
-          return new PepMatchesItem(Json.copyObject(json), Map.of());
+        public static PepMatches fromJson(JsonNode json) {
+          return new PepMatches(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -21136,11 +21136,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link PepMatchesItem}. */
+        /** Builds a {@link PepMatches}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(PepMatchesItem from) {
+          private Builder(PepMatches from) {
             super(from);
           }
 
@@ -21257,10 +21257,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code PepMatchesItem}
+           * @return a new immutable {@code PepMatches}
            */
-          public PepMatchesItem build() {
-            return new PepMatchesItem(buildJson(), buildFiles());
+          public PepMatches build() {
+            return new PepMatches(buildJson(), buildFiles());
           }
 
           @Override
@@ -21270,22 +21270,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
       }
 
-      public static final class LinkedEntitiesItem extends JsonModel {
+      public static final class LinkedEntities extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("name", "active", "status", "details", "relation");
 
-        private LinkedEntitiesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private LinkedEntities(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code LinkedEntitiesItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code LinkedEntities} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static LinkedEntitiesItem fromJson(JsonNode json) {
-          return new LinkedEntitiesItem(Json.copyObject(json), Map.of());
+        public static LinkedEntities fromJson(JsonNode json) {
+          return new LinkedEntities(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -21361,11 +21361,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link LinkedEntitiesItem}. */
+        /** Builds a {@link LinkedEntities}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(LinkedEntitiesItem from) {
+          private Builder(LinkedEntities from) {
             super(from);
           }
 
@@ -21422,10 +21422,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code LinkedEntitiesItem}
+           * @return a new immutable {@code LinkedEntities}
            */
-          public LinkedEntitiesItem build() {
-            return new LinkedEntitiesItem(buildJson(), buildFiles());
+          public LinkedEntities build() {
+            return new LinkedEntities(buildJson(), buildFiles());
           }
 
           @Override
@@ -21435,22 +21435,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
       }
 
-      public static final class WarningMatchesItem extends JsonModel {
+      public static final class WarningMatches extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("list_name", "matched_name", "description", "publisher", "source_url", "other_sources", "countries", "created_at", "updated_at", "additional_data");
 
-        private WarningMatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private WarningMatches(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code WarningMatchesItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code WarningMatches} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static WarningMatchesItem fromJson(JsonNode json) {
-          return new WarningMatchesItem(Json.copyObject(json), Map.of());
+        public static WarningMatches fromJson(JsonNode json) {
+          return new WarningMatches(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -21567,8 +21567,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData> additionalData() {
-          return Json.optional(json, "additional_data", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData::fromJson));
+        public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData> additionalData() {
+          return Json.optional(json, "additional_data", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData::fromJson));
         }
 
         @Override
@@ -21576,11 +21576,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link WarningMatchesItem}. */
+        /** Builds a {@link WarningMatches}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(WarningMatchesItem from) {
+          private Builder(WarningMatches from) {
             super(from);
           }
 
@@ -21680,17 +21680,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param additionalData the value
            * @return this builder
            */
-          public Builder additionalData(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData additionalData) {
-            return set("additional_data", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData::fromJson), additionalData);
+          public Builder additionalData(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData additionalData) {
+            return set("additional_data", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData::fromJson), additionalData);
           }
 
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code WarningMatchesItem}
+           * @return a new immutable {@code WarningMatches}
            */
-          public WarningMatchesItem build() {
-            return new WarningMatchesItem(buildJson(), buildFiles());
+          public WarningMatches build() {
+            return new WarningMatches(buildJson(), buildFiles());
           }
 
           @Override
@@ -21744,8 +21744,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData.Data> data() {
-            return Json.optional(json, "data", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData.Data::fromJson));
+          public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData.Data> data() {
+            return Json.optional(json, "data", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData.Data::fromJson));
           }
 
           @Override
@@ -21767,8 +21767,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param data the value
              * @return this builder
              */
-            public Builder data(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData.Data data) {
-              return set("data", Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData.Data::fromJson), data);
+            public Builder data(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData.Data data) {
+              return set("data", Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData.Data::fromJson), data);
             }
 
             /**
@@ -21828,8 +21828,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @return the value, or empty when the field is absent or null
              * @throws me.didit.errors.UnexpectedResponseException when the field has another type
              */
-            public Optional<List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData.Data.CaseDetailsItem>> caseDetails() {
-              return Json.optional(json, "case_details", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData.Data.CaseDetailsItem::fromJson)));
+            public Optional<List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData.Data.CaseDetails>> caseDetails() {
+              return Json.optional(json, "case_details", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData.Data.CaseDetails::fromJson)));
             }
 
             @Override
@@ -21851,8 +21851,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
                * @param caseDetails the value
                * @return this builder
                */
-              public Builder caseDetails(List<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData.Data.CaseDetailsItem> caseDetails) {
-                return set("case_details", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData.Data.CaseDetailsItem::fromJson)), caseDetails);
+              public Builder caseDetails(List<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData.Data.CaseDetails> caseDetails) {
+                return set("case_details", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData.Data.CaseDetails::fromJson)), caseDetails);
               }
 
               /**
@@ -21870,22 +21870,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               }
             }
 
-            public static final class CaseDetailsItem extends JsonModel {
+            public static final class CaseDetails extends JsonModel {
               private static final Set<String> KNOWN_FIELDS = Set.of("case_type");
 
-              private CaseDetailsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+              private CaseDetails(ObjectNode json, Map<String, List<FileUpload>> files) {
                 super(json, files);
               }
 
               /**
-               * Reads a {@code CaseDetailsItem} from JSON. Unknown fields are kept and readable
+               * Reads a {@code CaseDetails} from JSON. Unknown fields are kept and readable
                * through {@link #_additionalProperties()}.
                *
                * @param json a JSON object
                * @return the parsed value
                */
-              public static CaseDetailsItem fromJson(JsonNode json) {
-                return new CaseDetailsItem(Json.copyObject(json), Map.of());
+              public static CaseDetails fromJson(JsonNode json) {
+                return new CaseDetails(Json.copyObject(json), Map.of());
               }
 
               /**
@@ -21912,8 +21912,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
                * @return the value, or empty when the field is absent or null
                * @throws me.didit.errors.UnexpectedResponseException when the field has another type
                */
-              public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData.Data.CaseDetailsItem.CaseType> caseType() {
-                return Json.optional(json, "case_type", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData.Data.CaseDetailsItem.CaseType::of));
+              public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData.Data.CaseDetails.CaseType> caseType() {
+                return Json.optional(json, "case_type", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData.Data.CaseDetails.CaseType::of));
               }
 
               @Override
@@ -21921,11 +21921,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
                 return KNOWN_FIELDS;
               }
 
-              /** Builds a {@link CaseDetailsItem}. */
+              /** Builds a {@link CaseDetails}. */
               public static final class Builder extends JsonModel.BaseBuilder<Builder> {
                 private Builder() {}
 
-                private Builder(CaseDetailsItem from) {
+                private Builder(CaseDetails from) {
                   super(from);
                 }
 
@@ -21935,17 +21935,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
                  * @param caseType the value
                  * @return this builder
                  */
-                public Builder caseType(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData.Data.CaseDetailsItem.CaseType caseType) {
-                  return set("case_type", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreeningsItem.HitsItem.WarningMatchesItem.AdditionalData.Data.CaseDetailsItem.CaseType::of), caseType);
+                public Builder caseType(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData.Data.CaseDetails.CaseType caseType) {
+                  return set("case_type", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreenings.Hits.WarningMatches.AdditionalData.Data.CaseDetails.CaseType::of), caseType);
                 }
 
                 /**
                  * Builds the value.
                  *
-                 * @return a new immutable {@code CaseDetailsItem}
+                 * @return a new immutable {@code CaseDetails}
                  */
-                public CaseDetailsItem build() {
-                  return new CaseDetailsItem(buildJson(), buildFiles());
+                public CaseDetails build() {
+                  return new CaseDetails(buildJson(), buildFiles());
                 }
 
                 @Override
@@ -22031,22 +22031,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
       }
 
-      public static final class SanctionMatchesItem extends JsonModel {
+      public static final class SanctionMatches extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("list_name", "matched_name", "description", "reason", "source_url", "other_sources", "details", "legal_basis", "listed_on", "sanction_list", "sanction_program", "sanctioning_authority", "updated_on", "additional_data");
 
-        private SanctionMatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private SanctionMatches(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code SanctionMatchesItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code SanctionMatches} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static SanctionMatchesItem fromJson(JsonNode json) {
-          return new SanctionMatchesItem(Json.copyObject(json), Map.of());
+        public static SanctionMatches fromJson(JsonNode json) {
+          return new SanctionMatches(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -22212,11 +22212,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link SanctionMatchesItem}. */
+        /** Builds a {@link SanctionMatches}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(SanctionMatchesItem from) {
+          private Builder(SanctionMatches from) {
             super(from);
           }
 
@@ -22363,10 +22363,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code SanctionMatchesItem}
+           * @return a new immutable {@code SanctionMatches}
            */
-          public SanctionMatchesItem build() {
-            return new SanctionMatchesItem(buildJson(), buildFiles());
+          public SanctionMatches build() {
+            return new SanctionMatches(buildJson(), buildFiles());
           }
 
           @Override
@@ -22521,22 +22521,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
       }
 
-      public static final class AdverseMediaMatchesItem extends JsonModel {
+      public static final class AdverseMediaMatches extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("country", "summary", "headline", "sentiment", "thumbnail", "source_url", "author_name", "other_sources", "adverse_keywords", "sentiment_score", "publication_date");
 
-        private AdverseMediaMatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private AdverseMediaMatches(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code AdverseMediaMatchesItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code AdverseMediaMatches} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static AdverseMediaMatchesItem fromJson(JsonNode json) {
-          return new AdverseMediaMatchesItem(Json.copyObject(json), Map.of());
+        public static AdverseMediaMatches fromJson(JsonNode json) {
+          return new AdverseMediaMatches(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -22672,11 +22672,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link AdverseMediaMatchesItem}. */
+        /** Builds a {@link AdverseMediaMatches}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(AdverseMediaMatchesItem from) {
+          private Builder(AdverseMediaMatches from) {
             super(from);
           }
 
@@ -22793,10 +22793,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code AdverseMediaMatchesItem}
+           * @return a new immutable {@code AdverseMediaMatches}
            */
-          public AdverseMediaMatchesItem build() {
-            return new AdverseMediaMatchesItem(buildJson(), buildFiles());
+          public AdverseMediaMatches build() {
+            return new AdverseMediaMatches(buildJson(), buildFiles());
           }
 
           @Override
@@ -22952,22 +22952,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("feature", "risk", "additional_data", "log_type", "short_description", "long_description", "node_id");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -22994,8 +22994,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.AmlScreeningsItem.WarningsItem.Feature> feature() {
-        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreeningsItem.WarningsItem.Feature::of));
+      public Optional<SessionsRetrieveDecisionResponse.AmlScreenings.Warnings.Feature> feature() {
+        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreenings.Warnings.Feature::of));
       }
 
       /**
@@ -23063,11 +23063,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -23077,8 +23077,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param feature the value
          * @return this builder
          */
-        public Builder feature(SessionsRetrieveDecisionResponse.AmlScreeningsItem.WarningsItem.Feature feature) {
-          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreeningsItem.WarningsItem.Feature::of), feature);
+        public Builder feature(SessionsRetrieveDecisionResponse.AmlScreenings.Warnings.Feature feature) {
+          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.AmlScreenings.Warnings.Feature::of), feature);
         }
 
         /**
@@ -23144,10 +23144,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override
@@ -23240,22 +23240,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
   }
 
-  public static final class IpAnalysesItem extends JsonModel {
+  public static final class IpAnalyses extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "device_brand", "device_model", "browser_family", "os_family", "platform", "device_fingerprint", "ip_country", "ip_country_code", "ip_state", "ip_city", "latitude", "longitude", "ip_address", "isp", "organization", "is_vpn_or_tor", "is_data_center", "time_zone", "time_zone_offset", "ip", "id_document", "poa_document", "warnings", "matches");
 
-    private IpAnalysesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private IpAnalyses(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code IpAnalysesItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code IpAnalyses} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static IpAnalysesItem fromJson(JsonNode json) {
-      return new IpAnalysesItem(Json.copyObject(json), Map.of());
+    public static IpAnalyses fromJson(JsonNode json) {
+      return new IpAnalyses(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -23292,8 +23292,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IpAnalysesItem.Status> status() {
-      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalysesItem.Status::of));
+    public Optional<SessionsRetrieveDecisionResponse.IpAnalyses.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalyses.Status::of));
     }
 
     /**
@@ -23492,8 +23492,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IpAnalysesItem.Ip> ip() {
-      return Json.optional(json, "ip", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.Ip::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.IpAnalyses.Ip> ip() {
+      return Json.optional(json, "ip", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.Ip::fromJson));
     }
 
     /**
@@ -23502,8 +23502,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IpAnalysesItem.IdDocument> idDocument() {
-      return Json.optional(json, "id_document", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.IdDocument::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.IpAnalyses.IdDocument> idDocument() {
+      return Json.optional(json, "id_document", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.IdDocument::fromJson));
     }
 
     /**
@@ -23512,8 +23512,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.IpAnalysesItem.PoaDocument> poaDocument() {
-      return Json.optional(json, "poa_document", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.PoaDocument::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.IpAnalyses.PoaDocument> poaDocument() {
+      return Json.optional(json, "poa_document", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.PoaDocument::fromJson));
     }
 
     /**
@@ -23522,8 +23522,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.IpAnalysesItem.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.WarningsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.IpAnalyses.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.Warnings::fromJson)));
     }
 
     /**
@@ -23532,8 +23532,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem>> matches() {
-      return Json.optional(json, "matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.IpAnalyses.Matches>> matches() {
+      return Json.optional(json, "matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.Matches::fromJson)));
     }
 
     @Override
@@ -23541,11 +23541,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link IpAnalysesItem}. */
+    /** Builds a {@link IpAnalyses}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(IpAnalysesItem from) {
+      private Builder(IpAnalyses from) {
         super(from);
       }
 
@@ -23565,8 +23565,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(SessionsRetrieveDecisionResponse.IpAnalysesItem.Status status) {
-        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalysesItem.Status::of), status);
+      public Builder status(SessionsRetrieveDecisionResponse.IpAnalyses.Status status) {
+        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalyses.Status::of), status);
       }
 
       /**
@@ -23765,8 +23765,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param ip the value
        * @return this builder
        */
-      public Builder ip(SessionsRetrieveDecisionResponse.IpAnalysesItem.Ip ip) {
-        return set("ip", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.Ip::fromJson), ip);
+      public Builder ip(SessionsRetrieveDecisionResponse.IpAnalyses.Ip ip) {
+        return set("ip", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.Ip::fromJson), ip);
       }
 
       /**
@@ -23775,8 +23775,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param idDocument the value
        * @return this builder
        */
-      public Builder idDocument(SessionsRetrieveDecisionResponse.IpAnalysesItem.IdDocument idDocument) {
-        return set("id_document", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.IdDocument::fromJson), idDocument);
+      public Builder idDocument(SessionsRetrieveDecisionResponse.IpAnalyses.IdDocument idDocument) {
+        return set("id_document", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.IdDocument::fromJson), idDocument);
       }
 
       /**
@@ -23785,8 +23785,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param poaDocument the value
        * @return this builder
        */
-      public Builder poaDocument(SessionsRetrieveDecisionResponse.IpAnalysesItem.PoaDocument poaDocument) {
-        return set("poa_document", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.PoaDocument::fromJson), poaDocument);
+      public Builder poaDocument(SessionsRetrieveDecisionResponse.IpAnalyses.PoaDocument poaDocument) {
+        return set("poa_document", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.PoaDocument::fromJson), poaDocument);
       }
 
       /**
@@ -23795,8 +23795,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<SessionsRetrieveDecisionResponse.IpAnalysesItem.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<SessionsRetrieveDecisionResponse.IpAnalyses.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.Warnings::fromJson)), warnings);
       }
 
       /**
@@ -23805,17 +23805,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param matches the value
        * @return this builder
        */
-      public Builder matches(List<SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem> matches) {
-        return set("matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem::fromJson)), matches);
+      public Builder matches(List<SessionsRetrieveDecisionResponse.IpAnalyses.Matches> matches) {
+        return set("matches", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.Matches::fromJson)), matches);
       }
 
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code IpAnalysesItem}
+       * @return a new immutable {@code IpAnalyses}
        */
-      public IpAnalysesItem build() {
-        return new IpAnalysesItem(buildJson(), buildFiles());
+      public IpAnalyses build() {
+        return new IpAnalyses(buildJson(), buildFiles());
       }
 
       @Override
@@ -23921,8 +23921,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IpAnalysesItem.Ip.Location> location() {
-        return Json.optional(json, "location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.Ip.Location::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.IpAnalyses.Ip.Location> location() {
+        return Json.optional(json, "location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.Ip.Location::fromJson));
       }
 
       /**
@@ -23964,8 +23964,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param location the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder location(SessionsRetrieveDecisionResponse.IpAnalysesItem.Ip.@Nullable Location location) {
-          return setNullable("location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.Ip.Location::fromJson), location);
+        public Builder location(SessionsRetrieveDecisionResponse.IpAnalyses.Ip.@Nullable Location location) {
+          return setNullable("location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.Ip.Location::fromJson), location);
         }
 
         /**
@@ -24155,8 +24155,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IpAnalysesItem.IdDocument.Location> location() {
-        return Json.optional(json, "location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.IdDocument.Location::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.IpAnalyses.IdDocument.Location> location() {
+        return Json.optional(json, "location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.IdDocument.Location::fromJson));
       }
 
       /**
@@ -24198,8 +24198,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param location the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder location(SessionsRetrieveDecisionResponse.IpAnalysesItem.IdDocument.@Nullable Location location) {
-          return setNullable("location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.IdDocument.Location::fromJson), location);
+        public Builder location(SessionsRetrieveDecisionResponse.IpAnalyses.IdDocument.@Nullable Location location) {
+          return setNullable("location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.IdDocument.Location::fromJson), location);
         }
 
         /**
@@ -24389,8 +24389,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IpAnalysesItem.PoaDocument.Location> location() {
-        return Json.optional(json, "location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.PoaDocument.Location::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.IpAnalyses.PoaDocument.Location> location() {
+        return Json.optional(json, "location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.PoaDocument.Location::fromJson));
       }
 
       /**
@@ -24432,8 +24432,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param location the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder location(SessionsRetrieveDecisionResponse.IpAnalysesItem.PoaDocument.@Nullable Location location) {
-          return setNullable("location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.PoaDocument.Location::fromJson), location);
+        public Builder location(SessionsRetrieveDecisionResponse.IpAnalyses.PoaDocument.@Nullable Location location) {
+          return setNullable("location", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.PoaDocument.Location::fromJson), location);
         }
 
         /**
@@ -24578,22 +24578,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("feature", "risk", "additional_data", "log_type", "short_description", "long_description", "node_id");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -24620,8 +24620,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IpAnalysesItem.WarningsItem.Feature> feature() {
-        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalysesItem.WarningsItem.Feature::of));
+      public Optional<SessionsRetrieveDecisionResponse.IpAnalyses.Warnings.Feature> feature() {
+        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalyses.Warnings.Feature::of));
       }
 
       /**
@@ -24689,11 +24689,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -24703,8 +24703,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param feature the value
          * @return this builder
          */
-        public Builder feature(SessionsRetrieveDecisionResponse.IpAnalysesItem.WarningsItem.Feature feature) {
-          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalysesItem.WarningsItem.Feature::of), feature);
+        public Builder feature(SessionsRetrieveDecisionResponse.IpAnalyses.Warnings.Feature feature) {
+          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalyses.Warnings.Feature::of), feature);
         }
 
         /**
@@ -24770,10 +24770,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override
@@ -24865,22 +24865,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class MatchesItem extends JsonModel {
+    public static final class Matches extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_number", "vendor_data", "verification_date", "match_type", "match_source", "matched_value", "status", "is_blocklisted", "api_service", "source", "device_info", "location_info", "confidence", "match_mode", "recovery_similarity", "tls_ja4_corroborated", "recovery_gate_reason");
 
-      private MatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Matches(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code MatchesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Matches} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static MatchesItem fromJson(JsonNode json) {
-        return new MatchesItem(Json.copyObject(json), Map.of());
+      public static Matches fromJson(JsonNode json) {
+        return new Matches(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -24947,8 +24947,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.MatchType> matchType() {
-        return Json.optional(json, "match_type", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.MatchType::of));
+      public Optional<SessionsRetrieveDecisionResponse.IpAnalyses.Matches.MatchType> matchType() {
+        return Json.optional(json, "match_type", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.MatchType::of));
       }
 
       /**
@@ -24957,8 +24957,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.MatchSource> matchSource() {
-        return Json.optional(json, "match_source", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.MatchSource::of));
+      public Optional<SessionsRetrieveDecisionResponse.IpAnalyses.Matches.MatchSource> matchSource() {
+        return Json.optional(json, "match_source", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.MatchSource::of));
       }
 
       /**
@@ -25007,8 +25007,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.Source> source() {
-        return Json.optional(json, "source", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.Source::of));
+      public Optional<SessionsRetrieveDecisionResponse.IpAnalyses.Matches.Source> source() {
+        return Json.optional(json, "source", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.Source::of));
       }
 
       /**
@@ -25017,8 +25017,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.DeviceInfo> deviceInfo() {
-        return Json.optional(json, "device_info", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.DeviceInfo::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.IpAnalyses.Matches.DeviceInfo> deviceInfo() {
+        return Json.optional(json, "device_info", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.DeviceInfo::fromJson));
       }
 
       /**
@@ -25027,8 +25027,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.LocationInfo> locationInfo() {
-        return Json.optional(json, "location_info", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.LocationInfo::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.IpAnalyses.Matches.LocationInfo> locationInfo() {
+        return Json.optional(json, "location_info", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.LocationInfo::fromJson));
       }
 
       /**
@@ -25047,8 +25047,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.MatchMode> matchMode() {
-        return Json.optional(json, "match_mode", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.MatchMode::of));
+      public Optional<SessionsRetrieveDecisionResponse.IpAnalyses.Matches.MatchMode> matchMode() {
+        return Json.optional(json, "match_mode", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.MatchMode::of));
       }
 
       /**
@@ -25086,11 +25086,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link MatchesItem}. */
+      /** Builds a {@link Matches}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(MatchesItem from) {
+        private Builder(Matches from) {
           super(from);
         }
 
@@ -25140,8 +25140,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param matchType the value
          * @return this builder
          */
-        public Builder matchType(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.MatchType matchType) {
-          return set("match_type", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.MatchType::of), matchType);
+        public Builder matchType(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.MatchType matchType) {
+          return set("match_type", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.MatchType::of), matchType);
         }
 
         /**
@@ -25150,8 +25150,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param matchSource the value
          * @return this builder
          */
-        public Builder matchSource(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.MatchSource matchSource) {
-          return set("match_source", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.MatchSource::of), matchSource);
+        public Builder matchSource(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.MatchSource matchSource) {
+          return set("match_source", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.MatchSource::of), matchSource);
         }
 
         /**
@@ -25200,8 +25200,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param source the value
          * @return this builder
          */
-        public Builder source(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.Source source) {
-          return set("source", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.Source::of), source);
+        public Builder source(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.Source source) {
+          return set("source", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.Source::of), source);
         }
 
         /**
@@ -25210,8 +25210,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param deviceInfo the value
          * @return this builder
          */
-        public Builder deviceInfo(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.DeviceInfo deviceInfo) {
-          return set("device_info", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.DeviceInfo::fromJson), deviceInfo);
+        public Builder deviceInfo(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.DeviceInfo deviceInfo) {
+          return set("device_info", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.DeviceInfo::fromJson), deviceInfo);
         }
 
         /**
@@ -25220,8 +25220,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param locationInfo the value
          * @return this builder
          */
-        public Builder locationInfo(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.LocationInfo locationInfo) {
-          return set("location_info", Conv.model(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.LocationInfo::fromJson), locationInfo);
+        public Builder locationInfo(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.LocationInfo locationInfo) {
+          return set("location_info", Conv.model(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.LocationInfo::fromJson), locationInfo);
         }
 
         /**
@@ -25240,8 +25240,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param matchMode the value
          * @return this builder
          */
-        public Builder matchMode(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.MatchMode matchMode) {
-          return set("match_mode", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalysesItem.MatchesItem.MatchMode::of), matchMode);
+        public Builder matchMode(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.MatchMode matchMode) {
+          return set("match_mode", Conv.enumeration(SessionsRetrieveDecisionResponse.IpAnalyses.Matches.MatchMode::of), matchMode);
         }
 
         /**
@@ -25277,10 +25277,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code MatchesItem}
+         * @return a new immutable {@code Matches}
          */
-        public MatchesItem build() {
-          return new MatchesItem(buildJson(), buildFiles());
+        public Matches build() {
+          return new Matches(buildJson(), buildFiles());
         }
 
         @Override
@@ -25861,22 +25861,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
   }
 
-  public static final class DatabaseValidationsItem extends JsonModel {
+  public static final class DatabaseValidations extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "issuing_state", "validation_type", "screened_data", "validations", "errors", "match_type", "status", "warnings");
 
-    private DatabaseValidationsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private DatabaseValidations(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code DatabaseValidationsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code DatabaseValidations} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static DatabaseValidationsItem fromJson(JsonNode json) {
-      return new DatabaseValidationsItem(Json.copyObject(json), Map.of());
+    public static DatabaseValidations fromJson(JsonNode json) {
+      return new DatabaseValidations(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -25923,8 +25923,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ValidationType> validationType() {
-      return Json.optional(json, "validation_type", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ValidationType::of));
+    public Optional<SessionsRetrieveDecisionResponse.DatabaseValidations.ValidationType> validationType() {
+      return Json.optional(json, "validation_type", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidations.ValidationType::of));
     }
 
     /**
@@ -25933,8 +25933,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ScreenedData> screenedData() {
-      return Json.optional(json, "screened_data", Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ScreenedData::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.DatabaseValidations.ScreenedData> screenedData() {
+      return Json.optional(json, "screened_data", Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidations.ScreenedData::fromJson));
     }
 
     /**
@@ -25943,8 +25943,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ValidationsItem>> validations() {
-      return Json.optional(json, "validations", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ValidationsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.DatabaseValidations.Validations>> validations() {
+      return Json.optional(json, "validations", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidations.Validations::fromJson)));
     }
 
     /**
@@ -25953,8 +25953,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ErrorsItem>> errors() {
-      return Json.optional(json, "errors", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ErrorsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.DatabaseValidations.Errors>> errors() {
+      return Json.optional(json, "errors", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidations.Errors::fromJson)));
     }
 
     /**
@@ -25963,8 +25963,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.DatabaseValidationsItem.MatchType> matchType() {
-      return Json.optional(json, "match_type", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.MatchType::of));
+    public Optional<SessionsRetrieveDecisionResponse.DatabaseValidations.MatchType> matchType() {
+      return Json.optional(json, "match_type", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidations.MatchType::of));
     }
 
     /**
@@ -25973,8 +25973,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.DatabaseValidationsItem.Status> status() {
-      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.Status::of));
+    public Optional<SessionsRetrieveDecisionResponse.DatabaseValidations.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidations.Status::of));
     }
 
     /**
@@ -25983,8 +25983,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.DatabaseValidationsItem.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.WarningsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.DatabaseValidations.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidations.Warnings::fromJson)));
     }
 
     @Override
@@ -25992,11 +25992,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link DatabaseValidationsItem}. */
+    /** Builds a {@link DatabaseValidations}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(DatabaseValidationsItem from) {
+      private Builder(DatabaseValidations from) {
         super(from);
       }
 
@@ -26026,8 +26026,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param validationType the value
        * @return this builder
        */
-      public Builder validationType(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ValidationType validationType) {
-        return set("validation_type", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ValidationType::of), validationType);
+      public Builder validationType(SessionsRetrieveDecisionResponse.DatabaseValidations.ValidationType validationType) {
+        return set("validation_type", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidations.ValidationType::of), validationType);
       }
 
       /**
@@ -26036,8 +26036,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param screenedData the value
        * @return this builder
        */
-      public Builder screenedData(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ScreenedData screenedData) {
-        return set("screened_data", Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ScreenedData::fromJson), screenedData);
+      public Builder screenedData(SessionsRetrieveDecisionResponse.DatabaseValidations.ScreenedData screenedData) {
+        return set("screened_data", Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidations.ScreenedData::fromJson), screenedData);
       }
 
       /**
@@ -26046,8 +26046,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param validations the value
        * @return this builder
        */
-      public Builder validations(List<SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ValidationsItem> validations) {
-        return set("validations", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ValidationsItem::fromJson)), validations);
+      public Builder validations(List<SessionsRetrieveDecisionResponse.DatabaseValidations.Validations> validations) {
+        return set("validations", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidations.Validations::fromJson)), validations);
       }
 
       /**
@@ -26056,8 +26056,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param errors the value
        * @return this builder
        */
-      public Builder errors(List<SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ErrorsItem> errors) {
-        return set("errors", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ErrorsItem::fromJson)), errors);
+      public Builder errors(List<SessionsRetrieveDecisionResponse.DatabaseValidations.Errors> errors) {
+        return set("errors", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidations.Errors::fromJson)), errors);
       }
 
       /**
@@ -26066,8 +26066,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param matchType the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder matchType(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.@Nullable MatchType matchType) {
-        return setNullable("match_type", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.MatchType::of), matchType);
+      public Builder matchType(SessionsRetrieveDecisionResponse.DatabaseValidations.@Nullable MatchType matchType) {
+        return setNullable("match_type", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidations.MatchType::of), matchType);
       }
 
       /**
@@ -26076,8 +26076,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param status the value
        * @return this builder
        */
-      public Builder status(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.Status status) {
-        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.Status::of), status);
+      public Builder status(SessionsRetrieveDecisionResponse.DatabaseValidations.Status status) {
+        return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidations.Status::of), status);
       }
 
       /**
@@ -26086,17 +26086,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<SessionsRetrieveDecisionResponse.DatabaseValidationsItem.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<SessionsRetrieveDecisionResponse.DatabaseValidations.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidations.Warnings::fromJson)), warnings);
       }
 
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code DatabaseValidationsItem}
+       * @return a new immutable {@code DatabaseValidations}
        */
-      public DatabaseValidationsItem build() {
-        return new DatabaseValidationsItem(buildJson(), buildFiles());
+      public DatabaseValidations build() {
+        return new DatabaseValidations(buildJson(), buildFiles());
       }
 
       @Override
@@ -26379,22 +26379,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class ValidationsItem extends JsonModel {
+    public static final class Validations extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("service_id", "service_name", "validation", "outcome_code", "outcome_detail", "source_data");
 
-      private ValidationsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Validations(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code ValidationsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Validations} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static ValidationsItem fromJson(JsonNode json) {
-        return new ValidationsItem(Json.copyObject(json), Map.of());
+      public static Validations fromJson(JsonNode json) {
+        return new Validations(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -26441,8 +26441,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ValidationsItem.Validation> validation() {
-        return Json.optional(json, "validation", Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ValidationsItem.Validation::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.DatabaseValidations.Validations.Validation> validation() {
+        return Json.optional(json, "validation", Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidations.Validations.Validation::fromJson));
       }
 
       /**
@@ -26480,11 +26480,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link ValidationsItem}. */
+      /** Builds a {@link Validations}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(ValidationsItem from) {
+        private Builder(Validations from) {
           super(from);
         }
 
@@ -26514,8 +26514,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param validation the value
          * @return this builder
          */
-        public Builder validation(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ValidationsItem.Validation validation) {
-          return set("validation", Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.ValidationsItem.Validation::fromJson), validation);
+        public Builder validation(SessionsRetrieveDecisionResponse.DatabaseValidations.Validations.Validation validation) {
+          return set("validation", Conv.model(SessionsRetrieveDecisionResponse.DatabaseValidations.Validations.Validation::fromJson), validation);
         }
 
         /**
@@ -26551,10 +26551,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code ValidationsItem}
+         * @return a new immutable {@code Validations}
          */
-        public ValidationsItem build() {
-          return new ValidationsItem(buildJson(), buildFiles());
+        public Validations build() {
+          return new Validations(buildJson(), buildFiles());
         }
 
         @Override
@@ -26693,22 +26693,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     /**
      * The upstream service's error object spread as-is — its keys vary by service (commonly a message/code and any provider-specific details) — plus <code>service_id</code> identifying the service that errored.
      */
-    public static final class ErrorsItem extends JsonModel {
+    public static final class Errors extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("service_id");
 
-      private ErrorsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Errors(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code ErrorsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Errors} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static ErrorsItem fromJson(JsonNode json) {
-        return new ErrorsItem(Json.copyObject(json), Map.of());
+      public static Errors fromJson(JsonNode json) {
+        return new Errors(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -26744,11 +26744,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link ErrorsItem}. */
+      /** Builds a {@link Errors}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(ErrorsItem from) {
+        private Builder(Errors from) {
           super(from);
         }
 
@@ -26765,10 +26765,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code ErrorsItem}
+         * @return a new immutable {@code Errors}
          */
-        public ErrorsItem build() {
-          return new ErrorsItem(buildJson(), buildFiles());
+        public Errors build() {
+          return new Errors(buildJson(), buildFiles());
         }
 
         @Override
@@ -26876,22 +26876,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("feature", "risk", "additional_data", "log_type", "short_description", "long_description", "node_id");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -26918,8 +26918,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.DatabaseValidationsItem.WarningsItem.Feature> feature() {
-        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.WarningsItem.Feature::of));
+      public Optional<SessionsRetrieveDecisionResponse.DatabaseValidations.Warnings.Feature> feature() {
+        return Json.optional(json, "feature", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidations.Warnings.Feature::of));
       }
 
       /**
@@ -26987,11 +26987,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -27001,8 +27001,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param feature the value
          * @return this builder
          */
-        public Builder feature(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.WarningsItem.Feature feature) {
-          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidationsItem.WarningsItem.Feature::of), feature);
+        public Builder feature(SessionsRetrieveDecisionResponse.DatabaseValidations.Warnings.Feature feature) {
+          return set("feature", Conv.enumeration(SessionsRetrieveDecisionResponse.DatabaseValidations.Warnings.Feature::of), feature);
         }
 
         /**
@@ -27068,10 +27068,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override
@@ -27164,22 +27164,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
   }
 
-  public static final class ReviewsItem extends JsonModel {
+  public static final class Reviews extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("user", "new_status", "comment", "created_at");
 
-    private ReviewsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Reviews(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code ReviewsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Reviews} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static ReviewsItem fromJson(JsonNode json) {
-      return new ReviewsItem(Json.copyObject(json), Map.of());
+    public static Reviews fromJson(JsonNode json) {
+      return new Reviews(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -27245,11 +27245,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link ReviewsItem}. */
+    /** Builds a {@link Reviews}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(ReviewsItem from) {
+      private Builder(Reviews from) {
         super(from);
       }
 
@@ -27296,10 +27296,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code ReviewsItem}
+       * @return a new immutable {@code Reviews}
        */
-      public ReviewsItem build() {
-        return new ReviewsItem(buildJson(), buildFiles());
+      public Reviews build() {
+        return new Reviews(buildJson(), buildFiles());
       }
 
       @Override
@@ -27312,22 +27312,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
   /**
    * One company registry check — the full company-registry payload enriched with ownership structure and warnings. Present only when <code>session_kind = business</code>.
    */
-  public static final class RegistryChecksItem extends JsonModel {
+  public static final class RegistryChecks extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("status", "node_id", "data_resolved", "company", "ownership_structure", "warnings");
 
-    private RegistryChecksItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private RegistryChecks(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code RegistryChecksItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code RegistryChecks} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static RegistryChecksItem fromJson(JsonNode json) {
-      return new RegistryChecksItem(Json.copyObject(json), Map.of());
+    public static RegistryChecks fromJson(JsonNode json) {
+      return new RegistryChecks(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -27384,8 +27384,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.RegistryChecksItem.Company> company() {
-      return Json.optional(json, "company", Conv.model(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.RegistryChecks.Company> company() {
+      return Json.optional(json, "company", Conv.model(SessionsRetrieveDecisionResponse.RegistryChecks.Company::fromJson));
     }
 
     /**
@@ -27413,11 +27413,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link RegistryChecksItem}. */
+    /** Builds a {@link RegistryChecks}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(RegistryChecksItem from) {
+      private Builder(RegistryChecks from) {
         super(from);
       }
 
@@ -27457,8 +27457,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param company the value
        * @return this builder
        */
-      public Builder company(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company company) {
-        return set("company", Conv.model(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company::fromJson), company);
+      public Builder company(SessionsRetrieveDecisionResponse.RegistryChecks.Company company) {
+        return set("company", Conv.model(SessionsRetrieveDecisionResponse.RegistryChecks.Company::fromJson), company);
       }
 
       /**
@@ -27484,10 +27484,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code RegistryChecksItem}
+       * @return a new immutable {@code RegistryChecks}
        */
-      public RegistryChecksItem build() {
-        return new RegistryChecksItem(buildJson(), buildFiles());
+      public RegistryChecks build() {
+        return new RegistryChecks(buildJson(), buildFiles());
       }
 
       @Override
@@ -27671,8 +27671,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.RiskLevel> riskLevel() {
-        return Json.optional(json, "risk_level", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.RiskLevel::of));
+      public Optional<SessionsRetrieveDecisionResponse.RegistryChecks.Company.RiskLevel> riskLevel() {
+        return Json.optional(json, "risk_level", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecks.Company.RiskLevel::of));
       }
 
       /**
@@ -27821,8 +27821,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.VatValidationStatus> vatValidationStatus() {
-        return Json.optional(json, "vat_validation_status", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.VatValidationStatus::of));
+      public Optional<SessionsRetrieveDecisionResponse.RegistryChecks.Company.VatValidationStatus> vatValidationStatus() {
+        return Json.optional(json, "vat_validation_status", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecks.Company.VatValidationStatus::of));
       }
 
       /**
@@ -27841,8 +27841,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.VatValidationSource> vatValidationSource() {
-        return Json.optional(json, "vat_validation_source", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.VatValidationSource::of));
+      public Optional<SessionsRetrieveDecisionResponse.RegistryChecks.Company.VatValidationSource> vatValidationSource() {
+        return Json.optional(json, "vat_validation_source", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecks.Company.VatValidationSource::of));
       }
 
       /**
@@ -27891,8 +27891,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.OfficersItem>> officers() {
-        return Json.optional(json, "officers", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.OfficersItem::fromJson)));
+      public Optional<List<SessionsRetrieveDecisionResponse.RegistryChecks.Company.Officers>> officers() {
+        return Json.optional(json, "officers", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.RegistryChecks.Company.Officers::fromJson)));
       }
 
       /**
@@ -27901,8 +27901,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem>> beneficialOwners() {
-        return Json.optional(json, "beneficial_owners", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem::fromJson)));
+      public Optional<List<SessionsRetrieveDecisionResponse.RegistryChecks.Company.BeneficialOwners>> beneficialOwners() {
+        return Json.optional(json, "beneficial_owners", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.RegistryChecks.Company.BeneficialOwners::fromJson)));
       }
 
       /**
@@ -28174,8 +28174,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param riskLevel the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder riskLevel(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.@Nullable RiskLevel riskLevel) {
-          return setNullable("risk_level", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.RiskLevel::of), riskLevel);
+        public Builder riskLevel(SessionsRetrieveDecisionResponse.RegistryChecks.Company.@Nullable RiskLevel riskLevel) {
+          return setNullable("risk_level", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecks.Company.RiskLevel::of), riskLevel);
         }
 
         /**
@@ -28324,8 +28324,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param vatValidationStatus the value
          * @return this builder
          */
-        public Builder vatValidationStatus(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.VatValidationStatus vatValidationStatus) {
-          return set("vat_validation_status", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.VatValidationStatus::of), vatValidationStatus);
+        public Builder vatValidationStatus(SessionsRetrieveDecisionResponse.RegistryChecks.Company.VatValidationStatus vatValidationStatus) {
+          return set("vat_validation_status", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecks.Company.VatValidationStatus::of), vatValidationStatus);
         }
 
         /**
@@ -28344,8 +28344,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param vatValidationSource the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder vatValidationSource(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.@Nullable VatValidationSource vatValidationSource) {
-          return setNullable("vat_validation_source", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.VatValidationSource::of), vatValidationSource);
+        public Builder vatValidationSource(SessionsRetrieveDecisionResponse.RegistryChecks.Company.@Nullable VatValidationSource vatValidationSource) {
+          return setNullable("vat_validation_source", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecks.Company.VatValidationSource::of), vatValidationSource);
         }
 
         /**
@@ -28394,8 +28394,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param officers the value
          * @return this builder
          */
-        public Builder officers(List<SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.OfficersItem> officers) {
-          return set("officers", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.OfficersItem::fromJson)), officers);
+        public Builder officers(List<SessionsRetrieveDecisionResponse.RegistryChecks.Company.Officers> officers) {
+          return set("officers", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.RegistryChecks.Company.Officers::fromJson)), officers);
         }
 
         /**
@@ -28404,8 +28404,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param beneficialOwners the value
          * @return this builder
          */
-        public Builder beneficialOwners(List<SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem> beneficialOwners) {
-          return set("beneficial_owners", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem::fromJson)), beneficialOwners);
+        public Builder beneficialOwners(List<SessionsRetrieveDecisionResponse.RegistryChecks.Company.BeneficialOwners> beneficialOwners) {
+          return set("beneficial_owners", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.RegistryChecks.Company.BeneficialOwners::fromJson)), beneficialOwners);
         }
 
         /**
@@ -28710,22 +28710,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
       }
 
-      public static final class OfficersItem extends JsonModel {
+      public static final class Officers extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "designation", "role", "nationality", "is_active", "kyc_status", "kyc_session_url", "first_name", "last_name", "address", "appointment_date", "termination_date", "date_of_birth", "date_of_birth_year", "date_of_birth_month");
 
-        private OfficersItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private Officers(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code OfficersItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code Officers} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static OfficersItem fromJson(JsonNode json) {
-          return new OfficersItem(Json.copyObject(json), Map.of());
+        public static Officers fromJson(JsonNode json) {
+          return new Officers(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -28812,8 +28812,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.OfficersItem.KycStatus> kycStatus() {
-          return Json.optional(json, "kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.OfficersItem.KycStatus::of));
+        public Optional<SessionsRetrieveDecisionResponse.RegistryChecks.Company.Officers.KycStatus> kycStatus() {
+          return Json.optional(json, "kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecks.Company.Officers.KycStatus::of));
         }
 
         /**
@@ -28911,11 +28911,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link OfficersItem}. */
+        /** Builds a {@link Officers}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(OfficersItem from) {
+          private Builder(Officers from) {
             super(from);
           }
 
@@ -28985,8 +28985,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kycStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kycStatus(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.OfficersItem.@Nullable KycStatus kycStatus) {
-            return setNullable("kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.OfficersItem.KycStatus::of), kycStatus);
+          public Builder kycStatus(SessionsRetrieveDecisionResponse.RegistryChecks.Company.Officers.@Nullable KycStatus kycStatus) {
+            return setNullable("kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecks.Company.Officers.KycStatus::of), kycStatus);
           }
 
           /**
@@ -29082,10 +29082,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code OfficersItem}
+           * @return a new immutable {@code Officers}
            */
-          public OfficersItem build() {
-            return new OfficersItem(buildJson(), buildFiles());
+          public Officers build() {
+            return new Officers(buildJson(), buildFiles());
           }
 
           @Override
@@ -29140,22 +29140,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
       }
 
-      public static final class BeneficialOwnersItem extends JsonModel {
+      public static final class BeneficialOwners extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "first_name", "last_name", "entity_type", "roles", "ownership_min_shares", "ownership_max_shares", "is_active", "kyc_status", "kyc_session_url", "effective_ownership_percent", "company_name", "registration_number", "country_of_birth", "email", "nationality", "designation", "voting_min_shares", "voting_max_shares", "date_of_birth", "appointment_date", "shareholding");
 
-        private BeneficialOwnersItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private BeneficialOwners(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code BeneficialOwnersItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code BeneficialOwners} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static BeneficialOwnersItem fromJson(JsonNode json) {
-          return new BeneficialOwnersItem(Json.copyObject(json), Map.of());
+        public static BeneficialOwners fromJson(JsonNode json) {
+          return new BeneficialOwners(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -29222,8 +29222,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem.EntityType> entityType() {
-          return Json.optional(json, "entity_type", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem.EntityType::of));
+        public Optional<SessionsRetrieveDecisionResponse.RegistryChecks.Company.BeneficialOwners.EntityType> entityType() {
+          return Json.optional(json, "entity_type", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecks.Company.BeneficialOwners.EntityType::of));
         }
 
         /**
@@ -29272,8 +29272,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem.KycStatus> kycStatus() {
-          return Json.optional(json, "kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem.KycStatus::of));
+        public Optional<SessionsRetrieveDecisionResponse.RegistryChecks.Company.BeneficialOwners.KycStatus> kycStatus() {
+          return Json.optional(json, "kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecks.Company.BeneficialOwners.KycStatus::of));
         }
 
         /**
@@ -29411,11 +29411,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link BeneficialOwnersItem}. */
+        /** Builds a {@link BeneficialOwners}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(BeneficialOwnersItem from) {
+          private Builder(BeneficialOwners from) {
             super(from);
           }
 
@@ -29465,8 +29465,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param entityType the value
            * @return this builder
            */
-          public Builder entityType(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem.EntityType entityType) {
-            return set("entity_type", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem.EntityType::of), entityType);
+          public Builder entityType(SessionsRetrieveDecisionResponse.RegistryChecks.Company.BeneficialOwners.EntityType entityType) {
+            return set("entity_type", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecks.Company.BeneficialOwners.EntityType::of), entityType);
           }
 
           /**
@@ -29515,8 +29515,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kycStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kycStatus(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem.@Nullable KycStatus kycStatus) {
-            return setNullable("kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecksItem.Company.BeneficialOwnersItem.KycStatus::of), kycStatus);
+          public Builder kycStatus(SessionsRetrieveDecisionResponse.RegistryChecks.Company.BeneficialOwners.@Nullable KycStatus kycStatus) {
+            return setNullable("kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.RegistryChecks.Company.BeneficialOwners.KycStatus::of), kycStatus);
           }
 
           /**
@@ -29652,10 +29652,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code BeneficialOwnersItem}
+           * @return a new immutable {@code BeneficialOwners}
            */
-          public BeneficialOwnersItem build() {
-            return new BeneficialOwnersItem(buildJson(), buildFiles());
+          public BeneficialOwners build() {
+            return new BeneficialOwners(buildJson(), buildFiles());
           }
 
           @Override
@@ -29757,22 +29757,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
   /**
    * Aggregate check over the company's officers + UBOs. Uses the <code>registry</code> / <code>submitted</code> shape. Present only when session_kind = business.
    */
-  public static final class KeyPeopleChecksItem extends JsonModel {
+  public static final class KeyPeopleChecks extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("status", "node_id", "registry", "submitted", "ubo_kyc_summary", "warnings");
 
-    private KeyPeopleChecksItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private KeyPeopleChecks(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code KeyPeopleChecksItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code KeyPeopleChecks} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static KeyPeopleChecksItem fromJson(JsonNode json) {
-      return new KeyPeopleChecksItem(Json.copyObject(json), Map.of());
+    public static KeyPeopleChecks fromJson(JsonNode json) {
+      return new KeyPeopleChecks(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -29819,8 +29819,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry> registry() {
-      return Json.optional(json, "registry", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry> registry() {
+      return Json.optional(json, "registry", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry::fromJson));
     }
 
     /**
@@ -29829,8 +29829,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted> submitted() {
-      return Json.optional(json, "submitted", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted> submitted() {
+      return Json.optional(json, "submitted", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted::fromJson));
     }
 
     /**
@@ -29839,8 +29839,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.UboKycSummary> uboKycSummary() {
-      return Json.optional(json, "ubo_kyc_summary", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.UboKycSummary::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.UboKycSummary> uboKycSummary() {
+      return Json.optional(json, "ubo_kyc_summary", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.UboKycSummary::fromJson));
     }
 
     /**
@@ -29858,11 +29858,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link KeyPeopleChecksItem}. */
+    /** Builds a {@link KeyPeopleChecks}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(KeyPeopleChecksItem from) {
+      private Builder(KeyPeopleChecks from) {
         super(from);
       }
 
@@ -29892,8 +29892,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param registry the value
        * @return this builder
        */
-      public Builder registry(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry registry) {
-        return set("registry", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry::fromJson), registry);
+      public Builder registry(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry registry) {
+        return set("registry", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry::fromJson), registry);
       }
 
       /**
@@ -29902,8 +29902,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param submitted the value
        * @return this builder
        */
-      public Builder submitted(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted submitted) {
-        return set("submitted", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted::fromJson), submitted);
+      public Builder submitted(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted submitted) {
+        return set("submitted", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted::fromJson), submitted);
       }
 
       /**
@@ -29912,8 +29912,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param uboKycSummary the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder uboKycSummary(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.@Nullable UboKycSummary uboKycSummary) {
-        return setNullable("ubo_kyc_summary", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.UboKycSummary::fromJson), uboKycSummary);
+      public Builder uboKycSummary(SessionsRetrieveDecisionResponse.KeyPeopleChecks.@Nullable UboKycSummary uboKycSummary) {
+        return setNullable("ubo_kyc_summary", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.UboKycSummary::fromJson), uboKycSummary);
       }
 
       /**
@@ -29929,10 +29929,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code KeyPeopleChecksItem}
+       * @return a new immutable {@code KeyPeopleChecks}
        */
-      public KeyPeopleChecksItem build() {
-        return new KeyPeopleChecksItem(buildJson(), buildFiles());
+      public KeyPeopleChecks build() {
+        return new KeyPeopleChecks(buildJson(), buildFiles());
       }
 
       @Override
@@ -29984,8 +29984,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem>> officers() {
-        return Json.optional(json, "officers", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem::fromJson)));
+      public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers>> officers() {
+        return Json.optional(json, "officers", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers::fromJson)));
       }
 
       /**
@@ -29994,8 +29994,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem>> beneficialOwners() {
-        return Json.optional(json, "beneficial_owners", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem::fromJson)));
+      public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners>> beneficialOwners() {
+        return Json.optional(json, "beneficial_owners", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners::fromJson)));
       }
 
       @Override
@@ -30017,8 +30017,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param officers the value
          * @return this builder
          */
-        public Builder officers(List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem> officers) {
-          return set("officers", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem::fromJson)), officers);
+        public Builder officers(List<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers> officers) {
+          return set("officers", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers::fromJson)), officers);
         }
 
         /**
@@ -30027,8 +30027,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param beneficialOwners the value
          * @return this builder
          */
-        public Builder beneficialOwners(List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem> beneficialOwners) {
-          return set("beneficial_owners", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem::fromJson)), beneficialOwners);
+        public Builder beneficialOwners(List<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners> beneficialOwners) {
+          return set("beneficial_owners", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners::fromJson)), beneficialOwners);
         }
 
         /**
@@ -30046,22 +30046,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
       }
 
-      public static final class OfficersItem extends JsonModel {
+      public static final class Officers extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "designation", "role", "nationality", "appointment_date", "termination_date", "is_active", "address", "aml_status", "kyc_status", "kyc_session_url", "kyc_session_id", "verification_workflow_type", "verification_workflow_id", "verification_workflow_label", "verification_workflow_features", "didit_internal_id", "kyc_document_type", "kyc_nationality", "kyc_liveness_passed", "kyc_verified_at", "kyc_aml_categories", "kyc_notification_sent_at", "first_name", "last_name", "date_of_birth", "date_of_birth_year", "date_of_birth_month");
 
-        private OfficersItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private Officers(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code OfficersItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code Officers} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static OfficersItem fromJson(JsonNode json) {
-          return new OfficersItem(Json.copyObject(json), Map.of());
+        public static Officers fromJson(JsonNode json) {
+          return new Officers(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -30118,8 +30118,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.Role> role() {
-          return Json.optional(json, "role", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.Role::of));
+        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.Role> role() {
+          return Json.optional(json, "role", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.Role::of));
         }
 
         /**
@@ -30178,8 +30178,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.AmlStatus> amlStatus() {
-          return Json.optional(json, "aml_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.AmlStatus::of));
+        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.AmlStatus> amlStatus() {
+          return Json.optional(json, "aml_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.AmlStatus::of));
         }
 
         /**
@@ -30188,8 +30188,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycStatus> kycStatus() {
-          return Json.optional(json, "kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycStatus::of));
+        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycStatus> kycStatus() {
+          return Json.optional(json, "kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycStatus::of));
         }
 
         /**
@@ -30248,8 +30248,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.VerificationWorkflowFeaturesItem>> verificationWorkflowFeatures() {
-          return Json.optional(json, "verification_workflow_features", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.VerificationWorkflowFeaturesItem::fromJson)));
+        public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.VerificationWorkflowFeatures>> verificationWorkflowFeatures() {
+          return Json.optional(json, "verification_workflow_features", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.VerificationWorkflowFeatures::fromJson)));
         }
 
         /**
@@ -30308,8 +30308,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories> kycAmlCategories() {
-          return Json.optional(json, "kyc_aml_categories", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories::fromJson));
+        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories> kycAmlCategories() {
+          return Json.optional(json, "kyc_aml_categories", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories::fromJson));
         }
 
         /**
@@ -30377,11 +30377,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link OfficersItem}. */
+        /** Builds a {@link Officers}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(OfficersItem from) {
+          private Builder(Officers from) {
             super(from);
           }
 
@@ -30421,8 +30421,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param role the value
            * @return this builder
            */
-          public Builder role(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.Role role) {
-            return set("role", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.Role::of), role);
+          public Builder role(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.Role role) {
+            return set("role", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.Role::of), role);
           }
 
           /**
@@ -30481,8 +30481,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param amlStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder amlStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.@Nullable AmlStatus amlStatus) {
-            return setNullable("aml_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.AmlStatus::of), amlStatus);
+          public Builder amlStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.@Nullable AmlStatus amlStatus) {
+            return setNullable("aml_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.AmlStatus::of), amlStatus);
           }
 
           /**
@@ -30491,8 +30491,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kycStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kycStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.@Nullable KycStatus kycStatus) {
-            return setNullable("kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycStatus::of), kycStatus);
+          public Builder kycStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.@Nullable KycStatus kycStatus) {
+            return setNullable("kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycStatus::of), kycStatus);
           }
 
           /**
@@ -30551,8 +30551,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param verificationWorkflowFeatures the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder verificationWorkflowFeatures(@Nullable List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.VerificationWorkflowFeaturesItem> verificationWorkflowFeatures) {
-            return setNullable("verification_workflow_features", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.VerificationWorkflowFeaturesItem::fromJson)), verificationWorkflowFeatures);
+          public Builder verificationWorkflowFeatures(@Nullable List<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.VerificationWorkflowFeatures> verificationWorkflowFeatures) {
+            return setNullable("verification_workflow_features", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.VerificationWorkflowFeatures::fromJson)), verificationWorkflowFeatures);
           }
 
           /**
@@ -30611,8 +30611,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kycAmlCategories the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kycAmlCategories(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.@Nullable KycAmlCategories kycAmlCategories) {
-            return setNullable("kyc_aml_categories", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories::fromJson), kycAmlCategories);
+          public Builder kycAmlCategories(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.@Nullable KycAmlCategories kycAmlCategories) {
+            return setNullable("kyc_aml_categories", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories::fromJson), kycAmlCategories);
           }
 
           /**
@@ -30678,10 +30678,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code OfficersItem}
+           * @return a new immutable {@code Officers}
            */
-          public OfficersItem build() {
-            return new OfficersItem(buildJson(), buildFiles());
+          public Officers build() {
+            return new Officers(buildJson(), buildFiles());
           }
 
           @Override
@@ -30897,22 +30897,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
         }
 
-        public static final class VerificationWorkflowFeaturesItem extends JsonModel {
+        public static final class VerificationWorkflowFeatures extends JsonModel {
           private static final Set<String> KNOWN_FIELDS = Set.of("feature", "status");
 
-          private VerificationWorkflowFeaturesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+          private VerificationWorkflowFeatures(ObjectNode json, Map<String, List<FileUpload>> files) {
             super(json, files);
           }
 
           /**
-           * Reads a {@code VerificationWorkflowFeaturesItem} from JSON. Unknown fields are kept and readable
+           * Reads a {@code VerificationWorkflowFeatures} from JSON. Unknown fields are kept and readable
            * through {@link #_additionalProperties()}.
            *
            * @param json a JSON object
            * @return the parsed value
            */
-          public static VerificationWorkflowFeaturesItem fromJson(JsonNode json) {
-            return new VerificationWorkflowFeaturesItem(Json.copyObject(json), Map.of());
+          public static VerificationWorkflowFeatures fromJson(JsonNode json) {
+            return new VerificationWorkflowFeatures(Json.copyObject(json), Map.of());
           }
 
           /**
@@ -30949,8 +30949,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.VerificationWorkflowFeaturesItem.Status> status() {
-            return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.VerificationWorkflowFeaturesItem.Status::of));
+          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.VerificationWorkflowFeatures.Status> status() {
+            return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.VerificationWorkflowFeatures.Status::of));
           }
 
           @Override
@@ -30958,11 +30958,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             return KNOWN_FIELDS;
           }
 
-          /** Builds a {@link VerificationWorkflowFeaturesItem}. */
+          /** Builds a {@link VerificationWorkflowFeatures}. */
           public static final class Builder extends JsonModel.BaseBuilder<Builder> {
             private Builder() {}
 
-            private Builder(VerificationWorkflowFeaturesItem from) {
+            private Builder(VerificationWorkflowFeatures from) {
               super(from);
             }
 
@@ -30982,17 +30982,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param status the value
              * @return this builder
              */
-            public Builder status(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.VerificationWorkflowFeaturesItem.Status status) {
-              return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.VerificationWorkflowFeaturesItem.Status::of), status);
+            public Builder status(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.VerificationWorkflowFeatures.Status status) {
+              return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.VerificationWorkflowFeatures.Status::of), status);
             }
 
             /**
              * Builds the value.
              *
-             * @return a new immutable {@code VerificationWorkflowFeaturesItem}
+             * @return a new immutable {@code VerificationWorkflowFeatures}
              */
-            public VerificationWorkflowFeaturesItem build() {
-              return new VerificationWorkflowFeaturesItem(buildJson(), buildFiles());
+            public VerificationWorkflowFeatures build() {
+              return new VerificationWorkflowFeatures(buildJson(), buildFiles());
             }
 
             @Override
@@ -31099,8 +31099,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.Sanctions> sanctions() {
-            return Json.optional(json, "sanctions", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.Sanctions::of));
+          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.Sanctions> sanctions() {
+            return Json.optional(json, "sanctions", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.Sanctions::of));
           }
 
           /**
@@ -31109,8 +31109,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.Pep> pep() {
-            return Json.optional(json, "pep", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.Pep::of));
+          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.Pep> pep() {
+            return Json.optional(json, "pep", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.Pep::of));
           }
 
           /**
@@ -31119,8 +31119,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.AdverseMedia> adverseMedia() {
-            return Json.optional(json, "adverse_media", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.AdverseMedia::of));
+          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.AdverseMedia> adverseMedia() {
+            return Json.optional(json, "adverse_media", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.AdverseMedia::of));
           }
 
           /**
@@ -31129,8 +31129,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.Warnings> warnings() {
-            return Json.optional(json, "warnings", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.Warnings::of));
+          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.Warnings> warnings() {
+            return Json.optional(json, "warnings", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.Warnings::of));
           }
 
           @Override
@@ -31152,8 +31152,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param sanctions the value
              * @return this builder
              */
-            public Builder sanctions(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.Sanctions sanctions) {
-              return set("sanctions", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.Sanctions::of), sanctions);
+            public Builder sanctions(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.Sanctions sanctions) {
+              return set("sanctions", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.Sanctions::of), sanctions);
             }
 
             /**
@@ -31162,8 +31162,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param pep the value
              * @return this builder
              */
-            public Builder pep(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.Pep pep) {
-              return set("pep", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.Pep::of), pep);
+            public Builder pep(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.Pep pep) {
+              return set("pep", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.Pep::of), pep);
             }
 
             /**
@@ -31172,8 +31172,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param adverseMedia the value
              * @return this builder
              */
-            public Builder adverseMedia(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.AdverseMedia adverseMedia) {
-              return set("adverse_media", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.AdverseMedia::of), adverseMedia);
+            public Builder adverseMedia(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.AdverseMedia adverseMedia) {
+              return set("adverse_media", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.AdverseMedia::of), adverseMedia);
             }
 
             /**
@@ -31182,8 +31182,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param warnings the value
              * @return this builder
              */
-            public Builder warnings(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.Warnings warnings) {
-              return set("warnings", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.OfficersItem.KycAmlCategories.Warnings::of), warnings);
+            public Builder warnings(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.Warnings warnings) {
+              return set("warnings", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.Officers.KycAmlCategories.Warnings::of), warnings);
             }
 
             /**
@@ -31371,22 +31371,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         }
       }
 
-      public static final class BeneficialOwnersItem extends JsonModel {
+      public static final class BeneficialOwners extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "first_name", "last_name", "date_of_birth", "country_of_birth", "email", "company_name", "registration_number", "entity_type", "nationality", "designation", "roles", "ownership_min_shares", "ownership_max_shares", "is_active", "aml_status", "kyc_status", "kyc_session_url", "kyc_session_id", "verification_workflow_type", "verification_workflow_id", "verification_workflow_label", "verification_workflow_features", "didit_internal_id", "kyc_document_type", "kyc_nationality", "kyc_liveness_passed", "kyc_verified_at", "kyc_aml_categories", "kyc_notification_sent_at", "child_beneficial_owners", "effective_ownership_percent", "voting_min_shares", "voting_max_shares", "appointment_date");
 
-        private BeneficialOwnersItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private BeneficialOwners(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code BeneficialOwnersItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code BeneficialOwners} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static BeneficialOwnersItem fromJson(JsonNode json) {
-          return new BeneficialOwnersItem(Json.copyObject(json), Map.of());
+        public static BeneficialOwners fromJson(JsonNode json) {
+          return new BeneficialOwners(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -31503,8 +31503,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.EntityType> entityType() {
-          return Json.optional(json, "entity_type", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.EntityType::of));
+        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.EntityType> entityType() {
+          return Json.optional(json, "entity_type", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.EntityType::of));
         }
 
         /**
@@ -31573,8 +31573,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.AmlStatus> amlStatus() {
-          return Json.optional(json, "aml_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.AmlStatus::of));
+        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.AmlStatus> amlStatus() {
+          return Json.optional(json, "aml_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.AmlStatus::of));
         }
 
         /**
@@ -31583,8 +31583,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycStatus> kycStatus() {
-          return Json.optional(json, "kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycStatus::of));
+        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycStatus> kycStatus() {
+          return Json.optional(json, "kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycStatus::of));
         }
 
         /**
@@ -31643,8 +31643,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.VerificationWorkflowFeaturesItem>> verificationWorkflowFeatures() {
-          return Json.optional(json, "verification_workflow_features", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.VerificationWorkflowFeaturesItem::fromJson)));
+        public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.VerificationWorkflowFeatures>> verificationWorkflowFeatures() {
+          return Json.optional(json, "verification_workflow_features", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.VerificationWorkflowFeatures::fromJson)));
         }
 
         /**
@@ -31703,8 +31703,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories> kycAmlCategories() {
-          return Json.optional(json, "kyc_aml_categories", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories::fromJson));
+        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories> kycAmlCategories() {
+          return Json.optional(json, "kyc_aml_categories", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories::fromJson));
         }
 
         /**
@@ -31772,11 +31772,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link BeneficialOwnersItem}. */
+        /** Builds a {@link BeneficialOwners}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(BeneficialOwnersItem from) {
+          private Builder(BeneficialOwners from) {
             super(from);
           }
 
@@ -31876,8 +31876,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param entityType the value
            * @return this builder
            */
-          public Builder entityType(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.EntityType entityType) {
-            return set("entity_type", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.EntityType::of), entityType);
+          public Builder entityType(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.EntityType entityType) {
+            return set("entity_type", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.EntityType::of), entityType);
           }
 
           /**
@@ -31946,8 +31946,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param amlStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder amlStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.@Nullable AmlStatus amlStatus) {
-            return setNullable("aml_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.AmlStatus::of), amlStatus);
+          public Builder amlStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.@Nullable AmlStatus amlStatus) {
+            return setNullable("aml_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.AmlStatus::of), amlStatus);
           }
 
           /**
@@ -31956,8 +31956,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kycStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kycStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.@Nullable KycStatus kycStatus) {
-            return setNullable("kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycStatus::of), kycStatus);
+          public Builder kycStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.@Nullable KycStatus kycStatus) {
+            return setNullable("kyc_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycStatus::of), kycStatus);
           }
 
           /**
@@ -32016,8 +32016,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param verificationWorkflowFeatures the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder verificationWorkflowFeatures(@Nullable List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.VerificationWorkflowFeaturesItem> verificationWorkflowFeatures) {
-            return setNullable("verification_workflow_features", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.VerificationWorkflowFeaturesItem::fromJson)), verificationWorkflowFeatures);
+          public Builder verificationWorkflowFeatures(@Nullable List<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.VerificationWorkflowFeatures> verificationWorkflowFeatures) {
+            return setNullable("verification_workflow_features", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.VerificationWorkflowFeatures::fromJson)), verificationWorkflowFeatures);
           }
 
           /**
@@ -32076,8 +32076,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kycAmlCategories the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kycAmlCategories(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.@Nullable KycAmlCategories kycAmlCategories) {
-            return setNullable("kyc_aml_categories", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories::fromJson), kycAmlCategories);
+          public Builder kycAmlCategories(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.@Nullable KycAmlCategories kycAmlCategories) {
+            return setNullable("kyc_aml_categories", Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories::fromJson), kycAmlCategories);
           }
 
           /**
@@ -32143,10 +32143,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code BeneficialOwnersItem}
+           * @return a new immutable {@code BeneficialOwners}
            */
-          public BeneficialOwnersItem build() {
-            return new BeneficialOwnersItem(buildJson(), buildFiles());
+          public BeneficialOwners build() {
+            return new BeneficialOwners(buildJson(), buildFiles());
           }
 
           @Override
@@ -32316,22 +32316,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
         }
 
-        public static final class VerificationWorkflowFeaturesItem extends JsonModel {
+        public static final class VerificationWorkflowFeatures extends JsonModel {
           private static final Set<String> KNOWN_FIELDS = Set.of("feature", "status");
 
-          private VerificationWorkflowFeaturesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+          private VerificationWorkflowFeatures(ObjectNode json, Map<String, List<FileUpload>> files) {
             super(json, files);
           }
 
           /**
-           * Reads a {@code VerificationWorkflowFeaturesItem} from JSON. Unknown fields are kept and readable
+           * Reads a {@code VerificationWorkflowFeatures} from JSON. Unknown fields are kept and readable
            * through {@link #_additionalProperties()}.
            *
            * @param json a JSON object
            * @return the parsed value
            */
-          public static VerificationWorkflowFeaturesItem fromJson(JsonNode json) {
-            return new VerificationWorkflowFeaturesItem(Json.copyObject(json), Map.of());
+          public static VerificationWorkflowFeatures fromJson(JsonNode json) {
+            return new VerificationWorkflowFeatures(Json.copyObject(json), Map.of());
           }
 
           /**
@@ -32368,8 +32368,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.VerificationWorkflowFeaturesItem.Status> status() {
-            return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.VerificationWorkflowFeaturesItem.Status::of));
+          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.VerificationWorkflowFeatures.Status> status() {
+            return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.VerificationWorkflowFeatures.Status::of));
           }
 
           @Override
@@ -32377,11 +32377,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             return KNOWN_FIELDS;
           }
 
-          /** Builds a {@link VerificationWorkflowFeaturesItem}. */
+          /** Builds a {@link VerificationWorkflowFeatures}. */
           public static final class Builder extends JsonModel.BaseBuilder<Builder> {
             private Builder() {}
 
-            private Builder(VerificationWorkflowFeaturesItem from) {
+            private Builder(VerificationWorkflowFeatures from) {
               super(from);
             }
 
@@ -32401,17 +32401,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param status the value
              * @return this builder
              */
-            public Builder status(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.VerificationWorkflowFeaturesItem.Status status) {
-              return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.VerificationWorkflowFeaturesItem.Status::of), status);
+            public Builder status(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.VerificationWorkflowFeatures.Status status) {
+              return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.VerificationWorkflowFeatures.Status::of), status);
             }
 
             /**
              * Builds the value.
              *
-             * @return a new immutable {@code VerificationWorkflowFeaturesItem}
+             * @return a new immutable {@code VerificationWorkflowFeatures}
              */
-            public VerificationWorkflowFeaturesItem build() {
-              return new VerificationWorkflowFeaturesItem(buildJson(), buildFiles());
+            public VerificationWorkflowFeatures build() {
+              return new VerificationWorkflowFeatures(buildJson(), buildFiles());
             }
 
             @Override
@@ -32518,8 +32518,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.Sanctions> sanctions() {
-            return Json.optional(json, "sanctions", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.Sanctions::of));
+          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.Sanctions> sanctions() {
+            return Json.optional(json, "sanctions", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.Sanctions::of));
           }
 
           /**
@@ -32528,8 +32528,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.Pep> pep() {
-            return Json.optional(json, "pep", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.Pep::of));
+          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.Pep> pep() {
+            return Json.optional(json, "pep", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.Pep::of));
           }
 
           /**
@@ -32538,8 +32538,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.AdverseMedia> adverseMedia() {
-            return Json.optional(json, "adverse_media", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.AdverseMedia::of));
+          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.AdverseMedia> adverseMedia() {
+            return Json.optional(json, "adverse_media", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.AdverseMedia::of));
           }
 
           /**
@@ -32548,8 +32548,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.Warnings> warnings() {
-            return Json.optional(json, "warnings", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.Warnings::of));
+          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.Warnings> warnings() {
+            return Json.optional(json, "warnings", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.Warnings::of));
           }
 
           @Override
@@ -32571,8 +32571,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param sanctions the value
              * @return this builder
              */
-            public Builder sanctions(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.Sanctions sanctions) {
-              return set("sanctions", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.Sanctions::of), sanctions);
+            public Builder sanctions(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.Sanctions sanctions) {
+              return set("sanctions", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.Sanctions::of), sanctions);
             }
 
             /**
@@ -32581,8 +32581,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param pep the value
              * @return this builder
              */
-            public Builder pep(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.Pep pep) {
-              return set("pep", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.Pep::of), pep);
+            public Builder pep(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.Pep pep) {
+              return set("pep", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.Pep::of), pep);
             }
 
             /**
@@ -32591,8 +32591,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param adverseMedia the value
              * @return this builder
              */
-            public Builder adverseMedia(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.AdverseMedia adverseMedia) {
-              return set("adverse_media", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.AdverseMedia::of), adverseMedia);
+            public Builder adverseMedia(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.AdverseMedia adverseMedia) {
+              return set("adverse_media", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.AdverseMedia::of), adverseMedia);
             }
 
             /**
@@ -32601,8 +32601,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param warnings the value
              * @return this builder
              */
-            public Builder warnings(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.Warnings warnings) {
-              return set("warnings", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Registry.BeneficialOwnersItem.KycAmlCategories.Warnings::of), warnings);
+            public Builder warnings(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.Warnings warnings) {
+              return set("warnings", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Registry.BeneficialOwners.KycAmlCategories.Warnings::of), warnings);
             }
 
             /**
@@ -32836,8 +32836,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem>> parties() {
-        return Json.optional(json, "parties", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem::fromJson)));
+      public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties>> parties() {
+        return Json.optional(json, "parties", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties::fromJson)));
       }
 
       @Override
@@ -32859,8 +32859,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param parties the value
          * @return this builder
          */
-        public Builder parties(List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem> parties) {
-          return set("parties", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem::fromJson)), parties);
+        public Builder parties(List<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties> parties) {
+          return set("parties", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties::fromJson)), parties);
         }
 
         /**
@@ -32879,22 +32879,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
 
       /** Party submitted by the business admin via the Key People flow (source=USER). */
-      public static final class PartiesItem extends JsonModel {
+      public static final class Parties extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "entity_type", "source", "name", "first_name", "last_name", "company_name", "registration_number", "email", "nationality", "phone_number", "date_of_birth", "position", "custom_fields", "is_active", "is_skipped", "requires_verification", "roles", "kyc_session_id", "kyc_session_status", "kyc_session_url", "kyb_sub_session_id", "kyb_sub_session_status", "kyb_sub_session_url", "verification_workflow_type", "verification_workflow_id", "verification_workflow_label", "verification_workflow_features", "didit_internal_id");
 
-        private PartiesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private Parties(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code PartiesItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code Parties} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static PartiesItem fromJson(JsonNode json) {
-          return new PartiesItem(Json.copyObject(json), Map.of());
+        public static Parties fromJson(JsonNode json) {
+          return new Parties(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -32931,8 +32931,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.EntityType> entityType() {
-          return Json.optional(json, "entity_type", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.EntityType::of));
+        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.EntityType> entityType() {
+          return Json.optional(json, "entity_type", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.EntityType::of));
         }
 
         /**
@@ -32941,8 +32941,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.Source> source() {
-          return Json.optional(json, "source", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.Source::of));
+        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.Source> source() {
+          return Json.optional(json, "source", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.Source::of));
         }
 
         /**
@@ -33091,8 +33091,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.RolesItem>> roles() {
-          return Json.optional(json, "roles", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.RolesItem::fromJson)));
+        public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.Roles>> roles() {
+          return Json.optional(json, "roles", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.Roles::fromJson)));
         }
 
         /**
@@ -33111,8 +33111,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.KycSessionStatus> kycSessionStatus() {
-          return Json.optional(json, "kyc_session_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.KycSessionStatus::of));
+        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.KycSessionStatus> kycSessionStatus() {
+          return Json.optional(json, "kyc_session_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.KycSessionStatus::of));
         }
 
         /**
@@ -33141,8 +33141,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.KybSubSessionStatus> kybSubSessionStatus() {
-          return Json.optional(json, "kyb_sub_session_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.KybSubSessionStatus::of));
+        public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.KybSubSessionStatus> kybSubSessionStatus() {
+          return Json.optional(json, "kyb_sub_session_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.KybSubSessionStatus::of));
         }
 
         /**
@@ -33191,8 +33191,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.VerificationWorkflowFeaturesItem>> verificationWorkflowFeatures() {
-          return Json.optional(json, "verification_workflow_features", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.VerificationWorkflowFeaturesItem::fromJson)));
+        public Optional<List<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.VerificationWorkflowFeatures>> verificationWorkflowFeatures() {
+          return Json.optional(json, "verification_workflow_features", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.VerificationWorkflowFeatures::fromJson)));
         }
 
         /**
@@ -33210,11 +33210,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link PartiesItem}. */
+        /** Builds a {@link Parties}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(PartiesItem from) {
+          private Builder(Parties from) {
             super(from);
           }
 
@@ -33234,8 +33234,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param entityType the value
            * @return this builder
            */
-          public Builder entityType(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.EntityType entityType) {
-            return set("entity_type", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.EntityType::of), entityType);
+          public Builder entityType(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.EntityType entityType) {
+            return set("entity_type", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.EntityType::of), entityType);
           }
 
           /**
@@ -33244,8 +33244,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param source the value
            * @return this builder
            */
-          public Builder source(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.Source source) {
-            return set("source", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.Source::of), source);
+          public Builder source(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.Source source) {
+            return set("source", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.Source::of), source);
           }
 
           /**
@@ -33394,8 +33394,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param roles the value
            * @return this builder
            */
-          public Builder roles(List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.RolesItem> roles) {
-            return set("roles", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.RolesItem::fromJson)), roles);
+          public Builder roles(List<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.Roles> roles) {
+            return set("roles", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.Roles::fromJson)), roles);
           }
 
           /**
@@ -33414,8 +33414,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kycSessionStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kycSessionStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.@Nullable KycSessionStatus kycSessionStatus) {
-            return setNullable("kyc_session_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.KycSessionStatus::of), kycSessionStatus);
+          public Builder kycSessionStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.@Nullable KycSessionStatus kycSessionStatus) {
+            return setNullable("kyc_session_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.KycSessionStatus::of), kycSessionStatus);
           }
 
           /**
@@ -33444,8 +33444,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param kybSubSessionStatus the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder kybSubSessionStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.@Nullable KybSubSessionStatus kybSubSessionStatus) {
-            return setNullable("kyb_sub_session_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.KybSubSessionStatus::of), kybSubSessionStatus);
+          public Builder kybSubSessionStatus(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.@Nullable KybSubSessionStatus kybSubSessionStatus) {
+            return setNullable("kyb_sub_session_status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.KybSubSessionStatus::of), kybSubSessionStatus);
           }
 
           /**
@@ -33494,8 +33494,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param verificationWorkflowFeatures the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder verificationWorkflowFeatures(@Nullable List<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.VerificationWorkflowFeaturesItem> verificationWorkflowFeatures) {
-            return setNullable("verification_workflow_features", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.VerificationWorkflowFeaturesItem::fromJson)), verificationWorkflowFeatures);
+          public Builder verificationWorkflowFeatures(@Nullable List<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.VerificationWorkflowFeatures> verificationWorkflowFeatures) {
+            return setNullable("verification_workflow_features", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.VerificationWorkflowFeatures::fromJson)), verificationWorkflowFeatures);
           }
 
           /**
@@ -33511,10 +33511,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code PartiesItem}
+           * @return a new immutable {@code Parties}
            */
-          public PartiesItem build() {
-            return new PartiesItem(buildJson(), buildFiles());
+          public Parties build() {
+            return new Parties(buildJson(), buildFiles());
           }
 
           @Override
@@ -33605,22 +33605,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
         }
 
-        public static final class RolesItem extends JsonModel {
+        public static final class Roles extends JsonModel {
           private static final Set<String> KNOWN_FIELDS = Set.of("role", "ownership_percent", "voting_percent");
 
-          private RolesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+          private Roles(ObjectNode json, Map<String, List<FileUpload>> files) {
             super(json, files);
           }
 
           /**
-           * Reads a {@code RolesItem} from JSON. Unknown fields are kept and readable
+           * Reads a {@code Roles} from JSON. Unknown fields are kept and readable
            * through {@link #_additionalProperties()}.
            *
            * @param json a JSON object
            * @return the parsed value
            */
-          public static RolesItem fromJson(JsonNode json) {
-            return new RolesItem(Json.copyObject(json), Map.of());
+          public static Roles fromJson(JsonNode json) {
+            return new Roles(Json.copyObject(json), Map.of());
           }
 
           /**
@@ -33647,8 +33647,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.RolesItem.Role> role() {
-            return Json.optional(json, "role", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.RolesItem.Role::of));
+          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.Roles.Role> role() {
+            return Json.optional(json, "role", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.Roles.Role::of));
           }
 
           /**
@@ -33676,11 +33676,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             return KNOWN_FIELDS;
           }
 
-          /** Builds a {@link RolesItem}. */
+          /** Builds a {@link Roles}. */
           public static final class Builder extends JsonModel.BaseBuilder<Builder> {
             private Builder() {}
 
-            private Builder(RolesItem from) {
+            private Builder(Roles from) {
               super(from);
             }
 
@@ -33690,8 +33690,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param role the value
              * @return this builder
              */
-            public Builder role(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.RolesItem.Role role) {
-              return set("role", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.RolesItem.Role::of), role);
+            public Builder role(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.Roles.Role role) {
+              return set("role", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.Roles.Role::of), role);
             }
 
             /**
@@ -33717,10 +33717,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             /**
              * Builds the value.
              *
-             * @return a new immutable {@code RolesItem}
+             * @return a new immutable {@code Roles}
              */
-            public RolesItem build() {
-              return new RolesItem(buildJson(), buildFiles());
+            public Roles build() {
+              return new Roles(buildJson(), buildFiles());
             }
 
             @Override
@@ -33951,22 +33951,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
           }
         }
 
-        public static final class VerificationWorkflowFeaturesItem extends JsonModel {
+        public static final class VerificationWorkflowFeatures extends JsonModel {
           private static final Set<String> KNOWN_FIELDS = Set.of("feature", "status");
 
-          private VerificationWorkflowFeaturesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+          private VerificationWorkflowFeatures(ObjectNode json, Map<String, List<FileUpload>> files) {
             super(json, files);
           }
 
           /**
-           * Reads a {@code VerificationWorkflowFeaturesItem} from JSON. Unknown fields are kept and readable
+           * Reads a {@code VerificationWorkflowFeatures} from JSON. Unknown fields are kept and readable
            * through {@link #_additionalProperties()}.
            *
            * @param json a JSON object
            * @return the parsed value
            */
-          public static VerificationWorkflowFeaturesItem fromJson(JsonNode json) {
-            return new VerificationWorkflowFeaturesItem(Json.copyObject(json), Map.of());
+          public static VerificationWorkflowFeatures fromJson(JsonNode json) {
+            return new VerificationWorkflowFeatures(Json.copyObject(json), Map.of());
           }
 
           /**
@@ -34003,8 +34003,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.VerificationWorkflowFeaturesItem.Status> status() {
-            return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.VerificationWorkflowFeaturesItem.Status::of));
+          public Optional<SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.VerificationWorkflowFeatures.Status> status() {
+            return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.VerificationWorkflowFeatures.Status::of));
           }
 
           @Override
@@ -34012,11 +34012,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             return KNOWN_FIELDS;
           }
 
-          /** Builds a {@link VerificationWorkflowFeaturesItem}. */
+          /** Builds a {@link VerificationWorkflowFeatures}. */
           public static final class Builder extends JsonModel.BaseBuilder<Builder> {
             private Builder() {}
 
-            private Builder(VerificationWorkflowFeaturesItem from) {
+            private Builder(VerificationWorkflowFeatures from) {
               super(from);
             }
 
@@ -34036,17 +34036,17 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param status the value
              * @return this builder
              */
-            public Builder status(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.VerificationWorkflowFeaturesItem.Status status) {
-              return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecksItem.Submitted.PartiesItem.VerificationWorkflowFeaturesItem.Status::of), status);
+            public Builder status(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.VerificationWorkflowFeatures.Status status) {
+              return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.KeyPeopleChecks.Submitted.Parties.VerificationWorkflowFeatures.Status::of), status);
             }
 
             /**
              * Builds the value.
              *
-             * @return a new immutable {@code VerificationWorkflowFeaturesItem}
+             * @return a new immutable {@code VerificationWorkflowFeatures}
              */
-            public VerificationWorkflowFeaturesItem build() {
-              return new VerificationWorkflowFeaturesItem(buildJson(), buildFiles());
+            public VerificationWorkflowFeatures build() {
+              return new VerificationWorkflowFeatures(buildJson(), buildFiles());
             }
 
             @Override
@@ -34258,22 +34258,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
   }
 
   /** Documents grouped by workflow node. Present only when session_kind = business. */
-  public static final class DocumentVerificationsItem extends JsonModel {
+  public static final class DocumentVerifications extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("status", "node_id", "items", "groups", "required_groups", "warnings");
 
-    private DocumentVerificationsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private DocumentVerifications(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code DocumentVerificationsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code DocumentVerifications} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static DocumentVerificationsItem fromJson(JsonNode json) {
-      return new DocumentVerificationsItem(Json.copyObject(json), Map.of());
+    public static DocumentVerifications fromJson(JsonNode json) {
+      return new DocumentVerifications(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -34320,8 +34320,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem>> items() {
-      return Json.optional(json, "items", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.DocumentVerifications.Items>> items() {
+      return Json.optional(json, "items", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerifications.Items::fromJson)));
     }
 
     /**
@@ -34330,8 +34330,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<Map<String, SessionsRetrieveDecisionResponse.DocumentVerificationsItem.GroupsValue>> groups() {
-      return Json.optional(json, "groups", Conv.map(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.GroupsValue::fromJson)));
+    public Optional<Map<String, SessionsRetrieveDecisionResponse.DocumentVerifications.GroupsValue>> groups() {
+      return Json.optional(json, "groups", Conv.map(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerifications.GroupsValue::fromJson)));
     }
 
     /**
@@ -34359,11 +34359,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link DocumentVerificationsItem}. */
+    /** Builds a {@link DocumentVerifications}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(DocumentVerificationsItem from) {
+      private Builder(DocumentVerifications from) {
         super(from);
       }
 
@@ -34393,8 +34393,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param items the value
        * @return this builder
        */
-      public Builder items(List<SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem> items) {
-        return set("items", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem::fromJson)), items);
+      public Builder items(List<SessionsRetrieveDecisionResponse.DocumentVerifications.Items> items) {
+        return set("items", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerifications.Items::fromJson)), items);
       }
 
       /**
@@ -34403,8 +34403,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param groups the value
        * @return this builder
        */
-      public Builder groups(Map<String, SessionsRetrieveDecisionResponse.DocumentVerificationsItem.GroupsValue> groups) {
-        return set("groups", Conv.map(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.GroupsValue::fromJson)), groups);
+      public Builder groups(Map<String, SessionsRetrieveDecisionResponse.DocumentVerifications.GroupsValue> groups) {
+        return set("groups", Conv.map(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerifications.GroupsValue::fromJson)), groups);
       }
 
       /**
@@ -34430,10 +34430,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code DocumentVerificationsItem}
+       * @return a new immutable {@code DocumentVerifications}
        */
-      public DocumentVerificationsItem build() {
-        return new DocumentVerificationsItem(buildJson(), buildFiles());
+      public DocumentVerifications build() {
+        return new DocumentVerifications(buildJson(), buildFiles());
       }
 
       @Override
@@ -34442,22 +34442,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class ItemsItem extends JsonModel {
+    public static final class Items extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "document_type", "document_subtype", "document_group", "file_url", "original_filename", "file_size", "status", "created_at", "cross_check_result", "document_metadata", "description", "is_requested", "ocr_data", "is_console_upload", "is_confirmed");
 
-      private ItemsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Items(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code ItemsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Items} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static ItemsItem fromJson(JsonNode json) {
-        return new ItemsItem(Json.copyObject(json), Map.of());
+      public static Items fromJson(JsonNode json) {
+        return new Items(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -34494,8 +34494,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentType> documentType() {
-        return Json.optional(json, "document_type", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentType::of));
+      public Optional<SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentType> documentType() {
+        return Json.optional(json, "document_type", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentType::of));
       }
 
       /**
@@ -34514,8 +34514,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentGroup> documentGroup() {
-        return Json.optional(json, "document_group", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentGroup::of));
+      public Optional<SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentGroup> documentGroup() {
+        return Json.optional(json, "document_group", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentGroup::of));
       }
 
       /**
@@ -34554,8 +34554,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.Status> status() {
-        return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.Status::of));
+      public Optional<SessionsRetrieveDecisionResponse.DocumentVerifications.Items.Status> status() {
+        return Json.optional(json, "status", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.Status::of));
       }
 
       /**
@@ -34584,8 +34584,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata> documentMetadata() {
-        return Json.optional(json, "document_metadata", Conv.model(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata::fromJson));
+      public Optional<SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentMetadata> documentMetadata() {
+        return Json.optional(json, "document_metadata", Conv.model(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentMetadata::fromJson));
       }
 
       /**
@@ -34643,11 +34643,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link ItemsItem}. */
+      /** Builds a {@link Items}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(ItemsItem from) {
+        private Builder(Items from) {
           super(from);
         }
 
@@ -34667,8 +34667,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param documentType the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder documentType(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.@Nullable DocumentType documentType) {
-          return setNullable("document_type", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentType::of), documentType);
+        public Builder documentType(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.@Nullable DocumentType documentType) {
+          return setNullable("document_type", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentType::of), documentType);
         }
 
         /**
@@ -34687,8 +34687,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param documentGroup the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder documentGroup(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.@Nullable DocumentGroup documentGroup) {
-          return setNullable("document_group", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentGroup::of), documentGroup);
+        public Builder documentGroup(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.@Nullable DocumentGroup documentGroup) {
+          return setNullable("document_group", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentGroup::of), documentGroup);
         }
 
         /**
@@ -34727,8 +34727,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param status the value
          * @return this builder
          */
-        public Builder status(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.Status status) {
-          return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.Status::of), status);
+        public Builder status(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.Status status) {
+          return set("status", Conv.enumeration(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.Status::of), status);
         }
 
         /**
@@ -34757,8 +34757,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @param documentMetadata the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder documentMetadata(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.@Nullable DocumentMetadata documentMetadata) {
-          return setNullable("document_metadata", Conv.model(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata::fromJson), documentMetadata);
+        public Builder documentMetadata(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.@Nullable DocumentMetadata documentMetadata) {
+          return setNullable("document_metadata", Conv.model(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentMetadata::fromJson), documentMetadata);
         }
 
         /**
@@ -34814,10 +34814,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code ItemsItem}
+         * @return a new immutable {@code Items}
          */
-        public ItemsItem build() {
-          return new ItemsItem(buildJson(), buildFiles());
+        public Items build() {
+          return new Items(buildJson(), buildFiles());
         }
 
         @Override
@@ -35177,8 +35177,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata.OverlayManipulation> overlayManipulation() {
-          return Json.optional(json, "overlay_manipulation", Conv.model(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata.OverlayManipulation::fromJson));
+        public Optional<SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentMetadata.OverlayManipulation> overlayManipulation() {
+          return Json.optional(json, "overlay_manipulation", Conv.model(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentMetadata.OverlayManipulation::fromJson));
         }
 
         @Override
@@ -35350,8 +35350,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @param overlayManipulation the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder overlayManipulation(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata.@Nullable OverlayManipulation overlayManipulation) {
-            return setNullable("overlay_manipulation", Conv.model(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata.OverlayManipulation::fromJson), overlayManipulation);
+          public Builder overlayManipulation(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentMetadata.@Nullable OverlayManipulation overlayManipulation) {
+            return setNullable("overlay_manipulation", Conv.model(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentMetadata.OverlayManipulation::fromJson), overlayManipulation);
           }
 
           /**
@@ -35444,8 +35444,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
            * @return the value, or empty when the field is absent or null
            * @throws me.didit.errors.UnexpectedResponseException when the field has another type
            */
-          public Optional<List<SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata.OverlayManipulation.ManipulatedRegionsItem>> manipulatedRegions() {
-            return Json.optional(json, "manipulated_regions", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata.OverlayManipulation.ManipulatedRegionsItem::fromJson)));
+          public Optional<List<SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentMetadata.OverlayManipulation.ManipulatedRegions>> manipulatedRegions() {
+            return Json.optional(json, "manipulated_regions", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentMetadata.OverlayManipulation.ManipulatedRegions::fromJson)));
           }
 
           @Override
@@ -35497,8 +35497,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
              * @param manipulatedRegions the value
              * @return this builder
              */
-            public Builder manipulatedRegions(List<SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata.OverlayManipulation.ManipulatedRegionsItem> manipulatedRegions) {
-              return set("manipulated_regions", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerificationsItem.ItemsItem.DocumentMetadata.OverlayManipulation.ManipulatedRegionsItem::fromJson)), manipulatedRegions);
+            public Builder manipulatedRegions(List<SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentMetadata.OverlayManipulation.ManipulatedRegions> manipulatedRegions) {
+              return set("manipulated_regions", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.DocumentVerifications.Items.DocumentMetadata.OverlayManipulation.ManipulatedRegions::fromJson)), manipulatedRegions);
             }
 
             /**
@@ -35516,22 +35516,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
             }
           }
 
-          public static final class ManipulatedRegionsItem extends JsonModel {
+          public static final class ManipulatedRegions extends JsonModel {
             private static final Set<String> KNOWN_FIELDS = Set.of("page", "x", "y", "width", "height", "page_width", "page_height");
 
-            private ManipulatedRegionsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+            private ManipulatedRegions(ObjectNode json, Map<String, List<FileUpload>> files) {
               super(json, files);
             }
 
             /**
-             * Reads a {@code ManipulatedRegionsItem} from JSON. Unknown fields are kept and readable
+             * Reads a {@code ManipulatedRegions} from JSON. Unknown fields are kept and readable
              * through {@link #_additionalProperties()}.
              *
              * @param json a JSON object
              * @return the parsed value
              */
-            public static ManipulatedRegionsItem fromJson(JsonNode json) {
-              return new ManipulatedRegionsItem(Json.copyObject(json), Map.of());
+            public static ManipulatedRegions fromJson(JsonNode json) {
+              return new ManipulatedRegions(Json.copyObject(json), Map.of());
             }
 
             /**
@@ -35627,11 +35627,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               return KNOWN_FIELDS;
             }
 
-            /** Builds a {@link ManipulatedRegionsItem}. */
+            /** Builds a {@link ManipulatedRegions}. */
             public static final class Builder extends JsonModel.BaseBuilder<Builder> {
               private Builder() {}
 
-              private Builder(ManipulatedRegionsItem from) {
+              private Builder(ManipulatedRegions from) {
                 super(from);
               }
 
@@ -35708,10 +35708,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
               /**
                * Builds the value.
                *
-               * @return a new immutable {@code ManipulatedRegionsItem}
+               * @return a new immutable {@code ManipulatedRegions}
                */
-              public ManipulatedRegionsItem build() {
-                return new ManipulatedRegionsItem(buildJson(), buildFiles());
+              public ManipulatedRegions build() {
+                return new ManipulatedRegions(buildJson(), buildFiles());
               }
 
               @Override
@@ -35973,22 +35973,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
     }
   }
 
-  public static final class ResubmissionsItem extends JsonModel {
+  public static final class Resubmissions extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("number", "created_at", "previous_status", "nodes", "reasons", "requested_by", "results");
 
-    private ResubmissionsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Resubmissions(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code ResubmissionsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Resubmissions} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static ResubmissionsItem fromJson(JsonNode json) {
-      return new ResubmissionsItem(Json.copyObject(json), Map.of());
+    public static Resubmissions fromJson(JsonNode json) {
+      return new Resubmissions(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -36045,8 +36045,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsRetrieveDecisionResponse.ResubmissionsItem.NodesItem>> nodes() {
-      return Json.optional(json, "nodes", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.ResubmissionsItem.NodesItem::fromJson)));
+    public Optional<List<SessionsRetrieveDecisionResponse.Resubmissions.Nodes>> nodes() {
+      return Json.optional(json, "nodes", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.Resubmissions.Nodes::fromJson)));
     }
 
     /**
@@ -36065,8 +36065,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<SessionsRetrieveDecisionResponse.ResubmissionsItem.RequestedBy> requestedBy() {
-      return Json.optional(json, "requested_by", Conv.model(SessionsRetrieveDecisionResponse.ResubmissionsItem.RequestedBy::fromJson));
+    public Optional<SessionsRetrieveDecisionResponse.Resubmissions.RequestedBy> requestedBy() {
+      return Json.optional(json, "requested_by", Conv.model(SessionsRetrieveDecisionResponse.Resubmissions.RequestedBy::fromJson));
     }
 
     /**
@@ -36084,11 +36084,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link ResubmissionsItem}. */
+    /** Builds a {@link Resubmissions}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(ResubmissionsItem from) {
+      private Builder(Resubmissions from) {
         super(from);
       }
 
@@ -36128,8 +36128,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param nodes the value
        * @return this builder
        */
-      public Builder nodes(List<SessionsRetrieveDecisionResponse.ResubmissionsItem.NodesItem> nodes) {
-        return set("nodes", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.ResubmissionsItem.NodesItem::fromJson)), nodes);
+      public Builder nodes(List<SessionsRetrieveDecisionResponse.Resubmissions.Nodes> nodes) {
+        return set("nodes", Conv.list(Conv.model(SessionsRetrieveDecisionResponse.Resubmissions.Nodes::fromJson)), nodes);
       }
 
       /**
@@ -36148,8 +36148,8 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
        * @param requestedBy the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder requestedBy(SessionsRetrieveDecisionResponse.ResubmissionsItem.@Nullable RequestedBy requestedBy) {
-        return setNullable("requested_by", Conv.model(SessionsRetrieveDecisionResponse.ResubmissionsItem.RequestedBy::fromJson), requestedBy);
+      public Builder requestedBy(SessionsRetrieveDecisionResponse.Resubmissions.@Nullable RequestedBy requestedBy) {
+        return setNullable("requested_by", Conv.model(SessionsRetrieveDecisionResponse.Resubmissions.RequestedBy::fromJson), requestedBy);
       }
 
       /**
@@ -36165,10 +36165,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code ResubmissionsItem}
+       * @return a new immutable {@code Resubmissions}
        */
-      public ResubmissionsItem build() {
-        return new ResubmissionsItem(buildJson(), buildFiles());
+      public Resubmissions build() {
+        return new Resubmissions(buildJson(), buildFiles());
       }
 
       @Override
@@ -36177,22 +36177,22 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
       }
     }
 
-    public static final class NodesItem extends JsonModel {
+    public static final class Nodes extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "feature");
 
-      private NodesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Nodes(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code NodesItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Nodes} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static NodesItem fromJson(JsonNode json) {
-        return new NodesItem(Json.copyObject(json), Map.of());
+      public static Nodes fromJson(JsonNode json) {
+        return new Nodes(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -36238,11 +36238,11 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link NodesItem}. */
+      /** Builds a {@link Nodes}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(NodesItem from) {
+        private Builder(Nodes from) {
           super(from);
         }
 
@@ -36269,10 +36269,10 @@ public final class SessionsRetrieveDecisionResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code NodesItem}
+         * @return a new immutable {@code Nodes}
          */
-        public NodesItem build() {
-          return new NodesItem(buildJson(), buildFiles());
+        public Nodes build() {
+          return new Nodes(buildJson(), buildFiles());
         }
 
         @Override

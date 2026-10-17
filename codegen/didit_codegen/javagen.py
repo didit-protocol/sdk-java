@@ -586,8 +586,7 @@ def handler_expr(om: OpModel, ctx: Ctx) -> str:
         return "Responses.jsonNode()"
     if r.kind == "page":
         assert r.type is not None
-        style = "Responses.page" if r.page_style == "next" else "Responses.offsetPage"
-        return f"{style}({ctx.conv(r.type)})"
+        return f"Responses.page({ctx.conv(r.type)})"
     assert r.type is not None
     if r.type.kind == "class" and r.type.cls is not None and r.type.cls.kind == "status":
         return f"Responses.byStatus({ctx.ref(r.type.cls)}::fromResponse)"

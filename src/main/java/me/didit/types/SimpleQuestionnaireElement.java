@@ -116,8 +116,8 @@ public final class SimpleQuestionnaireElement extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<SimpleQuestionnaireElement.OptionsItem>> options() {
-    return Json.optional(json, "options", Conv.list(Conv.model(SimpleQuestionnaireElement.OptionsItem::fromJson)));
+  public Optional<List<SimpleQuestionnaireElement.Options>> options() {
+    return Json.optional(json, "options", Conv.list(Conv.model(SimpleQuestionnaireElement.Options::fromJson)));
   }
 
   /**
@@ -219,8 +219,8 @@ public final class SimpleQuestionnaireElement extends JsonModel {
      * @param options_ the value
      * @return this builder
      */
-    public Builder options(List<SimpleQuestionnaireElement.OptionsItem> options_) {
-      return set("options", Conv.list(Conv.model(SimpleQuestionnaireElement.OptionsItem::fromJson)), options_);
+    public Builder options(List<SimpleQuestionnaireElement.Options> options_) {
+      return set("options", Conv.list(Conv.model(SimpleQuestionnaireElement.Options::fromJson)), options_);
     }
 
     /**
@@ -355,22 +355,22 @@ public final class SimpleQuestionnaireElement extends JsonModel {
     }
   }
 
-  public static final class OptionsItem extends JsonModel {
+  public static final class Options extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("value", "label");
 
-    private OptionsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Options(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code OptionsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Options} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static OptionsItem fromJson(JsonNode json) {
-      return new OptionsItem(Json.copyObject(json), Map.of());
+    public static Options fromJson(JsonNode json) {
+      return new Options(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -416,11 +416,11 @@ public final class SimpleQuestionnaireElement extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link OptionsItem}. */
+    /** Builds a {@link Options}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(OptionsItem from) {
+      private Builder(Options from) {
         super(from);
       }
 
@@ -447,12 +447,12 @@ public final class SimpleQuestionnaireElement extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code OptionsItem}
+       * @return a new immutable {@code Options}
        * @throws IllegalStateException when a required field is missing
        */
-      public OptionsItem build() {
+      public Options build() {
         require("label", false);
-        return new OptionsItem(buildJson(), buildFiles());
+        return new Options(buildJson(), buildFiles());
       }
 
       @Override

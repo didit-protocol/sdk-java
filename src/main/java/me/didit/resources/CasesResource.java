@@ -14,6 +14,7 @@ import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
 import me.didit.types.CaseActionCaseActionReceipt;
+import me.didit.types.CaseActionCaseActionReceiptPage;
 import me.didit.types.CaseActionCaseEntityActionRequest;
 import me.didit.types.CaseActionCaseEntityActionResult;
 import me.didit.types.CaseDetail;
@@ -1728,14 +1729,13 @@ public final class CasesResource {
    *
    * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
    * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public Page<CaseActionCaseActionReceipt> listActionReceipts(String caseUuid, CasesListActionReceiptsParams params, RequestOptions options) {
+  public CaseActionCaseActionReceiptPage listActionReceipts(String caseUuid, CasesListActionReceiptsParams params, RequestOptions options) {
     return client.execute(listActionReceiptsRequest(caseUuid, params), options, LIST_ACTION_RECEIPTS_RESPONSE).data();
   }
 
@@ -1744,14 +1744,13 @@ public final class CasesResource {
    *
    * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
    * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<CaseActionCaseActionReceipt>> listActionReceiptsAsync(String caseUuid, CasesListActionReceiptsParams params, RequestOptions options) {
+  public CompletableFuture<CaseActionCaseActionReceiptPage> listActionReceiptsAsync(String caseUuid, CasesListActionReceiptsParams params, RequestOptions options) {
     return client.executeAsync(listActionReceiptsRequest(caseUuid, params), options, LIST_ACTION_RECEIPTS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -1760,13 +1759,12 @@ public final class CasesResource {
    *
    * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
    * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
    * @return the response body
    */
-  public Page<CaseActionCaseActionReceipt> listActionReceipts(String caseUuid, CasesListActionReceiptsParams params) {
+  public CaseActionCaseActionReceiptPage listActionReceipts(String caseUuid, CasesListActionReceiptsParams params) {
     return client.execute(listActionReceiptsRequest(caseUuid, params), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE).data();
   }
 
@@ -1775,13 +1773,12 @@ public final class CasesResource {
    *
    * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
    * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<CaseActionCaseActionReceipt>> listActionReceiptsAsync(String caseUuid, CasesListActionReceiptsParams params) {
+  public CompletableFuture<CaseActionCaseActionReceiptPage> listActionReceiptsAsync(String caseUuid, CasesListActionReceiptsParams params) {
     return client.executeAsync(listActionReceiptsRequest(caseUuid, params), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -1790,13 +1787,12 @@ public final class CasesResource {
    *
    * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
    * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
    *
    * @param caseUuid the {@code case_uuid}
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public Page<CaseActionCaseActionReceipt> listActionReceipts(String caseUuid, RequestOptions options) {
+  public CaseActionCaseActionReceiptPage listActionReceipts(String caseUuid, RequestOptions options) {
     return client.execute(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), options, LIST_ACTION_RECEIPTS_RESPONSE).data();
   }
 
@@ -1805,13 +1801,12 @@ public final class CasesResource {
    *
    * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
    * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
    *
    * @param caseUuid the {@code case_uuid}
    * @param options per-request options that override the client options
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<CaseActionCaseActionReceipt>> listActionReceiptsAsync(String caseUuid, RequestOptions options) {
+  public CompletableFuture<CaseActionCaseActionReceiptPage> listActionReceiptsAsync(String caseUuid, RequestOptions options) {
     return client.executeAsync(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), options, LIST_ACTION_RECEIPTS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -1820,12 +1815,11 @@ public final class CasesResource {
    *
    * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
    * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
    *
    * @param caseUuid the {@code case_uuid}
    * @return the response body
    */
-  public Page<CaseActionCaseActionReceipt> listActionReceipts(String caseUuid) {
+  public CaseActionCaseActionReceiptPage listActionReceipts(String caseUuid) {
     return client.execute(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE).data();
   }
 
@@ -1834,12 +1828,11 @@ public final class CasesResource {
    *
    * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
    * <p>Application scoped: the organization and application ids come from the client options.
-   * <p>Returns one page; iterate it to fetch every following page automatically.
    *
    * @param caseUuid the {@code case_uuid}
    * @return a future completed with the response body
    */
-  public CompletableFuture<Page<CaseActionCaseActionReceipt>> listActionReceiptsAsync(String caseUuid) {
+  public CompletableFuture<CaseActionCaseActionReceiptPage> listActionReceiptsAsync(String caseUuid) {
     return client.executeAsync(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -2262,7 +2255,7 @@ public final class CasesResource {
         .build();
   }
 
-  private static final ResponseHandler<Page<CaseActionCaseActionReceipt>> LIST_ACTION_RECEIPTS_RESPONSE = Responses.offsetPage(Conv.model(CaseActionCaseActionReceipt::fromJson));
+  private static final ResponseHandler<CaseActionCaseActionReceiptPage> LIST_ACTION_RECEIPTS_RESPONSE = Responses.json(Conv.model(CaseActionCaseActionReceiptPage::fromJson));
 
   private static ApiRequest listActionReceiptsRequest(String caseUuid, CasesListActionReceiptsParams params) {
     return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/")
@@ -3892,14 +3885,13 @@ public final class CasesResource {
      *
      * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
      * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
      * @param options per-request options that override the client options
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<CaseActionCaseActionReceipt>> listActionReceipts(String caseUuid, CasesListActionReceiptsParams params, RequestOptions options) {
+    public RawResponse<CaseActionCaseActionReceiptPage> listActionReceipts(String caseUuid, CasesListActionReceiptsParams params, RequestOptions options) {
       return client.execute(listActionReceiptsRequest(caseUuid, params), options, LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
@@ -3908,14 +3900,13 @@ public final class CasesResource {
      *
      * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
      * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
      * @param options per-request options that override the client options
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<CaseActionCaseActionReceipt>>> listActionReceiptsAsync(String caseUuid, CasesListActionReceiptsParams params, RequestOptions options) {
+    public CompletableFuture<RawResponse<CaseActionCaseActionReceiptPage>> listActionReceiptsAsync(String caseUuid, CasesListActionReceiptsParams params, RequestOptions options) {
       return client.executeAsync(listActionReceiptsRequest(caseUuid, params), options, LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
@@ -3924,13 +3915,12 @@ public final class CasesResource {
      *
      * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
      * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<CaseActionCaseActionReceipt>> listActionReceipts(String caseUuid, CasesListActionReceiptsParams params) {
+    public RawResponse<CaseActionCaseActionReceiptPage> listActionReceipts(String caseUuid, CasesListActionReceiptsParams params) {
       return client.execute(listActionReceiptsRequest(caseUuid, params), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
@@ -3939,13 +3929,12 @@ public final class CasesResource {
      *
      * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
      * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
      *
      * @param caseUuid the {@code case_uuid}
      * @param params the request parameters
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<CaseActionCaseActionReceipt>>> listActionReceiptsAsync(String caseUuid, CasesListActionReceiptsParams params) {
+    public CompletableFuture<RawResponse<CaseActionCaseActionReceiptPage>> listActionReceiptsAsync(String caseUuid, CasesListActionReceiptsParams params) {
       return client.executeAsync(listActionReceiptsRequest(caseUuid, params), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
@@ -3954,13 +3943,12 @@ public final class CasesResource {
      *
      * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
      * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
      *
      * @param caseUuid the {@code case_uuid}
      * @param options per-request options that override the client options
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<CaseActionCaseActionReceipt>> listActionReceipts(String caseUuid, RequestOptions options) {
+    public RawResponse<CaseActionCaseActionReceiptPage> listActionReceipts(String caseUuid, RequestOptions options) {
       return client.execute(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), options, LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
@@ -3969,13 +3957,12 @@ public final class CasesResource {
      *
      * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
      * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
      *
      * @param caseUuid the {@code case_uuid}
      * @param options per-request options that override the client options
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<CaseActionCaseActionReceipt>>> listActionReceiptsAsync(String caseUuid, RequestOptions options) {
+    public CompletableFuture<RawResponse<CaseActionCaseActionReceiptPage>> listActionReceiptsAsync(String caseUuid, RequestOptions options) {
       return client.executeAsync(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), options, LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
@@ -3984,12 +3971,11 @@ public final class CasesResource {
      *
      * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
      * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
      *
      * @param caseUuid the {@code case_uuid}
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<Page<CaseActionCaseActionReceipt>> listActionReceipts(String caseUuid) {
+    public RawResponse<CaseActionCaseActionReceiptPage> listActionReceipts(String caseUuid) {
       return client.execute(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE);
     }
 
@@ -3998,12 +3984,11 @@ public final class CasesResource {
      *
      * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/}
      * <p>Application scoped: the organization and application ids come from the client options.
-     * <p>Returns one page; iterate it to fetch every following page automatically.
      *
      * @param caseUuid the {@code case_uuid}
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<Page<CaseActionCaseActionReceipt>>> listActionReceiptsAsync(String caseUuid) {
+    public CompletableFuture<RawResponse<CaseActionCaseActionReceiptPage>> listActionReceiptsAsync(String caseUuid) {
       return client.executeAsync(listActionReceiptsRequest(caseUuid, CasesListActionReceiptsParams.builder().build()), RequestOptions.none(), LIST_ACTION_RECEIPTS_RESPONSE);
     }
 

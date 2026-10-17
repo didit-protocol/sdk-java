@@ -251,8 +251,8 @@ public final class AmlScreenResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<AmlScreenResponse.Aml.HitsItem>> hits() {
-      return Json.optional(json, "hits", Conv.list(Conv.model(AmlScreenResponse.Aml.HitsItem::fromJson)));
+    public Optional<List<AmlScreenResponse.Aml.Hits>> hits() {
+      return Json.optional(json, "hits", Conv.list(Conv.model(AmlScreenResponse.Aml.Hits::fromJson)));
     }
 
     /**
@@ -281,8 +281,8 @@ public final class AmlScreenResponse extends JsonModel {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<AmlScreenResponse.Aml.WarningsItem>> warnings() {
-      return Json.optional(json, "warnings", Conv.list(Conv.model(AmlScreenResponse.Aml.WarningsItem::fromJson)));
+    public Optional<List<AmlScreenResponse.Aml.Warnings>> warnings() {
+      return Json.optional(json, "warnings", Conv.list(Conv.model(AmlScreenResponse.Aml.Warnings::fromJson)));
     }
 
     @Override
@@ -334,8 +334,8 @@ public final class AmlScreenResponse extends JsonModel {
        * @param hits the value
        * @return this builder
        */
-      public Builder hits(List<AmlScreenResponse.Aml.HitsItem> hits) {
-        return set("hits", Conv.list(Conv.model(AmlScreenResponse.Aml.HitsItem::fromJson)), hits);
+      public Builder hits(List<AmlScreenResponse.Aml.Hits> hits) {
+        return set("hits", Conv.list(Conv.model(AmlScreenResponse.Aml.Hits::fromJson)), hits);
       }
 
       /**
@@ -364,8 +364,8 @@ public final class AmlScreenResponse extends JsonModel {
        * @param warnings the value
        * @return this builder
        */
-      public Builder warnings(List<AmlScreenResponse.Aml.WarningsItem> warnings) {
-        return set("warnings", Conv.list(Conv.model(AmlScreenResponse.Aml.WarningsItem::fromJson)), warnings);
+      public Builder warnings(List<AmlScreenResponse.Aml.Warnings> warnings) {
+        return set("warnings", Conv.list(Conv.model(AmlScreenResponse.Aml.Warnings::fromJson)), warnings);
       }
 
       /**
@@ -475,22 +475,22 @@ public final class AmlScreenResponse extends JsonModel {
     /**
      * One screening hit. <code>match_score</code> (0–100) measures identity confidence — hits below <code>aml_match_score_threshold</code> are tagged <code>review_status: "False Positive"</code> and excluded from the risk assessment; hits at or above it are <code>"Unreviewed"</code> possible matches. <code>risk_score</code> (0–100) measures how risky the matched entity is and drives the top-level <code>aml.score</code>.
      */
-    public static final class HitsItem extends JsonModel {
+    public static final class Hits extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("id", "url", "match", "score", "match_score", "risk_score", "target", "caption", "datasets", "features", "properties", "rca_name", "pep_matches", "sanction_matches", "warning_matches", "adverse_media_matches", "adverse_media_details", "first_seen", "last_seen", "linked_entities", "risk_view", "additional_information", "review_status", "score_breakdown");
 
-      private HitsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Hits(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code HitsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Hits} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static HitsItem fromJson(JsonNode json) {
-        return new HitsItem(Json.copyObject(json), Map.of());
+      public static Hits fromJson(JsonNode json) {
+        return new Hits(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -637,8 +637,8 @@ public final class AmlScreenResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<AmlScreenResponse.Aml.HitsItem.PepMatchesItem>> pepMatches() {
-        return Json.optional(json, "pep_matches", Conv.list(Conv.model(AmlScreenResponse.Aml.HitsItem.PepMatchesItem::fromJson)));
+      public Optional<List<AmlScreenResponse.Aml.Hits.PepMatches>> pepMatches() {
+        return Json.optional(json, "pep_matches", Conv.list(Conv.model(AmlScreenResponse.Aml.Hits.PepMatches::fromJson)));
       }
 
       /**
@@ -667,8 +667,8 @@ public final class AmlScreenResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<AmlScreenResponse.Aml.HitsItem.AdverseMediaMatchesItem>> adverseMediaMatches() {
-        return Json.optional(json, "adverse_media_matches", Conv.list(Conv.model(AmlScreenResponse.Aml.HitsItem.AdverseMediaMatchesItem::fromJson)));
+      public Optional<List<AmlScreenResponse.Aml.Hits.AdverseMediaMatches>> adverseMediaMatches() {
+        return Json.optional(json, "adverse_media_matches", Conv.list(Conv.model(AmlScreenResponse.Aml.Hits.AdverseMediaMatches::fromJson)));
       }
 
       /**
@@ -707,8 +707,8 @@ public final class AmlScreenResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<AmlScreenResponse.Aml.HitsItem.LinkedEntitiesItem>> linkedEntities() {
-        return Json.optional(json, "linked_entities", Conv.list(Conv.model(AmlScreenResponse.Aml.HitsItem.LinkedEntitiesItem::fromJson)));
+      public Optional<List<AmlScreenResponse.Aml.Hits.LinkedEntities>> linkedEntities() {
+        return Json.optional(json, "linked_entities", Conv.list(Conv.model(AmlScreenResponse.Aml.Hits.LinkedEntities::fromJson)));
       }
 
       /**
@@ -737,8 +737,8 @@ public final class AmlScreenResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<AmlScreenResponse.Aml.HitsItem.ReviewStatus> reviewStatus() {
-        return Json.optional(json, "review_status", Conv.enumeration(AmlScreenResponse.Aml.HitsItem.ReviewStatus::of));
+      public Optional<AmlScreenResponse.Aml.Hits.ReviewStatus> reviewStatus() {
+        return Json.optional(json, "review_status", Conv.enumeration(AmlScreenResponse.Aml.Hits.ReviewStatus::of));
       }
 
       /**
@@ -747,8 +747,8 @@ public final class AmlScreenResponse extends JsonModel {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<AmlScreenResponse.Aml.HitsItem.ScoreBreakdown> scoreBreakdown() {
-        return Json.optional(json, "score_breakdown", Conv.model(AmlScreenResponse.Aml.HitsItem.ScoreBreakdown::fromJson));
+      public Optional<AmlScreenResponse.Aml.Hits.ScoreBreakdown> scoreBreakdown() {
+        return Json.optional(json, "score_breakdown", Conv.model(AmlScreenResponse.Aml.Hits.ScoreBreakdown::fromJson));
       }
 
       @Override
@@ -756,11 +756,11 @@ public final class AmlScreenResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link HitsItem}. */
+      /** Builds a {@link Hits}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(HitsItem from) {
+        private Builder(Hits from) {
           super(from);
         }
 
@@ -890,8 +890,8 @@ public final class AmlScreenResponse extends JsonModel {
          * @param pepMatches the value
          * @return this builder
          */
-        public Builder pepMatches(List<AmlScreenResponse.Aml.HitsItem.PepMatchesItem> pepMatches) {
-          return set("pep_matches", Conv.list(Conv.model(AmlScreenResponse.Aml.HitsItem.PepMatchesItem::fromJson)), pepMatches);
+        public Builder pepMatches(List<AmlScreenResponse.Aml.Hits.PepMatches> pepMatches) {
+          return set("pep_matches", Conv.list(Conv.model(AmlScreenResponse.Aml.Hits.PepMatches::fromJson)), pepMatches);
         }
 
         /**
@@ -920,8 +920,8 @@ public final class AmlScreenResponse extends JsonModel {
          * @param adverseMediaMatches the value
          * @return this builder
          */
-        public Builder adverseMediaMatches(List<AmlScreenResponse.Aml.HitsItem.AdverseMediaMatchesItem> adverseMediaMatches) {
-          return set("adverse_media_matches", Conv.list(Conv.model(AmlScreenResponse.Aml.HitsItem.AdverseMediaMatchesItem::fromJson)), adverseMediaMatches);
+        public Builder adverseMediaMatches(List<AmlScreenResponse.Aml.Hits.AdverseMediaMatches> adverseMediaMatches) {
+          return set("adverse_media_matches", Conv.list(Conv.model(AmlScreenResponse.Aml.Hits.AdverseMediaMatches::fromJson)), adverseMediaMatches);
         }
 
         /**
@@ -960,8 +960,8 @@ public final class AmlScreenResponse extends JsonModel {
          * @param linkedEntities the value
          * @return this builder
          */
-        public Builder linkedEntities(List<AmlScreenResponse.Aml.HitsItem.LinkedEntitiesItem> linkedEntities) {
-          return set("linked_entities", Conv.list(Conv.model(AmlScreenResponse.Aml.HitsItem.LinkedEntitiesItem::fromJson)), linkedEntities);
+        public Builder linkedEntities(List<AmlScreenResponse.Aml.Hits.LinkedEntities> linkedEntities) {
+          return set("linked_entities", Conv.list(Conv.model(AmlScreenResponse.Aml.Hits.LinkedEntities::fromJson)), linkedEntities);
         }
 
         /**
@@ -990,8 +990,8 @@ public final class AmlScreenResponse extends JsonModel {
          * @param reviewStatus the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder reviewStatus(AmlScreenResponse.Aml.HitsItem.@Nullable ReviewStatus reviewStatus) {
-          return setNullable("review_status", Conv.enumeration(AmlScreenResponse.Aml.HitsItem.ReviewStatus::of), reviewStatus);
+        public Builder reviewStatus(AmlScreenResponse.Aml.Hits.@Nullable ReviewStatus reviewStatus) {
+          return setNullable("review_status", Conv.enumeration(AmlScreenResponse.Aml.Hits.ReviewStatus::of), reviewStatus);
         }
 
         /**
@@ -1000,17 +1000,17 @@ public final class AmlScreenResponse extends JsonModel {
          * @param scoreBreakdown the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder scoreBreakdown(AmlScreenResponse.Aml.HitsItem.@Nullable ScoreBreakdown scoreBreakdown) {
-          return setNullable("score_breakdown", Conv.model(AmlScreenResponse.Aml.HitsItem.ScoreBreakdown::fromJson), scoreBreakdown);
+        public Builder scoreBreakdown(AmlScreenResponse.Aml.Hits.@Nullable ScoreBreakdown scoreBreakdown) {
+          return setNullable("score_breakdown", Conv.model(AmlScreenResponse.Aml.Hits.ScoreBreakdown::fromJson), scoreBreakdown);
         }
 
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code HitsItem}
+         * @return a new immutable {@code Hits}
          */
-        public HitsItem build() {
-          return new HitsItem(buildJson(), buildFiles());
+        public Hits build() {
+          return new Hits(buildJson(), buildFiles());
         }
 
         @Override
@@ -1019,22 +1019,22 @@ public final class AmlScreenResponse extends JsonModel {
         }
       }
 
-      public static final class PepMatchesItem extends JsonModel {
+      public static final class PepMatches extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("list_name", "publisher", "source_url", "description", "matched_name", "pep_position", "date_of_birth", "place_of_birth", "aliases", "education", "other_sources");
 
-        private PepMatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private PepMatches(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code PepMatchesItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code PepMatches} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static PepMatchesItem fromJson(JsonNode json) {
-          return new PepMatchesItem(Json.copyObject(json), Map.of());
+        public static PepMatches fromJson(JsonNode json) {
+          return new PepMatches(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -1170,11 +1170,11 @@ public final class AmlScreenResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link PepMatchesItem}. */
+        /** Builds a {@link PepMatches}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(PepMatchesItem from) {
+          private Builder(PepMatches from) {
             super(from);
           }
 
@@ -1291,10 +1291,10 @@ public final class AmlScreenResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code PepMatchesItem}
+           * @return a new immutable {@code PepMatches}
            */
-          public PepMatchesItem build() {
-            return new PepMatchesItem(buildJson(), buildFiles());
+          public PepMatches build() {
+            return new PepMatches(buildJson(), buildFiles());
           }
 
           @Override
@@ -1304,22 +1304,22 @@ public final class AmlScreenResponse extends JsonModel {
         }
       }
 
-      public static final class AdverseMediaMatchesItem extends JsonModel {
+      public static final class AdverseMediaMatches extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("headline", "summary", "sentiment", "sentiment_score", "source_url", "thumbnail", "country", "author_name", "publication_date", "adverse_keywords", "other_sources");
 
-        private AdverseMediaMatchesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private AdverseMediaMatches(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code AdverseMediaMatchesItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code AdverseMediaMatches} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static AdverseMediaMatchesItem fromJson(JsonNode json) {
-          return new AdverseMediaMatchesItem(Json.copyObject(json), Map.of());
+        public static AdverseMediaMatches fromJson(JsonNode json) {
+          return new AdverseMediaMatches(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -1455,11 +1455,11 @@ public final class AmlScreenResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link AdverseMediaMatchesItem}. */
+        /** Builds a {@link AdverseMediaMatches}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(AdverseMediaMatchesItem from) {
+          private Builder(AdverseMediaMatches from) {
             super(from);
           }
 
@@ -1576,10 +1576,10 @@ public final class AmlScreenResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code AdverseMediaMatchesItem}
+           * @return a new immutable {@code AdverseMediaMatches}
            */
-          public AdverseMediaMatchesItem build() {
-            return new AdverseMediaMatchesItem(buildJson(), buildFiles());
+          public AdverseMediaMatches build() {
+            return new AdverseMediaMatches(buildJson(), buildFiles());
           }
 
           @Override
@@ -1589,22 +1589,22 @@ public final class AmlScreenResponse extends JsonModel {
         }
       }
 
-      public static final class LinkedEntitiesItem extends JsonModel {
+      public static final class LinkedEntities extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("name", "relation", "status", "details", "active");
 
-        private LinkedEntitiesItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+        private LinkedEntities(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
         }
 
         /**
-         * Reads a {@code LinkedEntitiesItem} from JSON. Unknown fields are kept and readable
+         * Reads a {@code LinkedEntities} from JSON. Unknown fields are kept and readable
          * through {@link #_additionalProperties()}.
          *
          * @param json a JSON object
          * @return the parsed value
          */
-        public static LinkedEntitiesItem fromJson(JsonNode json) {
-          return new LinkedEntitiesItem(Json.copyObject(json), Map.of());
+        public static LinkedEntities fromJson(JsonNode json) {
+          return new LinkedEntities(Json.copyObject(json), Map.of());
         }
 
         /**
@@ -1680,11 +1680,11 @@ public final class AmlScreenResponse extends JsonModel {
           return KNOWN_FIELDS;
         }
 
-        /** Builds a {@link LinkedEntitiesItem}. */
+        /** Builds a {@link LinkedEntities}. */
         public static final class Builder extends JsonModel.BaseBuilder<Builder> {
           private Builder() {}
 
-          private Builder(LinkedEntitiesItem from) {
+          private Builder(LinkedEntities from) {
             super(from);
           }
 
@@ -1741,10 +1741,10 @@ public final class AmlScreenResponse extends JsonModel {
           /**
            * Builds the value.
            *
-           * @return a new immutable {@code LinkedEntitiesItem}
+           * @return a new immutable {@code LinkedEntities}
            */
-          public LinkedEntitiesItem build() {
-            return new LinkedEntitiesItem(buildJson(), buildFiles());
+          public LinkedEntities build() {
+            return new LinkedEntities(buildJson(), buildFiles());
           }
 
           @Override
@@ -1968,8 +1968,8 @@ public final class AmlScreenResponse extends JsonModel {
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
          */
-        public Optional<AmlScreenResponse.Aml.HitsItem.ScoreBreakdown.DocumentNumberMatchType> documentNumberMatchType() {
-          return Json.optional(json, "document_number_match_type", Conv.enumeration(AmlScreenResponse.Aml.HitsItem.ScoreBreakdown.DocumentNumberMatchType::of));
+        public Optional<AmlScreenResponse.Aml.Hits.ScoreBreakdown.DocumentNumberMatchType> documentNumberMatchType() {
+          return Json.optional(json, "document_number_match_type", Conv.enumeration(AmlScreenResponse.Aml.Hits.ScoreBreakdown.DocumentNumberMatchType::of));
         }
 
         /**
@@ -2131,8 +2131,8 @@ public final class AmlScreenResponse extends JsonModel {
            * @param documentNumberMatchType the value, or {@code null} to send JSON null
            * @return this builder
            */
-          public Builder documentNumberMatchType(AmlScreenResponse.Aml.HitsItem.ScoreBreakdown.@Nullable DocumentNumberMatchType documentNumberMatchType) {
-            return setNullable("document_number_match_type", Conv.enumeration(AmlScreenResponse.Aml.HitsItem.ScoreBreakdown.DocumentNumberMatchType::of), documentNumberMatchType);
+          public Builder documentNumberMatchType(AmlScreenResponse.Aml.Hits.ScoreBreakdown.@Nullable DocumentNumberMatchType documentNumberMatchType) {
+            return setNullable("document_number_match_type", Conv.enumeration(AmlScreenResponse.Aml.Hits.ScoreBreakdown.DocumentNumberMatchType::of), documentNumberMatchType);
           }
 
           /**
@@ -2366,22 +2366,22 @@ public final class AmlScreenResponse extends JsonModel {
       }
     }
 
-    public static final class WarningsItem extends JsonModel {
+    public static final class Warnings extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("feature", "risk", "additional_data", "log_type", "short_description", "long_description");
 
-      private WarningsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Warnings(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code WarningsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Warnings} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static WarningsItem fromJson(JsonNode json) {
-        return new WarningsItem(Json.copyObject(json), Map.of());
+      public static Warnings fromJson(JsonNode json) {
+        return new Warnings(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -2467,11 +2467,11 @@ public final class AmlScreenResponse extends JsonModel {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link WarningsItem}. */
+      /** Builds a {@link Warnings}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(WarningsItem from) {
+        private Builder(Warnings from) {
           super(from);
         }
 
@@ -2538,10 +2538,10 @@ public final class AmlScreenResponse extends JsonModel {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code WarningsItem}
+         * @return a new immutable {@code Warnings}
          */
-        public WarningsItem build() {
-          return new WarningsItem(buildJson(), buildFiles());
+        public Warnings build() {
+          return new Warnings(buildJson(), buildFiles());
         }
 
         @Override

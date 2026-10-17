@@ -12,7 +12,7 @@ import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
 import me.didit.types.WebhooksDestinationsCreateParams;
 import me.didit.types.WebhooksDestinationsCreateResponse;
-import me.didit.types.WebhooksDestinationsListResponseItem;
+import me.didit.types.WebhooksDestinationsListResponse;
 import me.didit.types.WebhooksDestinationsRetrieveResponse;
 import me.didit.types.WebhooksDestinationsUpdateParams;
 import me.didit.types.WebhooksDestinationsUpdateResponse;
@@ -47,7 +47,7 @@ public final class WebhooksDestinationsResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public List<WebhooksDestinationsListResponseItem> list(RequestOptions options) {
+  public List<WebhooksDestinationsListResponse> list(RequestOptions options) {
     return client.execute(listRequest(), options, LIST_RESPONSE).data();
   }
 
@@ -61,7 +61,7 @@ public final class WebhooksDestinationsResource {
    * @param options per-request options that override the client options
    * @return a future completed with the response body
    */
-  public CompletableFuture<List<WebhooksDestinationsListResponseItem>> listAsync(RequestOptions options) {
+  public CompletableFuture<List<WebhooksDestinationsListResponse>> listAsync(RequestOptions options) {
     return client.executeAsync(listRequest(), options, LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -74,7 +74,7 @@ public final class WebhooksDestinationsResource {
    *
    * @return the response body
    */
-  public List<WebhooksDestinationsListResponseItem> list() {
+  public List<WebhooksDestinationsListResponse> list() {
     return client.execute(listRequest(), RequestOptions.none(), LIST_RESPONSE).data();
   }
 
@@ -87,7 +87,7 @@ public final class WebhooksDestinationsResource {
    *
    * @return a future completed with the response body
    */
-  public CompletableFuture<List<WebhooksDestinationsListResponseItem>> listAsync() {
+  public CompletableFuture<List<WebhooksDestinationsListResponse>> listAsync() {
     return client.executeAsync(listRequest(), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -383,7 +383,7 @@ public final class WebhooksDestinationsResource {
     return client.executeAsync(deleteRequest(destinationUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
   }
 
-  private static final ResponseHandler<List<WebhooksDestinationsListResponseItem>> LIST_RESPONSE = Responses.json(Conv.list(Conv.model(WebhooksDestinationsListResponseItem::fromJson)));
+  private static final ResponseHandler<List<WebhooksDestinationsListResponse>> LIST_RESPONSE = Responses.json(Conv.list(Conv.model(WebhooksDestinationsListResponse::fromJson)));
 
   private static ApiRequest listRequest() {
     return ApiRequest.builder("GET", "/v3/webhook/destinations/")
@@ -443,7 +443,7 @@ public final class WebhooksDestinationsResource {
      * @param options per-request options that override the client options
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<List<WebhooksDestinationsListResponseItem>> list(RequestOptions options) {
+    public RawResponse<List<WebhooksDestinationsListResponse>> list(RequestOptions options) {
       return client.execute(listRequest(), options, LIST_RESPONSE);
     }
 
@@ -457,7 +457,7 @@ public final class WebhooksDestinationsResource {
      * @param options per-request options that override the client options
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<List<WebhooksDestinationsListResponseItem>>> listAsync(RequestOptions options) {
+    public CompletableFuture<RawResponse<List<WebhooksDestinationsListResponse>>> listAsync(RequestOptions options) {
       return client.executeAsync(listRequest(), options, LIST_RESPONSE);
     }
 
@@ -470,7 +470,7 @@ public final class WebhooksDestinationsResource {
      *
      * @return the HTTP status, headers and request id with the parsed body
      */
-    public RawResponse<List<WebhooksDestinationsListResponseItem>> list() {
+    public RawResponse<List<WebhooksDestinationsListResponse>> list() {
       return client.execute(listRequest(), RequestOptions.none(), LIST_RESPONSE);
     }
 
@@ -483,7 +483,7 @@ public final class WebhooksDestinationsResource {
      *
      * @return a future completed with the raw response
      */
-    public CompletableFuture<RawResponse<List<WebhooksDestinationsListResponseItem>>> listAsync() {
+    public CompletableFuture<RawResponse<List<WebhooksDestinationsListResponse>>> listAsync() {
       return client.executeAsync(listRequest(), RequestOptions.none(), LIST_RESPONSE);
     }
 

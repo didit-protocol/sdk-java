@@ -219,8 +219,8 @@ public final class UserListItem extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<UserListItem.FeaturesListItem>> featuresList() {
-    return Json.optional(json, "features_list", Conv.list(Conv.model(UserListItem.FeaturesListItem::fromJson)));
+  public Optional<List<UserListItem.FeaturesList>> featuresList() {
+    return Json.optional(json, "features_list", Conv.list(Conv.model(UserListItem.FeaturesList::fromJson)));
   }
 
   /**
@@ -259,8 +259,8 @@ public final class UserListItem extends JsonModel {
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<UserListItem.TagsItem>> tags() {
-    return Json.optional(json, "tags", Conv.list(Conv.model(UserListItem.TagsItem::fromJson)));
+  public Optional<List<UserListItem.Tags>> tags() {
+    return Json.optional(json, "tags", Conv.list(Conv.model(UserListItem.Tags::fromJson)));
   }
 
   /**
@@ -452,8 +452,8 @@ public final class UserListItem extends JsonModel {
      * @param featuresList the value
      * @return this builder
      */
-    public Builder featuresList(List<UserListItem.FeaturesListItem> featuresList) {
-      return set("features_list", Conv.list(Conv.model(UserListItem.FeaturesListItem::fromJson)), featuresList);
+    public Builder featuresList(List<UserListItem.FeaturesList> featuresList) {
+      return set("features_list", Conv.list(Conv.model(UserListItem.FeaturesList::fromJson)), featuresList);
     }
 
     /**
@@ -492,8 +492,8 @@ public final class UserListItem extends JsonModel {
      * @param tags the value
      * @return this builder
      */
-    public Builder tags(List<UserListItem.TagsItem> tags) {
-      return set("tags", Conv.list(Conv.model(UserListItem.TagsItem::fromJson)), tags);
+    public Builder tags(List<UserListItem.Tags> tags) {
+      return set("tags", Conv.list(Conv.model(UserListItem.Tags::fromJson)), tags);
     }
 
     /**
@@ -567,22 +567,22 @@ public final class UserListItem extends JsonModel {
     }
   }
 
-  public static final class FeaturesListItem extends JsonModel {
+  public static final class FeaturesList extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("feature", "status");
 
-    private FeaturesListItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private FeaturesList(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code FeaturesListItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code FeaturesList} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static FeaturesListItem fromJson(JsonNode json) {
-      return new FeaturesListItem(Json.copyObject(json), Map.of());
+    public static FeaturesList fromJson(JsonNode json) {
+      return new FeaturesList(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -628,11 +628,11 @@ public final class UserListItem extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link FeaturesListItem}. */
+    /** Builds a {@link FeaturesList}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(FeaturesListItem from) {
+      private Builder(FeaturesList from) {
         super(from);
       }
 
@@ -659,10 +659,10 @@ public final class UserListItem extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code FeaturesListItem}
+       * @return a new immutable {@code FeaturesList}
        */
-      public FeaturesListItem build() {
-        return new FeaturesListItem(buildJson(), buildFiles());
+      public FeaturesList build() {
+        return new FeaturesList(buildJson(), buildFiles());
       }
 
       @Override
@@ -672,22 +672,22 @@ public final class UserListItem extends JsonModel {
     }
   }
 
-  public static final class TagsItem extends JsonModel {
+  public static final class Tags extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "color");
 
-    private TagsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+    private Tags(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
     }
 
     /**
-     * Reads a {@code TagsItem} from JSON. Unknown fields are kept and readable
+     * Reads a {@code Tags} from JSON. Unknown fields are kept and readable
      * through {@link #_additionalProperties()}.
      *
      * @param json a JSON object
      * @return the parsed value
      */
-    public static TagsItem fromJson(JsonNode json) {
-      return new TagsItem(Json.copyObject(json), Map.of());
+    public static Tags fromJson(JsonNode json) {
+      return new Tags(Json.copyObject(json), Map.of());
     }
 
     /**
@@ -743,11 +743,11 @@ public final class UserListItem extends JsonModel {
       return KNOWN_FIELDS;
     }
 
-    /** Builds a {@link TagsItem}. */
+    /** Builds a {@link Tags}. */
     public static final class Builder extends JsonModel.BaseBuilder<Builder> {
       private Builder() {}
 
-      private Builder(TagsItem from) {
+      private Builder(Tags from) {
         super(from);
       }
 
@@ -784,10 +784,10 @@ public final class UserListItem extends JsonModel {
       /**
        * Builds the value.
        *
-       * @return a new immutable {@code TagsItem}
+       * @return a new immutable {@code Tags}
        */
-      public TagsItem build() {
-        return new TagsItem(buildJson(), buildFiles());
+      public Tags build() {
+        return new Tags(buildJson(), buildFiles());
       }
 
       @Override

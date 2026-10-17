@@ -111,8 +111,8 @@ public final class SessionsBatchDeleteResponse extends MultiStatusResponse {
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<List<SessionsBatchDeleteResponse.Ok.ResultsItem>> results() {
-      return Json.optional(json, "results", Conv.list(Conv.model(SessionsBatchDeleteResponse.Ok.ResultsItem::fromJson)));
+    public Optional<List<SessionsBatchDeleteResponse.Ok.Results>> results() {
+      return Json.optional(json, "results", Conv.list(Conv.model(SessionsBatchDeleteResponse.Ok.Results::fromJson)));
     }
 
     @Override
@@ -134,8 +134,8 @@ public final class SessionsBatchDeleteResponse extends MultiStatusResponse {
        * @param results the value
        * @return this builder
        */
-      public Builder results(List<SessionsBatchDeleteResponse.Ok.ResultsItem> results) {
-        return set("results", Conv.list(Conv.model(SessionsBatchDeleteResponse.Ok.ResultsItem::fromJson)), results);
+      public Builder results(List<SessionsBatchDeleteResponse.Ok.Results> results) {
+        return set("results", Conv.list(Conv.model(SessionsBatchDeleteResponse.Ok.Results::fromJson)), results);
       }
 
       /**
@@ -153,22 +153,22 @@ public final class SessionsBatchDeleteResponse extends MultiStatusResponse {
       }
     }
 
-    public static final class ResultsItem extends JsonModel {
+    public static final class Results extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_number", "face_retention_outcome", "biometric_template_uuid", "biometric_template_expires_at", "deleted_child_verifications");
 
-      private ResultsItem(ObjectNode json, Map<String, List<FileUpload>> files) {
+      private Results(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
       }
 
       /**
-       * Reads a {@code ResultsItem} from JSON. Unknown fields are kept and readable
+       * Reads a {@code Results} from JSON. Unknown fields are kept and readable
        * through {@link #_additionalProperties()}.
        *
        * @param json a JSON object
        * @return the parsed value
        */
-      public static ResultsItem fromJson(JsonNode json) {
-        return new ResultsItem(Json.copyObject(json), Map.of());
+      public static Results fromJson(JsonNode json) {
+        return new Results(Json.copyObject(json), Map.of());
       }
 
       /**
@@ -215,8 +215,8 @@ public final class SessionsBatchDeleteResponse extends MultiStatusResponse {
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<SessionsBatchDeleteResponse.Ok.ResultsItem.FaceRetentionOutcome> faceRetentionOutcome() {
-        return Json.optional(json, "face_retention_outcome", Conv.enumeration(SessionsBatchDeleteResponse.Ok.ResultsItem.FaceRetentionOutcome::of));
+      public Optional<SessionsBatchDeleteResponse.Ok.Results.FaceRetentionOutcome> faceRetentionOutcome() {
+        return Json.optional(json, "face_retention_outcome", Conv.enumeration(SessionsBatchDeleteResponse.Ok.Results.FaceRetentionOutcome::of));
       }
 
       /**
@@ -254,11 +254,11 @@ public final class SessionsBatchDeleteResponse extends MultiStatusResponse {
         return KNOWN_FIELDS;
       }
 
-      /** Builds a {@link ResultsItem}. */
+      /** Builds a {@link Results}. */
       public static final class Builder extends JsonModel.BaseBuilder<Builder> {
         private Builder() {}
 
-        private Builder(ResultsItem from) {
+        private Builder(Results from) {
           super(from);
         }
 
@@ -288,8 +288,8 @@ public final class SessionsBatchDeleteResponse extends MultiStatusResponse {
          * @param faceRetentionOutcome the value
          * @return this builder
          */
-        public Builder faceRetentionOutcome(SessionsBatchDeleteResponse.Ok.ResultsItem.FaceRetentionOutcome faceRetentionOutcome) {
-          return set("face_retention_outcome", Conv.enumeration(SessionsBatchDeleteResponse.Ok.ResultsItem.FaceRetentionOutcome::of), faceRetentionOutcome);
+        public Builder faceRetentionOutcome(SessionsBatchDeleteResponse.Ok.Results.FaceRetentionOutcome faceRetentionOutcome) {
+          return set("face_retention_outcome", Conv.enumeration(SessionsBatchDeleteResponse.Ok.Results.FaceRetentionOutcome::of), faceRetentionOutcome);
         }
 
         /**
@@ -325,10 +325,10 @@ public final class SessionsBatchDeleteResponse extends MultiStatusResponse {
         /**
          * Builds the value.
          *
-         * @return a new immutable {@code ResultsItem}
+         * @return a new immutable {@code Results}
          */
-        public ResultsItem build() {
-          return new ResultsItem(buildJson(), buildFiles());
+        public Results build() {
+          return new Results(buildJson(), buildFiles());
         }
 
         @Override
