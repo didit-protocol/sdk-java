@@ -852,7 +852,8 @@ public final class Authentication {
     headers.put("X-Didit-Client", List.of("java/" + Version.VERSION));
     extraHeaders.forEach((k, v) -> headers.put(k, List.of(v)));
     String where = method + " " + uri.getRawPath();
-    me.didit.core.TransportRequest request = AuthRequests.create(method, uri, headers, body, timeout);
+    me.didit.core.TransportRequest request =
+        me.didit.core.TransportRequest.of(method, uri, headers, body, timeout);
     CompletableFuture<TransportResponse> sent;
     try {
       sent = transport.send(request);
@@ -1085,9 +1086,5 @@ public final class Authentication {
       }
       return new Authentication(this, Issuers.normalize(issuer));
     }
-  }
-
-  static Instant epoch(double seconds) {
-    return Instant.ofEpochMilli((long) (seconds * 1000));
   }
 }

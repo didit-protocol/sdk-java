@@ -32,6 +32,21 @@ public final class TransportRequest {
   }
 
   /**
+   * Creates a request whose response is read into memory.
+   *
+   * @param method the HTTP method
+   * @param uri the absolute URL
+   * @param headers header names to values
+   * @param body the body; empty for none
+   * @param timeout the time to wait for the response
+   * @return the request
+   */
+  public static TransportRequest of(
+      String method, URI uri, Map<String, List<String>> headers, byte[] body, Duration timeout) {
+    return new TransportRequest(method, uri, headers, body.clone(), timeout, false);
+  }
+
+  /**
    * The HTTP method.
    *
    * @return {@code GET}, {@code POST}, {@code PUT}, {@code PATCH} or {@code DELETE}
