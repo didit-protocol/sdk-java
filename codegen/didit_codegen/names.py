@@ -94,6 +94,16 @@ def safe_member(name: str) -> str:
     return name
 
 
+OBJECT_METHODS = frozenset("equals hashCode toString getClass notify notifyAll wait clone finalize".split())
+
+
+def safe_method(name: str) -> str:
+    """A resource method name: not a keyword and not a method of java.lang.Object."""
+    if name in JAVA_KEYWORDS or name in OBJECT_METHODS:
+        return name + "_"
+    return name
+
+
 def safe_param(name: str) -> str:
     """A Java parameter name that is not a keyword and not used by generated code."""
     if name in JAVA_KEYWORDS or name in ("params", "options", "client"):

@@ -536,7 +536,7 @@ class Builder:
     def operation(self, op: Operation) -> OpModel:
         doc = op.doc
         prefix = names.type_prefix(op.resource, op.method)
-        java_method = names.safe_member(names.camel(op.method))
+        java_method = names.safe_method(names.camel(op.method))
         params = op.parameters()
 
         path_params: list[PathParam] = []

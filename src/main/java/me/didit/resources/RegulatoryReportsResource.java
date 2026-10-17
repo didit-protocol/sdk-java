@@ -368,39 +368,39 @@ public final class RegulatoryReportsResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public RegulatoryReportsValidateResponse validate_(String reportUuid, RequestOptions options) {
-    return client.execute(validate_Request(reportUuid), options, VALIDATE_RESPONSE).data();
+  public RegulatoryReportsValidateResponse validate(String reportUuid, RequestOptions options) {
+    return client.execute(validateRequest(reportUuid), options, VALIDATE_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #validate_(String, RequestOptions)}.
+   * Asynchronous {@link #validate(String, RequestOptions)}.
    *
    * @param reportUuid the {@code report_uuid}
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<RegulatoryReportsValidateResponse> validate_Async(String reportUuid, RequestOptions options) {
-    return client.executeAsync(validate_Request(reportUuid), options, VALIDATE_RESPONSE).thenApply(RawResponse::data);
+  public CompletableFuture<RegulatoryReportsValidateResponse> validateAsync(String reportUuid, RequestOptions options) {
+    return client.executeAsync(validateRequest(reportUuid), options, VALIDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Same as {@link #validate_(String, RequestOptions)}, with the client's options.
+   * Same as {@link #validate(String, RequestOptions)}, with the client's options.
    *
    * @param reportUuid the {@code report_uuid}
    * @return the result
    */
-  public RegulatoryReportsValidateResponse validate_(String reportUuid) {
-    return client.execute(validate_Request(reportUuid), RequestOptions.none(), VALIDATE_RESPONSE).data();
+  public RegulatoryReportsValidateResponse validate(String reportUuid) {
+    return client.execute(validateRequest(reportUuid), RequestOptions.none(), VALIDATE_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #validate_(String, RequestOptions)}, with the client's options.
+   * Asynchronous {@link #validate(String, RequestOptions)}, with the client's options.
    *
    * @param reportUuid the {@code report_uuid}
    * @return a future completed with the result
    */
-  public CompletableFuture<RegulatoryReportsValidateResponse> validate_Async(String reportUuid) {
-    return client.executeAsync(validate_Request(reportUuid), RequestOptions.none(), VALIDATE_RESPONSE).thenApply(RawResponse::data);
+  public CompletableFuture<RegulatoryReportsValidateResponse> validateAsync(String reportUuid) {
+    return client.executeAsync(validateRequest(reportUuid), RequestOptions.none(), VALIDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
@@ -594,7 +594,7 @@ public final class RegulatoryReportsResource {
 
   private static final ResponseHandler<RegulatoryReportsValidateResponse> VALIDATE_RESPONSE = Responses.json(Conv.model(RegulatoryReportsValidateResponse::fromJson));
 
-  private static ApiRequest validate_Request(String reportUuid) {
+  private static ApiRequest validateRequest(String reportUuid) {
     return ApiRequest.builder("POST", "/v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/validate/")
         .applicationScoped()
         .pathParam("report_uuid", reportUuid)
@@ -924,45 +924,45 @@ public final class RegulatoryReportsResource {
     }
 
     /**
-     * {@link #validate_(String, RequestOptions)} with the raw response.
+     * {@link #validate(String, RequestOptions)} with the raw response.
      *
      * @param reportUuid the {@code report_uuid}
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<RegulatoryReportsValidateResponse> validate_(String reportUuid, RequestOptions options) {
-      return client.execute(validate_Request(reportUuid), options, VALIDATE_RESPONSE);
+    public RawResponse<RegulatoryReportsValidateResponse> validate(String reportUuid, RequestOptions options) {
+      return client.execute(validateRequest(reportUuid), options, VALIDATE_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #validate_(String, RequestOptions)} with the raw response.
+     * Asynchronous {@link #validate(String, RequestOptions)} with the raw response.
      *
      * @param reportUuid the {@code report_uuid}
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<RegulatoryReportsValidateResponse>> validate_Async(String reportUuid, RequestOptions options) {
-      return client.executeAsync(validate_Request(reportUuid), options, VALIDATE_RESPONSE);
+    public CompletableFuture<RawResponse<RegulatoryReportsValidateResponse>> validateAsync(String reportUuid, RequestOptions options) {
+      return client.executeAsync(validateRequest(reportUuid), options, VALIDATE_RESPONSE);
     }
 
     /**
-     * {@link #validate_(String, RequestOptions)} with the raw response, with the client's options.
+     * {@link #validate(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param reportUuid the {@code report_uuid}
      * @return the result
      */
-    public RawResponse<RegulatoryReportsValidateResponse> validate_(String reportUuid) {
-      return client.execute(validate_Request(reportUuid), RequestOptions.none(), VALIDATE_RESPONSE);
+    public RawResponse<RegulatoryReportsValidateResponse> validate(String reportUuid) {
+      return client.execute(validateRequest(reportUuid), RequestOptions.none(), VALIDATE_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #validate_(String, RequestOptions)} with the raw response, with the client's options.
+     * Asynchronous {@link #validate(String, RequestOptions)} with the raw response, with the client's options.
      *
      * @param reportUuid the {@code report_uuid}
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<RegulatoryReportsValidateResponse>> validate_Async(String reportUuid) {
-      return client.executeAsync(validate_Request(reportUuid), RequestOptions.none(), VALIDATE_RESPONSE);
+    public CompletableFuture<RawResponse<RegulatoryReportsValidateResponse>> validateAsync(String reportUuid) {
+      return client.executeAsync(validateRequest(reportUuid), RequestOptions.none(), VALIDATE_RESPONSE);
     }
 
     /**

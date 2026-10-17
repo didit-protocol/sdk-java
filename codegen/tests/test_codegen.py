@@ -34,6 +34,8 @@ class NamesTest(unittest.TestCase):
         self.assertEqual("class_", names.safe_member("class"))
         self.assertEqual("builder_", names.safe_member("builder"))
         self.assertEqual("params_", names.safe_param("params"))
+        self.assertEqual("validate", names.safe_method("validate"))
+        self.assertEqual("finalize_", names.safe_method("finalize"))
         self.assertEqual("CasesNotesResource", names.resource_class("cases.notes"))
         self.assertEqual("SessionsImportsCreate", names.type_prefix("sessions.imports", "create"))
 

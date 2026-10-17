@@ -58,44 +58,44 @@ public final class DatabaseValidationResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public DatabaseValidationValidateResponse validate_(DatabaseValidationValidateParams params, RequestOptions options) {
-    return client.execute(validate_Request(params), options, VALIDATE_RESPONSE).data();
+  public DatabaseValidationValidateResponse validate(DatabaseValidationValidateParams params, RequestOptions options) {
+    return client.execute(validateRequest(params), options, VALIDATE_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #validate_(DatabaseValidationValidateParams, RequestOptions)}.
+   * Asynchronous {@link #validate(DatabaseValidationValidateParams, RequestOptions)}.
    *
    * @param params the request parameters
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<DatabaseValidationValidateResponse> validate_Async(DatabaseValidationValidateParams params, RequestOptions options) {
-    return client.executeAsync(validate_Request(params), options, VALIDATE_RESPONSE).thenApply(RawResponse::data);
+  public CompletableFuture<DatabaseValidationValidateResponse> validateAsync(DatabaseValidationValidateParams params, RequestOptions options) {
+    return client.executeAsync(validateRequest(params), options, VALIDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Same as {@link #validate_(DatabaseValidationValidateParams, RequestOptions)}, with the client's options.
+   * Same as {@link #validate(DatabaseValidationValidateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
    * @return the result
    */
-  public DatabaseValidationValidateResponse validate_(DatabaseValidationValidateParams params) {
-    return client.execute(validate_Request(params), RequestOptions.none(), VALIDATE_RESPONSE).data();
+  public DatabaseValidationValidateResponse validate(DatabaseValidationValidateParams params) {
+    return client.execute(validateRequest(params), RequestOptions.none(), VALIDATE_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #validate_(DatabaseValidationValidateParams, RequestOptions)}, with the client's options.
+   * Asynchronous {@link #validate(DatabaseValidationValidateParams, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
    * @return a future completed with the result
    */
-  public CompletableFuture<DatabaseValidationValidateResponse> validate_Async(DatabaseValidationValidateParams params) {
-    return client.executeAsync(validate_Request(params), RequestOptions.none(), VALIDATE_RESPONSE).thenApply(RawResponse::data);
+  public CompletableFuture<DatabaseValidationValidateResponse> validateAsync(DatabaseValidationValidateParams params) {
+    return client.executeAsync(validateRequest(params), RequestOptions.none(), VALIDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
   private static final ResponseHandler<DatabaseValidationValidateResponse> VALIDATE_RESPONSE = Responses.json(Conv.model(DatabaseValidationValidateResponse::fromJson));
 
-  private static ApiRequest validate_Request(DatabaseValidationValidateParams params) {
+  private static ApiRequest validateRequest(DatabaseValidationValidateParams params) {
     return ApiRequest.builder("POST", "/v3/database-validation/")
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON_OR_MULTIPART)
@@ -111,45 +111,45 @@ public final class DatabaseValidationResource {
     }
 
     /**
-     * {@link #validate_(DatabaseValidationValidateParams, RequestOptions)} with the raw response.
+     * {@link #validate(DatabaseValidationValidateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<DatabaseValidationValidateResponse> validate_(DatabaseValidationValidateParams params, RequestOptions options) {
-      return client.execute(validate_Request(params), options, VALIDATE_RESPONSE);
+    public RawResponse<DatabaseValidationValidateResponse> validate(DatabaseValidationValidateParams params, RequestOptions options) {
+      return client.execute(validateRequest(params), options, VALIDATE_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #validate_(DatabaseValidationValidateParams, RequestOptions)} with the raw response.
+     * Asynchronous {@link #validate(DatabaseValidationValidateParams, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<DatabaseValidationValidateResponse>> validate_Async(DatabaseValidationValidateParams params, RequestOptions options) {
-      return client.executeAsync(validate_Request(params), options, VALIDATE_RESPONSE);
+    public CompletableFuture<RawResponse<DatabaseValidationValidateResponse>> validateAsync(DatabaseValidationValidateParams params, RequestOptions options) {
+      return client.executeAsync(validateRequest(params), options, VALIDATE_RESPONSE);
     }
 
     /**
-     * {@link #validate_(DatabaseValidationValidateParams, RequestOptions)} with the raw response, with the client's options.
+     * {@link #validate(DatabaseValidationValidateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
      * @return the result
      */
-    public RawResponse<DatabaseValidationValidateResponse> validate_(DatabaseValidationValidateParams params) {
-      return client.execute(validate_Request(params), RequestOptions.none(), VALIDATE_RESPONSE);
+    public RawResponse<DatabaseValidationValidateResponse> validate(DatabaseValidationValidateParams params) {
+      return client.execute(validateRequest(params), RequestOptions.none(), VALIDATE_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #validate_(DatabaseValidationValidateParams, RequestOptions)} with the raw response, with the client's options.
+     * Asynchronous {@link #validate(DatabaseValidationValidateParams, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<DatabaseValidationValidateResponse>> validate_Async(DatabaseValidationValidateParams params) {
-      return client.executeAsync(validate_Request(params), RequestOptions.none(), VALIDATE_RESPONSE);
+    public CompletableFuture<RawResponse<DatabaseValidationValidateResponse>> validateAsync(DatabaseValidationValidateParams params) {
+      return client.executeAsync(validateRequest(params), RequestOptions.none(), VALIDATE_RESPONSE);
     }
   }
 }
