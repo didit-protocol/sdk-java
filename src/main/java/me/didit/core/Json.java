@@ -165,7 +165,7 @@ public final class Json {
    * @return the value
    * @throws UnexpectedResponseException when the field is absent, null or of another type
    */
-  public static <T> T required(ObjectNode json, String field, Conv<T> conv) {
+  public static <T> T required(JsonNode json, String field, Conv<T> conv) {
     JsonNode value = json.get(field);
     if (value == null || value.isNull() || value.isMissingNode()) {
       throw new UnexpectedResponseException(
@@ -184,7 +184,7 @@ public final class Json {
    * @return the value, or empty when absent or null
    * @throws UnexpectedResponseException when the field has another type
    */
-  public static <T> Optional<T> optional(ObjectNode json, String field, Conv<T> conv) {
+  public static <T> Optional<T> optional(JsonNode json, String field, Conv<T> conv) {
     JsonNode value = json.get(field);
     if (value == null || value.isNull() || value.isMissingNode()) {
       return Optional.empty();

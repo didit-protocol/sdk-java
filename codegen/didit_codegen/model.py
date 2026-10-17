@@ -293,7 +293,7 @@ class Builder:
             return self._remember(key, TypeRef("object"))
         if t == "array":
             item_schema = schema.get("items", {})
-            item = self.schema_type(doc, item_schema, f"{pointer}/items", outer, hint + "Item", context=context)
+            item = self.schema_type(doc, item_schema, f"{pointer}/items", outer, hint, context=context)
             return self._remember(key, TypeRef("list", item=item))
         if t == "string":
             fmt = schema.get("format")
@@ -480,6 +480,7 @@ class Builder:
             vt = self.schema_type(doc, v, vpointer, cls, vname, context=context)
             desc = description_of(target) if isinstance(target, dict) else ""
             cls.variants.append(Variant(vname, vt, detect, desc))
+        cls.props = self._common_props(cls)
         # Shape detection needs the properties unique to each object variant.
         for variant in cls.variants:
             if variant.detect[0] == "shape":
@@ -491,6 +492,29 @@ class Builder:
                 variant.detect = ("shape", variant.detect[1], tuple(unique))
         cls.complete = True
         return t
+
+    def _common_props(self, cls: JClass) -> list[Prop]:
+        """Fields every object variant declares, readable without picking a variant."""
+        models = [v.type.cls for v in cls.variants if v.type.kind == "class" and v.type.cls is not None]
+        if len(models) != len(cls.variants) or not models or any(m.kind != "model" for m in models):
+            return []
+        out: list[Prop] = []
+        for prop in models[0].props:
+            others = [next((p for p in m.props if p.json_name == prop.json_name), None) for m in models[1:]]
+            if any(o is None for o in others):
+                continue
+            ptype: TypeRef | None = prop.type
+            for other in others:
+                assert other is not None
+                ptype = _common_type(ptype, other.type) if ptype is not None else None
+            if ptype is None:
+                continue
+            required = prop.required and all(o is not None and o.required for o in others)
+            nullable = prop.nullable or any(o is not None and o.nullable for o in others)
+            out.append(
+                Prop(prop.json_name, prop.java_name, ptype, required, nullable, prop.description, prop.deprecated, prop.schema)
+            )
+        return out
 
     def _shape_detect(self, target: Any) -> tuple[Any, ...]:
         if not isinstance(target, dict):
@@ -755,8 +779,6 @@ class Builder:
             return None
         if "next" in props and "count" in props:
             return "next", results.type.item
-        if "next_offset" in props:
-            return "next_offset", results.type.item
         return None
 
     def build(self) -> Model:
@@ -777,6 +799,23 @@ class Builder:
                 resources.setdefault(".".join(parts[:i]), [])
         check_resource_names(resources)
         return Model(self.spec, sorted(self.top_classes, key=lambda c: c.name), ops, dict(sorted(resources.items())))
+
+
+def _common_type(a: TypeRef, b: TypeRef) -> TypeRef | None:
+    """The type two variants' fields share, or None when they differ."""
+    if a.kind != b.kind:
+        return None
+    if a.kind in ("list", "map"):
+        assert a.item is not None and b.item is not None
+        item = _common_type(a.item, b.item)
+        return None if item is None else TypeRef(a.kind, item=item)
+    if a.kind == "class":
+        if a.cls is b.cls:
+            return a
+        if a.cls is not None and b.cls is not None and a.cls.kind == "enum" and b.cls.kind == "enum":
+            return TypeRef("string")
+        return None
+    return a
 
 
 STATUS_NAMES = {"200": "Ok", "201": "Created", "202": "Accepted", "203": "NonAuthoritative", "206": "PartialContent"}

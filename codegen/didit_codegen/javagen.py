@@ -430,7 +430,8 @@ def emit_union(cls: JClass, ctx: Ctx, indent: str) -> str:
     doc = javadoc.render(cls.description) + [
         "",
         "<p>One of: " + ", ".join(f"{{@code {v.name}}}" for v in cls.variants) + ". Check with the {@code is...}",
-        "methods and read with the {@code as...} methods.",
+        "methods and read with the {@code as...} methods"
+        + ("; the fields every variant has are readable directly." if cls.props else "."),
     ]
     out.append(javadoc.block(doc, indent))
     out.append(f"{indent}{modifiers(cls)} {cls.name} extends JsonUnion {{\n")
@@ -440,6 +441,9 @@ def emit_union(cls: JClass, ctx: Ctx, indent: str) -> str:
         f"{i1} * @return the union\n{i1} */\n"
     )
     out.append(f"{i1}public static {cls.name} fromJson(JsonNode json) {{\n{i2}return new {cls.name}(json.deepCopy());\n{i1}}}\n")
+    for prop in cls.props:
+        out.append("\n")
+        out.append(emit_getter(prop, ctx, i1))
     for v in cls.variants:
         jt = variant_type_text(v, ctx)
         conv = ctx.conv(v.type)
