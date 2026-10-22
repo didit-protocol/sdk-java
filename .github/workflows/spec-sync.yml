@@ -1,0 +1,120 @@
+# DESIGN 3.1: keeps the SDK current with the published API. Daily and on demand, it downloads the
+# OpenAPI documents, regenerates the code, runs every check and opens (or updates) a pull request
+# titled "chore(spec): sync API spec YYYY-MM-DD" with an operation-level summary.
+#
+# It never overwrites commits people added to the sync branch: when the open sync pull request has
+# a commit not made by this workflow, the run stops and says so. Otherwise it rebuilds the branch
+# from main and pushes with --force-with-lease against the head it saw, so a concurrent push wins.
+#
+# Set the SPEC_SYNC_TOKEN secret (a GitHub App or fine-grained token with contents and pull
+# requests write) so CI runs on the sync pull request; with the default token it does not.
+name: Spec sync
+
+on:
+  schedule:
+    - cron: "23 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: spec-sync
+  cancel-in-progress: false
+
+env:
+  BRANCH: chore/spec-sync
+  BOT_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+  BOT_NAME: github-actions[bot]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Leave branches with people's commits alone
+        id: guard
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.SPEC_SYNC_TOKEN || github.token }}
+        run: |
+          set -euo pipefail
+          # The checkout keeps no credentials and the repository may be private, so read with the
+          # token; a failed read stops the job instead of looking like a missing branch.
+          remote="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          head=$(git ls-remote --heads "$remote" "refs/heads/${BRANCH}" | cut -f1)
+          echo "head=${head}" >> "$GITHUB_OUTPUT"
+          if [ -z "$head" ]; then exit 0; fi
+          pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -z "$pr" ]; then exit 0; fi
+          git fetch --quiet "$remote" "+refs/heads/${BRANCH}:refs/remotes/origin/${BRANCH}"
+          authors=$(git log --format='%ae%n%ce' "origin/main..origin/${BRANCH}")
+          others=$(printf '%s\n' "$authors" | sort -u | grep -vxF -e "$BOT_EMAIL" -e '' || true)
+          if [ -n "$others" ]; then
+            echo "::notice::Pull request #${pr} has commits by people; this run does not touch it."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        if: steps.guard.outputs.skip != 'true'
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        if: steps.guard.outputs.skip != 'true'
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
+        if: steps.guard.outputs.skip != 'true'
+      - name: Download the API documents
+        id: sync
+        if: steps.guard.outputs.skip != 'true'
+        run: python3 codegen/spec_sync.py --summary "$RUNNER_TEMP/summary.md"
+      - name: Regenerate and run every check
+        id: checks
+        if: steps.sync.outputs.changed == 'true'
+        continue-on-error: true
+        run: |
+          python3 codegen/generate.py
+          python3 -m unittest discover -s codegen/tests -t codegen
+          ./gradlew build
+      - name: Push the branch and open or update the pull request
+        if: steps.sync.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.SPEC_SYNC_TOKEN || github.token }}
+          PUSH_TOKEN: ${{ secrets.SPEC_SYNC_TOKEN || github.token }}
+          SEEN_HEAD: ${{ steps.guard.outputs.head }}
+          BREAKING: ${{ steps.sync.outputs.breaking }}
+          CHECKS: ${{ steps.checks.outcome }}
+        run: |
+          today=$(date -u +%Y-%m-%d)
+          title="chore(spec): sync API spec ${today}"
+          body="$RUNNER_TEMP/body.md"
+          cp "$RUNNER_TEMP/summary.md" "$body"
+          if [ "$CHECKS" != "success" ]; then
+            printf '\n**The checks failed on this sync**; see the workflow run %s.\n' \
+              "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> "$body"
+          fi
+          git config user.name "$BOT_NAME"
+          git config user.email "$BOT_EMAIL"
+          git checkout -B "$BRANCH"
+          git add openapi src codegen
+          message="$title"
+          if [ "$BREAKING" = "true" ]; then
+            message="$(printf '%s\n\nBREAKING CHANGE: the API removed or renamed operations or schemas; see the pull request.' "$title")"
+          fi
+          git commit --quiet -m "$message"
+          remote="https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push --force-with-lease="${BRANCH}:${SEEN_HEAD}" "$remote" "HEAD:refs/heads/${BRANCH}"
+          pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$pr" ]; then
+            gh pr edit "$pr" --title "$title" --body-file "$body"
+          elif [ "$CHECKS" = "success" ]; then
+            gh pr create --base main --head "$BRANCH" --title "$title" --body-file "$body"
+          else
+            gh pr create --base main --head "$BRANCH" --title "$title" --body-file "$body" --draft
+          fi
