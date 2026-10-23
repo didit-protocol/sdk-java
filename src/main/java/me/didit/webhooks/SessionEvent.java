@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Map;
 import java.util.Optional;
 import me.didit.core.Conv;
-import me.didit.types.SessionsRetrieveDecisionResponse;
+import me.didit.types.SessionDecision;
 
 /** A verification session event: {@code status.updated} or {@code data.updated}. */
 public abstract class SessionEvent extends WebhookEvent {
@@ -88,12 +88,12 @@ public abstract class SessionEvent extends WebhookEvent {
   /**
    * The decision, sent with {@code Approved}, {@code Declined}, {@code In Review} and {@code
    * Abandoned}. Its fields depend on the application's webhook version; read raw values with {@link
-   * SessionsRetrieveDecisionResponse#_json()}.
+   * SessionDecision#_json()}.
    *
    * @return the decision
    */
-  public final Optional<SessionsRetrieveDecisionResponse> decision() {
-    return optional("decision", Conv.model(SessionsRetrieveDecisionResponse::fromJson));
+  public final Optional<SessionDecision> decision() {
+    return optional("decision", Conv.model(SessionDecision::fromJson));
   }
 
   /**
