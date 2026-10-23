@@ -13,6 +13,7 @@ public abstract class DiditResources {
   private final AmlResource aml;
   private final AmlMonitoringResource amlMonitoring;
   private final AnalyticsResource analytics;
+  private final BankResource bank;
   private final BillingResource billing;
   private final BiometricTemplatesResource biometricTemplates;
   private final BlocklistResource blocklist;
@@ -59,6 +60,7 @@ public abstract class DiditResources {
     this.aml = new AmlResource(client);
     this.amlMonitoring = new AmlMonitoringResource(client);
     this.analytics = new AnalyticsResource(client);
+    this.bank = new BankResource(client);
     this.billing = new BillingResource(client);
     this.biometricTemplates = new BiometricTemplatesResource(client);
     this.blocklist = new BlocklistResource(client);
@@ -138,6 +140,15 @@ public abstract class DiditResources {
    */
   public final AnalyticsResource analytics() {
     return analytics;
+  }
+
+  /**
+   * The {@code bank} resource.
+   *
+   * @return the resource
+   */
+  public final BankResource bank() {
+    return bank;
   }
 
   /**

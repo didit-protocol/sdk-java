@@ -17,7 +17,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class SessionDecision extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_kind", "shared_from_session", "session_number", "session_url", "status", "workflow_id", "features", "vendor_data", "metadata", "expected_details", "contact_details", "callback", "id_verifications", "nfc_skip_reason", "nfc_verifications", "liveness_checks", "face_matches", "phone_verifications", "email_verifications", "poa_verifications", "document_ai_documents", "questionnaire_responses", "signatures", "aml_screenings", "ip_analyses", "database_validations", "reviews", "created_at", "expires_at", "registry_checks", "key_people_checks", "document_verifications", "environment", "resubmissions", "investigator");
+  private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_kind", "shared_from_session", "session_number", "session_url", "status", "workflow_id", "features", "vendor_data", "metadata", "expected_details", "contact_details", "callback", "id_verifications", "nfc_skip_reason", "nfc_verifications", "liveness_checks", "face_matches", "phone_verifications", "email_verifications", "poa_verifications", "document_ai_documents", "questionnaire_responses", "bank_verifications", "signatures", "aml_screenings", "ip_analyses", "database_validations", "reviews", "created_at", "expires_at", "registry_checks", "key_people_checks", "document_verifications", "environment", "resubmissions", "investigator");
 
   private SessionDecision(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -280,6 +280,16 @@ public final class SessionDecision extends JsonModel {
    */
   public Optional<List<SessionDecision.QuestionnaireResponses>> questionnaireResponses() {
     return Json.optional(json, "questionnaire_responses", Conv.list(Conv.model(SessionDecision.QuestionnaireResponses::fromJson)));
+  }
+
+  /**
+   * Bank Verification results, one item per Bank Verification step, for User and Business Verification. <code>null</code> until a step produces one. Each item's <code>method</code> says how the account was verified: <code>open_banking</code> (bank sign-in) or <code>account_lookup</code> (account check), or a <code>microdeposits</code> or <code>statement</code> fallback. See [Bank verification methods](/core-technology/bank-verification/verification-methods).
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<BankVerificationResult>> bankVerifications() {
+    return Json.optional(json, "bank_verifications", Conv.list(Conv.model(BankVerificationResult::fromJson)));
   }
 
   /**
@@ -689,6 +699,16 @@ public final class SessionDecision extends JsonModel {
      */
     public Builder questionnaireResponses(@Nullable List<SessionDecision.QuestionnaireResponses> questionnaireResponses) {
       return setNullable("questionnaire_responses", Conv.list(Conv.model(SessionDecision.QuestionnaireResponses::fromJson)), questionnaireResponses);
+    }
+
+    /**
+     * Bank Verification results, one item per Bank Verification step, for User and Business Verification. <code>null</code> until a step produces one. Each item's <code>method</code> says how the account was verified: <code>open_banking</code> (bank sign-in) or <code>account_lookup</code> (account check), or a <code>microdeposits</code> or <code>statement</code> fallback. See [Bank verification methods](/core-technology/bank-verification/verification-methods).
+     *
+     * @param bankVerifications the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder bankVerifications(@Nullable List<BankVerificationResult> bankVerifications) {
+      return setNullable("bank_verifications", Conv.list(Conv.model(BankVerificationResult::fromJson)), bankVerifications);
     }
 
     /**
