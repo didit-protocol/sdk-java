@@ -13,9 +13,11 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 
-/** Provide exactly one of: payment_txn_id (finish), action=cancel, or action=resend. */
+/**
+ * Provide exactly one of: payment_txn_id (finish), action=cancel, action=resend, action=update_compliance_email with compliance_email, or action=update_originator_wallet with wallet_address.
+ */
 public final class TravelRuleTransferPatchRequest extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("payment_txn_id", "action");
+  private static final Set<String> KNOWN_FIELDS = Set.of("payment_txn_id", "action", "compliance_email", "wallet_address", "memo");
 
   private TravelRuleTransferPatchRequest(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -61,13 +63,43 @@ public final class TravelRuleTransferPatchRequest extends JsonModel {
   }
 
   /**
-   * "cancel" cancels a non-terminal transfer. "resend" re-runs routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA.
+   * "cancel" cancels a non-terminal transfer. "resend" re-runs routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA. "update_compliance_email" replaces the compliance email the request goes to, on an outbound transfer in one of those three statuses; send "resend" afterwards. "update_originator_wallet" records the wallet the funds actually left from (<code>wallet_address</code>, <code>memo</code>).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<TravelRuleTransferPatchRequest.Action> action() {
     return Json.optional(json, "action", Conv.enumeration(TravelRuleTransferPatchRequest.Action::of));
+  }
+
+  /**
+   * Required with <code>action: update_compliance_email</code>. Kept as this transfer's <code>beneficiary_data.counterparty_vasp_email</code>: it belongs to this transfer only and joins no directory entry and no contact list.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> complianceEmail() {
+    return Json.optional(json, "compliance_email", Conv.STRING);
+  }
+
+  /**
+   * With <code>action: update_originator_wallet</code>: the wallet the funds left from. When the transfer's UTXO inputs are known it must be one of them.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> walletAddress() {
+    return Json.optional(json, "wallet_address", Conv.STRING);
+  }
+
+  /**
+   * With <code>action: update_originator_wallet</code>: the wallet's memo or tag on a memo network. Optional.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> memo() {
+    return Json.optional(json, "memo", Conv.STRING);
   }
 
   @Override
@@ -94,13 +126,43 @@ public final class TravelRuleTransferPatchRequest extends JsonModel {
     }
 
     /**
-     * "cancel" cancels a non-terminal transfer. "resend" re-runs routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA.
+     * "cancel" cancels a non-terminal transfer. "resend" re-runs routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA. "update_compliance_email" replaces the compliance email the request goes to, on an outbound transfer in one of those three statuses; send "resend" afterwards. "update_originator_wallet" records the wallet the funds actually left from (<code>wallet_address</code>, <code>memo</code>).
      *
      * @param action the value
      * @return this builder
      */
     public Builder action(TravelRuleTransferPatchRequest.Action action) {
       return set("action", Conv.enumeration(TravelRuleTransferPatchRequest.Action::of), action);
+    }
+
+    /**
+     * Required with <code>action: update_compliance_email</code>. Kept as this transfer's <code>beneficiary_data.counterparty_vasp_email</code>: it belongs to this transfer only and joins no directory entry and no contact list.
+     *
+     * @param complianceEmail the value
+     * @return this builder
+     */
+    public Builder complianceEmail(String complianceEmail) {
+      return set("compliance_email", Conv.STRING, complianceEmail);
+    }
+
+    /**
+     * With <code>action: update_originator_wallet</code>: the wallet the funds left from. When the transfer's UTXO inputs are known it must be one of them.
+     *
+     * @param walletAddress the value
+     * @return this builder
+     */
+    public Builder walletAddress(String walletAddress) {
+      return set("wallet_address", Conv.STRING, walletAddress);
+    }
+
+    /**
+     * With <code>action: update_originator_wallet</code>: the wallet's memo or tag on a memo network. Optional.
+     *
+     * @param memo the value
+     * @return this builder
+     */
+    public Builder memo(String memo) {
+      return set("memo", Conv.STRING, memo);
     }
 
     /**
@@ -119,7 +181,7 @@ public final class TravelRuleTransferPatchRequest extends JsonModel {
   }
 
   /**
-   * "cancel" cancels a non-terminal transfer. "resend" re-runs routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA.
+   * "cancel" cancels a non-terminal transfer. "resend" re-runs routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA. "update_compliance_email" replaces the compliance email the request goes to, on an outbound transfer in one of those three statuses; send "resend" afterwards. "update_originator_wallet" records the wallet the funds actually left from (<code>wallet_address</code>, <code>memo</code>).
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -130,7 +192,13 @@ public final class TravelRuleTransferPatchRequest extends JsonModel {
     /** The value {@code "resend"}. */
     public static final Action RESEND = new Action("resend");
 
-    private static final List<Action> KNOWN_VALUES = List.of(CANCEL, RESEND);
+    /** The value {@code "update_compliance_email"}. */
+    public static final Action UPDATE_COMPLIANCE_EMAIL = new Action("update_compliance_email");
+
+    /** The value {@code "update_originator_wallet"}. */
+    public static final Action UPDATE_ORIGINATOR_WALLET = new Action("update_originator_wallet");
+
+    private static final List<Action> KNOWN_VALUES = List.of(CANCEL, RESEND, UPDATE_COMPLIANCE_EMAIL, UPDATE_ORIGINATOR_WALLET);
 
     private Action(String value) {
       super(value);

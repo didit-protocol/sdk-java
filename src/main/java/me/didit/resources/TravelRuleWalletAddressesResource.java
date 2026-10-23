@@ -10,10 +10,12 @@ import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
+import me.didit.types.TravelRuleWalletAddressesBulkImportParams;
 import me.didit.types.TravelRuleWalletAddressesListParams;
 import me.didit.types.WalletAddressEntry;
 import me.didit.types.WalletAddressEntryCreate;
 import me.didit.types.WalletAddressEntryUpdate;
+import me.didit.types.WalletAddressImportReport;
 import org.jspecify.annotations.Nullable;
 
 /** The {@code travel_rule.wallet_addresses} resource: {@code client.travelRule().walletAddresses()}. */
@@ -219,7 +221,7 @@ public final class TravelRuleWalletAddressesResource {
   /**
    * Delete a wallet address
    *
-   * <p>Deletes the entry. It stops matching new transfers immediately and the address is freed up for re-registration.
+   * <p>Deletes the entry together with its ownership proofs and the screenshots they stored. It stops matching new transfers immediately and the address is freed up for re-registration. Transfers that already used the wallet keep their own record of it and read the same. Deletion is irreversible.
    *
    * <p>{@code DELETE /v3/travel-rule/wallet-addresses/{entry_uuid}/}
    *
@@ -260,6 +262,52 @@ public final class TravelRuleWalletAddressesResource {
     return client.executeAsync(deleteRequest(entryUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
   }
 
+  /**
+   * Import wallet addresses in bulk
+   *
+   * <p>Add up to 10,000 wallets to your Travel Rule address book in one call, as JSON or as a CSV file. A wallet can be sent by its address, by the SHA-256 of its lowercased address (<code>address_hash</code>) to keep the address private, or both. The import is idempotent: a wallet already in the book is reported as <code>existing</code> and left untouched, so the same file can be sent again. Each row is validated on its own, so one bad row never fails the others. A wallet imported by its hash only matches transfers to that address and can be proven with the wallet-ownership widget like any other entry.
+   *
+   * <p>{@code POST /v3/travel-rule/wallet-addresses/import/}
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public WalletAddressImportReport bulkImport(TravelRuleWalletAddressesBulkImportParams params, RequestOptions options) {
+    return client.execute(bulkImportRequest(params), options, BULK_IMPORT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #bulkImport(TravelRuleWalletAddressesBulkImportParams, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<WalletAddressImportReport> bulkImportAsync(TravelRuleWalletAddressesBulkImportParams params, RequestOptions options) {
+    return client.executeAsync(bulkImportRequest(params), options, BULK_IMPORT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #bulkImport(TravelRuleWalletAddressesBulkImportParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return the result
+   */
+  public WalletAddressImportReport bulkImport(TravelRuleWalletAddressesBulkImportParams params) {
+    return client.execute(bulkImportRequest(params), RequestOptions.none(), BULK_IMPORT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #bulkImport(TravelRuleWalletAddressesBulkImportParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<WalletAddressImportReport> bulkImportAsync(TravelRuleWalletAddressesBulkImportParams params) {
+    return client.executeAsync(bulkImportRequest(params), RequestOptions.none(), BULK_IMPORT_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<Page<WalletAddressEntry>> LIST_RESPONSE = Responses.page(Conv.model(WalletAddressEntry::fromJson));
 
   private static ApiRequest listRequest(TravelRuleWalletAddressesListParams params) {
@@ -293,6 +341,15 @@ public final class TravelRuleWalletAddressesResource {
   private static ApiRequest deleteRequest(String entryUuid) {
     return ApiRequest.builder("DELETE", "/v3/travel-rule/wallet-addresses/{entry_uuid}/")
         .pathParam("entry_uuid", entryUuid)
+        .build();
+  }
+
+  private static final ResponseHandler<WalletAddressImportReport> BULK_IMPORT_RESPONSE = Responses.json(Conv.model(WalletAddressImportReport::fromJson));
+
+  private static ApiRequest bulkImportRequest(TravelRuleWalletAddressesBulkImportParams params) {
+    return ApiRequest.builder("POST", "/v3/travel-rule/wallet-addresses/import/")
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON_OR_MULTIPART)
         .build();
   }
 
@@ -512,6 +569,48 @@ public final class TravelRuleWalletAddressesResource {
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String entryUuid) {
       return client.executeAsync(deleteRequest(entryUuid), RequestOptions.none(), DELETE_RESPONSE);
+    }
+
+    /**
+     * {@link #bulkImport(TravelRuleWalletAddressesBulkImportParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<WalletAddressImportReport> bulkImport(TravelRuleWalletAddressesBulkImportParams params, RequestOptions options) {
+      return client.execute(bulkImportRequest(params), options, BULK_IMPORT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #bulkImport(TravelRuleWalletAddressesBulkImportParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<WalletAddressImportReport>> bulkImportAsync(TravelRuleWalletAddressesBulkImportParams params, RequestOptions options) {
+      return client.executeAsync(bulkImportRequest(params), options, BULK_IMPORT_RESPONSE);
+    }
+
+    /**
+     * {@link #bulkImport(TravelRuleWalletAddressesBulkImportParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<WalletAddressImportReport> bulkImport(TravelRuleWalletAddressesBulkImportParams params) {
+      return client.execute(bulkImportRequest(params), RequestOptions.none(), BULK_IMPORT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #bulkImport(TravelRuleWalletAddressesBulkImportParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<WalletAddressImportReport>> bulkImportAsync(TravelRuleWalletAddressesBulkImportParams params) {
+      return client.executeAsync(bulkImportRequest(params), RequestOptions.none(), BULK_IMPORT_RESPONSE);
     }
   }
 }

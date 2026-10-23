@@ -16,7 +16,7 @@ import org.jspecify.annotations.Nullable;
 
 /** The single user or business the case is anchored to. */
 public final class CaseSubject extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("type", "uuid", "name", "external_id");
+  private static final Set<String> KNOWN_FIELDS = Set.of("type", "uuid", "name", "external_id", "country", "portrait");
 
   private CaseSubject(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -91,6 +91,26 @@ public final class CaseSubject extends JsonModel {
     return Json.optional(json, "external_id", Conv.STRING);
   }
 
+  /**
+   * Three-letter country code of the subject (ISO 3166-1 alpha-3), or null when it is not known. For a business, its country of incorporation. For a person, the issuing country of an identity document from their verifications; a person with documents from several countries shows one of them, and ICAO document codes such as <code>XXA</code> can appear.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> country() {
+    return Json.optional(json, "country", Conv.STRING);
+  }
+
+  /**
+   * Short-lived signed URL of the person's portrait image. Always null for a business, and null for a person without a portrait. The URL expires, so download the image when you read the case instead of storing the URL.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> portrait() {
+    return Json.optional(json, "portrait", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -142,6 +162,26 @@ public final class CaseSubject extends JsonModel {
      */
     public Builder externalId(@Nullable String externalId) {
       return setNullable("external_id", Conv.STRING, externalId);
+    }
+
+    /**
+     * Three-letter country code of the subject (ISO 3166-1 alpha-3), or null when it is not known. For a business, its country of incorporation. For a person, the issuing country of an identity document from their verifications; a person with documents from several countries shows one of them, and ICAO document codes such as <code>XXA</code> can appear.
+     *
+     * @param country the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder country(@Nullable String country) {
+      return setNullable("country", Conv.STRING, country);
+    }
+
+    /**
+     * Short-lived signed URL of the person's portrait image. Always null for a business, and null for a person without a portrait. The URL expires, so download the image when you read the case instead of storing the URL.
+     *
+     * @param portrait the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder portrait(@Nullable String portrait) {
+      return setNullable("portrait", Conv.STRING, portrait);
     }
 
     /**

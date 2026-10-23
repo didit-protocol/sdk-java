@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class TravelRuleWidgetProofSummary extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("proof_id", "method", "status", "wallet_address", "chain", "deposit_address", "expected_amount", "expires_at", "challenge", "created_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("proof_id", "method", "status", "wallet_address", "chain", "deposit_address", "expected_amount", "expires_at", "challenge", "rejection_reason", "created_at");
 
   private TravelRuleWidgetProofSummary(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -142,6 +142,16 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
   }
 
   /**
+   * Why the proof was rejected. Present only when <code>status</code> is REJECTED.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> rejectionReason() {
+    return Json.optional(json, "rejection_reason", Conv.STRING);
+  }
+
+  /**
    * The <code>created_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
@@ -252,6 +262,16 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
      */
     public Builder challenge(@Nullable String challenge) {
       return setNullable("challenge", Conv.STRING, challenge);
+    }
+
+    /**
+     * Why the proof was rejected. Present only when <code>status</code> is REJECTED.
+     *
+     * @param rejectionReason the value
+     * @return this builder
+     */
+    public Builder rejectionReason(String rejectionReason) {
+      return set("rejection_reason", Conv.STRING, rejectionReason);
     }
 
     /**

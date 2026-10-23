@@ -15,8 +15,10 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.NetworkTagRequest;
 import me.didit.types.NetworksListParams;
 import me.didit.types.NetworksRetrieveGraphParams;
+import me.didit.types.NetworksRetrieveTimelineParams;
 import org.junit.jupiter.api.Test;
 
 /** One test per operation of {@code networks}, against a stubbed HTTP layer. */
@@ -27,14 +29,14 @@ final class NetworksResourceTest {
 
   @Test
   void list() {
-    NetworksListParams params = NetworksListParams.builder().status("value-status").signalType("value-signal-type").patternType("value-pattern-type").riskBand("value-risk-band").minSize(1L).maxSize(1L).dateFrom(LocalDate.parse("2026-11-01")).dateTo(LocalDate.parse("2026-11-01")).q("value-q").ordering("value-ordering").limit(1L).offset(1L).build();
+    NetworksListParams params = NetworksListParams.builder().status("value-status").scope(NetworksListParams.Scope.IDENTITY).signalType("value-signal-type").patternType("value-pattern-type").riskBand("value-risk-band").minSize(1L).maxSize(1L).assignee("value-assignee").priority("value-priority").riskMin(1L).hasCase(true).dateFrom(LocalDate.parse("2026-11-01")).dateTo(LocalDate.parse("2026-11-01")).q("value-q").ordering("value-ordering").limit(1L).offset(1L).summary(true).build();
     JsonNode example = TestJson.parse("{\"count\":0,\"next\":null,\"previous\":null,\"results\":[]}");
     transport.respondJson(200, example);
     var result = client.networks().list(params);
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/networks/", request.path());
-    assertEquals(Map.ofEntries(Map.entry("status", List.of("value-status")), Map.entry("signal_type", List.of("value-signal-type")), Map.entry("pattern_type", List.of("value-pattern-type")), Map.entry("risk_band", List.of("value-risk-band")), Map.entry("min_size", List.of("1")), Map.entry("max_size", List.of("1")), Map.entry("date_from", List.of("2026-11-01")), Map.entry("date_to", List.of("2026-11-01")), Map.entry("q", List.of("value-q")), Map.entry("ordering", List.of("value-ordering")), Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1"))), request.query());
+    assertEquals(Map.ofEntries(Map.entry("status", List.of("value-status")), Map.entry("scope", List.of("identity")), Map.entry("signal_type", List.of("value-signal-type")), Map.entry("pattern_type", List.of("value-pattern-type")), Map.entry("risk_band", List.of("value-risk-band")), Map.entry("min_size", List.of("1")), Map.entry("max_size", List.of("1")), Map.entry("assignee", List.of("value-assignee")), Map.entry("priority", List.of("value-priority")), Map.entry("risk_min", List.of("1")), Map.entry("has_case", List.of("true")), Map.entry("date_from", List.of("2026-11-01")), Map.entry("date_to", List.of("2026-11-01")), Map.entry("q", List.of("value-q")), Map.entry("ordering", List.of("value-ordering")), Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1")), Map.entry("summary", List.of("true"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
@@ -45,7 +47,7 @@ final class NetworksResourceTest {
 
   @Test
   void retrieve() {
-    JsonNode example = TestJson.parse("{}");
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/", "200");
     transport.respondJson(200, example);
     var result = client.networks().retrieve("00000000-0000-4000-8000-00000000b75b");
     RecordedRequest request = transport.only();
@@ -110,13 +112,14 @@ final class NetworksResourceTest {
 
   @Test
   void retrieveTimeline() {
-    JsonNode example = TestJson.parse("{}");
+    NetworksRetrieveTimelineParams params = NetworksRetrieveTimelineParams.builder().contract(NetworksRetrieveTimelineParams.Contract._2).limit(1L).cursor("value-cursor").eventType(List.of(NetworksRetrieveTimelineParams.EventType.NETWORK_DETECTED)).build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/timeline/", "200");
     transport.respondJson(200, example);
-    var result = client.networks().retrieveTimeline("00000000-0000-4000-8000-000000013724");
+    var result = client.networks().retrieveTimeline("00000000-0000-4000-8000-000000013724", params);
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/networks/00000000-0000-4000-8000-000000013724/timeline/", request.path());
-    assertEquals(Map.of(), request.query());
+    assertEquals(Map.ofEntries(Map.entry("contract", List.of("2")), Map.entry("limit", List.of("1")), Map.entry("cursor", List.of("value-cursor")), Map.entry("event_type", List.of("network_detected"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
@@ -153,5 +156,39 @@ final class NetworksResourceTest {
     assertEquals("application/pdf, application/json", request.header("Accept"));
     assertEquals(0, request.body().length);
     assertArrayEquals(new byte[] {37, 80, 68, 70}, result.bytes());
+  }
+
+  @Test
+  void addTag() {
+    NetworkTagRequest params = NetworkTagRequest.builder().tagUuid("00000000-0000-4000-8000-000000000eed").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/tags/add/", "200");
+    transport.respondJson(200, example);
+    var result = client.networks().addTag("00000000-0000-4000-8000-00000000a888", params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/networks/00000000-0000-4000-8000-00000000a888/tags/add/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"tag_uuid\":\"00000000-0000-4000-8000-000000000eed\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void removeTag() {
+    NetworkTagRequest params = NetworkTagRequest.builder().tagUuid("00000000-0000-4000-8000-000000000eed").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/tags/remove/", "200");
+    transport.respondJson(200, example);
+    var result = client.networks().removeTag("00000000-0000-4000-8000-00000000cfdc", params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/networks/00000000-0000-4000-8000-00000000cfdc/tags/remove/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"tag_uuid\":\"00000000-0000-4000-8000-000000000eed\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 }

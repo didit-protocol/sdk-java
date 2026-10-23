@@ -61,13 +61,13 @@ public final class SessionsPreviewResubmissionParams extends JsonModel {
   }
 
   /**
-   * Recipient shown in the preview. No email is sent.
+   * Optional. Send the email to this address instead of the person's own. Without it, the recipient is the address the person verified in the flow, else the one given in <code>contact_details</code>. No email is sent by this call.
    *
-   * @return the value
-   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public String emailAddress() {
-    return Json.required(json, "email_address", Conv.STRING);
+  public Optional<String> emailAddress() {
+    return Json.optional(json, "email_address", Conv.STRING);
   }
 
   /**
@@ -104,7 +104,7 @@ public final class SessionsPreviewResubmissionParams extends JsonModel {
     }
 
     /**
-     * Recipient shown in the preview. No email is sent.
+     * Optional. Send the email to this address instead of the person's own. Without it, the recipient is the address the person verified in the flow, else the one given in <code>contact_details</code>. No email is sent by this call.
      *
      * @param emailAddress the value
      * @return this builder
@@ -127,10 +127,8 @@ public final class SessionsPreviewResubmissionParams extends JsonModel {
      * Builds the value.
      *
      * @return a new immutable {@code SessionsPreviewResubmissionParams}
-     * @throws IllegalStateException when a required field is missing
      */
     public SessionsPreviewResubmissionParams build() {
-      require("email_address", false);
       return new SessionsPreviewResubmissionParams(buildJson(), buildFiles());
     }
 

@@ -4,33 +4,46 @@ package me.didit.resources;
 import java.util.concurrent.CompletableFuture;
 import me.didit.core.ApiClient;
 import me.didit.core.ApiRequest;
+import me.didit.core.BinaryResponse;
 import me.didit.core.Conv;
 import me.didit.core.Page;
 import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
+import me.didit.types.EntityNetworkMembershipList;
 import me.didit.types.TransactionDetail;
+import me.didit.types.TransactionSummary;
 import me.didit.types.TransactionsCreateParams;
 import me.didit.types.TransactionsCreateSdkTokenParams;
 import me.didit.types.TransactionsCreateSdkTokenResponse;
-import me.didit.types.TransactionsListNetworksResponse;
 import me.didit.types.TransactionsListParams;
-import me.didit.types.TransactionsListPartyNetworksResponse;
+import me.didit.types.TransactionsListRelatedParams;
 import me.didit.types.TransactionsListResponse;
 
 /** The {@code transactions} resource: {@code client.transactions()}. */
 public final class TransactionsResource {
   private final ApiClient client;
   private final WithRawResponse withRawResponse;
+  private final TransactionsNotesResource notes;
   private final TransactionsRulesResource rules;
   private final TransactionsTravelRuleResource travelRule;
 
   TransactionsResource(ApiClient client) {
     this.client = client;
     this.withRawResponse = new WithRawResponse(client);
+    this.notes = new TransactionsNotesResource(client);
     this.rules = new TransactionsRulesResource(client);
     this.travelRule = new TransactionsTravelRuleResource(client);
+  }
+
+  /**
+   * The {@code transactions.notes} resource.
+   *
+   * @return the resource
+   */
+  public TransactionsNotesResource notes() {
+    return notes;
   }
 
   /**
@@ -148,7 +161,7 @@ public final class TransactionsResource {
   /**
    * Create transaction
    *
-   * <p>Submit a transaction for synchronous AML/risk monitoring. The transaction is created <code>APPROVED</code>, then your rules (and crypto screening, when applicable) run inline and may flip the returned <code>status</code> to <code>IN_REVIEW</code> or <code>DECLINED</code>. **<code>transaction_id</code> is your idempotency key** (max 128 chars, unique per app); reusing it returns 400. A <code>transaction.created</code> webhook is dispatched on success (sandbox applications are not billed and do not emit webhooks).
+   * <p>Submit a transaction for synchronous AML/risk monitoring. The transaction is created <code>APPROVED</code>, then your rules (and crypto screening, when applicable) run inline and may flip the returned <code>status</code> to <code>IN_REVIEW</code> or <code>DECLINED</code>. **<code>transaction_id</code> is your idempotency key** (max 128 chars, unique per app); reusing it returns 400. A <code>transaction.created</code> webhook is dispatched on success for live applications. Sandbox applications are not billed and do not emit <code>transaction.created</code> or <code>transaction.status.updated</code> webhooks. Sandbox Travel Rule exchanges do emit <code>travel_rule.status.updated</code> webhooks with <code>environment: sandbox</code>. A Travel Rule transfer is stored and returned before any counterparty is contacted: <code>travel_rule.status</code> comes back <code>AWAITING_COUNTERPARTY</code> (or <code>NOT_APPLICABLE</code> below your threshold, <code>UNCONFIRMED_OWNERSHIP</code> for a declared self-hosted wallet, <code>COMPLETED</code> when the other wallet is your own verified wallet) and <code>travel_rule.protocol</code> is null. Didit then chooses the rail and sends the exchange, and every later status change of the transfer, including <code>COUNTERPARTY_VASP_NOT_FOUND</code> when no rail reaches the counterparty, arrives as a <code>travel_rule.status.updated</code> webhook. Your rules run again when the rail or the status changes.
    *
    * <p>{@code POST /v3/transactions/}
    *
@@ -295,7 +308,7 @@ public final class TransactionsResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public TransactionsListNetworksResponse listNetworks(String transactionUuid, RequestOptions options) {
+  public EntityNetworkMembershipList listNetworks(String transactionUuid, RequestOptions options) {
     return client.execute(listNetworksRequest(transactionUuid), options, LIST_NETWORKS_RESPONSE).data();
   }
 
@@ -306,7 +319,7 @@ public final class TransactionsResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<TransactionsListNetworksResponse> listNetworksAsync(String transactionUuid, RequestOptions options) {
+  public CompletableFuture<EntityNetworkMembershipList> listNetworksAsync(String transactionUuid, RequestOptions options) {
     return client.executeAsync(listNetworksRequest(transactionUuid), options, LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -316,7 +329,7 @@ public final class TransactionsResource {
    * @param transactionUuid the {@code transaction_uuid}
    * @return the result
    */
-  public TransactionsListNetworksResponse listNetworks(String transactionUuid) {
+  public EntityNetworkMembershipList listNetworks(String transactionUuid) {
     return client.execute(listNetworksRequest(transactionUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE).data();
   }
 
@@ -326,7 +339,7 @@ public final class TransactionsResource {
    * @param transactionUuid the {@code transaction_uuid}
    * @return a future completed with the result
    */
-  public CompletableFuture<TransactionsListNetworksResponse> listNetworksAsync(String transactionUuid) {
+  public CompletableFuture<EntityNetworkMembershipList> listNetworksAsync(String transactionUuid) {
     return client.executeAsync(listNetworksRequest(transactionUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -343,7 +356,7 @@ public final class TransactionsResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public TransactionsListPartyNetworksResponse listPartyNetworks(String transactionUuid, String transactionPartyUuid, RequestOptions options) {
+  public EntityNetworkMembershipList listPartyNetworks(String transactionUuid, String transactionPartyUuid, RequestOptions options) {
     return client.execute(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), options, LIST_PARTY_NETWORKS_RESPONSE).data();
   }
 
@@ -355,7 +368,7 @@ public final class TransactionsResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<TransactionsListPartyNetworksResponse> listPartyNetworksAsync(String transactionUuid, String transactionPartyUuid, RequestOptions options) {
+  public CompletableFuture<EntityNetworkMembershipList> listPartyNetworksAsync(String transactionUuid, String transactionPartyUuid, RequestOptions options) {
     return client.executeAsync(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), options, LIST_PARTY_NETWORKS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -366,7 +379,7 @@ public final class TransactionsResource {
    * @param transactionPartyUuid the {@code transaction_party_uuid}
    * @return the result
    */
-  public TransactionsListPartyNetworksResponse listPartyNetworks(String transactionUuid, String transactionPartyUuid) {
+  public EntityNetworkMembershipList listPartyNetworks(String transactionUuid, String transactionPartyUuid) {
     return client.execute(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), RequestOptions.none(), LIST_PARTY_NETWORKS_RESPONSE).data();
   }
 
@@ -377,8 +390,157 @@ public final class TransactionsResource {
    * @param transactionPartyUuid the {@code transaction_party_uuid}
    * @return a future completed with the result
    */
-  public CompletableFuture<TransactionsListPartyNetworksResponse> listPartyNetworksAsync(String transactionUuid, String transactionPartyUuid) {
+  public CompletableFuture<EntityNetworkMembershipList> listPartyNetworksAsync(String transactionUuid, String transactionPartyUuid) {
     return client.executeAsync(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), RequestOptions.none(), LIST_PARTY_NETWORKS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * List related transactions
+   *
+   * <p>List the other transactions in your application that involve the same people or companies as this one. A transaction is related when any of its parties, in any role, has the same <code>vendor_data</code> as one of this transaction's parties. The transaction itself is never returned, and parties without <code>vendor_data</code> are ignored: when none of this transaction's parties has one, the result is always empty.
+   *
+   * <p>Results use the summary shape of <code>GET /v3/transactions/</code>, newest first (<code>txn_date</code>, then <code>created_at</code>). Paginated with <code>limit</code> and <code>offset</code>; <code>count</code> is exact up to 100 and capped at 100 above that, so follow <code>next</code> until it is <code>null</code>.
+   *
+   * <p>A scoped API key needs <code>transactions: read</code>; a key limited to some workflows or to approved sessions cannot call this endpoint. Send the same <code>vendor_data</code> for the same person or company on every <a href="https://docs.didit.me/transaction-monitoring/transactions#subject-and-counterparty">transaction</a> to make this list complete.
+   *
+   * <p>{@code GET /v3/transactions/{transaction_id}/related/}
+   * <p>Returns one page; iterate it to fetch every following page automatically.
+   *
+   * @param transactionId Didit transaction UUID: the `uuid` returned by `POST /v3/transactions/` and `GET /v3/transactions/`. Your own `txn_id` is not accepted.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public Page<TransactionSummary> listRelated(String transactionId, TransactionsListRelatedParams params, RequestOptions options) {
+    return client.execute(listRelatedRequest(transactionId, params), options, LIST_RELATED_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)}.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TransactionSummary>> listRelatedAsync(String transactionId, TransactionsListRelatedParams params, RequestOptions options) {
+    return client.executeAsync(listRelatedRequest(transactionId, params), options, LIST_RELATED_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)}, with the client's options.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @param params the request parameters
+   * @return the result
+   */
+  public Page<TransactionSummary> listRelated(String transactionId, TransactionsListRelatedParams params) {
+    return client.execute(listRelatedRequest(transactionId, params), RequestOptions.none(), LIST_RELATED_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)}, with the client's options.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TransactionSummary>> listRelatedAsync(String transactionId, TransactionsListRelatedParams params) {
+    return client.executeAsync(listRelatedRequest(transactionId, params), RequestOptions.none(), LIST_RELATED_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)}, without parameters.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @param options per-request options
+   * @return the result
+   */
+  public Page<TransactionSummary> listRelated(String transactionId, RequestOptions options) {
+    return client.execute(listRelatedRequest(transactionId, TransactionsListRelatedParams.builder().build()), options, LIST_RELATED_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)}, without parameters.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TransactionSummary>> listRelatedAsync(String transactionId, RequestOptions options) {
+    return client.executeAsync(listRelatedRequest(transactionId, TransactionsListRelatedParams.builder().build()), options, LIST_RELATED_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @return the result
+   */
+  public Page<TransactionSummary> listRelated(String transactionId) {
+    return client.execute(listRelatedRequest(transactionId, TransactionsListRelatedParams.builder().build()), RequestOptions.none(), LIST_RELATED_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TransactionSummary>> listRelatedAsync(String transactionId) {
+    return client.executeAsync(listRelatedRequest(transactionId, TransactionsListRelatedParams.builder().build()), RequestOptions.none(), LIST_RELATED_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Download a transaction PDF report
+   *
+   * <p>Render one monitored transaction as a PDF report: overview and verdict, parties and payment methods, custom properties, alerts and rule runs, screening and Travel Rule results, the network summary, the cost breakdown, up to 50 related transactions and the 20 most recent activity entries. The body is the PDF itself (<code>application/pdf</code>), not JSON.
+   *
+   * <p>The report is rendered from the transaction's current data on every call, so request it again after a status change. Nothing is stored and nothing is billed. Rendering can take a few seconds, so use a generous client timeout.
+   *
+   * <p>This endpoint lives on an application-scoped path: put your organization ID and the ID of the application your API key belongs to in the URL (<a href="https://docs.didit.me/getting-started/api-authentication#find-your-organization-id">find your organization ID</a>). A PDF report counts as media: a scoped API key needs <code>media: read</code> and <code>transactions: read</code>, and a key limited to some workflows or to approved sessions cannot call it.
+   *
+   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/pdf/}
+   * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+   *
+   * @param transactionUuid Didit transaction UUID: the `uuid` returned by `POST /v3/transactions/` and `GET /v3/transactions/`. Your own `txn_id` is not accepted.
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public BinaryResponse generatePdf(String transactionUuid, RequestOptions options) {
+    return client.execute(generatePdfRequest(transactionUuid), options, GENERATE_PDF_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #generatePdf(String, RequestOptions)}.
+   *
+   * @param transactionUuid the {@code transaction_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BinaryResponse> generatePdfAsync(String transactionUuid, RequestOptions options) {
+    return client.executeAsync(generatePdfRequest(transactionUuid), options, GENERATE_PDF_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #generatePdf(String, RequestOptions)}, with the client's options.
+   *
+   * @param transactionUuid the {@code transaction_uuid}
+   * @return the result
+   */
+  public BinaryResponse generatePdf(String transactionUuid) {
+    return client.execute(generatePdfRequest(transactionUuid), RequestOptions.none(), GENERATE_PDF_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #generatePdf(String, RequestOptions)}, with the client's options.
+   *
+   * @param transactionUuid the {@code transaction_uuid}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BinaryResponse> generatePdfAsync(String transactionUuid) {
+    return client.executeAsync(generatePdfRequest(transactionUuid), RequestOptions.none(), GENERATE_PDF_RESPONSE).thenApply(RawResponse::data);
   }
 
   private static final ResponseHandler<Page<TransactionsListResponse.Results>> LIST_RESPONSE = Responses.page(Conv.model(TransactionsListResponse.Results::fromJson));
@@ -386,7 +548,7 @@ public final class TransactionsResource {
   private static ApiRequest listRequest(TransactionsListParams params) {
     return ApiRequest.builder("GET", "/v3/transactions/")
         .params(params)
-        .queryFields("limit", "offset")
+        .queryFields("limit", "offset", "travel_rule_status")
         .build();
   }
 
@@ -416,7 +578,7 @@ public final class TransactionsResource {
         .build();
   }
 
-  private static final ResponseHandler<TransactionsListNetworksResponse> LIST_NETWORKS_RESPONSE = Responses.json(Conv.model(TransactionsListNetworksResponse::fromJson));
+  private static final ResponseHandler<EntityNetworkMembershipList> LIST_NETWORKS_RESPONSE = Responses.json(Conv.model(EntityNetworkMembershipList::fromJson));
 
   private static ApiRequest listNetworksRequest(String transactionUuid) {
     return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/networks/")
@@ -425,13 +587,33 @@ public final class TransactionsResource {
         .build();
   }
 
-  private static final ResponseHandler<TransactionsListPartyNetworksResponse> LIST_PARTY_NETWORKS_RESPONSE = Responses.json(Conv.model(TransactionsListPartyNetworksResponse::fromJson));
+  private static final ResponseHandler<EntityNetworkMembershipList> LIST_PARTY_NETWORKS_RESPONSE = Responses.json(Conv.model(EntityNetworkMembershipList::fromJson));
 
   private static ApiRequest listPartyNetworksRequest(String transactionUuid, String transactionPartyUuid) {
     return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/parties/{transaction_party_uuid}/networks/")
         .applicationScoped()
         .pathParam("transaction_uuid", transactionUuid)
         .pathParam("transaction_party_uuid", transactionPartyUuid)
+        .build();
+  }
+
+  private static final ResponseHandler<Page<TransactionSummary>> LIST_RELATED_RESPONSE = Responses.page(Conv.model(TransactionSummary::fromJson));
+
+  private static ApiRequest listRelatedRequest(String transactionId, TransactionsListRelatedParams params) {
+    return ApiRequest.builder("GET", "/v3/transactions/{transaction_id}/related/")
+        .pathParam("transaction_id", transactionId)
+        .params(params)
+        .queryFields("limit", "offset")
+        .build();
+  }
+
+  private static final ResponseHandler<BinaryResponse> GENERATE_PDF_RESPONSE = Responses.binary();
+
+  private static ApiRequest generatePdfRequest(String transactionUuid) {
+    return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/transactions/{transaction_uuid}/pdf/")
+        .applicationScoped()
+        .pathParam("transaction_uuid", transactionUuid)
+        .accept("application/pdf")
         .build();
   }
 
@@ -656,7 +838,7 @@ public final class TransactionsResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<TransactionsListNetworksResponse> listNetworks(String transactionUuid, RequestOptions options) {
+    public RawResponse<EntityNetworkMembershipList> listNetworks(String transactionUuid, RequestOptions options) {
       return client.execute(listNetworksRequest(transactionUuid), options, LIST_NETWORKS_RESPONSE);
     }
 
@@ -667,7 +849,7 @@ public final class TransactionsResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<TransactionsListNetworksResponse>> listNetworksAsync(String transactionUuid, RequestOptions options) {
+    public CompletableFuture<RawResponse<EntityNetworkMembershipList>> listNetworksAsync(String transactionUuid, RequestOptions options) {
       return client.executeAsync(listNetworksRequest(transactionUuid), options, LIST_NETWORKS_RESPONSE);
     }
 
@@ -677,7 +859,7 @@ public final class TransactionsResource {
      * @param transactionUuid the {@code transaction_uuid}
      * @return the result
      */
-    public RawResponse<TransactionsListNetworksResponse> listNetworks(String transactionUuid) {
+    public RawResponse<EntityNetworkMembershipList> listNetworks(String transactionUuid) {
       return client.execute(listNetworksRequest(transactionUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE);
     }
 
@@ -687,7 +869,7 @@ public final class TransactionsResource {
      * @param transactionUuid the {@code transaction_uuid}
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<TransactionsListNetworksResponse>> listNetworksAsync(String transactionUuid) {
+    public CompletableFuture<RawResponse<EntityNetworkMembershipList>> listNetworksAsync(String transactionUuid) {
       return client.executeAsync(listNetworksRequest(transactionUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE);
     }
 
@@ -699,7 +881,7 @@ public final class TransactionsResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<TransactionsListPartyNetworksResponse> listPartyNetworks(String transactionUuid, String transactionPartyUuid, RequestOptions options) {
+    public RawResponse<EntityNetworkMembershipList> listPartyNetworks(String transactionUuid, String transactionPartyUuid, RequestOptions options) {
       return client.execute(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), options, LIST_PARTY_NETWORKS_RESPONSE);
     }
 
@@ -711,7 +893,7 @@ public final class TransactionsResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<TransactionsListPartyNetworksResponse>> listPartyNetworksAsync(String transactionUuid, String transactionPartyUuid, RequestOptions options) {
+    public CompletableFuture<RawResponse<EntityNetworkMembershipList>> listPartyNetworksAsync(String transactionUuid, String transactionPartyUuid, RequestOptions options) {
       return client.executeAsync(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), options, LIST_PARTY_NETWORKS_RESPONSE);
     }
 
@@ -722,7 +904,7 @@ public final class TransactionsResource {
      * @param transactionPartyUuid the {@code transaction_party_uuid}
      * @return the result
      */
-    public RawResponse<TransactionsListPartyNetworksResponse> listPartyNetworks(String transactionUuid, String transactionPartyUuid) {
+    public RawResponse<EntityNetworkMembershipList> listPartyNetworks(String transactionUuid, String transactionPartyUuid) {
       return client.execute(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), RequestOptions.none(), LIST_PARTY_NETWORKS_RESPONSE);
     }
 
@@ -733,8 +915,138 @@ public final class TransactionsResource {
      * @param transactionPartyUuid the {@code transaction_party_uuid}
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<TransactionsListPartyNetworksResponse>> listPartyNetworksAsync(String transactionUuid, String transactionPartyUuid) {
+    public CompletableFuture<RawResponse<EntityNetworkMembershipList>> listPartyNetworksAsync(String transactionUuid, String transactionPartyUuid) {
       return client.executeAsync(listPartyNetworksRequest(transactionUuid, transactionPartyUuid), RequestOptions.none(), LIST_PARTY_NETWORKS_RESPONSE);
+    }
+
+    /**
+     * {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)} with the raw response.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<Page<TransactionSummary>> listRelated(String transactionId, TransactionsListRelatedParams params, RequestOptions options) {
+      return client.execute(listRelatedRequest(transactionId, params), options, LIST_RELATED_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)} with the raw response.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TransactionSummary>>> listRelatedAsync(String transactionId, TransactionsListRelatedParams params, RequestOptions options) {
+      return client.executeAsync(listRelatedRequest(transactionId, params), options, LIST_RELATED_RESPONSE);
+    }
+
+    /**
+     * {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<Page<TransactionSummary>> listRelated(String transactionId, TransactionsListRelatedParams params) {
+      return client.execute(listRelatedRequest(transactionId, params), RequestOptions.none(), LIST_RELATED_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TransactionSummary>>> listRelatedAsync(String transactionId, TransactionsListRelatedParams params) {
+      return client.executeAsync(listRelatedRequest(transactionId, params), RequestOptions.none(), LIST_RELATED_RESPONSE);
+    }
+
+    /**
+     * {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<Page<TransactionSummary>> listRelated(String transactionId, RequestOptions options) {
+      return client.execute(listRelatedRequest(transactionId, TransactionsListRelatedParams.builder().build()), options, LIST_RELATED_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TransactionSummary>>> listRelatedAsync(String transactionId, RequestOptions options) {
+      return client.executeAsync(listRelatedRequest(transactionId, TransactionsListRelatedParams.builder().build()), options, LIST_RELATED_RESPONSE);
+    }
+
+    /**
+     * {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @return the result
+     */
+    public RawResponse<Page<TransactionSummary>> listRelated(String transactionId) {
+      return client.execute(listRelatedRequest(transactionId, TransactionsListRelatedParams.builder().build()), RequestOptions.none(), LIST_RELATED_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listRelated(String, TransactionsListRelatedParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TransactionSummary>>> listRelatedAsync(String transactionId) {
+      return client.executeAsync(listRelatedRequest(transactionId, TransactionsListRelatedParams.builder().build()), RequestOptions.none(), LIST_RELATED_RESPONSE);
+    }
+
+    /**
+     * {@link #generatePdf(String, RequestOptions)} with the raw response.
+     *
+     * @param transactionUuid the {@code transaction_uuid}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<BinaryResponse> generatePdf(String transactionUuid, RequestOptions options) {
+      return client.execute(generatePdfRequest(transactionUuid), options, GENERATE_PDF_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #generatePdf(String, RequestOptions)} with the raw response.
+     *
+     * @param transactionUuid the {@code transaction_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BinaryResponse>> generatePdfAsync(String transactionUuid, RequestOptions options) {
+      return client.executeAsync(generatePdfRequest(transactionUuid), options, GENERATE_PDF_RESPONSE);
+    }
+
+    /**
+     * {@link #generatePdf(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param transactionUuid the {@code transaction_uuid}
+     * @return the result
+     */
+    public RawResponse<BinaryResponse> generatePdf(String transactionUuid) {
+      return client.execute(generatePdfRequest(transactionUuid), RequestOptions.none(), GENERATE_PDF_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #generatePdf(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param transactionUuid the {@code transaction_uuid}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BinaryResponse>> generatePdfAsync(String transactionUuid) {
+      return client.executeAsync(generatePdfRequest(transactionUuid), RequestOptions.none(), GENERATE_PDF_RESPONSE);
     }
   }
 }

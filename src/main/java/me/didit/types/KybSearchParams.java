@@ -16,7 +16,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code kyb.search}. */
 public final class KybSearchParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("country_code", "name", "registration_number", "search_type", "vendor_data", "metadata", "webhook_url");
+  private static final Set<String> KNOWN_FIELDS = Set.of("country_code", "name", "registration_number", "tier", "search_type", "vendor_data", "metadata", "webhook_url");
 
   private KybSearchParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -82,7 +82,17 @@ public final class KybSearchParams extends JsonModel {
   }
 
   /**
-   * Name-matching strategy applied by the registry search.
+   * Registry tier whose provider chain this search runs on. <code>basic</code> (default) searches the country's Lite chain; <code>shareholders</code> and <code>ubo</code> search that tier's ownership chain, which can be a different source, so an empty Lite search does not prove the registry lacks the company. A country that does not offer the named tier is searched at the highest tier it offers up to that one. Retrieve the candidate from the endpoint that sells the tier you searched: <code>POST /v3/kyb/select/</code> (Lite), <code>POST /v3/kyb/shareholders/</code> or <code>POST /v3/kyb/ubo/</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<KybSearchParams.Tier> tier() {
+    return Json.optional(json, "tier", Conv.enumeration(KybSearchParams.Tier::of));
+  }
+
+  /**
+   * Name-matching strategy applied by the registry search. <code>contains</code> is the only accepted value: no registry source behind the search offers a prefix or fuzzy mode, so <code>start_with</code> and <code>fuzzy</code> are rejected with <code>400</code> (<code>not a valid choice</code>).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -165,7 +175,17 @@ public final class KybSearchParams extends JsonModel {
     }
 
     /**
-     * Name-matching strategy applied by the registry search.
+     * Registry tier whose provider chain this search runs on. <code>basic</code> (default) searches the country's Lite chain; <code>shareholders</code> and <code>ubo</code> search that tier's ownership chain, which can be a different source, so an empty Lite search does not prove the registry lacks the company. A country that does not offer the named tier is searched at the highest tier it offers up to that one. Retrieve the candidate from the endpoint that sells the tier you searched: <code>POST /v3/kyb/select/</code> (Lite), <code>POST /v3/kyb/shareholders/</code> or <code>POST /v3/kyb/ubo/</code>.
+     *
+     * @param tier the value
+     * @return this builder
+     */
+    public Builder tier(KybSearchParams.Tier tier) {
+      return set("tier", Conv.enumeration(KybSearchParams.Tier::of), tier);
+    }
+
+    /**
+     * Name-matching strategy applied by the registry search. <code>contains</code> is the only accepted value: no registry source behind the search offers a prefix or fuzzy mode, so <code>start_with</code> and <code>fuzzy</code> are rejected with <code>400</code> (<code>not a valid choice</code>).
      *
      * @param searchType the value
      * @return this builder
@@ -222,7 +242,53 @@ public final class KybSearchParams extends JsonModel {
   }
 
   /**
-   * Name-matching strategy applied by the registry search.
+   * Registry tier whose provider chain this search runs on. <code>basic</code> (default) searches the country's Lite chain; <code>shareholders</code> and <code>ubo</code> search that tier's ownership chain, which can be a different source, so an empty Lite search does not prove the registry lacks the company. A country that does not offer the named tier is searched at the highest tier it offers up to that one. Retrieve the candidate from the endpoint that sells the tier you searched: <code>POST /v3/kyb/select/</code> (Lite), <code>POST /v3/kyb/shareholders/</code> or <code>POST /v3/kyb/ubo/</code>.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Tier extends StringEnum {
+    /** The value {@code "basic"}. */
+    public static final Tier BASIC = new Tier("basic");
+
+    /** The value {@code "shareholders"}. */
+    public static final Tier SHAREHOLDERS = new Tier("shareholders");
+
+    /** The value {@code "ubo"}. */
+    public static final Tier UBO = new Tier("ubo");
+
+    private static final List<Tier> KNOWN_VALUES = List.of(BASIC, SHAREHOLDERS, UBO);
+
+    private Tier(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Tier of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Tier::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Tier> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Name-matching strategy applied by the registry search. <code>contains</code> is the only accepted value: no registry source behind the search offers a prefix or fuzzy mode, so <code>start_with</code> and <code>fuzzy</code> are rejected with <code>400</code> (<code>not a valid choice</code>).
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -230,13 +296,7 @@ public final class KybSearchParams extends JsonModel {
     /** The value {@code "contains"}. */
     public static final SearchType CONTAINS = new SearchType("contains");
 
-    /** The value {@code "start_with"}. */
-    public static final SearchType START_WITH = new SearchType("start_with");
-
-    /** The value {@code "fuzzy"}. */
-    public static final SearchType FUZZY = new SearchType("fuzzy");
-
-    private static final List<SearchType> KNOWN_VALUES = List.of(CONTAINS, START_WITH, FUZZY);
+    private static final List<SearchType> KNOWN_VALUES = List.of(CONTAINS);
 
     private SearchType(String value) {
       super(value);

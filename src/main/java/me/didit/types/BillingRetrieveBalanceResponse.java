@@ -60,7 +60,7 @@ public final class BillingRetrieveBalanceResponse extends JsonModel {
   }
 
   /**
-   * When <code>true</code>, Didit will automatically charge the saved Stripe payment method to add credits once the balance crosses <code>auto_refill_threshold</code>. Configured from Console → Billing.
+   * When <code>true</code>, Didit will automatically charge the saved payment method to add credits once the balance crosses <code>auto_refill_threshold</code>. Configured from Console → Billing.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -113,7 +113,7 @@ public final class BillingRetrieveBalanceResponse extends JsonModel {
     }
 
     /**
-     * When <code>true</code>, Didit will automatically charge the saved Stripe payment method to add credits once the balance crosses <code>auto_refill_threshold</code>. Configured from Console → Billing.
+     * When <code>true</code>, Didit will automatically charge the saved payment method to add credits once the balance crosses <code>auto_refill_threshold</code>. Configured from Console → Billing.
      *
      * @param autoRefillEnabled the value
      * @return this builder

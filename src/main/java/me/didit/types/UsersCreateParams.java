@@ -17,7 +17,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code users.create}. */
 public final class UsersCreateParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("vendor_data", "full_name", "display_name", "date_of_birth", "status", "metadata", "approved_emails", "approved_phones", "issuing_states");
+  private static final Set<String> KNOWN_FIELDS = Set.of("vendor_data", "full_name", "display_name", "date_of_birth", "status", "metadata", "approved_emails", "approved_phones", "issuing_states", "first_name", "last_name", "email", "phone_number", "country", "send_verification_link", "workflow_id", "language");
 
   private UsersCreateParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -53,7 +53,7 @@ public final class UsersCreateParams extends JsonModel {
   }
 
   /**
-   * Your unique identifier for this user (free-form string, NOT a UUID). Must be unique among non-deleted users for the application; matched exactly as sent.
+   * Your unique identifier for this user (free-form string, NOT a UUID). Must be unique among the application's users; matched exactly as sent.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -142,6 +142,86 @@ public final class UsersCreateParams extends JsonModel {
     return Json.optional(json, "issuing_states", Conv.list(Conv.STRING));
   }
 
+  /**
+   * Given name. When <code>full_name</code> is not sent, Didit joins <code>first_name</code> and <code>last_name</code> with a space into <code>full_name</code>. Not returned as a separate field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> firstName() {
+    return Json.optional(json, "first_name", Conv.STRING);
+  }
+
+  /**
+   * Family name. Joined with <code>first_name</code> into <code>full_name</code> when <code>full_name</code> is not sent. Not returned as a separate field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> lastName() {
+    return Json.optional(json, "last_name", Conv.STRING);
+  }
+
+  /**
+   * Contact email, stored in <code>metadata.contact.email</code> (it replaces an <code>email</code> you send inside <code>metadata.contact</code>). Required when <code>send_verification_link</code> is <code>true</code>: the link is sent to this address. If <code>metadata.contact</code> is not a JSON object, the call answers <code>400</code> on this field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> email() {
+    return Json.optional(json, "email", Conv.STRING);
+  }
+
+  /**
+   * Contact phone number, stored in <code>metadata.contact.phone_number</code>. If <code>metadata.contact</code> is not a JSON object, the call answers <code>400</code> on this field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> phoneNumber() {
+    return Json.optional(json, "phone_number", Conv.STRING);
+  }
+
+  /**
+   * Country as an ISO 3166 code, alpha-2 or alpha-3 (<code>ES</code> or <code>ESP</code>). Stored uppercased in <code>metadata.address.country</code>. If <code>metadata.address</code> is not a JSON object, the call answers <code>400</code> on this field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> country() {
+    return Json.optional(json, "country", Conv.STRING);
+  }
+
+  /**
+   * When <code>true</code>, Didit creates a verification session for the person on <code>workflow_id</code> and emails them the link at <code>email</code>. Requires <code>email</code> and <code>workflow_id</code>. A scoped API key also needs <code>sessions</code> write.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> sendVerificationLink() {
+    return Json.optional(json, "send_verification_link", Conv.BOOLEAN);
+  }
+
+  /**
+   * The workflow of the verification session. Required when <code>send_verification_link</code> is <code>true</code>. It must verify a person: a Business Verification (KYB) workflow is refused. Ignored otherwise.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> workflowId() {
+    return Json.optional(json, "workflow_id", Conv.STRING);
+  }
+
+  /**
+   * Language of the verification email, as a [supported language](/integration/supported-languages) code. English when omitted. Ignored when <code>send_verification_link</code> is not <code>true</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> language() {
+    return Json.optional(json, "language", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -156,7 +236,7 @@ public final class UsersCreateParams extends JsonModel {
     }
 
     /**
-     * Your unique identifier for this user (free-form string, NOT a UUID). Must be unique among non-deleted users for the application; matched exactly as sent.
+     * Your unique identifier for this user (free-form string, NOT a UUID). Must be unique among the application's users; matched exactly as sent.
      *
      * @param vendorData the value
      * @return this builder
@@ -243,6 +323,86 @@ public final class UsersCreateParams extends JsonModel {
      */
     public Builder issuingStates(List<String> issuingStates) {
       return set("issuing_states", Conv.list(Conv.STRING), issuingStates);
+    }
+
+    /**
+     * Given name. When <code>full_name</code> is not sent, Didit joins <code>first_name</code> and <code>last_name</code> with a space into <code>full_name</code>. Not returned as a separate field.
+     *
+     * @param firstName the value
+     * @return this builder
+     */
+    public Builder firstName(String firstName) {
+      return set("first_name", Conv.STRING, firstName);
+    }
+
+    /**
+     * Family name. Joined with <code>first_name</code> into <code>full_name</code> when <code>full_name</code> is not sent. Not returned as a separate field.
+     *
+     * @param lastName the value
+     * @return this builder
+     */
+    public Builder lastName(String lastName) {
+      return set("last_name", Conv.STRING, lastName);
+    }
+
+    /**
+     * Contact email, stored in <code>metadata.contact.email</code> (it replaces an <code>email</code> you send inside <code>metadata.contact</code>). Required when <code>send_verification_link</code> is <code>true</code>: the link is sent to this address. If <code>metadata.contact</code> is not a JSON object, the call answers <code>400</code> on this field.
+     *
+     * @param email the value
+     * @return this builder
+     */
+    public Builder email(String email) {
+      return set("email", Conv.STRING, email);
+    }
+
+    /**
+     * Contact phone number, stored in <code>metadata.contact.phone_number</code>. If <code>metadata.contact</code> is not a JSON object, the call answers <code>400</code> on this field.
+     *
+     * @param phoneNumber the value
+     * @return this builder
+     */
+    public Builder phoneNumber(String phoneNumber) {
+      return set("phone_number", Conv.STRING, phoneNumber);
+    }
+
+    /**
+     * Country as an ISO 3166 code, alpha-2 or alpha-3 (<code>ES</code> or <code>ESP</code>). Stored uppercased in <code>metadata.address.country</code>. If <code>metadata.address</code> is not a JSON object, the call answers <code>400</code> on this field.
+     *
+     * @param country the value
+     * @return this builder
+     */
+    public Builder country(String country) {
+      return set("country", Conv.STRING, country);
+    }
+
+    /**
+     * When <code>true</code>, Didit creates a verification session for the person on <code>workflow_id</code> and emails them the link at <code>email</code>. Requires <code>email</code> and <code>workflow_id</code>. A scoped API key also needs <code>sessions</code> write.
+     *
+     * @param sendVerificationLink the value
+     * @return this builder
+     */
+    public Builder sendVerificationLink(boolean sendVerificationLink) {
+      return set("send_verification_link", Conv.BOOLEAN, sendVerificationLink);
+    }
+
+    /**
+     * The workflow of the verification session. Required when <code>send_verification_link</code> is <code>true</code>. It must verify a person: a Business Verification (KYB) workflow is refused. Ignored otherwise.
+     *
+     * @param workflowId the value
+     * @return this builder
+     */
+    public Builder workflowId(String workflowId) {
+      return set("workflow_id", Conv.STRING, workflowId);
+    }
+
+    /**
+     * Language of the verification email, as a [supported language](/integration/supported-languages) code. English when omitted. Ignored when <code>send_verification_link</code> is not <code>true</code>.
+     *
+     * @param language the value
+     * @return this builder
+     */
+    public Builder language(String language) {
+      return set("language", Conv.STRING, language);
     }
 
     /**

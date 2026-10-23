@@ -2,97 +2,88 @@
 package me.didit.types;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import me.didit.core.Conv;
-import me.didit.core.FileUpload;
 import me.didit.core.Json;
-import me.didit.core.JsonModel;
+import me.didit.core.JsonUnion;
 
-public final class NetworksRetrieveTimelineResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("results");
-
-  private NetworksRetrieveTimelineResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
-    super(json, files);
+/**
+ *
+ * <p>One of: {@code NetworkTimeline}, {@code NetworkTimelinePage}. Check with the {@code is...}
+ * methods and read with the {@code as...} methods.
+ */
+public final class NetworksRetrieveTimelineResponse extends JsonUnion {
+  private NetworksRetrieveTimelineResponse(JsonNode json) {
+    super(json);
   }
 
   /**
-   * Reads a {@code NetworksRetrieveTimelineResponse} from JSON. Unknown fields are kept and readable
-   * through {@link #_additionalProperties()}.
+   * Reads a {@code NetworksRetrieveTimelineResponse} from JSON.
    *
-   * @param json a JSON object
-   * @return the parsed value
+   * @param json any JSON value
+   * @return the union
    */
   public static NetworksRetrieveTimelineResponse fromJson(JsonNode json) {
-    return new NetworksRetrieveTimelineResponse(Json.copyObject(json), Map.of());
+    return new NetworksRetrieveTimelineResponse(json.deepCopy());
   }
 
   /**
-   * Returns an empty builder.
+   * Wraps a {@code NetworkTimeline} value.
    *
-   * @return a new builder
+   * @param value the value
+   * @return the union
    */
-  public static Builder builder() {
-    return new Builder();
+  public static NetworksRetrieveTimelineResponse ofNetworkTimeline(NetworkTimeline value) {
+    return new NetworksRetrieveTimelineResponse(Conv.model(NetworkTimeline::fromJson).write(value));
   }
 
   /**
-   * Returns a builder holding a copy of every field of this value.
+   * Whether this value is a {@code NetworkTimeline}.
    *
-   * @return a new builder
+   * Without <code>contract</code>: the network's own events, oldest first, not paginated.
+   *
+   * @return true when it matches
    */
-  public Builder toBuilder() {
-    return new Builder(this);
+  public boolean isNetworkTimeline() {
+    return json.isObject();
   }
 
   /**
-   * The <code>results</code> field.
+   * Reads this value as a {@code NetworkTimeline}.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value, or empty when {@link #isNetworkTimeline()} is false
    */
-  public Optional<List<NetworkTimelineEvent>> results() {
-    return Json.optional(json, "results", Conv.list(Conv.model(NetworkTimelineEvent::fromJson)));
+  public Optional<NetworkTimeline> asNetworkTimeline() {
+    return isNetworkTimeline() ? Optional.of(Conv.model(NetworkTimeline::fromJson).read(json)) : Optional.empty();
   }
 
-  @Override
-  protected Set<String> knownFields() {
-    return KNOWN_FIELDS;
+  /**
+   * Wraps a {@code NetworkTimelinePage} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static NetworksRetrieveTimelineResponse ofNetworkTimelinePage(NetworkTimelinePage value) {
+    return new NetworksRetrieveTimelineResponse(Conv.model(NetworkTimelinePage::fromJson).write(value));
   }
 
-  /** Builds a {@link NetworksRetrieveTimelineResponse}. */
-  public static final class Builder extends JsonModel.BaseBuilder<Builder> {
-    private Builder() {}
+  /**
+   * Whether this value is a {@code NetworkTimelinePage}.
+   *
+   * With <code>contract=2</code>: one page of typed events, newest first.
+   *
+   * @return true when it matches
+   */
+  public boolean isNetworkTimelinePage() {
+    return Json.hasAnyField(json, "results", "next_cursor");
+  }
 
-    private Builder(NetworksRetrieveTimelineResponse from) {
-      super(from);
-    }
-
-    /**
-     * The <code>results</code> field.
-     *
-     * @param results the value
-     * @return this builder
-     */
-    public Builder results(List<NetworkTimelineEvent> results) {
-      return set("results", Conv.list(Conv.model(NetworkTimelineEvent::fromJson)), results);
-    }
-
-    /**
-     * Builds the value.
-     *
-     * @return a new immutable {@code NetworksRetrieveTimelineResponse}
-     */
-    public NetworksRetrieveTimelineResponse build() {
-      return new NetworksRetrieveTimelineResponse(buildJson(), buildFiles());
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
-    }
+  /**
+   * Reads this value as a {@code NetworkTimelinePage}.
+   *
+   * @return the value, or empty when {@link #isNetworkTimelinePage()} is false
+   */
+  public Optional<NetworkTimelinePage> asNetworkTimelinePage() {
+    return isNetworkTimelinePage() ? Optional.of(Conv.model(NetworkTimelinePage::fromJson).read(json)) : Optional.empty();
   }
 }

@@ -15,11 +15,12 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.EntityStatusUpdateRequest;
+import me.didit.types.OngoingMonitoringToggleRequest;
 import me.didit.types.UsersBatchDeleteParams;
 import me.didit.types.UsersCreateParams;
 import me.didit.types.UsersListParams;
 import me.didit.types.UsersSetAmlMonitoringParams;
-import me.didit.types.UsersSetOngoingMonitoringParams;
 import me.didit.types.UsersUpdateParams;
 import me.didit.types.UsersUpdateStatusParams;
 import me.didit.types.UsersUploadFaceParams;
@@ -67,7 +68,7 @@ final class UsersResourceTest {
 
   @Test
   void update() {
-    UsersUpdateParams params = UsersUpdateParams.builder().fullName("value-full-name").displayName("value-display-name").dateOfBirth(LocalDate.parse("2026-11-01")).status(UsersUpdateParams.Status.ACTIVE).metadata(Map.of("key", "value")).approvedEmails(List.of("value-approved-emails")).approvedPhones(List.of("value-approved-phones")).issuingStates(List.of("value-issuing-states")).build();
+    UsersUpdateParams params = UsersUpdateParams.builder().fullName("value-full-name").displayName("value-display-name").dateOfBirth(LocalDate.parse("2026-11-01")).status(UsersUpdateParams.Status.ACTIVE).metadata(Map.of("key", "value")).approvedEmails(List.of("value-approved-emails")).approvedPhones(List.of("value-approved-phones")).issuingStates(List.of("value-issuing-states")).reason("value-reason").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/users/{vendor_data}/", "200");
     transport.respondJson(200, example);
     var result = client.users().update("00000000-0000-4000-8000-000000007078", params);
@@ -77,7 +78,7 @@ final class UsersResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"full_name\":\"value-full-name\",\"display_name\":\"value-display-name\",\"date_of_birth\":\"2026-11-01\",\"status\":\"ACTIVE\",\"metadata\":{\"key\":\"value\"},\"approved_emails\":[\"value-approved-emails\"],\"approved_phones\":[\"value-approved-phones\"],\"issuing_states\":[\"value-issuing-states\"]}", request.body());
+    TestJson.assertJsonEquals("{\"full_name\":\"value-full-name\",\"display_name\":\"value-display-name\",\"date_of_birth\":\"2026-11-01\",\"status\":\"ACTIVE\",\"metadata\":{\"key\":\"value\"},\"approved_emails\":[\"value-approved-emails\"],\"approved_phones\":[\"value-approved-phones\"],\"issuing_states\":[\"value-issuing-states\"],\"reason\":\"value-reason\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
@@ -134,7 +135,7 @@ final class UsersResourceTest {
 
   @Test
   void updateStatus() {
-    UsersUpdateStatusParams params = UsersUpdateStatusParams.builder().status(UsersUpdateStatusParams.Status.ACTIVE).build();
+    UsersUpdateStatusParams params = UsersUpdateStatusParams.builder().status(EntityStatusUpdateRequest.Status.ACTIVE).reason("value-reason").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/users/{vendor_data}/update-status/", "200");
     transport.respondJson(200, example);
     var result = client.users().updateStatus("00000000-0000-4000-8000-00000000c099", params);
@@ -144,14 +145,14 @@ final class UsersResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"status\":\"ACTIVE\"}", request.body());
+    TestJson.assertJsonEquals("{\"status\":\"ACTIVE\",\"reason\":\"value-reason\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
   @Test
   void create() {
-    UsersCreateParams params = UsersCreateParams.builder().vendorData("value-vendor-data").fullName("value-full-name").displayName("value-display-name").dateOfBirth(LocalDate.parse("2026-11-01")).status(UsersCreateParams.Status.ACTIVE).metadata(Map.of("key", "value")).approvedEmails(List.of("value-approved-emails")).approvedPhones(List.of("value-approved-phones")).issuingStates(List.of("value-issuing-states")).build();
+    UsersCreateParams params = UsersCreateParams.builder().vendorData("value-vendor-data").fullName("value-full-name").displayName("value-display-name").dateOfBirth(LocalDate.parse("2026-11-01")).status(UsersCreateParams.Status.ACTIVE).metadata(Map.of("key", "value")).approvedEmails(List.of("value-approved-emails")).approvedPhones(List.of("value-approved-phones")).issuingStates(List.of("value-issuing-states")).firstName("value-first-name").lastName("value-last-name").email("user@example.com").phoneNumber("value-phone-number").country("value-country").sendVerificationLink(true).workflowId("00000000-0000-4000-8000-000000001b5b").language("value-language").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/users/create/", "201");
     transport.respondJson(201, example);
     var result = client.users().create(params);
@@ -161,7 +162,7 @@ final class UsersResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"full_name\":\"value-full-name\",\"display_name\":\"value-display-name\",\"date_of_birth\":\"2026-11-01\",\"status\":\"ACTIVE\",\"metadata\":{\"key\":\"value\"},\"approved_emails\":[\"value-approved-emails\"],\"approved_phones\":[\"value-approved-phones\"],\"issuing_states\":[\"value-issuing-states\"]}", request.body());
+    TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"full_name\":\"value-full-name\",\"display_name\":\"value-display-name\",\"date_of_birth\":\"2026-11-01\",\"status\":\"ACTIVE\",\"metadata\":{\"key\":\"value\"},\"approved_emails\":[\"value-approved-emails\"],\"approved_phones\":[\"value-approved-phones\"],\"issuing_states\":[\"value-issuing-states\"],\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\",\"email\":\"user@example.com\",\"phone_number\":\"value-phone-number\",\"country\":\"value-country\",\"send_verification_link\":true,\"workflow_id\":\"00000000-0000-4000-8000-000000001b5b\",\"language\":\"value-language\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
@@ -185,7 +186,7 @@ final class UsersResourceTest {
 
   @Test
   void setOngoingMonitoring() {
-    UsersSetOngoingMonitoringParams params = UsersSetOngoingMonitoringParams.builder().isEnabled(true).estimateOnly(true).updateAll(true).filterSearch("value-filter-search").filterStatus(List.of("value-filter-status")).filterCountry("value-filter-country").filterDateFrom(LocalDate.parse("2026-11-01")).filterDateTo(LocalDate.parse("2026-11-01")).diditInternalIdList(List.of("00000000-0000-4000-8000-0000000068ce")).build();
+    OngoingMonitoringToggleRequest params = OngoingMonitoringToggleRequest.builder().isEnabled(true).estimateOnly(true).updateAll(true).filterSearch("value-filter-search").filterStatus(List.of("value-filter-status")).filterCountry("value-filter-country").filterDateFrom(LocalDate.parse("2026-11-01")).filterDateTo(LocalDate.parse("2026-11-01")).diditInternalIdList(List.of("00000000-0000-4000-8000-0000000068ce")).build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
     var result = client.users().setOngoingMonitoring(params);

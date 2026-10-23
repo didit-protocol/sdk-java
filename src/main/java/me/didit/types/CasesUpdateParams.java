@@ -17,7 +17,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code cases.update}. */
 public final class CasesUpdateParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("title", "priority", "due_at", "tags");
+  private static final Set<String> KNOWN_FIELDS = Set.of("title", "priority", "due_at", "tags", "team");
 
   private CasesUpdateParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -53,7 +53,7 @@ public final class CasesUpdateParams extends JsonModel {
   }
 
   /**
-   * The <code>title</code> field.
+   * New case title.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -73,7 +73,7 @@ public final class CasesUpdateParams extends JsonModel {
   }
 
   /**
-   * The <code>due_at</code> field.
+   * New deadline. Send null to clear it.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -83,13 +83,23 @@ public final class CasesUpdateParams extends JsonModel {
   }
 
   /**
-   * The <code>tags</code> field.
+   * The complete tag list. It replaces the current tags.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<List<String>> tags() {
     return Json.optional(json, "tags", Conv.list(Conv.STRING));
+  }
+
+  /**
+   * UUID of the review team that owns the case. It must be an active team of this application. Send null to clear the team.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> team() {
+    return Json.optional(json, "team", Conv.STRING);
   }
 
   @Override
@@ -106,7 +116,7 @@ public final class CasesUpdateParams extends JsonModel {
     }
 
     /**
-     * The <code>title</code> field.
+     * New case title.
      *
      * @param title the value
      * @return this builder
@@ -126,7 +136,7 @@ public final class CasesUpdateParams extends JsonModel {
     }
 
     /**
-     * The <code>due_at</code> field.
+     * New deadline. Send null to clear it.
      *
      * @param dueAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -136,13 +146,23 @@ public final class CasesUpdateParams extends JsonModel {
     }
 
     /**
-     * The <code>tags</code> field.
+     * The complete tag list. It replaces the current tags.
      *
      * @param tags the value
      * @return this builder
      */
     public Builder tags(List<String> tags) {
       return set("tags", Conv.list(Conv.STRING), tags);
+    }
+
+    /**
+     * UUID of the review team that owns the case. It must be an active team of this application. Send null to clear the team.
+     *
+     * @param team the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder team(@Nullable String team) {
+      return setNullable("team", Conv.STRING, team);
     }
 
     /**

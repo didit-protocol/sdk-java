@@ -11,17 +11,18 @@ import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
+import me.didit.types.EntityNetworkMembershipList;
+import me.didit.types.OngoingMonitoringJob;
+import me.didit.types.OngoingMonitoringToggleRequest;
 import me.didit.types.UserDetailItem;
 import me.didit.types.UserListItem;
 import me.didit.types.UsersBatchDeleteParams;
 import me.didit.types.UsersBatchDeleteResponse;
 import me.didit.types.UsersCreateParams;
-import me.didit.types.UsersListNetworksResponse;
+import me.didit.types.UsersCreateResponse;
 import me.didit.types.UsersListParams;
-import me.didit.types.UsersRetrieveOngoingMonitoringJobResponse;
 import me.didit.types.UsersSetAmlMonitoringParams;
 import me.didit.types.UsersSetAmlMonitoringResponse;
-import me.didit.types.UsersSetOngoingMonitoringParams;
 import me.didit.types.UsersSetOngoingMonitoringResponse;
 import me.didit.types.UsersUpdateParams;
 import me.didit.types.UsersUpdateStatusParams;
@@ -181,7 +182,7 @@ public final class UsersResource {
   /**
    * Update user
    *
-   * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. <b>Note:</b> unlike [Update User Status](#patch-/v3/users/-vendor_data-/update-status/), changing <code>status</code> here does NOT record a status-change activity and does NOT sync the system blocklist — use the dedicated update-status endpoint for <code>BLOCKED</code>/unblock flows.
+   * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. Changing <code>status</code> here works like [Update User Status](#patch-/v3/users/-vendor_data-/update-status/): it records a <code>STATUS_CHANGED</code> activity with the optional <code>reason</code>, and <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist (moving away from <code>BLOCKED</code> removes that entry). Changes to <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code> or <code>metadata</code> are recorded as a <code>PROFILE_UPDATED</code> activity.
    *
    * <p>{@code PATCH /v3/users/{vendor_data}/}
    *
@@ -336,7 +337,7 @@ public final class UsersResource {
   /**
    * Batch delete users
    *
-   * <p><b>Permanently delete</b> users — the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. The Console's <code>filter_*</code> batch params are rejected with a <code>400</code> rather than ignored, so a narrowed intent can never turn into a full wipe.
+   * <p><b>Permanently delete</b> users: the user records are removed permanently. For everyday blocking prefer [Update User Status](#patch-/v3/users/-vendor_data-/update-status/) with <code>BLOCKED</code>. Select users with <code>vendor_data_list</code>, with <code>didit_internal_id_list</code>, or with both at once; or pass <code>delete_all: true</code>. This endpoint never narrows <code>delete_all</code> with filters. The Console's People filters are refused with a <code>400</code> (see the <code>400</code> response), so a narrowed intent does not turn into a full wipe. Two exceptions: <code>filter_has_approved_sessions</code> and <code>filter_has_declined_sessions</code> are not refused and not applied, so with <code>delete_all: true</code> they still delete every user; do not send them.
    *
    * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
    *
@@ -470,7 +471,7 @@ public final class UsersResource {
   /**
    * Update user status
    *
-   * <p>Flip only the lifecycle <code>status</code> of a user — <code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code> (NOT session statuses). <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry. Each change is recorded as a <code>STATUS_CHANGED</code> activity on the user.
+   * <p>Flip only the lifecycle <code>status</code> of a user: <code>ACTIVE</code>, <code>FLAGGED</code> or <code>BLOCKED</code> (not session statuses). <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry. Each change is recorded as a <code>STATUS_CHANGED</code> activity on the user, with the optional <code>reason</code> as its <code>comment</code>. Sending the current status changes nothing and records no <code>reason</code>. The <code>user.status.updated</code> webhook does not carry <code>reason</code>.
    *
    * <p>{@code PATCH /v3/users/{vendor_data}/update-status/}
    *
@@ -520,7 +521,13 @@ public final class UsersResource {
   /**
    * Create user
    *
-   * <p>Pre-create a [user](/entities/users) by <code>vendor_data</code> *without* a verification session. <code>vendor_data</code> must be unique among non-deleted users for the application (exact match; conflicts return 400). Not idempotent.
+   * <p>Create a [user](/entities/users) by <code>vendor_data</code>, before or without a verification session. <code>vendor_data</code> must be unique among the application's users (a duplicate returns <code>400</code>). Not idempotent.
+   *
+   * <p><b>Contact details:</b> <code>email</code> and <code>phone_number</code> are stored in <code>metadata.contact</code>, and <code>country</code> in <code>metadata.address</code>. When you send <code>first_name</code> or <code>last_name</code> without <code>full_name</code>, Didit joins them into <code>full_name</code>.
+   *
+   * <p><b>Verification link:</b> with <code>send_verification_link: true</code>, Didit also creates a verification session for the person on <code>workflow_id</code> and emails them the link at <code>email</code>. The session runs the same checks as [Create Session](/sessions-api/create-session), such as the blocklist and your credit balance. The person and the session are created together or not at all: if any check fails, nothing is written and no email is sent. The response's <code>verification_link</code> describes the session, and is <code>null</code> when you don't ask for a link.
+   *
+   * <p><b>API key access:</b> a scoped API key needs <code>users</code> write. With <code>send_verification_link: true</code> it also needs <code>sessions</code> write, or the call answers <code>403</code> before anything is written. Full-access keys are unaffected. See [API keys](/console/api-keys).
    *
    * <p>{@code POST /v3/users/create/}
    *
@@ -528,7 +535,7 @@ public final class UsersResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public UserDetailItem create(UsersCreateParams params, RequestOptions options) {
+  public UsersCreateResponse create(UsersCreateParams params, RequestOptions options) {
     return client.execute(createRequest(params), options, CREATE_RESPONSE).data();
   }
 
@@ -539,7 +546,7 @@ public final class UsersResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<UserDetailItem> createAsync(UsersCreateParams params, RequestOptions options) {
+  public CompletableFuture<UsersCreateResponse> createAsync(UsersCreateParams params, RequestOptions options) {
     return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -549,7 +556,7 @@ public final class UsersResource {
    * @param params the request parameters
    * @return the result
    */
-  public UserDetailItem create(UsersCreateParams params) {
+  public UsersCreateResponse create(UsersCreateParams params) {
     return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
   }
 
@@ -559,7 +566,7 @@ public final class UsersResource {
    * @param params the request parameters
    * @return a future completed with the result
    */
-  public CompletableFuture<UserDetailItem> createAsync(UsersCreateParams params) {
+  public CompletableFuture<UsersCreateResponse> createAsync(UsersCreateParams params) {
     return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -626,38 +633,38 @@ public final class UsersResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public UsersSetOngoingMonitoringResponse setOngoingMonitoring(UsersSetOngoingMonitoringParams params, RequestOptions options) {
+  public UsersSetOngoingMonitoringResponse setOngoingMonitoring(OngoingMonitoringToggleRequest params, RequestOptions options) {
     return client.execute(setOngoingMonitoringRequest(params), options, SET_ONGOING_MONITORING_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #setOngoingMonitoring(UsersSetOngoingMonitoringParams, RequestOptions)}.
+   * Asynchronous {@link #setOngoingMonitoring(OngoingMonitoringToggleRequest, RequestOptions)}.
    *
    * @param params the request parameters
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<UsersSetOngoingMonitoringResponse> setOngoingMonitoringAsync(UsersSetOngoingMonitoringParams params, RequestOptions options) {
+  public CompletableFuture<UsersSetOngoingMonitoringResponse> setOngoingMonitoringAsync(OngoingMonitoringToggleRequest params, RequestOptions options) {
     return client.executeAsync(setOngoingMonitoringRequest(params), options, SET_ONGOING_MONITORING_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Same as {@link #setOngoingMonitoring(UsersSetOngoingMonitoringParams, RequestOptions)}, with the client's options.
+   * Same as {@link #setOngoingMonitoring(OngoingMonitoringToggleRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
    * @return the result
    */
-  public UsersSetOngoingMonitoringResponse setOngoingMonitoring(UsersSetOngoingMonitoringParams params) {
+  public UsersSetOngoingMonitoringResponse setOngoingMonitoring(OngoingMonitoringToggleRequest params) {
     return client.execute(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #setOngoingMonitoring(UsersSetOngoingMonitoringParams, RequestOptions)}, with the client's options.
+   * Asynchronous {@link #setOngoingMonitoring(OngoingMonitoringToggleRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
    * @return a future completed with the result
    */
-  public CompletableFuture<UsersSetOngoingMonitoringResponse> setOngoingMonitoringAsync(UsersSetOngoingMonitoringParams params) {
+  public CompletableFuture<UsersSetOngoingMonitoringResponse> setOngoingMonitoringAsync(OngoingMonitoringToggleRequest params) {
     return client.executeAsync(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -673,7 +680,7 @@ public final class UsersResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public UsersRetrieveOngoingMonitoringJobResponse retrieveOngoingMonitoringJob(String jobId, RequestOptions options) {
+  public OngoingMonitoringJob retrieveOngoingMonitoringJob(String jobId, RequestOptions options) {
     return client.execute(retrieveOngoingMonitoringJobRequest(jobId), options, RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE).data();
   }
 
@@ -684,7 +691,7 @@ public final class UsersResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<UsersRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
+  public CompletableFuture<OngoingMonitoringJob> retrieveOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
     return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), options, RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -694,7 +701,7 @@ public final class UsersResource {
    * @param jobId the {@code job_id}
    * @return the result
    */
-  public UsersRetrieveOngoingMonitoringJobResponse retrieveOngoingMonitoringJob(String jobId) {
+  public OngoingMonitoringJob retrieveOngoingMonitoringJob(String jobId) {
     return client.execute(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE).data();
   }
 
@@ -704,7 +711,7 @@ public final class UsersResource {
    * @param jobId the {@code job_id}
    * @return a future completed with the result
    */
-  public CompletableFuture<UsersRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJobAsync(String jobId) {
+  public CompletableFuture<OngoingMonitoringJob> retrieveOngoingMonitoringJobAsync(String jobId) {
     return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -720,7 +727,7 @@ public final class UsersResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public UsersListNetworksResponse listNetworks(String vendorUserUuid, RequestOptions options) {
+  public EntityNetworkMembershipList listNetworks(String vendorUserUuid, RequestOptions options) {
     return client.execute(listNetworksRequest(vendorUserUuid), options, LIST_NETWORKS_RESPONSE).data();
   }
 
@@ -731,7 +738,7 @@ public final class UsersResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<UsersListNetworksResponse> listNetworksAsync(String vendorUserUuid, RequestOptions options) {
+  public CompletableFuture<EntityNetworkMembershipList> listNetworksAsync(String vendorUserUuid, RequestOptions options) {
     return client.executeAsync(listNetworksRequest(vendorUserUuid), options, LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -741,7 +748,7 @@ public final class UsersResource {
    * @param vendorUserUuid the {@code vendor_user_uuid}
    * @return the result
    */
-  public UsersListNetworksResponse listNetworks(String vendorUserUuid) {
+  public EntityNetworkMembershipList listNetworks(String vendorUserUuid) {
     return client.execute(listNetworksRequest(vendorUserUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE).data();
   }
 
@@ -751,7 +758,7 @@ public final class UsersResource {
    * @param vendorUserUuid the {@code vendor_user_uuid}
    * @return a future completed with the result
    */
-  public CompletableFuture<UsersListNetworksResponse> listNetworksAsync(String vendorUserUuid) {
+  public CompletableFuture<EntityNetworkMembershipList> listNetworksAsync(String vendorUserUuid) {
     return client.executeAsync(listNetworksRequest(vendorUserUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -819,7 +826,7 @@ public final class UsersResource {
         .build();
   }
 
-  private static final ResponseHandler<UserDetailItem> CREATE_RESPONSE = Responses.json(Conv.model(UserDetailItem::fromJson));
+  private static final ResponseHandler<UsersCreateResponse> CREATE_RESPONSE = Responses.json(Conv.model(UsersCreateResponse::fromJson));
 
   private static ApiRequest createRequest(UsersCreateParams params) {
     return ApiRequest.builder("POST", "/v3/users/create/")
@@ -841,7 +848,7 @@ public final class UsersResource {
 
   private static final ResponseHandler<UsersSetOngoingMonitoringResponse> SET_ONGOING_MONITORING_RESPONSE = Responses.byStatus(UsersSetOngoingMonitoringResponse::fromResponse);
 
-  private static ApiRequest setOngoingMonitoringRequest(UsersSetOngoingMonitoringParams params) {
+  private static ApiRequest setOngoingMonitoringRequest(OngoingMonitoringToggleRequest params) {
     return ApiRequest.builder("PATCH", "/v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/")
         .applicationScoped()
         .params(params)
@@ -849,7 +856,7 @@ public final class UsersResource {
         .build();
   }
 
-  private static final ResponseHandler<UsersRetrieveOngoingMonitoringJobResponse> RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE = Responses.json(Conv.model(UsersRetrieveOngoingMonitoringJobResponse::fromJson));
+  private static final ResponseHandler<OngoingMonitoringJob> RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE = Responses.json(Conv.model(OngoingMonitoringJob::fromJson));
 
   private static ApiRequest retrieveOngoingMonitoringJobRequest(String jobId) {
     return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/{job_id}/")
@@ -858,7 +865,7 @@ public final class UsersResource {
         .build();
   }
 
-  private static final ResponseHandler<UsersListNetworksResponse> LIST_NETWORKS_RESPONSE = Responses.json(Conv.model(UsersListNetworksResponse::fromJson));
+  private static final ResponseHandler<EntityNetworkMembershipList> LIST_NETWORKS_RESPONSE = Responses.json(Conv.model(EntityNetworkMembershipList::fromJson));
 
   private static ApiRequest listNetworksRequest(String vendorUserUuid) {
     return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/users/{vendor_user_uuid}/networks/")
@@ -1302,7 +1309,7 @@ public final class UsersResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<UserDetailItem> create(UsersCreateParams params, RequestOptions options) {
+    public RawResponse<UsersCreateResponse> create(UsersCreateParams params, RequestOptions options) {
       return client.execute(createRequest(params), options, CREATE_RESPONSE);
     }
 
@@ -1313,7 +1320,7 @@ public final class UsersResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<UserDetailItem>> createAsync(UsersCreateParams params, RequestOptions options) {
+    public CompletableFuture<RawResponse<UsersCreateResponse>> createAsync(UsersCreateParams params, RequestOptions options) {
       return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
     }
 
@@ -1323,7 +1330,7 @@ public final class UsersResource {
      * @param params the request parameters
      * @return the result
      */
-    public RawResponse<UserDetailItem> create(UsersCreateParams params) {
+    public RawResponse<UsersCreateResponse> create(UsersCreateParams params) {
       return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
@@ -1333,7 +1340,7 @@ public final class UsersResource {
      * @param params the request parameters
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<UserDetailItem>> createAsync(UsersCreateParams params) {
+    public CompletableFuture<RawResponse<UsersCreateResponse>> createAsync(UsersCreateParams params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
 
@@ -1384,44 +1391,44 @@ public final class UsersResource {
     }
 
     /**
-     * {@link #setOngoingMonitoring(UsersSetOngoingMonitoringParams, RequestOptions)} with the raw response.
+     * {@link #setOngoingMonitoring(OngoingMonitoringToggleRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<UsersSetOngoingMonitoringResponse> setOngoingMonitoring(UsersSetOngoingMonitoringParams params, RequestOptions options) {
+    public RawResponse<UsersSetOngoingMonitoringResponse> setOngoingMonitoring(OngoingMonitoringToggleRequest params, RequestOptions options) {
       return client.execute(setOngoingMonitoringRequest(params), options, SET_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #setOngoingMonitoring(UsersSetOngoingMonitoringParams, RequestOptions)} with the raw response.
+     * Asynchronous {@link #setOngoingMonitoring(OngoingMonitoringToggleRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<UsersSetOngoingMonitoringResponse>> setOngoingMonitoringAsync(UsersSetOngoingMonitoringParams params, RequestOptions options) {
+    public CompletableFuture<RawResponse<UsersSetOngoingMonitoringResponse>> setOngoingMonitoringAsync(OngoingMonitoringToggleRequest params, RequestOptions options) {
       return client.executeAsync(setOngoingMonitoringRequest(params), options, SET_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * {@link #setOngoingMonitoring(UsersSetOngoingMonitoringParams, RequestOptions)} with the raw response, with the client's options.
+     * {@link #setOngoingMonitoring(OngoingMonitoringToggleRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
      * @return the result
      */
-    public RawResponse<UsersSetOngoingMonitoringResponse> setOngoingMonitoring(UsersSetOngoingMonitoringParams params) {
+    public RawResponse<UsersSetOngoingMonitoringResponse> setOngoingMonitoring(OngoingMonitoringToggleRequest params) {
       return client.execute(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #setOngoingMonitoring(UsersSetOngoingMonitoringParams, RequestOptions)} with the raw response, with the client's options.
+     * Asynchronous {@link #setOngoingMonitoring(OngoingMonitoringToggleRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<UsersSetOngoingMonitoringResponse>> setOngoingMonitoringAsync(UsersSetOngoingMonitoringParams params) {
+    public CompletableFuture<RawResponse<UsersSetOngoingMonitoringResponse>> setOngoingMonitoringAsync(OngoingMonitoringToggleRequest params) {
       return client.executeAsync(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE);
     }
 
@@ -1432,7 +1439,7 @@ public final class UsersResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<UsersRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJob(String jobId, RequestOptions options) {
+    public RawResponse<OngoingMonitoringJob> retrieveOngoingMonitoringJob(String jobId, RequestOptions options) {
       return client.execute(retrieveOngoingMonitoringJobRequest(jobId), options, RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
@@ -1443,7 +1450,7 @@ public final class UsersResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<UsersRetrieveOngoingMonitoringJobResponse>> retrieveOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
+    public CompletableFuture<RawResponse<OngoingMonitoringJob>> retrieveOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
       return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), options, RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
@@ -1453,7 +1460,7 @@ public final class UsersResource {
      * @param jobId the {@code job_id}
      * @return the result
      */
-    public RawResponse<UsersRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJob(String jobId) {
+    public RawResponse<OngoingMonitoringJob> retrieveOngoingMonitoringJob(String jobId) {
       return client.execute(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
@@ -1463,7 +1470,7 @@ public final class UsersResource {
      * @param jobId the {@code job_id}
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<UsersRetrieveOngoingMonitoringJobResponse>> retrieveOngoingMonitoringJobAsync(String jobId) {
+    public CompletableFuture<RawResponse<OngoingMonitoringJob>> retrieveOngoingMonitoringJobAsync(String jobId) {
       return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
@@ -1474,7 +1481,7 @@ public final class UsersResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<UsersListNetworksResponse> listNetworks(String vendorUserUuid, RequestOptions options) {
+    public RawResponse<EntityNetworkMembershipList> listNetworks(String vendorUserUuid, RequestOptions options) {
       return client.execute(listNetworksRequest(vendorUserUuid), options, LIST_NETWORKS_RESPONSE);
     }
 
@@ -1485,7 +1492,7 @@ public final class UsersResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<UsersListNetworksResponse>> listNetworksAsync(String vendorUserUuid, RequestOptions options) {
+    public CompletableFuture<RawResponse<EntityNetworkMembershipList>> listNetworksAsync(String vendorUserUuid, RequestOptions options) {
       return client.executeAsync(listNetworksRequest(vendorUserUuid), options, LIST_NETWORKS_RESPONSE);
     }
 
@@ -1495,7 +1502,7 @@ public final class UsersResource {
      * @param vendorUserUuid the {@code vendor_user_uuid}
      * @return the result
      */
-    public RawResponse<UsersListNetworksResponse> listNetworks(String vendorUserUuid) {
+    public RawResponse<EntityNetworkMembershipList> listNetworks(String vendorUserUuid) {
       return client.execute(listNetworksRequest(vendorUserUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE);
     }
 
@@ -1505,7 +1512,7 @@ public final class UsersResource {
      * @param vendorUserUuid the {@code vendor_user_uuid}
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<UsersListNetworksResponse>> listNetworksAsync(String vendorUserUuid) {
+    public CompletableFuture<RawResponse<EntityNetworkMembershipList>> listNetworksAsync(String vendorUserUuid) {
       return client.executeAsync(listNetworksRequest(vendorUserUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE);
     }
   }

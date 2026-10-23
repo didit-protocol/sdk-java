@@ -40,7 +40,70 @@ public final class WebhookEvent extends StringEnum {
   /** The value {@code "travel_rule.status.updated"}. */
   public static final WebhookEvent TRAVEL_RULE_STATUS_UPDATED = new WebhookEvent("travel_rule.status.updated");
 
-  private static final List<WebhookEvent> KNOWN_VALUES = List.of(STATUS_UPDATED, DATA_UPDATED, USER_STATUS_UPDATED, USER_DATA_UPDATED, BUSINESS_STATUS_UPDATED, BUSINESS_DATA_UPDATED, ACTIVITY_CREATED, TRANSACTION_CREATED, TRANSACTION_STATUS_UPDATED, TRAVEL_RULE_STATUS_UPDATED);
+  /** The value {@code "workflow.compliance_changed"}. */
+  public static final WebhookEvent WORKFLOW_COMPLIANCE_CHANGED = new WebhookEvent("workflow.compliance_changed");
+
+  /** The value {@code "auth.signup"}. */
+  public static final WebhookEvent AUTH_SIGNUP = new WebhookEvent("auth.signup");
+
+  /** The value {@code "auth.login"}. */
+  public static final WebhookEvent AUTH_LOGIN = new WebhookEvent("auth.login");
+
+  /** The value {@code "auth.login_failed"}. */
+  public static final WebhookEvent AUTH_LOGIN_FAILED = new WebhookEvent("auth.login_failed");
+
+  /** The value {@code "auth.password_reset_requested"}. */
+  public static final WebhookEvent AUTH_PASSWORD_RESET_REQUESTED = new WebhookEvent("auth.password_reset_requested");
+
+  /** The value {@code "auth.password_reset_completed"}. */
+  public static final WebhookEvent AUTH_PASSWORD_RESET_COMPLETED = new WebhookEvent("auth.password_reset_completed");
+
+  /** The value {@code "auth.mfa_changed"}. */
+  public static final WebhookEvent AUTH_MFA_CHANGED = new WebhookEvent("auth.mfa_changed");
+
+  /** The value {@code "auth.new_device"}. */
+  public static final WebhookEvent AUTH_NEW_DEVICE = new WebhookEvent("auth.new_device");
+
+  /** The value {@code "auth.account_locked"}. */
+  public static final WebhookEvent AUTH_ACCOUNT_LOCKED = new WebhookEvent("auth.account_locked");
+
+  /** The value {@code "investigator.report.ready"}. */
+  public static final WebhookEvent INVESTIGATOR_REPORT_READY = new WebhookEvent("investigator.report.ready");
+
+  /** The value {@code "investigator.decision.automated"}. */
+  public static final WebhookEvent INVESTIGATOR_DECISION_AUTOMATED = new WebhookEvent("investigator.decision.automated");
+
+  /** The value {@code "investigator.decision.overridden"}. */
+  public static final WebhookEvent INVESTIGATOR_DECISION_OVERRIDDEN = new WebhookEvent("investigator.decision.overridden");
+
+  /** The value {@code "investigator.decision.contested"}. */
+  public static final WebhookEvent INVESTIGATOR_DECISION_CONTESTED = new WebhookEvent("investigator.decision.contested");
+
+  /** The value {@code "investigator.question.raised"}. */
+  public static final WebhookEvent INVESTIGATOR_QUESTION_RAISED = new WebhookEvent("investigator.question.raised");
+
+  /** The value {@code "investigator.automation.paused"}. */
+  public static final WebhookEvent INVESTIGATOR_AUTOMATION_PAUSED = new WebhookEvent("investigator.automation.paused");
+
+  /** The value {@code "investigator.rfi.answered"}. */
+  public static final WebhookEvent INVESTIGATOR_RFI_ANSWERED = new WebhookEvent("investigator.rfi.answered");
+
+  /** The value {@code "investigator.rfi.overdue"}. */
+  public static final WebhookEvent INVESTIGATOR_RFI_OVERDUE = new WebhookEvent("investigator.rfi.overdue");
+
+  /** The value {@code "investigator.drift.detected"}. */
+  public static final WebhookEvent INVESTIGATOR_DRIFT_DETECTED = new WebhookEvent("investigator.drift.detected");
+
+  /** The value {@code "investigator.sla.breached"}. */
+  public static final WebhookEvent INVESTIGATOR_SLA_BREACHED = new WebhookEvent("investigator.sla.breached");
+
+  /** The value {@code "investigator.qa.failed"}. */
+  public static final WebhookEvent INVESTIGATOR_QA_FAILED = new WebhookEvent("investigator.qa.failed");
+
+  /** The value {@code "investigator.external.report.ready"}. */
+  public static final WebhookEvent INVESTIGATOR_EXTERNAL_REPORT_READY = new WebhookEvent("investigator.external.report.ready");
+
+  private static final List<WebhookEvent> KNOWN_VALUES = List.of(STATUS_UPDATED, DATA_UPDATED, USER_STATUS_UPDATED, USER_DATA_UPDATED, BUSINESS_STATUS_UPDATED, BUSINESS_DATA_UPDATED, ACTIVITY_CREATED, TRANSACTION_CREATED, TRANSACTION_STATUS_UPDATED, TRAVEL_RULE_STATUS_UPDATED, WORKFLOW_COMPLIANCE_CHANGED, AUTH_SIGNUP, AUTH_LOGIN, AUTH_LOGIN_FAILED, AUTH_PASSWORD_RESET_REQUESTED, AUTH_PASSWORD_RESET_COMPLETED, AUTH_MFA_CHANGED, AUTH_NEW_DEVICE, AUTH_ACCOUNT_LOCKED, INVESTIGATOR_REPORT_READY, INVESTIGATOR_DECISION_AUTOMATED, INVESTIGATOR_DECISION_OVERRIDDEN, INVESTIGATOR_DECISION_CONTESTED, INVESTIGATOR_QUESTION_RAISED, INVESTIGATOR_AUTOMATION_PAUSED, INVESTIGATOR_RFI_ANSWERED, INVESTIGATOR_RFI_OVERDUE, INVESTIGATOR_DRIFT_DETECTED, INVESTIGATOR_SLA_BREACHED, INVESTIGATOR_QA_FAILED, INVESTIGATOR_EXTERNAL_REPORT_READY);
 
   private WebhookEvent(String value) {
     super(value);

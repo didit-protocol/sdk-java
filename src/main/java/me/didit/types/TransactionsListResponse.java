@@ -180,7 +180,7 @@ public final class TransactionsListResponse extends JsonModel {
   }
 
   public static final class Results extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "transaction_number", "txn_id", "transaction_type", "action_type", "status", "direction", "amount", "currency", "preferred_currency_amount", "preferred_currency_code", "payment_details", "score", "severity", "subject_name", "subject_vendor_data", "subject_country", "counterparty_name", "counterparty_vendor_data", "counterparty_country", "tags", "txn_date", "created_at", "decision_reason_code", "decision_reason_label", "assigned_to_name");
+    private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "transaction_number", "txn_id", "transaction_type", "action_type", "status", "direction", "amount", "currency", "preferred_currency_amount", "preferred_currency_code", "payment_details", "score", "severity", "subject_name", "subject_vendor_data", "subject_country", "counterparty_name", "counterparty_vendor_data", "counterparty_country", "tags", "txn_date", "created_at", "decision_reason_code", "decision_reason_label", "assigned_to_name", "travel_rule_status", "travel_rule");
 
     private Results(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -475,6 +475,26 @@ public final class TransactionsListResponse extends JsonModel {
       return Json.optional(json, "assigned_to_name", Conv.STRING);
     }
 
+    /**
+     * Status of the transaction's Travel Rule transfer (for example <code>COMPLETED</code>), or <code>null</code> when it has none.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> travelRuleStatus() {
+      return Json.optional(json, "travel_rule_status", Conv.STRING);
+    }
+
+    /**
+     * The transaction's Travel Rule transfer, the same block as <code>travel_rule</code> on <code>GET /v3/transactions/{transaction_id}/</code>, or <code>null</code> when the transaction has none.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<TransactionTravelRule> travelRule() {
+      return Json.optional(json, "travel_rule", Conv.model(TransactionTravelRule::fromJson));
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -746,6 +766,26 @@ public final class TransactionsListResponse extends JsonModel {
        */
       public Builder assignedToName(@Nullable String assignedToName) {
         return setNullable("assigned_to_name", Conv.STRING, assignedToName);
+      }
+
+      /**
+       * Status of the transaction's Travel Rule transfer (for example <code>COMPLETED</code>), or <code>null</code> when it has none.
+       *
+       * @param travelRuleStatus the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder travelRuleStatus(@Nullable String travelRuleStatus) {
+        return setNullable("travel_rule_status", Conv.STRING, travelRuleStatus);
+      }
+
+      /**
+       * The transaction's Travel Rule transfer, the same block as <code>travel_rule</code> on <code>GET /v3/transactions/{transaction_id}/</code>, or <code>null</code> when the transaction has none.
+       *
+       * @param travelRule the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder travelRule(@Nullable TransactionTravelRule travelRule) {
+        return setNullable("travel_rule", Conv.model(TransactionTravelRule::fromJson), travelRule);
       }
 
       /**

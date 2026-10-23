@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class TravelRuleWidgetContext extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("vasp_name", "wallet_address", "chain", "holder_name", "allowed_methods", "transfer_status", "callback_url", "expires_at", "completed_at", "proofs", "customization");
+  private static final Set<String> KNOWN_FIELDS = Set.of("vasp_name", "wallet_address", "chain", "holder_name", "allowed_methods", "transfer_status", "callback_url", "expires_at", "completed_at", "proofs", "max_attempts", "attempts_used", "attempts_remaining", "customization");
 
   private TravelRuleWidgetContext(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -92,7 +92,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
   }
 
   /**
-   * Proof methods available for this session. MESSAGE_SIGNING requires a supported chain family, SATOSHI_TEST requires a satoshi_deposit_address on the session, SCREENSHOT requires the allow_screenshot_proof setting, and SELF_DECLARATION requires the allow_self_declaration setting.
+   * Proof methods available for this session. MESSAGE_SIGNING requires a supported chain family, SATOSHI_TEST requires a satoshi_deposit_address on the session, SCREENSHOT requires the allow_screenshot_proof setting, and SELF_DECLARATION requires the allow_self_declaration setting and an <code>ownership_validation_mode</code> that accepts a declaration for the linked transfer (never in <code>FULL</code>; in <code>SIMPLIFIED</code> only below <code>simplified_validation_threshold</code>). Initiating a SELF_DECLARATION the mode does not accept answers 403.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -149,6 +149,36 @@ public final class TravelRuleWidgetContext extends JsonModel {
    */
   public Optional<List<TravelRuleWidgetProofSummary>> proofs() {
     return Json.optional(json, "proofs", Conv.list(Conv.model(TravelRuleWidgetProofSummary::fromJson)));
+  }
+
+  /**
+   * Rejected wallet proofs this session allows.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> maxAttempts() {
+    return Json.optional(json, "max_attempts", Conv.LONG);
+  }
+
+  /**
+   * Rejected proofs so far.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> attemptsUsed() {
+    return Json.optional(json, "attempts_used", Conv.LONG);
+  }
+
+  /**
+   * When 0, starting another proof answers 409 and you mint a new widget session.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> attemptsRemaining() {
+    return Json.optional(json, "attempts_remaining", Conv.LONG);
   }
 
   /**
@@ -215,7 +245,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
     }
 
     /**
-     * Proof methods available for this session. MESSAGE_SIGNING requires a supported chain family, SATOSHI_TEST requires a satoshi_deposit_address on the session, SCREENSHOT requires the allow_screenshot_proof setting, and SELF_DECLARATION requires the allow_self_declaration setting.
+     * Proof methods available for this session. MESSAGE_SIGNING requires a supported chain family, SATOSHI_TEST requires a satoshi_deposit_address on the session, SCREENSHOT requires the allow_screenshot_proof setting, and SELF_DECLARATION requires the allow_self_declaration setting and an <code>ownership_validation_mode</code> that accepts a declaration for the linked transfer (never in <code>FULL</code>; in <code>SIMPLIFIED</code> only below <code>simplified_validation_threshold</code>). Initiating a SELF_DECLARATION the mode does not accept answers 403.
      *
      * @param allowedMethods the value
      * @return this builder
@@ -272,6 +302,36 @@ public final class TravelRuleWidgetContext extends JsonModel {
      */
     public Builder proofs(List<TravelRuleWidgetProofSummary> proofs) {
       return set("proofs", Conv.list(Conv.model(TravelRuleWidgetProofSummary::fromJson)), proofs);
+    }
+
+    /**
+     * Rejected wallet proofs this session allows.
+     *
+     * @param maxAttempts the value
+     * @return this builder
+     */
+    public Builder maxAttempts(long maxAttempts) {
+      return set("max_attempts", Conv.LONG, maxAttempts);
+    }
+
+    /**
+     * Rejected proofs so far.
+     *
+     * @param attemptsUsed the value
+     * @return this builder
+     */
+    public Builder attemptsUsed(long attemptsUsed) {
+      return set("attempts_used", Conv.LONG, attemptsUsed);
+    }
+
+    /**
+     * When 0, starting another proof answers 409 and you mint a new widget session.
+     *
+     * @param attemptsRemaining the value
+     * @return this builder
+     */
+    public Builder attemptsRemaining(long attemptsRemaining) {
+      return set("attempts_remaining", Conv.LONG, attemptsRemaining);
     }
 
     /**

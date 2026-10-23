@@ -18,6 +18,7 @@ import me.didit.testing.TestModels;
 import me.didit.types.TransactionsCreateParams;
 import me.didit.types.TransactionsCreateSdkTokenParams;
 import me.didit.types.TransactionsListParams;
+import me.didit.types.TransactionsListRelatedParams;
 import org.junit.jupiter.api.Test;
 
 /** One test per operation of {@code transactions}, against a stubbed HTTP layer. */
@@ -28,14 +29,14 @@ final class TransactionsResourceTest {
 
   @Test
   void list() {
-    TransactionsListParams params = TransactionsListParams.builder().limit(1L).offset(1L).build();
+    TransactionsListParams params = TransactionsListParams.builder().limit(1L).offset(1L).travelRuleStatus("value-travel-rule-status").build();
     JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/transactions/", "200");
     transport.respondJson(200, example);
     var result = client.transactions().list(params);
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/v3/transactions/", request.path());
-    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1"))), request.query());
+    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1")), Map.entry("travel_rule_status", List.of("value-travel-rule-status"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
@@ -124,5 +125,38 @@ final class TransactionsResourceTest {
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
+  }
+
+  @Test
+  void listRelated() {
+    TransactionsListRelatedParams params = TransactionsListRelatedParams.builder().limit(1L).offset(1L).build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/transactions/{transaction_id}/related/", "200");
+    transport.respondJson(200, example);
+    var result = client.transactions().listRelated("00000000-0000-4000-8000-0000000140ee", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/transactions/00000000-0000-4000-8000-0000000140ee/related/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, result._json());
+    assertEquals(example.path("results").size(), result.results().size());
+    TestModels.readAll(result.results());
+  }
+
+  @Test
+  void generatePdf() {
+    transport.respondBinary(200, "application/pdf", new byte[] {37, 80, 68, 70});
+    var result = client.transactions().generatePdf("00000000-0000-4000-8000-000000016426");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/transactions/00000000-0000-4000-8000-000000016426/pdf/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("application/pdf, application/json", request.header("Accept"));
+    assertEquals(0, request.body().length);
+    assertArrayEquals(new byte[] {37, 80, 68, 70}, result.bytes());
   }
 }

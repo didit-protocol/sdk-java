@@ -16,10 +16,10 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Full transfer object returned by the ownership-confirmation and finish/cancel endpoints. originator_data/beneficiary_data are omitted while PII is masked (see description).
+ * Full transfer object returned by the ownership-confirmation and finish/cancel endpoints. While an inbound transfer's wallet ownership is unconfirmed, the counterparty's <code>originator_data</code> and <code>beneficiary_data</code> come back masked (the first letter of each word is kept; the wallet, chain and VASP routing stay readable) and <code>data_masked</code> is true.
  */
 public final class TravelRuleTransferDetail extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "direction", "rail", "protocol", "ivms_version", "required", "ownership_confirmed", "deadline_at", "timeline", "counterparty_vasp", "originator_data", "beneficiary_data", "created_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "direction", "rail", "protocol", "ivms_version", "required", "ownership_confirmed", "deadline_at", "timeline", "counterparty_vasp", "originator_data", "beneficiary_data", "name_match", "data_match", "mismatched_fields", "data_unmasked", "data_masked", "created_at", "delivery", "discovery", "reason", "next_actions", "chain_details");
 
   private TravelRuleTransferDetail(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -85,7 +85,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The <code>rail</code> field.
+   * The rail the transfer was routed over, or null when no rail was selected (for example below the threshold, a self-hosted counterparty wallet, an after-deposit registration, or no reachable counterparty). INTERNAL means both sides are Didit applications; EMAIL means the counterparty was reached by an emailed pickup link. TEST_VASP means the Didit Test VASP answered a sandbox application's transfer. Over GTR, VERIFYVASP and SYGNA, Didit reads the counterparty's answer from the network's response or by polling it every 5 minutes. TRUST only sends, so a TRUST transfer stays AWAITING_COUNTERPARTY until it expires. A network rail is used only when you have connected your own membership for that network. It is chosen after the transaction create returns, so it is null in that response.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -165,7 +165,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The <code>originator_data</code> field.
+   * Originator party. For an inbound transfer the counterparty's values are masked until ownership is confirmed.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -175,13 +175,63 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
-   * The <code>beneficiary_data</code> field.
+   * Beneficiary party. For an inbound transfer the counterparty's values are masked until ownership is confirmed.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<Map<String, JsonNode>> beneficiaryData() {
     return Json.optional(json, "beneficiary_data", Conv.OBJECT);
+  }
+
+  /**
+   * The name comparison that decided the transfer, or null until one ran. While the parties are masked, and on the other customer's copy of an INTERNAL exchange, <code>transfer_name</code>, <code>compared_name</code>, <code>matched_names</code> and <code>mismatched_names</code> are hidden. <code>score</code> and <code>matched</code> can disagree: <code>matched</code> follows the strictness, <code>score</code> is the similarity of the two full names.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleNameMatch> nameMatch() {
+    return Json.optional(json, "name_match", Conv.model(TravelRuleNameMatch::fromJson));
+  }
+
+  /**
+   * Field-by-field comparison of the transfer's party data with what the other side knows about the wallet holder. It names fields and results, never values, so it stays readable while the counterparty's data is masked. Null until a comparison ran.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleDataMatch> dataMatch() {
+    return Json.optional(json, "data_match", Conv.model(TravelRuleDataMatch::fromJson));
+  }
+
+  /**
+   * Shortcut for <code>data_match.mismatched_fields</code>. Empty when nothing differs.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<String>> mismatchedFields() {
+    return Json.optional(json, "mismatched_fields", Conv.list(Conv.STRING));
+  }
+
+  /**
+   * Audit record of the moment the counterparty's data was unmasked. Null while the data is still masked, and for outbound transfers.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleDataUnmasked> dataUnmasked() {
+    return Json.optional(json, "data_unmasked", Conv.model(TravelRuleDataUnmasked::fromJson));
+  }
+
+  /**
+   * True while the counterparty's personal data is masked in this response.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> dataMasked() {
+    return Json.optional(json, "data_masked", Conv.BOOLEAN);
   }
 
   /**
@@ -192,6 +242,56 @@ public final class TravelRuleTransferDetail extends JsonModel {
    */
   public Optional<OffsetDateTime> createdAt() {
     return Json.optional(json, "created_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * Where the latest message this transfer owes the other side stands. Null when the transfer never owed one (for example below <code>threshold_amount</code>, a declared self-hosted wallet, or a sunrise registration).
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleDelivery> delivery() {
+    return Json.optional(json, "delivery", Conv.model(TravelRuleDelivery::fromJson));
+  }
+
+  /**
+   * How Didit looked for the counterparty, one entry per step that ran. Empty when no discovery ran, for example on an inbound transfer.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<TravelRuleDiscoveryStep>> discovery() {
+    return Json.optional(json, "discovery", Conv.list(Conv.model(TravelRuleDiscoveryStep::fromJson)));
+  }
+
+  /**
+   * Why a <code>COUNTERPARTY_VASP_NOT_FOUND</code> or <code>COUNTERPARTY_VASP_NOT_REACHABLE</code> transfer is stuck; <code>""</code> for any other status. A failed delivery decides it first, on <code>COUNTERPARTY_VASP_NOT_REACHABLE</code> only: <code>email_undeliverable</code> (the mail provider refused the compliance email and no address is left to try: when it was sent, on a reminder, or as a permanent bounce reported later) or <code>delivery_failed</code> (the rail that was delivering failed for good: a network rail refused the message or ran out of retries, a <code>TRP</code> identity host did not answer, or the counterparty's <code>TRP</code> host did not accept the inquiry). Otherwise the <code>discovery</code> trace decides it: <code>awaiting_end_user</code> (no step named a counterparty Didit can reach), <code>directory_match_no_route</code> (a step named a directory VASP that has no route), <code>picked_member_without_proven_wallet</code> (the end user picked a Didit customer that has not proven control of the wallet), or <code>no_directory_match</code> when the trace gives no other reason. A resend moves the transfer on, so the reason clears. See [Why a transfer is stuck](/transaction-monitoring/travel-rule#why-a-transfer-is-stuck).
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> reason() {
+    return Json.optional(json, "reason", Conv.STRING);
+  }
+
+  /**
+   * What moves the transfer on; <code>[]</code> for any status but <code>COUNTERPARTY_VASP_NOT_FOUND</code> or <code>COUNTERPARTY_VASP_NOT_REACHABLE</code>. <code>email_undeliverable</code> offers <code>update_compliance_email</code>, then <code>resend</code>. <code>delivery_failed</code> offers <code>resend</code>. A discovery reason offers <code>select_counterparty_vasp</code>, <code>declare_self_hosted</code>, <code>add_vasp_hint</code> and <code>resend</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<TravelRuleNextAction>> nextActions() {
+    return Json.optional(json, "next_actions", Conv.list(Conv.model(TravelRuleNextAction::fromJson)));
+  }
+
+  /**
+   * How the transfer's chain names its two wallets, when that is more than one address paying another. Empty (<code>{}</code>) for an account-chain transfer (EVM, Solana, Tron), where the two addresses are the wallets. Matching, routing and the address book read the wallets from here first.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleChainDetails> chainDetails() {
+    return Json.optional(json, "chain_details", Conv.model(TravelRuleChainDetails::fromJson));
   }
 
   @Override
@@ -238,7 +338,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The <code>rail</code> field.
+     * The rail the transfer was routed over, or null when no rail was selected (for example below the threshold, a self-hosted counterparty wallet, an after-deposit registration, or no reachable counterparty). INTERNAL means both sides are Didit applications; EMAIL means the counterparty was reached by an emailed pickup link. TEST_VASP means the Didit Test VASP answered a sandbox application's transfer. Over GTR, VERIFYVASP and SYGNA, Didit reads the counterparty's answer from the network's response or by polling it every 5 minutes. TRUST only sends, so a TRUST transfer stays AWAITING_COUNTERPARTY until it expires. A network rail is used only when you have connected your own membership for that network. It is chosen after the transaction create returns, so it is null in that response.
      *
      * @param rail the value, or {@code null} to send JSON null
      * @return this builder
@@ -318,7 +418,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The <code>originator_data</code> field.
+     * Originator party. For an inbound transfer the counterparty's values are masked until ownership is confirmed.
      *
      * @param originatorData the value
      * @return this builder
@@ -328,13 +428,63 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The <code>beneficiary_data</code> field.
+     * Beneficiary party. For an inbound transfer the counterparty's values are masked until ownership is confirmed.
      *
      * @param beneficiaryData the value
      * @return this builder
      */
     public Builder beneficiaryData(Map<String, ?> beneficiaryData) {
       return setAny("beneficiary_data", beneficiaryData);
+    }
+
+    /**
+     * The name comparison that decided the transfer, or null until one ran. While the parties are masked, and on the other customer's copy of an INTERNAL exchange, <code>transfer_name</code>, <code>compared_name</code>, <code>matched_names</code> and <code>mismatched_names</code> are hidden. <code>score</code> and <code>matched</code> can disagree: <code>matched</code> follows the strictness, <code>score</code> is the similarity of the two full names.
+     *
+     * @param nameMatch the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder nameMatch(@Nullable TravelRuleNameMatch nameMatch) {
+      return setNullable("name_match", Conv.model(TravelRuleNameMatch::fromJson), nameMatch);
+    }
+
+    /**
+     * Field-by-field comparison of the transfer's party data with what the other side knows about the wallet holder. It names fields and results, never values, so it stays readable while the counterparty's data is masked. Null until a comparison ran.
+     *
+     * @param dataMatch the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder dataMatch(@Nullable TravelRuleDataMatch dataMatch) {
+      return setNullable("data_match", Conv.model(TravelRuleDataMatch::fromJson), dataMatch);
+    }
+
+    /**
+     * Shortcut for <code>data_match.mismatched_fields</code>. Empty when nothing differs.
+     *
+     * @param mismatchedFields the value
+     * @return this builder
+     */
+    public Builder mismatchedFields(List<String> mismatchedFields) {
+      return set("mismatched_fields", Conv.list(Conv.STRING), mismatchedFields);
+    }
+
+    /**
+     * Audit record of the moment the counterparty's data was unmasked. Null while the data is still masked, and for outbound transfers.
+     *
+     * @param dataUnmasked the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder dataUnmasked(@Nullable TravelRuleDataUnmasked dataUnmasked) {
+      return setNullable("data_unmasked", Conv.model(TravelRuleDataUnmasked::fromJson), dataUnmasked);
+    }
+
+    /**
+     * True while the counterparty's personal data is masked in this response.
+     *
+     * @param dataMasked the value
+     * @return this builder
+     */
+    public Builder dataMasked(boolean dataMasked) {
+      return set("data_masked", Conv.BOOLEAN, dataMasked);
     }
 
     /**
@@ -345,6 +495,56 @@ public final class TravelRuleTransferDetail extends JsonModel {
      */
     public Builder createdAt(OffsetDateTime createdAt) {
       return set("created_at", Conv.DATE_TIME, createdAt);
+    }
+
+    /**
+     * Where the latest message this transfer owes the other side stands. Null when the transfer never owed one (for example below <code>threshold_amount</code>, a declared self-hosted wallet, or a sunrise registration).
+     *
+     * @param delivery the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder delivery(@Nullable TravelRuleDelivery delivery) {
+      return setNullable("delivery", Conv.model(TravelRuleDelivery::fromJson), delivery);
+    }
+
+    /**
+     * How Didit looked for the counterparty, one entry per step that ran. Empty when no discovery ran, for example on an inbound transfer.
+     *
+     * @param discovery the value
+     * @return this builder
+     */
+    public Builder discovery(List<TravelRuleDiscoveryStep> discovery) {
+      return set("discovery", Conv.list(Conv.model(TravelRuleDiscoveryStep::fromJson)), discovery);
+    }
+
+    /**
+     * Why a <code>COUNTERPARTY_VASP_NOT_FOUND</code> or <code>COUNTERPARTY_VASP_NOT_REACHABLE</code> transfer is stuck; <code>""</code> for any other status. A failed delivery decides it first, on <code>COUNTERPARTY_VASP_NOT_REACHABLE</code> only: <code>email_undeliverable</code> (the mail provider refused the compliance email and no address is left to try: when it was sent, on a reminder, or as a permanent bounce reported later) or <code>delivery_failed</code> (the rail that was delivering failed for good: a network rail refused the message or ran out of retries, a <code>TRP</code> identity host did not answer, or the counterparty's <code>TRP</code> host did not accept the inquiry). Otherwise the <code>discovery</code> trace decides it: <code>awaiting_end_user</code> (no step named a counterparty Didit can reach), <code>directory_match_no_route</code> (a step named a directory VASP that has no route), <code>picked_member_without_proven_wallet</code> (the end user picked a Didit customer that has not proven control of the wallet), or <code>no_directory_match</code> when the trace gives no other reason. A resend moves the transfer on, so the reason clears. See [Why a transfer is stuck](/transaction-monitoring/travel-rule#why-a-transfer-is-stuck).
+     *
+     * @param reason the value
+     * @return this builder
+     */
+    public Builder reason(String reason) {
+      return set("reason", Conv.STRING, reason);
+    }
+
+    /**
+     * What moves the transfer on; <code>[]</code> for any status but <code>COUNTERPARTY_VASP_NOT_FOUND</code> or <code>COUNTERPARTY_VASP_NOT_REACHABLE</code>. <code>email_undeliverable</code> offers <code>update_compliance_email</code>, then <code>resend</code>. <code>delivery_failed</code> offers <code>resend</code>. A discovery reason offers <code>select_counterparty_vasp</code>, <code>declare_self_hosted</code>, <code>add_vasp_hint</code> and <code>resend</code>.
+     *
+     * @param nextActions the value
+     * @return this builder
+     */
+    public Builder nextActions(List<TravelRuleNextAction> nextActions) {
+      return set("next_actions", Conv.list(Conv.model(TravelRuleNextAction::fromJson)), nextActions);
+    }
+
+    /**
+     * How the transfer's chain names its two wallets, when that is more than one address paying another. Empty (<code>{}</code>) for an account-chain transfer (EVM, Solana, Tron), where the two addresses are the wallets. Matching, routing and the address book read the wallets from here first.
+     *
+     * @param chainDetails the value
+     * @return this builder
+     */
+    public Builder chainDetails(TravelRuleChainDetails chainDetails) {
+      return set("chain_details", Conv.model(TravelRuleChainDetails::fromJson), chainDetails);
     }
 
     /**
@@ -480,6 +680,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
+   * The rail the transfer was routed over, or null when no rail was selected (for example below the threshold, a self-hosted counterparty wallet, an after-deposit registration, or no reachable counterparty). INTERNAL means both sides are Didit applications; EMAIL means the counterparty was reached by an emailed pickup link. TEST_VASP means the Didit Test VASP answered a sandbox application's transfer. Over GTR, VERIFYVASP and SYGNA, Didit reads the counterparty's answer from the network's response or by polling it every 5 minutes. TRUST only sends, so a TRUST transfer stays AWAITING_COUNTERPARTY until it expires. A network rail is used only when you have connected your own membership for that network. It is chosen after the transaction create returns, so it is null in that response.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -493,10 +694,22 @@ public final class TravelRuleTransferDetail extends JsonModel {
     /** The value {@code "GTR"}. */
     public static final Rail GTR = new Rail("GTR");
 
+    /** The value {@code "TRUST"}. */
+    public static final Rail TRUST = new Rail("TRUST");
+
+    /** The value {@code "VERIFYVASP"}. */
+    public static final Rail VERIFYVASP = new Rail("VERIFYVASP");
+
+    /** The value {@code "SYGNA"}. */
+    public static final Rail SYGNA = new Rail("SYGNA");
+
     /** The value {@code "EMAIL"}. */
     public static final Rail EMAIL = new Rail("EMAIL");
 
-    private static final List<Rail> KNOWN_VALUES = List.of(INTERNAL, TRP, GTR, EMAIL);
+    /** The value {@code "TEST_VASP"}. */
+    public static final Rail TEST_VASP = new Rail("TEST_VASP");
+
+    private static final List<Rail> KNOWN_VALUES = List.of(INTERNAL, TRP, GTR, TRUST, VERIFYVASP, SYGNA, EMAIL, TEST_VASP);
 
     private Rail(String value) {
       super(value);
@@ -528,7 +741,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   public static final class Timeline extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("status", "at", "detail");
+    private static final Set<String> KNOWN_FIELDS = Set.of("status", "at", "detail", "name_match", "reason");
 
     private Timeline(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -593,6 +806,26 @@ public final class TravelRuleTransferDetail extends JsonModel {
       return Json.optional(json, "detail", Conv.STRING);
     }
 
+    /**
+     * The name comparison this entry decided, next to <code>detail</code>. Absent on entries that compared no name.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<TravelRuleNameMatch> nameMatch() {
+      return Json.optional(json, "name_match", Conv.model(TravelRuleNameMatch::fromJson));
+    }
+
+    /**
+     * Present only on the entry of a transition a failed delivery caused: <code>email_undeliverable</code> or <code>delivery_failed</code>, the value the transfer's <code>reason</code> reports.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> reason() {
+      return Json.optional(json, "reason", Conv.STRING);
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -637,6 +870,26 @@ public final class TravelRuleTransferDetail extends JsonModel {
       }
 
       /**
+       * The name comparison this entry decided, next to <code>detail</code>. Absent on entries that compared no name.
+       *
+       * @param nameMatch the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder nameMatch(@Nullable TravelRuleNameMatch nameMatch) {
+        return setNullable("name_match", Conv.model(TravelRuleNameMatch::fromJson), nameMatch);
+      }
+
+      /**
+       * Present only on the entry of a transition a failed delivery caused: <code>email_undeliverable</code> or <code>delivery_failed</code>, the value the transfer's <code>reason</code> reports.
+       *
+       * @param reason the value
+       * @return this builder
+       */
+      public Builder reason(String reason) {
+        return set("reason", Conv.STRING, reason);
+      }
+
+      /**
        * Builds the value.
        *
        * @return a new immutable {@code Timeline}
@@ -653,7 +906,7 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   public static final class CounterpartyVasp extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("name", "lei", "dd_score");
+    private static final Set<String> KNOWN_FIELDS = Set.of("name", "lei", "dd_score", "dd_score_breakdown", "dd_assessed_at");
 
     private CounterpartyVasp(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -709,13 +962,33 @@ public final class TravelRuleTransferDetail extends JsonModel {
     }
 
     /**
-     * The <code>dd_score</code> field.
+     * Due-diligence score from 0 to 100, where higher is better. Same scale as in the VASP directory.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
     public Optional<Long> ddScore() {
       return Json.optional(json, "dd_score", Conv.LONG);
+    }
+
+    /**
+     * Per-component contributions to dd_score, one object per component as in the VASP directory (jurisdiction, verification, protocol, lei, history, essentials, responsiveness), each {points, max, reason, detail}. {} until the counterparty has been assessed.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Map<String, TravelRuleTransferDetail.CounterpartyVasp.DdScoreBreakdownValue>> ddScoreBreakdown() {
+      return Json.optional(json, "dd_score_breakdown", Conv.map(Conv.model(TravelRuleTransferDetail.CounterpartyVasp.DdScoreBreakdownValue::fromJson)));
+    }
+
+    /**
+     * When the due-diligence assessment last ran. Null until the counterparty has been assessed.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> ddAssessedAt() {
+      return Json.optional(json, "dd_assessed_at", Conv.DATE_TIME);
     }
 
     @Override
@@ -752,13 +1025,33 @@ public final class TravelRuleTransferDetail extends JsonModel {
       }
 
       /**
-       * The <code>dd_score</code> field.
+       * Due-diligence score from 0 to 100, where higher is better. Same scale as in the VASP directory.
        *
        * @param ddScore the value
        * @return this builder
        */
       public Builder ddScore(long ddScore) {
         return set("dd_score", Conv.LONG, ddScore);
+      }
+
+      /**
+       * Per-component contributions to dd_score, one object per component as in the VASP directory (jurisdiction, verification, protocol, lei, history, essentials, responsiveness), each {points, max, reason, detail}. {} until the counterparty has been assessed.
+       *
+       * @param ddScoreBreakdown the value
+       * @return this builder
+       */
+      public Builder ddScoreBreakdown(Map<String, TravelRuleTransferDetail.CounterpartyVasp.DdScoreBreakdownValue> ddScoreBreakdown) {
+        return set("dd_score_breakdown", Conv.map(Conv.model(TravelRuleTransferDetail.CounterpartyVasp.DdScoreBreakdownValue::fromJson)), ddScoreBreakdown);
+      }
+
+      /**
+       * When the due-diligence assessment last ran. Null until the counterparty has been assessed.
+       *
+       * @param ddAssessedAt the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder ddAssessedAt(@Nullable OffsetDateTime ddAssessedAt) {
+        return setNullable("dd_assessed_at", Conv.DATE_TIME, ddAssessedAt);
       }
 
       /**
@@ -773,6 +1066,151 @@ public final class TravelRuleTransferDetail extends JsonModel {
       @Override
       protected Builder self() {
         return this;
+      }
+    }
+
+    public static final class DdScoreBreakdownValue extends JsonModel {
+      private static final Set<String> KNOWN_FIELDS = Set.of("points", "max", "reason", "detail");
+
+      private DdScoreBreakdownValue(ObjectNode json, Map<String, List<FileUpload>> files) {
+        super(json, files);
+      }
+
+      /**
+       * Reads a {@code DdScoreBreakdownValue} from JSON. Unknown fields are kept and readable
+       * through {@link #_additionalProperties()}.
+       *
+       * @param json a JSON object
+       * @return the parsed value
+       */
+      public static DdScoreBreakdownValue fromJson(JsonNode json) {
+        return new DdScoreBreakdownValue(Json.copyObject(json), Map.of());
+      }
+
+      /**
+       * Returns an empty builder.
+       *
+       * @return a new builder
+       */
+      public static Builder builder() {
+        return new Builder();
+      }
+
+      /**
+       * Returns a builder holding a copy of every field of this value.
+       *
+       * @return a new builder
+       */
+      public Builder toBuilder() {
+        return new Builder(this);
+      }
+
+      /**
+       * Points awarded for this component.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<Double> points() {
+        return Json.optional(json, "points", Conv.DOUBLE);
+      }
+
+      /**
+       * Maximum points this component can award.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<Long> max() {
+        return Json.optional(json, "max", Conv.LONG);
+      }
+
+      /**
+       * Machine-readable code of the component's verdict.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> reason() {
+        return Json.optional(json, "reason", Conv.STRING);
+      }
+
+      /**
+       * Human-readable reason for the awarded points.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> detail() {
+        return Json.optional(json, "detail", Conv.STRING);
+      }
+
+      @Override
+      protected Set<String> knownFields() {
+        return KNOWN_FIELDS;
+      }
+
+      /** Builds a {@link DdScoreBreakdownValue}. */
+      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+        private Builder() {}
+
+        private Builder(DdScoreBreakdownValue from) {
+          super(from);
+        }
+
+        /**
+         * Points awarded for this component.
+         *
+         * @param points the value
+         * @return this builder
+         */
+        public Builder points(double points) {
+          return set("points", Conv.DOUBLE, points);
+        }
+
+        /**
+         * Maximum points this component can award.
+         *
+         * @param max the value
+         * @return this builder
+         */
+        public Builder max(long max) {
+          return set("max", Conv.LONG, max);
+        }
+
+        /**
+         * Machine-readable code of the component's verdict.
+         *
+         * @param reason the value
+         * @return this builder
+         */
+        public Builder reason(String reason) {
+          return set("reason", Conv.STRING, reason);
+        }
+
+        /**
+         * Human-readable reason for the awarded points.
+         *
+         * @param detail the value
+         * @return this builder
+         */
+        public Builder detail(String detail) {
+          return set("detail", Conv.STRING, detail);
+        }
+
+        /**
+         * Builds the value.
+         *
+         * @return a new immutable {@code DdScoreBreakdownValue}
+         */
+        public DdScoreBreakdownValue build() {
+          return new DdScoreBreakdownValue(buildJson(), buildFiles());
+        }
+
+        @Override
+        protected Builder self() {
+          return this;
+        }
       }
     }
   }

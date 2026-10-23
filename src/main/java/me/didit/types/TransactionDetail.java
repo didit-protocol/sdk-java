@@ -407,13 +407,13 @@ public final class TransactionDetail extends JsonModel {
   }
 
   /**
-   * Travel Rule transfer or check. Populated when <code>travel_rule_details</code> was submitted, and also when Travel Rule is enabled and the transaction was created with <code>transaction_category: travelRule</code> (Didit initiates the exchange itself, even without <code>travel_rule_details</code>). <code>null</code> when no transfer or check exists.
+   * Travel Rule transfer or check. Populated when <code>travel_rule_details</code> was submitted, and also when Travel Rule is enabled and the transaction was created with <code>transaction_category: travelRule</code> (Didit initiates the exchange itself, even without <code>travel_rule_details</code>). <code>null</code> when no transfer or check exists. On an inbound transfer, the counterparty's <code>originator_data</code> and <code>beneficiary_data</code> stay masked (<code>data_masked: true</code>) until wallet ownership is confirmed.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<TransactionDetail.TravelRule> travelRule() {
-    return Json.optional(json, "travel_rule", Conv.model(TransactionDetail.TravelRule::fromJson));
+  public Optional<TransactionTravelRule> travelRule() {
+    return Json.optional(json, "travel_rule", Conv.model(TransactionTravelRule::fromJson));
   }
 
   /**
@@ -820,13 +820,13 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * Travel Rule transfer or check. Populated when <code>travel_rule_details</code> was submitted, and also when Travel Rule is enabled and the transaction was created with <code>transaction_category: travelRule</code> (Didit initiates the exchange itself, even without <code>travel_rule_details</code>). <code>null</code> when no transfer or check exists.
+     * Travel Rule transfer or check. Populated when <code>travel_rule_details</code> was submitted, and also when Travel Rule is enabled and the transaction was created with <code>transaction_category: travelRule</code> (Didit initiates the exchange itself, even without <code>travel_rule_details</code>). <code>null</code> when no transfer or check exists. On an inbound transfer, the counterparty's <code>originator_data</code> and <code>beneficiary_data</code> stay masked (<code>data_masked: true</code>) until wallet ownership is confirmed.
      *
      * @param travelRule the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder travelRule(TransactionDetail.@Nullable TravelRule travelRule) {
-      return setNullable("travel_rule", Conv.model(TransactionDetail.TravelRule::fromJson), travelRule);
+    public Builder travelRule(@Nullable TransactionTravelRule travelRule) {
+      return setNullable("travel_rule", Conv.model(TransactionTravelRule::fromJson), travelRule);
     }
 
     /**
@@ -3847,7 +3847,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * Evaluation detail: <code>scope_match</code>, <code>conditions[]</code> and <code>aggregations[]</code>. Each condition entry carries <code>field</code>, <code>operator</code>, <code>expected_value</code>, the <code>current_value</code> read from the transaction, <code>matched</code>, <code>group_index</code> and <code>group_logic</code>. Each aggregation entry (velocity / count / sum) carries <code>metric</code>, <code>field</code>, <code>operator</code>, <code>expected_value</code>, the <code>computed_value</code> the aggregate evaluated to, <code>window</code>, <code>filters</code>, <code>matched</code> and <code>sample_references</code>; deferred async aggregations have <code>computed_value: null</code> and <code>deferred: true</code>.
+     * Evaluation detail: <code>scope_match</code>, <code>conditions[]</code> and <code>aggregations[]</code>. Each condition entry carries <code>field</code>, <code>operator</code>, <code>expected_value</code>, the <code>current_value</code> read from the transaction, <code>matched</code>, <code>group_index</code> and <code>group_logic</code>. Each aggregation entry (velocity / count / sum) carries <code>metric</code>, <code>field</code>, <code>operator</code>, <code>expected_value</code>, the <code>computed_value</code> the aggregate evaluated to, <code>window</code>, <code>filters</code>, <code>matched</code> and <code>sample_references</code>; deferred async aggregations have <code>computed_value: null</code> and <code>deferred: true</code>. A nested condition group is one <code>conditions[]</code> entry with <code>operator</code> <code>any_of</code> or <code>all_of</code>, <code>field</code> null, and its members' results under its own <code>conditions</code>.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4000,7 +4000,7 @@ public final class TransactionDetail extends JsonModel {
       }
 
       /**
-       * Evaluation detail: <code>scope_match</code>, <code>conditions[]</code> and <code>aggregations[]</code>. Each condition entry carries <code>field</code>, <code>operator</code>, <code>expected_value</code>, the <code>current_value</code> read from the transaction, <code>matched</code>, <code>group_index</code> and <code>group_logic</code>. Each aggregation entry (velocity / count / sum) carries <code>metric</code>, <code>field</code>, <code>operator</code>, <code>expected_value</code>, the <code>computed_value</code> the aggregate evaluated to, <code>window</code>, <code>filters</code>, <code>matched</code> and <code>sample_references</code>; deferred async aggregations have <code>computed_value: null</code> and <code>deferred: true</code>.
+       * Evaluation detail: <code>scope_match</code>, <code>conditions[]</code> and <code>aggregations[]</code>. Each condition entry carries <code>field</code>, <code>operator</code>, <code>expected_value</code>, the <code>current_value</code> read from the transaction, <code>matched</code>, <code>group_index</code> and <code>group_logic</code>. Each aggregation entry (velocity / count / sum) carries <code>metric</code>, <code>field</code>, <code>operator</code>, <code>expected_value</code>, the <code>computed_value</code> the aggregate evaluated to, <code>window</code>, <code>filters</code>, <code>matched</code> and <code>sample_references</code>; deferred async aggregations have <code>computed_value: null</code> and <code>deferred: true</code>. A nested condition group is one <code>conditions[]</code> entry with <code>operator</code> <code>any_of</code> or <code>all_of</code>, <code>field</code> null, and its members' results under its own <code>conditions</code>.
        *
        * @param metadata the value
        * @return this builder
@@ -4380,234 +4380,6 @@ public final class TransactionDetail extends JsonModel {
   }
 
   /**
-   * Travel Rule transfer or check. Populated when <code>travel_rule_details</code> was submitted, and also when Travel Rule is enabled and the transaction was created with <code>transaction_category: travelRule</code> (Didit initiates the exchange itself, even without <code>travel_rule_details</code>). <code>null</code> when no transfer or check exists.
-   */
-  public static final class TravelRule extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "protocol", "required", "obligations_count", "originator_data", "beneficiary_data", "metadata");
-
-    private TravelRule(ObjectNode json, Map<String, List<FileUpload>> files) {
-      super(json, files);
-    }
-
-    /**
-     * Reads a {@code TravelRule} from JSON. Unknown fields are kept and readable
-     * through {@link #_additionalProperties()}.
-     *
-     * @param json a JSON object
-     * @return the parsed value
-     */
-    public static TravelRule fromJson(JsonNode json) {
-      return new TravelRule(Json.copyObject(json), Map.of());
-    }
-
-    /**
-     * Returns an empty builder.
-     *
-     * @return a new builder
-     */
-    public static Builder builder() {
-      return new Builder();
-    }
-
-    /**
-     * Returns a builder holding a copy of every field of this value.
-     *
-     * @return a new builder
-     */
-    public Builder toBuilder() {
-      return new Builder(this);
-    }
-
-    /**
-     * The <code>uuid</code> field.
-     *
-     * @return the value, or empty when the field is absent or null
-     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-     */
-    public Optional<String> uuid() {
-      return Json.optional(json, "uuid", Conv.STRING);
-    }
-
-    /**
-     * The <code>status</code> field.
-     *
-     * @return the value, or empty when the field is absent or null
-     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-     */
-    public Optional<String> status() {
-      return Json.optional(json, "status", Conv.STRING);
-    }
-
-    /**
-     * The <code>protocol</code> field.
-     *
-     * @return the value, or empty when the field is absent or null
-     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-     */
-    public Optional<String> protocol() {
-      return Json.optional(json, "protocol", Conv.STRING);
-    }
-
-    /**
-     * The <code>required</code> field.
-     *
-     * @return the value, or empty when the field is absent or null
-     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-     */
-    public Optional<Boolean> required() {
-      return Json.optional(json, "required", Conv.BOOLEAN);
-    }
-
-    /**
-     * The <code>obligations_count</code> field.
-     *
-     * @return the value, or empty when the field is absent or null
-     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-     */
-    public Optional<Long> obligationsCount() {
-      return Json.optional(json, "obligations_count", Conv.LONG);
-    }
-
-    /**
-     * The <code>originator_data</code> field.
-     *
-     * @return the value, or empty when the field is absent or null
-     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-     */
-    public Optional<Map<String, JsonNode>> originatorData() {
-      return Json.optional(json, "originator_data", Conv.OBJECT);
-    }
-
-    /**
-     * The <code>beneficiary_data</code> field.
-     *
-     * @return the value, or empty when the field is absent or null
-     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-     */
-    public Optional<Map<String, JsonNode>> beneficiaryData() {
-      return Json.optional(json, "beneficiary_data", Conv.OBJECT);
-    }
-
-    /**
-     * The <code>metadata</code> field.
-     *
-     * @return the value, or empty when the field is absent or null
-     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-     */
-    public Optional<Map<String, JsonNode>> metadata() {
-      return Json.optional(json, "metadata", Conv.OBJECT);
-    }
-
-    @Override
-    protected Set<String> knownFields() {
-      return KNOWN_FIELDS;
-    }
-
-    /** Builds a {@link TravelRule}. */
-    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
-      private Builder() {}
-
-      private Builder(TravelRule from) {
-        super(from);
-      }
-
-      /**
-       * The <code>uuid</code> field.
-       *
-       * @param uuid the value
-       * @return this builder
-       */
-      public Builder uuid(String uuid) {
-        return set("uuid", Conv.STRING, uuid);
-      }
-
-      /**
-       * The <code>status</code> field.
-       *
-       * @param status the value
-       * @return this builder
-       */
-      public Builder status(String status) {
-        return set("status", Conv.STRING, status);
-      }
-
-      /**
-       * The <code>protocol</code> field.
-       *
-       * @param protocol the value, or {@code null} to send JSON null
-       * @return this builder
-       */
-      public Builder protocol(@Nullable String protocol) {
-        return setNullable("protocol", Conv.STRING, protocol);
-      }
-
-      /**
-       * The <code>required</code> field.
-       *
-       * @param required the value
-       * @return this builder
-       */
-      public Builder required(boolean required) {
-        return set("required", Conv.BOOLEAN, required);
-      }
-
-      /**
-       * The <code>obligations_count</code> field.
-       *
-       * @param obligationsCount the value
-       * @return this builder
-       */
-      public Builder obligationsCount(long obligationsCount) {
-        return set("obligations_count", Conv.LONG, obligationsCount);
-      }
-
-      /**
-       * The <code>originator_data</code> field.
-       *
-       * @param originatorData the value
-       * @return this builder
-       */
-      public Builder originatorData(Map<String, ?> originatorData) {
-        return setAny("originator_data", originatorData);
-      }
-
-      /**
-       * The <code>beneficiary_data</code> field.
-       *
-       * @param beneficiaryData the value
-       * @return this builder
-       */
-      public Builder beneficiaryData(Map<String, ?> beneficiaryData) {
-        return setAny("beneficiary_data", beneficiaryData);
-      }
-
-      /**
-       * The <code>metadata</code> field.
-       *
-       * @param metadata the value
-       * @return this builder
-       */
-      public Builder metadata(Map<String, ?> metadata) {
-        return setAny("metadata", metadata);
-      }
-
-      /**
-       * Builds the value.
-       *
-       * @return a new immutable {@code TravelRule}
-       */
-      public TravelRule build() {
-        return new TravelRule(buildJson(), buildFiles());
-      }
-
-      @Override
-      protected Builder self() {
-        return this;
-      }
-    }
-  }
-
-  /**
    * Graph snapshot of related transactions/parties used by the rules engine. Either the <code>network_snapshot</code> submitted with the transaction or the graph Didit builds from a successful AML wallet screening (which replaces a submitted one). <code>null</code> when neither exists.
    */
   public static final class NetworkSnapshot extends JsonModel {
@@ -4950,8 +4722,8 @@ public final class TransactionDetail extends JsonModel {
      * @param value the value
      * @return the union
      */
-    public static ActionRequired ofVerificationSession(TransactionDetail.ActionRequired.VerificationSession value) {
-      return new ActionRequired(Conv.model(TransactionDetail.ActionRequired.VerificationSession::fromJson).write(value));
+    public static ActionRequired ofVerificationSession(TransactionVerificationSessionAction value) {
+      return new ActionRequired(Conv.model(TransactionVerificationSessionAction::fromJson).write(value));
     }
 
     /**
@@ -4970,8 +4742,8 @@ public final class TransactionDetail extends JsonModel {
      *
      * @return the value, or empty when {@link #isVerificationSession()} is false
      */
-    public Optional<TransactionDetail.ActionRequired.VerificationSession> asVerificationSession() {
-      return isVerificationSession() ? Optional.of(Conv.model(TransactionDetail.ActionRequired.VerificationSession::fromJson).read(json)) : Optional.empty();
+    public Optional<TransactionVerificationSessionAction> asVerificationSession() {
+      return isVerificationSession() ? Optional.of(Conv.model(TransactionVerificationSessionAction::fromJson).read(json)) : Optional.empty();
     }
 
     /**
@@ -4980,8 +4752,8 @@ public final class TransactionDetail extends JsonModel {
      * @param value the value
      * @return the union
      */
-    public static ActionRequired ofWalletOwnership(TransactionDetail.ActionRequired.WalletOwnership value) {
-      return new ActionRequired(Conv.model(TransactionDetail.ActionRequired.WalletOwnership::fromJson).write(value));
+    public static ActionRequired ofWalletOwnership(TransactionWalletOwnershipAction value) {
+      return new ActionRequired(Conv.model(TransactionWalletOwnershipAction::fromJson).write(value));
     }
 
     /**
@@ -5000,404 +4772,8 @@ public final class TransactionDetail extends JsonModel {
      *
      * @return the value, or empty when {@link #isWalletOwnership()} is false
      */
-    public Optional<TransactionDetail.ActionRequired.WalletOwnership> asWalletOwnership() {
-      return isWalletOwnership() ? Optional.of(Conv.model(TransactionDetail.ActionRequired.WalletOwnership::fromJson).read(json)) : Optional.empty();
-    }
-
-    /** Verification session */
-    public static final class VerificationSession extends JsonModel {
-      private static final Set<String> KNOWN_FIELDS = Set.of("type", "url", "session_id", "session_token", "status");
-
-      private VerificationSession(ObjectNode json, Map<String, List<FileUpload>> files) {
-        super(json, files);
-      }
-
-      /**
-       * Reads a {@code VerificationSession} from JSON. Unknown fields are kept and readable
-       * through {@link #_additionalProperties()}.
-       *
-       * @param json a JSON object
-       * @return the parsed value
-       */
-      public static VerificationSession fromJson(JsonNode json) {
-        return new VerificationSession(Json.copyObject(json), Map.of());
-      }
-
-      /**
-       * Returns an empty builder.
-       *
-       * @return a new builder
-       */
-      public static Builder builder() {
-        return new Builder();
-      }
-
-      /**
-       * Returns a builder holding a copy of every field of this value.
-       *
-       * @return a new builder
-       */
-      public Builder toBuilder() {
-        return new Builder(this);
-      }
-
-      /**
-       * The <code>type</code> field.
-       *
-       * @return the value
-       * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
-       */
-      public TransactionDetail.ActionRequired.VerificationSession.Type type() {
-        return Json.required(json, "type", Conv.enumeration(TransactionDetail.ActionRequired.VerificationSession.Type::of));
-      }
-
-      /**
-       * Hosted verification URL to open for the end user.
-       *
-       * @return the value
-       * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
-       */
-      public String url() {
-        return Json.required(json, "url", Conv.STRING);
-      }
-
-      /**
-       * Verification session id.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<String> sessionId() {
-        return Json.optional(json, "session_id", Conv.STRING);
-      }
-
-      /**
-       * Session token, used by the mobile SDKs to launch the flow natively.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<String> sessionToken() {
-        return Json.optional(json, "session_token", Conv.STRING);
-      }
-
-      /**
-       * Verification session status.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<String> status() {
-        return Json.optional(json, "status", Conv.STRING);
-      }
-
-      @Override
-      protected Set<String> knownFields() {
-        return KNOWN_FIELDS;
-      }
-
-      /** Builds a {@link VerificationSession}. */
-      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
-        private Builder() {}
-
-        private Builder(VerificationSession from) {
-          super(from);
-        }
-
-        /**
-         * The <code>type</code> field.
-         *
-         * @param type the value
-         * @return this builder
-         */
-        public Builder type(TransactionDetail.ActionRequired.VerificationSession.Type type) {
-          return set("type", Conv.enumeration(TransactionDetail.ActionRequired.VerificationSession.Type::of), type);
-        }
-
-        /**
-         * Hosted verification URL to open for the end user.
-         *
-         * @param url the value
-         * @return this builder
-         */
-        public Builder url(String url) {
-          return set("url", Conv.STRING, url);
-        }
-
-        /**
-         * Verification session id.
-         *
-         * @param sessionId the value
-         * @return this builder
-         */
-        public Builder sessionId(String sessionId) {
-          return set("session_id", Conv.STRING, sessionId);
-        }
-
-        /**
-         * Session token, used by the mobile SDKs to launch the flow natively.
-         *
-         * @param sessionToken the value
-         * @return this builder
-         */
-        public Builder sessionToken(String sessionToken) {
-          return set("session_token", Conv.STRING, sessionToken);
-        }
-
-        /**
-         * Verification session status.
-         *
-         * @param status the value
-         * @return this builder
-         */
-        public Builder status(String status) {
-          return set("status", Conv.STRING, status);
-        }
-
-        /**
-         * Builds the value.
-         *
-         * @return a new immutable {@code VerificationSession}
-         * @throws IllegalStateException when a required field is missing
-         */
-        public VerificationSession build() {
-          require("type", false);
-          require("url", false);
-          return new VerificationSession(buildJson(), buildFiles());
-        }
-
-        @Override
-        protected Builder self() {
-          return this;
-        }
-      }
-
-      /**
-       *
-       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
-       */
-      public static final class Type extends StringEnum {
-        /** The value {@code "verification_session"}. */
-        public static final Type VERIFICATION_SESSION = new Type("verification_session");
-
-        private static final List<Type> KNOWN_VALUES = List.of(VERIFICATION_SESSION);
-
-        private Type(String value) {
-          super(value);
-        }
-
-        /**
-         * Returns the constant for a known value, or a new instance for any other value.
-         *
-         * @param value the string value
-         * @return the enum value
-         */
-        public static Type of(String value) {
-          return StringEnum.lookup(KNOWN_VALUES, value, Type::new);
-        }
-
-        /**
-         * Returns the values known to this SDK version.
-         *
-         * @return the known values
-         */
-        public static List<Type> knownValues() {
-          return KNOWN_VALUES;
-        }
-
-        @Override
-        public boolean isKnown() {
-          return KNOWN_VALUES.contains(this);
-        }
-      }
-    }
-
-    /** Wallet ownership */
-    public static final class WalletOwnership extends JsonModel {
-      private static final Set<String> KNOWN_FIELDS = Set.of("type", "url", "widget_session_id", "expires_at");
-
-      private WalletOwnership(ObjectNode json, Map<String, List<FileUpload>> files) {
-        super(json, files);
-      }
-
-      /**
-       * Reads a {@code WalletOwnership} from JSON. Unknown fields are kept and readable
-       * through {@link #_additionalProperties()}.
-       *
-       * @param json a JSON object
-       * @return the parsed value
-       */
-      public static WalletOwnership fromJson(JsonNode json) {
-        return new WalletOwnership(Json.copyObject(json), Map.of());
-      }
-
-      /**
-       * Returns an empty builder.
-       *
-       * @return a new builder
-       */
-      public static Builder builder() {
-        return new Builder();
-      }
-
-      /**
-       * Returns a builder holding a copy of every field of this value.
-       *
-       * @return a new builder
-       */
-      public Builder toBuilder() {
-        return new Builder(this);
-      }
-
-      /**
-       * The <code>type</code> field.
-       *
-       * @return the value
-       * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
-       */
-      public TransactionDetail.ActionRequired.WalletOwnership.Type type() {
-        return Json.required(json, "type", Conv.enumeration(TransactionDetail.ActionRequired.WalletOwnership.Type::of));
-      }
-
-      /**
-       * Hosted wallet-ownership widget URL. Open it in a real browser surface - on mobile use SFSafariViewController or a Chrome Custom Tab, never an embedded webview.
-       *
-       * @return the value
-       * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
-       */
-      public String url() {
-        return Json.required(json, "url", Conv.STRING);
-      }
-
-      /**
-       * Wallet-ownership widget session id.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<String> widgetSessionId() {
-        return Json.optional(json, "widget_session_id", Conv.STRING);
-      }
-
-      /**
-       * When the widget session expires.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<OffsetDateTime> expiresAt() {
-        return Json.optional(json, "expires_at", Conv.DATE_TIME);
-      }
-
-      @Override
-      protected Set<String> knownFields() {
-        return KNOWN_FIELDS;
-      }
-
-      /** Builds a {@link WalletOwnership}. */
-      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
-        private Builder() {}
-
-        private Builder(WalletOwnership from) {
-          super(from);
-        }
-
-        /**
-         * The <code>type</code> field.
-         *
-         * @param type the value
-         * @return this builder
-         */
-        public Builder type(TransactionDetail.ActionRequired.WalletOwnership.Type type) {
-          return set("type", Conv.enumeration(TransactionDetail.ActionRequired.WalletOwnership.Type::of), type);
-        }
-
-        /**
-         * Hosted wallet-ownership widget URL. Open it in a real browser surface - on mobile use SFSafariViewController or a Chrome Custom Tab, never an embedded webview.
-         *
-         * @param url the value
-         * @return this builder
-         */
-        public Builder url(String url) {
-          return set("url", Conv.STRING, url);
-        }
-
-        /**
-         * Wallet-ownership widget session id.
-         *
-         * @param widgetSessionId the value
-         * @return this builder
-         */
-        public Builder widgetSessionId(String widgetSessionId) {
-          return set("widget_session_id", Conv.STRING, widgetSessionId);
-        }
-
-        /**
-         * When the widget session expires.
-         *
-         * @param expiresAt the value
-         * @return this builder
-         */
-        public Builder expiresAt(OffsetDateTime expiresAt) {
-          return set("expires_at", Conv.DATE_TIME, expiresAt);
-        }
-
-        /**
-         * Builds the value.
-         *
-         * @return a new immutable {@code WalletOwnership}
-         * @throws IllegalStateException when a required field is missing
-         */
-        public WalletOwnership build() {
-          require("type", false);
-          require("url", false);
-          return new WalletOwnership(buildJson(), buildFiles());
-        }
-
-        @Override
-        protected Builder self() {
-          return this;
-        }
-      }
-
-      /**
-       *
-       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
-       */
-      public static final class Type extends StringEnum {
-        /** The value {@code "wallet_ownership"}. */
-        public static final Type WALLET_OWNERSHIP = new Type("wallet_ownership");
-
-        private static final List<Type> KNOWN_VALUES = List.of(WALLET_OWNERSHIP);
-
-        private Type(String value) {
-          super(value);
-        }
-
-        /**
-         * Returns the constant for a known value, or a new instance for any other value.
-         *
-         * @param value the string value
-         * @return the enum value
-         */
-        public static Type of(String value) {
-          return StringEnum.lookup(KNOWN_VALUES, value, Type::new);
-        }
-
-        /**
-         * Returns the values known to this SDK version.
-         *
-         * @return the known values
-         */
-        public static List<Type> knownValues() {
-          return KNOWN_VALUES;
-        }
-
-        @Override
-        public boolean isKnown() {
-          return KNOWN_VALUES.contains(this);
-        }
-      }
+    public Optional<TransactionWalletOwnershipAction> asWalletOwnership() {
+      return isWalletOwnership() ? Optional.of(Conv.model(TransactionWalletOwnershipAction::fromJson).read(json)) : Optional.empty();
     }
   }
 }

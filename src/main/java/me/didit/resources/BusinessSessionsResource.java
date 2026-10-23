@@ -9,7 +9,7 @@ import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
-import me.didit.types.BusinessSessionsListNetworksResponse;
+import me.didit.types.EntityNetworkMembershipList;
 
 /** The {@code business_sessions} resource: {@code client.businessSessions()}. */
 public final class BusinessSessionsResource {
@@ -42,7 +42,7 @@ public final class BusinessSessionsResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public BusinessSessionsListNetworksResponse listNetworks(String businessSessionId, RequestOptions options) {
+  public EntityNetworkMembershipList listNetworks(String businessSessionId, RequestOptions options) {
     return client.execute(listNetworksRequest(businessSessionId), options, LIST_NETWORKS_RESPONSE).data();
   }
 
@@ -53,7 +53,7 @@ public final class BusinessSessionsResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<BusinessSessionsListNetworksResponse> listNetworksAsync(String businessSessionId, RequestOptions options) {
+  public CompletableFuture<EntityNetworkMembershipList> listNetworksAsync(String businessSessionId, RequestOptions options) {
     return client.executeAsync(listNetworksRequest(businessSessionId), options, LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -63,7 +63,7 @@ public final class BusinessSessionsResource {
    * @param businessSessionId the {@code business_session_id}
    * @return the result
    */
-  public BusinessSessionsListNetworksResponse listNetworks(String businessSessionId) {
+  public EntityNetworkMembershipList listNetworks(String businessSessionId) {
     return client.execute(listNetworksRequest(businessSessionId), RequestOptions.none(), LIST_NETWORKS_RESPONSE).data();
   }
 
@@ -73,11 +73,11 @@ public final class BusinessSessionsResource {
    * @param businessSessionId the {@code business_session_id}
    * @return a future completed with the result
    */
-  public CompletableFuture<BusinessSessionsListNetworksResponse> listNetworksAsync(String businessSessionId) {
+  public CompletableFuture<EntityNetworkMembershipList> listNetworksAsync(String businessSessionId) {
     return client.executeAsync(listNetworksRequest(businessSessionId), RequestOptions.none(), LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
   }
 
-  private static final ResponseHandler<BusinessSessionsListNetworksResponse> LIST_NETWORKS_RESPONSE = Responses.json(Conv.model(BusinessSessionsListNetworksResponse::fromJson));
+  private static final ResponseHandler<EntityNetworkMembershipList> LIST_NETWORKS_RESPONSE = Responses.json(Conv.model(EntityNetworkMembershipList::fromJson));
 
   private static ApiRequest listNetworksRequest(String businessSessionId) {
     return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/business-sessions/{business_session_id}/networks/")
@@ -101,7 +101,7 @@ public final class BusinessSessionsResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<BusinessSessionsListNetworksResponse> listNetworks(String businessSessionId, RequestOptions options) {
+    public RawResponse<EntityNetworkMembershipList> listNetworks(String businessSessionId, RequestOptions options) {
       return client.execute(listNetworksRequest(businessSessionId), options, LIST_NETWORKS_RESPONSE);
     }
 
@@ -112,7 +112,7 @@ public final class BusinessSessionsResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<BusinessSessionsListNetworksResponse>> listNetworksAsync(String businessSessionId, RequestOptions options) {
+    public CompletableFuture<RawResponse<EntityNetworkMembershipList>> listNetworksAsync(String businessSessionId, RequestOptions options) {
       return client.executeAsync(listNetworksRequest(businessSessionId), options, LIST_NETWORKS_RESPONSE);
     }
 
@@ -122,7 +122,7 @@ public final class BusinessSessionsResource {
      * @param businessSessionId the {@code business_session_id}
      * @return the result
      */
-    public RawResponse<BusinessSessionsListNetworksResponse> listNetworks(String businessSessionId) {
+    public RawResponse<EntityNetworkMembershipList> listNetworks(String businessSessionId) {
       return client.execute(listNetworksRequest(businessSessionId), RequestOptions.none(), LIST_NETWORKS_RESPONSE);
     }
 
@@ -132,7 +132,7 @@ public final class BusinessSessionsResource {
      * @param businessSessionId the {@code business_session_id}
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<BusinessSessionsListNetworksResponse>> listNetworksAsync(String businessSessionId) {
+    public CompletableFuture<RawResponse<EntityNetworkMembershipList>> listNetworksAsync(String businessSessionId) {
       return client.executeAsync(listNetworksRequest(businessSessionId), RequestOptions.none(), LIST_NETWORKS_RESPONSE);
     }
   }

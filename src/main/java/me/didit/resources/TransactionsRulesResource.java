@@ -221,7 +221,7 @@ public final class TransactionsRulesResource {
   /**
    * Update rule
    *
-   * <p>Partially update a rule. Custom rules accept every configuration field. Library (PRESET) rules accept only <code>mode</code> - use it to activate, disable, or switch a preset to TEST; any other field returns 400.
+   * <p>Partially update a rule. Custom rules accept every configuration field. Library (PRESET) rules accept only <code>mode</code> - use it to activate, disable, or switch a preset to TEST; any other field returns 400. An installed copy of a withheld library rule is switched off: setting its <code>mode</code> to anything but <code>DISABLED</code> answers 400 ("This library rule cannot run yet: its conditions read data the rules engine cannot evaluate.").
    *
    * <p>{@code PATCH /v3/transactions/rules/{rule_uuid}/}
    *
@@ -361,7 +361,7 @@ public final class TransactionsRulesResource {
   /**
    * List rule library
    *
-   * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search.
+   * <p>Browse the full preset rule library (150+ rules) with each entry's complete configuration and an <code>is_installed</code> flag for this application. Filter by bundle, category, or free-text search. A library rule whose conditions read data the rules engine cannot evaluate yet is withheld until it can run. Withheld rules are not listed.
    *
    * <p>{@code GET /v3/transactions/rules/library/}
    * <p>Returns one page; iterate it to fetch every following page automatically.
@@ -446,7 +446,7 @@ public final class TransactionsRulesResource {
   /**
    * Install library rules
    *
-   * <p>Install one or more presets onto the application, by <code>library_keys</code> or a whole <code>bundle</code>. Installed presets evaluate immediately in their default mode; already-installed keys are skipped.
+   * <p>Install one or more presets onto the application, by <code>library_keys</code> or a whole <code>bundle</code>. An installed preset is active at once while transaction monitoring is on, and disabled otherwise; already-installed keys are skipped. A library rule whose conditions read data the rules engine cannot evaluate yet is withheld until it can run. A request that names one in <code>library_keys</code> answers 400 and installs nothing ("These library rules cannot run yet: their conditions read data the rules engine cannot evaluate." followed by the keys), and a <code>bundle</code> install skips it. A withheld rule comes back on its own once its conditions can be evaluated. A <code>library_keys</code> entry that is not in the library is skipped, not refused.
    *
    * <p>{@code POST /v3/transactions/rules/install/}
    *

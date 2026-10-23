@@ -11,14 +11,16 @@ import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
-import me.didit.types.NetworkDetail;
+import me.didit.types.NetworkDetailResponse;
 import me.didit.types.NetworkGraph;
 import me.didit.types.NetworkListItem;
 import me.didit.types.NetworkMap;
+import me.didit.types.NetworkTagRequest;
 import me.didit.types.NetworksListMembersResponse;
 import me.didit.types.NetworksListParams;
 import me.didit.types.NetworksListSignalsResponse;
 import me.didit.types.NetworksRetrieveGraphParams;
+import me.didit.types.NetworksRetrieveTimelineParams;
 import me.didit.types.NetworksRetrieveTimelineResponse;
 
 /** The {@code networks} resource: {@code client.networks()}. */
@@ -54,7 +56,7 @@ public final class NetworksResource {
   /**
    * List networks
    *
-   * <p>List fraud networks detected within this application's organization, newest activity first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks - clustering excludes sandbox data entirely.
+   * <p>List fraud networks detected within this application's organization, highest risk first by default. By default dismissed networks are excluded; pass status to include them. Sandbox applications never have networks: clustering excludes sandbox data entirely. Every response carries the organization's <code>sharing_mode</code> and whether cross-organization signals apply to it (<code>cross_org_available</code>, <code>cross_org_unavailable_reason</code>). <code>kpis</code> aggregate the networks that match your filters and <code>counts</code> aggregate every network the application can see; pass <code>summary=false</code> to skip both when you only need the page. Requires a full-access API key, or <code>list:networks</code> for a console member.
    *
    * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/}
    * <p>Application scoped: the organization and application ids come from the client options.
@@ -140,7 +142,7 @@ public final class NetworksResource {
   /**
    * Get network
    *
-   * <p>Retrieve a single network's full detail, including stats, fraud tags, and risk signals.
+   * <p>Retrieve a single network's full detail: stats, fraud tags and risk signals, plus the organization's <code>sharing_mode</code> and cross-organization availability, your application's <code>tags</code> on the network, member <code>outcomes</code> and pattern scores (<code>patterns</code>). Requires a full-access API key, or <code>read:networks</code> for a console member.
    *
    * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
@@ -149,7 +151,7 @@ public final class NetworksResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public NetworkDetail retrieve(String networkUuid, RequestOptions options) {
+  public NetworkDetailResponse retrieve(String networkUuid, RequestOptions options) {
     return client.execute(retrieveRequest(networkUuid), options, RETRIEVE_RESPONSE).data();
   }
 
@@ -160,7 +162,7 @@ public final class NetworksResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<NetworkDetail> retrieveAsync(String networkUuid, RequestOptions options) {
+  public CompletableFuture<NetworkDetailResponse> retrieveAsync(String networkUuid, RequestOptions options) {
     return client.executeAsync(retrieveRequest(networkUuid), options, RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -170,7 +172,7 @@ public final class NetworksResource {
    * @param networkUuid the {@code network_uuid}
    * @return the result
    */
-  public NetworkDetail retrieve(String networkUuid) {
+  public NetworkDetailResponse retrieve(String networkUuid) {
     return client.execute(retrieveRequest(networkUuid), RequestOptions.none(), RETRIEVE_RESPONSE).data();
   }
 
@@ -180,7 +182,7 @@ public final class NetworksResource {
    * @param networkUuid the {@code network_uuid}
    * @return a future completed with the result
    */
-  public CompletableFuture<NetworkDetail> retrieveAsync(String networkUuid) {
+  public CompletableFuture<NetworkDetailResponse> retrieveAsync(String networkUuid) {
     return client.executeAsync(retrieveRequest(networkUuid), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -374,48 +376,94 @@ public final class NetworksResource {
   /**
    * Get network timeline
    *
-   * <p>Chronological events for this network: detection, each signal's observation, and lifecycle status changes.
+   * <p>Without <code>contract</code>: the network's own events (detection, each signal's latest observation and its review), oldest first and not paginated. <code>limit</code>, <code>cursor</code> and <code>event_type</code> are ignored. With <code>contract=2</code>: the typed timeline, newest first and paginated by cursor. It adds what the member accounts did (verification attempts, transactions, sign-ins you post through the events API and the live rules they hit) and the cases opened for the network. <code>note_added</code> events are returned to console members only, never to an API key. Requires a full-access API key, or <code>read:networks</code> for a console member.
    *
    * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/timeline/}
    * <p>Application scoped: the organization and application ids come from the client options.
    *
    * @param networkUuid Network UUID.
+   * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public NetworksRetrieveTimelineResponse retrieveTimeline(String networkUuid, RequestOptions options) {
-    return client.execute(retrieveTimelineRequest(networkUuid), options, RETRIEVE_TIMELINE_RESPONSE).data();
+  public NetworksRetrieveTimelineResponse retrieveTimeline(String networkUuid, NetworksRetrieveTimelineParams params, RequestOptions options) {
+    return client.execute(retrieveTimelineRequest(networkUuid, params), options, RETRIEVE_TIMELINE_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #retrieveTimeline(String, RequestOptions)}.
+   * Asynchronous {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)}.
+   *
+   * @param networkUuid the {@code network_uuid}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<NetworksRetrieveTimelineResponse> retrieveTimelineAsync(String networkUuid, NetworksRetrieveTimelineParams params, RequestOptions options) {
+    return client.executeAsync(retrieveTimelineRequest(networkUuid, params), options, RETRIEVE_TIMELINE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)}, with the client's options.
+   *
+   * @param networkUuid the {@code network_uuid}
+   * @param params the request parameters
+   * @return the result
+   */
+  public NetworksRetrieveTimelineResponse retrieveTimeline(String networkUuid, NetworksRetrieveTimelineParams params) {
+    return client.execute(retrieveTimelineRequest(networkUuid, params), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)}, with the client's options.
+   *
+   * @param networkUuid the {@code network_uuid}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<NetworksRetrieveTimelineResponse> retrieveTimelineAsync(String networkUuid, NetworksRetrieveTimelineParams params) {
+    return client.executeAsync(retrieveTimelineRequest(networkUuid, params), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)}, without parameters.
+   *
+   * @param networkUuid the {@code network_uuid}
+   * @param options per-request options
+   * @return the result
+   */
+  public NetworksRetrieveTimelineResponse retrieveTimeline(String networkUuid, RequestOptions options) {
+    return client.execute(retrieveTimelineRequest(networkUuid, NetworksRetrieveTimelineParams.builder().build()), options, RETRIEVE_TIMELINE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)}, without parameters.
    *
    * @param networkUuid the {@code network_uuid}
    * @param options per-request options
    * @return a future completed with the result
    */
   public CompletableFuture<NetworksRetrieveTimelineResponse> retrieveTimelineAsync(String networkUuid, RequestOptions options) {
-    return client.executeAsync(retrieveTimelineRequest(networkUuid), options, RETRIEVE_TIMELINE_RESPONSE).thenApply(RawResponse::data);
+    return client.executeAsync(retrieveTimelineRequest(networkUuid, NetworksRetrieveTimelineParams.builder().build()), options, RETRIEVE_TIMELINE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Same as {@link #retrieveTimeline(String, RequestOptions)}, with the client's options.
+   * Same as {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param networkUuid the {@code network_uuid}
    * @return the result
    */
   public NetworksRetrieveTimelineResponse retrieveTimeline(String networkUuid) {
-    return client.execute(retrieveTimelineRequest(networkUuid), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE).data();
+    return client.execute(retrieveTimelineRequest(networkUuid, NetworksRetrieveTimelineParams.builder().build()), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #retrieveTimeline(String, RequestOptions)}, with the client's options.
+   * Asynchronous {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param networkUuid the {@code network_uuid}
    * @return a future completed with the result
    */
   public CompletableFuture<NetworksRetrieveTimelineResponse> retrieveTimelineAsync(String networkUuid) {
-    return client.executeAsync(retrieveTimelineRequest(networkUuid), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE).thenApply(RawResponse::data);
+    return client.executeAsync(retrieveTimelineRequest(networkUuid, NetworksRetrieveTimelineParams.builder().build()), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
@@ -513,17 +561,119 @@ public final class NetworksResource {
     return client.executeAsync(downloadReportRequest(networkUuid), RequestOptions.none(), DOWNLOAD_REPORT_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Add a tag to a network
+   *
+   * <p>Put one of your application's tags on the network. Returns the network detail, whose <code>tags</code> lists your application's tags on the network, with <code>201</code> when the tag was added and <code>200</code> when it was already on the network. A tag that belongs to another application, or does not exist, returns 404 <code>Tag not found.</code>. Requires a full-access API key, or <code>write:networks</code> for a console member.
+   *
+   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/tags/add/}
+   * <p>Application scoped: the organization and application ids come from the client options.
+   *
+   * @param networkUuid Network UUID.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public NetworkDetailResponse addTag(String networkUuid, NetworkTagRequest params, RequestOptions options) {
+    return client.execute(addTagRequest(networkUuid, params), options, ADD_TAG_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #addTag(String, NetworkTagRequest, RequestOptions)}.
+   *
+   * @param networkUuid the {@code network_uuid}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<NetworkDetailResponse> addTagAsync(String networkUuid, NetworkTagRequest params, RequestOptions options) {
+    return client.executeAsync(addTagRequest(networkUuid, params), options, ADD_TAG_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #addTag(String, NetworkTagRequest, RequestOptions)}, with the client's options.
+   *
+   * @param networkUuid the {@code network_uuid}
+   * @param params the request parameters
+   * @return the result
+   */
+  public NetworkDetailResponse addTag(String networkUuid, NetworkTagRequest params) {
+    return client.execute(addTagRequest(networkUuid, params), RequestOptions.none(), ADD_TAG_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #addTag(String, NetworkTagRequest, RequestOptions)}, with the client's options.
+   *
+   * @param networkUuid the {@code network_uuid}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<NetworkDetailResponse> addTagAsync(String networkUuid, NetworkTagRequest params) {
+    return client.executeAsync(addTagRequest(networkUuid, params), RequestOptions.none(), ADD_TAG_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Remove a tag from a network
+   *
+   * <p>Remove one of your application's tags from the network. Returns the network detail. 404 when the tag is not on the network, or does not belong to your application. Requires a full-access API key, or <code>write:networks</code> for a console member.
+   *
+   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/tags/remove/}
+   * <p>Application scoped: the organization and application ids come from the client options.
+   *
+   * @param networkUuid Network UUID.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public NetworkDetailResponse removeTag(String networkUuid, NetworkTagRequest params, RequestOptions options) {
+    return client.execute(removeTagRequest(networkUuid, params), options, REMOVE_TAG_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #removeTag(String, NetworkTagRequest, RequestOptions)}.
+   *
+   * @param networkUuid the {@code network_uuid}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<NetworkDetailResponse> removeTagAsync(String networkUuid, NetworkTagRequest params, RequestOptions options) {
+    return client.executeAsync(removeTagRequest(networkUuid, params), options, REMOVE_TAG_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #removeTag(String, NetworkTagRequest, RequestOptions)}, with the client's options.
+   *
+   * @param networkUuid the {@code network_uuid}
+   * @param params the request parameters
+   * @return the result
+   */
+  public NetworkDetailResponse removeTag(String networkUuid, NetworkTagRequest params) {
+    return client.execute(removeTagRequest(networkUuid, params), RequestOptions.none(), REMOVE_TAG_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #removeTag(String, NetworkTagRequest, RequestOptions)}, with the client's options.
+   *
+   * @param networkUuid the {@code network_uuid}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<NetworkDetailResponse> removeTagAsync(String networkUuid, NetworkTagRequest params) {
+    return client.executeAsync(removeTagRequest(networkUuid, params), RequestOptions.none(), REMOVE_TAG_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<Page<NetworkListItem>> LIST_RESPONSE = Responses.page(Conv.model(NetworkListItem::fromJson));
 
   private static ApiRequest listRequest(NetworksListParams params) {
     return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/networks/")
         .applicationScoped()
         .params(params)
-        .queryFields("status", "signal_type", "pattern_type", "risk_band", "min_size", "max_size", "date_from", "date_to", "q", "ordering", "limit", "offset")
+        .queryFields("status", "scope", "signal_type", "pattern_type", "risk_band", "min_size", "max_size", "assignee", "priority", "risk_min", "has_case", "date_from", "date_to", "q", "ordering", "limit", "offset", "summary")
         .build();
   }
 
-  private static final ResponseHandler<NetworkDetail> RETRIEVE_RESPONSE = Responses.json(Conv.model(NetworkDetail::fromJson));
+  private static final ResponseHandler<NetworkDetailResponse> RETRIEVE_RESPONSE = Responses.json(Conv.model(NetworkDetailResponse::fromJson));
 
   private static ApiRequest retrieveRequest(String networkUuid) {
     return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/")
@@ -561,12 +711,14 @@ public final class NetworksResource {
         .build();
   }
 
-  private static final ResponseHandler<NetworksRetrieveTimelineResponse> RETRIEVE_TIMELINE_RESPONSE = Responses.json(Conv.model(NetworksRetrieveTimelineResponse::fromJson));
+  private static final ResponseHandler<NetworksRetrieveTimelineResponse> RETRIEVE_TIMELINE_RESPONSE = Responses.json(Conv.union(NetworksRetrieveTimelineResponse::fromJson));
 
-  private static ApiRequest retrieveTimelineRequest(String networkUuid) {
+  private static ApiRequest retrieveTimelineRequest(String networkUuid, NetworksRetrieveTimelineParams params) {
     return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/timeline/")
         .applicationScoped()
         .pathParam("network_uuid", networkUuid)
+        .params(params)
+        .queryFields("contract", "limit", "cursor", "event_type")
         .build();
   }
 
@@ -586,6 +738,28 @@ public final class NetworksResource {
         .applicationScoped()
         .pathParam("network_uuid", networkUuid)
         .accept("application/pdf")
+        .build();
+  }
+
+  private static final ResponseHandler<NetworkDetailResponse> ADD_TAG_RESPONSE = Responses.json(Conv.model(NetworkDetailResponse::fromJson));
+
+  private static ApiRequest addTagRequest(String networkUuid, NetworkTagRequest params) {
+    return ApiRequest.builder("POST", "/v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/tags/add/")
+        .applicationScoped()
+        .pathParam("network_uuid", networkUuid)
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<NetworkDetailResponse> REMOVE_TAG_RESPONSE = Responses.json(Conv.model(NetworkDetailResponse::fromJson));
+
+  private static ApiRequest removeTagRequest(String networkUuid, NetworkTagRequest params) {
+    return ApiRequest.builder("POST", "/v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/tags/remove/")
+        .applicationScoped()
+        .pathParam("network_uuid", networkUuid)
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
         .build();
   }
 
@@ -684,7 +858,7 @@ public final class NetworksResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<NetworkDetail> retrieve(String networkUuid, RequestOptions options) {
+    public RawResponse<NetworkDetailResponse> retrieve(String networkUuid, RequestOptions options) {
       return client.execute(retrieveRequest(networkUuid), options, RETRIEVE_RESPONSE);
     }
 
@@ -695,7 +869,7 @@ public final class NetworksResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<NetworkDetail>> retrieveAsync(String networkUuid, RequestOptions options) {
+    public CompletableFuture<RawResponse<NetworkDetailResponse>> retrieveAsync(String networkUuid, RequestOptions options) {
       return client.executeAsync(retrieveRequest(networkUuid), options, RETRIEVE_RESPONSE);
     }
 
@@ -705,7 +879,7 @@ public final class NetworksResource {
      * @param networkUuid the {@code network_uuid}
      * @return the result
      */
-    public RawResponse<NetworkDetail> retrieve(String networkUuid) {
+    public RawResponse<NetworkDetailResponse> retrieve(String networkUuid) {
       return client.execute(retrieveRequest(networkUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
@@ -715,7 +889,7 @@ public final class NetworksResource {
      * @param networkUuid the {@code network_uuid}
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<NetworkDetail>> retrieveAsync(String networkUuid) {
+    public CompletableFuture<RawResponse<NetworkDetailResponse>> retrieveAsync(String networkUuid) {
       return client.executeAsync(retrieveRequest(networkUuid), RequestOptions.none(), RETRIEVE_RESPONSE);
     }
 
@@ -892,45 +1066,91 @@ public final class NetworksResource {
     }
 
     /**
-     * {@link #retrieveTimeline(String, RequestOptions)} with the raw response.
+     * {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)} with the raw response.
+     *
+     * @param networkUuid the {@code network_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<NetworksRetrieveTimelineResponse> retrieveTimeline(String networkUuid, NetworksRetrieveTimelineParams params, RequestOptions options) {
+      return client.execute(retrieveTimelineRequest(networkUuid, params), options, RETRIEVE_TIMELINE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)} with the raw response.
+     *
+     * @param networkUuid the {@code network_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<NetworksRetrieveTimelineResponse>> retrieveTimelineAsync(String networkUuid, NetworksRetrieveTimelineParams params, RequestOptions options) {
+      return client.executeAsync(retrieveTimelineRequest(networkUuid, params), options, RETRIEVE_TIMELINE_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param networkUuid the {@code network_uuid}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<NetworksRetrieveTimelineResponse> retrieveTimeline(String networkUuid, NetworksRetrieveTimelineParams params) {
+      return client.execute(retrieveTimelineRequest(networkUuid, params), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param networkUuid the {@code network_uuid}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<NetworksRetrieveTimelineResponse>> retrieveTimelineAsync(String networkUuid, NetworksRetrieveTimelineParams params) {
+      return client.executeAsync(retrieveTimelineRequest(networkUuid, params), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param networkUuid the {@code network_uuid}
      * @param options per-request options
      * @return the result
      */
     public RawResponse<NetworksRetrieveTimelineResponse> retrieveTimeline(String networkUuid, RequestOptions options) {
-      return client.execute(retrieveTimelineRequest(networkUuid), options, RETRIEVE_TIMELINE_RESPONSE);
+      return client.execute(retrieveTimelineRequest(networkUuid, NetworksRetrieveTimelineParams.builder().build()), options, RETRIEVE_TIMELINE_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #retrieveTimeline(String, RequestOptions)} with the raw response.
+     * Asynchronous {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param networkUuid the {@code network_uuid}
      * @param options per-request options
      * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworksRetrieveTimelineResponse>> retrieveTimelineAsync(String networkUuid, RequestOptions options) {
-      return client.executeAsync(retrieveTimelineRequest(networkUuid), options, RETRIEVE_TIMELINE_RESPONSE);
+      return client.executeAsync(retrieveTimelineRequest(networkUuid, NetworksRetrieveTimelineParams.builder().build()), options, RETRIEVE_TIMELINE_RESPONSE);
     }
 
     /**
-     * {@link #retrieveTimeline(String, RequestOptions)} with the raw response, with the client's options.
+     * {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param networkUuid the {@code network_uuid}
      * @return the result
      */
     public RawResponse<NetworksRetrieveTimelineResponse> retrieveTimeline(String networkUuid) {
-      return client.execute(retrieveTimelineRequest(networkUuid), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE);
+      return client.execute(retrieveTimelineRequest(networkUuid, NetworksRetrieveTimelineParams.builder().build()), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #retrieveTimeline(String, RequestOptions)} with the raw response, with the client's options.
+     * Asynchronous {@link #retrieveTimeline(String, NetworksRetrieveTimelineParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param networkUuid the {@code network_uuid}
      * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<NetworksRetrieveTimelineResponse>> retrieveTimelineAsync(String networkUuid) {
-      return client.executeAsync(retrieveTimelineRequest(networkUuid), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE);
+      return client.executeAsync(retrieveTimelineRequest(networkUuid, NetworksRetrieveTimelineParams.builder().build()), RequestOptions.none(), RETRIEVE_TIMELINE_RESPONSE);
     }
 
     /**
@@ -1015,6 +1235,98 @@ public final class NetworksResource {
      */
     public CompletableFuture<RawResponse<BinaryResponse>> downloadReportAsync(String networkUuid) {
       return client.executeAsync(downloadReportRequest(networkUuid), RequestOptions.none(), DOWNLOAD_REPORT_RESPONSE);
+    }
+
+    /**
+     * {@link #addTag(String, NetworkTagRequest, RequestOptions)} with the raw response.
+     *
+     * @param networkUuid the {@code network_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<NetworkDetailResponse> addTag(String networkUuid, NetworkTagRequest params, RequestOptions options) {
+      return client.execute(addTagRequest(networkUuid, params), options, ADD_TAG_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #addTag(String, NetworkTagRequest, RequestOptions)} with the raw response.
+     *
+     * @param networkUuid the {@code network_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<NetworkDetailResponse>> addTagAsync(String networkUuid, NetworkTagRequest params, RequestOptions options) {
+      return client.executeAsync(addTagRequest(networkUuid, params), options, ADD_TAG_RESPONSE);
+    }
+
+    /**
+     * {@link #addTag(String, NetworkTagRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param networkUuid the {@code network_uuid}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<NetworkDetailResponse> addTag(String networkUuid, NetworkTagRequest params) {
+      return client.execute(addTagRequest(networkUuid, params), RequestOptions.none(), ADD_TAG_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #addTag(String, NetworkTagRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param networkUuid the {@code network_uuid}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<NetworkDetailResponse>> addTagAsync(String networkUuid, NetworkTagRequest params) {
+      return client.executeAsync(addTagRequest(networkUuid, params), RequestOptions.none(), ADD_TAG_RESPONSE);
+    }
+
+    /**
+     * {@link #removeTag(String, NetworkTagRequest, RequestOptions)} with the raw response.
+     *
+     * @param networkUuid the {@code network_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<NetworkDetailResponse> removeTag(String networkUuid, NetworkTagRequest params, RequestOptions options) {
+      return client.execute(removeTagRequest(networkUuid, params), options, REMOVE_TAG_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #removeTag(String, NetworkTagRequest, RequestOptions)} with the raw response.
+     *
+     * @param networkUuid the {@code network_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<NetworkDetailResponse>> removeTagAsync(String networkUuid, NetworkTagRequest params, RequestOptions options) {
+      return client.executeAsync(removeTagRequest(networkUuid, params), options, REMOVE_TAG_RESPONSE);
+    }
+
+    /**
+     * {@link #removeTag(String, NetworkTagRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param networkUuid the {@code network_uuid}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<NetworkDetailResponse> removeTag(String networkUuid, NetworkTagRequest params) {
+      return client.execute(removeTagRequest(networkUuid, params), RequestOptions.none(), REMOVE_TAG_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #removeTag(String, NetworkTagRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param networkUuid the {@code network_uuid}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<NetworkDetailResponse>> removeTagAsync(String networkUuid, NetworkTagRequest params) {
+      return client.executeAsync(removeTagRequest(networkUuid, params), RequestOptions.none(), REMOVE_TAG_RESPONSE);
     }
   }
 }

@@ -9,6 +9,7 @@ import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
+import me.didit.types.AmlRetrieveDatasetFreshnessResponse;
 import me.didit.types.AmlScreenParams;
 import me.didit.types.AmlScreenResponse;
 
@@ -92,12 +93,65 @@ public final class AmlResource {
     return client.executeAsync(screenRequest(params), RequestOptions.none(), SCREEN_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Get AML dataset freshness
+   *
+   * <p>Report how current the datasets behind AML screening are, per source family (<code>sanctions</code>, <code>pep</code>, <code>warnings</code>, <code>adverse_media</code>), as audit evidence for <a href="https://docs.didit.me/core-technology/aml-screening/continuous-monitoring-aml-screening#proving-that-monitoring-ran">ongoing AML monitoring</a>. The answer is platform-wide: no session in the path, no customer data in the body, the same answer for every application.
+   *
+   * <p>Always <code>200</code> for an accepted key. Check <code>availability</code> first: when it is not <code>available</code>, <code>dataset_freshness</code> is <code>null</code>. Dates are never estimated: a family whose datasets reported no date is absent from <code>sources</code>, and a family where only some datasets reported one has <code>oldest_updated_at: null</code>. Readings are taken while ongoing monitoring runs, not on each call; <code>captured_at</code> says when.
+   *
+   * <p>A scoped API key needs <code>sessions: read</code>; a key limited to some workflows or to approved sessions cannot call this endpoint. Nothing is billed.
+   *
+   * <p>{@code GET /v3/aml/dataset-freshness/}
+   *
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public AmlRetrieveDatasetFreshnessResponse retrieveDatasetFreshness(RequestOptions options) {
+    return client.execute(retrieveDatasetFreshnessRequest(), options, RETRIEVE_DATASET_FRESHNESS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveDatasetFreshness(RequestOptions)}.
+   *
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<AmlRetrieveDatasetFreshnessResponse> retrieveDatasetFreshnessAsync(RequestOptions options) {
+    return client.executeAsync(retrieveDatasetFreshnessRequest(), options, RETRIEVE_DATASET_FRESHNESS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retrieveDatasetFreshness(RequestOptions)}, with the client's options.
+   *
+   * @return the result
+   */
+  public AmlRetrieveDatasetFreshnessResponse retrieveDatasetFreshness() {
+    return client.execute(retrieveDatasetFreshnessRequest(), RequestOptions.none(), RETRIEVE_DATASET_FRESHNESS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveDatasetFreshness(RequestOptions)}, with the client's options.
+   *
+   * @return a future completed with the result
+   */
+  public CompletableFuture<AmlRetrieveDatasetFreshnessResponse> retrieveDatasetFreshnessAsync() {
+    return client.executeAsync(retrieveDatasetFreshnessRequest(), RequestOptions.none(), RETRIEVE_DATASET_FRESHNESS_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<AmlScreenResponse> SCREEN_RESPONSE = Responses.json(Conv.model(AmlScreenResponse::fromJson));
 
   private static ApiRequest screenRequest(AmlScreenParams params) {
     return ApiRequest.builder("POST", "/v3/aml/")
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<AmlRetrieveDatasetFreshnessResponse> RETRIEVE_DATASET_FRESHNESS_RESPONSE = Responses.json(Conv.model(AmlRetrieveDatasetFreshnessResponse::fromJson));
+
+  private static ApiRequest retrieveDatasetFreshnessRequest() {
+    return ApiRequest.builder("GET", "/v3/aml/dataset-freshness/")
         .build();
   }
 
@@ -149,6 +203,44 @@ public final class AmlResource {
      */
     public CompletableFuture<RawResponse<AmlScreenResponse>> screenAsync(AmlScreenParams params) {
       return client.executeAsync(screenRequest(params), RequestOptions.none(), SCREEN_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveDatasetFreshness(RequestOptions)} with the raw response.
+     *
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<AmlRetrieveDatasetFreshnessResponse> retrieveDatasetFreshness(RequestOptions options) {
+      return client.execute(retrieveDatasetFreshnessRequest(), options, RETRIEVE_DATASET_FRESHNESS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveDatasetFreshness(RequestOptions)} with the raw response.
+     *
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<AmlRetrieveDatasetFreshnessResponse>> retrieveDatasetFreshnessAsync(RequestOptions options) {
+      return client.executeAsync(retrieveDatasetFreshnessRequest(), options, RETRIEVE_DATASET_FRESHNESS_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveDatasetFreshness(RequestOptions)} with the raw response, with the client's options.
+     *
+     * @return the result
+     */
+    public RawResponse<AmlRetrieveDatasetFreshnessResponse> retrieveDatasetFreshness() {
+      return client.execute(retrieveDatasetFreshnessRequest(), RequestOptions.none(), RETRIEVE_DATASET_FRESHNESS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveDatasetFreshness(RequestOptions)} with the raw response, with the client's options.
+     *
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<AmlRetrieveDatasetFreshnessResponse>> retrieveDatasetFreshnessAsync() {
+      return client.executeAsync(retrieveDatasetFreshnessRequest(), RequestOptions.none(), RETRIEVE_DATASET_FRESHNESS_RESPONSE);
     }
   }
 }

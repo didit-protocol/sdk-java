@@ -15,8 +15,11 @@ import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
+/**
+ * A VASP of the directory or a member of the Didit network, with the routes your application has to it. A customer is a member of the Didit network only while its application is live, its Travel Rule is on, its profile is discoverable, has a legal name and a confirmed compliance email, and Didit has not marked the application as a test, demo or internal one. Each row also carries the shared due-diligence assessment (dd_score, risk_level, responsiveness, essential_checks) and your application's own decision, entity screening and questionnaires, which no other customer sees.
+ */
 public final class VaspDirectoryEntry extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("name", "lei", "jurisdiction", "dd_status", "dd_score", "reachable_rails", "is_didit_customer", "dd_score_breakdown", "dd_assessed_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("id", "kind", "name", "lei", "jurisdiction", "domains", "reachable", "aliases", "networks", "routes", "umbrella", "entities", "contacts", "dd_status", "dd_score", "reachable_rails", "is_didit_customer", "dd_score_breakdown", "dd_assessed_at", "dd_score_semantic", "risk_level", "responsiveness", "essential_checks", "decision", "entity_screening", "questionnaires");
 
   private VaspDirectoryEntry(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -52,6 +55,26 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
+   * The entry's id, for GET /v3/travel-rule/vasps/{vasp_id}/.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> id() {
+    return Json.optional(json, "id", Conv.STRING);
+  }
+
+  /**
+   * directory for an entry of the shared directory; didit for a member of the Didit network.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<VaspDirectoryEntry.Kind> kind() {
+    return Json.optional(json, "kind", Conv.enumeration(VaspDirectoryEntry.Kind::of));
+  }
+
+  /**
    * The <code>name</code> field.
    *
    * @return the value, or empty when the field is absent or null
@@ -72,7 +95,7 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * The <code>jurisdiction</code> field.
+   * ISO 3166 country code, as the source gives it.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -82,7 +105,87 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * The <code>dd_status</code> field.
+   * The VASP's web domains. Always empty for Didit network members.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<String>> domains() {
+    return Json.optional(json, "domains", Conv.list(Conv.STRING));
+  }
+
+  /**
+   * Whether your application has an available route to this VASP, or to one of its entities for a brand. Always true for a Didit network member, except on a sandbox application, where every row is false.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> reachable() {
+    return Json.optional(json, "reachable", Conv.BOOLEAN);
+  }
+
+  /**
+   * Other names the VASP is found by.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<VaspDirectoryEntry.Aliases>> aliases() {
+    return Json.optional(json, "aliases", Conv.list(Conv.model(VaspDirectoryEntry.Aliases::fromJson)));
+  }
+
+  /**
+   * The <code>networks</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<VaspDirectoryEntry.Networks>> networks() {
+    return Json.optional(json, "networks", Conv.list(Conv.model(VaspDirectoryEntry.Networks::fromJson)));
+  }
+
+  /**
+   * The <code>routes</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<VaspDirectoryEntry.Routes>> routes() {
+    return Json.optional(json, "routes", Conv.list(Conv.model(VaspDirectoryEntry.Routes::fromJson)));
+  }
+
+  /**
+   * The brand this entry is a regulated entity of. Null when it is not part of one.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<VaspDirectoryEntry.Umbrella> umbrella() {
+    return Json.optional(json, "umbrella", Conv.model(VaspDirectoryEntry.Umbrella::fromJson));
+  }
+
+  /**
+   * For a brand, the regulated entities that receive its transfers. A transfer naming the brand goes to the reachable entity in the jurisdiction it states (beneficiary_data.counterparty_vasp_jurisdiction), else to the entity blockchain analytics attribution linked to the destination wallet, else to the only reachable entity when no jurisdiction is stated. Two entities that fit equally are never guessed between.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<VaspDirectoryEntry.Entities>> entities() {
+    return Json.optional(json, "entities", Conv.list(Conv.model(VaspDirectoryEntry.Entities::fromJson)));
+  }
+
+  /**
+   * The platform's contacts for this VASP and your application's own.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<VaspDirectoryEntry.Contacts>> contacts() {
+    return Json.optional(json, "contacts", Conv.list(Conv.model(VaspDirectoryEntry.Contacts::fromJson)));
+  }
+
+  /**
+   * Didit's verification status of the entry, scored by the verification component of dd_score. Always COMPLETED for a Didit network member.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +195,7 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * The <code>dd_score</code> field.
+   * The shared due-diligence score of a directory entry, 0 to 100, where higher is safer (see dd_score_semantic): the sum of the points in dd_score_breakdown. Null for a Didit network member, which is not scored. An entry not assessed yet (dd_assessed_at null) shows 0 with an empty risk_level, so read risk_level rather than the raw score.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -102,7 +205,7 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * The <code>reachable_rails</code> field.
+   * Rails recorded on the entry. Read routes for what your application can use today.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,7 +215,7 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * true for discoverable Didit applications (dd_status is always COMPLETED, dd_score always 0 for these); false for internal counterparty-registry rows, which carry a real due-diligence status and score.
+   * true for a member of the Didit network (dd_status is always COMPLETED, dd_score null and risk_level empty for these) and for a directory entry linked to a Didit customer.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -122,23 +225,93 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * Per-component contributions to dd_score (licensing/registry, sanctions/PEP, jurisdiction risk, on-chain analytics risk), all derived from checks Didit runs in-house. Empty for Didit-customer rows.
+   * One object per component of dd_score. Components, their weight (max) and their reason codes: jurisdiction, 25 (jurisdiction_not_high_risk, jurisdiction_high_risk, jurisdiction_unknown); verification, 15 (dd_status_completed, dd_status_in_progress, dd_status_not_started, dd_status_rejected); protocol, 15 (native_rail, email_only, no_rail); lei, 10 (lei_valid, lei_missing); history, 10 (history, no_history); essentials, 15 (essential_checks, no_essential_checks); responsiveness, 10 (responsive, unresponsive, responsiveness_unknown). Empty for a Didit network member.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<Map<String, Long>> ddScoreBreakdown() {
-    return Json.optional(json, "dd_score_breakdown", Conv.map(Conv.LONG));
+  public Optional<Map<String, VaspDirectoryEntry.DdScoreBreakdownValue>> ddScoreBreakdown() {
+    return Json.optional(json, "dd_score_breakdown", Conv.map(Conv.model(VaspDirectoryEntry.DdScoreBreakdownValue::fromJson)));
   }
 
   /**
-   * When the due-diligence assessment last ran. Null for Didit-customer rows.
+   * When dd_score, risk_level and responsiveness were last computed: after an exchange with the entry completes, finishes, expires, mismatches or is declined, when Didit refreshes or curates the entry, and in the weekly directory refresh. Null for a Didit network member.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<OffsetDateTime> ddAssessedAt() {
     return Json.optional(json, "dd_assessed_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * Which way dd_score points: always higher_is_safer.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<VaspDirectoryEntry.DdScoreSemantic> ddScoreSemantic() {
+    return Json.optional(json, "dd_score_semantic", Conv.enumeration(VaspDirectoryEntry.DdScoreSemantic::of));
+  }
+
+  /**
+   * The band dd_score falls in: LOW (70 or more), MEDIUM (40 to 69) or HIGH (below 40). Empty for a Didit network member and for an entry not assessed yet. Filter on it with risk. Your own flagged screening never changes this shared value: it makes counterparty_risk_level HIGH in your rules instead.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<VaspDirectoryEntry.RiskLevel> riskLevel() {
+    return Json.optional(json, "risk_level", Conv.enumeration(VaspDirectoryEntry.RiskLevel::of));
+  }
+
+  /**
+   * Whether the VASP answers Travel Rule requests: the share of the requests Didit customers started towards it in the last 90 days that it answered. Only requests sent over a network or protocol rail, or by email to a shared address (the entry's compliance address or a platform contact), count; a request sent to an address a customer typed, or to a customer's private contact, never does. An expired request is unanswered; a completed exchange, a decline or a data mismatch is an answer; a cancelled request or an unreachable rail is neither. Always UNKNOWN with zero counts for a Didit network member.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<VaspDirectoryEntry.Responsiveness> responsiveness() {
+    return Json.optional(json, "responsiveness", Conv.model(VaspDirectoryEntry.Responsiveness::fromJson));
+  }
+
+  /**
+   * The essential-checks report of a directory entry, built only from the platform's verified sources: registration (an official register lists the VASP: the EU's interim MiCA register, the public TRISA directory or the global LEI register), licence (a MiCA authorisation is on record and current), domain (the entry's domain matches its TRP endpoint or the website its register gives) and lei (its LEI record is active, issued and consistent with the entry's names and country). The essentials component of dd_score is the share of decided checks that pass. Empty until the weekly directory refresh first checks the entry, and always empty for a Didit network member.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<VaspDirectoryEntry.EssentialChecks> essentialChecks() {
+    return Json.optional(json, "essential_checks", Conv.model(VaspDirectoryEntry.EssentialChecks::fromJson));
+  }
+
+  /**
+   * Your application's decision on this VASP, or for an entity with no decision of its own its brand's (inherited_from names the brand). Null when there is none. Private to your application.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleCounterpartyDecision> decision() {
+    return Json.optional(json, "decision", Conv.model(TravelRuleCounterpartyDecision::fromJson));
+  }
+
+  /**
+   * Your application's latest sanctions and adverse-media screening of this VASP. Null when you never screened it. Private to your application.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleCounterpartyScreening> entityScreening() {
+    return Json.optional(json, "entity_screening", Conv.model(TravelRuleCounterpartyScreening::fromJson));
+  }
+
+  /**
+   * Your application's due-diligence questionnaires with this VASP, newest first. Private to your application.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<TravelRuleCounterpartyQuestionnaire>> questionnaires() {
+    return Json.optional(json, "questionnaires", Conv.list(Conv.model(TravelRuleCounterpartyQuestionnaire::fromJson)));
   }
 
   @Override
@@ -152,6 +325,26 @@ public final class VaspDirectoryEntry extends JsonModel {
 
     private Builder(VaspDirectoryEntry from) {
       super(from);
+    }
+
+    /**
+     * The entry's id, for GET /v3/travel-rule/vasps/{vasp_id}/.
+     *
+     * @param id the value
+     * @return this builder
+     */
+    public Builder id(String id) {
+      return set("id", Conv.STRING, id);
+    }
+
+    /**
+     * directory for an entry of the shared directory; didit for a member of the Didit network.
+     *
+     * @param kind the value
+     * @return this builder
+     */
+    public Builder kind(VaspDirectoryEntry.Kind kind) {
+      return set("kind", Conv.enumeration(VaspDirectoryEntry.Kind::of), kind);
     }
 
     /**
@@ -175,7 +368,7 @@ public final class VaspDirectoryEntry extends JsonModel {
     }
 
     /**
-     * The <code>jurisdiction</code> field.
+     * ISO 3166 country code, as the source gives it.
      *
      * @param jurisdiction the value
      * @return this builder
@@ -185,7 +378,87 @@ public final class VaspDirectoryEntry extends JsonModel {
     }
 
     /**
-     * The <code>dd_status</code> field.
+     * The VASP's web domains. Always empty for Didit network members.
+     *
+     * @param domains the value
+     * @return this builder
+     */
+    public Builder domains(List<String> domains) {
+      return set("domains", Conv.list(Conv.STRING), domains);
+    }
+
+    /**
+     * Whether your application has an available route to this VASP, or to one of its entities for a brand. Always true for a Didit network member, except on a sandbox application, where every row is false.
+     *
+     * @param reachable the value
+     * @return this builder
+     */
+    public Builder reachable(boolean reachable) {
+      return set("reachable", Conv.BOOLEAN, reachable);
+    }
+
+    /**
+     * Other names the VASP is found by.
+     *
+     * @param aliases the value
+     * @return this builder
+     */
+    public Builder aliases(List<VaspDirectoryEntry.Aliases> aliases) {
+      return set("aliases", Conv.list(Conv.model(VaspDirectoryEntry.Aliases::fromJson)), aliases);
+    }
+
+    /**
+     * The <code>networks</code> field.
+     *
+     * @param networks the value
+     * @return this builder
+     */
+    public Builder networks(List<VaspDirectoryEntry.Networks> networks) {
+      return set("networks", Conv.list(Conv.model(VaspDirectoryEntry.Networks::fromJson)), networks);
+    }
+
+    /**
+     * The <code>routes</code> field.
+     *
+     * @param routes the value
+     * @return this builder
+     */
+    public Builder routes(List<VaspDirectoryEntry.Routes> routes) {
+      return set("routes", Conv.list(Conv.model(VaspDirectoryEntry.Routes::fromJson)), routes);
+    }
+
+    /**
+     * The brand this entry is a regulated entity of. Null when it is not part of one.
+     *
+     * @param umbrella the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder umbrella(VaspDirectoryEntry.@Nullable Umbrella umbrella) {
+      return setNullable("umbrella", Conv.model(VaspDirectoryEntry.Umbrella::fromJson), umbrella);
+    }
+
+    /**
+     * For a brand, the regulated entities that receive its transfers. A transfer naming the brand goes to the reachable entity in the jurisdiction it states (beneficiary_data.counterparty_vasp_jurisdiction), else to the entity blockchain analytics attribution linked to the destination wallet, else to the only reachable entity when no jurisdiction is stated. Two entities that fit equally are never guessed between.
+     *
+     * @param entities the value
+     * @return this builder
+     */
+    public Builder entities(List<VaspDirectoryEntry.Entities> entities) {
+      return set("entities", Conv.list(Conv.model(VaspDirectoryEntry.Entities::fromJson)), entities);
+    }
+
+    /**
+     * The platform's contacts for this VASP and your application's own.
+     *
+     * @param contacts the value
+     * @return this builder
+     */
+    public Builder contacts(List<VaspDirectoryEntry.Contacts> contacts) {
+      return set("contacts", Conv.list(Conv.model(VaspDirectoryEntry.Contacts::fromJson)), contacts);
+    }
+
+    /**
+     * Didit's verification status of the entry, scored by the verification component of dd_score. Always COMPLETED for a Didit network member.
      *
      * @param ddStatus the value
      * @return this builder
@@ -195,17 +468,17 @@ public final class VaspDirectoryEntry extends JsonModel {
     }
 
     /**
-     * The <code>dd_score</code> field.
+     * The shared due-diligence score of a directory entry, 0 to 100, where higher is safer (see dd_score_semantic): the sum of the points in dd_score_breakdown. Null for a Didit network member, which is not scored. An entry not assessed yet (dd_assessed_at null) shows 0 with an empty risk_level, so read risk_level rather than the raw score.
      *
-     * @param ddScore the value
+     * @param ddScore the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder ddScore(long ddScore) {
-      return set("dd_score", Conv.LONG, ddScore);
+    public Builder ddScore(@Nullable Long ddScore) {
+      return setNullable("dd_score", Conv.LONG, ddScore);
     }
 
     /**
-     * The <code>reachable_rails</code> field.
+     * Rails recorded on the entry. Read routes for what your application can use today.
      *
      * @param reachableRails the value
      * @return this builder
@@ -215,7 +488,7 @@ public final class VaspDirectoryEntry extends JsonModel {
     }
 
     /**
-     * true for discoverable Didit applications (dd_status is always COMPLETED, dd_score always 0 for these); false for internal counterparty-registry rows, which carry a real due-diligence status and score.
+     * true for a member of the Didit network (dd_status is always COMPLETED, dd_score null and risk_level empty for these) and for a directory entry linked to a Didit customer.
      *
      * @param isDiditCustomer the value
      * @return this builder
@@ -225,23 +498,93 @@ public final class VaspDirectoryEntry extends JsonModel {
     }
 
     /**
-     * Per-component contributions to dd_score (licensing/registry, sanctions/PEP, jurisdiction risk, on-chain analytics risk), all derived from checks Didit runs in-house. Empty for Didit-customer rows.
+     * One object per component of dd_score. Components, their weight (max) and their reason codes: jurisdiction, 25 (jurisdiction_not_high_risk, jurisdiction_high_risk, jurisdiction_unknown); verification, 15 (dd_status_completed, dd_status_in_progress, dd_status_not_started, dd_status_rejected); protocol, 15 (native_rail, email_only, no_rail); lei, 10 (lei_valid, lei_missing); history, 10 (history, no_history); essentials, 15 (essential_checks, no_essential_checks); responsiveness, 10 (responsive, unresponsive, responsiveness_unknown). Empty for a Didit network member.
      *
      * @param ddScoreBreakdown the value
      * @return this builder
      */
-    public Builder ddScoreBreakdown(Map<String, Long> ddScoreBreakdown) {
-      return set("dd_score_breakdown", Conv.map(Conv.LONG), ddScoreBreakdown);
+    public Builder ddScoreBreakdown(Map<String, VaspDirectoryEntry.DdScoreBreakdownValue> ddScoreBreakdown) {
+      return set("dd_score_breakdown", Conv.map(Conv.model(VaspDirectoryEntry.DdScoreBreakdownValue::fromJson)), ddScoreBreakdown);
     }
 
     /**
-     * When the due-diligence assessment last ran. Null for Didit-customer rows.
+     * When dd_score, risk_level and responsiveness were last computed: after an exchange with the entry completes, finishes, expires, mismatches or is declined, when Didit refreshes or curates the entry, and in the weekly directory refresh. Null for a Didit network member.
      *
      * @param ddAssessedAt the value, or {@code null} to send JSON null
      * @return this builder
      */
     public Builder ddAssessedAt(@Nullable OffsetDateTime ddAssessedAt) {
       return setNullable("dd_assessed_at", Conv.DATE_TIME, ddAssessedAt);
+    }
+
+    /**
+     * Which way dd_score points: always higher_is_safer.
+     *
+     * @param ddScoreSemantic the value
+     * @return this builder
+     */
+    public Builder ddScoreSemantic(VaspDirectoryEntry.DdScoreSemantic ddScoreSemantic) {
+      return set("dd_score_semantic", Conv.enumeration(VaspDirectoryEntry.DdScoreSemantic::of), ddScoreSemantic);
+    }
+
+    /**
+     * The band dd_score falls in: LOW (70 or more), MEDIUM (40 to 69) or HIGH (below 40). Empty for a Didit network member and for an entry not assessed yet. Filter on it with risk. Your own flagged screening never changes this shared value: it makes counterparty_risk_level HIGH in your rules instead.
+     *
+     * @param riskLevel the value
+     * @return this builder
+     */
+    public Builder riskLevel(VaspDirectoryEntry.RiskLevel riskLevel) {
+      return set("risk_level", Conv.enumeration(VaspDirectoryEntry.RiskLevel::of), riskLevel);
+    }
+
+    /**
+     * Whether the VASP answers Travel Rule requests: the share of the requests Didit customers started towards it in the last 90 days that it answered. Only requests sent over a network or protocol rail, or by email to a shared address (the entry's compliance address or a platform contact), count; a request sent to an address a customer typed, or to a customer's private contact, never does. An expired request is unanswered; a completed exchange, a decline or a data mismatch is an answer; a cancelled request or an unreachable rail is neither. Always UNKNOWN with zero counts for a Didit network member.
+     *
+     * @param responsiveness the value
+     * @return this builder
+     */
+    public Builder responsiveness(VaspDirectoryEntry.Responsiveness responsiveness) {
+      return set("responsiveness", Conv.model(VaspDirectoryEntry.Responsiveness::fromJson), responsiveness);
+    }
+
+    /**
+     * The essential-checks report of a directory entry, built only from the platform's verified sources: registration (an official register lists the VASP: the EU's interim MiCA register, the public TRISA directory or the global LEI register), licence (a MiCA authorisation is on record and current), domain (the entry's domain matches its TRP endpoint or the website its register gives) and lei (its LEI record is active, issued and consistent with the entry's names and country). The essentials component of dd_score is the share of decided checks that pass. Empty until the weekly directory refresh first checks the entry, and always empty for a Didit network member.
+     *
+     * @param essentialChecks the value
+     * @return this builder
+     */
+    public Builder essentialChecks(VaspDirectoryEntry.EssentialChecks essentialChecks) {
+      return set("essential_checks", Conv.model(VaspDirectoryEntry.EssentialChecks::fromJson), essentialChecks);
+    }
+
+    /**
+     * Your application's decision on this VASP, or for an entity with no decision of its own its brand's (inherited_from names the brand). Null when there is none. Private to your application.
+     *
+     * @param decision the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder decision(@Nullable TravelRuleCounterpartyDecision decision) {
+      return setNullable("decision", Conv.model(TravelRuleCounterpartyDecision::fromJson), decision);
+    }
+
+    /**
+     * Your application's latest sanctions and adverse-media screening of this VASP. Null when you never screened it. Private to your application.
+     *
+     * @param entityScreening the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder entityScreening(@Nullable TravelRuleCounterpartyScreening entityScreening) {
+      return setNullable("entity_screening", Conv.model(TravelRuleCounterpartyScreening::fromJson), entityScreening);
+    }
+
+    /**
+     * Your application's due-diligence questionnaires with this VASP, newest first. Private to your application.
+     *
+     * @param questionnaires the value
+     * @return this builder
+     */
+    public Builder questionnaires(List<TravelRuleCounterpartyQuestionnaire> questionnaires) {
+      return set("questionnaires", Conv.list(Conv.model(TravelRuleCounterpartyQuestionnaire::fromJson)), questionnaires);
     }
 
     /**
@@ -260,6 +603,1410 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
+   * directory for an entry of the shared directory; didit for a member of the Didit network.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Kind extends StringEnum {
+    /** The value {@code "directory"}. */
+    public static final Kind DIRECTORY = new Kind("directory");
+
+    /** The value {@code "didit"}. */
+    public static final Kind DIDIT = new Kind("didit");
+
+    private static final List<Kind> KNOWN_VALUES = List.of(DIRECTORY, DIDIT);
+
+    private Kind(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Kind of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Kind::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Kind> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  public static final class Aliases extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("name", "kind");
+
+    private Aliases(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Aliases} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Aliases fromJson(JsonNode json) {
+      return new Aliases(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>name</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> name() {
+      return Json.optional(json, "name", Conv.STRING);
+    }
+
+    /**
+     * trading_name, other_legal_name (from the global LEI register), network_name (the name on a Travel Rule network), attribution (the entity name blockchain analytics gives the VASP's wallets), merged (the name of a duplicate entry merged into this one) or staff.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<VaspDirectoryEntry.Aliases.Kind> kind() {
+      return Json.optional(json, "kind", Conv.enumeration(VaspDirectoryEntry.Aliases.Kind::of));
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Aliases}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Aliases from) {
+        super(from);
+      }
+
+      /**
+       * The <code>name</code> field.
+       *
+       * @param name the value
+       * @return this builder
+       */
+      public Builder name(String name) {
+        return set("name", Conv.STRING, name);
+      }
+
+      /**
+       * trading_name, other_legal_name (from the global LEI register), network_name (the name on a Travel Rule network), attribution (the entity name blockchain analytics gives the VASP's wallets), merged (the name of a duplicate entry merged into this one) or staff.
+       *
+       * @param kind the value
+       * @return this builder
+       */
+      public Builder kind(VaspDirectoryEntry.Aliases.Kind kind) {
+        return set("kind", Conv.enumeration(VaspDirectoryEntry.Aliases.Kind::of), kind);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Aliases}
+       */
+      public Aliases build() {
+        return new Aliases(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     * trading_name, other_legal_name (from the global LEI register), network_name (the name on a Travel Rule network), attribution (the entity name blockchain analytics gives the VASP's wallets), merged (the name of a duplicate entry merged into this one) or staff.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Kind extends StringEnum {
+      /** The value {@code "trading_name"}. */
+      public static final Kind TRADING_NAME = new Kind("trading_name");
+
+      /** The value {@code "other_legal_name"}. */
+      public static final Kind OTHER_LEGAL_NAME = new Kind("other_legal_name");
+
+      /** The value {@code "network_name"}. */
+      public static final Kind NETWORK_NAME = new Kind("network_name");
+
+      /** The value {@code "attribution"}. */
+      public static final Kind ATTRIBUTION = new Kind("attribution");
+
+      /** The value {@code "merged"}. */
+      public static final Kind MERGED = new Kind("merged");
+
+      /** The value {@code "staff"}. */
+      public static final Kind STAFF = new Kind("staff");
+
+      private static final List<Kind> KNOWN_VALUES = List.of(TRADING_NAME, OTHER_LEGAL_NAME, NETWORK_NAME, ATTRIBUTION, MERGED, STAFF);
+
+      private Kind(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Kind of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Kind::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Kind> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+  }
+
+  /**
+   * A current listing of this VASP in a Travel Rule network's member directory. A TRISA listing says who the VASP is on TRISA; Didit has no TRISA rail, so it is never a route.
+   */
+  public static final class Networks extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("network", "code", "listed_name", "country", "verified_at", "last_seen_at", "source");
+
+    private Networks(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Networks} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Networks fromJson(JsonNode json) {
+      return new Networks(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>network</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<VaspDirectoryEntry.Networks.Network> network() {
+      return Json.optional(json, "network", Conv.enumeration(VaspDirectoryEntry.Networks.Network::of));
+    }
+
+    /**
+     * The VASP's identifier on that network.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> code() {
+      return Json.optional(json, "code", Conv.STRING);
+    }
+
+    /**
+     * The name the network lists the VASP under.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> listedName() {
+      return Json.optional(json, "listed_name", Conv.STRING);
+    }
+
+    /**
+     * The country the network lists, when it gives one.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> country() {
+      return Json.optional(json, "country", Conv.STRING);
+    }
+
+    /**
+     * When Didit staff verified the listing. Null for listings read from a public directory.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> verifiedAt() {
+      return Json.optional(json, "verified_at", Conv.DATE_TIME);
+    }
+
+    /**
+     * When the source last showed the listing. A listing the source has not shown for three weeks is removed.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> lastSeenAt() {
+      return Json.optional(json, "last_seen_at", Conv.DATE_TIME);
+    }
+
+    /**
+     * Where the listing comes from: the public TRISA directory, or Didit staff.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<VaspDirectoryEntry.Networks.Source> source() {
+      return Json.optional(json, "source", Conv.enumeration(VaspDirectoryEntry.Networks.Source::of));
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Networks}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Networks from) {
+        super(from);
+      }
+
+      /**
+       * The <code>network</code> field.
+       *
+       * @param network the value
+       * @return this builder
+       */
+      public Builder network(VaspDirectoryEntry.Networks.Network network) {
+        return set("network", Conv.enumeration(VaspDirectoryEntry.Networks.Network::of), network);
+      }
+
+      /**
+       * The VASP's identifier on that network.
+       *
+       * @param code the value
+       * @return this builder
+       */
+      public Builder code(String code) {
+        return set("code", Conv.STRING, code);
+      }
+
+      /**
+       * The name the network lists the VASP under.
+       *
+       * @param listedName the value
+       * @return this builder
+       */
+      public Builder listedName(String listedName) {
+        return set("listed_name", Conv.STRING, listedName);
+      }
+
+      /**
+       * The country the network lists, when it gives one.
+       *
+       * @param country the value
+       * @return this builder
+       */
+      public Builder country(String country) {
+        return set("country", Conv.STRING, country);
+      }
+
+      /**
+       * When Didit staff verified the listing. Null for listings read from a public directory.
+       *
+       * @param verifiedAt the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder verifiedAt(@Nullable OffsetDateTime verifiedAt) {
+        return setNullable("verified_at", Conv.DATE_TIME, verifiedAt);
+      }
+
+      /**
+       * When the source last showed the listing. A listing the source has not shown for three weeks is removed.
+       *
+       * @param lastSeenAt the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder lastSeenAt(@Nullable OffsetDateTime lastSeenAt) {
+        return setNullable("last_seen_at", Conv.DATE_TIME, lastSeenAt);
+      }
+
+      /**
+       * Where the listing comes from: the public TRISA directory, or Didit staff.
+       *
+       * @param source the value
+       * @return this builder
+       */
+      public Builder source(VaspDirectoryEntry.Networks.Source source) {
+        return set("source", Conv.enumeration(VaspDirectoryEntry.Networks.Source::of), source);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Networks}
+       */
+      public Networks build() {
+        return new Networks(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Network extends StringEnum {
+      /** The value {@code "GTR"}. */
+      public static final Network GTR = new Network("GTR");
+
+      /** The value {@code "TRUST"}. */
+      public static final Network TRUST = new Network("TRUST");
+
+      /** The value {@code "VERIFYVASP"}. */
+      public static final Network VERIFYVASP = new Network("VERIFYVASP");
+
+      /** The value {@code "SYGNA"}. */
+      public static final Network SYGNA = new Network("SYGNA");
+
+      /** The value {@code "TRISA"}. */
+      public static final Network TRISA = new Network("TRISA");
+
+      private static final List<Network> KNOWN_VALUES = List.of(GTR, TRUST, VERIFYVASP, SYGNA, TRISA);
+
+      private Network(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Network of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Network::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Network> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     * Where the listing comes from: the public TRISA directory, or Didit staff.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Source extends StringEnum {
+      /** The value {@code "trisa_directory"}. */
+      public static final Source TRISA_DIRECTORY = new Source("trisa_directory");
+
+      /** The value {@code "staff"}. */
+      public static final Source STAFF = new Source("staff");
+
+      private static final List<Source> KNOWN_VALUES = List.of(TRISA_DIRECTORY, STAFF);
+
+      private Source(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Source of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Source::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Source> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+  }
+
+  /**
+   * One way your application can deliver Travel Rule data to this VASP, in the order dispatch tries them. A network route needs a membership on that network: your own (connected in the Marketplace) or Didit's once Didit holds one. Without it the route is listed as unavailable with the reason, never as a way to reach the VASP.
+   */
+  public static final class Routes extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("rail", "status", "reason", "via");
+
+    private Routes(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Routes} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Routes fromJson(JsonNode json) {
+      return new Routes(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>rail</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<VaspDirectoryEntry.Routes.Rail> rail() {
+      return Json.optional(json, "rail", Conv.enumeration(VaspDirectoryEntry.Routes.Rail::of));
+    }
+
+    /**
+     * The <code>status</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<VaspDirectoryEntry.Routes.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(VaspDirectoryEntry.Routes.Status::of));
+    }
+
+    /**
+     * Why an unavailable route cannot be used: no_membership (neither you nor Didit holds a membership on that network), network_switched_off (you turned that network off in your settings) or sandbox_application (a sandbox application sends only to the Didit Test VASP, so no route is available to it). Empty when the route is available.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<VaspDirectoryEntry.Routes.Reason> reason() {
+      return Json.optional(json, "reason", Conv.enumeration(VaspDirectoryEntry.Routes.Reason::of));
+    }
+
+    /**
+     * How an available route is reached: own_membership or didit_membership for a network rail, directory for a TRP endpoint the directory verified, contact for the EMAIL rail, didit_network for a Didit network member. Empty when the route is unavailable.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<VaspDirectoryEntry.Routes.Via> via() {
+      return Json.optional(json, "via", Conv.enumeration(VaspDirectoryEntry.Routes.Via::of));
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Routes}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Routes from) {
+        super(from);
+      }
+
+      /**
+       * The <code>rail</code> field.
+       *
+       * @param rail the value
+       * @return this builder
+       */
+      public Builder rail(VaspDirectoryEntry.Routes.Rail rail) {
+        return set("rail", Conv.enumeration(VaspDirectoryEntry.Routes.Rail::of), rail);
+      }
+
+      /**
+       * The <code>status</code> field.
+       *
+       * @param status the value
+       * @return this builder
+       */
+      public Builder status(VaspDirectoryEntry.Routes.Status status) {
+        return set("status", Conv.enumeration(VaspDirectoryEntry.Routes.Status::of), status);
+      }
+
+      /**
+       * Why an unavailable route cannot be used: no_membership (neither you nor Didit holds a membership on that network), network_switched_off (you turned that network off in your settings) or sandbox_application (a sandbox application sends only to the Didit Test VASP, so no route is available to it). Empty when the route is available.
+       *
+       * @param reason the value
+       * @return this builder
+       */
+      public Builder reason(VaspDirectoryEntry.Routes.Reason reason) {
+        return set("reason", Conv.enumeration(VaspDirectoryEntry.Routes.Reason::of), reason);
+      }
+
+      /**
+       * How an available route is reached: own_membership or didit_membership for a network rail, directory for a TRP endpoint the directory verified, contact for the EMAIL rail, didit_network for a Didit network member. Empty when the route is unavailable.
+       *
+       * @param via the value
+       * @return this builder
+       */
+      public Builder via(VaspDirectoryEntry.Routes.Via via) {
+        return set("via", Conv.enumeration(VaspDirectoryEntry.Routes.Via::of), via);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Routes}
+       */
+      public Routes build() {
+        return new Routes(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Rail extends StringEnum {
+      /** The value {@code "INTERNAL"}. */
+      public static final Rail INTERNAL = new Rail("INTERNAL");
+
+      /** The value {@code "TRP"}. */
+      public static final Rail TRP = new Rail("TRP");
+
+      /** The value {@code "GTR"}. */
+      public static final Rail GTR = new Rail("GTR");
+
+      /** The value {@code "TRUST"}. */
+      public static final Rail TRUST = new Rail("TRUST");
+
+      /** The value {@code "VERIFYVASP"}. */
+      public static final Rail VERIFYVASP = new Rail("VERIFYVASP");
+
+      /** The value {@code "SYGNA"}. */
+      public static final Rail SYGNA = new Rail("SYGNA");
+
+      /** The value {@code "EMAIL"}. */
+      public static final Rail EMAIL = new Rail("EMAIL");
+
+      private static final List<Rail> KNOWN_VALUES = List.of(INTERNAL, TRP, GTR, TRUST, VERIFYVASP, SYGNA, EMAIL);
+
+      private Rail(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Rail of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Rail::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Rail> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Status extends StringEnum {
+      /** The value {@code "available"}. */
+      public static final Status AVAILABLE = new Status("available");
+
+      /** The value {@code "unavailable"}. */
+      public static final Status UNAVAILABLE = new Status("unavailable");
+
+      private static final List<Status> KNOWN_VALUES = List.of(AVAILABLE, UNAVAILABLE);
+
+      private Status(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Status of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Status::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Status> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     * Why an unavailable route cannot be used: no_membership (neither you nor Didit holds a membership on that network), network_switched_off (you turned that network off in your settings) or sandbox_application (a sandbox application sends only to the Didit Test VASP, so no route is available to it). Empty when the route is available.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Reason extends StringEnum {
+      /** The value {@code ""}. */
+      public static final Reason EMPTY = new Reason("");
+
+      /** The value {@code "no_membership"}. */
+      public static final Reason NO_MEMBERSHIP = new Reason("no_membership");
+
+      /** The value {@code "network_switched_off"}. */
+      public static final Reason NETWORK_SWITCHED_OFF = new Reason("network_switched_off");
+
+      /** The value {@code "sandbox_application"}. */
+      public static final Reason SANDBOX_APPLICATION = new Reason("sandbox_application");
+
+      private static final List<Reason> KNOWN_VALUES = List.of(EMPTY, NO_MEMBERSHIP, NETWORK_SWITCHED_OFF, SANDBOX_APPLICATION);
+
+      private Reason(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Reason of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Reason::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Reason> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     * How an available route is reached: own_membership or didit_membership for a network rail, directory for a TRP endpoint the directory verified, contact for the EMAIL rail, didit_network for a Didit network member. Empty when the route is unavailable.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Via extends StringEnum {
+      /** The value {@code ""}. */
+      public static final Via EMPTY = new Via("");
+
+      /** The value {@code "own_membership"}. */
+      public static final Via OWN_MEMBERSHIP = new Via("own_membership");
+
+      /** The value {@code "didit_membership"}. */
+      public static final Via DIDIT_MEMBERSHIP = new Via("didit_membership");
+
+      /** The value {@code "directory"}. */
+      public static final Via DIRECTORY = new Via("directory");
+
+      /** The value {@code "contact"}. */
+      public static final Via CONTACT = new Via("contact");
+
+      /** The value {@code "didit_network"}. */
+      public static final Via DIDIT_NETWORK = new Via("didit_network");
+
+      private static final List<Via> KNOWN_VALUES = List.of(EMPTY, OWN_MEMBERSHIP, DIDIT_MEMBERSHIP, DIRECTORY, CONTACT, DIDIT_NETWORK);
+
+      private Via(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Via of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Via::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Via> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+  }
+
+  /** The brand this entry is a regulated entity of. Null when it is not part of one. */
+  public static final class Umbrella extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("id", "name");
+
+    private Umbrella(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Umbrella} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Umbrella fromJson(JsonNode json) {
+      return new Umbrella(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>id</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> id() {
+      return Json.optional(json, "id", Conv.STRING);
+    }
+
+    /**
+     * The <code>name</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> name() {
+      return Json.optional(json, "name", Conv.STRING);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Umbrella}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Umbrella from) {
+        super(from);
+      }
+
+      /**
+       * The <code>id</code> field.
+       *
+       * @param id the value
+       * @return this builder
+       */
+      public Builder id(String id) {
+        return set("id", Conv.STRING, id);
+      }
+
+      /**
+       * The <code>name</code> field.
+       *
+       * @param name the value
+       * @return this builder
+       */
+      public Builder name(String name) {
+        return set("name", Conv.STRING, name);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Umbrella}
+       */
+      public Umbrella build() {
+        return new Umbrella(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+  }
+
+  /** A regulated entity of a brand: the legal entity that receives a transfer. */
+  public static final class Entities extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("id", "name", "lei", "jurisdiction", "reachable");
+
+    private Entities(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Entities} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Entities fromJson(JsonNode json) {
+      return new Entities(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>id</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> id() {
+      return Json.optional(json, "id", Conv.STRING);
+    }
+
+    /**
+     * The <code>name</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> name() {
+      return Json.optional(json, "name", Conv.STRING);
+    }
+
+    /**
+     * The <code>lei</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> lei() {
+      return Json.optional(json, "lei", Conv.STRING);
+    }
+
+    /**
+     * The <code>jurisdiction</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> jurisdiction() {
+      return Json.optional(json, "jurisdiction", Conv.STRING);
+    }
+
+    /**
+     * Whether your application has an available route to it.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Boolean> reachable() {
+      return Json.optional(json, "reachable", Conv.BOOLEAN);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Entities}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Entities from) {
+        super(from);
+      }
+
+      /**
+       * The <code>id</code> field.
+       *
+       * @param id the value
+       * @return this builder
+       */
+      public Builder id(String id) {
+        return set("id", Conv.STRING, id);
+      }
+
+      /**
+       * The <code>name</code> field.
+       *
+       * @param name the value
+       * @return this builder
+       */
+      public Builder name(String name) {
+        return set("name", Conv.STRING, name);
+      }
+
+      /**
+       * The <code>lei</code> field.
+       *
+       * @param lei the value
+       * @return this builder
+       */
+      public Builder lei(String lei) {
+        return set("lei", Conv.STRING, lei);
+      }
+
+      /**
+       * The <code>jurisdiction</code> field.
+       *
+       * @param jurisdiction the value
+       * @return this builder
+       */
+      public Builder jurisdiction(String jurisdiction) {
+        return set("jurisdiction", Conv.STRING, jurisdiction);
+      }
+
+      /**
+       * Whether your application has an available route to it.
+       *
+       * @param reachable the value
+       * @return this builder
+       */
+      public Builder reachable(boolean reachable) {
+        return set("reachable", Conv.BOOLEAN, reachable);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Entities}
+       */
+      public Entities build() {
+        return new Entities(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+  }
+
+  /** A compliance contact the EMAIL rail can write to. */
+  public static final class Contacts extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("id", "email", "name", "source", "scope", "verified_at");
+
+    private Contacts(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Contacts} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Contacts fromJson(JsonNode json) {
+      return new Contacts(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>id</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> id() {
+      return Json.optional(json, "id", Conv.STRING);
+    }
+
+    /**
+     * The <code>email</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> email() {
+      return Json.optional(json, "email", Conv.STRING);
+    }
+
+    /**
+     * The <code>name</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> name() {
+      return Json.optional(json, "name", Conv.STRING);
+    }
+
+    /**
+     * staff: curated by Didit; application: added by your application; learned: an address that answered a Travel Rule request through its response link.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<VaspDirectoryEntry.Contacts.Source> source() {
+      return Json.optional(json, "source", Conv.enumeration(VaspDirectoryEntry.Contacts.Source::of));
+    }
+
+    /**
+     * platform contacts are used for every Didit customer's transfers; application contacts are private to your application, which sees only its own.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<VaspDirectoryEntry.Contacts.Scope> scope() {
+      return Json.optional(json, "scope", Conv.enumeration(VaspDirectoryEntry.Contacts.Scope::of));
+    }
+
+    /**
+     * When someone at this address answered a request. Null when it has not yet.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> verifiedAt() {
+      return Json.optional(json, "verified_at", Conv.DATE_TIME);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Contacts}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Contacts from) {
+        super(from);
+      }
+
+      /**
+       * The <code>id</code> field.
+       *
+       * @param id the value
+       * @return this builder
+       */
+      public Builder id(String id) {
+        return set("id", Conv.STRING, id);
+      }
+
+      /**
+       * The <code>email</code> field.
+       *
+       * @param email the value
+       * @return this builder
+       */
+      public Builder email(String email) {
+        return set("email", Conv.STRING, email);
+      }
+
+      /**
+       * The <code>name</code> field.
+       *
+       * @param name the value
+       * @return this builder
+       */
+      public Builder name(String name) {
+        return set("name", Conv.STRING, name);
+      }
+
+      /**
+       * staff: curated by Didit; application: added by your application; learned: an address that answered a Travel Rule request through its response link.
+       *
+       * @param source the value
+       * @return this builder
+       */
+      public Builder source(VaspDirectoryEntry.Contacts.Source source) {
+        return set("source", Conv.enumeration(VaspDirectoryEntry.Contacts.Source::of), source);
+      }
+
+      /**
+       * platform contacts are used for every Didit customer's transfers; application contacts are private to your application, which sees only its own.
+       *
+       * @param scope the value
+       * @return this builder
+       */
+      public Builder scope(VaspDirectoryEntry.Contacts.Scope scope) {
+        return set("scope", Conv.enumeration(VaspDirectoryEntry.Contacts.Scope::of), scope);
+      }
+
+      /**
+       * When someone at this address answered a request. Null when it has not yet.
+       *
+       * @param verifiedAt the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder verifiedAt(@Nullable OffsetDateTime verifiedAt) {
+        return setNullable("verified_at", Conv.DATE_TIME, verifiedAt);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Contacts}
+       */
+      public Contacts build() {
+        return new Contacts(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     * staff: curated by Didit; application: added by your application; learned: an address that answered a Travel Rule request through its response link.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Source extends StringEnum {
+      /** The value {@code "staff"}. */
+      public static final Source STAFF = new Source("staff");
+
+      /** The value {@code "application"}. */
+      public static final Source APPLICATION = new Source("application");
+
+      /** The value {@code "learned"}. */
+      public static final Source LEARNED = new Source("learned");
+
+      private static final List<Source> KNOWN_VALUES = List.of(STAFF, APPLICATION, LEARNED);
+
+      private Source(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Source of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Source::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Source> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     * platform contacts are used for every Didit customer's transfers; application contacts are private to your application, which sees only its own.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Scope extends StringEnum {
+      /** The value {@code "platform"}. */
+      public static final Scope PLATFORM = new Scope("platform");
+
+      /** The value {@code "application"}. */
+      public static final Scope APPLICATION = new Scope("application");
+
+      private static final List<Scope> KNOWN_VALUES = List.of(PLATFORM, APPLICATION);
+
+      private Scope(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Scope of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Scope::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Scope> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+  }
+
+  /**
+   * Didit's verification status of the entry, scored by the verification component of dd_score. Always COMPLETED for a Didit network member.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -321,10 +2068,19 @@ public final class VaspDirectoryEntry extends JsonModel {
     /** The value {@code "GTR"}. */
     public static final ReachableRails GTR = new ReachableRails("GTR");
 
+    /** The value {@code "TRUST"}. */
+    public static final ReachableRails TRUST = new ReachableRails("TRUST");
+
+    /** The value {@code "VERIFYVASP"}. */
+    public static final ReachableRails VERIFYVASP = new ReachableRails("VERIFYVASP");
+
+    /** The value {@code "SYGNA"}. */
+    public static final ReachableRails SYGNA = new ReachableRails("SYGNA");
+
     /** The value {@code "EMAIL"}. */
     public static final ReachableRails EMAIL = new ReachableRails("EMAIL");
 
-    private static final List<ReachableRails> KNOWN_VALUES = List.of(INTERNAL, TRP, GTR, EMAIL);
+    private static final List<ReachableRails> KNOWN_VALUES = List.of(INTERNAL, TRP, GTR, TRUST, VERIFYVASP, SYGNA, EMAIL);
 
     private ReachableRails(String value) {
       super(value);
@@ -352,6 +2108,920 @@ public final class VaspDirectoryEntry extends JsonModel {
     @Override
     public boolean isKnown() {
       return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  public static final class DdScoreBreakdownValue extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("points", "max", "reason", "detail");
+
+    private DdScoreBreakdownValue(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code DdScoreBreakdownValue} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static DdScoreBreakdownValue fromJson(JsonNode json) {
+      return new DdScoreBreakdownValue(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * Points the component contributes, rounded to one decimal.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Double> points() {
+      return Json.optional(json, "points", Conv.DOUBLE);
+    }
+
+    /**
+     * The component's weight: the points it contributes at best.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Long> max() {
+      return Json.optional(json, "max", Conv.LONG);
+    }
+
+    /**
+     * Machine-readable code of the component's verdict.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> reason() {
+      return Json.optional(json, "reason", Conv.STRING);
+    }
+
+    /**
+     * One-line English explanation.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> detail() {
+      return Json.optional(json, "detail", Conv.STRING);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link DdScoreBreakdownValue}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(DdScoreBreakdownValue from) {
+        super(from);
+      }
+
+      /**
+       * Points the component contributes, rounded to one decimal.
+       *
+       * @param points the value
+       * @return this builder
+       */
+      public Builder points(double points) {
+        return set("points", Conv.DOUBLE, points);
+      }
+
+      /**
+       * The component's weight: the points it contributes at best.
+       *
+       * @param max the value
+       * @return this builder
+       */
+      public Builder max(long max) {
+        return set("max", Conv.LONG, max);
+      }
+
+      /**
+       * Machine-readable code of the component's verdict.
+       *
+       * @param reason the value
+       * @return this builder
+       */
+      public Builder reason(String reason) {
+        return set("reason", Conv.STRING, reason);
+      }
+
+      /**
+       * One-line English explanation.
+       *
+       * @param detail the value
+       * @return this builder
+       */
+      public Builder detail(String detail) {
+        return set("detail", Conv.STRING, detail);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code DdScoreBreakdownValue}
+       */
+      public DdScoreBreakdownValue build() {
+        return new DdScoreBreakdownValue(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+  }
+
+  /**
+   * Which way dd_score points: always higher_is_safer.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class DdScoreSemantic extends StringEnum {
+    /** The value {@code "higher_is_safer"}. */
+    public static final DdScoreSemantic HIGHER_IS_SAFER = new DdScoreSemantic("higher_is_safer");
+
+    private static final List<DdScoreSemantic> KNOWN_VALUES = List.of(HIGHER_IS_SAFER);
+
+    private DdScoreSemantic(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static DdScoreSemantic of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, DdScoreSemantic::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<DdScoreSemantic> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * The band dd_score falls in: LOW (70 or more), MEDIUM (40 to 69) or HIGH (below 40). Empty for a Didit network member and for an entry not assessed yet. Filter on it with risk. Your own flagged screening never changes this shared value: it makes counterparty_risk_level HIGH in your rules instead.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class RiskLevel extends StringEnum {
+    /** The value {@code "LOW"}. */
+    public static final RiskLevel LOW = new RiskLevel("LOW");
+
+    /** The value {@code "MEDIUM"}. */
+    public static final RiskLevel MEDIUM = new RiskLevel("MEDIUM");
+
+    /** The value {@code "HIGH"}. */
+    public static final RiskLevel HIGH = new RiskLevel("HIGH");
+
+    /** The value {@code ""}. */
+    public static final RiskLevel EMPTY = new RiskLevel("");
+
+    private static final List<RiskLevel> KNOWN_VALUES = List.of(LOW, MEDIUM, HIGH, EMPTY);
+
+    private RiskLevel(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static RiskLevel of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, RiskLevel::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<RiskLevel> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Whether the VASP answers Travel Rule requests: the share of the requests Didit customers started towards it in the last 90 days that it answered. Only requests sent over a network or protocol rail, or by email to a shared address (the entry's compliance address or a platform contact), count; a request sent to an address a customer typed, or to a customer's private contact, never does. An expired request is unanswered; a completed exchange, a decline or a data mismatch is an answer; a cancelled request or an unreachable rail is neither. Always UNKNOWN with zero counts for a Didit network member.
+   */
+  public static final class Responsiveness extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("status", "answered", "total", "computed_at");
+
+    private Responsiveness(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Responsiveness} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Responsiveness fromJson(JsonNode json) {
+      return new Responsiveness(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * UNKNOWN with fewer than 5 decided requests in the window; UNRESPONSIVE when less than 10 percent of them were answered; RESPONSIVE otherwise.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<VaspDirectoryEntry.Responsiveness.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(VaspDirectoryEntry.Responsiveness.Status::of));
+    }
+
+    /**
+     * Decided requests in the window that the VASP answered.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Long> answered() {
+      return Json.optional(json, "answered", Conv.LONG);
+    }
+
+    /**
+     * Decided requests in the window: answered plus expired.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Long> total() {
+      return Json.optional(json, "total", Conv.LONG);
+    }
+
+    /**
+     * The <code>computed_at</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> computedAt() {
+      return Json.optional(json, "computed_at", Conv.DATE_TIME);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Responsiveness}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Responsiveness from) {
+        super(from);
+      }
+
+      /**
+       * UNKNOWN with fewer than 5 decided requests in the window; UNRESPONSIVE when less than 10 percent of them were answered; RESPONSIVE otherwise.
+       *
+       * @param status the value
+       * @return this builder
+       */
+      public Builder status(VaspDirectoryEntry.Responsiveness.Status status) {
+        return set("status", Conv.enumeration(VaspDirectoryEntry.Responsiveness.Status::of), status);
+      }
+
+      /**
+       * Decided requests in the window that the VASP answered.
+       *
+       * @param answered the value
+       * @return this builder
+       */
+      public Builder answered(long answered) {
+        return set("answered", Conv.LONG, answered);
+      }
+
+      /**
+       * Decided requests in the window: answered plus expired.
+       *
+       * @param total the value
+       * @return this builder
+       */
+      public Builder total(long total) {
+        return set("total", Conv.LONG, total);
+      }
+
+      /**
+       * The <code>computed_at</code> field.
+       *
+       * @param computedAt the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder computedAt(@Nullable OffsetDateTime computedAt) {
+        return setNullable("computed_at", Conv.DATE_TIME, computedAt);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Responsiveness}
+       */
+      public Responsiveness build() {
+        return new Responsiveness(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     * UNKNOWN with fewer than 5 decided requests in the window; UNRESPONSIVE when less than 10 percent of them were answered; RESPONSIVE otherwise.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Status extends StringEnum {
+      /** The value {@code "RESPONSIVE"}. */
+      public static final Status RESPONSIVE = new Status("RESPONSIVE");
+
+      /** The value {@code "UNRESPONSIVE"}. */
+      public static final Status UNRESPONSIVE = new Status("UNRESPONSIVE");
+
+      /** The value {@code "UNKNOWN"}. */
+      public static final Status UNKNOWN = new Status("UNKNOWN");
+
+      private static final List<Status> KNOWN_VALUES = List.of(RESPONSIVE, UNRESPONSIVE, UNKNOWN);
+
+      private Status(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Status of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Status::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Status> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+  }
+
+  /**
+   * The essential-checks report of a directory entry, built only from the platform's verified sources: registration (an official register lists the VASP: the EU's interim MiCA register, the public TRISA directory or the global LEI register), licence (a MiCA authorisation is on record and current), domain (the entry's domain matches its TRP endpoint or the website its register gives) and lei (its LEI record is active, issued and consistent with the entry's names and country). The essentials component of dd_score is the share of decided checks that pass. Empty until the weekly directory refresh first checks the entry, and always empty for a Didit network member.
+   */
+  public static final class EssentialChecks extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("level", "checked_at", "checks", "passed", "failed", "unknown", "total");
+
+    private EssentialChecks(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code EssentialChecks} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static EssentialChecks fromJson(JsonNode json) {
+      return new EssentialChecks(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>level</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<VaspDirectoryEntry.EssentialChecks.Level> level() {
+      return Json.optional(json, "level", Conv.enumeration(VaspDirectoryEntry.EssentialChecks.Level::of));
+    }
+
+    /**
+     * The <code>checked_at</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> checkedAt() {
+      return Json.optional(json, "checked_at", Conv.DATE_TIME);
+    }
+
+    /**
+     * The <code>checks</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<List<VaspDirectoryEntry.EssentialChecks.Checks>> checks() {
+      return Json.optional(json, "checks", Conv.list(Conv.model(VaspDirectoryEntry.EssentialChecks.Checks::fromJson)));
+    }
+
+    /**
+     * The <code>passed</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Long> passed() {
+      return Json.optional(json, "passed", Conv.LONG);
+    }
+
+    /**
+     * The <code>failed</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Long> failed() {
+      return Json.optional(json, "failed", Conv.LONG);
+    }
+
+    /**
+     * The <code>unknown</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Long> unknown() {
+      return Json.optional(json, "unknown", Conv.LONG);
+    }
+
+    /**
+     * The <code>total</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Long> total() {
+      return Json.optional(json, "total", Conv.LONG);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link EssentialChecks}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(EssentialChecks from) {
+        super(from);
+      }
+
+      /**
+       * The <code>level</code> field.
+       *
+       * @param level the value
+       * @return this builder
+       */
+      public Builder level(VaspDirectoryEntry.EssentialChecks.Level level) {
+        return set("level", Conv.enumeration(VaspDirectoryEntry.EssentialChecks.Level::of), level);
+      }
+
+      /**
+       * The <code>checked_at</code> field.
+       *
+       * @param checkedAt the value
+       * @return this builder
+       */
+      public Builder checkedAt(OffsetDateTime checkedAt) {
+        return set("checked_at", Conv.DATE_TIME, checkedAt);
+      }
+
+      /**
+       * The <code>checks</code> field.
+       *
+       * @param checks the value
+       * @return this builder
+       */
+      public Builder checks(List<VaspDirectoryEntry.EssentialChecks.Checks> checks) {
+        return set("checks", Conv.list(Conv.model(VaspDirectoryEntry.EssentialChecks.Checks::fromJson)), checks);
+      }
+
+      /**
+       * The <code>passed</code> field.
+       *
+       * @param passed the value
+       * @return this builder
+       */
+      public Builder passed(long passed) {
+        return set("passed", Conv.LONG, passed);
+      }
+
+      /**
+       * The <code>failed</code> field.
+       *
+       * @param failed the value
+       * @return this builder
+       */
+      public Builder failed(long failed) {
+        return set("failed", Conv.LONG, failed);
+      }
+
+      /**
+       * The <code>unknown</code> field.
+       *
+       * @param unknown the value
+       * @return this builder
+       */
+      public Builder unknown(long unknown) {
+        return set("unknown", Conv.LONG, unknown);
+      }
+
+      /**
+       * The <code>total</code> field.
+       *
+       * @param total the value
+       * @return this builder
+       */
+      public Builder total(long total) {
+        return set("total", Conv.LONG, total);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code EssentialChecks}
+       */
+      public EssentialChecks build() {
+        return new EssentialChecks(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Level extends StringEnum {
+      /** The value {@code "essential"}. */
+      public static final Level ESSENTIAL = new Level("essential");
+
+      private static final List<Level> KNOWN_VALUES = List.of(ESSENTIAL);
+
+      private Level(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Level of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Level::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Level> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    public static final class Checks extends JsonModel {
+      private static final Set<String> KNOWN_FIELDS = Set.of("id", "status", "reason", "detail");
+
+      private Checks(ObjectNode json, Map<String, List<FileUpload>> files) {
+        super(json, files);
+      }
+
+      /**
+       * Reads a {@code Checks} from JSON. Unknown fields are kept and readable
+       * through {@link #_additionalProperties()}.
+       *
+       * @param json a JSON object
+       * @return the parsed value
+       */
+      public static Checks fromJson(JsonNode json) {
+        return new Checks(Json.copyObject(json), Map.of());
+      }
+
+      /**
+       * Returns an empty builder.
+       *
+       * @return a new builder
+       */
+      public static Builder builder() {
+        return new Builder();
+      }
+
+      /**
+       * Returns a builder holding a copy of every field of this value.
+       *
+       * @return a new builder
+       */
+      public Builder toBuilder() {
+        return new Builder(this);
+      }
+
+      /**
+       * The <code>id</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<VaspDirectoryEntry.EssentialChecks.Checks.Id> id() {
+        return Json.optional(json, "id", Conv.enumeration(VaspDirectoryEntry.EssentialChecks.Checks.Id::of));
+      }
+
+      /**
+       * unknown when no source on record can decide the check.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<VaspDirectoryEntry.EssentialChecks.Checks.Status> status() {
+        return Json.optional(json, "status", Conv.enumeration(VaspDirectoryEntry.EssentialChecks.Checks.Status::of));
+      }
+
+      /**
+       * Machine-readable code of the verdict.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> reason() {
+        return Json.optional(json, "reason", Conv.STRING);
+      }
+
+      /**
+       * One-line English explanation.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> detail() {
+        return Json.optional(json, "detail", Conv.STRING);
+      }
+
+      @Override
+      protected Set<String> knownFields() {
+        return KNOWN_FIELDS;
+      }
+
+      /** Builds a {@link Checks}. */
+      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+        private Builder() {}
+
+        private Builder(Checks from) {
+          super(from);
+        }
+
+        /**
+         * The <code>id</code> field.
+         *
+         * @param id the value
+         * @return this builder
+         */
+        public Builder id(VaspDirectoryEntry.EssentialChecks.Checks.Id id) {
+          return set("id", Conv.enumeration(VaspDirectoryEntry.EssentialChecks.Checks.Id::of), id);
+        }
+
+        /**
+         * unknown when no source on record can decide the check.
+         *
+         * @param status the value
+         * @return this builder
+         */
+        public Builder status(VaspDirectoryEntry.EssentialChecks.Checks.Status status) {
+          return set("status", Conv.enumeration(VaspDirectoryEntry.EssentialChecks.Checks.Status::of), status);
+        }
+
+        /**
+         * Machine-readable code of the verdict.
+         *
+         * @param reason the value
+         * @return this builder
+         */
+        public Builder reason(String reason) {
+          return set("reason", Conv.STRING, reason);
+        }
+
+        /**
+         * One-line English explanation.
+         *
+         * @param detail the value
+         * @return this builder
+         */
+        public Builder detail(String detail) {
+          return set("detail", Conv.STRING, detail);
+        }
+
+        /**
+         * Builds the value.
+         *
+         * @return a new immutable {@code Checks}
+         */
+        public Checks build() {
+          return new Checks(buildJson(), buildFiles());
+        }
+
+        @Override
+        protected Builder self() {
+          return this;
+        }
+      }
+
+      /**
+       *
+       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+       */
+      public static final class Id extends StringEnum {
+        /** The value {@code "registration"}. */
+        public static final Id REGISTRATION = new Id("registration");
+
+        /** The value {@code "licence"}. */
+        public static final Id LICENCE = new Id("licence");
+
+        /** The value {@code "domain"}. */
+        public static final Id DOMAIN = new Id("domain");
+
+        /** The value {@code "lei"}. */
+        public static final Id LEI = new Id("lei");
+
+        private static final List<Id> KNOWN_VALUES = List.of(REGISTRATION, LICENCE, DOMAIN, LEI);
+
+        private Id(String value) {
+          super(value);
+        }
+
+        /**
+         * Returns the constant for a known value, or a new instance for any other value.
+         *
+         * @param value the string value
+         * @return the enum value
+         */
+        public static Id of(String value) {
+          return StringEnum.lookup(KNOWN_VALUES, value, Id::new);
+        }
+
+        /**
+         * Returns the values known to this SDK version.
+         *
+         * @return the known values
+         */
+        public static List<Id> knownValues() {
+          return KNOWN_VALUES;
+        }
+
+        @Override
+        public boolean isKnown() {
+          return KNOWN_VALUES.contains(this);
+        }
+      }
+
+      /**
+       * unknown when no source on record can decide the check.
+       *
+       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+       */
+      public static final class Status extends StringEnum {
+        /** The value {@code "pass"}. */
+        public static final Status PASS = new Status("pass");
+
+        /** The value {@code "fail"}. */
+        public static final Status FAIL = new Status("fail");
+
+        /** The value {@code "unknown"}. */
+        public static final Status UNKNOWN = new Status("unknown");
+
+        private static final List<Status> KNOWN_VALUES = List.of(PASS, FAIL, UNKNOWN);
+
+        private Status(String value) {
+          super(value);
+        }
+
+        /**
+         * Returns the constant for a known value, or a new instance for any other value.
+         *
+         * @param value the string value
+         * @return the enum value
+         */
+        public static Status of(String value) {
+          return StringEnum.lookup(KNOWN_VALUES, value, Status::new);
+        }
+
+        /**
+         * Returns the values known to this SDK version.
+         *
+         * @return the known values
+         */
+        public static List<Status> knownValues() {
+          return KNOWN_VALUES;
+        }
+
+        @Override
+        public boolean isKnown() {
+          return KNOWN_VALUES.contains(this);
+        }
+      }
     }
   }
 }

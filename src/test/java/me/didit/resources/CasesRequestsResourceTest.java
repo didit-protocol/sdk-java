@@ -126,4 +126,20 @@ final class CasesRequestsResourceTest {
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
+
+  @Test
+  void remind() {
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/requests/{request_uuid}/remind/", "200");
+    transport.respondJson(200, example);
+    var result = client.cases().requests().remind("00000000-0000-4000-8000-00000000bd2b", "00000000-0000-4000-8000-00000000e986");
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/00000000-0000-4000-8000-00000000bd2b/requests/00000000-0000-4000-8000-00000000e986/remind/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
 }

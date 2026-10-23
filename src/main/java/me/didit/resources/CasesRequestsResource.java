@@ -12,6 +12,7 @@ import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
 import me.didit.types.CasesRequestsListParams;
+import me.didit.types.CasesRequestsRemindResponse;
 import me.didit.types.CustomerMessagingCaseRequest;
 import me.didit.types.CustomerMessagingCaseRequestConfirmRequest;
 import me.didit.types.CustomerMessagingCaseRequestOptions;
@@ -363,6 +364,57 @@ public final class CasesRequestsResource {
     return client.executeAsync(previewRequest(caseUuid, params), RequestOptions.none(), PREVIEW_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Remind the customer of a request
+   *
+   * <p>Send a waiting customer request's email again, to the same verified recipient, with the same content. You can remind a request at most once every 24 hours. A reminder changes nothing else: the request keeps its deadline and the case keeps its status. Each reminder is logged on the case as a CUSTOMER_REQUEST event with action <code>reminded</code>. The response's <code>delivery_status</code> is how this reminder's delivery ended: SENT, SIMULATED (the email was not sent), or UNKNOWN (the email might have been accepted; it is not sent again automatically). <code>next_reminder_at</code> is when you can remind this request again. Returns 409 with a <code>reason</code> when the customer no longer has the request to answer, and 429 with <code>retry_at</code> and a <code>Retry-After</code> header when the request was reminded in the last 24 hours. Requires <code>write:cases</code>.
+   *
+   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/requests/{request_uuid}/remind/}
+   * <p>Application scoped: the organization and application ids come from the client options.
+   *
+   * @param caseUuid Case UUID.
+   * @param requestUuid Customer request UUID, from the case's request list.
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public CasesRequestsRemindResponse remind(String caseUuid, String requestUuid, RequestOptions options) {
+    return client.execute(remindRequest(caseUuid, requestUuid), options, REMIND_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #remind(String, String, RequestOptions)}.
+   *
+   * @param caseUuid the {@code case_uuid}
+   * @param requestUuid the {@code request_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<CasesRequestsRemindResponse> remindAsync(String caseUuid, String requestUuid, RequestOptions options) {
+    return client.executeAsync(remindRequest(caseUuid, requestUuid), options, REMIND_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #remind(String, String, RequestOptions)}, with the client's options.
+   *
+   * @param caseUuid the {@code case_uuid}
+   * @param requestUuid the {@code request_uuid}
+   * @return the result
+   */
+  public CasesRequestsRemindResponse remind(String caseUuid, String requestUuid) {
+    return client.execute(remindRequest(caseUuid, requestUuid), RequestOptions.none(), REMIND_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #remind(String, String, RequestOptions)}, with the client's options.
+   *
+   * @param caseUuid the {@code case_uuid}
+   * @param requestUuid the {@code request_uuid}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<CasesRequestsRemindResponse> remindAsync(String caseUuid, String requestUuid) {
+    return client.executeAsync(remindRequest(caseUuid, requestUuid), RequestOptions.none(), REMIND_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<Page<CustomerMessagingCaseRequest>> LIST_RESPONSE = Responses.page(Conv.model(CustomerMessagingCaseRequest::fromJson));
 
   private static ApiRequest listRequest(String caseUuid, CasesRequestsListParams params) {
@@ -423,6 +475,16 @@ public final class CasesRequestsResource {
         .pathParam("case_uuid", caseUuid)
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<CasesRequestsRemindResponse> REMIND_RESPONSE = Responses.json(Conv.model(CasesRequestsRemindResponse::fromJson));
+
+  private static ApiRequest remindRequest(String caseUuid, String requestUuid) {
+    return ApiRequest.builder("POST", "/v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/requests/{request_uuid}/remind/")
+        .applicationScoped()
+        .pathParam("case_uuid", caseUuid)
+        .pathParam("request_uuid", requestUuid)
         .build();
   }
 
@@ -746,6 +808,52 @@ public final class CasesRequestsResource {
      */
     public CompletableFuture<RawResponse<CustomerMessagingCaseRequestPreviewResponse>> previewAsync(String caseUuid, CustomerMessagingCaseRequestPreviewRequest params) {
       return client.executeAsync(previewRequest(caseUuid, params), RequestOptions.none(), PREVIEW_RESPONSE);
+    }
+
+    /**
+     * {@link #remind(String, String, RequestOptions)} with the raw response.
+     *
+     * @param caseUuid the {@code case_uuid}
+     * @param requestUuid the {@code request_uuid}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<CasesRequestsRemindResponse> remind(String caseUuid, String requestUuid, RequestOptions options) {
+      return client.execute(remindRequest(caseUuid, requestUuid), options, REMIND_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #remind(String, String, RequestOptions)} with the raw response.
+     *
+     * @param caseUuid the {@code case_uuid}
+     * @param requestUuid the {@code request_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<CasesRequestsRemindResponse>> remindAsync(String caseUuid, String requestUuid, RequestOptions options) {
+      return client.executeAsync(remindRequest(caseUuid, requestUuid), options, REMIND_RESPONSE);
+    }
+
+    /**
+     * {@link #remind(String, String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param caseUuid the {@code case_uuid}
+     * @param requestUuid the {@code request_uuid}
+     * @return the result
+     */
+    public RawResponse<CasesRequestsRemindResponse> remind(String caseUuid, String requestUuid) {
+      return client.execute(remindRequest(caseUuid, requestUuid), RequestOptions.none(), REMIND_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #remind(String, String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param caseUuid the {@code case_uuid}
+     * @param requestUuid the {@code request_uuid}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<CasesRequestsRemindResponse>> remindAsync(String caseUuid, String requestUuid) {
+      return client.executeAsync(remindRequest(caseUuid, requestUuid), RequestOptions.none(), REMIND_RESPONSE);
     }
   }
 }

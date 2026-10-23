@@ -3,6 +3,7 @@ package me.didit.types;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +13,13 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import me.didit.core.JsonUnion;
 import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code sessions.batch_delete}. */
 public final class SessionsBatchDeleteParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("session_numbers", "delete_all", "retain_face_embeddings", "face_retention_days", "face_retention_deadline", "deletion_instruction", "instruction_id");
+  private static final Set<String> KNOWN_FIELDS = Set.of("session_numbers", "delete_all", "retain_face_embeddings", "face_retention_days", "face_retention_deadline", "deletion_instruction", "instruction_id", "filter_status", "filter_vendor_data", "filter_search", "filter_workflow_id", "filter_date_from", "filter_date_to", "filter_country", "filter_document_type", "filter_document_name", "filter_region", "filter_didit_internal_id", "filter_session_type", "filter_api_service", "filter_screened_full_name", "filter_warning", "filter_status_initialized_as_in_review", "filter_is_kyc_to_be_reviewed", "filter_euuid", "filter_organization_name");
 
   private SessionsBatchDeleteParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -63,7 +65,7 @@ public final class SessionsBatchDeleteParams extends JsonModel {
   }
 
   /**
-   * When <code>true</code>, every remaining KYC session in the calling application is deleted and <code>session_numbers</code> is ignored. More than 20 matching sessions run as a deletion job (<code>202</code>) that covers only the sessions created before the request. Defaults to <code>false</code>. Irreversible; there is no confirmation step.
+   * When <code>true</code>, every remaining KYC session in the calling application is deleted and <code>session_numbers</code> is ignored, unless you narrow the selection with <code>filter_*</code> keys. More than 20 matching sessions run as a deletion job (<code>202</code>) that covers only the sessions created before the request. Defaults to <code>false</code>. Irreversible; there is no confirmation step.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -122,6 +124,196 @@ public final class SessionsBatchDeleteParams extends JsonModel {
     return Json.optional(json, "instruction_id", Conv.STRING);
   }
 
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>status</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsBatchDeleteParams.FilterStatus> filterStatus() {
+    return Json.optional(json, "filter_status", Conv.union(SessionsBatchDeleteParams.FilterStatus::fromJson));
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>vendor_data</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated text, so several values are not matched as alternatives. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> filterVendorData() {
+    return Json.optional(json, "filter_vendor_data", Conv.STRING);
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>search</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated text, so several values are not matched as alternatives. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> filterSearch() {
+    return Json.optional(json, "filter_search", Conv.STRING);
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>workflow_id</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsBatchDeleteParams.FilterWorkflowId> filterWorkflowId() {
+    return Json.optional(json, "filter_workflow_id", Conv.union(SessionsBatchDeleteParams.FilterWorkflowId::fromJson));
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>date_from</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated value, so several values are refused with <code>400</code>. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<LocalDate> filterDateFrom() {
+    return Json.optional(json, "filter_date_from", Conv.DATE);
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>date_to</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated value, so several values are refused with <code>400</code>. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<LocalDate> filterDateTo() {
+    return Json.optional(json, "filter_date_to", Conv.DATE);
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>country</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsBatchDeleteParams.FilterCountry> filterCountry() {
+    return Json.optional(json, "filter_country", Conv.union(SessionsBatchDeleteParams.FilterCountry::fromJson));
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>document_type</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsBatchDeleteParams.FilterDocumentType> filterDocumentType() {
+    return Json.optional(json, "filter_document_type", Conv.union(SessionsBatchDeleteParams.FilterDocumentType::fromJson));
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>document_name</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsBatchDeleteParams.FilterDocumentName> filterDocumentName() {
+    return Json.optional(json, "filter_document_name", Conv.union(SessionsBatchDeleteParams.FilterDocumentName::fromJson));
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>region</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsBatchDeleteParams.FilterRegion> filterRegion() {
+    return Json.optional(json, "filter_region", Conv.union(SessionsBatchDeleteParams.FilterRegion::fromJson));
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>didit_internal_id</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated value, so several values are refused with <code>400</code>. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> filterDiditInternalId() {
+    return Json.optional(json, "filter_didit_internal_id", Conv.STRING);
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>session_type</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsBatchDeleteParams.FilterSessionType> filterSessionType() {
+    return Json.optional(json, "filter_session_type", Conv.union(SessionsBatchDeleteParams.FilterSessionType::fromJson));
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>api_service</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated value, so several values are refused with <code>400</code>. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> filterApiService() {
+    return Json.optional(json, "filter_api_service", Conv.STRING);
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>screened_full_name</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated text, so several values are not matched as alternatives. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> filterScreenedFullName() {
+    return Json.optional(json, "filter_screened_full_name", Conv.STRING);
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>warning</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsBatchDeleteParams.FilterWarning> filterWarning() {
+    return Json.optional(json, "filter_warning", Conv.union(SessionsBatchDeleteParams.FilterWarning::fromJson));
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>status_initialized_as_in_review</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> filterStatusInitializedAsInReview() {
+    return Json.optional(json, "filter_status_initialized_as_in_review", Conv.BOOLEAN);
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>is_kyc_to_be_reviewed</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> filterIsKycToBeReviewed() {
+    return Json.optional(json, "filter_is_kyc_to_be_reviewed", Conv.BOOLEAN);
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>euuid</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated value, so several values are refused with <code>400</code>. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> filterEuuid() {
+    return Json.optional(json, "filter_euuid", Conv.STRING);
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>organization_name</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. With an API key it can only match your own organization's name, so it selects all of your sessions or none. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsBatchDeleteParams.FilterOrganizationName> filterOrganizationName() {
+    return Json.optional(json, "filter_organization_name", Conv.union(SessionsBatchDeleteParams.FilterOrganizationName::fromJson));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -146,7 +338,7 @@ public final class SessionsBatchDeleteParams extends JsonModel {
     }
 
     /**
-     * When <code>true</code>, every remaining KYC session in the calling application is deleted and <code>session_numbers</code> is ignored. More than 20 matching sessions run as a deletion job (<code>202</code>) that covers only the sessions created before the request. Defaults to <code>false</code>. Irreversible; there is no confirmation step.
+     * When <code>true</code>, every remaining KYC session in the calling application is deleted and <code>session_numbers</code> is ignored, unless you narrow the selection with <code>filter_*</code> keys. More than 20 matching sessions run as a deletion job (<code>202</code>) that covers only the sessions created before the request. Defaults to <code>false</code>. Irreversible; there is no confirmation step.
      *
      * @param deleteAll the value
      * @return this builder
@@ -206,6 +398,196 @@ public final class SessionsBatchDeleteParams extends JsonModel {
     }
 
     /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>status</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterStatus the value
+     * @return this builder
+     */
+    public Builder filterStatus(SessionsBatchDeleteParams.FilterStatus filterStatus) {
+      return set("filter_status", Conv.union(SessionsBatchDeleteParams.FilterStatus::fromJson), filterStatus);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>vendor_data</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated text, so several values are not matched as alternatives. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterVendorData the value
+     * @return this builder
+     */
+    public Builder filterVendorData(String filterVendorData) {
+      return set("filter_vendor_data", Conv.STRING, filterVendorData);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>search</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated text, so several values are not matched as alternatives. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterSearch the value
+     * @return this builder
+     */
+    public Builder filterSearch(String filterSearch) {
+      return set("filter_search", Conv.STRING, filterSearch);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>workflow_id</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterWorkflowId the value
+     * @return this builder
+     */
+    public Builder filterWorkflowId(SessionsBatchDeleteParams.FilterWorkflowId filterWorkflowId) {
+      return set("filter_workflow_id", Conv.union(SessionsBatchDeleteParams.FilterWorkflowId::fromJson), filterWorkflowId);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>date_from</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated value, so several values are refused with <code>400</code>. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterDateFrom the value
+     * @return this builder
+     */
+    public Builder filterDateFrom(LocalDate filterDateFrom) {
+      return set("filter_date_from", Conv.DATE, filterDateFrom);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>date_to</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated value, so several values are refused with <code>400</code>. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterDateTo the value
+     * @return this builder
+     */
+    public Builder filterDateTo(LocalDate filterDateTo) {
+      return set("filter_date_to", Conv.DATE, filterDateTo);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>country</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterCountry the value
+     * @return this builder
+     */
+    public Builder filterCountry(SessionsBatchDeleteParams.FilterCountry filterCountry) {
+      return set("filter_country", Conv.union(SessionsBatchDeleteParams.FilterCountry::fromJson), filterCountry);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>document_type</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterDocumentType the value
+     * @return this builder
+     */
+    public Builder filterDocumentType(SessionsBatchDeleteParams.FilterDocumentType filterDocumentType) {
+      return set("filter_document_type", Conv.union(SessionsBatchDeleteParams.FilterDocumentType::fromJson), filterDocumentType);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>document_name</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterDocumentName the value
+     * @return this builder
+     */
+    public Builder filterDocumentName(SessionsBatchDeleteParams.FilterDocumentName filterDocumentName) {
+      return set("filter_document_name", Conv.union(SessionsBatchDeleteParams.FilterDocumentName::fromJson), filterDocumentName);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>region</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterRegion the value
+     * @return this builder
+     */
+    public Builder filterRegion(SessionsBatchDeleteParams.FilterRegion filterRegion) {
+      return set("filter_region", Conv.union(SessionsBatchDeleteParams.FilterRegion::fromJson), filterRegion);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>didit_internal_id</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated value, so several values are refused with <code>400</code>. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterDiditInternalId the value
+     * @return this builder
+     */
+    public Builder filterDiditInternalId(String filterDiditInternalId) {
+      return set("filter_didit_internal_id", Conv.STRING, filterDiditInternalId);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>session_type</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterSessionType the value
+     * @return this builder
+     */
+    public Builder filterSessionType(SessionsBatchDeleteParams.FilterSessionType filterSessionType) {
+      return set("filter_session_type", Conv.union(SessionsBatchDeleteParams.FilterSessionType::fromJson), filterSessionType);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>api_service</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated value, so several values are refused with <code>400</code>. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterApiService the value
+     * @return this builder
+     */
+    public Builder filterApiService(String filterApiService) {
+      return set("filter_api_service", Conv.STRING, filterApiService);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>screened_full_name</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated text, so several values are not matched as alternatives. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterScreenedFullName the value
+     * @return this builder
+     */
+    public Builder filterScreenedFullName(String filterScreenedFullName) {
+      return set("filter_screened_full_name", Conv.STRING, filterScreenedFullName);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>warning</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterWarning the value
+     * @return this builder
+     */
+    public Builder filterWarning(SessionsBatchDeleteParams.FilterWarning filterWarning) {
+      return set("filter_warning", Conv.union(SessionsBatchDeleteParams.FilterWarning::fromJson), filterWarning);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>status_initialized_as_in_review</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterStatusInitializedAsInReview the value
+     * @return this builder
+     */
+    public Builder filterStatusInitializedAsInReview(boolean filterStatusInitializedAsInReview) {
+      return set("filter_status_initialized_as_in_review", Conv.BOOLEAN, filterStatusInitializedAsInReview);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>is_kyc_to_be_reviewed</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterIsKycToBeReviewed the value
+     * @return this builder
+     */
+    public Builder filterIsKycToBeReviewed(boolean filterIsKycToBeReviewed) {
+      return set("filter_is_kyc_to_be_reviewed", Conv.BOOLEAN, filterIsKycToBeReviewed);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>euuid</code> filter of [List Sessions](/sessions-api/list-sessions), with the same value. One value, not a list: an array is joined into one comma-separated value, so several values are refused with <code>400</code>. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterEuuid the value
+     * @return this builder
+     */
+    public Builder filterEuuid(String filterEuuid) {
+      return set("filter_euuid", Conv.STRING, filterEuuid);
+    }
+
+    /**
+     * Narrows a <code>delete_all</code> to the sessions that match the <code>organization_name</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. With an API key it can only match your own organization's name, so it selects all of your sessions or none. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+     *
+     * @param filterOrganizationName the value
+     * @return this builder
+     */
+    public Builder filterOrganizationName(SessionsBatchDeleteParams.FilterOrganizationName filterOrganizationName) {
+      return set("filter_organization_name", Conv.union(SessionsBatchDeleteParams.FilterOrganizationName::fromJson), filterOrganizationName);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code SessionsBatchDeleteParams}
@@ -260,6 +642,708 @@ public final class SessionsBatchDeleteParams extends JsonModel {
     @Override
     public boolean isKnown() {
       return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>status</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * <p>One of: {@code String}, {@code List}. Check with the {@code is...}
+   * methods and read with the {@code as...} methods.
+   */
+  public static final class FilterStatus extends JsonUnion {
+    private FilterStatus(JsonNode json) {
+      super(json);
+    }
+
+    /**
+     * Reads a {@code FilterStatus} from JSON.
+     *
+     * @param json any JSON value
+     * @return the union
+     */
+    public static FilterStatus fromJson(JsonNode json) {
+      return new FilterStatus(json.deepCopy());
+    }
+
+    /**
+     * Wraps a {@code String} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterStatus ofString(String value) {
+      return new FilterStatus(Conv.STRING.write(value));
+    }
+
+    /**
+     * Whether this value is a {@code String}.
+     *
+     * @return true when it matches
+     */
+    public boolean isString() {
+      return json.isTextual();
+    }
+
+    /**
+     * Reads this value as a {@code String}.
+     *
+     * @return the value, or empty when {@link #isString()} is false
+     */
+    public Optional<String> asString() {
+      return isString() ? Optional.of(Conv.STRING.read(json)) : Optional.empty();
+    }
+
+    /**
+     * Wraps a {@code List} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterStatus ofList(List<String> value) {
+      return new FilterStatus(Conv.list(Conv.STRING).write(value));
+    }
+
+    /**
+     * Whether this value is a {@code List}.
+     *
+     * @return true when it matches
+     */
+    public boolean isList() {
+      return json.isArray();
+    }
+
+    /**
+     * Reads this value as a {@code List}.
+     *
+     * @return the value, or empty when {@link #isList()} is false
+     */
+    public Optional<List<String>> asList() {
+      return isList() ? Optional.of(Conv.list(Conv.STRING).read(json)) : Optional.empty();
+    }
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>workflow_id</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * <p>One of: {@code String}, {@code List}. Check with the {@code is...}
+   * methods and read with the {@code as...} methods.
+   */
+  public static final class FilterWorkflowId extends JsonUnion {
+    private FilterWorkflowId(JsonNode json) {
+      super(json);
+    }
+
+    /**
+     * Reads a {@code FilterWorkflowId} from JSON.
+     *
+     * @param json any JSON value
+     * @return the union
+     */
+    public static FilterWorkflowId fromJson(JsonNode json) {
+      return new FilterWorkflowId(json.deepCopy());
+    }
+
+    /**
+     * Wraps a {@code String} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterWorkflowId ofString(String value) {
+      return new FilterWorkflowId(Conv.STRING.write(value));
+    }
+
+    /**
+     * Whether this value is a {@code String}.
+     *
+     * @return true when it matches
+     */
+    public boolean isString() {
+      return json.isTextual();
+    }
+
+    /**
+     * Reads this value as a {@code String}.
+     *
+     * @return the value, or empty when {@link #isString()} is false
+     */
+    public Optional<String> asString() {
+      return isString() ? Optional.of(Conv.STRING.read(json)) : Optional.empty();
+    }
+
+    /**
+     * Wraps a {@code List} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterWorkflowId ofList(List<String> value) {
+      return new FilterWorkflowId(Conv.list(Conv.STRING).write(value));
+    }
+
+    /**
+     * Whether this value is a {@code List}.
+     *
+     * @return true when it matches
+     */
+    public boolean isList() {
+      return json.isArray();
+    }
+
+    /**
+     * Reads this value as a {@code List}.
+     *
+     * @return the value, or empty when {@link #isList()} is false
+     */
+    public Optional<List<String>> asList() {
+      return isList() ? Optional.of(Conv.list(Conv.STRING).read(json)) : Optional.empty();
+    }
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>country</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * <p>One of: {@code String}, {@code List}. Check with the {@code is...}
+   * methods and read with the {@code as...} methods.
+   */
+  public static final class FilterCountry extends JsonUnion {
+    private FilterCountry(JsonNode json) {
+      super(json);
+    }
+
+    /**
+     * Reads a {@code FilterCountry} from JSON.
+     *
+     * @param json any JSON value
+     * @return the union
+     */
+    public static FilterCountry fromJson(JsonNode json) {
+      return new FilterCountry(json.deepCopy());
+    }
+
+    /**
+     * Wraps a {@code String} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterCountry ofString(String value) {
+      return new FilterCountry(Conv.STRING.write(value));
+    }
+
+    /**
+     * Whether this value is a {@code String}.
+     *
+     * @return true when it matches
+     */
+    public boolean isString() {
+      return json.isTextual();
+    }
+
+    /**
+     * Reads this value as a {@code String}.
+     *
+     * @return the value, or empty when {@link #isString()} is false
+     */
+    public Optional<String> asString() {
+      return isString() ? Optional.of(Conv.STRING.read(json)) : Optional.empty();
+    }
+
+    /**
+     * Wraps a {@code List} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterCountry ofList(List<String> value) {
+      return new FilterCountry(Conv.list(Conv.STRING).write(value));
+    }
+
+    /**
+     * Whether this value is a {@code List}.
+     *
+     * @return true when it matches
+     */
+    public boolean isList() {
+      return json.isArray();
+    }
+
+    /**
+     * Reads this value as a {@code List}.
+     *
+     * @return the value, or empty when {@link #isList()} is false
+     */
+    public Optional<List<String>> asList() {
+      return isList() ? Optional.of(Conv.list(Conv.STRING).read(json)) : Optional.empty();
+    }
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>document_type</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * <p>One of: {@code String}, {@code List}. Check with the {@code is...}
+   * methods and read with the {@code as...} methods.
+   */
+  public static final class FilterDocumentType extends JsonUnion {
+    private FilterDocumentType(JsonNode json) {
+      super(json);
+    }
+
+    /**
+     * Reads a {@code FilterDocumentType} from JSON.
+     *
+     * @param json any JSON value
+     * @return the union
+     */
+    public static FilterDocumentType fromJson(JsonNode json) {
+      return new FilterDocumentType(json.deepCopy());
+    }
+
+    /**
+     * Wraps a {@code String} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterDocumentType ofString(String value) {
+      return new FilterDocumentType(Conv.STRING.write(value));
+    }
+
+    /**
+     * Whether this value is a {@code String}.
+     *
+     * @return true when it matches
+     */
+    public boolean isString() {
+      return json.isTextual();
+    }
+
+    /**
+     * Reads this value as a {@code String}.
+     *
+     * @return the value, or empty when {@link #isString()} is false
+     */
+    public Optional<String> asString() {
+      return isString() ? Optional.of(Conv.STRING.read(json)) : Optional.empty();
+    }
+
+    /**
+     * Wraps a {@code List} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterDocumentType ofList(List<String> value) {
+      return new FilterDocumentType(Conv.list(Conv.STRING).write(value));
+    }
+
+    /**
+     * Whether this value is a {@code List}.
+     *
+     * @return true when it matches
+     */
+    public boolean isList() {
+      return json.isArray();
+    }
+
+    /**
+     * Reads this value as a {@code List}.
+     *
+     * @return the value, or empty when {@link #isList()} is false
+     */
+    public Optional<List<String>> asList() {
+      return isList() ? Optional.of(Conv.list(Conv.STRING).read(json)) : Optional.empty();
+    }
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>document_name</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * <p>One of: {@code String}, {@code List}. Check with the {@code is...}
+   * methods and read with the {@code as...} methods.
+   */
+  public static final class FilterDocumentName extends JsonUnion {
+    private FilterDocumentName(JsonNode json) {
+      super(json);
+    }
+
+    /**
+     * Reads a {@code FilterDocumentName} from JSON.
+     *
+     * @param json any JSON value
+     * @return the union
+     */
+    public static FilterDocumentName fromJson(JsonNode json) {
+      return new FilterDocumentName(json.deepCopy());
+    }
+
+    /**
+     * Wraps a {@code String} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterDocumentName ofString(String value) {
+      return new FilterDocumentName(Conv.STRING.write(value));
+    }
+
+    /**
+     * Whether this value is a {@code String}.
+     *
+     * @return true when it matches
+     */
+    public boolean isString() {
+      return json.isTextual();
+    }
+
+    /**
+     * Reads this value as a {@code String}.
+     *
+     * @return the value, or empty when {@link #isString()} is false
+     */
+    public Optional<String> asString() {
+      return isString() ? Optional.of(Conv.STRING.read(json)) : Optional.empty();
+    }
+
+    /**
+     * Wraps a {@code List} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterDocumentName ofList(List<String> value) {
+      return new FilterDocumentName(Conv.list(Conv.STRING).write(value));
+    }
+
+    /**
+     * Whether this value is a {@code List}.
+     *
+     * @return true when it matches
+     */
+    public boolean isList() {
+      return json.isArray();
+    }
+
+    /**
+     * Reads this value as a {@code List}.
+     *
+     * @return the value, or empty when {@link #isList()} is false
+     */
+    public Optional<List<String>> asList() {
+      return isList() ? Optional.of(Conv.list(Conv.STRING).read(json)) : Optional.empty();
+    }
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>region</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * <p>One of: {@code String}, {@code List}. Check with the {@code is...}
+   * methods and read with the {@code as...} methods.
+   */
+  public static final class FilterRegion extends JsonUnion {
+    private FilterRegion(JsonNode json) {
+      super(json);
+    }
+
+    /**
+     * Reads a {@code FilterRegion} from JSON.
+     *
+     * @param json any JSON value
+     * @return the union
+     */
+    public static FilterRegion fromJson(JsonNode json) {
+      return new FilterRegion(json.deepCopy());
+    }
+
+    /**
+     * Wraps a {@code String} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterRegion ofString(String value) {
+      return new FilterRegion(Conv.STRING.write(value));
+    }
+
+    /**
+     * Whether this value is a {@code String}.
+     *
+     * @return true when it matches
+     */
+    public boolean isString() {
+      return json.isTextual();
+    }
+
+    /**
+     * Reads this value as a {@code String}.
+     *
+     * @return the value, or empty when {@link #isString()} is false
+     */
+    public Optional<String> asString() {
+      return isString() ? Optional.of(Conv.STRING.read(json)) : Optional.empty();
+    }
+
+    /**
+     * Wraps a {@code List} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterRegion ofList(List<String> value) {
+      return new FilterRegion(Conv.list(Conv.STRING).write(value));
+    }
+
+    /**
+     * Whether this value is a {@code List}.
+     *
+     * @return true when it matches
+     */
+    public boolean isList() {
+      return json.isArray();
+    }
+
+    /**
+     * Reads this value as a {@code List}.
+     *
+     * @return the value, or empty when {@link #isList()} is false
+     */
+    public Optional<List<String>> asList() {
+      return isList() ? Optional.of(Conv.list(Conv.STRING).read(json)) : Optional.empty();
+    }
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>session_type</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * <p>One of: {@code String}, {@code List}. Check with the {@code is...}
+   * methods and read with the {@code as...} methods.
+   */
+  public static final class FilterSessionType extends JsonUnion {
+    private FilterSessionType(JsonNode json) {
+      super(json);
+    }
+
+    /**
+     * Reads a {@code FilterSessionType} from JSON.
+     *
+     * @param json any JSON value
+     * @return the union
+     */
+    public static FilterSessionType fromJson(JsonNode json) {
+      return new FilterSessionType(json.deepCopy());
+    }
+
+    /**
+     * Wraps a {@code String} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterSessionType ofString(String value) {
+      return new FilterSessionType(Conv.STRING.write(value));
+    }
+
+    /**
+     * Whether this value is a {@code String}.
+     *
+     * @return true when it matches
+     */
+    public boolean isString() {
+      return json.isTextual();
+    }
+
+    /**
+     * Reads this value as a {@code String}.
+     *
+     * @return the value, or empty when {@link #isString()} is false
+     */
+    public Optional<String> asString() {
+      return isString() ? Optional.of(Conv.STRING.read(json)) : Optional.empty();
+    }
+
+    /**
+     * Wraps a {@code List} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterSessionType ofList(List<String> value) {
+      return new FilterSessionType(Conv.list(Conv.STRING).write(value));
+    }
+
+    /**
+     * Whether this value is a {@code List}.
+     *
+     * @return true when it matches
+     */
+    public boolean isList() {
+      return json.isArray();
+    }
+
+    /**
+     * Reads this value as a {@code List}.
+     *
+     * @return the value, or empty when {@link #isList()} is false
+     */
+    public Optional<List<String>> asList() {
+      return isList() ? Optional.of(Conv.list(Conv.STRING).read(json)) : Optional.empty();
+    }
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>warning</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * <p>One of: {@code String}, {@code List}. Check with the {@code is...}
+   * methods and read with the {@code as...} methods.
+   */
+  public static final class FilterWarning extends JsonUnion {
+    private FilterWarning(JsonNode json) {
+      super(json);
+    }
+
+    /**
+     * Reads a {@code FilterWarning} from JSON.
+     *
+     * @param json any JSON value
+     * @return the union
+     */
+    public static FilterWarning fromJson(JsonNode json) {
+      return new FilterWarning(json.deepCopy());
+    }
+
+    /**
+     * Wraps a {@code String} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterWarning ofString(String value) {
+      return new FilterWarning(Conv.STRING.write(value));
+    }
+
+    /**
+     * Whether this value is a {@code String}.
+     *
+     * @return true when it matches
+     */
+    public boolean isString() {
+      return json.isTextual();
+    }
+
+    /**
+     * Reads this value as a {@code String}.
+     *
+     * @return the value, or empty when {@link #isString()} is false
+     */
+    public Optional<String> asString() {
+      return isString() ? Optional.of(Conv.STRING.read(json)) : Optional.empty();
+    }
+
+    /**
+     * Wraps a {@code List} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterWarning ofList(List<String> value) {
+      return new FilterWarning(Conv.list(Conv.STRING).write(value));
+    }
+
+    /**
+     * Whether this value is a {@code List}.
+     *
+     * @return true when it matches
+     */
+    public boolean isList() {
+      return json.isArray();
+    }
+
+    /**
+     * Reads this value as a {@code List}.
+     *
+     * @return the value, or empty when {@link #isList()} is false
+     */
+    public Optional<List<String>> asList() {
+      return isList() ? Optional.of(Conv.list(Conv.STRING).read(json)) : Optional.empty();
+    }
+  }
+
+  /**
+   * Narrows a <code>delete_all</code> to the sessions that match the <code>organization_name</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. With an API key it can only match your own organization's name, so it selects all of your sessions or none. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
+   *
+   * <p>One of: {@code String}, {@code List}. Check with the {@code is...}
+   * methods and read with the {@code as...} methods.
+   */
+  public static final class FilterOrganizationName extends JsonUnion {
+    private FilterOrganizationName(JsonNode json) {
+      super(json);
+    }
+
+    /**
+     * Reads a {@code FilterOrganizationName} from JSON.
+     *
+     * @param json any JSON value
+     * @return the union
+     */
+    public static FilterOrganizationName fromJson(JsonNode json) {
+      return new FilterOrganizationName(json.deepCopy());
+    }
+
+    /**
+     * Wraps a {@code String} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterOrganizationName ofString(String value) {
+      return new FilterOrganizationName(Conv.STRING.write(value));
+    }
+
+    /**
+     * Whether this value is a {@code String}.
+     *
+     * @return true when it matches
+     */
+    public boolean isString() {
+      return json.isTextual();
+    }
+
+    /**
+     * Reads this value as a {@code String}.
+     *
+     * @return the value, or empty when {@link #isString()} is false
+     */
+    public Optional<String> asString() {
+      return isString() ? Optional.of(Conv.STRING.read(json)) : Optional.empty();
+    }
+
+    /**
+     * Wraps a {@code List} value.
+     *
+     * @param value the value
+     * @return the union
+     */
+    public static FilterOrganizationName ofList(List<String> value) {
+      return new FilterOrganizationName(Conv.list(Conv.STRING).write(value));
+    }
+
+    /**
+     * Whether this value is a {@code List}.
+     *
+     * @return true when it matches
+     */
+    public boolean isList() {
+      return json.isArray();
+    }
+
+    /**
+     * Reads this value as a {@code List}.
+     *
+     * @return the value, or empty when {@link #isList()} is false
+     */
+    public Optional<List<String>> asList() {
+      return isList() ? Optional.of(Conv.list(Conv.STRING).read(json)) : Optional.empty();
     }
   }
 }

@@ -5,16 +5,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
-import me.didit.core.StringEnum;
+import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code businesses.update_status}. */
 public final class BusinessesUpdateStatusParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("status");
+  private static final Set<String> KNOWN_FIELDS = Set.of("status", "reason");
 
   private BusinessesUpdateStatusParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -55,8 +56,18 @@ public final class BusinessesUpdateStatusParams extends JsonModel {
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public BusinessesUpdateStatusParams.Status status() {
-    return Json.required(json, "status", Conv.enumeration(BusinessesUpdateStatusParams.Status::of));
+  public EntityStatusUpdateRequest.Status status() {
+    return Json.required(json, "status", Conv.enumeration(EntityStatusUpdateRequest.Status::of));
+  }
+
+  /**
+   * Why the status changed. Recorded on the status-change entry of the company's <b>Activity</b> in the Business Console, only when the status actually changes. Webhooks do not carry it.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> reason() {
+    return Json.optional(json, "reason", Conv.STRING);
   }
 
   @Override
@@ -78,8 +89,18 @@ public final class BusinessesUpdateStatusParams extends JsonModel {
      * @param status the value
      * @return this builder
      */
-    public Builder status(BusinessesUpdateStatusParams.Status status) {
-      return set("status", Conv.enumeration(BusinessesUpdateStatusParams.Status::of), status);
+    public Builder status(EntityStatusUpdateRequest.Status status) {
+      return set("status", Conv.enumeration(EntityStatusUpdateRequest.Status::of), status);
+    }
+
+    /**
+     * Why the status changed. Recorded on the status-change entry of the company's <b>Activity</b> in the Business Console, only when the status actually changes. Webhooks do not carry it.
+     *
+     * @param reason the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder reason(@Nullable String reason) {
+      return setNullable("reason", Conv.STRING, reason);
     }
 
     /**
@@ -96,52 +117,6 @@ public final class BusinessesUpdateStatusParams extends JsonModel {
     @Override
     protected Builder self() {
       return this;
-    }
-  }
-
-  /**
-   * New lifecycle status. <code>BLOCKED</code> also adds the <code>vendor_data</code> to the system blocklist.
-   *
-   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
-   */
-  public static final class Status extends StringEnum {
-    /** The value {@code "ACTIVE"}. */
-    public static final Status ACTIVE = new Status("ACTIVE");
-
-    /** The value {@code "FLAGGED"}. */
-    public static final Status FLAGGED = new Status("FLAGGED");
-
-    /** The value {@code "BLOCKED"}. */
-    public static final Status BLOCKED = new Status("BLOCKED");
-
-    private static final List<Status> KNOWN_VALUES = List.of(ACTIVE, FLAGGED, BLOCKED);
-
-    private Status(String value) {
-      super(value);
-    }
-
-    /**
-     * Returns the constant for a known value, or a new instance for any other value.
-     *
-     * @param value the string value
-     * @return the enum value
-     */
-    public static Status of(String value) {
-      return StringEnum.lookup(KNOWN_VALUES, value, Status::new);
-    }
-
-    /**
-     * Returns the values known to this SDK version.
-     *
-     * @return the known values
-     */
-    public static List<Status> knownValues() {
-      return KNOWN_VALUES;
-    }
-
-    @Override
-    public boolean isKnown() {
-      return KNOWN_VALUES.contains(this);
     }
   }
 }

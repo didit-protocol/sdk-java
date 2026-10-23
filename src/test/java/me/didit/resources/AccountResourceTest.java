@@ -90,6 +90,7 @@ final class AccountResourceTest {
     assertEquals(null, request.header("x-api-key"));
     assertEquals(null, request.header("Authorization"));
     TestJson.assertJsonEquals("{\"email\":\"user@example.com\",\"password\":\"value-password\"}", request.body());
-    TestJson.assertJsonEquals(example, result);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 }

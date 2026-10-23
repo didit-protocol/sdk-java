@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 
 public final class TravelRulePickupRespondRequest extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("decision", "beneficiary_name");
+  private static final Set<String> KNOWN_FIELDS = Set.of("decision", "beneficiary_name", "decline_reason", "decline_detail", "ivms_response", "contact");
 
   private TravelRulePickupRespondRequest(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -60,13 +60,53 @@ public final class TravelRulePickupRespondRequest extends JsonModel {
   }
 
   /**
-   * Required in practice for decision=accept; run through the originator's name_matching_strictness policy.
+   * The beneficiary's name as your records hold it, run through the sending VASP's name rule. <code>ivms_response</code> takes precedence when it names the beneficiary.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<String> beneficiaryName() {
     return Json.optional(json, "beneficiary_name", Conv.STRING);
+  }
+
+  /**
+   * Why you decline. Recorded on the sending VASP's transfer timeline. Empty (the default) when you give no reason.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRulePickupRespondRequest.DeclineReason> declineReason() {
+    return Json.optional(json, "decline_reason", Conv.enumeration(TravelRulePickupRespondRequest.DeclineReason::of));
+  }
+
+  /**
+   * Free text; required when <code>decision</code> is <code>decline</code> and <code>decline_reason</code> is <code>other</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> declineDetail() {
+    return Json.optional(json, "decline_detail", Conv.STRING);
+  }
+
+  /**
+   * Your full IVMS 101 response. Its beneficiary name wins over <code>beneficiary_name</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Map<String, JsonNode>> ivmsResponse() {
+    return Json.optional(json, "ivms_response", Conv.OBJECT);
+  }
+
+  /**
+   * The contact the link was sent to, from the link's <code>?contact=</code> value. When the body leaves it out, the <code>contact</code> query parameter is used.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> contact() {
+    return Json.optional(json, "contact", Conv.STRING);
   }
 
   @Override
@@ -93,13 +133,53 @@ public final class TravelRulePickupRespondRequest extends JsonModel {
     }
 
     /**
-     * Required in practice for decision=accept; run through the originator's name_matching_strictness policy.
+     * The beneficiary's name as your records hold it, run through the sending VASP's name rule. <code>ivms_response</code> takes precedence when it names the beneficiary.
      *
      * @param beneficiaryName the value
      * @return this builder
      */
     public Builder beneficiaryName(String beneficiaryName) {
       return set("beneficiary_name", Conv.STRING, beneficiaryName);
+    }
+
+    /**
+     * Why you decline. Recorded on the sending VASP's transfer timeline. Empty (the default) when you give no reason.
+     *
+     * @param declineReason the value
+     * @return this builder
+     */
+    public Builder declineReason(TravelRulePickupRespondRequest.DeclineReason declineReason) {
+      return set("decline_reason", Conv.enumeration(TravelRulePickupRespondRequest.DeclineReason::of), declineReason);
+    }
+
+    /**
+     * Free text; required when <code>decision</code> is <code>decline</code> and <code>decline_reason</code> is <code>other</code>.
+     *
+     * @param declineDetail the value
+     * @return this builder
+     */
+    public Builder declineDetail(String declineDetail) {
+      return set("decline_detail", Conv.STRING, declineDetail);
+    }
+
+    /**
+     * Your full IVMS 101 response. Its beneficiary name wins over <code>beneficiary_name</code>.
+     *
+     * @param ivmsResponse the value
+     * @return this builder
+     */
+    public Builder ivmsResponse(Map<String, ?> ivmsResponse) {
+      return setAny("ivms_response", ivmsResponse);
+    }
+
+    /**
+     * The contact the link was sent to, from the link's <code>?contact=</code> value. When the body leaves it out, the <code>contact</code> query parameter is used.
+     *
+     * @param contact the value
+     * @return this builder
+     */
+    public Builder contact(String contact) {
+      return set("contact", Conv.STRING, contact);
     }
 
     /**
@@ -152,6 +232,70 @@ public final class TravelRulePickupRespondRequest extends JsonModel {
      * @return the known values
      */
     public static List<Decision> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Why you decline. Recorded on the sending VASP's transfer timeline. Empty (the default) when you give no reason.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class DeclineReason extends StringEnum {
+    /** The value {@code ""}. */
+    public static final DeclineReason EMPTY = new DeclineReason("");
+
+    /** The value {@code "data_mismatch"}. */
+    public static final DeclineReason DATA_MISMATCH = new DeclineReason("data_mismatch");
+
+    /** The value {@code "not_our_customer"}. */
+    public static final DeclineReason NOT_OUR_CUSTOMER = new DeclineReason("not_our_customer");
+
+    /** The value {@code "wallet_not_hosted"}. */
+    public static final DeclineReason WALLET_NOT_HOSTED = new DeclineReason("wallet_not_hosted");
+
+    /** The value {@code "sanctions"}. */
+    public static final DeclineReason SANCTIONS = new DeclineReason("sanctions");
+
+    /** The value {@code "risk_appetite"}. */
+    public static final DeclineReason RISK_APPETITE = new DeclineReason("risk_appetite");
+
+    /** The value {@code "jurisdiction"}. */
+    public static final DeclineReason JURISDICTION = new DeclineReason("jurisdiction");
+
+    /** The value {@code "insufficient_data"}. */
+    public static final DeclineReason INSUFFICIENT_DATA = new DeclineReason("insufficient_data");
+
+    /** The value {@code "other"}. */
+    public static final DeclineReason OTHER = new DeclineReason("other");
+
+    private static final List<DeclineReason> KNOWN_VALUES = List.of(EMPTY, DATA_MISMATCH, NOT_OUR_CUSTOMER, WALLET_NOT_HOSTED, SANCTIONS, RISK_APPETITE, JURISDICTION, INSUFFICIENT_DATA, OTHER);
+
+    private DeclineReason(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static DeclineReason of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, DeclineReason::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<DeclineReason> knownValues() {
       return KNOWN_VALUES;
     }
 

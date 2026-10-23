@@ -11,10 +11,11 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import me.didit.core.StringEnum;
 
 /** Parameters for {&#64;code travel_rule.list_vasps}. */
 public final class TravelRuleListVaspsParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("search", "limit", "offset");
+  private static final Set<String> KNOWN_FIELDS = Set.of("search", "network", "jurisdiction", "reachable", "kind", "risk", "responsiveness", "limit", "offset");
 
   private TravelRuleListVaspsParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -50,13 +51,73 @@ public final class TravelRuleListVaspsParams extends JsonModel {
   }
 
   /**
-   * Case-insensitive substring match on VASP name.
+   * A name or alias fragment (case-insensitive), an exact LEI, or a domain (example.com or a URL on it). Didit network members match on their legal name, LEI or the domain of their compliance email.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<String> search() {
     return Json.optional(json, "search", Conv.STRING);
+  }
+
+  /**
+   * Only directory entries a network's member directory currently lists.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleListVaspsParams.Network> network() {
+    return Json.optional(json, "network", Conv.enumeration(TravelRuleListVaspsParams.Network::of));
+  }
+
+  /**
+   * ISO 3166 alpha-2 or alpha-3 country code. 400 for anything else.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> jurisdiction() {
+    return Json.optional(json, "jurisdiction", Conv.STRING);
+  }
+
+  /**
+   * true: only VASPs your application has an available route to (Didit network members included). false: only directory entries it cannot reach today.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> reachable() {
+    return Json.optional(json, "reachable", Conv.BOOLEAN);
+  }
+
+  /**
+   * Only directory entries, or only Didit network members.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleListVaspsParams.Kind> kind() {
+    return Json.optional(json, "kind", Conv.enumeration(TravelRuleListVaspsParams.Kind::of));
+  }
+
+  /**
+   * Only directory entries whose risk_level is this band. Didit network members, which are not scored, never match.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleListVaspsParams.Risk> risk() {
+    return Json.optional(json, "risk", Conv.enumeration(TravelRuleListVaspsParams.Risk::of));
+  }
+
+  /**
+   * Only directory entries whose responsiveness.status is this value. Didit network members never match.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleListVaspsParams.Responsiveness> responsiveness() {
+    return Json.optional(json, "responsiveness", Conv.enumeration(TravelRuleListVaspsParams.Responsiveness::of));
   }
 
   /**
@@ -93,13 +154,73 @@ public final class TravelRuleListVaspsParams extends JsonModel {
     }
 
     /**
-     * Case-insensitive substring match on VASP name.
+     * A name or alias fragment (case-insensitive), an exact LEI, or a domain (example.com or a URL on it). Didit network members match on their legal name, LEI or the domain of their compliance email.
      *
      * @param search the value
      * @return this builder
      */
     public Builder search(String search) {
       return set("search", Conv.STRING, search);
+    }
+
+    /**
+     * Only directory entries a network's member directory currently lists.
+     *
+     * @param network the value
+     * @return this builder
+     */
+    public Builder network(TravelRuleListVaspsParams.Network network) {
+      return set("network", Conv.enumeration(TravelRuleListVaspsParams.Network::of), network);
+    }
+
+    /**
+     * ISO 3166 alpha-2 or alpha-3 country code. 400 for anything else.
+     *
+     * @param jurisdiction the value
+     * @return this builder
+     */
+    public Builder jurisdiction(String jurisdiction) {
+      return set("jurisdiction", Conv.STRING, jurisdiction);
+    }
+
+    /**
+     * true: only VASPs your application has an available route to (Didit network members included). false: only directory entries it cannot reach today.
+     *
+     * @param reachable the value
+     * @return this builder
+     */
+    public Builder reachable(boolean reachable) {
+      return set("reachable", Conv.BOOLEAN, reachable);
+    }
+
+    /**
+     * Only directory entries, or only Didit network members.
+     *
+     * @param kind the value
+     * @return this builder
+     */
+    public Builder kind(TravelRuleListVaspsParams.Kind kind) {
+      return set("kind", Conv.enumeration(TravelRuleListVaspsParams.Kind::of), kind);
+    }
+
+    /**
+     * Only directory entries whose risk_level is this band. Didit network members, which are not scored, never match.
+     *
+     * @param risk the value
+     * @return this builder
+     */
+    public Builder risk(TravelRuleListVaspsParams.Risk risk) {
+      return set("risk", Conv.enumeration(TravelRuleListVaspsParams.Risk::of), risk);
+    }
+
+    /**
+     * Only directory entries whose responsiveness.status is this value. Didit network members never match.
+     *
+     * @param responsiveness the value
+     * @return this builder
+     */
+    public Builder responsiveness(TravelRuleListVaspsParams.Responsiveness responsiveness) {
+      return set("responsiveness", Conv.enumeration(TravelRuleListVaspsParams.Responsiveness::of), responsiveness);
     }
 
     /**
@@ -134,6 +255,189 @@ public final class TravelRuleListVaspsParams extends JsonModel {
     @Override
     protected Builder self() {
       return this;
+    }
+  }
+
+  /**
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Network extends StringEnum {
+    /** The value {@code "GTR"}. */
+    public static final Network GTR = new Network("GTR");
+
+    /** The value {@code "TRUST"}. */
+    public static final Network TRUST = new Network("TRUST");
+
+    /** The value {@code "VERIFYVASP"}. */
+    public static final Network VERIFYVASP = new Network("VERIFYVASP");
+
+    /** The value {@code "SYGNA"}. */
+    public static final Network SYGNA = new Network("SYGNA");
+
+    /** The value {@code "TRISA"}. */
+    public static final Network TRISA = new Network("TRISA");
+
+    private static final List<Network> KNOWN_VALUES = List.of(GTR, TRUST, VERIFYVASP, SYGNA, TRISA);
+
+    private Network(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Network of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Network::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Network> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Kind extends StringEnum {
+    /** The value {@code "directory"}. */
+    public static final Kind DIRECTORY = new Kind("directory");
+
+    /** The value {@code "didit"}. */
+    public static final Kind DIDIT = new Kind("didit");
+
+    private static final List<Kind> KNOWN_VALUES = List.of(DIRECTORY, DIDIT);
+
+    private Kind(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Kind of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Kind::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Kind> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Risk extends StringEnum {
+    /** The value {@code "LOW"}. */
+    public static final Risk LOW = new Risk("LOW");
+
+    /** The value {@code "MEDIUM"}. */
+    public static final Risk MEDIUM = new Risk("MEDIUM");
+
+    /** The value {@code "HIGH"}. */
+    public static final Risk HIGH = new Risk("HIGH");
+
+    private static final List<Risk> KNOWN_VALUES = List.of(LOW, MEDIUM, HIGH);
+
+    private Risk(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Risk of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Risk::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Risk> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Responsiveness extends StringEnum {
+    /** The value {@code "RESPONSIVE"}. */
+    public static final Responsiveness RESPONSIVE = new Responsiveness("RESPONSIVE");
+
+    /** The value {@code "UNRESPONSIVE"}. */
+    public static final Responsiveness UNRESPONSIVE = new Responsiveness("UNRESPONSIVE");
+
+    /** The value {@code "UNKNOWN"}. */
+    public static final Responsiveness UNKNOWN = new Responsiveness("UNKNOWN");
+
+    private static final List<Responsiveness> KNOWN_VALUES = List.of(RESPONSIVE, UNRESPONSIVE, UNKNOWN);
+
+    private Responsiveness(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Responsiveness of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Responsiveness::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Responsiveness> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 }

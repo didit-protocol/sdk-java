@@ -60,7 +60,7 @@ public final class SimpleWorkflowFeature extends JsonModel {
   }
 
   /**
-   * Feature-specific settings. For <code>QUESTIONNAIRE</code>, include <code>questionnaire_uuid</code> with the <code>questionnaire_id</code> returned by the questionnaire create endpoint. For <code>OCR</code>, <code>methods</code> selects which ID Verification methods each country may use (document capture, non-doc lookup against a government or other authoritative source, and digital identity wallets); omit it and every country is document capture only.
+   * Feature-specific settings. For <code>QUESTIONNAIRE</code>, include <code>questionnaire_uuid</code> with the <code>questionnaire_id</code> returned by the questionnaire create endpoint. For <code>OCR</code>, <code>methods</code> selects which ID Verification methods each country may use (document capture, non-doc lookup against a government or other authoritative source, and digital identity wallets); omit it and every country is document capture only. For <code>SIGNATURE</code>, see [Electronic Signature settings](/management-api/workflows/feature-configs#electronic-signature): <code>signature_level</code> accepts <code>aes</code> only for now, and workflow documents and their fields are managed in the console, so through the API send documents and fields per session with <code>signature_documents_source: "session"</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -103,7 +103,7 @@ public final class SimpleWorkflowFeature extends JsonModel {
     }
 
     /**
-     * Feature-specific settings. For <code>QUESTIONNAIRE</code>, include <code>questionnaire_uuid</code> with the <code>questionnaire_id</code> returned by the questionnaire create endpoint. For <code>OCR</code>, <code>methods</code> selects which ID Verification methods each country may use (document capture, non-doc lookup against a government or other authoritative source, and digital identity wallets); omit it and every country is document capture only.
+     * Feature-specific settings. For <code>QUESTIONNAIRE</code>, include <code>questionnaire_uuid</code> with the <code>questionnaire_id</code> returned by the questionnaire create endpoint. For <code>OCR</code>, <code>methods</code> selects which ID Verification methods each country may use (document capture, non-doc lookup against a government or other authoritative source, and digital identity wallets); omit it and every country is document capture only. For <code>SIGNATURE</code>, see [Electronic Signature settings](/management-api/workflows/feature-configs#electronic-signature): <code>signature_level</code> accepts <code>aes</code> only for now, and workflow documents and their fields are managed in the console, so through the API send documents and fields per session with <code>signature_documents_source: "session"</code>.
      *
      * @param config the value
      * @return this builder
@@ -193,7 +193,10 @@ public final class SimpleWorkflowFeature extends JsonModel {
     /** The value {@code "KYB_KEY_PEOPLE"}. */
     public static final Feature KYB_KEY_PEOPLE = new Feature("KYB_KEY_PEOPLE");
 
-    private static final List<Feature> KNOWN_VALUES = List.of(OCR, NFC, LIVENESS, FACE_MATCH, PROOF_OF_ADDRESS, QUESTIONNAIRE, DOCUMENT_AI, PHONE_VERIFICATION, EMAIL_VERIFICATION, DATABASE_VALIDATION, AML, IP_ANALYSIS, AGE_ESTIMATION, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE);
+    /** The value {@code "SIGNATURE"}. */
+    public static final Feature SIGNATURE = new Feature("SIGNATURE");
+
+    private static final List<Feature> KNOWN_VALUES = List.of(OCR, NFC, LIVENESS, FACE_MATCH, PROOF_OF_ADDRESS, QUESTIONNAIRE, DOCUMENT_AI, PHONE_VERIFICATION, EMAIL_VERIFICATION, DATABASE_VALIDATION, AML, IP_ANALYSIS, AGE_ESTIMATION, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE, SIGNATURE);
 
     private Feature(String value) {
       super(value);

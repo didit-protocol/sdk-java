@@ -43,4 +43,20 @@ final class AmlResourceTest {
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
+
+  @Test
+  void retrieveDatasetFreshness() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/aml/dataset-freshness/", "200");
+    transport.respondJson(200, example);
+    var result = client.aml().retrieveDatasetFreshness();
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/aml/dataset-freshness/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
 }

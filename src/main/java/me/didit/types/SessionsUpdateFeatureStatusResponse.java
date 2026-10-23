@@ -11,9 +11,10 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import org.jspecify.annotations.Nullable;
 
 public final class SessionsUpdateFeatureStatusResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "node_id", "feature_type", "new_status");
+  private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "node_id", "feature_type", "new_status", "override");
 
   private SessionsUpdateFeatureStatusResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -51,15 +52,15 @@ public final class SessionsUpdateFeatureStatusResponse extends JsonModel {
   /**
    * The <code>session_id</code> field.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<String> sessionId() {
-    return Json.optional(json, "session_id", Conv.STRING);
+  public String sessionId() {
+    return Json.required(json, "session_id", Conv.STRING);
   }
 
   /**
-   * The <code>node_id</code> field.
+   * The updated step's workflow node, or <code>null</code> for a step without a node (the <code>default</code> path in a non-graph workflow).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -71,21 +72,31 @@ public final class SessionsUpdateFeatureStatusResponse extends JsonModel {
   /**
    * Model name of the updated feature (e.g. <code>KYC</code>, <code>Face</code>, <code>FaceMatch</code>, <code>AML</code>, <code>POA</code>).
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<String> featureType() {
-    return Json.optional(json, "feature_type", Conv.STRING);
+  public String featureType() {
+    return Json.required(json, "feature_type", Conv.STRING);
   }
 
   /**
-   * The <code>new_status</code> field.
+   * The check's stored status: the requested one once the override applied, the unchanged one while the override waits for the flow to finish.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<String> newStatus() {
-    return Json.optional(json, "new_status", Conv.STRING);
+  public String newStatus() {
+    return Json.required(json, "new_status", Conv.STRING);
+  }
+
+  /**
+   * One override of a check (feature) status made with <code>PATCH /v3/session/{sessionId}/features/{nodeId}/update-status/</code>: what it changes, whether it applied or still waits for the person to finish the flow, who asked and why.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public FeatureStatusOverride override() {
+    return Json.required(json, "override", Conv.model(FeatureStatusOverride::fromJson));
   }
 
   @Override
@@ -112,13 +123,13 @@ public final class SessionsUpdateFeatureStatusResponse extends JsonModel {
     }
 
     /**
-     * The <code>node_id</code> field.
+     * The updated step's workflow node, or <code>null</code> for a step without a node (the <code>default</code> path in a non-graph workflow).
      *
-     * @param nodeId the value
+     * @param nodeId the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder nodeId(String nodeId) {
-      return set("node_id", Conv.STRING, nodeId);
+    public Builder nodeId(@Nullable String nodeId) {
+      return setNullable("node_id", Conv.STRING, nodeId);
     }
 
     /**
@@ -132,7 +143,7 @@ public final class SessionsUpdateFeatureStatusResponse extends JsonModel {
     }
 
     /**
-     * The <code>new_status</code> field.
+     * The check's stored status: the requested one once the override applied, the unchanged one while the override waits for the flow to finish.
      *
      * @param newStatus the value
      * @return this builder
@@ -142,11 +153,27 @@ public final class SessionsUpdateFeatureStatusResponse extends JsonModel {
     }
 
     /**
+     * One override of a check (feature) status made with <code>PATCH /v3/session/{sessionId}/features/{nodeId}/update-status/</code>: what it changes, whether it applied or still waits for the person to finish the flow, who asked and why.
+     *
+     * @param override the value
+     * @return this builder
+     */
+    public Builder override(FeatureStatusOverride override) {
+      return set("override", Conv.model(FeatureStatusOverride::fromJson), override);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code SessionsUpdateFeatureStatusResponse}
+     * @throws IllegalStateException when a required field is missing
      */
     public SessionsUpdateFeatureStatusResponse build() {
+      require("session_id", false);
+      require("node_id", true);
+      require("feature_type", false);
+      require("new_status", false);
+      require("override", false);
       return new SessionsUpdateFeatureStatusResponse(buildJson(), buildFiles());
     }
 

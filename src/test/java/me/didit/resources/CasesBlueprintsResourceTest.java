@@ -141,7 +141,6 @@ final class CasesBlueprintsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"preset_keys\":[\"value-preset-keys\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
-    assertEquals(200, result.statusCode());
     TestModels.readAll(result);
   }
 

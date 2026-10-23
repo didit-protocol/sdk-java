@@ -9,13 +9,11 @@ import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
-import me.didit.types.KybListShareholdersParams;
+import me.didit.types.KYBRegistryCandidateRequest;
 import me.didit.types.KybListShareholdersResponse;
-import me.didit.types.KybListUbosParams;
 import me.didit.types.KybListUbosResponse;
 import me.didit.types.KybSearchParams;
 import me.didit.types.KybSearchResponse;
-import me.didit.types.KybSelectParams;
 import me.didit.types.KybSelectResponse;
 
 /** The {@code kyb} resource: {@code client.kyb()}. */
@@ -45,6 +43,10 @@ public final class KybResource {
    * <p><b>Search billing.</b> Successful searches using a paid company-data source cost USD 0.50 per request, regardless of candidate count. Empty results, failures and results served only by other sources are not charged. The applicable price is reserved before searching; insufficient balance returns 403 with code <code>insufficient_credits</code>. Contract rates apply where agreed, and an unconfigured contract search rate returns 403. Sandbox searches are free. Repeating a successful search can incur another charge; callback delivery does not add a charge. Profile retrieval is billed separately. This search fee also applies to v2. Candidates always come back with <code>fetch_status: "pending"</code>: the full company data is only fetched (and billed) on select.
    *
    * <p>**<code>kyb_response_id</code> is ephemeral.** It is a per-search handle, not a stable company id. Select promptly after searching and re-search to get a fresh handle instead of storing it.
+   *
+   * <p>**<code>tier</code> picks the provider chain.** <code>tier</code> names the registry tier the search runs on: <code>basic</code> (the default, the Lite chain), <code>shareholders</code> or <code>ubo</code>. The search uses the provider chain that serves that tier, and it is not always the same chain the Lite search reads, so an empty Lite search is not proof that the registry does not hold the company — search again at the tier you need. A country that does not offer the tier you name is searched at the highest tier it offers up to that one. Retrieve the candidate from the endpoint that sells that tier: <code>POST /v3/kyb/select/</code> (Lite), <code>POST /v3/kyb/shareholders/</code> or <code>POST /v3/kyb/ubo/</code>.
+   *
+   * <p><b>Authentication.</b> <code>POST /v3/kyb/search/</code> (and <code>/v2/</code>) takes your application's API key in the <code>x-api-key</code> header. The hosted <code>POST /v1/kyb/search/</code> is the session-authenticated route a hosted verification flow calls: it answers <code>403</code> to an API key and takes no <code>tier</code> — the workflow's KYB registry configuration picks the chain.
    *
    * <p><b>Two modes.</b>
    * - *Synchronous (default):* the API polls the registry until the search resolves and returns the final candidate list (<code>search_resolved: true</code>).
@@ -112,38 +114,38 @@ public final class KybResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public KybSelectResponse select(KybSelectParams params, RequestOptions options) {
+  public KybSelectResponse select(KYBRegistryCandidateRequest params, RequestOptions options) {
     return client.execute(selectRequest(params), options, SELECT_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #select(KybSelectParams, RequestOptions)}.
+   * Asynchronous {@link #select(KYBRegistryCandidateRequest, RequestOptions)}.
    *
    * @param params the request parameters
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<KybSelectResponse> selectAsync(KybSelectParams params, RequestOptions options) {
+  public CompletableFuture<KybSelectResponse> selectAsync(KYBRegistryCandidateRequest params, RequestOptions options) {
     return client.executeAsync(selectRequest(params), options, SELECT_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Same as {@link #select(KybSelectParams, RequestOptions)}, with the client's options.
+   * Same as {@link #select(KYBRegistryCandidateRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
    * @return the result
    */
-  public KybSelectResponse select(KybSelectParams params) {
+  public KybSelectResponse select(KYBRegistryCandidateRequest params) {
     return client.execute(selectRequest(params), RequestOptions.none(), SELECT_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #select(KybSelectParams, RequestOptions)}, with the client's options.
+   * Asynchronous {@link #select(KYBRegistryCandidateRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
    * @return a future completed with the result
    */
-  public CompletableFuture<KybSelectResponse> selectAsync(KybSelectParams params) {
+  public CompletableFuture<KybSelectResponse> selectAsync(KYBRegistryCandidateRequest params) {
     return client.executeAsync(selectRequest(params), RequestOptions.none(), SELECT_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -166,38 +168,38 @@ public final class KybResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public KybListShareholdersResponse listShareholders(KybListShareholdersParams params, RequestOptions options) {
+  public KybListShareholdersResponse listShareholders(KYBRegistryCandidateRequest params, RequestOptions options) {
     return client.execute(listShareholdersRequest(params), options, LIST_SHAREHOLDERS_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #listShareholders(KybListShareholdersParams, RequestOptions)}.
+   * Asynchronous {@link #listShareholders(KYBRegistryCandidateRequest, RequestOptions)}.
    *
    * @param params the request parameters
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<KybListShareholdersResponse> listShareholdersAsync(KybListShareholdersParams params, RequestOptions options) {
+  public CompletableFuture<KybListShareholdersResponse> listShareholdersAsync(KYBRegistryCandidateRequest params, RequestOptions options) {
     return client.executeAsync(listShareholdersRequest(params), options, LIST_SHAREHOLDERS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Same as {@link #listShareholders(KybListShareholdersParams, RequestOptions)}, with the client's options.
+   * Same as {@link #listShareholders(KYBRegistryCandidateRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
    * @return the result
    */
-  public KybListShareholdersResponse listShareholders(KybListShareholdersParams params) {
+  public KybListShareholdersResponse listShareholders(KYBRegistryCandidateRequest params) {
     return client.execute(listShareholdersRequest(params), RequestOptions.none(), LIST_SHAREHOLDERS_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #listShareholders(KybListShareholdersParams, RequestOptions)}, with the client's options.
+   * Asynchronous {@link #listShareholders(KYBRegistryCandidateRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
    * @return a future completed with the result
    */
-  public CompletableFuture<KybListShareholdersResponse> listShareholdersAsync(KybListShareholdersParams params) {
+  public CompletableFuture<KybListShareholdersResponse> listShareholdersAsync(KYBRegistryCandidateRequest params) {
     return client.executeAsync(listShareholdersRequest(params), RequestOptions.none(), LIST_SHAREHOLDERS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -220,38 +222,38 @@ public final class KybResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public KybListUbosResponse listUbos(KybListUbosParams params, RequestOptions options) {
+  public KybListUbosResponse listUbos(KYBRegistryCandidateRequest params, RequestOptions options) {
     return client.execute(listUbosRequest(params), options, LIST_UBOS_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #listUbos(KybListUbosParams, RequestOptions)}.
+   * Asynchronous {@link #listUbos(KYBRegistryCandidateRequest, RequestOptions)}.
    *
    * @param params the request parameters
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<KybListUbosResponse> listUbosAsync(KybListUbosParams params, RequestOptions options) {
+  public CompletableFuture<KybListUbosResponse> listUbosAsync(KYBRegistryCandidateRequest params, RequestOptions options) {
     return client.executeAsync(listUbosRequest(params), options, LIST_UBOS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Same as {@link #listUbos(KybListUbosParams, RequestOptions)}, with the client's options.
+   * Same as {@link #listUbos(KYBRegistryCandidateRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
    * @return the result
    */
-  public KybListUbosResponse listUbos(KybListUbosParams params) {
+  public KybListUbosResponse listUbos(KYBRegistryCandidateRequest params) {
     return client.execute(listUbosRequest(params), RequestOptions.none(), LIST_UBOS_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #listUbos(KybListUbosParams, RequestOptions)}, with the client's options.
+   * Asynchronous {@link #listUbos(KYBRegistryCandidateRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
    * @return a future completed with the result
    */
-  public CompletableFuture<KybListUbosResponse> listUbosAsync(KybListUbosParams params) {
+  public CompletableFuture<KybListUbosResponse> listUbosAsync(KYBRegistryCandidateRequest params) {
     return client.executeAsync(listUbosRequest(params), RequestOptions.none(), LIST_UBOS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -266,7 +268,7 @@ public final class KybResource {
 
   private static final ResponseHandler<KybSelectResponse> SELECT_RESPONSE = Responses.json(Conv.model(KybSelectResponse::fromJson));
 
-  private static ApiRequest selectRequest(KybSelectParams params) {
+  private static ApiRequest selectRequest(KYBRegistryCandidateRequest params) {
     return ApiRequest.builder("POST", "/v3/kyb/select/")
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
@@ -275,7 +277,7 @@ public final class KybResource {
 
   private static final ResponseHandler<KybListShareholdersResponse> LIST_SHAREHOLDERS_RESPONSE = Responses.json(Conv.model(KybListShareholdersResponse::fromJson));
 
-  private static ApiRequest listShareholdersRequest(KybListShareholdersParams params) {
+  private static ApiRequest listShareholdersRequest(KYBRegistryCandidateRequest params) {
     return ApiRequest.builder("POST", "/v3/kyb/shareholders/")
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
@@ -284,7 +286,7 @@ public final class KybResource {
 
   private static final ResponseHandler<KybListUbosResponse> LIST_UBOS_RESPONSE = Responses.json(Conv.model(KybListUbosResponse::fromJson));
 
-  private static ApiRequest listUbosRequest(KybListUbosParams params) {
+  private static ApiRequest listUbosRequest(KYBRegistryCandidateRequest params) {
     return ApiRequest.builder("POST", "/v3/kyb/ubo/")
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
@@ -342,128 +344,128 @@ public final class KybResource {
     }
 
     /**
-     * {@link #select(KybSelectParams, RequestOptions)} with the raw response.
+     * {@link #select(KYBRegistryCandidateRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<KybSelectResponse> select(KybSelectParams params, RequestOptions options) {
+    public RawResponse<KybSelectResponse> select(KYBRegistryCandidateRequest params, RequestOptions options) {
       return client.execute(selectRequest(params), options, SELECT_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #select(KybSelectParams, RequestOptions)} with the raw response.
+     * Asynchronous {@link #select(KYBRegistryCandidateRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<KybSelectResponse>> selectAsync(KybSelectParams params, RequestOptions options) {
+    public CompletableFuture<RawResponse<KybSelectResponse>> selectAsync(KYBRegistryCandidateRequest params, RequestOptions options) {
       return client.executeAsync(selectRequest(params), options, SELECT_RESPONSE);
     }
 
     /**
-     * {@link #select(KybSelectParams, RequestOptions)} with the raw response, with the client's options.
+     * {@link #select(KYBRegistryCandidateRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
      * @return the result
      */
-    public RawResponse<KybSelectResponse> select(KybSelectParams params) {
+    public RawResponse<KybSelectResponse> select(KYBRegistryCandidateRequest params) {
       return client.execute(selectRequest(params), RequestOptions.none(), SELECT_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #select(KybSelectParams, RequestOptions)} with the raw response, with the client's options.
+     * Asynchronous {@link #select(KYBRegistryCandidateRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<KybSelectResponse>> selectAsync(KybSelectParams params) {
+    public CompletableFuture<RawResponse<KybSelectResponse>> selectAsync(KYBRegistryCandidateRequest params) {
       return client.executeAsync(selectRequest(params), RequestOptions.none(), SELECT_RESPONSE);
     }
 
     /**
-     * {@link #listShareholders(KybListShareholdersParams, RequestOptions)} with the raw response.
+     * {@link #listShareholders(KYBRegistryCandidateRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<KybListShareholdersResponse> listShareholders(KybListShareholdersParams params, RequestOptions options) {
+    public RawResponse<KybListShareholdersResponse> listShareholders(KYBRegistryCandidateRequest params, RequestOptions options) {
       return client.execute(listShareholdersRequest(params), options, LIST_SHAREHOLDERS_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #listShareholders(KybListShareholdersParams, RequestOptions)} with the raw response.
+     * Asynchronous {@link #listShareholders(KYBRegistryCandidateRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<KybListShareholdersResponse>> listShareholdersAsync(KybListShareholdersParams params, RequestOptions options) {
+    public CompletableFuture<RawResponse<KybListShareholdersResponse>> listShareholdersAsync(KYBRegistryCandidateRequest params, RequestOptions options) {
       return client.executeAsync(listShareholdersRequest(params), options, LIST_SHAREHOLDERS_RESPONSE);
     }
 
     /**
-     * {@link #listShareholders(KybListShareholdersParams, RequestOptions)} with the raw response, with the client's options.
+     * {@link #listShareholders(KYBRegistryCandidateRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
      * @return the result
      */
-    public RawResponse<KybListShareholdersResponse> listShareholders(KybListShareholdersParams params) {
+    public RawResponse<KybListShareholdersResponse> listShareholders(KYBRegistryCandidateRequest params) {
       return client.execute(listShareholdersRequest(params), RequestOptions.none(), LIST_SHAREHOLDERS_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #listShareholders(KybListShareholdersParams, RequestOptions)} with the raw response, with the client's options.
+     * Asynchronous {@link #listShareholders(KYBRegistryCandidateRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<KybListShareholdersResponse>> listShareholdersAsync(KybListShareholdersParams params) {
+    public CompletableFuture<RawResponse<KybListShareholdersResponse>> listShareholdersAsync(KYBRegistryCandidateRequest params) {
       return client.executeAsync(listShareholdersRequest(params), RequestOptions.none(), LIST_SHAREHOLDERS_RESPONSE);
     }
 
     /**
-     * {@link #listUbos(KybListUbosParams, RequestOptions)} with the raw response.
+     * {@link #listUbos(KYBRegistryCandidateRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<KybListUbosResponse> listUbos(KybListUbosParams params, RequestOptions options) {
+    public RawResponse<KybListUbosResponse> listUbos(KYBRegistryCandidateRequest params, RequestOptions options) {
       return client.execute(listUbosRequest(params), options, LIST_UBOS_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #listUbos(KybListUbosParams, RequestOptions)} with the raw response.
+     * Asynchronous {@link #listUbos(KYBRegistryCandidateRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<KybListUbosResponse>> listUbosAsync(KybListUbosParams params, RequestOptions options) {
+    public CompletableFuture<RawResponse<KybListUbosResponse>> listUbosAsync(KYBRegistryCandidateRequest params, RequestOptions options) {
       return client.executeAsync(listUbosRequest(params), options, LIST_UBOS_RESPONSE);
     }
 
     /**
-     * {@link #listUbos(KybListUbosParams, RequestOptions)} with the raw response, with the client's options.
+     * {@link #listUbos(KYBRegistryCandidateRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
      * @return the result
      */
-    public RawResponse<KybListUbosResponse> listUbos(KybListUbosParams params) {
+    public RawResponse<KybListUbosResponse> listUbos(KYBRegistryCandidateRequest params) {
       return client.execute(listUbosRequest(params), RequestOptions.none(), LIST_UBOS_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #listUbos(KybListUbosParams, RequestOptions)} with the raw response, with the client's options.
+     * Asynchronous {@link #listUbos(KYBRegistryCandidateRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<KybListUbosResponse>> listUbosAsync(KybListUbosParams params) {
+    public CompletableFuture<RawResponse<KybListUbosResponse>> listUbosAsync(KYBRegistryCandidateRequest params) {
       return client.executeAsync(listUbosRequest(params), RequestOptions.none(), LIST_UBOS_RESPONSE);
     }
   }

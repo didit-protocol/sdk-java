@@ -17,7 +17,7 @@ import org.jspecify.annotations.Nullable;
  * Partial branding update body. Provide only the fields you want to change. Hex colors accept <code>#RRGGBB</code> or <code>#RRGGBBAA</code>. Custom domain and white-label email are not accepted here.
  */
 public final class BrandingCustomizationUpdate extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("color_primary", "color_secondary", "color_background", "color_panel", "color_panel_10", "color_on_panel_1", "color_on_panel_2", "color_on_background", "color_button_1", "color_button_2", "color_button_text_1", "color_button_text_2", "color_pill_text", "border_radius_panel", "border_radius_buttons", "font_family", "font_weight", "app_public_name", "privacy_policy_url", "skip_welcome_screen", "disable_login_with_didit", "hide_progress_bar", "callback_seconds", "delete_logo_square", "delete_logo_rectangular", "delete_favicon");
+  private static final Set<String> KNOWN_FIELDS = Set.of("color_primary", "color_secondary", "color_background", "color_panel", "color_panel_10", "color_on_panel_1", "color_on_panel_2", "color_on_background", "color_button_1", "color_button_2", "color_button_text_1", "color_button_text_2", "color_pill_text", "border_radius_panel", "border_radius_buttons", "font_family", "font_weight", "app_public_name", "privacy_policy_url", "skip_welcome_screen", "disable_login_with_didit", "hide_progress_bar", "callback_seconds", "delete_logo_square", "delete_logo_rectangular", "delete_logo_rectangular_dark", "delete_favicon");
 
   private BrandingCustomizationUpdate(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -303,6 +303,16 @@ public final class BrandingCustomizationUpdate extends JsonModel {
   }
 
   /**
+   * When <code>true</code>, removes the current dark-mode logo, and <code>logo_rectangular_dark</code> then reads <code>null</code>. If the same multipart request also uploads <code>image_rectangular_dark</code>, the upload wins.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> deleteLogoRectangularDark() {
+    return Json.optional(json, "delete_logo_rectangular_dark", Conv.BOOLEAN);
+  }
+
+  /**
    * When <code>true</code>, removes the current favicon.
    *
    * @return the value, or empty when the field is absent or null
@@ -573,6 +583,16 @@ public final class BrandingCustomizationUpdate extends JsonModel {
      */
     public Builder deleteLogoRectangular(boolean deleteLogoRectangular) {
       return set("delete_logo_rectangular", Conv.BOOLEAN, deleteLogoRectangular);
+    }
+
+    /**
+     * When <code>true</code>, removes the current dark-mode logo, and <code>logo_rectangular_dark</code> then reads <code>null</code>. If the same multipart request also uploads <code>image_rectangular_dark</code>, the upload wins.
+     *
+     * @param deleteLogoRectangularDark the value
+     * @return this builder
+     */
+    public Builder deleteLogoRectangularDark(boolean deleteLogoRectangularDark) {
+      return set("delete_logo_rectangular_dark", Conv.BOOLEAN, deleteLogoRectangularDark);
     }
 
     /**

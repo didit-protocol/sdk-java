@@ -17,7 +17,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code users.update}. */
 public final class UsersUpdateParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("full_name", "display_name", "date_of_birth", "status", "metadata", "approved_emails", "approved_phones", "issuing_states");
+  private static final Set<String> KNOWN_FIELDS = Set.of("full_name", "display_name", "date_of_birth", "status", "metadata", "approved_emails", "approved_phones", "issuing_states", "reason");
 
   private UsersUpdateParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -83,7 +83,7 @@ public final class UsersUpdateParams extends JsonModel {
   }
 
   /**
-   * User lifecycle status. Changing it via this generic PATCH does NOT sync the system blocklist or record a status-change activity; prefer the update-status endpoint.
+   * User lifecycle status. A change is recorded as a <code>STATUS_CHANGED</code> activity, and <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist (moving away from <code>BLOCKED</code> removes that entry).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -132,6 +132,16 @@ public final class UsersUpdateParams extends JsonModel {
     return Json.optional(json, "issuing_states", Conv.list(Conv.STRING));
   }
 
+  /**
+   * Why the status changed. Recorded on the status-change entry of the user's activity (<code>comments[].comment</code>, and <b>Activity</b> in the Business Console), only when the status actually changes. Webhooks do not carry it.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> reason() {
+    return Json.optional(json, "reason", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -176,7 +186,7 @@ public final class UsersUpdateParams extends JsonModel {
     }
 
     /**
-     * User lifecycle status. Changing it via this generic PATCH does NOT sync the system blocklist or record a status-change activity; prefer the update-status endpoint.
+     * User lifecycle status. A change is recorded as a <code>STATUS_CHANGED</code> activity, and <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist (moving away from <code>BLOCKED</code> removes that entry).
      *
      * @param status the value
      * @return this builder
@@ -226,6 +236,16 @@ public final class UsersUpdateParams extends JsonModel {
     }
 
     /**
+     * Why the status changed. Recorded on the status-change entry of the user's activity (<code>comments[].comment</code>, and <b>Activity</b> in the Business Console), only when the status actually changes. Webhooks do not carry it.
+     *
+     * @param reason the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder reason(@Nullable String reason) {
+      return setNullable("reason", Conv.STRING, reason);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code UsersUpdateParams}
@@ -241,7 +261,7 @@ public final class UsersUpdateParams extends JsonModel {
   }
 
   /**
-   * User lifecycle status. Changing it via this generic PATCH does NOT sync the system blocklist or record a status-change activity; prefer the update-status endpoint.
+   * User lifecycle status. A change is recorded as a <code>STATUS_CHANGED</code> activity, and <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist (moving away from <code>BLOCKED</code> removes that entry).
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */

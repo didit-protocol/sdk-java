@@ -97,7 +97,7 @@ final class CasesResourceTest {
 
   @Test
   void update() {
-    CasesUpdateParams params = CasesUpdateParams.builder().title("value-title").priority(CasesUpdateParams.Priority.LOW).dueAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).tags(List.of("value-tags")).build();
+    CasesUpdateParams params = CasesUpdateParams.builder().title("value-title").priority(CasesUpdateParams.Priority.LOW).dueAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).tags(List.of("value-tags")).team("00000000-0000-4000-8000-000000000415").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
     var result = client.cases().update("00000000-0000-4000-8000-000000005e20", params);
@@ -107,7 +107,7 @@ final class CasesResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"title\":\"value-title\",\"priority\":\"LOW\",\"due_at\":\"2026-11-01T10:15:30Z\",\"tags\":[\"value-tags\"]}", request.body());
+    TestJson.assertJsonEquals("{\"title\":\"value-title\",\"priority\":\"LOW\",\"due_at\":\"2026-11-01T10:15:30Z\",\"tags\":[\"value-tags\"],\"team\":\"00000000-0000-4000-8000-000000000415\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
@@ -144,7 +144,7 @@ final class CasesResourceTest {
 
   @Test
   void resolve() {
-    CasesResolveParams params = CasesResolveParams.builder().resolution(CasesResolveParams.Resolution.FALSE_POSITIVE).note("value-note").build();
+    CasesResolveParams params = CasesResolveParams.builder().resolution(CasesResolveParams.Resolution.FALSE_POSITIVE).note("value-note").checker("00000000-0000-4000-8000-000000000b81").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
     var result = client.cases().resolve("00000000-0000-4000-8000-00000000680d", params);
@@ -154,7 +154,7 @@ final class CasesResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"resolution\":\"FALSE_POSITIVE\",\"note\":\"value-note\"}", request.body());
+    TestJson.assertJsonEquals("{\"resolution\":\"FALSE_POSITIVE\",\"note\":\"value-note\",\"checker\":\"00000000-0000-4000-8000-000000000b81\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

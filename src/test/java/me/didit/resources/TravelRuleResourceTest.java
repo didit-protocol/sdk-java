@@ -14,9 +14,16 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.TravelRuleCounterpartyDecisionRequest;
+import me.didit.types.TravelRuleCounterpartyQuestionnaireRequest;
+import me.didit.types.TravelRuleCounterpartyScreeningRequest;
+import me.didit.types.TravelRuleDataSharingFields;
 import me.didit.types.TravelRuleInboundRequest;
 import me.didit.types.TravelRuleListVaspsParams;
+import me.didit.types.TravelRuleMatchingRules;
 import me.didit.types.TravelRuleSettingsUpdate;
+import me.didit.types.TravelRuleUtxo;
+import me.didit.types.TravelRuleUtxoEntry;
 import me.didit.types.TravelRuleWidgetSessionCreate;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +51,7 @@ final class TravelRuleResourceTest {
 
   @Test
   void updateSettings() {
-    TravelRuleSettingsUpdate params = TravelRuleSettingsUpdate.builder().isEnabled(true).legalName("value-legal-name").lei("value-lei").jurisdiction("value-jurisdiction").nameMatchingStrictness(TravelRuleSettingsUpdate.NameMatchingStrictness.NONE).confirmationTimeoutHours(1L).timeoutOutcome(TravelRuleSettingsUpdate.TimeoutOutcome.HOLD).complianceEmail("user@example.com").isDiscoverable(true).thresholdAmount("value-threshold-amount").inboundAutoAccept(true).allowSelfDeclaration(true).allowScreenshotProof(true).autoWalletVerification(true).vaspAttributionEnabled(true).disabledNetworks(List.of(TravelRuleSettingsUpdate.DisabledNetworks.GTR)).build();
+    TravelRuleSettingsUpdate params = TravelRuleSettingsUpdate.builder().isEnabled(true).legalName("value-legal-name").lei("value-lei").jurisdiction("value-jurisdiction").nameMatchingStrictness(TravelRuleSettingsUpdate.NameMatchingStrictness.NONE).confirmationTimeoutHours(1L).timeoutOutcome(TravelRuleSettingsUpdate.TimeoutOutcome.HOLD).complianceEmail("user@example.com").isDiscoverable(true).thresholdAmount("value-threshold-amount").ownershipValidationMode(TravelRuleSettingsUpdate.OwnershipValidationMode.FULL).simplifiedValidationThreshold("value-simplified-validation-threshold").dataSharingFields(TravelRuleDataSharingFields.builder().individual(List.of(TravelRuleDataSharingFields.Individual.NAME)).company(List.of(TravelRuleDataSharingFields.Company.NAME)).build()).matchingRules(TravelRuleMatchingRules.builder().individual(TravelRuleMatchingRules.Individual.builder().name(TravelRuleMatchingRules.Individual.Name.NONE).dateOfBirth(TravelRuleMatchingRules.Individual.DateOfBirth.NONE).build()).company(TravelRuleMatchingRules.Company.builder().name(TravelRuleMatchingRules.Company.Name.NONE).address(TravelRuleMatchingRules.Company.Address.NONE).build()).build()).inboundAutoAccept(true).allowSelfDeclaration(true).allowScreenshotProof(true).autoWalletVerification(true).vaspAttributionEnabled(true).counterpartyScreeningEnabled(true).sunrisePolicy(TravelRuleSettingsUpdate.SunrisePolicy.EMPTY).nonResponsivePolicy(TravelRuleSettingsUpdate.NonResponsivePolicy.EMPTY).disabledNetworks(List.of(TravelRuleSettingsUpdate.DisabledNetworks.GTR)).build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
     var result = client.travelRule().updateSettings(params);
@@ -54,21 +61,37 @@ final class TravelRuleResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"is_enabled\":true,\"legal_name\":\"value-legal-name\",\"lei\":\"value-lei\",\"jurisdiction\":\"value-jurisdiction\",\"name_matching_strictness\":\"NONE\",\"confirmation_timeout_hours\":1,\"timeout_outcome\":\"HOLD\",\"compliance_email\":\"user@example.com\",\"is_discoverable\":true,\"threshold_amount\":\"value-threshold-amount\",\"inbound_auto_accept\":true,\"allow_self_declaration\":true,\"allow_screenshot_proof\":true,\"auto_wallet_verification\":true,\"vasp_attribution_enabled\":true,\"disabled_networks\":[\"GTR\"]}", request.body());
+    TestJson.assertJsonEquals("{\"is_enabled\":true,\"legal_name\":\"value-legal-name\",\"lei\":\"value-lei\",\"jurisdiction\":\"value-jurisdiction\",\"name_matching_strictness\":\"NONE\",\"confirmation_timeout_hours\":1,\"timeout_outcome\":\"HOLD\",\"compliance_email\":\"user@example.com\",\"is_discoverable\":true,\"threshold_amount\":\"value-threshold-amount\",\"ownership_validation_mode\":\"FULL\",\"simplified_validation_threshold\":\"value-simplified-validation-threshold\",\"data_sharing_fields\":{\"individual\":[\"name\"],\"company\":[\"name\"]},\"matching_rules\":{\"individual\":{\"name\":\"NONE\",\"date_of_birth\":\"NONE\"},\"company\":{\"name\":\"NONE\",\"address\":\"NONE\"}},\"inbound_auto_accept\":true,\"allow_self_declaration\":true,\"allow_screenshot_proof\":true,\"auto_wallet_verification\":true,\"vasp_attribution_enabled\":true,\"counterparty_screening_enabled\":true,\"sunrise_policy\":\"\",\"non_responsive_policy\":\"\",\"disabled_networks\":[\"GTR\"]}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void sendComplianceEmailConfirmation() {
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/travel-rule/settings/compliance-email/confirmation/", "202");
+    transport.respondJson(202, example);
+    var result = client.travelRule().sendComplianceEmailConfirmation();
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/travel-rule/settings/compliance-email/confirmation/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
   @Test
   void listVasps() {
-    TravelRuleListVaspsParams params = TravelRuleListVaspsParams.builder().search("value-search").limit(1L).offset(1L).build();
+    TravelRuleListVaspsParams params = TravelRuleListVaspsParams.builder().search("value-search").network(TravelRuleListVaspsParams.Network.GTR).jurisdiction("value-jurisdiction").reachable(true).kind(TravelRuleListVaspsParams.Kind.DIRECTORY).risk(TravelRuleListVaspsParams.Risk.LOW).responsiveness(TravelRuleListVaspsParams.Responsiveness.RESPONSIVE).limit(1L).offset(1L).build();
     JsonNode example = TestJson.parse("{\"count\":0,\"next\":null,\"previous\":null,\"results\":[]}");
     transport.respondJson(200, example);
     var result = client.travelRule().listVasps(params);
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/v3/travel-rule/vasps/", request.path());
-    assertEquals(Map.ofEntries(Map.entry("search", List.of("value-search")), Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1"))), request.query());
+    assertEquals(Map.ofEntries(Map.entry("search", List.of("value-search")), Map.entry("network", List.of("GTR")), Map.entry("jurisdiction", List.of("value-jurisdiction")), Map.entry("reachable", List.of("true")), Map.entry("kind", List.of("directory")), Map.entry("risk", List.of("LOW")), Map.entry("responsiveness", List.of("RESPONSIVE")), Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
@@ -78,8 +101,139 @@ final class TravelRuleResourceTest {
   }
 
   @Test
+  void retrieveVasp() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/travel-rule/vasps/{vasp_id}/", "200");
+    transport.respondJson(200, example);
+    var result = client.travelRule().retrieveVasp("00000000-0000-4000-8000-00000000d9f8");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/travel-rule/vasps/00000000-0000-4000-8000-00000000d9f8/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void retrieveVaspDecision() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/travel-rule/vasps/{vasp_id}/decision/", "200");
+    transport.respondJson(200, example);
+    var result = client.travelRule().retrieveVaspDecision("00000000-0000-4000-8000-0000000162c9");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/travel-rule/vasps/00000000-0000-4000-8000-0000000162c9/decision/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void updateVaspDecision() {
+    TravelRuleCounterpartyDecisionRequest params = TravelRuleCounterpartyDecisionRequest.builder().decision(TravelRuleCounterpartyDecisionRequest.Decision.APPROVED).reason("value-reason").build();
+    JsonNode example = SpecExamples.response("verification.json", "PUT", "/v3/travel-rule/vasps/{vasp_id}/decision/", "200");
+    transport.respondJson(200, example);
+    var result = client.travelRule().updateVaspDecision("00000000-0000-4000-8000-000000014047", params);
+    RecordedRequest request = transport.only();
+    assertEquals("PUT", request.method());
+    assertEquals("/v3/travel-rule/vasps/00000000-0000-4000-8000-000000014047/decision/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"decision\":\"APPROVED\",\"reason\":\"value-reason\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void clearVaspDecision() {
+    JsonNode example = SpecExamples.response("verification.json", "DELETE", "/v3/travel-rule/vasps/{vasp_id}/decision/", "200");
+    transport.respondJson(200, example);
+    var result = client.travelRule().clearVaspDecision("00000000-0000-4000-8000-000000012f4c");
+    RecordedRequest request = transport.only();
+    assertEquals("DELETE", request.method());
+    assertEquals("/v3/travel-rule/vasps/00000000-0000-4000-8000-000000012f4c/decision/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void retrieveVaspScreening() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/travel-rule/vasps/{vasp_id}/screening/", "200");
+    transport.respondJson(200, example);
+    var result = client.travelRule().retrieveVaspScreening("00000000-0000-4000-8000-000000017484");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/travel-rule/vasps/00000000-0000-4000-8000-000000017484/screening/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void screenVasp() {
+    TravelRuleCounterpartyScreeningRequest params = TravelRuleCounterpartyScreeningRequest.builder().refresh(true).build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/travel-rule/vasps/{vasp_id}/screening/", "200");
+    transport.respondJson(200, example);
+    var result = client.travelRule().screenVasp("00000000-0000-4000-8000-00000000beb5", params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/travel-rule/vasps/00000000-0000-4000-8000-00000000beb5/screening/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"refresh\":true}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listVaspQuestionnaires() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/travel-rule/vasps/{vasp_id}/questionnaires/", "200");
+    transport.respondJson(200, example);
+    var result = client.travelRule().listVaspQuestionnaires("00000000-0000-4000-8000-000000018ad5");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/travel-rule/vasps/00000000-0000-4000-8000-000000018ad5/questionnaires/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void sendVaspQuestionnaire() {
+    TravelRuleCounterpartyQuestionnaireRequest params = TravelRuleCounterpartyQuestionnaireRequest.builder().sentTo("user@example.com").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/travel-rule/vasps/{vasp_id}/questionnaires/", "202");
+    transport.respondJson(202, example);
+    var result = client.travelRule().sendVaspQuestionnaire("00000000-0000-4000-8000-00000001769b", params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/travel-rule/vasps/00000000-0000-4000-8000-00000001769b/questionnaires/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"sent_to\":\"user@example.com\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
   void registerInbound() {
-    TravelRuleInboundRequest params = TravelRuleInboundRequest.builder().chain("value-chain").txid("value-txid").walletAddress("value-wallet-address").amount("value-amount").currency("value-currency").originatorData(Map.of("key", "value")).beneficiaryData(Map.of("key", "value")).originatingVasp(TravelRuleInboundRequest.OriginatingVasp.builder().name("value-name").lei("value-lei").build()).build();
+    TravelRuleInboundRequest params = TravelRuleInboundRequest.builder().chain("value-chain").txid("value-txid").walletAddress("value-wallet-address").amount("value-amount").currency("value-currency").originatorData(Map.of("key", "value")).beneficiaryData(Map.of("key", "value")).originatingVasp(TravelRuleInboundRequest.OriginatingVasp.builder().name("value-name").lei("value-lei").build()).memo("value-memo").utxo(TravelRuleUtxo.builder().inputs(List.of(TravelRuleUtxoEntry.builder().address("value-address").amount("value-amount").txid("value-txid").build())).outputs(List.of(TravelRuleUtxoEntry.builder().address("value-address").amount("value-amount").txid("value-txid").build())).build()).build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
     var result = client.travelRule().registerInbound(params);
@@ -89,7 +243,7 @@ final class TravelRuleResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"chain\":\"value-chain\",\"txid\":\"value-txid\",\"wallet_address\":\"value-wallet-address\",\"amount\":\"value-amount\",\"currency\":\"value-currency\",\"originator_data\":{\"key\":\"value\"},\"beneficiary_data\":{\"key\":\"value\"},\"originating_vasp\":{\"name\":\"value-name\",\"lei\":\"value-lei\"}}", request.body());
+    TestJson.assertJsonEquals("{\"chain\":\"value-chain\",\"txid\":\"value-txid\",\"wallet_address\":\"value-wallet-address\",\"amount\":\"value-amount\",\"currency\":\"value-currency\",\"originator_data\":{\"key\":\"value\"},\"beneficiary_data\":{\"key\":\"value\"},\"originating_vasp\":{\"name\":\"value-name\",\"lei\":\"value-lei\"},\"memo\":\"value-memo\",\"utxo\":{\"inputs\":[{\"address\":\"value-address\",\"amount\":\"value-amount\",\"txid\":\"value-txid\"}],\"outputs\":[{\"address\":\"value-address\",\"amount\":\"value-amount\",\"txid\":\"value-txid\"}]}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

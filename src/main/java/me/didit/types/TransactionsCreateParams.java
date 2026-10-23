@@ -134,7 +134,7 @@ public final class TransactionsCreateParams extends JsonModel {
   }
 
   /**
-   * Travel Rule compliance metadata.
+   * Travel Rule data. When Travel Rule is enabled and transaction_category is travel_rule, Didit runs the exchange itself: it ignores status, protocol, required and obligations_count, and uses originator_data, beneficiary_data and metadata. Otherwise Didit stores these values as a passive Travel Rule record. While Travel Rule is on, an outbound transfer at or above your threshold must carry what its regime requires (EU TFR or FATF Recommendation 16), checked on the sides you send: a missing field answers 400 under <code>travel_rule_details.originator_data</code> or <code>travel_rule_details.beneficiary_data</code>, for example "EU TFR requires the originator name."
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -257,7 +257,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * Travel Rule compliance metadata.
+     * Travel Rule data. When Travel Rule is enabled and transaction_category is travel_rule, Didit runs the exchange itself: it ignores status, protocol, required and obligations_count, and uses originator_data, beneficiary_data and metadata. Otherwise Didit stores these values as a passive Travel Rule record. While Travel Rule is on, an outbound transfer at or above your threshold must carry what its regime requires (EU TFR or FATF Recommendation 16), checked on the sides you send: a missing field answers 400 under <code>travel_rule_details.originator_data</code> or <code>travel_rule_details.beneficiary_data</code>, for example "EU TFR requires the originator name."
      *
      * @param travelRuleDetails the value
      * @return this builder
@@ -728,7 +728,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * Actual network used for screening. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism) and ARB (Arbitrum One). Always specify this for multi-network tokens. Connected-provider coverage varies; LIGHTNING requires a supported connected provider.
+       * Actual network used for screening. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism) and ARB (Arbitrum One). Always specify this for multi-network tokens. When it is missing for USDT, USDC or ETH sent with a 0x transaction hash, Didit looks the hash up on Ethereum, BNB Chain, Polygon, Base, Arbitrum and Optimism and screens it on the network where it is found; if no network has it, the transaction is not screened and custom_values.aml_screening_status is FAILED with the reason in custom_values.aml_screening_error. When it is missing for USDT or USDC screened by wallet (no transaction hash), a Tron address is screened on Tron, a Solana address on Solana, and a 0x address on the first of those six networks where it has sent a transaction or holds the token, or on Ethereum when it is active on none of them. Connected-provider coverage varies; LIGHTNING requires a supported connected provider.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -751,7 +751,7 @@ public final class TransactionsCreateParams extends JsonModel {
         }
 
         /**
-         * Actual network used for screening. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism) and ARB (Arbitrum One). Always specify this for multi-network tokens. Connected-provider coverage varies; LIGHTNING requires a supported connected provider.
+         * Actual network used for screening. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism) and ARB (Arbitrum One). Always specify this for multi-network tokens. When it is missing for USDT, USDC or ETH sent with a 0x transaction hash, Didit looks the hash up on Ethereum, BNB Chain, Polygon, Base, Arbitrum and Optimism and screens it on the network where it is found; if no network has it, the transaction is not screened and custom_values.aml_screening_status is FAILED with the reason in custom_values.aml_screening_error. When it is missing for USDT or USDC screened by wallet (no transaction hash), a Tron address is screened on Tron, a Solana address on Solana, and a 0x address on the first of those six networks where it has sent a transaction or holds the token, or on Ethereum when it is active on none of them. Connected-provider coverage varies; LIGHTNING requires a supported connected provider.
          *
          * @param cryptoChain the value
          * @return this builder
@@ -1795,7 +1795,7 @@ public final class TransactionsCreateParams extends JsonModel {
 
     /** Payment method used by the subject. */
     public static final class PaymentMethod extends JsonModel {
-      private static final Set<String> KNOWN_FIELDS = Set.of("method_type", "account_id", "issuing_country");
+      private static final Set<String> KNOWN_FIELDS = Set.of("method_type", "account_id", "memo", "issuing_country");
 
       private PaymentMethod(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
@@ -1841,13 +1841,23 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * Account identifier (e.g. IBAN, wallet address). For crypto screening, this should contain the wallet address for this participant. Inbound transaction-hash screening requires the service/customer deposit address on the subject. Outbound screening uses the destination wallet on the counterparty.
+       * Account identifier (e.g. IBAN, wallet address). For crypto screening, this should contain the wallet address for this participant. Inbound transaction-hash screening requires the service/customer deposit address on the subject. Outbound screening uses the destination wallet on the counterparty. On a crypto transfer on bitcoin or Lightning it may be a Lightning payment request (BOLT11 invoice, BOLT12 offer, LNURL) or a Lightning Address: Didit stores the payee it names as the account ("" when it names none) and what the request says on the Travel Rule transfer's <code>chain_details.lightning</code>. At most 255 characters once stored. On a crypto transfer on bitcoin or Lightning it may be a Lightning payment request (BOLT11 invoice, BOLT12 offer, LNURL) or a Lightning Address: Didit stores the payee it names as the account ("" when it names none) and what the request says on the Travel Rule transfer's <code>chain_details.lightning</code>. At most 255 characters once stored.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
       public Optional<String> accountId() {
         return Json.optional(json, "account_id", Conv.STRING);
+      }
+
+      /**
+       * The destination tag or memo that is part of the wallet on a memo network (XRP, XLM, EOS, ATOM, HBAR). On one shared exchange address each memo is its own payment method. XRP: a destination tag, a whole number from 0 to 4294967295 (a JSON number is accepted). XLM: a text memo of up to 28 bytes, a 64-bit id or a 32-byte hash in hex. EOS: up to 256 bytes. ATOM: up to 256 characters. HBAR: up to 100 bytes. Bitcoin, EVM, Solana, Tron, Litecoin, Bitcoin Cash, Dogecoin and Lightning wallets take no memo: one there is a <code>400</code>. Alias: <code>destinationTag</code> or <code>destination_tag</code>.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> memo() {
+        return Json.optional(json, "memo", Conv.STRING);
       }
 
       /**
@@ -1884,13 +1894,23 @@ public final class TransactionsCreateParams extends JsonModel {
         }
 
         /**
-         * Account identifier (e.g. IBAN, wallet address). For crypto screening, this should contain the wallet address for this participant. Inbound transaction-hash screening requires the service/customer deposit address on the subject. Outbound screening uses the destination wallet on the counterparty.
+         * Account identifier (e.g. IBAN, wallet address). For crypto screening, this should contain the wallet address for this participant. Inbound transaction-hash screening requires the service/customer deposit address on the subject. Outbound screening uses the destination wallet on the counterparty. On a crypto transfer on bitcoin or Lightning it may be a Lightning payment request (BOLT11 invoice, BOLT12 offer, LNURL) or a Lightning Address: Didit stores the payee it names as the account ("" when it names none) and what the request says on the Travel Rule transfer's <code>chain_details.lightning</code>. At most 255 characters once stored. On a crypto transfer on bitcoin or Lightning it may be a Lightning payment request (BOLT11 invoice, BOLT12 offer, LNURL) or a Lightning Address: Didit stores the payee it names as the account ("" when it names none) and what the request says on the Travel Rule transfer's <code>chain_details.lightning</code>. At most 255 characters once stored.
          *
          * @param accountId the value
          * @return this builder
          */
         public Builder accountId(String accountId) {
           return set("account_id", Conv.STRING, accountId);
+        }
+
+        /**
+         * The destination tag or memo that is part of the wallet on a memo network (XRP, XLM, EOS, ATOM, HBAR). On one shared exchange address each memo is its own payment method. XRP: a destination tag, a whole number from 0 to 4294967295 (a JSON number is accepted). XLM: a text memo of up to 28 bytes, a 64-bit id or a 32-byte hash in hex. EOS: up to 256 bytes. ATOM: up to 256 characters. HBAR: up to 100 bytes. Bitcoin, EVM, Solana, Tron, Litecoin, Bitcoin Cash, Dogecoin and Lightning wallets take no memo: one there is a <code>400</code>. Alias: <code>destinationTag</code> or <code>destination_tag</code>.
+         *
+         * @param memo the value
+         * @return this builder
+         */
+        public Builder memo(String memo) {
+          return set("memo", Conv.STRING, memo);
         }
 
         /**
@@ -2645,7 +2665,7 @@ public final class TransactionsCreateParams extends JsonModel {
      * Payment method used by the counterparty. On travelRule transactions, <code>method_type: "unhosted_wallet"</code> declares the counterparty wallet as self-hosted: the transfer skips counterparty-VASP routing, is created directly in <code>UNCONFIRMED_OWNERSHIP</code>, and (when <code>auto_wallet_verification</code> is enabled) a wallet-ownership widget session is auto-minted and returned in the transaction's <code>action_required</code> block.
      */
     public static final class PaymentMethod extends JsonModel {
-      private static final Set<String> KNOWN_FIELDS = Set.of("method_type", "account_id", "issuing_country");
+      private static final Set<String> KNOWN_FIELDS = Set.of("method_type", "account_id", "memo", "issuing_country");
 
       private PaymentMethod(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
@@ -2691,13 +2711,23 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * Account identifier (e.g. IBAN or wallet address).
+       * Account identifier (e.g. IBAN or wallet address). On a crypto transfer on bitcoin or Lightning it may be a Lightning payment request (BOLT11 invoice, BOLT12 offer, LNURL) or a Lightning Address: Didit stores the payee it names as the account ("" when it names none) and what the request says on the Travel Rule transfer's <code>chain_details.lightning</code>. At most 255 characters once stored. On a crypto transfer on bitcoin or Lightning it may be a Lightning payment request (BOLT11 invoice, BOLT12 offer, LNURL) or a Lightning Address: Didit stores the payee it names as the account ("" when it names none) and what the request says on the Travel Rule transfer's <code>chain_details.lightning</code>. At most 255 characters once stored.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
       public Optional<String> accountId() {
         return Json.optional(json, "account_id", Conv.STRING);
+      }
+
+      /**
+       * The destination tag or memo that is part of the wallet on a memo network (XRP, XLM, EOS, ATOM, HBAR). On one shared exchange address each memo is its own payment method. XRP: a destination tag, a whole number from 0 to 4294967295 (a JSON number is accepted). XLM: a text memo of up to 28 bytes, a 64-bit id or a 32-byte hash in hex. EOS: up to 256 bytes. ATOM: up to 256 characters. HBAR: up to 100 bytes. Bitcoin, EVM, Solana, Tron, Litecoin, Bitcoin Cash, Dogecoin and Lightning wallets take no memo: one there is a <code>400</code>. Alias: <code>destinationTag</code> or <code>destination_tag</code>.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> memo() {
+        return Json.optional(json, "memo", Conv.STRING);
       }
 
       /**
@@ -2734,13 +2764,23 @@ public final class TransactionsCreateParams extends JsonModel {
         }
 
         /**
-         * Account identifier (e.g. IBAN or wallet address).
+         * Account identifier (e.g. IBAN or wallet address). On a crypto transfer on bitcoin or Lightning it may be a Lightning payment request (BOLT11 invoice, BOLT12 offer, LNURL) or a Lightning Address: Didit stores the payee it names as the account ("" when it names none) and what the request says on the Travel Rule transfer's <code>chain_details.lightning</code>. At most 255 characters once stored. On a crypto transfer on bitcoin or Lightning it may be a Lightning payment request (BOLT11 invoice, BOLT12 offer, LNURL) or a Lightning Address: Didit stores the payee it names as the account ("" when it names none) and what the request says on the Travel Rule transfer's <code>chain_details.lightning</code>. At most 255 characters once stored.
          *
          * @param accountId the value
          * @return this builder
          */
         public Builder accountId(String accountId) {
           return set("account_id", Conv.STRING, accountId);
+        }
+
+        /**
+         * The destination tag or memo that is part of the wallet on a memo network (XRP, XLM, EOS, ATOM, HBAR). On one shared exchange address each memo is its own payment method. XRP: a destination tag, a whole number from 0 to 4294967295 (a JSON number is accepted). XLM: a text memo of up to 28 bytes, a 64-bit id or a 32-byte hash in hex. EOS: up to 256 bytes. ATOM: up to 256 characters. HBAR: up to 100 bytes. Bitcoin, EVM, Solana, Tron, Litecoin, Bitcoin Cash, Dogecoin and Lightning wallets take no memo: one there is a <code>400</code>. Alias: <code>destinationTag</code> or <code>destination_tag</code>.
+         *
+         * @param memo the value
+         * @return this builder
+         */
+        public Builder memo(String memo) {
+          return set("memo", Conv.STRING, memo);
         }
 
         /**
@@ -2770,9 +2810,11 @@ public final class TransactionsCreateParams extends JsonModel {
     }
   }
 
-  /** Travel Rule compliance metadata. */
+  /**
+   * Travel Rule data. When Travel Rule is enabled and transaction_category is travel_rule, Didit runs the exchange itself: it ignores status, protocol, required and obligations_count, and uses originator_data, beneficiary_data and metadata. Otherwise Didit stores these values as a passive Travel Rule record. While Travel Rule is on, an outbound transfer at or above your threshold must carry what its regime requires (EU TFR or FATF Recommendation 16), checked on the sides you send: a missing field answers 400 under <code>travel_rule_details.originator_data</code> or <code>travel_rule_details.beneficiary_data</code>, for example "EU TFR requires the originator name."
+   */
   public static final class TravelRuleDetails extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("status", "protocol", "required", "obligations_count", "originator_data", "beneficiary_data", "metadata");
+    private static final Set<String> KNOWN_FIELDS = Set.of("status", "protocol", "required", "obligations_count", "originator_data", "beneficiary_data", "metadata", "utxo", "originator", "beneficiary", "ivms101");
 
     private TravelRuleDetails(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -2808,7 +2850,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The <code>status</code> field.
+     * Required whenever you send travel_rule_details. One of the Travel Rule transfer statuses (for example AWAITING_COUNTERPARTY, COMPLETED, NOT_APPLICABLE); lowercase and camelCase spellings and the legacy values UNKNOWN, COMPLIANT, PENDING_ACTION, PENDING_COUNTERPARTY, FAILED and EXEMPT are also accepted and mapped. Any other value returns 400.
      *
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -2848,7 +2890,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The <code>originator_data</code> field.
+     * Originator party, as flat fields or one IVMS 101 person. For your user with an approved KYC verification, Didit replaces the fields the verification holds with the verified values (see <code>metadata.originator_provenance</code>). It must be an object: anything else is a <code>400</code>. On a memo network a <code>memo</code> key names the originator wallet's memo or tag.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2858,7 +2900,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * The <code>beneficiary_data</code> field.
+     * Beneficiary party, as flat fields or one IVMS 101 person. An empty <code>wallet_address</code> is filled from <code>counterparty.payment_method.account_id</code>. It must be an object: anything else is a <code>400</code>. On a memo network <code>memo</code> names the beneficiary wallet's memo or tag; <code>wallet_address</code> and <code>memo</code> win over the counterparty's payment method.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2877,6 +2919,46 @@ public final class TransactionsCreateParams extends JsonModel {
       return Json.optional(json, "metadata", Conv.OBJECT);
     }
 
+    /**
+     * Optional, UTXO chains only (BTC, LTC, BCH, DOGE). The transaction's inputs and outputs, from which Didit infers the originator wallet and the beneficiary output when you do not declare them.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<TravelRuleUtxo> utxo() {
+      return Json.optional(json, "utxo", Conv.model(TravelRuleUtxo::fromJson));
+    }
+
+    /**
+     * An IVMS 101 originator block: <code>originatorPersons</code> (one <code>naturalPerson</code> or <code>legalPerson</code>; a legal person makes the party a company) and <code>accountNumber</code> (wallet addresses). Used for <code>originator_data</code> when that object is empty. A malformed block answers 400 keyed by its path, for example <code>originator.originatorPersons</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Map<String, JsonNode>> originator() {
+      return Json.optional(json, "originator", Conv.OBJECT);
+    }
+
+    /**
+     * An IVMS 101 beneficiary block: <code>beneficiaryPersons</code> (one <code>naturalPerson</code> or <code>legalPerson</code>; a legal person makes the party a company) and <code>accountNumber</code> (wallet addresses). Used for <code>beneficiary_data</code> when that object is empty. A malformed block answers 400 keyed by its path, for example <code>beneficiary.beneficiaryPersons</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Map<String, JsonNode>> beneficiary() {
+      return Json.optional(json, "beneficiary", Conv.OBJECT);
+    }
+
+    /**
+     * The <code>originator</code> and <code>beneficiary</code> blocks wrapped in one IVMS 101 object (<code>IVMS101</code> is accepted too). Top-level blocks win over the wrapper's.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Map<String, JsonNode>> ivms101() {
+      return Json.optional(json, "ivms101", Conv.OBJECT);
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -2891,7 +2973,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The <code>status</code> field.
+       * Required whenever you send travel_rule_details. One of the Travel Rule transfer statuses (for example AWAITING_COUNTERPARTY, COMPLETED, NOT_APPLICABLE); lowercase and camelCase spellings and the legacy values UNKNOWN, COMPLIANT, PENDING_ACTION, PENDING_COUNTERPARTY, FAILED and EXEMPT are also accepted and mapped. Any other value returns 400.
        *
        * @param status the value
        * @return this builder
@@ -2931,7 +3013,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The <code>originator_data</code> field.
+       * Originator party, as flat fields or one IVMS 101 person. For your user with an approved KYC verification, Didit replaces the fields the verification holds with the verified values (see <code>metadata.originator_provenance</code>). It must be an object: anything else is a <code>400</code>. On a memo network a <code>memo</code> key names the originator wallet's memo or tag.
        *
        * @param originatorData the value
        * @return this builder
@@ -2941,7 +3023,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * The <code>beneficiary_data</code> field.
+       * Beneficiary party, as flat fields or one IVMS 101 person. An empty <code>wallet_address</code> is filled from <code>counterparty.payment_method.account_id</code>. It must be an object: anything else is a <code>400</code>. On a memo network <code>memo</code> names the beneficiary wallet's memo or tag; <code>wallet_address</code> and <code>memo</code> win over the counterparty's payment method.
        *
        * @param beneficiaryData the value
        * @return this builder
@@ -2958,6 +3040,46 @@ public final class TransactionsCreateParams extends JsonModel {
        */
       public Builder metadata(Map<String, ?> metadata) {
         return setAny("metadata", metadata);
+      }
+
+      /**
+       * Optional, UTXO chains only (BTC, LTC, BCH, DOGE). The transaction's inputs and outputs, from which Didit infers the originator wallet and the beneficiary output when you do not declare them.
+       *
+       * @param utxo the value
+       * @return this builder
+       */
+      public Builder utxo(TravelRuleUtxo utxo) {
+        return set("utxo", Conv.model(TravelRuleUtxo::fromJson), utxo);
+      }
+
+      /**
+       * An IVMS 101 originator block: <code>originatorPersons</code> (one <code>naturalPerson</code> or <code>legalPerson</code>; a legal person makes the party a company) and <code>accountNumber</code> (wallet addresses). Used for <code>originator_data</code> when that object is empty. A malformed block answers 400 keyed by its path, for example <code>originator.originatorPersons</code>.
+       *
+       * @param originator the value
+       * @return this builder
+       */
+      public Builder originator(Map<String, ?> originator) {
+        return setAny("originator", originator);
+      }
+
+      /**
+       * An IVMS 101 beneficiary block: <code>beneficiaryPersons</code> (one <code>naturalPerson</code> or <code>legalPerson</code>; a legal person makes the party a company) and <code>accountNumber</code> (wallet addresses). Used for <code>beneficiary_data</code> when that object is empty. A malformed block answers 400 keyed by its path, for example <code>beneficiary.beneficiaryPersons</code>.
+       *
+       * @param beneficiary the value
+       * @return this builder
+       */
+      public Builder beneficiary(Map<String, ?> beneficiary) {
+        return setAny("beneficiary", beneficiary);
+      }
+
+      /**
+       * The <code>originator</code> and <code>beneficiary</code> blocks wrapped in one IVMS 101 object (<code>IVMS101</code> is accepted too). Top-level blocks win over the wrapper's.
+       *
+       * @param ivms101 the value
+       * @return this builder
+       */
+      public Builder ivms101(Map<String, ?> ivms101) {
+        return setAny("ivms101", ivms101);
       }
 
       /**

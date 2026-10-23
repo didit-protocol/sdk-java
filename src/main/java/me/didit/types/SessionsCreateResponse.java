@@ -121,7 +121,7 @@ public final class SessionsCreateResponse extends JsonModel {
   }
 
   /**
-   * Final redirect URL the user is sent to after completing the flow. Didit appends <code>?verificationSessionId={session_id}&amp;status={status}</code> to this URL. Falls back to the workflow's configured callback URL when not provided in the request; <code>null</code> when neither is set.
+   * Final redirect URL the user is sent to after completing the flow. Didit appends <code>?verificationSessionId={session_id}&amp;status={status}</code> to this URL. Falls back to the workflow's configured callback URL when not provided in the request; <code>null</code> when neither is set. When the application has allowed domains and this URL is a web URL outside them (for example a workflow default set before the list changed), the hosted flow does not redirect the user to it.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -234,7 +234,7 @@ public final class SessionsCreateResponse extends JsonModel {
     }
 
     /**
-     * Final redirect URL the user is sent to after completing the flow. Didit appends <code>?verificationSessionId={session_id}&amp;status={status}</code> to this URL. Falls back to the workflow's configured callback URL when not provided in the request; <code>null</code> when neither is set.
+     * Final redirect URL the user is sent to after completing the flow. Didit appends <code>?verificationSessionId={session_id}&amp;status={status}</code> to this URL. Falls back to the workflow's configured callback URL when not provided in the request; <code>null</code> when neither is set. When the application has allowed domains and this URL is a web URL outside them (for example a workflow default set before the list changed), the hosted flow does not redirect the user to it.
      *
      * @param callback the value, or {@code null} to send JSON null
      * @return this builder

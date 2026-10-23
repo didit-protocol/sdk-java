@@ -14,10 +14,8 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
-import me.didit.types.KybListShareholdersParams;
-import me.didit.types.KybListUbosParams;
+import me.didit.types.KYBRegistryCandidateRequest;
 import me.didit.types.KybSearchParams;
-import me.didit.types.KybSelectParams;
 import org.junit.jupiter.api.Test;
 
 /** One test per operation of {@code kyb}, against a stubbed HTTP layer. */
@@ -28,7 +26,7 @@ final class KybResourceTest {
 
   @Test
   void search() {
-    KybSearchParams params = KybSearchParams.builder().countryCode("value-country-code").name("value-name").registrationNumber("value-registration-number").searchType(KybSearchParams.SearchType.CONTAINS).vendorData("value-vendor-data").metadata(Map.of("key", "value")).webhookUrl("https://example.com/callback").build();
+    KybSearchParams params = KybSearchParams.builder().countryCode("value-country-code").name("value-name").registrationNumber("value-registration-number").tier(KybSearchParams.Tier.BASIC).searchType(KybSearchParams.SearchType.CONTAINS).vendorData("value-vendor-data").metadata(Map.of("key", "value")).webhookUrl("https://example.com/callback").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/kyb/search/", "200");
     transport.respondJson(200, example);
     var result = client.kyb().search(params);
@@ -38,14 +36,14 @@ final class KybResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"country_code\":\"value-country-code\",\"name\":\"value-name\",\"registration_number\":\"value-registration-number\",\"search_type\":\"contains\",\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"webhook_url\":\"https://example.com/callback\"}", request.body());
+    TestJson.assertJsonEquals("{\"country_code\":\"value-country-code\",\"name\":\"value-name\",\"registration_number\":\"value-registration-number\",\"tier\":\"basic\",\"search_type\":\"contains\",\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"webhook_url\":\"https://example.com/callback\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
   @Test
   void select() {
-    KybSelectParams params = KybSelectParams.builder().kybResponseId("value-kyb-response-id").vendorData("value-vendor-data").metadata(Map.of("key", "value")).saveApiRequest(true).build();
+    KYBRegistryCandidateRequest params = KYBRegistryCandidateRequest.builder().kybResponseId("value-kyb-response-id").vendorData("value-vendor-data").metadata(Map.of("key", "value")).saveApiRequest(true).build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/kyb/select/", "200");
     transport.respondJson(200, example);
     var result = client.kyb().select(params);
@@ -62,7 +60,7 @@ final class KybResourceTest {
 
   @Test
   void listShareholders() {
-    KybListShareholdersParams params = KybListShareholdersParams.builder().kybResponseId("value-kyb-response-id").vendorData("value-vendor-data").metadata(Map.of("key", "value")).saveApiRequest(true).build();
+    KYBRegistryCandidateRequest params = KYBRegistryCandidateRequest.builder().kybResponseId("value-kyb-response-id").vendorData("value-vendor-data").metadata(Map.of("key", "value")).saveApiRequest(true).build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/kyb/shareholders/", "200");
     transport.respondJson(200, example);
     var result = client.kyb().listShareholders(params);
@@ -79,7 +77,7 @@ final class KybResourceTest {
 
   @Test
   void listUbos() {
-    KybListUbosParams params = KybListUbosParams.builder().kybResponseId("value-kyb-response-id").vendorData("value-vendor-data").metadata(Map.of("key", "value")).saveApiRequest(true).build();
+    KYBRegistryCandidateRequest params = KYBRegistryCandidateRequest.builder().kybResponseId("value-kyb-response-id").vendorData("value-vendor-data").metadata(Map.of("key", "value")).saveApiRequest(true).build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/kyb/ubo/", "200");
     transport.respondJson(200, example);
     var result = client.kyb().listUbos(params);
