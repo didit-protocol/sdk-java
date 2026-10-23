@@ -1,6 +1,6 @@
 [versions]
 jackson = "2.22.3"
-jspecify = "1.0.0"
+jspecify = "1.0.1"
 junit = "5.14.4"
 errorprone = "2.50.0"
 nullaway = "0.14.2"
