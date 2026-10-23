@@ -14,6 +14,7 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.AccountApplicationsListParams;
 import me.didit.types.ApplicationCreateRequest;
 import me.didit.types.ApplicationUpdateRequest;
 import org.junit.jupiter.api.Test;
@@ -26,18 +27,21 @@ final class AccountApplicationsResourceTest {
 
   @Test
   void list() {
-    JsonNode example = TestJson.parse("{\"ok\":true}");
+    AccountApplicationsListParams params = AccountApplicationsListParams.builder().limit(1L).offset(1L).build();
+    JsonNode example = SpecExamples.response("account.json", "GET", "/organizations/me/{org_id}/applications/", "200");
     transport.respondJson(200, example);
-    var result = client.account().applications().list("00000000-0000-4000-8000-00000000c91f");
+    var result = client.account().applications().list("00000000-0000-4000-8000-00000000c91f", params);
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/organizations/me/00000000-0000-4000-8000-00000000c91f/applications/", request.path());
-    assertEquals(Map.of(), request.query());
+    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1"))), request.query());
     assertEquals("Bearer test-account-token", request.header("Authorization"));
     assertEquals(null, request.header("x-api-key"));
     assertEquals("https://apx.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, result);
+    TestJson.assertJsonEquals(example, result._json());
+    assertEquals(example.path("results").size(), result.results().size());
+    TestModels.readAll(result.results());
   }
 
   @Test

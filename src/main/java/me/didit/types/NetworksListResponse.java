@@ -11,10 +11,11 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class NetworksListResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("count", "next", "previous", "results", "kpis");
+  private static final Set<String> KNOWN_FIELDS = Set.of("count", "next", "previous", "results", "kpis", "counts", "sharing_mode", "cross_org_available", "cross_org_unavailable_reason");
 
   private NetworksListResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -52,11 +53,11 @@ public final class NetworksListResponse extends JsonModel {
   /**
    * The <code>count</code> field.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<Long> count() {
-    return Json.optional(json, "count", Conv.LONG);
+  public long count() {
+    return Json.required(json, "count", Conv.LONG);
   }
 
   /**
@@ -82,21 +83,61 @@ public final class NetworksListResponse extends JsonModel {
   /**
    * The <code>results</code> field.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<List<NetworkListItem>> results() {
-    return Json.optional(json, "results", Conv.list(Conv.model(NetworkListItem::fromJson)));
+  public List<NetworkListItem> results() {
+    return Json.required(json, "results", Conv.list(Conv.model(NetworkListItem::fromJson)));
   }
 
   /**
-   * Each key is {value, delta} over the results matching the current filters.
+   * Each key is {value, delta} over the results matching the current filters. Omitted when <code>summary=false</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<NetworksListResponse.Kpis> kpis() {
     return Json.optional(json, "kpis", Conv.model(NetworksListResponse.Kpis::fromJson));
+  }
+
+  /**
+   * Network counts for the list's views and filter options, each network counted once. Returned only when <code>summary</code> is not <code>false</code>. <code>scopes</code> count every network visible to the application. <code>views</code> count the visible networks inside the selected <code>scope</code>. <code>facets</code> count the networks in the selected <code>scope</code> and <code>status</code> view (dismissed networks are left out unless <code>status</code> includes them). The other list filters do not change these counts.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<NetworkListCounts> counts() {
+    return Json.optional(json, "counts", Conv.model(NetworkListCounts::fromJson));
+  }
+
+  /**
+   * The organization's cross-organization sharing mode. Only <code>global</code> compares networks across organizations; <code>private</code> and <code>off</code> keep them to the organization's own history.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public NetworksListResponse.SharingMode sharingMode() {
+    return Json.required(json, "sharing_mode", Conv.enumeration(NetworksListResponse.SharingMode::of));
+  }
+
+  /**
+   * Whether cross-organization signals apply to this organization. They need both the Identity Enterprise plan and the <code>global</code> sharing mode.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public boolean crossOrgAvailable() {
+    return Json.required(json, "cross_org_available", Conv.BOOLEAN);
+  }
+
+  /**
+   * Why cross-organization signals do not apply, checked in this order. <code>plan</code>: the organization's Identity plan does not include the cross-organization fraud network (it needs Identity Enterprise), whatever the sharing mode. <code>sharing_mode</code>: the plan includes it, but the sharing mode is <code>private</code> or <code>off</code>. Null when <code>cross_org_available</code> is <code>true</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<NetworksListResponse.CrossOrgUnavailableReason> crossOrgUnavailableReason() {
+    return Json.optional(json, "cross_org_unavailable_reason", Conv.enumeration(NetworksListResponse.CrossOrgUnavailableReason::of));
   }
 
   @Override
@@ -153,7 +194,7 @@ public final class NetworksListResponse extends JsonModel {
     }
 
     /**
-     * Each key is {value, delta} over the results matching the current filters.
+     * Each key is {value, delta} over the results matching the current filters. Omitted when <code>summary=false</code>.
      *
      * @param kpis the value
      * @return this builder
@@ -163,11 +204,59 @@ public final class NetworksListResponse extends JsonModel {
     }
 
     /**
+     * Network counts for the list's views and filter options, each network counted once. Returned only when <code>summary</code> is not <code>false</code>. <code>scopes</code> count every network visible to the application. <code>views</code> count the visible networks inside the selected <code>scope</code>. <code>facets</code> count the networks in the selected <code>scope</code> and <code>status</code> view (dismissed networks are left out unless <code>status</code> includes them). The other list filters do not change these counts.
+     *
+     * @param counts the value
+     * @return this builder
+     */
+    public Builder counts(NetworkListCounts counts) {
+      return set("counts", Conv.model(NetworkListCounts::fromJson), counts);
+    }
+
+    /**
+     * The organization's cross-organization sharing mode. Only <code>global</code> compares networks across organizations; <code>private</code> and <code>off</code> keep them to the organization's own history.
+     *
+     * @param sharingMode the value
+     * @return this builder
+     */
+    public Builder sharingMode(NetworksListResponse.SharingMode sharingMode) {
+      return set("sharing_mode", Conv.enumeration(NetworksListResponse.SharingMode::of), sharingMode);
+    }
+
+    /**
+     * Whether cross-organization signals apply to this organization. They need both the Identity Enterprise plan and the <code>global</code> sharing mode.
+     *
+     * @param crossOrgAvailable the value
+     * @return this builder
+     */
+    public Builder crossOrgAvailable(boolean crossOrgAvailable) {
+      return set("cross_org_available", Conv.BOOLEAN, crossOrgAvailable);
+    }
+
+    /**
+     * Why cross-organization signals do not apply, checked in this order. <code>plan</code>: the organization's Identity plan does not include the cross-organization fraud network (it needs Identity Enterprise), whatever the sharing mode. <code>sharing_mode</code>: the plan includes it, but the sharing mode is <code>private</code> or <code>off</code>. Null when <code>cross_org_available</code> is <code>true</code>.
+     *
+     * @param crossOrgUnavailableReason the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder crossOrgUnavailableReason(NetworksListResponse.@Nullable CrossOrgUnavailableReason crossOrgUnavailableReason) {
+      return setNullable("cross_org_unavailable_reason", Conv.enumeration(NetworksListResponse.CrossOrgUnavailableReason::of), crossOrgUnavailableReason);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code NetworksListResponse}
+     * @throws IllegalStateException when a required field is missing
      */
     public NetworksListResponse build() {
+      require("count", false);
+      require("next", true);
+      require("previous", true);
+      require("results", false);
+      require("sharing_mode", false);
+      require("cross_org_available", false);
+      require("cross_org_unavailable_reason", true);
       return new NetworksListResponse(buildJson(), buildFiles());
     }
 
@@ -177,7 +266,9 @@ public final class NetworksListResponse extends JsonModel {
     }
   }
 
-  /** Each key is {value, delta} over the results matching the current filters. */
+  /**
+   * Each key is {value, delta} over the results matching the current filters. Omitted when <code>summary=false</code>.
+   */
   public static final class Kpis extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("active", "in_review", "applicants_involved", "detected_this_period", "false_positive_rate");
 
@@ -340,6 +431,95 @@ public final class NetworksListResponse extends JsonModel {
       protected Builder self() {
         return this;
       }
+    }
+  }
+
+  /**
+   * The organization's cross-organization sharing mode. Only <code>global</code> compares networks across organizations; <code>private</code> and <code>off</code> keep them to the organization's own history.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class SharingMode extends StringEnum {
+    /** The value {@code "off"}. */
+    public static final SharingMode OFF = new SharingMode("off");
+
+    /** The value {@code "private"}. */
+    public static final SharingMode PRIVATE = new SharingMode("private");
+
+    /** The value {@code "global"}. */
+    public static final SharingMode GLOBAL = new SharingMode("global");
+
+    private static final List<SharingMode> KNOWN_VALUES = List.of(OFF, PRIVATE, GLOBAL);
+
+    private SharingMode(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static SharingMode of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, SharingMode::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<SharingMode> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Why cross-organization signals do not apply, checked in this order. <code>plan</code>: the organization's Identity plan does not include the cross-organization fraud network (it needs Identity Enterprise), whatever the sharing mode. <code>sharing_mode</code>: the plan includes it, but the sharing mode is <code>private</code> or <code>off</code>. Null when <code>cross_org_available</code> is <code>true</code>.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class CrossOrgUnavailableReason extends StringEnum {
+    /** The value {@code "plan"}. */
+    public static final CrossOrgUnavailableReason PLAN = new CrossOrgUnavailableReason("plan");
+
+    /** The value {@code "sharing_mode"}. */
+    public static final CrossOrgUnavailableReason SHARING_MODE = new CrossOrgUnavailableReason("sharing_mode");
+
+    private static final List<CrossOrgUnavailableReason> KNOWN_VALUES = List.of(PLAN, SHARING_MODE);
+
+    private CrossOrgUnavailableReason(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static CrossOrgUnavailableReason of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, CrossOrgUnavailableReason::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<CrossOrgUnavailableReason> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 }

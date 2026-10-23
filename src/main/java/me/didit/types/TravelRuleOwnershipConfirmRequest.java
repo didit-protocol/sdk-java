@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.FileUpload;
@@ -12,7 +13,7 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 
 public final class TravelRuleOwnershipConfirmRequest extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("confirmed");
+  private static final Set<String> KNOWN_FIELDS = Set.of("confirmed", "wallet_address");
 
   private TravelRuleOwnershipConfirmRequest(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -48,13 +49,23 @@ public final class TravelRuleOwnershipConfirmRequest extends JsonModel {
   }
 
   /**
-   * The <code>confirmed</code> field.
+   * true to confirm ownership, false to deny it.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
   public boolean confirmed() {
     return Json.required(json, "confirmed", Conv.BOOLEAN);
+  }
+
+  /**
+   * Inbound TRP transfers: the payment address Didit returns to the originating VASP when you approve. Defaults to the matched address book entry's address, then beneficiary_data.wallet_address. On a declared self-hosted wallet transfer that names no counterparty wallet, the wallet whose ownership you verified; without it the request is rejected with 400. Ignored for other transfers.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> walletAddress() {
+    return Json.optional(json, "wallet_address", Conv.STRING);
   }
 
   @Override
@@ -71,13 +82,23 @@ public final class TravelRuleOwnershipConfirmRequest extends JsonModel {
     }
 
     /**
-     * The <code>confirmed</code> field.
+     * true to confirm ownership, false to deny it.
      *
      * @param confirmed the value
      * @return this builder
      */
     public Builder confirmed(boolean confirmed) {
       return set("confirmed", Conv.BOOLEAN, confirmed);
+    }
+
+    /**
+     * Inbound TRP transfers: the payment address Didit returns to the originating VASP when you approve. Defaults to the matched address book entry's address, then beneficiary_data.wallet_address. On a declared self-hosted wallet transfer that names no counterparty wallet, the wallet whose ownership you verified; without it the request is rejected with 400. Ignored for other transfers.
+     *
+     * @param walletAddress the value
+     * @return this builder
+     */
+    public Builder walletAddress(String walletAddress) {
+      return set("wallet_address", Conv.STRING, walletAddress);
     }
 
     /**

@@ -61,7 +61,7 @@ public final class WalletScreeningScreenParams extends JsonModel {
   }
 
   /**
-   * Network identifier. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism), and ARB (Arbitrum One). USDT and USDC are legacy Ethereum aliases, not multi-network searches. Connected-provider coverage varies. LIGHTNING requires a supported connected provider. Celo, Mode and Plume are not currently supported. Alias: <code>currency</code>.
+   * Network identifier. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism), and ARB (Arbitrum One). USDT and USDC are legacy Ethereum aliases, not multi-network searches. Connected-provider coverage varies. LIGHTNING requires a supported connected provider. CELO (Celo), MODE (Mode) and PLUME (Plume) are screened through a connected TRM Labs account; managed screening answers 400 for them. Alias: <code>currency</code>.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -104,7 +104,7 @@ public final class WalletScreeningScreenParams extends JsonModel {
     }
 
     /**
-     * Network identifier. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism), and ARB (Arbitrum One). USDT and USDC are legacy Ethereum aliases, not multi-network searches. Connected-provider coverage varies. LIGHTNING requires a supported connected provider. Celo, Mode and Plume are not currently supported. Alias: <code>currency</code>.
+     * Network identifier. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism), and ARB (Arbitrum One). USDT and USDC are legacy Ethereum aliases, not multi-network searches. Connected-provider coverage varies. LIGHTNING requires a supported connected provider. CELO (Celo), MODE (Mode) and PLUME (Plume) are screened through a connected TRM Labs account; managed screening answers 400 for them. Alias: <code>currency</code>.
      *
      * @param blockchain the value
      * @return this builder
@@ -142,7 +142,7 @@ public final class WalletScreeningScreenParams extends JsonModel {
   }
 
   /**
-   * Network identifier. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism), and ARB (Arbitrum One). USDT and USDC are legacy Ethereum aliases, not multi-network searches. Connected-provider coverage varies. LIGHTNING requires a supported connected provider. Celo, Mode and Plume are not currently supported. Alias: <code>currency</code>.
+   * Network identifier. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism), and ARB (Arbitrum One). USDT and USDC are legacy Ethereum aliases, not multi-network searches. Connected-provider coverage varies. LIGHTNING requires a supported connected provider. CELO (Celo), MODE (Mode) and PLUME (Plume) are screened through a connected TRM Labs account; managed screening answers 400 for them. Alias: <code>currency</code>.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -195,7 +195,16 @@ public final class WalletScreeningScreenParams extends JsonModel {
     /** The value {@code "ARB"}. */
     public static final Blockchain ARB = new Blockchain("ARB");
 
-    private static final List<Blockchain> KNOWN_VALUES = List.of(BTC, LIGHTNING, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, USDT, USDC, BASE, OP, ARB);
+    /** The value {@code "CELO"}. */
+    public static final Blockchain CELO = new Blockchain("CELO");
+
+    /** The value {@code "MODE"}. */
+    public static final Blockchain MODE = new Blockchain("MODE");
+
+    /** The value {@code "PLUME"}. */
+    public static final Blockchain PLUME = new Blockchain("PLUME");
+
+    private static final List<Blockchain> KNOWN_VALUES = List.of(BTC, LIGHTNING, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, USDT, USDC, BASE, OP, ARB, CELO, MODE, PLUME);
 
     private Blockchain(String value) {
       super(value);

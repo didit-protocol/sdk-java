@@ -6,13 +6,19 @@ import java.util.concurrent.CompletableFuture;
 import me.didit.core.ApiClient;
 import me.didit.core.ApiRequest;
 import me.didit.core.Conv;
+import me.didit.core.Page;
 import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
+import me.didit.types.WebhookDestinationDelivery;
+import me.didit.types.WebhookDestinationDeliveryDetail;
 import me.didit.types.WebhooksDestinationsCreateParams;
 import me.didit.types.WebhooksDestinationsCreateResponse;
+import me.didit.types.WebhooksDestinationsListDeliveriesParams;
 import me.didit.types.WebhooksDestinationsListResponse;
+import me.didit.types.WebhooksDestinationsRetrieveAnalyticsParams;
+import me.didit.types.WebhooksDestinationsRetrieveAnalyticsResponse;
 import me.didit.types.WebhooksDestinationsRetrieveResponse;
 import me.didit.types.WebhooksDestinationsUpdateParams;
 import me.didit.types.WebhooksDestinationsUpdateResponse;
@@ -40,7 +46,7 @@ public final class WebhooksDestinationsResource {
   /**
    * List webhook destinations
    *
-   * <p>List all webhook destinations (unpaginated array, oldest first). Each row includes URL, subscribed events, and delivery health metrics. The signing secret is NOT included in the list — fetch a single destination (<code>GET /v3/webhook/destinations/{destination_uuid}/</code>) to read <code>secret_shared_key</code>.
+   * <p>List all webhook destinations (unpaginated array, oldest first). Each item carries the destination's configuration, its delivery metrics for the last 30 days (<code>metrics_window_days</code>) with one <code>daily_points</code> entry per day, and its health (<code>health_status</code>, <code>failing_streak</code>, <code>failing_since</code>, <code>last_success_at</code>). The list has no <code>summary</code> object and never includes the signing secret: each item shows only <code>secret_last4</code>. Fetch a single destination (<code>GET /v3/webhook/destinations/{destination_uuid}/</code>) to read <code>secret_shared_key</code>.
    *
    * <p>{@code GET /v3/webhook/destinations/}
    *
@@ -82,7 +88,7 @@ public final class WebhooksDestinationsResource {
   /**
    * Create webhook destination
    *
-   * <p>Create a webhook destination. The response includes the auto-generated <code>secret_shared_key</code> HMAC signing secret (also readable later via <code>GET /v3/webhook/destinations/{destination_uuid}/</code>). Always send <code>subscribed_events</code> with at least one event (no wildcards): an explicit empty list is rejected with 400, and omitting the field creates a destination subscribed to nothing, which never receives a webhook. The <code>(application, url)</code> pair must be unique among non-deleted destinations.
+   * <p>Create a webhook destination. The response includes the auto-generated <code>secret_shared_key</code> HMAC signing secret (also readable later via <code>GET /v3/webhook/destinations/{destination_uuid}/</code>). Always send <code>subscribed_events</code> with at least one event (no wildcards): an explicit empty list is rejected with 400, and omitting the field creates a destination subscribed to nothing, which never receives a webhook. The <code>(application, url)</code> pair must be unique among the application's destinations.
    *
    * <p>{@code POST /v3/webhook/destinations/}
    *
@@ -128,7 +134,7 @@ public final class WebhooksDestinationsResource {
   /**
    * Get webhook destination
    *
-   * <p>Retrieve one webhook destination with its <code>secret_shared_key</code> signing secret and delivery health summary. API-key callers always receive the secret in full; Console users without <code>read:webhooks</code> see an empty string.
+   * <p>Retrieve one webhook destination with its <code>secret_shared_key</code> signing secret, its health (<code>health_status</code>, <code>failing_streak</code>, <code>failing_since</code>, <code>last_success_at</code>) and a delivery <code>summary</code> for the last 30 days. API-key callers always receive the secret in full; Console users without <code>read:webhooks</code> see an empty string.
    *
    * <p>{@code GET /v3/webhook/destinations/{destination_uuid}/}
    *
@@ -174,7 +180,7 @@ public final class WebhooksDestinationsResource {
   /**
    * Update webhook destination
    *
-   * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged** — fetch first, append, resend. Secret is not rotated.
+   * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged**: fetch first, append, resend. Secret is not rotated. A <code>uuid</code> in the body is ignored: the path names the destination.
    *
    * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
    *
@@ -266,7 +272,7 @@ public final class WebhooksDestinationsResource {
   /**
    * Delete webhook destination
    *
-   * <p>Delete a webhook destination. Future events stop being pushed to its URL. Past delivery records are not affected and stay queryable from the Business Console, so deleting a destination is not a way to remove your delivery history. Calling again returns 404.
+   * <p>Permanently delete a webhook destination, its signing secret and its entire delivery log. This cannot be undone. No new webhook is sent to the destination's URL; other destinations subscribed to the same events keep receiving them. Afterwards the destination no longer appears in <code>GET /v3/webhook/destinations/</code>, and every route under <code>/v3/webhook/destinations/{destination_uuid}/</code>, including its deliveries, a delivery's detail and its resend, answers 404. The application's legacy <code>webhook_url</code> is set to the URL of the oldest remaining enabled destination, or cleared when no enabled destination is left. Calling DELETE again returns 404.
    *
    * <p>{@code DELETE /v3/webhook/destinations/{destination_uuid}/}
    *
@@ -305,6 +311,291 @@ public final class WebhooksDestinationsResource {
    */
   public CompletableFuture<Void> deleteAsync(String destinationUuid) {
     return client.executeAsync(deleteRequest(destinationUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * Get webhook destination analytics
+   *
+   * <p>Delivery totals, failure rate and response times for one webhook destination, over the whole range (<code>summary</code>) and per UTC day (<code>points</code>). Every attempt counts as a delivery: the first send of an event, each automatic <a href="https://docs.didit.me/integration/webhooks#retry-policy">retry</a> and each resend. A delivery is failed when its recorded HTTP status is 400 or above, so timeouts (recorded as <code>504</code>) and connection failures (<code>503</code>) count as failed; a delivery still queued counts in <code>total_deliveries</code> only. Delivery records are available for about 30 days. A scoped API key needs <code>webhooks: read</code>.
+   *
+   * <p>{@code GET /v3/webhook/destinations/{destination_uuid}/analytics/}
+   *
+   * @param destinationUuid UUID of the destination (the `uuid` returned by `GET /v3/webhook/destinations/`).
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public WebhooksDestinationsRetrieveAnalyticsResponse retrieveAnalytics(String destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams params, RequestOptions options) {
+    return client.execute(retrieveAnalyticsRequest(destinationUuid, params), options, RETRIEVE_ANALYTICS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)}.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<WebhooksDestinationsRetrieveAnalyticsResponse> retrieveAnalyticsAsync(String destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams params, RequestOptions options) {
+    return client.executeAsync(retrieveAnalyticsRequest(destinationUuid, params), options, RETRIEVE_ANALYTICS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)}, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param params the request parameters
+   * @return the result
+   */
+  public WebhooksDestinationsRetrieveAnalyticsResponse retrieveAnalytics(String destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams params) {
+    return client.execute(retrieveAnalyticsRequest(destinationUuid, params), RequestOptions.none(), RETRIEVE_ANALYTICS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)}, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<WebhooksDestinationsRetrieveAnalyticsResponse> retrieveAnalyticsAsync(String destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams params) {
+    return client.executeAsync(retrieveAnalyticsRequest(destinationUuid, params), RequestOptions.none(), RETRIEVE_ANALYTICS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)}, without parameters.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param options per-request options
+   * @return the result
+   */
+  public WebhooksDestinationsRetrieveAnalyticsResponse retrieveAnalytics(String destinationUuid, RequestOptions options) {
+    return client.execute(retrieveAnalyticsRequest(destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams.builder().build()), options, RETRIEVE_ANALYTICS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)}, without parameters.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<WebhooksDestinationsRetrieveAnalyticsResponse> retrieveAnalyticsAsync(String destinationUuid, RequestOptions options) {
+    return client.executeAsync(retrieveAnalyticsRequest(destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams.builder().build()), options, RETRIEVE_ANALYTICS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @return the result
+   */
+  public WebhooksDestinationsRetrieveAnalyticsResponse retrieveAnalytics(String destinationUuid) {
+    return client.execute(retrieveAnalyticsRequest(destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams.builder().build()), RequestOptions.none(), RETRIEVE_ANALYTICS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<WebhooksDestinationsRetrieveAnalyticsResponse> retrieveAnalyticsAsync(String destinationUuid) {
+    return client.executeAsync(retrieveAnalyticsRequest(destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams.builder().build()), RequestOptions.none(), RETRIEVE_ANALYTICS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * List webhook destination deliveries
+   *
+   * <p>Page through every delivery attempt to one webhook destination, newest first. The first send of each event, each automatic <a href="https://docs.didit.me/integration/webhooks#retry-policy">retry</a> and each resend are separate entries. Entries carry the HTTP status and response time but not the payload: fetch one delivery to read its headers and body. <code>count</code> is exact up to 100 and reads 100 above that, so follow <code>next</code> until it is <code>null</code>. Delivery records are available for about 30 days. A scoped API key needs <code>webhooks: read</code> and <code>decisions: read</code>; a key limited to some workflows or to approved sessions cannot use this endpoint.
+   *
+   * <p>{@code GET /v3/webhook/destinations/{destination_uuid}/deliveries/}
+   * <p>Returns one page; iterate it to fetch every following page automatically.
+   *
+   * @param destinationUuid UUID of the destination (the `uuid` returned by `GET /v3/webhook/destinations/`).
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public Page<WebhookDestinationDelivery> listDeliveries(String destinationUuid, WebhooksDestinationsListDeliveriesParams params, RequestOptions options) {
+    return client.execute(listDeliveriesRequest(destinationUuid, params), options, LIST_DELIVERIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)}.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<WebhookDestinationDelivery>> listDeliveriesAsync(String destinationUuid, WebhooksDestinationsListDeliveriesParams params, RequestOptions options) {
+    return client.executeAsync(listDeliveriesRequest(destinationUuid, params), options, LIST_DELIVERIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)}, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param params the request parameters
+   * @return the result
+   */
+  public Page<WebhookDestinationDelivery> listDeliveries(String destinationUuid, WebhooksDestinationsListDeliveriesParams params) {
+    return client.execute(listDeliveriesRequest(destinationUuid, params), RequestOptions.none(), LIST_DELIVERIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)}, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<WebhookDestinationDelivery>> listDeliveriesAsync(String destinationUuid, WebhooksDestinationsListDeliveriesParams params) {
+    return client.executeAsync(listDeliveriesRequest(destinationUuid, params), RequestOptions.none(), LIST_DELIVERIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)}, without parameters.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param options per-request options
+   * @return the result
+   */
+  public Page<WebhookDestinationDelivery> listDeliveries(String destinationUuid, RequestOptions options) {
+    return client.execute(listDeliveriesRequest(destinationUuid, WebhooksDestinationsListDeliveriesParams.builder().build()), options, LIST_DELIVERIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)}, without parameters.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<WebhookDestinationDelivery>> listDeliveriesAsync(String destinationUuid, RequestOptions options) {
+    return client.executeAsync(listDeliveriesRequest(destinationUuid, WebhooksDestinationsListDeliveriesParams.builder().build()), options, LIST_DELIVERIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @return the result
+   */
+  public Page<WebhookDestinationDelivery> listDeliveries(String destinationUuid) {
+    return client.execute(listDeliveriesRequest(destinationUuid, WebhooksDestinationsListDeliveriesParams.builder().build()), RequestOptions.none(), LIST_DELIVERIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<WebhookDestinationDelivery>> listDeliveriesAsync(String destinationUuid) {
+    return client.executeAsync(listDeliveriesRequest(destinationUuid, WebhooksDestinationsListDeliveriesParams.builder().build()), RequestOptions.none(), LIST_DELIVERIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Get webhook destination delivery
+   *
+   * <p>Retrieve one delivery attempt to a webhook destination with the exact request headers and JSON body Didit sent, the HTTP status your endpoint returned and the response time. <code>request_header</code> and <code>request_body</code> are JSON text: parse them to read the signature headers and the payload, for example to check your <a href="https://docs.didit.me/integration/webhooks#signature-verification">signature verification</a> against the destination's <code>secret_shared_key</code>. A delivery never contains the signing secret, and Didit does not record your endpoint's response body. A scoped API key needs <code>webhooks: read</code> and <code>decisions: read</code>; a key limited to some workflows or to approved sessions cannot use this endpoint.
+   *
+   * <p>{@code GET /v3/webhook/destinations/{destination_uuid}/deliveries/{delivery_uuid}/}
+   *
+   * @param destinationUuid UUID of the destination the delivery was sent to.
+   * @param deliveryUuid UUID of the delivery: the `uuid` of an entry returned by `GET /v3/webhook/destinations/{destination_uuid}/deliveries/`.
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public WebhookDestinationDeliveryDetail retrieveDelivery(String destinationUuid, String deliveryUuid, RequestOptions options) {
+    return client.execute(retrieveDeliveryRequest(destinationUuid, deliveryUuid), options, RETRIEVE_DELIVERY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveDelivery(String, String, RequestOptions)}.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param deliveryUuid the {@code delivery_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<WebhookDestinationDeliveryDetail> retrieveDeliveryAsync(String destinationUuid, String deliveryUuid, RequestOptions options) {
+    return client.executeAsync(retrieveDeliveryRequest(destinationUuid, deliveryUuid), options, RETRIEVE_DELIVERY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retrieveDelivery(String, String, RequestOptions)}, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param deliveryUuid the {@code delivery_uuid}
+   * @return the result
+   */
+  public WebhookDestinationDeliveryDetail retrieveDelivery(String destinationUuid, String deliveryUuid) {
+    return client.execute(retrieveDeliveryRequest(destinationUuid, deliveryUuid), RequestOptions.none(), RETRIEVE_DELIVERY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveDelivery(String, String, RequestOptions)}, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param deliveryUuid the {@code delivery_uuid}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<WebhookDestinationDeliveryDetail> retrieveDeliveryAsync(String destinationUuid, String deliveryUuid) {
+    return client.executeAsync(retrieveDeliveryRequest(destinationUuid, deliveryUuid), RequestOptions.none(), RETRIEVE_DELIVERY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Resend webhook destination delivery
+   *
+   * <p>Send a past delivery again, for example after your endpoint was down. Didit takes the stored payload, sets a fresh <code>timestamp</code>, signs it again with the destination's current <code>secret_shared_key</code> (<code>X-Signature</code>, <code>X-Signature-V2</code>, <code>X-Signature-Simple</code> and <code>X-Timestamp</code>) and posts it to the delivery's <code>request_url</code>, even if the destination's URL has changed since or the destination is disabled. <code>event_id</code> and the rest of the payload are unchanged, so deduplicate on <code>event_id</code>. The call waits up to 5 seconds for your endpoint and returns the new delivery with <code>200</code> whatever your endpoint answered: read <code>response_status</code>. A resend is not retried automatically, every call sends again and creates a new delivery, and the request has no body. A scoped API key needs <code>webhooks: write</code> and <code>decisions: read</code>; a key limited to some workflows or to approved sessions cannot use this endpoint.
+   *
+   * <p>{@code POST /v3/webhook/destinations/{destination_uuid}/deliveries/{delivery_uuid}/resend/}
+   *
+   * @param destinationUuid UUID of the destination the delivery was sent to.
+   * @param deliveryUuid UUID of the delivery to resend: the `uuid` of an entry returned by `GET /v3/webhook/destinations/{destination_uuid}/deliveries/`.
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public WebhookDestinationDeliveryDetail resendDelivery(String destinationUuid, String deliveryUuid, RequestOptions options) {
+    return client.execute(resendDeliveryRequest(destinationUuid, deliveryUuid), options, RESEND_DELIVERY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #resendDelivery(String, String, RequestOptions)}.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param deliveryUuid the {@code delivery_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<WebhookDestinationDeliveryDetail> resendDeliveryAsync(String destinationUuid, String deliveryUuid, RequestOptions options) {
+    return client.executeAsync(resendDeliveryRequest(destinationUuid, deliveryUuid), options, RESEND_DELIVERY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #resendDelivery(String, String, RequestOptions)}, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param deliveryUuid the {@code delivery_uuid}
+   * @return the result
+   */
+  public WebhookDestinationDeliveryDetail resendDelivery(String destinationUuid, String deliveryUuid) {
+    return client.execute(resendDeliveryRequest(destinationUuid, deliveryUuid), RequestOptions.none(), RESEND_DELIVERY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #resendDelivery(String, String, RequestOptions)}, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param deliveryUuid the {@code delivery_uuid}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<WebhookDestinationDeliveryDetail> resendDeliveryAsync(String destinationUuid, String deliveryUuid) {
+    return client.executeAsync(resendDeliveryRequest(destinationUuid, deliveryUuid), RequestOptions.none(), RESEND_DELIVERY_RESPONSE).thenApply(RawResponse::data);
   }
 
   private static final ResponseHandler<List<WebhooksDestinationsListResponse>> LIST_RESPONSE = Responses.json(Conv.list(Conv.model(WebhooksDestinationsListResponse::fromJson)));
@@ -346,6 +637,44 @@ public final class WebhooksDestinationsResource {
   private static ApiRequest deleteRequest(String destinationUuid) {
     return ApiRequest.builder("DELETE", "/v3/webhook/destinations/{destination_uuid}/")
         .pathParam("destination_uuid", destinationUuid)
+        .build();
+  }
+
+  private static final ResponseHandler<WebhooksDestinationsRetrieveAnalyticsResponse> RETRIEVE_ANALYTICS_RESPONSE = Responses.json(Conv.model(WebhooksDestinationsRetrieveAnalyticsResponse::fromJson));
+
+  private static ApiRequest retrieveAnalyticsRequest(String destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams params) {
+    return ApiRequest.builder("GET", "/v3/webhook/destinations/{destination_uuid}/analytics/")
+        .pathParam("destination_uuid", destinationUuid)
+        .params(params)
+        .queryFields("date_from", "date_to")
+        .build();
+  }
+
+  private static final ResponseHandler<Page<WebhookDestinationDelivery>> LIST_DELIVERIES_RESPONSE = Responses.page(Conv.model(WebhookDestinationDelivery::fromJson));
+
+  private static ApiRequest listDeliveriesRequest(String destinationUuid, WebhooksDestinationsListDeliveriesParams params) {
+    return ApiRequest.builder("GET", "/v3/webhook/destinations/{destination_uuid}/deliveries/")
+        .pathParam("destination_uuid", destinationUuid)
+        .params(params)
+        .queryFields("limit", "offset", "date_from", "date_to")
+        .build();
+  }
+
+  private static final ResponseHandler<WebhookDestinationDeliveryDetail> RETRIEVE_DELIVERY_RESPONSE = Responses.json(Conv.model(WebhookDestinationDeliveryDetail::fromJson));
+
+  private static ApiRequest retrieveDeliveryRequest(String destinationUuid, String deliveryUuid) {
+    return ApiRequest.builder("GET", "/v3/webhook/destinations/{destination_uuid}/deliveries/{delivery_uuid}/")
+        .pathParam("destination_uuid", destinationUuid)
+        .pathParam("delivery_uuid", deliveryUuid)
+        .build();
+  }
+
+  private static final ResponseHandler<WebhookDestinationDeliveryDetail> RESEND_DELIVERY_RESPONSE = Responses.json(Conv.model(WebhookDestinationDeliveryDetail::fromJson));
+
+  private static ApiRequest resendDeliveryRequest(String destinationUuid, String deliveryUuid) {
+    return ApiRequest.builder("POST", "/v3/webhook/destinations/{destination_uuid}/deliveries/{delivery_uuid}/resend/")
+        .pathParam("destination_uuid", destinationUuid)
+        .pathParam("delivery_uuid", deliveryUuid)
         .build();
   }
 
@@ -607,6 +936,274 @@ public final class WebhooksDestinationsResource {
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String destinationUuid) {
       return client.executeAsync(deleteRequest(destinationUuid), RequestOptions.none(), DELETE_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)} with the raw response.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<WebhooksDestinationsRetrieveAnalyticsResponse> retrieveAnalytics(String destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams params, RequestOptions options) {
+      return client.execute(retrieveAnalyticsRequest(destinationUuid, params), options, RETRIEVE_ANALYTICS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)} with the raw response.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<WebhooksDestinationsRetrieveAnalyticsResponse>> retrieveAnalyticsAsync(String destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams params, RequestOptions options) {
+      return client.executeAsync(retrieveAnalyticsRequest(destinationUuid, params), options, RETRIEVE_ANALYTICS_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<WebhooksDestinationsRetrieveAnalyticsResponse> retrieveAnalytics(String destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams params) {
+      return client.execute(retrieveAnalyticsRequest(destinationUuid, params), RequestOptions.none(), RETRIEVE_ANALYTICS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<WebhooksDestinationsRetrieveAnalyticsResponse>> retrieveAnalyticsAsync(String destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams params) {
+      return client.executeAsync(retrieveAnalyticsRequest(destinationUuid, params), RequestOptions.none(), RETRIEVE_ANALYTICS_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<WebhooksDestinationsRetrieveAnalyticsResponse> retrieveAnalytics(String destinationUuid, RequestOptions options) {
+      return client.execute(retrieveAnalyticsRequest(destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams.builder().build()), options, RETRIEVE_ANALYTICS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<WebhooksDestinationsRetrieveAnalyticsResponse>> retrieveAnalyticsAsync(String destinationUuid, RequestOptions options) {
+      return client.executeAsync(retrieveAnalyticsRequest(destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams.builder().build()), options, RETRIEVE_ANALYTICS_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @return the result
+     */
+    public RawResponse<WebhooksDestinationsRetrieveAnalyticsResponse> retrieveAnalytics(String destinationUuid) {
+      return client.execute(retrieveAnalyticsRequest(destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams.builder().build()), RequestOptions.none(), RETRIEVE_ANALYTICS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveAnalytics(String, WebhooksDestinationsRetrieveAnalyticsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<WebhooksDestinationsRetrieveAnalyticsResponse>> retrieveAnalyticsAsync(String destinationUuid) {
+      return client.executeAsync(retrieveAnalyticsRequest(destinationUuid, WebhooksDestinationsRetrieveAnalyticsParams.builder().build()), RequestOptions.none(), RETRIEVE_ANALYTICS_RESPONSE);
+    }
+
+    /**
+     * {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)} with the raw response.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<Page<WebhookDestinationDelivery>> listDeliveries(String destinationUuid, WebhooksDestinationsListDeliveriesParams params, RequestOptions options) {
+      return client.execute(listDeliveriesRequest(destinationUuid, params), options, LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)} with the raw response.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<WebhookDestinationDelivery>>> listDeliveriesAsync(String destinationUuid, WebhooksDestinationsListDeliveriesParams params, RequestOptions options) {
+      return client.executeAsync(listDeliveriesRequest(destinationUuid, params), options, LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<Page<WebhookDestinationDelivery>> listDeliveries(String destinationUuid, WebhooksDestinationsListDeliveriesParams params) {
+      return client.execute(listDeliveriesRequest(destinationUuid, params), RequestOptions.none(), LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<WebhookDestinationDelivery>>> listDeliveriesAsync(String destinationUuid, WebhooksDestinationsListDeliveriesParams params) {
+      return client.executeAsync(listDeliveriesRequest(destinationUuid, params), RequestOptions.none(), LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<Page<WebhookDestinationDelivery>> listDeliveries(String destinationUuid, RequestOptions options) {
+      return client.execute(listDeliveriesRequest(destinationUuid, WebhooksDestinationsListDeliveriesParams.builder().build()), options, LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<WebhookDestinationDelivery>>> listDeliveriesAsync(String destinationUuid, RequestOptions options) {
+      return client.executeAsync(listDeliveriesRequest(destinationUuid, WebhooksDestinationsListDeliveriesParams.builder().build()), options, LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @return the result
+     */
+    public RawResponse<Page<WebhookDestinationDelivery>> listDeliveries(String destinationUuid) {
+      return client.execute(listDeliveriesRequest(destinationUuid, WebhooksDestinationsListDeliveriesParams.builder().build()), RequestOptions.none(), LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listDeliveries(String, WebhooksDestinationsListDeliveriesParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<WebhookDestinationDelivery>>> listDeliveriesAsync(String destinationUuid) {
+      return client.executeAsync(listDeliveriesRequest(destinationUuid, WebhooksDestinationsListDeliveriesParams.builder().build()), RequestOptions.none(), LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveDelivery(String, String, RequestOptions)} with the raw response.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param deliveryUuid the {@code delivery_uuid}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<WebhookDestinationDeliveryDetail> retrieveDelivery(String destinationUuid, String deliveryUuid, RequestOptions options) {
+      return client.execute(retrieveDeliveryRequest(destinationUuid, deliveryUuid), options, RETRIEVE_DELIVERY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveDelivery(String, String, RequestOptions)} with the raw response.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param deliveryUuid the {@code delivery_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<WebhookDestinationDeliveryDetail>> retrieveDeliveryAsync(String destinationUuid, String deliveryUuid, RequestOptions options) {
+      return client.executeAsync(retrieveDeliveryRequest(destinationUuid, deliveryUuid), options, RETRIEVE_DELIVERY_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveDelivery(String, String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param deliveryUuid the {@code delivery_uuid}
+     * @return the result
+     */
+    public RawResponse<WebhookDestinationDeliveryDetail> retrieveDelivery(String destinationUuid, String deliveryUuid) {
+      return client.execute(retrieveDeliveryRequest(destinationUuid, deliveryUuid), RequestOptions.none(), RETRIEVE_DELIVERY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveDelivery(String, String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param deliveryUuid the {@code delivery_uuid}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<WebhookDestinationDeliveryDetail>> retrieveDeliveryAsync(String destinationUuid, String deliveryUuid) {
+      return client.executeAsync(retrieveDeliveryRequest(destinationUuid, deliveryUuid), RequestOptions.none(), RETRIEVE_DELIVERY_RESPONSE);
+    }
+
+    /**
+     * {@link #resendDelivery(String, String, RequestOptions)} with the raw response.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param deliveryUuid the {@code delivery_uuid}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<WebhookDestinationDeliveryDetail> resendDelivery(String destinationUuid, String deliveryUuid, RequestOptions options) {
+      return client.execute(resendDeliveryRequest(destinationUuid, deliveryUuid), options, RESEND_DELIVERY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #resendDelivery(String, String, RequestOptions)} with the raw response.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param deliveryUuid the {@code delivery_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<WebhookDestinationDeliveryDetail>> resendDeliveryAsync(String destinationUuid, String deliveryUuid, RequestOptions options) {
+      return client.executeAsync(resendDeliveryRequest(destinationUuid, deliveryUuid), options, RESEND_DELIVERY_RESPONSE);
+    }
+
+    /**
+     * {@link #resendDelivery(String, String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param deliveryUuid the {@code delivery_uuid}
+     * @return the result
+     */
+    public RawResponse<WebhookDestinationDeliveryDetail> resendDelivery(String destinationUuid, String deliveryUuid) {
+      return client.execute(resendDeliveryRequest(destinationUuid, deliveryUuid), RequestOptions.none(), RESEND_DELIVERY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #resendDelivery(String, String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param deliveryUuid the {@code delivery_uuid}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<WebhookDestinationDeliveryDetail>> resendDeliveryAsync(String destinationUuid, String deliveryUuid) {
+      return client.executeAsync(resendDeliveryRequest(destinationUuid, deliveryUuid), RequestOptions.none(), RESEND_DELIVERY_RESPONSE);
     }
   }
 }

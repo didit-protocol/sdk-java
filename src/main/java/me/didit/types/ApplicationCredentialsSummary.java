@@ -82,7 +82,7 @@ public final class ApplicationCredentialsSummary extends JsonModel {
   }
 
   /**
-   * Use this as <code>x-api-key</code> on every verification API call.
+   * Use this as <code>x-api-key</code> on every verification API call. New keys start with <code>sk_live_</code> (live application) or <code>sk_test_</code> (sandbox application), followed by 43 URL-safe characters (letters, digits, <code>-</code> and <code>_</code>). Keys created before this format have no prefix and keep working unchanged.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -135,7 +135,7 @@ public final class ApplicationCredentialsSummary extends JsonModel {
     }
 
     /**
-     * Use this as <code>x-api-key</code> on every verification API call.
+     * Use this as <code>x-api-key</code> on every verification API call. New keys start with <code>sk_live_</code> (live application) or <code>sk_test_</code> (sandbox application), followed by 43 URL-safe characters (letters, digits, <code>-</code> and <code>_</code>). Keys created before this format have no prefix and keep working unchanged.
      *
      * @param apiKey the value
      * @return this builder

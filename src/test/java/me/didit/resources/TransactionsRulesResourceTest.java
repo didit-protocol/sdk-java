@@ -15,6 +15,7 @@ import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
 import me.didit.types.TransactionRuleAction;
+import me.didit.types.TransactionRuleActionAddScore;
 import me.didit.types.TransactionRuleAggregation;
 import me.didit.types.TransactionRuleBacktestRequest;
 import me.didit.types.TransactionRuleCondition;
@@ -52,7 +53,7 @@ final class TransactionsRulesResourceTest {
 
   @Test
   void create() {
-    TransactionRuleCreateRequest params = TransactionRuleCreateRequest.builder().title("value-title").description("value-description").category("value-category").mode(TransactionRuleCreateRequest.Mode.ACTIVE).evaluationMode(TransactionRuleCreateRequest.EvaluationMode.ALL).scope(TransactionRuleScope.builder().transactionTypes(List.of("value-transaction-types")).directions(List.of(TransactionRuleScope.Directions.INBOUND)).build()).conditions(List.of(TransactionRuleCondition.builder().field("value-field").operator(TransactionRuleCondition.Operator.EQ).value("value").valueType(TransactionRuleCondition.ValueType.LIST).build())).aggregation(List.of(TransactionRuleAggregation.builder().metric(TransactionRuleAggregation.Metric.COUNT).field("value-field").value(1.5).build())).actions(List.of(TransactionRuleAction.ofAddScore(TransactionRuleAction.AddScore.builder().type(TransactionRuleAction.AddScore.Type.ADD_SCORE).value(1L).build()))).metadata(Map.of("key", "value")).build();
+    TransactionRuleCreateRequest params = TransactionRuleCreateRequest.builder().title("value-title").description("value-description").category("value-category").mode(TransactionRuleCreateRequest.Mode.ACTIVE).evaluationMode(TransactionRuleCreateRequest.EvaluationMode.ALL).scope(TransactionRuleScope.builder().transactionTypes(List.of("value-transaction-types")).directions(List.of(TransactionRuleScope.Directions.INBOUND)).build()).conditions(List.of(TransactionRuleCondition.builder().field("value-field").operator(TransactionRuleCondition.Operator.EQ).value("value").valueType(TransactionRuleCondition.ValueType.LIST).build())).aggregation(List.of(TransactionRuleAggregation.builder().metric(TransactionRuleAggregation.Metric.COUNT).field("value-field").value(1.5).build())).actions(List.of(TransactionRuleAction.ofAddScore(TransactionRuleActionAddScore.builder().type(TransactionRuleActionAddScore.Type.ADD_SCORE).value(1L).build()))).metadata(Map.of("key", "value")).build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(201, example);
     var result = client.transactions().rules().create(params);
@@ -85,7 +86,7 @@ final class TransactionsRulesResourceTest {
 
   @Test
   void update() {
-    TransactionRuleUpdateRequest params = TransactionRuleUpdateRequest.builder().title("value-title").description("value-description").category("value-category").mode(TransactionRuleUpdateRequest.Mode.ACTIVE).evaluationMode(TransactionRuleUpdateRequest.EvaluationMode.ALL).scope(TransactionRuleScope.builder().transactionTypes(List.of("value-transaction-types")).directions(List.of(TransactionRuleScope.Directions.INBOUND)).build()).conditions(List.of(TransactionRuleCondition.builder().field("value-field").operator(TransactionRuleCondition.Operator.EQ).value("value").valueType(TransactionRuleCondition.ValueType.LIST).build())).aggregation(List.of(TransactionRuleAggregation.builder().metric(TransactionRuleAggregation.Metric.COUNT).field("value-field").value(1.5).build())).actions(List.of(TransactionRuleAction.ofAddScore(TransactionRuleAction.AddScore.builder().type(TransactionRuleAction.AddScore.Type.ADD_SCORE).value(1L).build()))).metadata(Map.of("key", "value")).build();
+    TransactionRuleUpdateRequest params = TransactionRuleUpdateRequest.builder().title("value-title").description("value-description").category("value-category").mode(TransactionRuleUpdateRequest.Mode.ACTIVE).evaluationMode(TransactionRuleUpdateRequest.EvaluationMode.ALL).scope(TransactionRuleScope.builder().transactionTypes(List.of("value-transaction-types")).directions(List.of(TransactionRuleScope.Directions.INBOUND)).build()).conditions(List.of(TransactionRuleCondition.builder().field("value-field").operator(TransactionRuleCondition.Operator.EQ).value("value").valueType(TransactionRuleCondition.ValueType.LIST).build())).aggregation(List.of(TransactionRuleAggregation.builder().metric(TransactionRuleAggregation.Metric.COUNT).field("value-field").value(1.5).build())).actions(List.of(TransactionRuleAction.ofAddScore(TransactionRuleActionAddScore.builder().type(TransactionRuleActionAddScore.Type.ADD_SCORE).value(1L).build()))).metadata(Map.of("key", "value")).build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
     var result = client.transactions().rules().update("00000000-0000-4000-8000-00000000f3de", params);

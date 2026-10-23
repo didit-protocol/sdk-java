@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 
 /** Parameters for {&#64;code transactions.list}. */
 public final class TransactionsListParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("limit", "offset");
+  private static final Set<String> KNOWN_FIELDS = Set.of("limit", "offset", "travel_rule_status");
 
   private TransactionsListParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -69,6 +69,16 @@ public final class TransactionsListParams extends JsonModel {
     return Json.optional(json, "offset", Conv.LONG);
   }
 
+  /**
+   * Return only transactions whose Travel Rule transfer is in this exact status (for example <code>ON_HOLD</code> or <code>AWAITING_COUNTERPARTY</code>). <code>count</code> follows this filter; <code>total_transactions</code> still counts every transaction in the application.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> travelRuleStatus() {
+    return Json.optional(json, "travel_rule_status", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -100,6 +110,16 @@ public final class TransactionsListParams extends JsonModel {
      */
     public Builder offset(long offset) {
       return set("offset", Conv.LONG, offset);
+    }
+
+    /**
+     * Return only transactions whose Travel Rule transfer is in this exact status (for example <code>ON_HOLD</code> or <code>AWAITING_COUNTERPARTY</code>). <code>count</code> follows this filter; <code>total_transactions</code> still counts every transaction in the application.
+     *
+     * @param travelRuleStatus the value
+     * @return this builder
+     */
+    public Builder travelRuleStatus(String travelRuleStatus) {
+      return set("travel_rule_status", Conv.STRING, travelRuleStatus);
     }
 
     /**

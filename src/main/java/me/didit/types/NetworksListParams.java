@@ -12,10 +12,11 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import me.didit.core.StringEnum;
 
 /** Parameters for {&#64;code networks.list}. */
 public final class NetworksListParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("status", "signal_type", "pattern_type", "risk_band", "min_size", "max_size", "date_from", "date_to", "q", "ordering", "limit", "offset");
+  private static final Set<String> KNOWN_FIELDS = Set.of("status", "scope", "signal_type", "pattern_type", "risk_band", "min_size", "max_size", "assignee", "priority", "risk_min", "has_case", "date_from", "date_to", "q", "ordering", "limit", "offset", "summary");
 
   private NetworksListParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -58,6 +59,16 @@ public final class NetworksListParams extends JsonModel {
    */
   public Optional<String> status() {
     return Json.optional(json, "status", Conv.STRING);
+  }
+
+  /**
+   * <code>transactions</code> keeps networks whose members are all transaction parties; <code>identity</code> keeps every other network. Omit for both. It also narrows <code>counts.views</code> and <code>counts.facets</code>. Any other value returns 400.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<NetworksListParams.Scope> scope() {
+    return Json.optional(json, "scope", Conv.enumeration(NetworksListParams.Scope::of));
   }
 
   /**
@@ -108,6 +119,46 @@ public final class NetworksListParams extends JsonModel {
    */
   public Optional<Long> maxSize() {
     return Json.optional(json, "max_size", Conv.LONG);
+  }
+
+  /**
+   * Comma-separated assignees: <code>unassigned</code>, member emails (matched case-insensitively), or <code>me</code> for the calling console member. A network matches any value. <code>me</code> needs a console member token: an API key gets 400 <code>{"assignee": ["\"me\" needs a user token; an API key has no assignee identity."]}</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> assignee() {
+    return Json.optional(json, "assignee", Conv.STRING);
+  }
+
+  /**
+   * Comma-separated priorities: <code>low</code>, <code>medium</code>, <code>high</code>, or <code>none</code> for networks without a priority. Any other value returns 400 <code>{"priority": "Unknown priority: &lt;values&gt;."}</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> priority() {
+    return Json.optional(json, "priority", Conv.STRING);
+  }
+
+  /**
+   * Minimum risk score, a whole number from 0 to 100. A value that is not a whole number returns 400 <code>{"risk_min": "Use a whole number from 0 to 100."}</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> riskMin() {
+    return Json.optional(json, "risk_min", Conv.LONG);
+  }
+
+  /**
+   * <code>true</code> keeps the networks your application opened a case for, <code>false</code> the others. Any other value is ignored.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> hasCase() {
+    return Json.optional(json, "has_case", Conv.BOOLEAN);
   }
 
   /**
@@ -170,6 +221,16 @@ public final class NetworksListParams extends JsonModel {
     return Json.optional(json, "offset", Conv.LONG);
   }
 
+  /**
+   * <code>false</code> returns the page and its <code>count</code> only, without <code>kpis</code> and <code>counts</code>. Defaults to <code>true</code>. Any value other than <code>true</code> or <code>false</code> returns 400.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> summary() {
+    return Json.optional(json, "summary", Conv.BOOLEAN);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -191,6 +252,16 @@ public final class NetworksListParams extends JsonModel {
      */
     public Builder status(String status) {
       return set("status", Conv.STRING, status);
+    }
+
+    /**
+     * <code>transactions</code> keeps networks whose members are all transaction parties; <code>identity</code> keeps every other network. Omit for both. It also narrows <code>counts.views</code> and <code>counts.facets</code>. Any other value returns 400.
+     *
+     * @param scope the value
+     * @return this builder
+     */
+    public Builder scope(NetworksListParams.Scope scope) {
+      return set("scope", Conv.enumeration(NetworksListParams.Scope::of), scope);
     }
 
     /**
@@ -241,6 +312,46 @@ public final class NetworksListParams extends JsonModel {
      */
     public Builder maxSize(long maxSize) {
       return set("max_size", Conv.LONG, maxSize);
+    }
+
+    /**
+     * Comma-separated assignees: <code>unassigned</code>, member emails (matched case-insensitively), or <code>me</code> for the calling console member. A network matches any value. <code>me</code> needs a console member token: an API key gets 400 <code>{"assignee": ["\"me\" needs a user token; an API key has no assignee identity."]}</code>.
+     *
+     * @param assignee the value
+     * @return this builder
+     */
+    public Builder assignee(String assignee) {
+      return set("assignee", Conv.STRING, assignee);
+    }
+
+    /**
+     * Comma-separated priorities: <code>low</code>, <code>medium</code>, <code>high</code>, or <code>none</code> for networks without a priority. Any other value returns 400 <code>{"priority": "Unknown priority: &lt;values&gt;."}</code>.
+     *
+     * @param priority the value
+     * @return this builder
+     */
+    public Builder priority(String priority) {
+      return set("priority", Conv.STRING, priority);
+    }
+
+    /**
+     * Minimum risk score, a whole number from 0 to 100. A value that is not a whole number returns 400 <code>{"risk_min": "Use a whole number from 0 to 100."}</code>.
+     *
+     * @param riskMin the value
+     * @return this builder
+     */
+    public Builder riskMin(long riskMin) {
+      return set("risk_min", Conv.LONG, riskMin);
+    }
+
+    /**
+     * <code>true</code> keeps the networks your application opened a case for, <code>false</code> the others. Any other value is ignored.
+     *
+     * @param hasCase the value
+     * @return this builder
+     */
+    public Builder hasCase(boolean hasCase) {
+      return set("has_case", Conv.BOOLEAN, hasCase);
     }
 
     /**
@@ -304,6 +415,16 @@ public final class NetworksListParams extends JsonModel {
     }
 
     /**
+     * <code>false</code> returns the page and its <code>count</code> only, without <code>kpis</code> and <code>counts</code>. Defaults to <code>true</code>. Any value other than <code>true</code> or <code>false</code> returns 400.
+     *
+     * @param summary the value
+     * @return this builder
+     */
+    public Builder summary(boolean summary) {
+      return set("summary", Conv.BOOLEAN, summary);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code NetworksListParams}
@@ -315,6 +436,48 @@ public final class NetworksListParams extends JsonModel {
     @Override
     protected Builder self() {
       return this;
+    }
+  }
+
+  /**
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Scope extends StringEnum {
+    /** The value {@code "identity"}. */
+    public static final Scope IDENTITY = new Scope("identity");
+
+    /** The value {@code "transactions"}. */
+    public static final Scope TRANSACTIONS = new Scope("transactions");
+
+    private static final List<Scope> KNOWN_VALUES = List.of(IDENTITY, TRANSACTIONS);
+
+    private Scope(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Scope of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Scope::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Scope> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 }

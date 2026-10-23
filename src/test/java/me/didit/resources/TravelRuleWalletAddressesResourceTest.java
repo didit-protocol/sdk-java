@@ -8,12 +8,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.TravelRuleWalletAddressesBulkImportParams;
 import me.didit.types.TravelRuleWalletAddressesListParams;
 import me.didit.types.WalletAddressEntryCreate;
 import me.didit.types.WalletAddressEntryUpdate;
@@ -45,7 +47,7 @@ final class TravelRuleWalletAddressesResourceTest {
 
   @Test
   void create() {
-    WalletAddressEntryCreate params = WalletAddressEntryCreate.builder().address("value-address").chain("value-chain").holderVendorData("value-holder-vendor-data").holderName("value-holder-name").entityType("value-entity-type").selfDeclared(true).travelAddress("value-travel-address").build();
+    WalletAddressEntryCreate params = WalletAddressEntryCreate.builder().address("value-address").chain("value-chain").holderVendorData("value-holder-vendor-data").holderName("value-holder-name").entityType("value-entity-type").selfDeclared(true).travelAddress("value-travel-address").memo("value-memo").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(201, example);
     var result = client.travelRule().walletAddresses().create(params);
@@ -55,7 +57,7 @@ final class TravelRuleWalletAddressesResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"address\":\"value-address\",\"chain\":\"value-chain\",\"holder_vendor_data\":\"value-holder-vendor-data\",\"holder_name\":\"value-holder-name\",\"entity_type\":\"value-entity-type\",\"self_declared\":true,\"travel_address\":\"value-travel-address\"}", request.body());
+    TestJson.assertJsonEquals("{\"address\":\"value-address\",\"chain\":\"value-chain\",\"holder_vendor_data\":\"value-holder-vendor-data\",\"holder_name\":\"value-holder-name\",\"entity_type\":\"value-entity-type\",\"self_declared\":true,\"travel_address\":\"value-travel-address\",\"memo\":\"value-memo\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
@@ -88,5 +90,23 @@ final class TravelRuleWalletAddressesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
+  }
+
+  @Test
+  void bulkImport() {
+    TravelRuleWalletAddressesBulkImportParams params = TravelRuleWalletAddressesBulkImportParams.builder().file(FileUpload.of(new byte[] {37, 80, 68, 70}, "file.pdf", "application/pdf")).build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/travel-rule/wallet-addresses/import/", "200");
+    transport.respondJson(200, example);
+    var result = client.travelRule().walletAddresses().bulkImport(params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/travel-rule/wallet-addresses/import/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(Map.of(), request.multipartFields());
+    assertEquals(Map.ofEntries(Map.entry("file", List.of("file.pdf"))), request.multipartFiles());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 }

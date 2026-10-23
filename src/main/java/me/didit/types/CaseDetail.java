@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class CaseDetail extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "case_number", "title", "status", "resolution", "resolution_notes", "priority", "source", "tags", "subject", "assigned_to", "assigned_at", "due_at", "resolved_at", "resolved_by_email", "pending_resolution", "metadata", "blueprint", "notes", "events", "links", "links_count", "notes_count", "checklist_items", "created_at", "updated_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "case_number", "title", "status", "resolution", "resolution_notes", "priority", "source", "tags", "subject", "assigned_to", "assigned_at", "team", "due_at", "resolved_at", "resolved_by_email", "pending_resolution", "checker", "metadata", "blueprint", "notes", "events", "links", "links_count", "notes_count", "checklist_items", "created_at", "updated_at");
 
   private CaseDetail(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -172,6 +172,16 @@ public final class CaseDetail extends JsonModel {
   }
 
   /**
+   * The review team that owns the case, or null when no team owns it. Routing sets it when a routing rule places the case with one of its teams. Change or clear it with <code>PATCH .../cases/{case_uuid}/</code> (<code>team</code>).
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<CaseTeamSummary> team() {
+    return Json.optional(json, "team", Conv.model(CaseTeamSummary::fromJson));
+  }
+
+  /**
    * The <code>due_at</code> field.
    *
    * @return the value, or empty when the field is absent or null
@@ -209,6 +219,16 @@ public final class CaseDetail extends JsonModel {
    */
   public Optional<CaseDetail.PendingResolution> pendingResolution() {
     return Json.optional(json, "pending_resolution", Conv.model(CaseDetail.PendingResolution::fromJson));
+  }
+
+  /**
+   * The member named to approve or reject the pending resolution. Set only while a four-eyes resolution waits on a named checker. Null when nothing is pending, while the pending resolution waits on the checker queue, and once the resolution is approved, rejected, or returned for a new review because the evidence changed.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<CaseChecker> checker() {
+    return Json.optional(json, "checker", Conv.model(CaseChecker::fromJson));
   }
 
   /**
@@ -445,6 +465,16 @@ public final class CaseDetail extends JsonModel {
     }
 
     /**
+     * The review team that owns the case, or null when no team owns it. Routing sets it when a routing rule places the case with one of its teams. Change or clear it with <code>PATCH .../cases/{case_uuid}/</code> (<code>team</code>).
+     *
+     * @param team the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder team(@Nullable CaseTeamSummary team) {
+      return setNullable("team", Conv.model(CaseTeamSummary::fromJson), team);
+    }
+
+    /**
      * The <code>due_at</code> field.
      *
      * @param dueAt the value, or {@code null} to send JSON null
@@ -482,6 +512,16 @@ public final class CaseDetail extends JsonModel {
      */
     public Builder pendingResolution(CaseDetail.@Nullable PendingResolution pendingResolution) {
       return setNullable("pending_resolution", Conv.model(CaseDetail.PendingResolution::fromJson), pendingResolution);
+    }
+
+    /**
+     * The member named to approve or reject the pending resolution. Set only while a four-eyes resolution waits on a named checker. Null when nothing is pending, while the pending resolution waits on the checker queue, and once the resolution is approved, rejected, or returned for a new review because the evidence changed.
+     *
+     * @param checker the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder checker(@Nullable CaseChecker checker) {
+      return setNullable("checker", Conv.model(CaseChecker::fromJson), checker);
     }
 
     /**
@@ -655,7 +695,16 @@ public final class CaseDetail extends JsonModel {
     /** The value {@code "VALID_THREAT"}. */
     public static final Resolution VALID_THREAT = new Resolution("VALID_THREAT");
 
-    private static final List<Resolution> KNOWN_VALUES = List.of(FALSE_POSITIVE, VALID_THREAT);
+    /** The value {@code "INCONCLUSIVE"}. */
+    public static final Resolution INCONCLUSIVE = new Resolution("INCONCLUSIVE");
+
+    /** The value {@code "REQUIREMENTS_NOT_MET"}. */
+    public static final Resolution REQUIREMENTS_NOT_MET = new Resolution("REQUIREMENTS_NOT_MET");
+
+    /** The value {@code "REQUIREMENTS_SATISFIED"}. */
+    public static final Resolution REQUIREMENTS_SATISFIED = new Resolution("REQUIREMENTS_SATISFIED");
+
+    private static final List<Resolution> KNOWN_VALUES = List.of(FALSE_POSITIVE, VALID_THREAT, INCONCLUSIVE, REQUIREMENTS_NOT_MET, REQUIREMENTS_SATISFIED);
 
     private Resolution(String value) {
       super(value);
@@ -783,7 +832,7 @@ public final class CaseDetail extends JsonModel {
    * Set only while a 4-eyes resolution is staged on the checker blueprint, awaiting approve or reject-approval.
    */
   public static final class PendingResolution extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("resolution", "resolution_notes", "maker_email", "maker_name", "maker_blueprint_id", "staged_at");
+    private static final Set<String> KNOWN_FIELDS = Set.of("resolution", "resolution_notes", "maker_email", "maker_name", "maker_user_id", "maker_blueprint_id", "staged_at");
 
     private PendingResolution(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -839,7 +888,7 @@ public final class CaseDetail extends JsonModel {
     }
 
     /**
-     * The <code>maker_email</code> field.
+     * Email of the officer who submitted the resolution. Null when an API key submitted it: that resolution has no recorded maker, so approve and reject-approval return 403 for every caller.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -856,6 +905,16 @@ public final class CaseDetail extends JsonModel {
      */
     public Optional<String> makerName() {
       return Json.optional(json, "maker_name", Conv.STRING);
+    }
+
+    /**
+     * Member user uuid of the officer who submitted the resolution. Null when an API key submitted it. That member cannot be named as <code>checker</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> makerUserId() {
+      return Json.optional(json, "maker_user_id", Conv.STRING);
     }
 
     /**
@@ -912,13 +971,13 @@ public final class CaseDetail extends JsonModel {
       }
 
       /**
-       * The <code>maker_email</code> field.
+       * Email of the officer who submitted the resolution. Null when an API key submitted it: that resolution has no recorded maker, so approve and reject-approval return 403 for every caller.
        *
-       * @param makerEmail the value
+       * @param makerEmail the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder makerEmail(String makerEmail) {
-        return set("maker_email", Conv.STRING, makerEmail);
+      public Builder makerEmail(@Nullable String makerEmail) {
+        return setNullable("maker_email", Conv.STRING, makerEmail);
       }
 
       /**
@@ -929,6 +988,16 @@ public final class CaseDetail extends JsonModel {
        */
       public Builder makerName(@Nullable String makerName) {
         return setNullable("maker_name", Conv.STRING, makerName);
+      }
+
+      /**
+       * Member user uuid of the officer who submitted the resolution. Null when an API key submitted it. That member cannot be named as <code>checker</code>.
+       *
+       * @param makerUserId the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder makerUserId(@Nullable String makerUserId) {
+        return setNullable("maker_user_id", Conv.STRING, makerUserId);
       }
 
       /**
@@ -977,7 +1046,16 @@ public final class CaseDetail extends JsonModel {
       /** The value {@code "VALID_THREAT"}. */
       public static final Resolution VALID_THREAT = new Resolution("VALID_THREAT");
 
-      private static final List<Resolution> KNOWN_VALUES = List.of(FALSE_POSITIVE, VALID_THREAT);
+      /** The value {@code "INCONCLUSIVE"}. */
+      public static final Resolution INCONCLUSIVE = new Resolution("INCONCLUSIVE");
+
+      /** The value {@code "REQUIREMENTS_NOT_MET"}. */
+      public static final Resolution REQUIREMENTS_NOT_MET = new Resolution("REQUIREMENTS_NOT_MET");
+
+      /** The value {@code "REQUIREMENTS_SATISFIED"}. */
+      public static final Resolution REQUIREMENTS_SATISFIED = new Resolution("REQUIREMENTS_SATISFIED");
+
+      private static final List<Resolution> KNOWN_VALUES = List.of(FALSE_POSITIVE, VALID_THREAT, INCONCLUSIVE, REQUIREMENTS_NOT_MET, REQUIREMENTS_SATISFIED);
 
       private Resolution(String value) {
         super(value);

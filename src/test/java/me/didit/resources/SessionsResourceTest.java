@@ -10,28 +10,39 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.SandboxSimulateRequest;
+import me.didit.types.SessionSignDocument;
+import me.didit.types.SessionsAddImagesParams;
 import me.didit.types.SessionsBatchDeleteParams;
 import me.didit.types.SessionsBulkUpdateAmlHitStatusParams;
 import me.didit.types.SessionsCreateParams;
 import me.didit.types.SessionsDeleteParams;
+import me.didit.types.SessionsExportAmlScreeningHistoryParams;
 import me.didit.types.SessionsImportSharedParams;
+import me.didit.types.SessionsListAmlScreeningHistoryParams;
+import me.didit.types.SessionsListEventsParams;
 import me.didit.types.SessionsListParams;
+import me.didit.types.SessionsPreviewDecisionEmailParams;
 import me.didit.types.SessionsPreviewResubmissionParams;
 import me.didit.types.SessionsRetrieveDecisionParams;
 import me.didit.types.SessionsShareParams;
 import me.didit.types.SessionsUpdateAmlHitStatusParams;
+import me.didit.types.SessionsUpdateAmlStatusParams;
 import me.didit.types.SessionsUpdateDataParams;
+import me.didit.types.SessionsUpdateDocumentAiDataParams;
 import me.didit.types.SessionsUpdateFeatureStatusParams;
 import me.didit.types.SessionsUpdateKybCompanyDataParams;
 import me.didit.types.SessionsUpdateKybPartyParams;
 import me.didit.types.SessionsUpdatePoaDataParams;
 import me.didit.types.SessionsUpdateStatusParams;
+import me.didit.types.SignatureField;
 import org.junit.jupiter.api.Test;
 
 /** One test per operation of {@code sessions}, against a stubbed HTTP layer. */
@@ -42,7 +53,7 @@ final class SessionsResourceTest {
 
   @Test
   void create() {
-    SessionsCreateParams params = SessionsCreateParams.builder().workflowId("00000000-0000-4000-8000-000000001b5b").vendorData("value-vendor-data").callback("value-callback").callbackMethod(SessionsCreateParams.CallbackMethod.INITIATOR).metadata("value").language(SessionsCreateParams.Language.EN).contactDetails(SessionsCreateParams.ContactDetails.builder().email("user@example.com").sendNotificationEmails(true).build()).expectedDetails(SessionsCreateParams.ExpectedDetails.builder().firstName("value-first-name").lastName("value-last-name").build()).portraitImage("value-portrait-image").sandboxScenario("value-sandbox-scenario").build();
+    SessionsCreateParams params = SessionsCreateParams.builder().workflowId("00000000-0000-4000-8000-000000001b5b").vendorData("value-vendor-data").callback("value-callback").callbackMethod(SessionsCreateParams.CallbackMethod.INITIATOR).metadata("value").language(SessionsCreateParams.Language.EN).contactDetails(SessionsCreateParams.ContactDetails.builder().email("user@example.com").sendNotificationEmails(true).build()).expectedDetails(SessionsCreateParams.ExpectedDetails.builder().firstName("value-first-name").lastName("value-last-name").build()).portraitImage("value-portrait-image").sandboxScenario("value-sandbox-scenario").sign(SessionsCreateParams.Sign.builder().documents(List.of(SessionSignDocument.builder().title("value-title").fileName("value-file-name").contentBase64("value-content-base64").fields(List.of(SignatureField.builder().key("value-key").type(SignatureField.Type.SIGNATURE).role(SignatureField.Role.VERIFIED_PERSON).page(1L).build())).build())).fieldValues(Map.of("key", SessionsCreateParams.Sign.FieldValuesValue.ofString("value-field-values"))).build()).build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/", "201");
     transport.respondJson(201, example);
     var result = client.sessions().create(params);
@@ -52,7 +63,7 @@ final class SessionsResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"workflow_id\":\"00000000-0000-4000-8000-000000001b5b\",\"vendor_data\":\"value-vendor-data\",\"callback\":\"value-callback\",\"callback_method\":\"initiator\",\"metadata\":\"value\",\"language\":\"en\",\"contact_details\":{\"email\":\"user@example.com\",\"send_notification_emails\":true},\"expected_details\":{\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\"},\"portrait_image\":\"value-portrait-image\",\"sandbox_scenario\":\"value-sandbox-scenario\"}", request.body());
+    TestJson.assertJsonEquals("{\"workflow_id\":\"00000000-0000-4000-8000-000000001b5b\",\"vendor_data\":\"value-vendor-data\",\"callback\":\"value-callback\",\"callback_method\":\"initiator\",\"metadata\":\"value\",\"language\":\"en\",\"contact_details\":{\"email\":\"user@example.com\",\"send_notification_emails\":true},\"expected_details\":{\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\"},\"portrait_image\":\"value-portrait-image\",\"sandbox_scenario\":\"value-sandbox-scenario\",\"sign\":{\"documents\":[{\"title\":\"value-title\",\"file_name\":\"value-file-name\",\"content_base64\":\"value-content-base64\",\"fields\":[{\"key\":\"value-key\",\"type\":\"signature\",\"role\":\"verified_person\",\"page\":1}]}],\"field_values\":{\"key\":\"value-field-values\"}}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
@@ -171,12 +182,13 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"share_token\":\"value-share-token\",\"trust_review\":true,\"workflow_id\":\"00000000-0000-4000-8000-000000001b5b\",\"vendor_data\":\"value-vendor-data\"}", request.body());
-    TestJson.assertJsonEquals(example, result);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 
   @Test
   void batchDelete() {
-    SessionsBatchDeleteParams params = SessionsBatchDeleteParams.builder().sessionNumbers(List.of("value-session-numbers")).deleteAll(true).retainFaceEmbeddings(true).faceRetentionDays(1L).faceRetentionDeadline(OffsetDateTime.parse("2026-11-01T10:15:30Z")).deletionInstruction(SessionsBatchDeleteParams.DeletionInstruction.OPERATIONAL_SESSION_DELETE).instructionId("value-instruction-id").build();
+    SessionsBatchDeleteParams params = SessionsBatchDeleteParams.builder().sessionNumbers(List.of("value-session-numbers")).deleteAll(true).retainFaceEmbeddings(true).faceRetentionDays(1L).faceRetentionDeadline(OffsetDateTime.parse("2026-11-01T10:15:30Z")).deletionInstruction(SessionsBatchDeleteParams.DeletionInstruction.OPERATIONAL_SESSION_DELETE).instructionId("value-instruction-id").filterStatus(SessionsBatchDeleteParams.FilterStatus.ofString("value-filter-status")).filterVendorData("value-filter-vendor-data").filterSearch("value-filter-search").filterWorkflowId(SessionsBatchDeleteParams.FilterWorkflowId.ofString("value-filter-workflow-id")).filterDateFrom(LocalDate.parse("2026-11-01")).filterDateTo(LocalDate.parse("2026-11-01")).filterCountry(SessionsBatchDeleteParams.FilterCountry.ofString("value-filter-country")).filterDocumentType(SessionsBatchDeleteParams.FilterDocumentType.ofString("value-filter-document-type")).filterDocumentName(SessionsBatchDeleteParams.FilterDocumentName.ofString("value-filter-document-name")).filterRegion(SessionsBatchDeleteParams.FilterRegion.ofString("value-filter-region")).filterDiditInternalId("00000000-0000-4000-8000-000000007ac5").filterSessionType(SessionsBatchDeleteParams.FilterSessionType.ofString("value-filter-session-type")).filterApiService("value-filter-api-service").filterScreenedFullName("value-filter-screened-full-name").filterWarning(SessionsBatchDeleteParams.FilterWarning.ofString("value-filter-warning")).filterStatusInitializedAsInReview(true).filterIsKycToBeReviewed(true).filterEuuid("00000000-0000-4000-8000-000000002094").filterOrganizationName(SessionsBatchDeleteParams.FilterOrganizationName.ofString("value-filter-organization-name")).build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/sessions/delete/", "200");
     transport.respondJson(200, example);
     var result = client.sessions().batchDelete(params);
@@ -186,7 +198,7 @@ final class SessionsResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"session_numbers\":[\"value-session-numbers\"],\"delete_all\":true,\"retain_face_embeddings\":true,\"face_retention_days\":1,\"face_retention_deadline\":\"2026-11-01T10:15:30Z\",\"deletion_instruction\":\"operational_session_delete\",\"instruction_id\":\"value-instruction-id\"}", request.body());
+    TestJson.assertJsonEquals("{\"session_numbers\":[\"value-session-numbers\"],\"delete_all\":true,\"retain_face_embeddings\":true,\"face_retention_days\":1,\"face_retention_deadline\":\"2026-11-01T10:15:30Z\",\"deletion_instruction\":\"operational_session_delete\",\"instruction_id\":\"value-instruction-id\",\"filter_status\":\"value-filter-status\",\"filter_vendor_data\":\"value-filter-vendor-data\",\"filter_search\":\"value-filter-search\",\"filter_workflow_id\":\"value-filter-workflow-id\",\"filter_date_from\":\"2026-11-01\",\"filter_date_to\":\"2026-11-01\",\"filter_country\":\"value-filter-country\",\"filter_document_type\":\"value-filter-document-type\",\"filter_document_name\":\"value-filter-document-name\",\"filter_region\":\"value-filter-region\",\"filter_didit_internal_id\":\"00000000-0000-4000-8000-000000007ac5\",\"filter_session_type\":\"value-filter-session-type\",\"filter_api_service\":\"value-filter-api-service\",\"filter_screened_full_name\":\"value-filter-screened-full-name\",\"filter_warning\":\"value-filter-warning\",\"filter_status_initialized_as_in_review\":true,\"filter_is_kyc_to_be_reviewed\":true,\"filter_euuid\":\"00000000-0000-4000-8000-000000002094\",\"filter_organization_name\":\"value-filter-organization-name\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     assertEquals(200, result.statusCode());
     TestModels.readAll(result);
@@ -227,7 +239,7 @@ final class SessionsResourceTest {
 
   @Test
   void updateFeatureStatus() {
-    SessionsUpdateFeatureStatusParams params = SessionsUpdateFeatureStatusParams.builder().newStatus(SessionsUpdateFeatureStatusParams.NewStatus.APPROVED).comment("value-comment").build();
+    SessionsUpdateFeatureStatusParams params = SessionsUpdateFeatureStatusParams.builder().newStatus(SessionsUpdateFeatureStatusParams.NewStatus.APPROVED).comment("value-comment").featureType(SessionsUpdateFeatureStatusParams.FeatureType.ID_VERIFICATION).deferUntilFlowFinishes(true).build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/features/{nodeId}/update-status/", "200");
     transport.respondJson(200, example);
     var result = client.sessions().updateFeatureStatus("00000000-0000-4000-8000-000000014334", "00000000-0000-4000-8000-00000001102a", params);
@@ -237,7 +249,7 @@ final class SessionsResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"new_status\":\"Approved\",\"comment\":\"value-comment\"}", request.body());
+    TestJson.assertJsonEquals("{\"new_status\":\"Approved\",\"comment\":\"value-comment\",\"feature_type\":\"ID_VERIFICATION\",\"defer_until_flow_finishes\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
@@ -255,7 +267,8 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"hit_id\":\"value-hit-id\",\"review_status\":\"Unreviewed\",\"node_id\":\"value-node-id\"}", request.body());
-    TestJson.assertJsonEquals(example, result);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 
   @Test
@@ -271,7 +284,8 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"hit_updates\":[{\"hit_id\":\"value-hit-id\",\"review_status\":\"Unreviewed\"}],\"node_id\":\"value-node-id\"}", request.body());
-    TestJson.assertJsonEquals(example, result);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 
   @Test
@@ -344,7 +358,7 @@ final class SessionsResourceTest {
   @Test
   void previewResubmission() {
     SessionsPreviewResubmissionParams params = SessionsPreviewResubmissionParams.builder().nodesToResubmit(List.of(SessionsPreviewResubmissionParams.NodesToResubmit.builder().nodeId("value-node-id").feature(SessionsPreviewResubmissionParams.NodesToResubmit.Feature.OCR).build())).emailAddress("user@example.com").emailLanguage("value-email-language").build();
-    JsonNode example = TestJson.parse("{\"html\":\"value\",\"nodes_to_resubmit\":[],\"preview_token\":\"value\",\"recipient\":\"value\",\"requires_user_action\":true,\"sender\":\"value\",\"subject\":\"value\"}");
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/resubmission-preview/", "200");
     transport.respondJson(200, example);
     var result = client.sessions().previewResubmission("00000000-0000-4000-8000-00000001344a", params);
     RecordedRequest request = transport.only();
@@ -354,6 +368,192 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"nodes_to_resubmit\":[{\"node_id\":\"value-node-id\",\"feature\":\"OCR\"}],\"email_address\":\"user@example.com\",\"email_language\":\"value-email-language\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void updateDocumentAiData() {
+    SessionsUpdateDocumentAiDataParams params = SessionsUpdateDocumentAiDataParams.builder().extractedData(Map.of("key", "value")).status(SessionsUpdateDocumentAiDataParams.Status.APPROVED).build();
+    JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/document-ai/{sessionId}/documents/{documentUuid}/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().updateDocumentAiData("00000000-0000-4000-8000-000000015d30", "00000000-0000-4000-8000-00000001941b", params);
+    RecordedRequest request = transport.only();
+    assertEquals("PATCH", request.method());
+    assertEquals("/v3/document-ai/00000000-0000-4000-8000-000000015d30/documents/00000000-0000-4000-8000-00000001941b/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"extracted_data\":{\"key\":\"value\"},\"status\":\"Approved\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void regenerateKybParty() {
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/kyb/parties/{partyUuid}/regenerate/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().regenerateKybParty("00000000-0000-4000-8000-000000013190", "00000000-0000-4000-8000-0000000134e9");
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-000000013190/kyb/parties/00000000-0000-4000-8000-0000000134e9/regenerate/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listEvents() {
+    SessionsListEventsParams params = SessionsListEventsParams.builder().limit(1L).offset(1L).ordering("value-ordering").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/session/{sessionId}/events/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().listEvents("00000000-0000-4000-8000-00000000b375", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-00000000b375/events/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1")), Map.entry("ordering", List.of("value-ordering"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, result._json());
+    assertEquals(example.path("results").size(), result.results().size());
+    TestModels.readAll(result.results());
+  }
+
+  @Test
+  void listAmlScreeningHistory() {
+    SessionsListAmlScreeningHistoryParams params = SessionsListAmlScreeningHistoryParams.builder().nodeId("value-node-id").limit(1L).offset(1L).ordering("value-ordering").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/session/{sessionId}/aml-screening-history/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().listAmlScreeningHistory("00000000-0000-4000-8000-000000019ab8", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-000000019ab8/aml-screening-history/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id")), Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1")), Map.entry("ordering", List.of("value-ordering"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, result._json());
+    assertEquals(example.path("results").size(), result.results().size());
+    TestModels.readAll(result.results());
+  }
+
+  @Test
+  void exportAmlScreeningHistory() {
+    SessionsExportAmlScreeningHistoryParams params = SessionsExportAmlScreeningHistoryParams.builder().nodeId("value-node-id").build();
+    transport.respondBinary(200, "text/csv", new byte[] {37, 80, 68, 70});
+    var result = client.sessions().exportAmlScreeningHistory("00000000-0000-4000-8000-00000001c16a", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-00000001c16a/aml-screening-history/export/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("text/csv, application/json", request.header("Accept"));
+    assertEquals(0, request.body().length);
+    assertArrayEquals(new byte[] {37, 80, 68, 70}, result.bytes());
+  }
+
+  @Test
+  void addImages() {
+    SessionsAddImagesParams params = SessionsAddImagesParams.builder().file(FileUpload.of(new byte[] {37, 80, 68, 70}, "file.pdf", "application/pdf")).modelType(SessionsAddImagesParams.ModelType.KYC).filePassword("value-file-password").build();
+    JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/add-images/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().addImages("00000000-0000-4000-8000-00000000a37f", params);
+    RecordedRequest request = transport.only();
+    assertEquals("PATCH", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-00000000a37f/add-images/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(Map.ofEntries(Map.entry("model_type", List.of("kyc")), Map.entry("file_password", List.of("value-file-password"))), request.multipartFields());
+    assertEquals(Map.ofEntries(Map.entry("file", List.of("file.pdf"))), request.multipartFiles());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void updateAmlStatus() {
+    SessionsUpdateAmlStatusParams params = SessionsUpdateAmlStatusParams.builder().nodeIdQuery("value-node-id-query").status(SessionsUpdateAmlStatusParams.Status.NOT_FINISHED).nodeId("value-node-id").build();
+    JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/update-aml-status/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().updateAmlStatus("00000000-0000-4000-8000-0000000103e8", params);
+    RecordedRequest request = transport.only();
+    assertEquals("PATCH", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-0000000103e8/update-aml-status/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id-query"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"status\":\"Not Finished\",\"node_id\":\"value-node-id\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void simulate() {
+    SandboxSimulateRequest params = SandboxSimulateRequest.builder().newStatus(SandboxSimulateRequest.NewStatus.APPROVED).comment("value-comment").scenario("value-scenario").risk("value-risk").nodeId("value-node-id").sendWebhooks(true).build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/simulate/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().simulate("00000000-0000-4000-8000-000000008f73", params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-000000008f73/simulate/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"new_status\":\"Approved\",\"comment\":\"value-comment\",\"scenario\":\"value-scenario\",\"risk\":\"value-risk\",\"node_id\":\"value-node-id\",\"send_webhooks\":true}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listFeatureOverrides() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/session/{sessionId}/features/overrides/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().listFeatureOverrides("00000000-0000-4000-8000-0000000152bc");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-0000000152bc/features/overrides/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void cancelFeatureOverride() {
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/features/overrides/{overrideId}/cancel/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().cancelFeatureOverride("00000000-0000-4000-8000-0000000160a3", "00000000-0000-4000-8000-000000016fab");
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-0000000160a3/features/overrides/00000000-0000-4000-8000-000000016fab/cancel/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void previewDecisionEmail() {
+    SessionsPreviewDecisionEmailParams params = SessionsPreviewDecisionEmailParams.builder().newStatus(SessionsPreviewDecisionEmailParams.NewStatus.APPROVED).emailLanguage("value-email-language").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/decision-email-preview/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().previewDecisionEmail("00000000-0000-4000-8000-000000014ede", params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-000000014ede/decision-email-preview/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"new_status\":\"Approved\",\"email_language\":\"value-email-language\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

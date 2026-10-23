@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 
 /** All fields optional; PUT applies a partial update. */
 public final class TravelRuleSettingsUpdate extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("is_enabled", "legal_name", "lei", "jurisdiction", "name_matching_strictness", "confirmation_timeout_hours", "timeout_outcome", "compliance_email", "is_discoverable", "threshold_amount", "inbound_auto_accept", "allow_self_declaration", "allow_screenshot_proof", "auto_wallet_verification", "vasp_attribution_enabled", "disabled_networks");
+  private static final Set<String> KNOWN_FIELDS = Set.of("is_enabled", "legal_name", "lei", "jurisdiction", "name_matching_strictness", "confirmation_timeout_hours", "timeout_outcome", "compliance_email", "is_discoverable", "threshold_amount", "ownership_validation_mode", "simplified_validation_threshold", "data_sharing_fields", "matching_rules", "inbound_auto_accept", "allow_self_declaration", "allow_screenshot_proof", "auto_wallet_verification", "vasp_attribution_enabled", "counterparty_screening_enabled", "sunrise_policy", "non_responsive_policy", "disabled_networks");
 
   private TravelRuleSettingsUpdate(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -91,7 +91,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The <code>name_matching_strictness</code> field.
+   * <code>CONTAINS</code> accepts one name whose words all appear in the other.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -121,7 +121,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The <code>compliance_email</code> field.
+   * Compliance contact email for your VASP profile. The Didit network lists your profile only once this address is confirmed through an emailed link (POST /v3/travel-rule/settings/compliance-email/confirmation/); changing it needs a new confirmation.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -131,7 +131,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The <code>is_discoverable</code> field.
+   * Whether your VASP profile can be listed in the Didit network: found in GET /v3/travel-rule/vasps/ by other Didit customers and reached on the INTERNAL rail. Listing also needs a live application, Travel Rule on, a legal name and a confirmed compliance email; didit_network says which are missing. Default true.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -141,13 +141,53 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * Decimal string. Minimum transfer amount that triggers a managed exchange.
+   * Decimal string, zero or greater, in your application's default currency. Minimum transfer amount that triggers a managed exchange.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<String> thresholdAmount() {
     return Json.optional(json, "threshold_amount", Conv.STRING);
+  }
+
+  /**
+   * See the response field of the same name.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleSettingsUpdate.OwnershipValidationMode> ownershipValidationMode() {
+    return Json.optional(json, "ownership_validation_mode", Conv.enumeration(TravelRuleSettingsUpdate.OwnershipValidationMode::of));
+  }
+
+  /**
+   * Decimal string, 0 or more.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> simplifiedValidationThreshold() {
+    return Json.optional(json, "simplified_validation_threshold", Conv.STRING);
+  }
+
+  /**
+   * Merged per entity type: an entity type you leave out keeps its current choice. A choice that cannot meet the originator obligations of your <code>jurisdiction</code> regime (EU TFR or FATF Recommendation 16), an empty list included, is refused with <code>400</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleDataSharingFields> dataSharingFields() {
+    return Json.optional(json, "data_sharing_fields", Conv.model(TravelRuleDataSharingFields::fromJson));
+  }
+
+  /**
+   * Merged per entity type, and per field inside it. A field that entity type does not compare (for example <code>date_of_birth</code> for <code>company</code>) is refused with <code>400</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleMatchingRules> matchingRules() {
+    return Json.optional(json, "matching_rules", Conv.model(TravelRuleMatchingRules::fromJson));
   }
 
   /**
@@ -198,6 +238,36 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
    */
   public Optional<Boolean> vaspAttributionEnabled() {
     return Json.optional(json, "vasp_attribution_enabled", Conv.BOOLEAN);
+  }
+
+  /**
+   * Opt-in sanctions and adverse-media screening of counterparty VASPs, billed per screening at the Company AML Screening price. When on, Didit screens the counterparty an outbound exchange reaches (reusing a screening younger than 30 days) and you can screen one with POST /v3/travel-rule/vasps/{vasp_id}/screening/. Default false: nothing is screened or billed.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> counterpartyScreeningEnabled() {
+    return Json.optional(json, "counterparty_screening_enabled", Conv.BOOLEAN);
+  }
+
+  /**
+   * HOLD, REJECT, PROCEED, or empty to follow timeout_outcome. See the response field of the same name.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleSettingsUpdate.SunrisePolicy> sunrisePolicy() {
+    return Json.optional(json, "sunrise_policy", Conv.enumeration(TravelRuleSettingsUpdate.SunrisePolicy::of));
+  }
+
+  /**
+   * HOLD, REJECT, PROCEED, or empty to follow timeout_outcome. See the response field of the same name.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleSettingsUpdate.NonResponsivePolicy> nonResponsivePolicy() {
+    return Json.optional(json, "non_responsive_policy", Conv.enumeration(TravelRuleSettingsUpdate.NonResponsivePolicy::of));
   }
 
   /**
@@ -264,7 +334,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The <code>name_matching_strictness</code> field.
+     * <code>CONTAINS</code> accepts one name whose words all appear in the other.
      *
      * @param nameMatchingStrictness the value
      * @return this builder
@@ -294,7 +364,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The <code>compliance_email</code> field.
+     * Compliance contact email for your VASP profile. The Didit network lists your profile only once this address is confirmed through an emailed link (POST /v3/travel-rule/settings/compliance-email/confirmation/); changing it needs a new confirmation.
      *
      * @param complianceEmail the value
      * @return this builder
@@ -304,7 +374,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The <code>is_discoverable</code> field.
+     * Whether your VASP profile can be listed in the Didit network: found in GET /v3/travel-rule/vasps/ by other Didit customers and reached on the INTERNAL rail. Listing also needs a live application, Travel Rule on, a legal name and a confirmed compliance email; didit_network says which are missing. Default true.
      *
      * @param isDiscoverable the value
      * @return this builder
@@ -314,13 +384,53 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * Decimal string. Minimum transfer amount that triggers a managed exchange.
+     * Decimal string, zero or greater, in your application's default currency. Minimum transfer amount that triggers a managed exchange.
      *
      * @param thresholdAmount the value
      * @return this builder
      */
     public Builder thresholdAmount(String thresholdAmount) {
       return set("threshold_amount", Conv.STRING, thresholdAmount);
+    }
+
+    /**
+     * See the response field of the same name.
+     *
+     * @param ownershipValidationMode the value
+     * @return this builder
+     */
+    public Builder ownershipValidationMode(TravelRuleSettingsUpdate.OwnershipValidationMode ownershipValidationMode) {
+      return set("ownership_validation_mode", Conv.enumeration(TravelRuleSettingsUpdate.OwnershipValidationMode::of), ownershipValidationMode);
+    }
+
+    /**
+     * Decimal string, 0 or more.
+     *
+     * @param simplifiedValidationThreshold the value
+     * @return this builder
+     */
+    public Builder simplifiedValidationThreshold(String simplifiedValidationThreshold) {
+      return set("simplified_validation_threshold", Conv.STRING, simplifiedValidationThreshold);
+    }
+
+    /**
+     * Merged per entity type: an entity type you leave out keeps its current choice. A choice that cannot meet the originator obligations of your <code>jurisdiction</code> regime (EU TFR or FATF Recommendation 16), an empty list included, is refused with <code>400</code>.
+     *
+     * @param dataSharingFields the value
+     * @return this builder
+     */
+    public Builder dataSharingFields(TravelRuleDataSharingFields dataSharingFields) {
+      return set("data_sharing_fields", Conv.model(TravelRuleDataSharingFields::fromJson), dataSharingFields);
+    }
+
+    /**
+     * Merged per entity type, and per field inside it. A field that entity type does not compare (for example <code>date_of_birth</code> for <code>company</code>) is refused with <code>400</code>.
+     *
+     * @param matchingRules the value
+     * @return this builder
+     */
+    public Builder matchingRules(TravelRuleMatchingRules matchingRules) {
+      return set("matching_rules", Conv.model(TravelRuleMatchingRules::fromJson), matchingRules);
     }
 
     /**
@@ -374,6 +484,36 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
+     * Opt-in sanctions and adverse-media screening of counterparty VASPs, billed per screening at the Company AML Screening price. When on, Didit screens the counterparty an outbound exchange reaches (reusing a screening younger than 30 days) and you can screen one with POST /v3/travel-rule/vasps/{vasp_id}/screening/. Default false: nothing is screened or billed.
+     *
+     * @param counterpartyScreeningEnabled the value
+     * @return this builder
+     */
+    public Builder counterpartyScreeningEnabled(boolean counterpartyScreeningEnabled) {
+      return set("counterparty_screening_enabled", Conv.BOOLEAN, counterpartyScreeningEnabled);
+    }
+
+    /**
+     * HOLD, REJECT, PROCEED, or empty to follow timeout_outcome. See the response field of the same name.
+     *
+     * @param sunrisePolicy the value
+     * @return this builder
+     */
+    public Builder sunrisePolicy(TravelRuleSettingsUpdate.SunrisePolicy sunrisePolicy) {
+      return set("sunrise_policy", Conv.enumeration(TravelRuleSettingsUpdate.SunrisePolicy::of), sunrisePolicy);
+    }
+
+    /**
+     * HOLD, REJECT, PROCEED, or empty to follow timeout_outcome. See the response field of the same name.
+     *
+     * @param nonResponsivePolicy the value
+     * @return this builder
+     */
+    public Builder nonResponsivePolicy(TravelRuleSettingsUpdate.NonResponsivePolicy nonResponsivePolicy) {
+      return set("non_responsive_policy", Conv.enumeration(TravelRuleSettingsUpdate.NonResponsivePolicy::of), nonResponsivePolicy);
+    }
+
+    /**
      * Networks opted out of platform membership. Does not disable your connected own memberships or provision unavailable networks.
      *
      * @param disabledNetworks the value
@@ -399,6 +539,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
+   * <code>CONTAINS</code> accepts one name whose words all appear in the other.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -409,13 +550,16 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     /** The value {@code "STRICT"}. */
     public static final NameMatchingStrictness STRICT = new NameMatchingStrictness("STRICT");
 
+    /** The value {@code "CONTAINS"}. */
+    public static final NameMatchingStrictness CONTAINS = new NameMatchingStrictness("CONTAINS");
+
     /** The value {@code "DEFAULT"}. */
     public static final NameMatchingStrictness DEFAULT = new NameMatchingStrictness("DEFAULT");
 
     /** The value {@code "FUZZY"}. */
     public static final NameMatchingStrictness FUZZY = new NameMatchingStrictness("FUZZY");
 
-    private static final List<NameMatchingStrictness> KNOWN_VALUES = List.of(NONE, STRICT, DEFAULT, FUZZY);
+    private static final List<NameMatchingStrictness> KNOWN_VALUES = List.of(NONE, STRICT, CONTAINS, DEFAULT, FUZZY);
 
     private NameMatchingStrictness(String value) {
       super(value);
@@ -482,6 +626,150 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
      * @return the known values
      */
     public static List<TimeoutOutcome> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * See the response field of the same name.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class OwnershipValidationMode extends StringEnum {
+    /** The value {@code "FULL"}. */
+    public static final OwnershipValidationMode FULL = new OwnershipValidationMode("FULL");
+
+    /** The value {@code "SIMPLIFIED"}. */
+    public static final OwnershipValidationMode SIMPLIFIED = new OwnershipValidationMode("SIMPLIFIED");
+
+    /** The value {@code "AUTOMATED"}. */
+    public static final OwnershipValidationMode AUTOMATED = new OwnershipValidationMode("AUTOMATED");
+
+    private static final List<OwnershipValidationMode> KNOWN_VALUES = List.of(FULL, SIMPLIFIED, AUTOMATED);
+
+    private OwnershipValidationMode(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static OwnershipValidationMode of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, OwnershipValidationMode::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<OwnershipValidationMode> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * HOLD, REJECT, PROCEED, or empty to follow timeout_outcome. See the response field of the same name.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class SunrisePolicy extends StringEnum {
+    /** The value {@code ""}. */
+    public static final SunrisePolicy EMPTY = new SunrisePolicy("");
+
+    /** The value {@code "HOLD"}. */
+    public static final SunrisePolicy HOLD = new SunrisePolicy("HOLD");
+
+    /** The value {@code "REJECT"}. */
+    public static final SunrisePolicy REJECT = new SunrisePolicy("REJECT");
+
+    /** The value {@code "PROCEED"}. */
+    public static final SunrisePolicy PROCEED = new SunrisePolicy("PROCEED");
+
+    private static final List<SunrisePolicy> KNOWN_VALUES = List.of(EMPTY, HOLD, REJECT, PROCEED);
+
+    private SunrisePolicy(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static SunrisePolicy of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, SunrisePolicy::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<SunrisePolicy> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * HOLD, REJECT, PROCEED, or empty to follow timeout_outcome. See the response field of the same name.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class NonResponsivePolicy extends StringEnum {
+    /** The value {@code ""}. */
+    public static final NonResponsivePolicy EMPTY = new NonResponsivePolicy("");
+
+    /** The value {@code "HOLD"}. */
+    public static final NonResponsivePolicy HOLD = new NonResponsivePolicy("HOLD");
+
+    /** The value {@code "REJECT"}. */
+    public static final NonResponsivePolicy REJECT = new NonResponsivePolicy("REJECT");
+
+    /** The value {@code "PROCEED"}. */
+    public static final NonResponsivePolicy PROCEED = new NonResponsivePolicy("PROCEED");
+
+    private static final List<NonResponsivePolicy> KNOWN_VALUES = List.of(EMPTY, HOLD, REJECT, PROCEED);
+
+    private NonResponsivePolicy(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static NonResponsivePolicy of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, NonResponsivePolicy::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<NonResponsivePolicy> knownValues() {
       return KNOWN_VALUES;
     }
 

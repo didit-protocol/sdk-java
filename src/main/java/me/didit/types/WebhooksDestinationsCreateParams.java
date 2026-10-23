@@ -61,7 +61,7 @@ public final class WebhooksDestinationsCreateParams extends JsonModel {
   }
 
   /**
-   * HTTPS URL that will receive <code>POST</code> requests. Must be unique per application among non-deleted destinations. Use a stable, hardened endpoint — Didit retries failed deliveries on a backoff schedule.
+   * HTTPS URL that will receive <code>POST</code> requests. Must be unique among the application's destinations. Use a stable, hardened endpoint: Didit retries failed deliveries on a backoff schedule.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -124,7 +124,7 @@ public final class WebhooksDestinationsCreateParams extends JsonModel {
     }
 
     /**
-     * HTTPS URL that will receive <code>POST</code> requests. Must be unique per application among non-deleted destinations. Use a stable, hardened endpoint — Didit retries failed deliveries on a backoff schedule.
+     * HTTPS URL that will receive <code>POST</code> requests. Must be unique among the application's destinations. Use a stable, hardened endpoint: Didit retries failed deliveries on a backoff schedule.
      *
      * @param url the value
      * @return this builder

@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class WebhooksDestinationsUpdateResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "label", "url", "enabled", "webhook_version", "secret_shared_key", "subscribed_events", "created_at", "updated_at", "summary");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "label", "url", "enabled", "webhook_version", "secret_shared_key", "secret_last4", "previous_secret_expires_at", "subscribed_events", "created_by_email", "created_by_name", "created_at", "updated_at", "health_status", "failing_streak", "failing_since", "last_success_at", "environment", "summary");
 
   private WebhooksDestinationsUpdateResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -112,6 +112,26 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
   }
 
   /**
+   * Last four characters of the destination's current signing secret, so you can tell secrets apart. Not enough to verify a signature.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> secretLast4() {
+    return Json.optional(json, "secret_last4", Conv.STRING);
+  }
+
+  /**
+   * Set for 24 hours after the destination's signing secret is rotated in the Business Console. Until this time, every delivery to the destination also carries <code>X-Signature-Previous</code>, <code>X-Signature-V2-Previous</code> and <code>X-Signature-Simple-Previous</code>, made with the replaced secret (see [Signature verification](/integration/webhooks#signature-verification)). <code>null</code> when no rotation happened in the last 24 hours.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> previousSecretExpiresAt() {
+    return Json.optional(json, "previous_secret_expires_at", Conv.DATE_TIME);
+  }
+
+  /**
    * Event filter for this webhook destination. Didit delivers only webhooks whose event type exactly matches one of these values — there is no wildcard subscription. When sent, the list must contain at least one valid event (an explicit <code>[]</code> is rejected with 400); a destination whose list is empty (field omitted at create) receives nothing. On update the list is replaced wholesale, never merged.
    *
    * @return the value, or empty when the field is absent or null
@@ -119,6 +139,26 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
    */
   public Optional<List<WebhookEvent>> subscribedEvents() {
     return Json.optional(json, "subscribed_events", Conv.list(Conv.enumeration(WebhookEvent::of)));
+  }
+
+  /**
+   * Email of the Business Console member who created the destination. <code>null</code> for a destination created with an API key.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> createdByEmail() {
+    return Json.optional(json, "created_by_email", Conv.STRING);
+  }
+
+  /**
+   * Name of the Business Console member who created the destination. <code>null</code> for a destination created with an API key.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> createdByName() {
+    return Json.optional(json, "created_by_name", Conv.STRING);
   }
 
   /**
@@ -142,7 +182,57 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
   }
 
   /**
-   * The <code>summary</code> field.
+   * Delivery health. <code>failing</code>: 3 or more consecutive events failed their first delivery attempt since the destination last answered successfully (see <code>failing_streak</code>). <code>degraded</code>: not failing, but a delivery attempt failed in the last 24 hours and no later attempt has delivered that event; a retry or resend that delivers it clears this. <code>healthy</code>: neither. Independent of <code>enabled</code>. A failed attempt is one answered with HTTP 400 or above, or not answered at all.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<WebhooksDestinationsUpdateResponse.HealthStatus> healthStatus() {
+    return Json.optional(json, "health_status", Conv.enumeration(WebhooksDestinationsUpdateResponse.HealthStatus::of));
+  }
+
+  /**
+   * How many consecutive events failed their first delivery attempt since the destination last answered successfully, within the last 30 days. Retries are not counted, and any successful attempt, including a retry or a resend, ends the streak. <code>0</code> when no event has failed since the last success.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> failingStreak() {
+    return Json.optional(json, "failing_streak", Conv.LONG);
+  }
+
+  /**
+   * When the first failed attempt of the current <code>failing_streak</code> was made. <code>null</code> when <code>failing_streak</code> is <code>0</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> failingSince() {
+    return Json.optional(json, "failing_since", Conv.DATE_TIME);
+  }
+
+  /**
+   * When the destination last answered a delivery with an HTTP status under 400, within the last 30 days. <code>null</code> if it has not in that window.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> lastSuccessAt() {
+    return Json.optional(json, "last_success_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * Environment of the application that owns the destination.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<WebhooksDestinationsUpdateResponse.Environment> environment() {
+    return Json.optional(json, "environment", Conv.enumeration(WebhooksDestinationsUpdateResponse.Environment::of));
+  }
+
+  /**
+   * Delivery metrics for the last <code>metrics_window_days</code> (30) days. <code>last_delivery_at</code> is the most recent attempt, whenever it was made.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -225,6 +315,26 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
+     * Last four characters of the destination's current signing secret, so you can tell secrets apart. Not enough to verify a signature.
+     *
+     * @param secretLast4 the value
+     * @return this builder
+     */
+    public Builder secretLast4(String secretLast4) {
+      return set("secret_last4", Conv.STRING, secretLast4);
+    }
+
+    /**
+     * Set for 24 hours after the destination's signing secret is rotated in the Business Console. Until this time, every delivery to the destination also carries <code>X-Signature-Previous</code>, <code>X-Signature-V2-Previous</code> and <code>X-Signature-Simple-Previous</code>, made with the replaced secret (see [Signature verification](/integration/webhooks#signature-verification)). <code>null</code> when no rotation happened in the last 24 hours.
+     *
+     * @param previousSecretExpiresAt the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder previousSecretExpiresAt(@Nullable OffsetDateTime previousSecretExpiresAt) {
+      return setNullable("previous_secret_expires_at", Conv.DATE_TIME, previousSecretExpiresAt);
+    }
+
+    /**
      * Event filter for this webhook destination. Didit delivers only webhooks whose event type exactly matches one of these values — there is no wildcard subscription. When sent, the list must contain at least one valid event (an explicit <code>[]</code> is rejected with 400); a destination whose list is empty (field omitted at create) receives nothing. On update the list is replaced wholesale, never merged.
      *
      * @param subscribedEvents the value
@@ -232,6 +342,26 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
      */
     public Builder subscribedEvents(List<WebhookEvent> subscribedEvents) {
       return set("subscribed_events", Conv.list(Conv.enumeration(WebhookEvent::of)), subscribedEvents);
+    }
+
+    /**
+     * Email of the Business Console member who created the destination. <code>null</code> for a destination created with an API key.
+     *
+     * @param createdByEmail the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder createdByEmail(@Nullable String createdByEmail) {
+      return setNullable("created_by_email", Conv.STRING, createdByEmail);
+    }
+
+    /**
+     * Name of the Business Console member who created the destination. <code>null</code> for a destination created with an API key.
+     *
+     * @param createdByName the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder createdByName(@Nullable String createdByName) {
+      return setNullable("created_by_name", Conv.STRING, createdByName);
     }
 
     /**
@@ -255,7 +385,57 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
 
     /**
-     * The <code>summary</code> field.
+     * Delivery health. <code>failing</code>: 3 or more consecutive events failed their first delivery attempt since the destination last answered successfully (see <code>failing_streak</code>). <code>degraded</code>: not failing, but a delivery attempt failed in the last 24 hours and no later attempt has delivered that event; a retry or resend that delivers it clears this. <code>healthy</code>: neither. Independent of <code>enabled</code>. A failed attempt is one answered with HTTP 400 or above, or not answered at all.
+     *
+     * @param healthStatus the value
+     * @return this builder
+     */
+    public Builder healthStatus(WebhooksDestinationsUpdateResponse.HealthStatus healthStatus) {
+      return set("health_status", Conv.enumeration(WebhooksDestinationsUpdateResponse.HealthStatus::of), healthStatus);
+    }
+
+    /**
+     * How many consecutive events failed their first delivery attempt since the destination last answered successfully, within the last 30 days. Retries are not counted, and any successful attempt, including a retry or a resend, ends the streak. <code>0</code> when no event has failed since the last success.
+     *
+     * @param failingStreak the value
+     * @return this builder
+     */
+    public Builder failingStreak(long failingStreak) {
+      return set("failing_streak", Conv.LONG, failingStreak);
+    }
+
+    /**
+     * When the first failed attempt of the current <code>failing_streak</code> was made. <code>null</code> when <code>failing_streak</code> is <code>0</code>.
+     *
+     * @param failingSince the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder failingSince(@Nullable OffsetDateTime failingSince) {
+      return setNullable("failing_since", Conv.DATE_TIME, failingSince);
+    }
+
+    /**
+     * When the destination last answered a delivery with an HTTP status under 400, within the last 30 days. <code>null</code> if it has not in that window.
+     *
+     * @param lastSuccessAt the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder lastSuccessAt(@Nullable OffsetDateTime lastSuccessAt) {
+      return setNullable("last_success_at", Conv.DATE_TIME, lastSuccessAt);
+    }
+
+    /**
+     * Environment of the application that owns the destination.
+     *
+     * @param environment the value
+     * @return this builder
+     */
+    public Builder environment(WebhooksDestinationsUpdateResponse.Environment environment) {
+      return set("environment", Conv.enumeration(WebhooksDestinationsUpdateResponse.Environment::of), environment);
+    }
+
+    /**
+     * Delivery metrics for the last <code>metrics_window_days</code> (30) days. <code>last_delivery_at</code> is the most recent attempt, whenever it was made.
      *
      * @param summary the value
      * @return this builder
@@ -324,8 +504,100 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
     }
   }
 
+  /**
+   * Delivery health. <code>failing</code>: 3 or more consecutive events failed their first delivery attempt since the destination last answered successfully (see <code>failing_streak</code>). <code>degraded</code>: not failing, but a delivery attempt failed in the last 24 hours and no later attempt has delivered that event; a retry or resend that delivers it clears this. <code>healthy</code>: neither. Independent of <code>enabled</code>. A failed attempt is one answered with HTTP 400 or above, or not answered at all.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class HealthStatus extends StringEnum {
+    /** The value {@code "healthy"}. */
+    public static final HealthStatus HEALTHY = new HealthStatus("healthy");
+
+    /** The value {@code "degraded"}. */
+    public static final HealthStatus DEGRADED = new HealthStatus("degraded");
+
+    /** The value {@code "failing"}. */
+    public static final HealthStatus FAILING = new HealthStatus("failing");
+
+    private static final List<HealthStatus> KNOWN_VALUES = List.of(HEALTHY, DEGRADED, FAILING);
+
+    private HealthStatus(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static HealthStatus of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, HealthStatus::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<HealthStatus> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Environment of the application that owns the destination.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Environment extends StringEnum {
+    /** The value {@code "live"}. */
+    public static final Environment LIVE = new Environment("live");
+
+    /** The value {@code "sandbox"}. */
+    public static final Environment SANDBOX = new Environment("sandbox");
+
+    private static final List<Environment> KNOWN_VALUES = List.of(LIVE, SANDBOX);
+
+    private Environment(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Environment of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Environment::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Environment> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Delivery metrics for the last <code>metrics_window_days</code> (30) days. <code>last_delivery_at</code> is the most recent attempt, whenever it was made.
+   */
   public static final class Summary extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("total_deliveries", "failed_deliveries", "error_rate_percentage", "min_response_time_ms", "avg_response_time_ms", "max_response_time_ms", "last_delivery_at");
+    private static final Set<String> KNOWN_FIELDS = Set.of("total_deliveries", "failed_deliveries", "error_rate_percentage", "min_response_time_ms", "avg_response_time_ms", "max_response_time_ms", "last_delivery_at", "metrics_window_days");
 
     private Summary(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -430,6 +702,16 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
       return Json.optional(json, "last_delivery_at", Conv.DATE_TIME);
     }
 
+    /**
+     * Length in days of the window the other summary metrics cover. Always <code>30</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Long> metricsWindowDays() {
+      return Json.optional(json, "metrics_window_days", Conv.LONG);
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -511,6 +793,16 @@ public final class WebhooksDestinationsUpdateResponse extends JsonModel {
        */
       public Builder lastDeliveryAt(@Nullable OffsetDateTime lastDeliveryAt) {
         return setNullable("last_delivery_at", Conv.DATE_TIME, lastDeliveryAt);
+      }
+
+      /**
+       * Length in days of the window the other summary metrics cover. Always <code>30</code>.
+       *
+       * @param metricsWindowDays the value
+       * @return this builder
+       */
+      public Builder metricsWindowDays(long metricsWindowDays) {
+        return set("metrics_window_days", Conv.LONG, metricsWindowDays);
       }
 
       /**

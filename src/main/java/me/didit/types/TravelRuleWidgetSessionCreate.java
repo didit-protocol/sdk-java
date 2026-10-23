@@ -11,6 +11,7 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import org.jspecify.annotations.Nullable;
 
 public final class TravelRuleWidgetSessionCreate extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("wallet_address", "chain", "holder_name", "vendor_data", "transaction_id", "satoshi_deposit_address", "callback_url", "expires_in_minutes");
@@ -49,23 +50,23 @@ public final class TravelRuleWidgetSessionCreate extends JsonModel {
   }
 
   /**
-   * The wallet address to verify.
+   * The wallet address to verify. Optional; when empty, the address must be supplied when a proof is started.
    *
-   * @return the value
-   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public String walletAddress() {
-    return Json.required(json, "wallet_address", Conv.STRING);
+  public Optional<String> walletAddress() {
+    return Json.optional(json, "wallet_address", Conv.STRING);
   }
 
   /**
-   * Chain identifier for the address, e.g. "ethereum", "bitcoin", "solana".
+   * Chain token for the address, for example <code>ETH</code>, <code>BTC</code> or <code>SOL</code>. Use the same token as in your wallet address book. Message signing and the Satoshi test are offered only for a supported chain.
    *
-   * @return the value
-   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public String chain() {
-    return Json.required(json, "chain", Conv.STRING);
+  public Optional<String> chain() {
+    return Json.optional(json, "chain", Conv.STRING);
   }
 
   /**
@@ -109,7 +110,7 @@ public final class TravelRuleWidgetSessionCreate extends JsonModel {
   }
 
   /**
-   * Optional. Where the widget returns the customer after completion.
+   * Optional. Absolute http(s) URL where the widget returns the customer after completion.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -142,7 +143,7 @@ public final class TravelRuleWidgetSessionCreate extends JsonModel {
     }
 
     /**
-     * The wallet address to verify.
+     * The wallet address to verify. Optional; when empty, the address must be supplied when a proof is started.
      *
      * @param walletAddress the value
      * @return this builder
@@ -152,7 +153,7 @@ public final class TravelRuleWidgetSessionCreate extends JsonModel {
     }
 
     /**
-     * Chain identifier for the address, e.g. "ethereum", "bitcoin", "solana".
+     * Chain token for the address, for example <code>ETH</code>, <code>BTC</code> or <code>SOL</code>. Use the same token as in your wallet address book. Message signing and the Satoshi test are offered only for a supported chain.
      *
      * @param chain the value
      * @return this builder
@@ -184,11 +185,11 @@ public final class TravelRuleWidgetSessionCreate extends JsonModel {
     /**
      * Optional. Didit transaction UUID of a Travel Rule transfer to advance when the proof verifies.
      *
-     * @param transactionId the value
+     * @param transactionId the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder transactionId(String transactionId) {
-      return set("transaction_id", Conv.STRING, transactionId);
+    public Builder transactionId(@Nullable String transactionId) {
+      return setNullable("transaction_id", Conv.STRING, transactionId);
     }
 
     /**
@@ -202,7 +203,7 @@ public final class TravelRuleWidgetSessionCreate extends JsonModel {
     }
 
     /**
-     * Optional. Where the widget returns the customer after completion.
+     * Optional. Absolute http(s) URL where the widget returns the customer after completion.
      *
      * @param callbackUrl the value
      * @return this builder
@@ -225,11 +226,8 @@ public final class TravelRuleWidgetSessionCreate extends JsonModel {
      * Builds the value.
      *
      * @return a new immutable {@code TravelRuleWidgetSessionCreate}
-     * @throws IllegalStateException when a required field is missing
      */
     public TravelRuleWidgetSessionCreate build() {
-      require("wallet_address", false);
-      require("chain", false);
       return new TravelRuleWidgetSessionCreate(buildJson(), buildFiles());
     }
 

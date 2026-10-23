@@ -14,6 +14,7 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.AccountOrganizationsListParams;
 import org.junit.jupiter.api.Test;
 
 /** One test per operation of {@code account.organizations}, against a stubbed HTTP layer. */
@@ -24,18 +25,20 @@ final class AccountOrganizationsResourceTest {
 
   @Test
   void list() {
+    AccountOrganizationsListParams params = AccountOrganizationsListParams.builder().limit(1L).offset(1L).build();
     JsonNode example = SpecExamples.response("account.json", "GET", "/organizations/me/", "200");
     transport.respondJson(200, example);
-    var result = client.account().organizations().list();
+    var result = client.account().organizations().list(params);
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/organizations/me/", request.path());
-    assertEquals(Map.of(), request.query());
+    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1"))), request.query());
     assertEquals("Bearer test-account-token", request.header("Authorization"));
     assertEquals(null, request.header("x-api-key"));
     assertEquals("https://apx.didit.me", request.origin());
     assertEquals(0, request.body().length);
-    TestJson.assertJsonEquals(example, Json.toNode(result));
-    TestModels.readAll(result);
+    TestJson.assertJsonEquals(example, result._json());
+    assertEquals(example.path("results").size(), result.results().size());
+    TestModels.readAll(result.results());
   }
 }

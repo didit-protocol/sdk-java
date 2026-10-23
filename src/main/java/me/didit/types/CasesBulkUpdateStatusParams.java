@@ -219,7 +219,16 @@ public final class CasesBulkUpdateStatusParams extends JsonModel {
     /** The value {@code "VALID_THREAT"}. */
     public static final Resolution VALID_THREAT = new Resolution("VALID_THREAT");
 
-    private static final List<Resolution> KNOWN_VALUES = List.of(FALSE_POSITIVE, VALID_THREAT);
+    /** The value {@code "INCONCLUSIVE"}. */
+    public static final Resolution INCONCLUSIVE = new Resolution("INCONCLUSIVE");
+
+    /** The value {@code "REQUIREMENTS_NOT_MET"}. */
+    public static final Resolution REQUIREMENTS_NOT_MET = new Resolution("REQUIREMENTS_NOT_MET");
+
+    /** The value {@code "REQUIREMENTS_SATISFIED"}. */
+    public static final Resolution REQUIREMENTS_SATISFIED = new Resolution("REQUIREMENTS_SATISFIED");
+
+    private static final List<Resolution> KNOWN_VALUES = List.of(FALSE_POSITIVE, VALID_THREAT, INCONCLUSIVE, REQUIREMENTS_NOT_MET, REQUIREMENTS_SATISFIED);
 
     private Resolution(String value) {
       super(value);

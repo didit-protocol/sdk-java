@@ -48,7 +48,7 @@ public final class BillingTopUpResponse extends JsonModel {
   }
 
   /**
-   * Stripe Checkout Session identifier (e.g. <code>cs_test_a1B2c3...</code>). Useful for server-side reconciliation.
+   * Hosted checkout session identifier (e.g. <code>cs_test_a1B2c3...</code>). Useful for server-side reconciliation.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -58,7 +58,7 @@ public final class BillingTopUpResponse extends JsonModel {
   }
 
   /**
-   * Single-use Stripe-hosted payment page URL. Redirect the customer here to complete payment.
+   * Single-use hosted payment page URL. Redirect the customer here to complete payment.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -81,7 +81,7 @@ public final class BillingTopUpResponse extends JsonModel {
     }
 
     /**
-     * Stripe Checkout Session identifier (e.g. <code>cs_test_a1B2c3...</code>). Useful for server-side reconciliation.
+     * Hosted checkout session identifier (e.g. <code>cs_test_a1B2c3...</code>). Useful for server-side reconciliation.
      *
      * @param checkoutSessionId the value
      * @return this builder
@@ -91,7 +91,7 @@ public final class BillingTopUpResponse extends JsonModel {
     }
 
     /**
-     * Single-use Stripe-hosted payment page URL. Redirect the customer here to complete payment.
+     * Single-use hosted payment page URL. Redirect the customer here to complete payment.
      *
      * @param checkoutSessionUrl the value
      * @return this builder

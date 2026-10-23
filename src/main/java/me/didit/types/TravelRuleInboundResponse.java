@@ -59,7 +59,7 @@ public final class TravelRuleInboundResponse extends JsonModel {
   }
 
   /**
-   * Didit-generated txn_id for the sunrise transaction.
+   * txn_id of the inbound transaction: Didit-generated when Didit created the transaction, or your own when an unclaimed deposit was reused.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -69,7 +69,7 @@ public final class TravelRuleInboundResponse extends JsonModel {
   }
 
   /**
-   * true when a new transaction was minted (HTTP 201); false when an existing unclaimed deposit was reused (HTTP 200).
+   * true when this call registered the transfer (HTTP 201); false when a transfer for the same txid and wallet_address already existed (HTTP 200).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -79,7 +79,7 @@ public final class TravelRuleInboundResponse extends JsonModel {
   }
 
   /**
-   * Full transfer object returned by the ownership-confirmation and finish/cancel endpoints. originator_data/beneficiary_data are omitted while PII is masked (see description).
+   * Full transfer object returned by the ownership-confirmation and finish/cancel endpoints. While an inbound transfer's wallet ownership is unconfirmed, the counterparty's <code>originator_data</code> and <code>beneficiary_data</code> come back masked (the first letter of each word is kept; the wallet, chain and VASP routing stay readable) and <code>data_masked</code> is true.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,7 +112,7 @@ public final class TravelRuleInboundResponse extends JsonModel {
     }
 
     /**
-     * Didit-generated txn_id for the sunrise transaction.
+     * txn_id of the inbound transaction: Didit-generated when Didit created the transaction, or your own when an unclaimed deposit was reused.
      *
      * @param txnId the value
      * @return this builder
@@ -122,7 +122,7 @@ public final class TravelRuleInboundResponse extends JsonModel {
     }
 
     /**
-     * true when a new transaction was minted (HTTP 201); false when an existing unclaimed deposit was reused (HTTP 200).
+     * true when this call registered the transfer (HTTP 201); false when a transfer for the same txid and wallet_address already existed (HTTP 200).
      *
      * @param created the value
      * @return this builder
@@ -132,7 +132,7 @@ public final class TravelRuleInboundResponse extends JsonModel {
     }
 
     /**
-     * Full transfer object returned by the ownership-confirmation and finish/cancel endpoints. originator_data/beneficiary_data are omitted while PII is masked (see description).
+     * Full transfer object returned by the ownership-confirmation and finish/cancel endpoints. While an inbound transfer's wallet ownership is unconfirmed, the counterparty's <code>originator_data</code> and <code>beneficiary_data</code> come back masked (the first letter of each word is kept; the wallet, chain and VASP routing stay readable) and <code>data_masked</code> is true.
      *
      * @param travelRule the value
      * @return this builder

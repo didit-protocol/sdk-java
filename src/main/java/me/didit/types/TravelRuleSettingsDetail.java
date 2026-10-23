@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 
 public final class TravelRuleSettingsDetail extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("is_enabled", "jurisdiction", "name_matching_strictness", "confirmation_timeout_hours", "timeout_outcome", "threshold_amount", "legal_name", "lei", "compliance_email", "is_discoverable", "inbound_auto_accept", "allow_self_declaration", "allow_screenshot_proof", "auto_wallet_verification", "vasp_attribution_enabled", "travel_address", "disabled_networks", "networks");
+  private static final Set<String> KNOWN_FIELDS = Set.of("is_enabled", "jurisdiction", "name_matching_strictness", "confirmation_timeout_hours", "timeout_outcome", "threshold_amount", "ownership_validation_mode", "simplified_validation_threshold", "data_sharing_fields", "matching_rules", "legal_name", "lei", "compliance_email", "is_discoverable", "inbound_auto_accept", "allow_self_declaration", "allow_screenshot_proof", "auto_wallet_verification", "vasp_attribution_enabled", "counterparty_screening_enabled", "sunrise_policy", "sunrise_jurisdictions", "non_responsive_policy", "travel_address", "disabled_networks", "networks", "didit_network");
 
   private TravelRuleSettingsDetail(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -60,7 +60,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * Your VASP's operating jurisdiction code. Default <code>"EU"</code>.
+   * Your VASP's operating jurisdiction code. Default <code>"EU"</code>. Didit maps it to the regime it stamps on your Travel Rule transactions as <code>travel_rule_regime</code> (for example <code>EU</code> or an EU member code becomes <code>eu</code>), which transaction rules can key on. Other Didit customers see it as your jurisdiction in the VASP directory once the Didit network lists your profile.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -70,7 +70,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * How strictly beneficiary names must match before a transfer can reach COMPLETED.
+   * How strictly beneficiary names must match before a transfer can reach COMPLETED. <code>CONTAINS</code> accepts one name whose words all appear in the other.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -90,7 +90,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * What happens to the underlying transaction when a transfer expires. Default HOLD.
+   * What happens to the underlying transaction when a transfer expires. Default HOLD. sunrise_policy and non_responsive_policy take precedence when they apply and are set.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -100,13 +100,53 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * Decimal string. Minimum transfer amount that triggers a managed exchange; transfers below it resolve straight to NOT_APPLICABLE. Defaults to "0.00" (EU TFR applies no minimum amount).
+   * Decimal string, in your application's default currency. Minimum transfer amount that triggers a managed exchange; transfers below it resolve straight to NOT_APPLICABLE. Didit compares the transaction amount converted to your default currency, or the <code>amount_in_default_currency</code> you send; when no converted amount is available, the threshold does not apply. Defaults to "0.00" (EU TFR applies no minimum amount).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<String> thresholdAmount() {
     return Json.optional(json, "threshold_amount", Conv.STRING);
+  }
+
+  /**
+   * How much proof a wallet's ownership takes. <code>FULL</code> always needs a proof (signed message, test deposit or reviewed screenshot), never the end user's word. <code>SIMPLIFIED</code> accepts a self-declaration below <code>simplified_validation_threshold</code> and a proof above it. <code>AUTOMATED</code> lets the address book and earlier proofs answer on their own, self-declarations included while <code>allow_self_declaration</code> is true. Default <code>AUTOMATED</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleSettingsDetail.OwnershipValidationMode> ownershipValidationMode() {
+    return Json.optional(json, "ownership_validation_mode", Conv.enumeration(TravelRuleSettingsDetail.OwnershipValidationMode::of));
+  }
+
+  /**
+   * Decimal string, default "0.00". In <code>SIMPLIFIED</code> mode a transfer below this amount (in the threshold currency) accepts a self-declaration. A transfer with no amount in that currency counts as above it.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> simplifiedValidationThreshold() {
+    return Json.optional(json, "simplified_validation_threshold", Conv.STRING);
+  }
+
+  /**
+   * The fields Didit sends to the counterparty VASP about your own users, per entity type. The <code>name</code> and the <code>wallet_address</code> are always sent, whatever the list says. An entity type you never chose shares every field. An empty list is a choice too: it shares the name and the wallet only.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleDataSharingFields> dataSharingFields() {
+    return Json.optional(json, "data_sharing_fields", Conv.model(TravelRuleDataSharingFields::fromJson));
+  }
+
+  /**
+   * How strictly each field of the counterparty's data is compared with what you hold, per entity type. A field you leave out keeps its default. <code>NONE</code> skips the comparison, <code>STRICT</code> needs exactly the same words, <code>CONTAINS</code> accepts one value whose words all appear in the other, <code>DEFAULT</code> is the standard subset match, and <code>FUZZY</code> accepts close spellings (and, for dates of birth, a swapped day and month).
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleMatchingRules> matchingRules() {
+    return Json.optional(json, "matching_rules", Conv.model(TravelRuleMatchingRules::fromJson));
   }
 
   /**
@@ -130,7 +170,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * Compliance contact email for your VASP profile.
+   * Compliance contact email for your VASP profile. The Didit network lists your profile only once this address is confirmed through an emailed link (POST /v3/travel-rule/settings/compliance-email/confirmation/); changing it needs a new confirmation.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -140,7 +180,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * Whether your VASP profile appears in GET /v3/travel-rule/vasps/ search results and can be reached on the INTERNAL rail. Default true.
+   * Whether your VASP profile can be listed in the Didit network: found in GET /v3/travel-rule/vasps/ by other Didit customers and reached on the INTERNAL rail. Listing also needs a live application, Travel Rule on, a legal name and a confirmed compliance email; didit_network says which are missing. Default true.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -150,7 +190,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * When true, inbound transfers whose beneficiary wallet is a verified address-book entry with a matching name are accepted automatically, without a manual review step. Default false.
+   * When true, an inbound TRP inquiry whose beneficiary wallet is a verified address-book entry with a matching name is approved automatically. When false, that inquiry waits in ON_HOLD for you to approve or deny it with the ownership endpoint. INTERNAL-rail and after-deposit transfers are not affected. Default true.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -160,7 +200,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * When true, the wallet-ownership widget offers self-declaration as a fallback proof method. Default false.
+   * When true, the wallet-ownership widget offers self-declaration as a fallback proof method. Default true.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -200,7 +240,47 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * Read-only. Your VASP's own travel address - the encoded inbound TRP inquiry endpoint other VASPs use to reach you. Populated once your VASP profile is complete.
+   * Opt-in sanctions and adverse-media screening of counterparty VASPs, billed per screening at the Company AML Screening price. When on, Didit screens the counterparty an outbound exchange reaches (reusing a screening younger than 30 days) and you can screen one with POST /v3/travel-rule/vasps/{vasp_id}/screening/. Default false: nothing is screened or billed.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> counterpartyScreeningEnabled() {
+    return Json.optional(json, "counterparty_screening_enabled", Conv.BOOLEAN);
+  }
+
+  /**
+   * What an expired transfer does to its transaction when the counterparty is a directory entry in a jurisdiction on sunrise_jurisdictions, which does not enforce the Travel Rule yet: HOLD moves it to review, REJECT declines it, PROCEED leaves its status untouched. Empty (the default) follows timeout_outcome. Applies before non_responsive_policy.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleSettingsDetail.SunrisePolicy> sunrisePolicy() {
+    return Json.optional(json, "sunrise_policy", Conv.enumeration(TravelRuleSettingsDetail.SunrisePolicy::of));
+  }
+
+  /**
+   * Read-only. The countries (ISO 3166 alpha-2) Didit treats as in a Travel Rule sunrise period, where sunrise_policy applies. Currently CO, KH and VN. Any other jurisdiction, and an empty or unknown one, follows timeout_outcome.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<String>> sunriseJurisdictions() {
+    return Json.optional(json, "sunrise_jurisdictions", Conv.list(Conv.STRING));
+  }
+
+  /**
+   * What an expired transfer does to its transaction when the counterparty is a directory entry whose responsiveness is UNRESPONSIVE: HOLD, REJECT or PROCEED, as for timeout_outcome. Empty (the default) follows timeout_outcome. sunrise_policy applies first when both fit.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleSettingsDetail.NonResponsivePolicy> nonResponsivePolicy() {
+    return Json.optional(json, "non_responsive_policy", Conv.enumeration(TravelRuleSettingsDetail.NonResponsivePolicy::of));
+  }
+
+  /**
+   * Read-only. Your VASP's own travel address - the encoded inbound TRP inquiry endpoint other VASPs use to reach you. Empty while <code>is_enabled</code> is false.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -229,6 +309,16 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     return Json.optional(json, "networks", Conv.model(TravelRuleSettingsDetail.Networks::fromJson));
   }
 
+  /**
+   * Whether the Didit network lists your VASP profile, so other Didit customers find it in the directory and reach it on the INTERNAL rail, and each condition it still misses.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleSettingsDetail.DiditNetwork> diditNetwork() {
+    return Json.optional(json, "didit_network", Conv.model(TravelRuleSettingsDetail.DiditNetwork::fromJson));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -253,7 +343,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * Your VASP's operating jurisdiction code. Default <code>"EU"</code>.
+     * Your VASP's operating jurisdiction code. Default <code>"EU"</code>. Didit maps it to the regime it stamps on your Travel Rule transactions as <code>travel_rule_regime</code> (for example <code>EU</code> or an EU member code becomes <code>eu</code>), which transaction rules can key on. Other Didit customers see it as your jurisdiction in the VASP directory once the Didit network lists your profile.
      *
      * @param jurisdiction the value
      * @return this builder
@@ -263,7 +353,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * How strictly beneficiary names must match before a transfer can reach COMPLETED.
+     * How strictly beneficiary names must match before a transfer can reach COMPLETED. <code>CONTAINS</code> accepts one name whose words all appear in the other.
      *
      * @param nameMatchingStrictness the value
      * @return this builder
@@ -283,7 +373,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * What happens to the underlying transaction when a transfer expires. Default HOLD.
+     * What happens to the underlying transaction when a transfer expires. Default HOLD. sunrise_policy and non_responsive_policy take precedence when they apply and are set.
      *
      * @param timeoutOutcome the value
      * @return this builder
@@ -293,13 +383,53 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * Decimal string. Minimum transfer amount that triggers a managed exchange; transfers below it resolve straight to NOT_APPLICABLE. Defaults to "0.00" (EU TFR applies no minimum amount).
+     * Decimal string, in your application's default currency. Minimum transfer amount that triggers a managed exchange; transfers below it resolve straight to NOT_APPLICABLE. Didit compares the transaction amount converted to your default currency, or the <code>amount_in_default_currency</code> you send; when no converted amount is available, the threshold does not apply. Defaults to "0.00" (EU TFR applies no minimum amount).
      *
      * @param thresholdAmount the value
      * @return this builder
      */
     public Builder thresholdAmount(String thresholdAmount) {
       return set("threshold_amount", Conv.STRING, thresholdAmount);
+    }
+
+    /**
+     * How much proof a wallet's ownership takes. <code>FULL</code> always needs a proof (signed message, test deposit or reviewed screenshot), never the end user's word. <code>SIMPLIFIED</code> accepts a self-declaration below <code>simplified_validation_threshold</code> and a proof above it. <code>AUTOMATED</code> lets the address book and earlier proofs answer on their own, self-declarations included while <code>allow_self_declaration</code> is true. Default <code>AUTOMATED</code>.
+     *
+     * @param ownershipValidationMode the value
+     * @return this builder
+     */
+    public Builder ownershipValidationMode(TravelRuleSettingsDetail.OwnershipValidationMode ownershipValidationMode) {
+      return set("ownership_validation_mode", Conv.enumeration(TravelRuleSettingsDetail.OwnershipValidationMode::of), ownershipValidationMode);
+    }
+
+    /**
+     * Decimal string, default "0.00". In <code>SIMPLIFIED</code> mode a transfer below this amount (in the threshold currency) accepts a self-declaration. A transfer with no amount in that currency counts as above it.
+     *
+     * @param simplifiedValidationThreshold the value
+     * @return this builder
+     */
+    public Builder simplifiedValidationThreshold(String simplifiedValidationThreshold) {
+      return set("simplified_validation_threshold", Conv.STRING, simplifiedValidationThreshold);
+    }
+
+    /**
+     * The fields Didit sends to the counterparty VASP about your own users, per entity type. The <code>name</code> and the <code>wallet_address</code> are always sent, whatever the list says. An entity type you never chose shares every field. An empty list is a choice too: it shares the name and the wallet only.
+     *
+     * @param dataSharingFields the value
+     * @return this builder
+     */
+    public Builder dataSharingFields(TravelRuleDataSharingFields dataSharingFields) {
+      return set("data_sharing_fields", Conv.model(TravelRuleDataSharingFields::fromJson), dataSharingFields);
+    }
+
+    /**
+     * How strictly each field of the counterparty's data is compared with what you hold, per entity type. A field you leave out keeps its default. <code>NONE</code> skips the comparison, <code>STRICT</code> needs exactly the same words, <code>CONTAINS</code> accepts one value whose words all appear in the other, <code>DEFAULT</code> is the standard subset match, and <code>FUZZY</code> accepts close spellings (and, for dates of birth, a swapped day and month).
+     *
+     * @param matchingRules the value
+     * @return this builder
+     */
+    public Builder matchingRules(TravelRuleMatchingRules matchingRules) {
+      return set("matching_rules", Conv.model(TravelRuleMatchingRules::fromJson), matchingRules);
     }
 
     /**
@@ -323,7 +453,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * Compliance contact email for your VASP profile.
+     * Compliance contact email for your VASP profile. The Didit network lists your profile only once this address is confirmed through an emailed link (POST /v3/travel-rule/settings/compliance-email/confirmation/); changing it needs a new confirmation.
      *
      * @param complianceEmail the value
      * @return this builder
@@ -333,7 +463,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * Whether your VASP profile appears in GET /v3/travel-rule/vasps/ search results and can be reached on the INTERNAL rail. Default true.
+     * Whether your VASP profile can be listed in the Didit network: found in GET /v3/travel-rule/vasps/ by other Didit customers and reached on the INTERNAL rail. Listing also needs a live application, Travel Rule on, a legal name and a confirmed compliance email; didit_network says which are missing. Default true.
      *
      * @param isDiscoverable the value
      * @return this builder
@@ -343,7 +473,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * When true, inbound transfers whose beneficiary wallet is a verified address-book entry with a matching name are accepted automatically, without a manual review step. Default false.
+     * When true, an inbound TRP inquiry whose beneficiary wallet is a verified address-book entry with a matching name is approved automatically. When false, that inquiry waits in ON_HOLD for you to approve or deny it with the ownership endpoint. INTERNAL-rail and after-deposit transfers are not affected. Default true.
      *
      * @param inboundAutoAccept the value
      * @return this builder
@@ -353,7 +483,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * When true, the wallet-ownership widget offers self-declaration as a fallback proof method. Default false.
+     * When true, the wallet-ownership widget offers self-declaration as a fallback proof method. Default true.
      *
      * @param allowSelfDeclaration the value
      * @return this builder
@@ -393,7 +523,47 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * Read-only. Your VASP's own travel address - the encoded inbound TRP inquiry endpoint other VASPs use to reach you. Populated once your VASP profile is complete.
+     * Opt-in sanctions and adverse-media screening of counterparty VASPs, billed per screening at the Company AML Screening price. When on, Didit screens the counterparty an outbound exchange reaches (reusing a screening younger than 30 days) and you can screen one with POST /v3/travel-rule/vasps/{vasp_id}/screening/. Default false: nothing is screened or billed.
+     *
+     * @param counterpartyScreeningEnabled the value
+     * @return this builder
+     */
+    public Builder counterpartyScreeningEnabled(boolean counterpartyScreeningEnabled) {
+      return set("counterparty_screening_enabled", Conv.BOOLEAN, counterpartyScreeningEnabled);
+    }
+
+    /**
+     * What an expired transfer does to its transaction when the counterparty is a directory entry in a jurisdiction on sunrise_jurisdictions, which does not enforce the Travel Rule yet: HOLD moves it to review, REJECT declines it, PROCEED leaves its status untouched. Empty (the default) follows timeout_outcome. Applies before non_responsive_policy.
+     *
+     * @param sunrisePolicy the value
+     * @return this builder
+     */
+    public Builder sunrisePolicy(TravelRuleSettingsDetail.SunrisePolicy sunrisePolicy) {
+      return set("sunrise_policy", Conv.enumeration(TravelRuleSettingsDetail.SunrisePolicy::of), sunrisePolicy);
+    }
+
+    /**
+     * Read-only. The countries (ISO 3166 alpha-2) Didit treats as in a Travel Rule sunrise period, where sunrise_policy applies. Currently CO, KH and VN. Any other jurisdiction, and an empty or unknown one, follows timeout_outcome.
+     *
+     * @param sunriseJurisdictions the value
+     * @return this builder
+     */
+    public Builder sunriseJurisdictions(List<String> sunriseJurisdictions) {
+      return set("sunrise_jurisdictions", Conv.list(Conv.STRING), sunriseJurisdictions);
+    }
+
+    /**
+     * What an expired transfer does to its transaction when the counterparty is a directory entry whose responsiveness is UNRESPONSIVE: HOLD, REJECT or PROCEED, as for timeout_outcome. Empty (the default) follows timeout_outcome. sunrise_policy applies first when both fit.
+     *
+     * @param nonResponsivePolicy the value
+     * @return this builder
+     */
+    public Builder nonResponsivePolicy(TravelRuleSettingsDetail.NonResponsivePolicy nonResponsivePolicy) {
+      return set("non_responsive_policy", Conv.enumeration(TravelRuleSettingsDetail.NonResponsivePolicy::of), nonResponsivePolicy);
+    }
+
+    /**
+     * Read-only. Your VASP's own travel address - the encoded inbound TRP inquiry endpoint other VASPs use to reach you. Empty while <code>is_enabled</code> is false.
      *
      * @param travelAddress the value
      * @return this builder
@@ -423,6 +593,16 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
+     * Whether the Didit network lists your VASP profile, so other Didit customers find it in the directory and reach it on the INTERNAL rail, and each condition it still misses.
+     *
+     * @param diditNetwork the value
+     * @return this builder
+     */
+    public Builder diditNetwork(TravelRuleSettingsDetail.DiditNetwork diditNetwork) {
+      return set("didit_network", Conv.model(TravelRuleSettingsDetail.DiditNetwork::fromJson), diditNetwork);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code TravelRuleSettingsDetail}
@@ -438,7 +618,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * How strictly beneficiary names must match before a transfer can reach COMPLETED.
+   * How strictly beneficiary names must match before a transfer can reach COMPLETED. <code>CONTAINS</code> accepts one name whose words all appear in the other.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -449,13 +629,16 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     /** The value {@code "STRICT"}. */
     public static final NameMatchingStrictness STRICT = new NameMatchingStrictness("STRICT");
 
+    /** The value {@code "CONTAINS"}. */
+    public static final NameMatchingStrictness CONTAINS = new NameMatchingStrictness("CONTAINS");
+
     /** The value {@code "DEFAULT"}. */
     public static final NameMatchingStrictness DEFAULT = new NameMatchingStrictness("DEFAULT");
 
     /** The value {@code "FUZZY"}. */
     public static final NameMatchingStrictness FUZZY = new NameMatchingStrictness("FUZZY");
 
-    private static final List<NameMatchingStrictness> KNOWN_VALUES = List.of(NONE, STRICT, DEFAULT, FUZZY);
+    private static final List<NameMatchingStrictness> KNOWN_VALUES = List.of(NONE, STRICT, CONTAINS, DEFAULT, FUZZY);
 
     private NameMatchingStrictness(String value) {
       super(value);
@@ -487,7 +670,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * What happens to the underlying transaction when a transfer expires. Default HOLD.
+   * What happens to the underlying transaction when a transfer expires. Default HOLD. sunrise_policy and non_responsive_policy take precedence when they apply and are set.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -523,6 +706,150 @@ public final class TravelRuleSettingsDetail extends JsonModel {
      * @return the known values
      */
     public static List<TimeoutOutcome> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * How much proof a wallet's ownership takes. <code>FULL</code> always needs a proof (signed message, test deposit or reviewed screenshot), never the end user's word. <code>SIMPLIFIED</code> accepts a self-declaration below <code>simplified_validation_threshold</code> and a proof above it. <code>AUTOMATED</code> lets the address book and earlier proofs answer on their own, self-declarations included while <code>allow_self_declaration</code> is true. Default <code>AUTOMATED</code>.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class OwnershipValidationMode extends StringEnum {
+    /** The value {@code "FULL"}. */
+    public static final OwnershipValidationMode FULL = new OwnershipValidationMode("FULL");
+
+    /** The value {@code "SIMPLIFIED"}. */
+    public static final OwnershipValidationMode SIMPLIFIED = new OwnershipValidationMode("SIMPLIFIED");
+
+    /** The value {@code "AUTOMATED"}. */
+    public static final OwnershipValidationMode AUTOMATED = new OwnershipValidationMode("AUTOMATED");
+
+    private static final List<OwnershipValidationMode> KNOWN_VALUES = List.of(FULL, SIMPLIFIED, AUTOMATED);
+
+    private OwnershipValidationMode(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static OwnershipValidationMode of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, OwnershipValidationMode::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<OwnershipValidationMode> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * What an expired transfer does to its transaction when the counterparty is a directory entry in a jurisdiction on sunrise_jurisdictions, which does not enforce the Travel Rule yet: HOLD moves it to review, REJECT declines it, PROCEED leaves its status untouched. Empty (the default) follows timeout_outcome. Applies before non_responsive_policy.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class SunrisePolicy extends StringEnum {
+    /** The value {@code ""}. */
+    public static final SunrisePolicy EMPTY = new SunrisePolicy("");
+
+    /** The value {@code "HOLD"}. */
+    public static final SunrisePolicy HOLD = new SunrisePolicy("HOLD");
+
+    /** The value {@code "REJECT"}. */
+    public static final SunrisePolicy REJECT = new SunrisePolicy("REJECT");
+
+    /** The value {@code "PROCEED"}. */
+    public static final SunrisePolicy PROCEED = new SunrisePolicy("PROCEED");
+
+    private static final List<SunrisePolicy> KNOWN_VALUES = List.of(EMPTY, HOLD, REJECT, PROCEED);
+
+    private SunrisePolicy(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static SunrisePolicy of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, SunrisePolicy::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<SunrisePolicy> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * What an expired transfer does to its transaction when the counterparty is a directory entry whose responsiveness is UNRESPONSIVE: HOLD, REJECT or PROCEED, as for timeout_outcome. Empty (the default) follows timeout_outcome. sunrise_policy applies first when both fit.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class NonResponsivePolicy extends StringEnum {
+    /** The value {@code ""}. */
+    public static final NonResponsivePolicy EMPTY = new NonResponsivePolicy("");
+
+    /** The value {@code "HOLD"}. */
+    public static final NonResponsivePolicy HOLD = new NonResponsivePolicy("HOLD");
+
+    /** The value {@code "REJECT"}. */
+    public static final NonResponsivePolicy REJECT = new NonResponsivePolicy("REJECT");
+
+    /** The value {@code "PROCEED"}. */
+    public static final NonResponsivePolicy PROCEED = new NonResponsivePolicy("PROCEED");
+
+    private static final List<NonResponsivePolicy> KNOWN_VALUES = List.of(EMPTY, HOLD, REJECT, PROCEED);
+
+    private NonResponsivePolicy(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static NonResponsivePolicy of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, NonResponsivePolicy::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<NonResponsivePolicy> knownValues() {
       return KNOWN_VALUES;
     }
 
@@ -1656,6 +1983,194 @@ public final class TravelRuleSettingsDetail extends JsonModel {
         public boolean isKnown() {
           return KNOWN_VALUES.contains(this);
         }
+      }
+    }
+  }
+
+  /**
+   * Whether the Didit network lists your VASP profile, so other Didit customers find it in the directory and reach it on the INTERNAL rail, and each condition it still misses.
+   */
+  public static final class DiditNetwork extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("listed", "missing", "compliance_email_confirmed");
+
+    private DiditNetwork(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code DiditNetwork} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static DiditNetwork fromJson(JsonNode json) {
+      return new DiditNetwork(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>listed</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Boolean> listed() {
+      return Json.optional(json, "listed", Conv.BOOLEAN);
+    }
+
+    /**
+     * Empty when listed. compliance_email_unconfirmed: send the confirmation with POST /v3/travel-rule/settings/compliance-email/confirmation/ and open the emailed link. excluded_by_staff: Didit marked the application as a test, demo or internal one.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<List<TravelRuleSettingsDetail.DiditNetwork.Missing>> missing() {
+      return Json.optional(json, "missing", Conv.list(Conv.enumeration(TravelRuleSettingsDetail.DiditNetwork.Missing::of)));
+    }
+
+    /**
+     * Whether the current compliance_email was confirmed through the emailed link.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Boolean> complianceEmailConfirmed() {
+      return Json.optional(json, "compliance_email_confirmed", Conv.BOOLEAN);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link DiditNetwork}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(DiditNetwork from) {
+        super(from);
+      }
+
+      /**
+       * The <code>listed</code> field.
+       *
+       * @param listed the value
+       * @return this builder
+       */
+      public Builder listed(boolean listed) {
+        return set("listed", Conv.BOOLEAN, listed);
+      }
+
+      /**
+       * Empty when listed. compliance_email_unconfirmed: send the confirmation with POST /v3/travel-rule/settings/compliance-email/confirmation/ and open the emailed link. excluded_by_staff: Didit marked the application as a test, demo or internal one.
+       *
+       * @param missing the value
+       * @return this builder
+       */
+      public Builder missing(List<TravelRuleSettingsDetail.DiditNetwork.Missing> missing) {
+        return set("missing", Conv.list(Conv.enumeration(TravelRuleSettingsDetail.DiditNetwork.Missing::of)), missing);
+      }
+
+      /**
+       * Whether the current compliance_email was confirmed through the emailed link.
+       *
+       * @param complianceEmailConfirmed the value
+       * @return this builder
+       */
+      public Builder complianceEmailConfirmed(boolean complianceEmailConfirmed) {
+        return set("compliance_email_confirmed", Conv.BOOLEAN, complianceEmailConfirmed);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code DiditNetwork}
+       */
+      public DiditNetwork build() {
+        return new DiditNetwork(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Missing extends StringEnum {
+      /** The value {@code "travel_rule_off"}. */
+      public static final Missing TRAVEL_RULE_OFF = new Missing("travel_rule_off");
+
+      /** The value {@code "sandbox_application"}. */
+      public static final Missing SANDBOX_APPLICATION = new Missing("sandbox_application");
+
+      /** The value {@code "not_discoverable"}. */
+      public static final Missing NOT_DISCOVERABLE = new Missing("not_discoverable");
+
+      /** The value {@code "legal_name_missing"}. */
+      public static final Missing LEGAL_NAME_MISSING = new Missing("legal_name_missing");
+
+      /** The value {@code "compliance_email_missing"}. */
+      public static final Missing COMPLIANCE_EMAIL_MISSING = new Missing("compliance_email_missing");
+
+      /** The value {@code "compliance_email_unconfirmed"}. */
+      public static final Missing COMPLIANCE_EMAIL_UNCONFIRMED = new Missing("compliance_email_unconfirmed");
+
+      /** The value {@code "excluded_by_staff"}. */
+      public static final Missing EXCLUDED_BY_STAFF = new Missing("excluded_by_staff");
+
+      /** The value {@code "internal_organization"}. */
+      public static final Missing INTERNAL_ORGANIZATION = new Missing("internal_organization");
+
+      private static final List<Missing> KNOWN_VALUES = List.of(TRAVEL_RULE_OFF, SANDBOX_APPLICATION, NOT_DISCOVERABLE, LEGAL_NAME_MISSING, COMPLIANCE_EMAIL_MISSING, COMPLIANCE_EMAIL_UNCONFIRMED, EXCLUDED_BY_STAFF, INTERNAL_ORGANIZATION);
+
+      private Missing(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Missing of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Missing::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Missing> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
       }
     }
   }

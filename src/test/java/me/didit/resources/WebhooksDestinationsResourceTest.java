@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
@@ -16,6 +17,8 @@ import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
 import me.didit.types.WebhookEvent;
 import me.didit.types.WebhooksDestinationsCreateParams;
+import me.didit.types.WebhooksDestinationsListDeliveriesParams;
+import me.didit.types.WebhooksDestinationsRetrieveAnalyticsParams;
 import me.didit.types.WebhooksDestinationsUpdateParams;
 import org.junit.jupiter.api.Test;
 
@@ -102,5 +105,72 @@ final class WebhooksDestinationsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
+  }
+
+  @Test
+  void retrieveAnalytics() {
+    WebhooksDestinationsRetrieveAnalyticsParams params = WebhooksDestinationsRetrieveAnalyticsParams.builder().dateFrom(LocalDate.parse("2026-11-01")).dateTo(LocalDate.parse("2026-11-01")).build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/webhook/destinations/{destination_uuid}/analytics/", "200");
+    transport.respondJson(200, example);
+    var result = client.webhooks().destinations().retrieveAnalytics("00000000-0000-4000-8000-0000000297c7", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/webhook/destinations/00000000-0000-4000-8000-0000000297c7/analytics/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("date_from", List.of("2026-11-01")), Map.entry("date_to", List.of("2026-11-01"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listDeliveries() {
+    WebhooksDestinationsListDeliveriesParams params = WebhooksDestinationsListDeliveriesParams.builder().limit(1L).offset(1L).dateFrom(LocalDate.parse("2026-11-01")).dateTo(LocalDate.parse("2026-11-01")).build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/webhook/destinations/{destination_uuid}/deliveries/", "200");
+    transport.respondJson(200, example);
+    var result = client.webhooks().destinations().listDeliveries("00000000-0000-4000-8000-000000025239", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/webhook/destinations/00000000-0000-4000-8000-000000025239/deliveries/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1")), Map.entry("date_from", List.of("2026-11-01")), Map.entry("date_to", List.of("2026-11-01"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, result._json());
+    assertEquals(example.path("results").size(), result.results().size());
+    TestModels.readAll(result.results());
+  }
+
+  @Test
+  void retrieveDelivery() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/webhook/destinations/{destination_uuid}/deliveries/{delivery_uuid}/", "200");
+    transport.respondJson(200, example);
+    var result = client.webhooks().destinations().retrieveDelivery("00000000-0000-4000-8000-000000028174", "00000000-0000-4000-8000-000000023e68");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/webhook/destinations/00000000-0000-4000-8000-000000028174/deliveries/00000000-0000-4000-8000-000000023e68/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void resendDelivery() {
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/webhook/destinations/{destination_uuid}/deliveries/{delivery_uuid}/resend/", "200");
+    transport.respondJson(200, example);
+    var result = client.webhooks().destinations().resendDelivery("00000000-0000-4000-8000-00000002524a", "00000000-0000-4000-8000-0000000211ba");
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/webhook/destinations/00000000-0000-4000-8000-00000002524a/deliveries/00000000-0000-4000-8000-0000000211ba/resend/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 }

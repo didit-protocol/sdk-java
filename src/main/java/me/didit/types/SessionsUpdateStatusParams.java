@@ -111,7 +111,7 @@ public final class SessionsUpdateStatusParams extends JsonModel {
   }
 
   /**
-   * Optional signed receipt from Preview Resubmission Email. When supplied with send_email=true and new_status=Resubmitted, the recipient, language, checks, current session state, sender and message must still match the preview. A changed or expired receipt returns 409 before changing the session or sending email. Existing integrations may omit this field.
+   * Optional receipt from [Preview Decision Email](/sessions-api/preview-decision-email) (for <code>Approved</code> and <code>Declined</code>) or [Preview Resubmission Email](/sessions-api/preview-resubmission) (for <code>Resubmitted</code>): its <code>preview_token</code>. Valid only with <code>send_email: true</code>; without it the request returns <code>400</code>. The recipient, language, session status, sender and email (and, for a resubmission, the selected steps) must still match the preview, and the receipt expires after 15 minutes. Otherwise the request returns <code>409</code> before the session changes or an email is sent. Existing integrations may omit this field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -194,7 +194,7 @@ public final class SessionsUpdateStatusParams extends JsonModel {
     }
 
     /**
-     * Optional signed receipt from Preview Resubmission Email. When supplied with send_email=true and new_status=Resubmitted, the recipient, language, checks, current session state, sender and message must still match the preview. A changed or expired receipt returns 409 before changing the session or sending email. Existing integrations may omit this field.
+     * Optional receipt from [Preview Decision Email](/sessions-api/preview-decision-email) (for <code>Approved</code> and <code>Declined</code>) or [Preview Resubmission Email](/sessions-api/preview-resubmission) (for <code>Resubmitted</code>): its <code>preview_token</code>. Valid only with <code>send_email: true</code>; without it the request returns <code>400</code>. The recipient, language, session status, sender and email (and, for a resubmission, the selected steps) must still match the preview, and the receipt expires after 15 minutes. Otherwise the request returns <code>409</code> before the session changes or an email is sent. Existing integrations may omit this field.
      *
      * @param emailPreviewToken the value
      * @return this builder

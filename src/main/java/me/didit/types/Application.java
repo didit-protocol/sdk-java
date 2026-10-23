@@ -18,7 +18,7 @@ import org.jspecify.annotations.Nullable;
  * Full application record. <code>uuid</code>, <code>client_id</code>, and <code>api_key</code> never change after creation.
  */
 public final class Application extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "client_id", "api_key", "website_url", "redirect_uris", "terms_url", "privacy_url", "description", "created_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "client_id", "api_key", "website_url", "redirect_uris", "terms_url", "privacy_url", "description", "created_at", "products");
 
   private Application(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -84,7 +84,7 @@ public final class Application extends JsonModel {
   }
 
   /**
-   * Long-lived secret (also called <code>client_secret</code>). Use as the <code>x-api-key</code> header for every call to <code>https://verification.didit.me/v3/...</code> (sessions, workflows, AML, etc.). Treat as a credential; never expose client-side.
+   * Long-lived secret (also called <code>client_secret</code>). Use as the <code>x-api-key</code> header for every call to <code>https://verification.didit.me/v3/...</code> (sessions, workflows, AML, etc.). Treat as a credential; never expose client-side. New keys start with <code>sk_live_</code> (live application) or <code>sk_test_</code> (sandbox application), followed by 43 URL-safe characters (letters, digits, <code>-</code> and <code>_</code>). Keys created before this format have no prefix and keep working unchanged.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -153,6 +153,16 @@ public final class Application extends JsonModel {
     return Json.optional(json, "created_at", Conv.DATE_TIME);
   }
 
+  /**
+   * The application's products. Always all three, in this order: <code>identity</code>, <code>transactions</code>, <code>authentication</code>. A new application has <code>identity</code> enabled with every module on, and <code>transactions</code> and <code>authentication</code> disabled. Read-only: a <code>products</code> key in a create or update body is ignored.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<ApplicationProduct>> products() {
+    return Json.optional(json, "products", Conv.list(Conv.model(ApplicationProduct::fromJson)));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -197,7 +207,7 @@ public final class Application extends JsonModel {
     }
 
     /**
-     * Long-lived secret (also called <code>client_secret</code>). Use as the <code>x-api-key</code> header for every call to <code>https://verification.didit.me/v3/...</code> (sessions, workflows, AML, etc.). Treat as a credential; never expose client-side.
+     * Long-lived secret (also called <code>client_secret</code>). Use as the <code>x-api-key</code> header for every call to <code>https://verification.didit.me/v3/...</code> (sessions, workflows, AML, etc.). Treat as a credential; never expose client-side. New keys start with <code>sk_live_</code> (live application) or <code>sk_test_</code> (sandbox application), followed by 43 URL-safe characters (letters, digits, <code>-</code> and <code>_</code>). Keys created before this format have no prefix and keep working unchanged.
      *
      * @param apiKey the value
      * @return this builder
@@ -264,6 +274,16 @@ public final class Application extends JsonModel {
      */
     public Builder createdAt(OffsetDateTime createdAt) {
       return set("created_at", Conv.DATE_TIME, createdAt);
+    }
+
+    /**
+     * The application's products. Always all three, in this order: <code>identity</code>, <code>transactions</code>, <code>authentication</code>. A new application has <code>identity</code> enabled with every module on, and <code>transactions</code> and <code>authentication</code> disabled. Read-only: a <code>products</code> key in a create or update body is ignored.
+     *
+     * @param products the value
+     * @return this builder
+     */
+    public Builder products(List<ApplicationProduct> products) {
+      return set("products", Conv.list(Conv.model(ApplicationProduct::fromJson)), products);
     }
 
     /**

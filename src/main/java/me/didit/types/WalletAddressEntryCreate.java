@@ -13,7 +13,7 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 
 public final class WalletAddressEntryCreate extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("address", "chain", "holder_vendor_data", "holder_name", "entity_type", "self_declared", "travel_address");
+  private static final Set<String> KNOWN_FIELDS = Set.of("address", "chain", "holder_vendor_data", "holder_name", "entity_type", "self_declared", "travel_address", "memo");
 
   private WalletAddressEntryCreate(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -49,7 +49,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
   }
 
   /**
-   * The <code>address</code> field.
+   * The wallet address. An XRP X-address is stored as its classic address and its tag, so it matches transfers that name either form.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -59,7 +59,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
   }
 
   /**
-   * The <code>chain</code> field.
+   * Chain token for the address, for example <code>ETH</code> or <code>BTC</code>. When Didit routes or registers a transfer, it matches address book entries on the wallet address and, when the transfer carries a chain, on this value too, ignoring case. A transfer's chain is <code>beneficiary_data.chain</code>, filled from the transaction's crypto chain or currency symbol (for example <code>ETH</code>) when you do not send it, or the <code>chain</code> of an after-deposit registration, so use the same token everywhere. An entry with an empty chain matches any chain.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -99,7 +99,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
   }
 
   /**
-   * Write-only. When true, the entry is created already ownership-verified via a SELF_DECLARATION proof.
+   * Write-only. When true, the entry is created already ownership-verified via a SELF_DECLARATION proof. Returns 400 when <code>allow_self_declaration</code> is off in your Travel Rule settings.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -109,13 +109,23 @@ public final class WalletAddressEntryCreate extends JsonModel {
   }
 
   /**
-   * Optional. The counterparty VASP's travel address for this wallet, enabling TRP routing.
+   * Optional. The counterparty VASP's travel address for this wallet, enabling TRP routing for the assets TRP carries (BTC, ETH, and USDC on a named network). An invalid travel address returns 400.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<String> travelAddress() {
     return Json.optional(json, "travel_address", Conv.STRING);
+  }
+
+  /**
+   * Optional. The destination tag or memo that is part of the wallet. XRP: a destination tag, a whole number from 0 to 4294967295 (a JSON number is accepted). XLM: a text memo of up to 28 bytes, a 64-bit id or a 32-byte hash in hex. EOS: up to 256 bytes. ATOM: up to 256 characters. HBAR: up to 100 bytes. Bitcoin, EVM, Solana, Tron, Litecoin, Bitcoin Cash, Dogecoin and Lightning wallets take no memo: one there is a <code>400</code>. Alias: <code>destinationTag</code> or <code>destination_tag</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> memo() {
+    return Json.optional(json, "memo", Conv.STRING);
   }
 
   @Override
@@ -132,7 +142,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
     }
 
     /**
-     * The <code>address</code> field.
+     * The wallet address. An XRP X-address is stored as its classic address and its tag, so it matches transfers that name either form.
      *
      * @param address the value
      * @return this builder
@@ -142,7 +152,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
     }
 
     /**
-     * The <code>chain</code> field.
+     * Chain token for the address, for example <code>ETH</code> or <code>BTC</code>. When Didit routes or registers a transfer, it matches address book entries on the wallet address and, when the transfer carries a chain, on this value too, ignoring case. A transfer's chain is <code>beneficiary_data.chain</code>, filled from the transaction's crypto chain or currency symbol (for example <code>ETH</code>) when you do not send it, or the <code>chain</code> of an after-deposit registration, so use the same token everywhere. An entry with an empty chain matches any chain.
      *
      * @param chain the value
      * @return this builder
@@ -182,7 +192,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
     }
 
     /**
-     * Write-only. When true, the entry is created already ownership-verified via a SELF_DECLARATION proof.
+     * Write-only. When true, the entry is created already ownership-verified via a SELF_DECLARATION proof. Returns 400 when <code>allow_self_declaration</code> is off in your Travel Rule settings.
      *
      * @param selfDeclared the value
      * @return this builder
@@ -192,13 +202,23 @@ public final class WalletAddressEntryCreate extends JsonModel {
     }
 
     /**
-     * Optional. The counterparty VASP's travel address for this wallet, enabling TRP routing.
+     * Optional. The counterparty VASP's travel address for this wallet, enabling TRP routing for the assets TRP carries (BTC, ETH, and USDC on a named network). An invalid travel address returns 400.
      *
      * @param travelAddress the value
      * @return this builder
      */
     public Builder travelAddress(String travelAddress) {
       return set("travel_address", Conv.STRING, travelAddress);
+    }
+
+    /**
+     * Optional. The destination tag or memo that is part of the wallet. XRP: a destination tag, a whole number from 0 to 4294967295 (a JSON number is accepted). XLM: a text memo of up to 28 bytes, a 64-bit id or a 32-byte hash in hex. EOS: up to 256 bytes. ATOM: up to 256 characters. HBAR: up to 100 bytes. Bitcoin, EVM, Solana, Tron, Litecoin, Bitcoin Cash, Dogecoin and Lightning wallets take no memo: one there is a <code>400</code>. Alias: <code>destinationTag</code> or <code>destination_tag</code>.
+     *
+     * @param memo the value
+     * @return this builder
+     */
+    public Builder memo(String memo) {
+      return set("memo", Conv.STRING, memo);
     }
 
     /**

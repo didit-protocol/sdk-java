@@ -271,6 +271,12 @@ public final class CaseEvent extends JsonModel {
     /** The value {@code "NOTE_ADDED"}. */
     public static final EventType NOTE_ADDED = new EventType("NOTE_ADDED");
 
+    /** The value {@code "NOTE_PINNED"}. */
+    public static final EventType NOTE_PINNED = new EventType("NOTE_PINNED");
+
+    /** The value {@code "NOTE_UNPINNED"}. */
+    public static final EventType NOTE_UNPINNED = new EventType("NOTE_UNPINNED");
+
     /** The value {@code "PRIORITY_CHANGED"}. */
     public static final EventType PRIORITY_CHANGED = new EventType("PRIORITY_CHANGED");
 
@@ -313,7 +319,22 @@ public final class CaseEvent extends JsonModel {
     /** The value {@code "APPROVAL_INVALIDATED"}. */
     public static final EventType APPROVAL_INVALIDATED = new EventType("APPROVAL_INVALIDATED");
 
-    private static final List<EventType> KNOWN_VALUES = List.of(CREATED, STATUS_CHANGED, ASSIGNED, UNASSIGNED, RESOLVED, REOPENED, LINK_ADDED, LINK_REMOVED, NOTE_ADDED, PRIORITY_CHANGED, DUE_DATE_CHANGED, TAG_ADDED, TAG_REMOVED, ESCALATED, TRANSFERRED, CHECKLIST_COMPLETED, REPORT_CREATED, REPORT_FINALIZED, SUBMITTED_FOR_APPROVAL, APPROVAL_GRANTED, APPROVAL_REJECTED, ENTITY_ACTION, APPROVAL_INVALIDATED);
+    /** The value {@code "CUSTOMER_REQUEST"}. */
+    public static final EventType CUSTOMER_REQUEST = new EventType("CUSTOMER_REQUEST");
+
+    /** The value {@code "STAGE_CHANGED"}. */
+    public static final EventType STAGE_CHANGED = new EventType("STAGE_CHANGED");
+
+    /** The value {@code "TEAM_CHANGED"}. */
+    public static final EventType TEAM_CHANGED = new EventType("TEAM_CHANGED");
+
+    /** The value {@code "CHECKER_ASSIGNED"}. */
+    public static final EventType CHECKER_ASSIGNED = new EventType("CHECKER_ASSIGNED");
+
+    /** The value {@code "CHECKER_UNASSIGNED"}. */
+    public static final EventType CHECKER_UNASSIGNED = new EventType("CHECKER_UNASSIGNED");
+
+    private static final List<EventType> KNOWN_VALUES = List.of(CREATED, STATUS_CHANGED, ASSIGNED, UNASSIGNED, RESOLVED, REOPENED, LINK_ADDED, LINK_REMOVED, NOTE_ADDED, NOTE_PINNED, NOTE_UNPINNED, PRIORITY_CHANGED, DUE_DATE_CHANGED, TAG_ADDED, TAG_REMOVED, ESCALATED, TRANSFERRED, CHECKLIST_COMPLETED, REPORT_CREATED, REPORT_FINALIZED, SUBMITTED_FOR_APPROVAL, APPROVAL_GRANTED, APPROVAL_REJECTED, ENTITY_ACTION, APPROVAL_INVALIDATED, CUSTOMER_REQUEST, STAGE_CHANGED, TEAM_CHANGED, CHECKER_ASSIGNED, CHECKER_UNASSIGNED);
 
     private EventType(String value) {
       super(value);

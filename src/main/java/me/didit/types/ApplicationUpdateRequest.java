@@ -13,7 +13,7 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 
 /**
- * PATCH body for application metadata. Send only the fields you want to change; omitted fields are preserved. <code>uuid</code>, <code>client_id</code>, and <code>api_key</code> cannot be updated.
+ * PATCH body for application metadata. Send only the fields you want to change; omitted fields are preserved. <code>uuid</code>, <code>client_id</code>, and <code>api_key</code> cannot be updated. <code>products</code> is read-only: a <code>products</code> key in the body is ignored.
  */
 public final class ApplicationUpdateRequest extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("name", "website_url", "redirect_uris", "terms_url", "privacy_url", "description");

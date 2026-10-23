@@ -16,7 +16,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code cases.resolve}. */
 public final class CasesResolveParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("resolution", "note");
+  private static final Set<String> KNOWN_FIELDS = Set.of("resolution", "note", "checker");
 
   private CasesResolveParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -71,6 +71,16 @@ public final class CasesResolveParams extends JsonModel {
     return Json.optional(json, "note", Conv.STRING);
   }
 
+  /**
+   * Four-eyes blueprints only. The user uuid of the member who must approve this resolution (the same id as <code>assigned_to.uuid</code> on a case, or <code>members[].user_id</code> on a review team). The member must have case access to this application and cannot be the officer who submits the resolution. Omit it or send null to leave the resolution to the checker queue.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> checker() {
+    return Json.optional(json, "checker", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -105,6 +115,16 @@ public final class CasesResolveParams extends JsonModel {
     }
 
     /**
+     * Four-eyes blueprints only. The user uuid of the member who must approve this resolution (the same id as <code>assigned_to.uuid</code> on a case, or <code>members[].user_id</code> on a review team). The member must have case access to this application and cannot be the officer who submits the resolution. Omit it or send null to leave the resolution to the checker queue.
+     *
+     * @param checker the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder checker(@Nullable String checker) {
+      return setNullable("checker", Conv.STRING, checker);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code CasesResolveParams}
@@ -132,7 +152,16 @@ public final class CasesResolveParams extends JsonModel {
     /** The value {@code "VALID_THREAT"}. */
     public static final Resolution VALID_THREAT = new Resolution("VALID_THREAT");
 
-    private static final List<Resolution> KNOWN_VALUES = List.of(FALSE_POSITIVE, VALID_THREAT);
+    /** The value {@code "INCONCLUSIVE"}. */
+    public static final Resolution INCONCLUSIVE = new Resolution("INCONCLUSIVE");
+
+    /** The value {@code "REQUIREMENTS_NOT_MET"}. */
+    public static final Resolution REQUIREMENTS_NOT_MET = new Resolution("REQUIREMENTS_NOT_MET");
+
+    /** The value {@code "REQUIREMENTS_SATISFIED"}. */
+    public static final Resolution REQUIREMENTS_SATISFIED = new Resolution("REQUIREMENTS_SATISFIED");
+
+    private static final List<Resolution> KNOWN_VALUES = List.of(FALSE_POSITIVE, VALID_THREAT, INCONCLUSIVE, REQUIREMENTS_NOT_MET, REQUIREMENTS_SATISFIED);
 
     private Resolution(String value) {
       super(value);

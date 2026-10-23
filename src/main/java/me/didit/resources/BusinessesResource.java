@@ -4,6 +4,7 @@ package me.didit.resources;
 import java.util.concurrent.CompletableFuture;
 import me.didit.core.ApiClient;
 import me.didit.core.ApiRequest;
+import me.didit.core.BinaryResponse;
 import me.didit.core.Conv;
 import me.didit.core.Page;
 import me.didit.core.RawResponse;
@@ -15,18 +16,17 @@ import me.didit.types.BusinessListItem;
 import me.didit.types.BusinessesBatchDeleteParams;
 import me.didit.types.BusinessesBatchDeleteResponse;
 import me.didit.types.BusinessesCreateParams;
-import me.didit.types.BusinessesListNetworksResponse;
 import me.didit.types.BusinessesListParams;
-import me.didit.types.BusinessesRetrieveOngoingMonitoringJobResponse;
-import me.didit.types.BusinessesRetrieveSessionOngoingMonitoringJobResponse;
 import me.didit.types.BusinessesSetAmlMonitoringParams;
 import me.didit.types.BusinessesSetAmlMonitoringResponse;
-import me.didit.types.BusinessesSetOngoingMonitoringParams;
 import me.didit.types.BusinessesSetOngoingMonitoringResponse;
 import me.didit.types.BusinessesSetSessionOngoingMonitoringParams;
 import me.didit.types.BusinessesSetSessionOngoingMonitoringResponse;
 import me.didit.types.BusinessesUpdateParams;
 import me.didit.types.BusinessesUpdateStatusParams;
+import me.didit.types.EntityNetworkMembershipList;
+import me.didit.types.OngoingMonitoringJob;
+import me.didit.types.OngoingMonitoringToggleRequest;
 
 /** The {@code businesses} resource: {@code client.businesses()}. */
 public final class BusinessesResource {
@@ -181,7 +181,7 @@ public final class BusinessesResource {
   /**
    * Update business
    *
-   * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry.
+   * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry. Every edit is recorded in the company's activity: a status change with the optional <code>reason</code>, and a change to <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code> or <code>metadata</code> as a profile update.
    *
    * <p>{@code PATCH /v3/businesses/{vendor_data}/}
    *
@@ -273,7 +273,7 @@ public final class BusinessesResource {
   /**
    * Update business status
    *
-   * <p>Flip only the lifecycle <code>status</code> of a business — VendorBusinessStatusChoices (<code>ACTIVE</code>/<code>FLAGGED</code>/<code>BLOCKED</code>, NOT session statuses). <code>BLOCKED</code> adds <code>vendor_data</code> to the system blocklist.
+   * <p>Flip only the lifecycle <code>status</code> of a business: <code>ACTIVE</code>, <code>FLAGGED</code> or <code>BLOCKED</code> (not session statuses). <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry. Each change is recorded in the company's activity, with the optional <code>reason</code>. Sending the current status changes nothing and records no <code>reason</code>. The <code>business.status.updated</code> webhook does not carry <code>reason</code>.
    *
    * <p>{@code PATCH /v3/businesses/{vendor_data}/update-status/}
    *
@@ -548,38 +548,38 @@ public final class BusinessesResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public BusinessesSetOngoingMonitoringResponse setOngoingMonitoring(BusinessesSetOngoingMonitoringParams params, RequestOptions options) {
+  public BusinessesSetOngoingMonitoringResponse setOngoingMonitoring(OngoingMonitoringToggleRequest params, RequestOptions options) {
     return client.execute(setOngoingMonitoringRequest(params), options, SET_ONGOING_MONITORING_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #setOngoingMonitoring(BusinessesSetOngoingMonitoringParams, RequestOptions)}.
+   * Asynchronous {@link #setOngoingMonitoring(OngoingMonitoringToggleRequest, RequestOptions)}.
    *
    * @param params the request parameters
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<BusinessesSetOngoingMonitoringResponse> setOngoingMonitoringAsync(BusinessesSetOngoingMonitoringParams params, RequestOptions options) {
+  public CompletableFuture<BusinessesSetOngoingMonitoringResponse> setOngoingMonitoringAsync(OngoingMonitoringToggleRequest params, RequestOptions options) {
     return client.executeAsync(setOngoingMonitoringRequest(params), options, SET_ONGOING_MONITORING_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Same as {@link #setOngoingMonitoring(BusinessesSetOngoingMonitoringParams, RequestOptions)}, with the client's options.
+   * Same as {@link #setOngoingMonitoring(OngoingMonitoringToggleRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
    * @return the result
    */
-  public BusinessesSetOngoingMonitoringResponse setOngoingMonitoring(BusinessesSetOngoingMonitoringParams params) {
+  public BusinessesSetOngoingMonitoringResponse setOngoingMonitoring(OngoingMonitoringToggleRequest params) {
     return client.execute(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #setOngoingMonitoring(BusinessesSetOngoingMonitoringParams, RequestOptions)}, with the client's options.
+   * Asynchronous {@link #setOngoingMonitoring(OngoingMonitoringToggleRequest, RequestOptions)}, with the client's options.
    *
    * @param params the request parameters
    * @return a future completed with the result
    */
-  public CompletableFuture<BusinessesSetOngoingMonitoringResponse> setOngoingMonitoringAsync(BusinessesSetOngoingMonitoringParams params) {
+  public CompletableFuture<BusinessesSetOngoingMonitoringResponse> setOngoingMonitoringAsync(OngoingMonitoringToggleRequest params) {
     return client.executeAsync(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -595,7 +595,7 @@ public final class BusinessesResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public BusinessesRetrieveOngoingMonitoringJobResponse retrieveOngoingMonitoringJob(String jobId, RequestOptions options) {
+  public OngoingMonitoringJob retrieveOngoingMonitoringJob(String jobId, RequestOptions options) {
     return client.execute(retrieveOngoingMonitoringJobRequest(jobId), options, RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE).data();
   }
 
@@ -606,7 +606,7 @@ public final class BusinessesResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<BusinessesRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
+  public CompletableFuture<OngoingMonitoringJob> retrieveOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
     return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), options, RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -616,7 +616,7 @@ public final class BusinessesResource {
    * @param jobId the {@code job_id}
    * @return the result
    */
-  public BusinessesRetrieveOngoingMonitoringJobResponse retrieveOngoingMonitoringJob(String jobId) {
+  public OngoingMonitoringJob retrieveOngoingMonitoringJob(String jobId) {
     return client.execute(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE).data();
   }
 
@@ -626,7 +626,7 @@ public final class BusinessesResource {
    * @param jobId the {@code job_id}
    * @return a future completed with the result
    */
-  public CompletableFuture<BusinessesRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJobAsync(String jobId) {
+  public CompletableFuture<OngoingMonitoringJob> retrieveOngoingMonitoringJobAsync(String jobId) {
     return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -689,7 +689,7 @@ public final class BusinessesResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public BusinessesRetrieveSessionOngoingMonitoringJobResponse retrieveSessionOngoingMonitoringJob(String jobId, RequestOptions options) {
+  public OngoingMonitoringJob retrieveSessionOngoingMonitoringJob(String jobId, RequestOptions options) {
     return client.execute(retrieveSessionOngoingMonitoringJobRequest(jobId), options, RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE).data();
   }
 
@@ -700,7 +700,7 @@ public final class BusinessesResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<BusinessesRetrieveSessionOngoingMonitoringJobResponse> retrieveSessionOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
+  public CompletableFuture<OngoingMonitoringJob> retrieveSessionOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
     return client.executeAsync(retrieveSessionOngoingMonitoringJobRequest(jobId), options, RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -710,7 +710,7 @@ public final class BusinessesResource {
    * @param jobId the {@code job_id}
    * @return the result
    */
-  public BusinessesRetrieveSessionOngoingMonitoringJobResponse retrieveSessionOngoingMonitoringJob(String jobId) {
+  public OngoingMonitoringJob retrieveSessionOngoingMonitoringJob(String jobId) {
     return client.execute(retrieveSessionOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE).data();
   }
 
@@ -720,7 +720,7 @@ public final class BusinessesResource {
    * @param jobId the {@code job_id}
    * @return a future completed with the result
    */
-  public CompletableFuture<BusinessesRetrieveSessionOngoingMonitoringJobResponse> retrieveSessionOngoingMonitoringJobAsync(String jobId) {
+  public CompletableFuture<OngoingMonitoringJob> retrieveSessionOngoingMonitoringJobAsync(String jobId) {
     return client.executeAsync(retrieveSessionOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -736,7 +736,7 @@ public final class BusinessesResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public BusinessesListNetworksResponse listNetworks(String vendorBusinessUuid, RequestOptions options) {
+  public EntityNetworkMembershipList listNetworks(String vendorBusinessUuid, RequestOptions options) {
     return client.execute(listNetworksRequest(vendorBusinessUuid), options, LIST_NETWORKS_RESPONSE).data();
   }
 
@@ -747,7 +747,7 @@ public final class BusinessesResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<BusinessesListNetworksResponse> listNetworksAsync(String vendorBusinessUuid, RequestOptions options) {
+  public CompletableFuture<EntityNetworkMembershipList> listNetworksAsync(String vendorBusinessUuid, RequestOptions options) {
     return client.executeAsync(listNetworksRequest(vendorBusinessUuid), options, LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -757,7 +757,7 @@ public final class BusinessesResource {
    * @param vendorBusinessUuid the {@code vendor_business_uuid}
    * @return the result
    */
-  public BusinessesListNetworksResponse listNetworks(String vendorBusinessUuid) {
+  public EntityNetworkMembershipList listNetworks(String vendorBusinessUuid) {
     return client.execute(listNetworksRequest(vendorBusinessUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE).data();
   }
 
@@ -767,8 +767,60 @@ public final class BusinessesResource {
    * @param vendorBusinessUuid the {@code vendor_business_uuid}
    * @return a future completed with the result
    */
-  public CompletableFuture<BusinessesListNetworksResponse> listNetworksAsync(String vendorBusinessUuid) {
+  public CompletableFuture<EntityNetworkMembershipList> listNetworksAsync(String vendorBusinessUuid) {
     return client.executeAsync(listNetworksRequest(vendorBusinessUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Download a business session PDF report
+   *
+   * <p>Render the PDF report of one Business Verification (KYB) session: company registry data, key people and beneficial owners, documents, AML results and the other workflow features, plus the session's tags and review activity. With white-label customization on, the report carries your logo and privacy policy URL. The body is the PDF itself (<code>application/pdf</code>), not JSON.
+   *
+   * <p>The session must be <code>Approved</code>, <code>Declined</code> or <code>In Review</code>; any other status returns <code>403</code>, so wait for the <code>status.updated</code> <a href="https://docs.didit.me/integration/webhooks">webhook</a> first. The report is rendered on every call and nothing is billed, so store the file instead of fetching it repeatedly. <code>GET /v3/session/{sessionId}/generate-pdf/</code> renders the same kind of report by session ID alone.
+   *
+   * <p>A PDF report counts as media: a scoped API key needs <code>businesses: read</code> and <code>media: read</code>, and a key limited to some workflows or to approved sessions cannot call it.
+   *
+   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/businesses/{business_session_id}/pdf/}
+   * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+   *
+   * @param businessSessionId `session_id` of the Business Verification (KYB) session, as returned when the session was created. A session of another application returns `404`.
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public BinaryResponse generateSessionPdf(String businessSessionId, RequestOptions options) {
+    return client.execute(generateSessionPdfRequest(businessSessionId), options, GENERATE_SESSION_PDF_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #generateSessionPdf(String, RequestOptions)}.
+   *
+   * @param businessSessionId the {@code business_session_id}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BinaryResponse> generateSessionPdfAsync(String businessSessionId, RequestOptions options) {
+    return client.executeAsync(generateSessionPdfRequest(businessSessionId), options, GENERATE_SESSION_PDF_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #generateSessionPdf(String, RequestOptions)}, with the client's options.
+   *
+   * @param businessSessionId the {@code business_session_id}
+   * @return the result
+   */
+  public BinaryResponse generateSessionPdf(String businessSessionId) {
+    return client.execute(generateSessionPdfRequest(businessSessionId), RequestOptions.none(), GENERATE_SESSION_PDF_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #generateSessionPdf(String, RequestOptions)}, with the client's options.
+   *
+   * @param businessSessionId the {@code business_session_id}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BinaryResponse> generateSessionPdfAsync(String businessSessionId) {
+    return client.executeAsync(generateSessionPdfRequest(businessSessionId), RequestOptions.none(), GENERATE_SESSION_PDF_RESPONSE).thenApply(RawResponse::data);
   }
 
   private static final ResponseHandler<Page<BusinessListItem>> LIST_RESPONSE = Responses.page(Conv.model(BusinessListItem::fromJson));
@@ -837,7 +889,7 @@ public final class BusinessesResource {
 
   private static final ResponseHandler<BusinessesSetOngoingMonitoringResponse> SET_ONGOING_MONITORING_RESPONSE = Responses.byStatus(BusinessesSetOngoingMonitoringResponse::fromResponse);
 
-  private static ApiRequest setOngoingMonitoringRequest(BusinessesSetOngoingMonitoringParams params) {
+  private static ApiRequest setOngoingMonitoringRequest(OngoingMonitoringToggleRequest params) {
     return ApiRequest.builder("PATCH", "/v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/")
         .applicationScoped()
         .params(params)
@@ -845,7 +897,7 @@ public final class BusinessesResource {
         .build();
   }
 
-  private static final ResponseHandler<BusinessesRetrieveOngoingMonitoringJobResponse> RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE = Responses.json(Conv.model(BusinessesRetrieveOngoingMonitoringJobResponse::fromJson));
+  private static final ResponseHandler<OngoingMonitoringJob> RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE = Responses.json(Conv.model(OngoingMonitoringJob::fromJson));
 
   private static ApiRequest retrieveOngoingMonitoringJobRequest(String jobId) {
     return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/{job_id}/")
@@ -864,7 +916,7 @@ public final class BusinessesResource {
         .build();
   }
 
-  private static final ResponseHandler<BusinessesRetrieveSessionOngoingMonitoringJobResponse> RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE = Responses.json(Conv.model(BusinessesRetrieveSessionOngoingMonitoringJobResponse::fromJson));
+  private static final ResponseHandler<OngoingMonitoringJob> RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE = Responses.json(Conv.model(OngoingMonitoringJob::fromJson));
 
   private static ApiRequest retrieveSessionOngoingMonitoringJobRequest(String jobId) {
     return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/{job_id}/")
@@ -873,12 +925,22 @@ public final class BusinessesResource {
         .build();
   }
 
-  private static final ResponseHandler<BusinessesListNetworksResponse> LIST_NETWORKS_RESPONSE = Responses.json(Conv.model(BusinessesListNetworksResponse::fromJson));
+  private static final ResponseHandler<EntityNetworkMembershipList> LIST_NETWORKS_RESPONSE = Responses.json(Conv.model(EntityNetworkMembershipList::fromJson));
 
   private static ApiRequest listNetworksRequest(String vendorBusinessUuid) {
     return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/businesses/{vendor_business_uuid}/networks/")
         .applicationScoped()
         .pathParam("vendor_business_uuid", vendorBusinessUuid)
+        .build();
+  }
+
+  private static final ResponseHandler<BinaryResponse> GENERATE_SESSION_PDF_RESPONSE = Responses.binary();
+
+  private static ApiRequest generateSessionPdfRequest(String businessSessionId) {
+    return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/businesses/{business_session_id}/pdf/")
+        .applicationScoped()
+        .pathParam("business_session_id", businessSessionId)
+        .accept("application/pdf")
         .build();
   }
 
@@ -1349,44 +1411,44 @@ public final class BusinessesResource {
     }
 
     /**
-     * {@link #setOngoingMonitoring(BusinessesSetOngoingMonitoringParams, RequestOptions)} with the raw response.
+     * {@link #setOngoingMonitoring(OngoingMonitoringToggleRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<BusinessesSetOngoingMonitoringResponse> setOngoingMonitoring(BusinessesSetOngoingMonitoringParams params, RequestOptions options) {
+    public RawResponse<BusinessesSetOngoingMonitoringResponse> setOngoingMonitoring(OngoingMonitoringToggleRequest params, RequestOptions options) {
       return client.execute(setOngoingMonitoringRequest(params), options, SET_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #setOngoingMonitoring(BusinessesSetOngoingMonitoringParams, RequestOptions)} with the raw response.
+     * Asynchronous {@link #setOngoingMonitoring(OngoingMonitoringToggleRequest, RequestOptions)} with the raw response.
      *
      * @param params the request parameters
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<BusinessesSetOngoingMonitoringResponse>> setOngoingMonitoringAsync(BusinessesSetOngoingMonitoringParams params, RequestOptions options) {
+    public CompletableFuture<RawResponse<BusinessesSetOngoingMonitoringResponse>> setOngoingMonitoringAsync(OngoingMonitoringToggleRequest params, RequestOptions options) {
       return client.executeAsync(setOngoingMonitoringRequest(params), options, SET_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * {@link #setOngoingMonitoring(BusinessesSetOngoingMonitoringParams, RequestOptions)} with the raw response, with the client's options.
+     * {@link #setOngoingMonitoring(OngoingMonitoringToggleRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
      * @return the result
      */
-    public RawResponse<BusinessesSetOngoingMonitoringResponse> setOngoingMonitoring(BusinessesSetOngoingMonitoringParams params) {
+    public RawResponse<BusinessesSetOngoingMonitoringResponse> setOngoingMonitoring(OngoingMonitoringToggleRequest params) {
       return client.execute(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #setOngoingMonitoring(BusinessesSetOngoingMonitoringParams, RequestOptions)} with the raw response, with the client's options.
+     * Asynchronous {@link #setOngoingMonitoring(OngoingMonitoringToggleRequest, RequestOptions)} with the raw response, with the client's options.
      *
      * @param params the request parameters
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<BusinessesSetOngoingMonitoringResponse>> setOngoingMonitoringAsync(BusinessesSetOngoingMonitoringParams params) {
+    public CompletableFuture<RawResponse<BusinessesSetOngoingMonitoringResponse>> setOngoingMonitoringAsync(OngoingMonitoringToggleRequest params) {
       return client.executeAsync(setOngoingMonitoringRequest(params), RequestOptions.none(), SET_ONGOING_MONITORING_RESPONSE);
     }
 
@@ -1397,7 +1459,7 @@ public final class BusinessesResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<BusinessesRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJob(String jobId, RequestOptions options) {
+    public RawResponse<OngoingMonitoringJob> retrieveOngoingMonitoringJob(String jobId, RequestOptions options) {
       return client.execute(retrieveOngoingMonitoringJobRequest(jobId), options, RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
@@ -1408,7 +1470,7 @@ public final class BusinessesResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<BusinessesRetrieveOngoingMonitoringJobResponse>> retrieveOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
+    public CompletableFuture<RawResponse<OngoingMonitoringJob>> retrieveOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
       return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), options, RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
@@ -1418,7 +1480,7 @@ public final class BusinessesResource {
      * @param jobId the {@code job_id}
      * @return the result
      */
-    public RawResponse<BusinessesRetrieveOngoingMonitoringJobResponse> retrieveOngoingMonitoringJob(String jobId) {
+    public RawResponse<OngoingMonitoringJob> retrieveOngoingMonitoringJob(String jobId) {
       return client.execute(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
@@ -1428,7 +1490,7 @@ public final class BusinessesResource {
      * @param jobId the {@code job_id}
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<BusinessesRetrieveOngoingMonitoringJobResponse>> retrieveOngoingMonitoringJobAsync(String jobId) {
+    public CompletableFuture<RawResponse<OngoingMonitoringJob>> retrieveOngoingMonitoringJobAsync(String jobId) {
       return client.executeAsync(retrieveOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
@@ -1481,7 +1543,7 @@ public final class BusinessesResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<BusinessesRetrieveSessionOngoingMonitoringJobResponse> retrieveSessionOngoingMonitoringJob(String jobId, RequestOptions options) {
+    public RawResponse<OngoingMonitoringJob> retrieveSessionOngoingMonitoringJob(String jobId, RequestOptions options) {
       return client.execute(retrieveSessionOngoingMonitoringJobRequest(jobId), options, RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
@@ -1492,7 +1554,7 @@ public final class BusinessesResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<BusinessesRetrieveSessionOngoingMonitoringJobResponse>> retrieveSessionOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
+    public CompletableFuture<RawResponse<OngoingMonitoringJob>> retrieveSessionOngoingMonitoringJobAsync(String jobId, RequestOptions options) {
       return client.executeAsync(retrieveSessionOngoingMonitoringJobRequest(jobId), options, RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
@@ -1502,7 +1564,7 @@ public final class BusinessesResource {
      * @param jobId the {@code job_id}
      * @return the result
      */
-    public RawResponse<BusinessesRetrieveSessionOngoingMonitoringJobResponse> retrieveSessionOngoingMonitoringJob(String jobId) {
+    public RawResponse<OngoingMonitoringJob> retrieveSessionOngoingMonitoringJob(String jobId) {
       return client.execute(retrieveSessionOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
@@ -1512,7 +1574,7 @@ public final class BusinessesResource {
      * @param jobId the {@code job_id}
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<BusinessesRetrieveSessionOngoingMonitoringJobResponse>> retrieveSessionOngoingMonitoringJobAsync(String jobId) {
+    public CompletableFuture<RawResponse<OngoingMonitoringJob>> retrieveSessionOngoingMonitoringJobAsync(String jobId) {
       return client.executeAsync(retrieveSessionOngoingMonitoringJobRequest(jobId), RequestOptions.none(), RETRIEVE_SESSION_ONGOING_MONITORING_JOB_RESPONSE);
     }
 
@@ -1523,7 +1585,7 @@ public final class BusinessesResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<BusinessesListNetworksResponse> listNetworks(String vendorBusinessUuid, RequestOptions options) {
+    public RawResponse<EntityNetworkMembershipList> listNetworks(String vendorBusinessUuid, RequestOptions options) {
       return client.execute(listNetworksRequest(vendorBusinessUuid), options, LIST_NETWORKS_RESPONSE);
     }
 
@@ -1534,7 +1596,7 @@ public final class BusinessesResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<BusinessesListNetworksResponse>> listNetworksAsync(String vendorBusinessUuid, RequestOptions options) {
+    public CompletableFuture<RawResponse<EntityNetworkMembershipList>> listNetworksAsync(String vendorBusinessUuid, RequestOptions options) {
       return client.executeAsync(listNetworksRequest(vendorBusinessUuid), options, LIST_NETWORKS_RESPONSE);
     }
 
@@ -1544,7 +1606,7 @@ public final class BusinessesResource {
      * @param vendorBusinessUuid the {@code vendor_business_uuid}
      * @return the result
      */
-    public RawResponse<BusinessesListNetworksResponse> listNetworks(String vendorBusinessUuid) {
+    public RawResponse<EntityNetworkMembershipList> listNetworks(String vendorBusinessUuid) {
       return client.execute(listNetworksRequest(vendorBusinessUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE);
     }
 
@@ -1554,8 +1616,50 @@ public final class BusinessesResource {
      * @param vendorBusinessUuid the {@code vendor_business_uuid}
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<BusinessesListNetworksResponse>> listNetworksAsync(String vendorBusinessUuid) {
+    public CompletableFuture<RawResponse<EntityNetworkMembershipList>> listNetworksAsync(String vendorBusinessUuid) {
       return client.executeAsync(listNetworksRequest(vendorBusinessUuid), RequestOptions.none(), LIST_NETWORKS_RESPONSE);
+    }
+
+    /**
+     * {@link #generateSessionPdf(String, RequestOptions)} with the raw response.
+     *
+     * @param businessSessionId the {@code business_session_id}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<BinaryResponse> generateSessionPdf(String businessSessionId, RequestOptions options) {
+      return client.execute(generateSessionPdfRequest(businessSessionId), options, GENERATE_SESSION_PDF_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #generateSessionPdf(String, RequestOptions)} with the raw response.
+     *
+     * @param businessSessionId the {@code business_session_id}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BinaryResponse>> generateSessionPdfAsync(String businessSessionId, RequestOptions options) {
+      return client.executeAsync(generateSessionPdfRequest(businessSessionId), options, GENERATE_SESSION_PDF_RESPONSE);
+    }
+
+    /**
+     * {@link #generateSessionPdf(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param businessSessionId the {@code business_session_id}
+     * @return the result
+     */
+    public RawResponse<BinaryResponse> generateSessionPdf(String businessSessionId) {
+      return client.execute(generateSessionPdfRequest(businessSessionId), RequestOptions.none(), GENERATE_SESSION_PDF_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #generateSessionPdf(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param businessSessionId the {@code business_session_id}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BinaryResponse>> generateSessionPdfAsync(String businessSessionId) {
+      return client.executeAsync(generateSessionPdfRequest(businessSessionId), RequestOptions.none(), GENERATE_SESSION_PDF_RESPONSE);
     }
   }
 }

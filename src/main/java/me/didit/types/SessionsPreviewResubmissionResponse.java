@@ -5,15 +5,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
+import org.jspecify.annotations.Nullable;
 
 public final class SessionsPreviewResubmissionResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("recipient", "sender", "subject", "html", "nodes_to_resubmit", "requires_user_action", "preview_token");
+  private static final Set<String> KNOWN_FIELDS = Set.of("recipient", "recipient_source", "sender", "sender_name", "sender_email", "sender_kind", "subject", "html", "language", "will_be_sent", "not_sent_reason", "nodes_to_resubmit", "requires_user_action", "preview_token");
 
   private SessionsPreviewResubmissionResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -49,7 +51,7 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
   }
 
   /**
-   * The <code>recipient</code> field.
+   * The address the email goes to. An empty string when no address is known for the person: then no email can be sent and <code>preview_token</code> is empty too. Pass it as <code>email_address</code> when you confirm.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -59,7 +61,17 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
   }
 
   /**
-   * The <code>sender</code> field.
+   * Where <code>recipient</code> comes from. <code>request</code>: the <code>email_address</code> you passed. <code>email_verification</code>: the address the person verified in an email verification step of the flow. <code>contact_details</code>: the address given in <code>contact_details</code> when the session was created. An empty string when there is no address.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public SessionsPreviewResubmissionResponse.RecipientSource recipientSource() {
+    return Json.required(json, "recipient_source", Conv.enumeration(SessionsPreviewResubmissionResponse.RecipientSource::of));
+  }
+
+  /**
+   * The <code>From</code> header the email goes out with.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -69,7 +81,37 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
   }
 
   /**
-   * The <code>subject</code> field.
+   * The display name part of <code>sender</code>.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public String senderName() {
+    return Json.required(json, "sender_name", Conv.STRING);
+  }
+
+  /**
+   * The address part of <code>sender</code>.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public String senderEmail() {
+    return Json.required(json, "sender_email", Conv.STRING);
+  }
+
+  /**
+   * <code>customer</code>: the email goes out from your application's verified sender domain (white label). <code>didit</code>: it goes out from Didit's own sender.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public SessionsPreviewResubmissionResponse.SenderKind senderKind() {
+    return Json.required(json, "sender_kind", Conv.enumeration(SessionsPreviewResubmissionResponse.SenderKind::of));
+  }
+
+  /**
+   * The subject line exactly as it is sent.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -79,13 +121,43 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
   }
 
   /**
-   * Rendered email. Inline image attachments use data URLs for preview.
+   * The email's HTML exactly as it is sent, with its logo embedded as a data URL. Render it in a sandboxed frame, never directly in your application DOM.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
   public String html() {
     return Json.required(json, "html", Conv.STRING);
+  }
+
+  /**
+   * The language the email is written in. English (<code>en</code>) when the <code>email_language</code> you asked for is not offered.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public String language() {
+    return Json.required(json, "language", Conv.STRING);
+  }
+
+  /**
+   * Whether confirming the change with <code>send_email: true</code> sends this email. <code>false</code> when <code>not_sent_reason</code> is set.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public boolean willBeSent() {
+    return Json.required(json, "will_be_sent", Conv.BOOLEAN);
+  }
+
+  /**
+   * Why confirming would send no email, or <code>null</code> when it will be sent. <code>no_user_action</code>: every selected step runs without the person, so the resubmission finishes on its own and no email goes out. <code>no_recipient</code>: no address is known for the person and you passed none. <code>sandbox</code>: a sandbox session whose recipient has not opted into sandbox email delivery, so the send is only simulated.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsPreviewResubmissionResponse.NotSentReason> notSentReason() {
+    return Json.optional(json, "not_sent_reason", Conv.enumeration(SessionsPreviewResubmissionResponse.NotSentReason::of));
   }
 
   /**
@@ -109,7 +181,7 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
   }
 
   /**
-   * Signed confirmation receipt, valid for 15 minutes. Pass it as email_preview_token when confirming the same message.
+   * Signed receipt for this exact email, valid for 15 minutes. Pass it as <code>email_preview_token</code> to [Update Session Status](/sessions-api/update-status). An empty string when there is no recipient.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -132,7 +204,7 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
     }
 
     /**
-     * The <code>recipient</code> field.
+     * The address the email goes to. An empty string when no address is known for the person: then no email can be sent and <code>preview_token</code> is empty too. Pass it as <code>email_address</code> when you confirm.
      *
      * @param recipient the value
      * @return this builder
@@ -142,7 +214,17 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
     }
 
     /**
-     * The <code>sender</code> field.
+     * Where <code>recipient</code> comes from. <code>request</code>: the <code>email_address</code> you passed. <code>email_verification</code>: the address the person verified in an email verification step of the flow. <code>contact_details</code>: the address given in <code>contact_details</code> when the session was created. An empty string when there is no address.
+     *
+     * @param recipientSource the value
+     * @return this builder
+     */
+    public Builder recipientSource(SessionsPreviewResubmissionResponse.RecipientSource recipientSource) {
+      return set("recipient_source", Conv.enumeration(SessionsPreviewResubmissionResponse.RecipientSource::of), recipientSource);
+    }
+
+    /**
+     * The <code>From</code> header the email goes out with.
      *
      * @param sender the value
      * @return this builder
@@ -152,7 +234,37 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
     }
 
     /**
-     * The <code>subject</code> field.
+     * The display name part of <code>sender</code>.
+     *
+     * @param senderName the value
+     * @return this builder
+     */
+    public Builder senderName(String senderName) {
+      return set("sender_name", Conv.STRING, senderName);
+    }
+
+    /**
+     * The address part of <code>sender</code>.
+     *
+     * @param senderEmail the value
+     * @return this builder
+     */
+    public Builder senderEmail(String senderEmail) {
+      return set("sender_email", Conv.STRING, senderEmail);
+    }
+
+    /**
+     * <code>customer</code>: the email goes out from your application's verified sender domain (white label). <code>didit</code>: it goes out from Didit's own sender.
+     *
+     * @param senderKind the value
+     * @return this builder
+     */
+    public Builder senderKind(SessionsPreviewResubmissionResponse.SenderKind senderKind) {
+      return set("sender_kind", Conv.enumeration(SessionsPreviewResubmissionResponse.SenderKind::of), senderKind);
+    }
+
+    /**
+     * The subject line exactly as it is sent.
      *
      * @param subject the value
      * @return this builder
@@ -162,13 +274,43 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
     }
 
     /**
-     * Rendered email. Inline image attachments use data URLs for preview.
+     * The email's HTML exactly as it is sent, with its logo embedded as a data URL. Render it in a sandboxed frame, never directly in your application DOM.
      *
      * @param html the value
      * @return this builder
      */
     public Builder html(String html) {
       return set("html", Conv.STRING, html);
+    }
+
+    /**
+     * The language the email is written in. English (<code>en</code>) when the <code>email_language</code> you asked for is not offered.
+     *
+     * @param language the value
+     * @return this builder
+     */
+    public Builder language(String language) {
+      return set("language", Conv.STRING, language);
+    }
+
+    /**
+     * Whether confirming the change with <code>send_email: true</code> sends this email. <code>false</code> when <code>not_sent_reason</code> is set.
+     *
+     * @param willBeSent the value
+     * @return this builder
+     */
+    public Builder willBeSent(boolean willBeSent) {
+      return set("will_be_sent", Conv.BOOLEAN, willBeSent);
+    }
+
+    /**
+     * Why confirming would send no email, or <code>null</code> when it will be sent. <code>no_user_action</code>: every selected step runs without the person, so the resubmission finishes on its own and no email goes out. <code>no_recipient</code>: no address is known for the person and you passed none. <code>sandbox</code>: a sandbox session whose recipient has not opted into sandbox email delivery, so the send is only simulated.
+     *
+     * @param notSentReason the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder notSentReason(SessionsPreviewResubmissionResponse.@Nullable NotSentReason notSentReason) {
+      return setNullable("not_sent_reason", Conv.enumeration(SessionsPreviewResubmissionResponse.NotSentReason::of), notSentReason);
     }
 
     /**
@@ -192,7 +334,7 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
     }
 
     /**
-     * Signed confirmation receipt, valid for 15 minutes. Pass it as email_preview_token when confirming the same message.
+     * Signed receipt for this exact email, valid for 15 minutes. Pass it as <code>email_preview_token</code> to [Update Session Status](/sessions-api/update-status). An empty string when there is no recipient.
      *
      * @param previewToken the value
      * @return this builder
@@ -209,9 +351,16 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
      */
     public SessionsPreviewResubmissionResponse build() {
       require("recipient", false);
+      require("recipient_source", false);
       require("sender", false);
+      require("sender_name", false);
+      require("sender_email", false);
+      require("sender_kind", false);
       require("subject", false);
       require("html", false);
+      require("language", false);
+      require("will_be_sent", false);
+      require("not_sent_reason", true);
       require("nodes_to_resubmit", false);
       require("requires_user_action", false);
       require("preview_token", false);
@@ -221,6 +370,144 @@ public final class SessionsPreviewResubmissionResponse extends JsonModel {
     @Override
     protected Builder self() {
       return this;
+    }
+  }
+
+  /**
+   * Where <code>recipient</code> comes from. <code>request</code>: the <code>email_address</code> you passed. <code>email_verification</code>: the address the person verified in an email verification step of the flow. <code>contact_details</code>: the address given in <code>contact_details</code> when the session was created. An empty string when there is no address.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class RecipientSource extends StringEnum {
+    /** The value {@code "email_verification"}. */
+    public static final RecipientSource EMAIL_VERIFICATION = new RecipientSource("email_verification");
+
+    /** The value {@code "contact_details"}. */
+    public static final RecipientSource CONTACT_DETAILS = new RecipientSource("contact_details");
+
+    /** The value {@code "request"}. */
+    public static final RecipientSource REQUEST = new RecipientSource("request");
+
+    /** The value {@code ""}. */
+    public static final RecipientSource EMPTY = new RecipientSource("");
+
+    private static final List<RecipientSource> KNOWN_VALUES = List.of(EMAIL_VERIFICATION, CONTACT_DETAILS, REQUEST, EMPTY);
+
+    private RecipientSource(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static RecipientSource of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, RecipientSource::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<RecipientSource> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * <code>customer</code>: the email goes out from your application's verified sender domain (white label). <code>didit</code>: it goes out from Didit's own sender.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class SenderKind extends StringEnum {
+    /** The value {@code "customer"}. */
+    public static final SenderKind CUSTOMER = new SenderKind("customer");
+
+    /** The value {@code "didit"}. */
+    public static final SenderKind DIDIT = new SenderKind("didit");
+
+    private static final List<SenderKind> KNOWN_VALUES = List.of(CUSTOMER, DIDIT);
+
+    private SenderKind(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static SenderKind of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, SenderKind::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<SenderKind> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Why confirming would send no email, or <code>null</code> when it will be sent. <code>no_user_action</code>: every selected step runs without the person, so the resubmission finishes on its own and no email goes out. <code>no_recipient</code>: no address is known for the person and you passed none. <code>sandbox</code>: a sandbox session whose recipient has not opted into sandbox email delivery, so the send is only simulated.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class NotSentReason extends StringEnum {
+    /** The value {@code "no_user_action"}. */
+    public static final NotSentReason NO_USER_ACTION = new NotSentReason("no_user_action");
+
+    /** The value {@code "no_recipient"}. */
+    public static final NotSentReason NO_RECIPIENT = new NotSentReason("no_recipient");
+
+    /** The value {@code "sandbox"}. */
+    public static final NotSentReason SANDBOX = new NotSentReason("sandbox");
+
+    private static final List<NotSentReason> KNOWN_VALUES = List.of(NO_USER_ACTION, NO_RECIPIENT, SANDBOX);
+
+    private NotSentReason(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static NotSentReason of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, NotSentReason::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<NotSentReason> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 

@@ -3,9 +3,9 @@ package me.didit.examples;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.types.SessionDecision;
 import me.didit.types.SessionsCreateParams;
 import me.didit.types.SessionsCreateResponse;
-import me.didit.types.SessionsRetrieveDecisionResponse;
 import me.didit.webhooks.SessionStatusUpdatedEvent;
 import me.didit.webhooks.WebhookEvent;
 import me.didit.webhooks.Webhooks;
@@ -40,8 +40,7 @@ public final class Quickstart {
     System.out.println("Session " + session.sessionId() + ": send the user to " + session.url());
 
     // 2. Later, read the decision.
-    SessionsRetrieveDecisionResponse decision =
-        client.sessions().retrieveDecision(session.sessionId());
+    SessionDecision decision = client.sessions().retrieveDecision(session.sessionId());
     System.out.println(
         "Decision: " + decision.status().map(Object::toString).orElse("not available yet"));
     return session.sessionId();

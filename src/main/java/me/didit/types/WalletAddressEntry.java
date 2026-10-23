@@ -12,10 +12,9 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
-import org.jspecify.annotations.Nullable;
 
 public final class WalletAddressEntry extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "address", "chain", "holder_vendor_data", "holder_name", "entity_type", "is_ownership_verified", "created_at", "self_declared", "travel_address");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "address", "chain", "holder_vendor_data", "holder_name", "entity_type", "is_ownership_verified", "created_at", "travel_address", "address_hash", "memo", "receiving_travel_address");
 
   private WalletAddressEntry(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -61,7 +60,7 @@ public final class WalletAddressEntry extends JsonModel {
   }
 
   /**
-   * The wallet address. Unique per application and chain among non-deleted entries.
+   * The wallet address; <code>""</code> for an entry imported by its hash only. Unique per application, chain and memo, comparing the address without regard to case. After you delete an entry, you can register the same address again.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -71,7 +70,7 @@ public final class WalletAddressEntry extends JsonModel {
   }
 
   /**
-   * Free-text chain identifier, e.g. "ethereum", "bitcoin".
+   * Chain token for the address, for example <code>ETH</code> or <code>BTC</code>. When Didit routes or registers a transfer, it matches address book entries on the wallet address and, when the transfer carries a chain, on this value too, ignoring case. A transfer's chain is <code>beneficiary_data.chain</code>, filled from the transaction's crypto chain or currency symbol (for example <code>ETH</code>) when you do not send it, or the <code>chain</code> of an after-deposit registration, so use the same token everywhere. An entry with an empty chain matches any chain. A Lightning payee (a node id or a Lightning Address) registered on bitcoin is stored lowercased on <code>LIGHTNING</code>, where Lightning transfers are matched.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -131,23 +130,43 @@ public final class WalletAddressEntry extends JsonModel {
   }
 
   /**
-   * Whether the entry was created as a self-declared ownership proof.
-   *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-   */
-  public Optional<Boolean> selfDeclared() {
-    return Json.optional(json, "self_declared", Conv.BOOLEAN);
-  }
-
-  /**
-   * The counterparty VASP's travel address for this wallet, if known. Lets Didit route this beneficiary's transfers over the TRP rail.
+   * The counterparty VASP's travel address for this wallet, if known. Lets Didit route this beneficiary's transfers over the TRP rail, for the assets TRP carries (BTC, ETH, and USDC on a named network).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<String> travelAddress() {
     return Json.optional(json, "travel_address", Conv.STRING);
+  }
+
+  /**
+   * Read-only. SHA-256 of the lowercased address, in lowercase hex. An entry imported by its hash only is matched on it.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> addressHash() {
+    return Json.optional(json, "address_hash", Conv.STRING);
+  }
+
+  /**
+   * The destination tag or memo that is part of the wallet on a memo network (XRP, XLM, EOS, ATOM, HBAR); <code>""</code> for the whole address. An entry with a memo matches only transfers naming that memo; one without matches the whole address.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> memo() {
+    return Json.optional(json, "memo", Conv.STRING);
+  }
+
+  /**
+   * Your per-wallet travel address for this wallet: give it to the sending VASP so its TRP inquiry names this wallet. Empty for a wallet recorded as another VASP's, while Travel Rule is off, and before your VASP profile is saved.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> receivingTravelAddress() {
+    return Json.optional(json, "receiving_travel_address", Conv.STRING);
   }
 
   @Override
@@ -174,7 +193,7 @@ public final class WalletAddressEntry extends JsonModel {
     }
 
     /**
-     * The wallet address. Unique per application and chain among non-deleted entries.
+     * The wallet address; <code>""</code> for an entry imported by its hash only. Unique per application, chain and memo, comparing the address without regard to case. After you delete an entry, you can register the same address again.
      *
      * @param address the value
      * @return this builder
@@ -184,33 +203,33 @@ public final class WalletAddressEntry extends JsonModel {
     }
 
     /**
-     * Free-text chain identifier, e.g. "ethereum", "bitcoin".
+     * Chain token for the address, for example <code>ETH</code> or <code>BTC</code>. When Didit routes or registers a transfer, it matches address book entries on the wallet address and, when the transfer carries a chain, on this value too, ignoring case. A transfer's chain is <code>beneficiary_data.chain</code>, filled from the transaction's crypto chain or currency symbol (for example <code>ETH</code>) when you do not send it, or the <code>chain</code> of an after-deposit registration, so use the same token everywhere. An entry with an empty chain matches any chain. A Lightning payee (a node id or a Lightning Address) registered on bitcoin is stored lowercased on <code>LIGHTNING</code>, where Lightning transfers are matched.
      *
-     * @param chain the value, or {@code null} to send JSON null
+     * @param chain the value
      * @return this builder
      */
-    public Builder chain(@Nullable String chain) {
-      return setNullable("chain", Conv.STRING, chain);
+    public Builder chain(String chain) {
+      return set("chain", Conv.STRING, chain);
     }
 
     /**
      * Your internal identifier for the holder.
      *
-     * @param holderVendorData the value, or {@code null} to send JSON null
+     * @param holderVendorData the value
      * @return this builder
      */
-    public Builder holderVendorData(@Nullable String holderVendorData) {
-      return setNullable("holder_vendor_data", Conv.STRING, holderVendorData);
+    public Builder holderVendorData(String holderVendorData) {
+      return set("holder_vendor_data", Conv.STRING, holderVendorData);
     }
 
     /**
      * Name of the wallet holder, used for the beneficiary name match.
      *
-     * @param holderName the value, or {@code null} to send JSON null
+     * @param holderName the value
      * @return this builder
      */
-    public Builder holderName(@Nullable String holderName) {
-      return setNullable("holder_name", Conv.STRING, holderName);
+    public Builder holderName(String holderName) {
+      return set("holder_name", Conv.STRING, holderName);
     }
 
     /**
@@ -244,23 +263,43 @@ public final class WalletAddressEntry extends JsonModel {
     }
 
     /**
-     * Whether the entry was created as a self-declared ownership proof.
+     * The counterparty VASP's travel address for this wallet, if known. Lets Didit route this beneficiary's transfers over the TRP rail, for the assets TRP carries (BTC, ETH, and USDC on a named network).
      *
-     * @param selfDeclared the value
+     * @param travelAddress the value
      * @return this builder
      */
-    public Builder selfDeclared(boolean selfDeclared) {
-      return set("self_declared", Conv.BOOLEAN, selfDeclared);
+    public Builder travelAddress(String travelAddress) {
+      return set("travel_address", Conv.STRING, travelAddress);
     }
 
     /**
-     * The counterparty VASP's travel address for this wallet, if known. Lets Didit route this beneficiary's transfers over the TRP rail.
+     * Read-only. SHA-256 of the lowercased address, in lowercase hex. An entry imported by its hash only is matched on it.
      *
-     * @param travelAddress the value, or {@code null} to send JSON null
+     * @param addressHash the value
      * @return this builder
      */
-    public Builder travelAddress(@Nullable String travelAddress) {
-      return setNullable("travel_address", Conv.STRING, travelAddress);
+    public Builder addressHash(String addressHash) {
+      return set("address_hash", Conv.STRING, addressHash);
+    }
+
+    /**
+     * The destination tag or memo that is part of the wallet on a memo network (XRP, XLM, EOS, ATOM, HBAR); <code>""</code> for the whole address. An entry with a memo matches only transfers naming that memo; one without matches the whole address.
+     *
+     * @param memo the value
+     * @return this builder
+     */
+    public Builder memo(String memo) {
+      return set("memo", Conv.STRING, memo);
+    }
+
+    /**
+     * Your per-wallet travel address for this wallet: give it to the sending VASP so its TRP inquiry names this wallet. Empty for a wallet recorded as another VASP's, while Travel Rule is off, and before your VASP profile is saved.
+     *
+     * @param receivingTravelAddress the value
+     * @return this builder
+     */
+    public Builder receivingTravelAddress(String receivingTravelAddress) {
+      return set("receiving_travel_address", Conv.STRING, receivingTravelAddress);
     }
 
     /**

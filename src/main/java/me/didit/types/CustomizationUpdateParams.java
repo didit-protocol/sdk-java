@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 
 /** Parameters for {&#64;code customization.update}. */
 public final class CustomizationUpdateParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("image_square", "image_rectangular", "image_favicon");
+  private static final Set<String> KNOWN_FIELDS = Set.of("image_square", "image_rectangular", "image_rectangular_dark", "image_favicon");
 
   private CustomizationUpdateParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -50,7 +50,7 @@ public final class CustomizationUpdateParams extends JsonModel {
   }
 
   /**
-   * Square logo (1:1 aspect ratio). Max <b>1 MB</b>. Allowed: <code>png</code>, <code>jpg</code>, <code>jpeg</code>, <code>webp</code>.
+   * Square logo (1:1 aspect ratio). PNG, JPG or WebP, at least 512 px on the long side, at most <b>1 MB</b>.
    *
    * @return the file to upload, if set
    */
@@ -59,12 +59,21 @@ public final class CustomizationUpdateParams extends JsonModel {
   }
 
   /**
-   * Rectangular logo (2:1 aspect ratio). Max <b>1 MB</b>. Allowed: <code>png</code>, <code>jpg</code>, <code>jpeg</code>, <code>webp</code>.
+   * Rectangular logo (2:1 aspect ratio). PNG, JPG or WebP, at least 512 px on the long side, at most <b>1 MB</b>.
    *
    * @return the file to upload, if set
    */
   public Optional<FileUpload> imageRectangular() {
     return file("image_rectangular");
+  }
+
+  /**
+   * Rectangular logo for dark mode (2:1 aspect ratio), shown on a dark background. PNG, JPG or WebP, at least 512 px on the long side, at most <b>1 MB</b>. Returned as <code>logo_rectangular_dark</code>.
+   *
+   * @return the file to upload, if set
+   */
+  public Optional<FileUpload> imageRectangularDark() {
+    return file("image_rectangular_dark");
   }
 
   /**
@@ -90,7 +99,7 @@ public final class CustomizationUpdateParams extends JsonModel {
     }
 
     /**
-     * Square logo (1:1 aspect ratio). Max <b>1 MB</b>. Allowed: <code>png</code>, <code>jpg</code>, <code>jpeg</code>, <code>webp</code>.
+     * Square logo (1:1 aspect ratio). PNG, JPG or WebP, at least 512 px on the long side, at most <b>1 MB</b>.
      *
      * @param imageSquare the value
      * @return this builder
@@ -110,7 +119,7 @@ public final class CustomizationUpdateParams extends JsonModel {
     }
 
     /**
-     * Rectangular logo (2:1 aspect ratio). Max <b>1 MB</b>. Allowed: <code>png</code>, <code>jpg</code>, <code>jpeg</code>, <code>webp</code>.
+     * Rectangular logo (2:1 aspect ratio). PNG, JPG or WebP, at least 512 px on the long side, at most <b>1 MB</b>.
      *
      * @param imageRectangular the value
      * @return this builder
@@ -127,6 +136,26 @@ public final class CustomizationUpdateParams extends JsonModel {
      */
     public Builder imageRectangular(Path path) {
       return setFile("image_rectangular", FileUpload.of(path));
+    }
+
+    /**
+     * Rectangular logo for dark mode (2:1 aspect ratio), shown on a dark background. PNG, JPG or WebP, at least 512 px on the long side, at most <b>1 MB</b>. Returned as <code>logo_rectangular_dark</code>.
+     *
+     * @param imageRectangularDark the value
+     * @return this builder
+     */
+    public Builder imageRectangularDark(FileUpload imageRectangularDark) {
+      return setFile("image_rectangular_dark", imageRectangularDark);
+    }
+
+    /**
+     * Uploads the file at {@code path} as {@code image_rectangular_dark}.
+     *
+     * @param path the file to read when the request is sent
+     * @return this builder
+     */
+    public Builder imageRectangularDark(Path path) {
+      return setFile("image_rectangular_dark", FileUpload.of(path));
     }
 
     /**

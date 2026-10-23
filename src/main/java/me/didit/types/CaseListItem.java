@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class CaseListItem extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "case_number", "title", "status", "resolution", "priority", "source", "tags", "subject", "assigned_to", "assigned_at", "due_at", "resolved_at", "created_by_email", "created_by_name", "blueprint", "links_count", "notes_count", "created_at", "updated_at", "application_id", "application_name", "organization_id", "organization_name");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "case_number", "title", "status", "resolution", "pending_resolution", "checker", "priority", "source", "tags", "subject", "assigned_to", "assigned_at", "team", "due_at", "resolved_at", "created_by_email", "created_by_name", "blueprint", "links_count", "notes_count", "created_at", "updated_at", "application_id", "application_name", "organization_id", "organization_name");
 
   private CaseListItem(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -102,6 +102,26 @@ public final class CaseListItem extends JsonModel {
   }
 
   /**
+   * Set only while a 4-eyes resolution is staged on the checker blueprint, awaiting approve or reject-approval.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<CaseListItem.PendingResolution> pendingResolution() {
+    return Json.optional(json, "pending_resolution", Conv.model(CaseListItem.PendingResolution::fromJson));
+  }
+
+  /**
+   * The member named to approve or reject the pending resolution. Set only while a four-eyes resolution waits on a named checker. Null when nothing is pending, while the pending resolution waits on the checker queue, and once the resolution is approved, rejected, or returned for a new review because the evidence changed.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<CaseChecker> checker() {
+    return Json.optional(json, "checker", Conv.model(CaseChecker::fromJson));
+  }
+
+  /**
    * The <code>priority</code> field.
    *
    * @return the value, or empty when the field is absent or null
@@ -159,6 +179,16 @@ public final class CaseListItem extends JsonModel {
    */
   public Optional<OffsetDateTime> assignedAt() {
     return Json.optional(json, "assigned_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * The review team that owns the case, or null when no team owns it. Routing sets it when a routing rule places the case with one of its teams. Change or clear it with <code>PATCH .../cases/{case_uuid}/</code> (<code>team</code>).
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<CaseTeamSummary> team() {
+    return Json.optional(json, "team", Conv.model(CaseTeamSummary::fromJson));
   }
 
   /**
@@ -355,6 +385,26 @@ public final class CaseListItem extends JsonModel {
     }
 
     /**
+     * Set only while a 4-eyes resolution is staged on the checker blueprint, awaiting approve or reject-approval.
+     *
+     * @param pendingResolution the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder pendingResolution(CaseListItem.@Nullable PendingResolution pendingResolution) {
+      return setNullable("pending_resolution", Conv.model(CaseListItem.PendingResolution::fromJson), pendingResolution);
+    }
+
+    /**
+     * The member named to approve or reject the pending resolution. Set only while a four-eyes resolution waits on a named checker. Null when nothing is pending, while the pending resolution waits on the checker queue, and once the resolution is approved, rejected, or returned for a new review because the evidence changed.
+     *
+     * @param checker the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder checker(@Nullable CaseChecker checker) {
+      return setNullable("checker", Conv.model(CaseChecker::fromJson), checker);
+    }
+
+    /**
      * The <code>priority</code> field.
      *
      * @param priority the value
@@ -412,6 +462,16 @@ public final class CaseListItem extends JsonModel {
      */
     public Builder assignedAt(@Nullable OffsetDateTime assignedAt) {
       return setNullable("assigned_at", Conv.DATE_TIME, assignedAt);
+    }
+
+    /**
+     * The review team that owns the case, or null when no team owns it. Routing sets it when a routing rule places the case with one of its teams. Change or clear it with <code>PATCH .../cases/{case_uuid}/</code> (<code>team</code>).
+     *
+     * @param team the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder team(@Nullable CaseTeamSummary team) {
+      return setNullable("team", Conv.model(CaseTeamSummary::fromJson), team);
     }
 
     /**
@@ -615,7 +675,16 @@ public final class CaseListItem extends JsonModel {
     /** The value {@code "VALID_THREAT"}. */
     public static final Resolution VALID_THREAT = new Resolution("VALID_THREAT");
 
-    private static final List<Resolution> KNOWN_VALUES = List.of(FALSE_POSITIVE, VALID_THREAT);
+    /** The value {@code "INCONCLUSIVE"}. */
+    public static final Resolution INCONCLUSIVE = new Resolution("INCONCLUSIVE");
+
+    /** The value {@code "REQUIREMENTS_NOT_MET"}. */
+    public static final Resolution REQUIREMENTS_NOT_MET = new Resolution("REQUIREMENTS_NOT_MET");
+
+    /** The value {@code "REQUIREMENTS_SATISFIED"}. */
+    public static final Resolution REQUIREMENTS_SATISFIED = new Resolution("REQUIREMENTS_SATISFIED");
+
+    private static final List<Resolution> KNOWN_VALUES = List.of(FALSE_POSITIVE, VALID_THREAT, INCONCLUSIVE, REQUIREMENTS_NOT_MET, REQUIREMENTS_SATISFIED);
 
     private Resolution(String value) {
       super(value);
@@ -643,6 +712,265 @@ public final class CaseListItem extends JsonModel {
     @Override
     public boolean isKnown() {
       return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Set only while a 4-eyes resolution is staged on the checker blueprint, awaiting approve or reject-approval.
+   */
+  public static final class PendingResolution extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("resolution", "resolution_notes", "maker_email", "maker_name", "maker_user_id", "maker_blueprint_id", "staged_at");
+
+    private PendingResolution(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code PendingResolution} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static PendingResolution fromJson(JsonNode json) {
+      return new PendingResolution(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>resolution</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<CaseListItem.PendingResolution.Resolution> resolution() {
+      return Json.optional(json, "resolution", Conv.enumeration(CaseListItem.PendingResolution.Resolution::of));
+    }
+
+    /**
+     * The <code>resolution_notes</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> resolutionNotes() {
+      return Json.optional(json, "resolution_notes", Conv.STRING);
+    }
+
+    /**
+     * Email of the officer who submitted the resolution. Null when an API key submitted it: that resolution has no recorded maker, so approve and reject-approval return 403 for every caller.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> makerEmail() {
+      return Json.optional(json, "maker_email", Conv.STRING);
+    }
+
+    /**
+     * The <code>maker_name</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> makerName() {
+      return Json.optional(json, "maker_name", Conv.STRING);
+    }
+
+    /**
+     * Member user uuid of the officer who submitted the resolution. Null when an API key submitted it. That member cannot be named as <code>checker</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> makerUserId() {
+      return Json.optional(json, "maker_user_id", Conv.STRING);
+    }
+
+    /**
+     * The <code>maker_blueprint_id</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> makerBlueprintId() {
+      return Json.optional(json, "maker_blueprint_id", Conv.STRING);
+    }
+
+    /**
+     * The <code>staged_at</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> stagedAt() {
+      return Json.optional(json, "staged_at", Conv.DATE_TIME);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link PendingResolution}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(PendingResolution from) {
+        super(from);
+      }
+
+      /**
+       * The <code>resolution</code> field.
+       *
+       * @param resolution the value
+       * @return this builder
+       */
+      public Builder resolution(CaseListItem.PendingResolution.Resolution resolution) {
+        return set("resolution", Conv.enumeration(CaseListItem.PendingResolution.Resolution::of), resolution);
+      }
+
+      /**
+       * The <code>resolution_notes</code> field.
+       *
+       * @param resolutionNotes the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder resolutionNotes(@Nullable String resolutionNotes) {
+        return setNullable("resolution_notes", Conv.STRING, resolutionNotes);
+      }
+
+      /**
+       * Email of the officer who submitted the resolution. Null when an API key submitted it: that resolution has no recorded maker, so approve and reject-approval return 403 for every caller.
+       *
+       * @param makerEmail the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder makerEmail(@Nullable String makerEmail) {
+        return setNullable("maker_email", Conv.STRING, makerEmail);
+      }
+
+      /**
+       * The <code>maker_name</code> field.
+       *
+       * @param makerName the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder makerName(@Nullable String makerName) {
+        return setNullable("maker_name", Conv.STRING, makerName);
+      }
+
+      /**
+       * Member user uuid of the officer who submitted the resolution. Null when an API key submitted it. That member cannot be named as <code>checker</code>.
+       *
+       * @param makerUserId the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder makerUserId(@Nullable String makerUserId) {
+        return setNullable("maker_user_id", Conv.STRING, makerUserId);
+      }
+
+      /**
+       * The <code>maker_blueprint_id</code> field.
+       *
+       * @param makerBlueprintId the value
+       * @return this builder
+       */
+      public Builder makerBlueprintId(String makerBlueprintId) {
+        return set("maker_blueprint_id", Conv.STRING, makerBlueprintId);
+      }
+
+      /**
+       * The <code>staged_at</code> field.
+       *
+       * @param stagedAt the value
+       * @return this builder
+       */
+      public Builder stagedAt(OffsetDateTime stagedAt) {
+        return set("staged_at", Conv.DATE_TIME, stagedAt);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code PendingResolution}
+       */
+      public PendingResolution build() {
+        return new PendingResolution(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Resolution extends StringEnum {
+      /** The value {@code "FALSE_POSITIVE"}. */
+      public static final Resolution FALSE_POSITIVE = new Resolution("FALSE_POSITIVE");
+
+      /** The value {@code "VALID_THREAT"}. */
+      public static final Resolution VALID_THREAT = new Resolution("VALID_THREAT");
+
+      /** The value {@code "INCONCLUSIVE"}. */
+      public static final Resolution INCONCLUSIVE = new Resolution("INCONCLUSIVE");
+
+      /** The value {@code "REQUIREMENTS_NOT_MET"}. */
+      public static final Resolution REQUIREMENTS_NOT_MET = new Resolution("REQUIREMENTS_NOT_MET");
+
+      /** The value {@code "REQUIREMENTS_SATISFIED"}. */
+      public static final Resolution REQUIREMENTS_SATISFIED = new Resolution("REQUIREMENTS_SATISFIED");
+
+      private static final List<Resolution> KNOWN_VALUES = List.of(FALSE_POSITIVE, VALID_THREAT, INCONCLUSIVE, REQUIREMENTS_NOT_MET, REQUIREMENTS_SATISFIED);
+
+      private Resolution(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Resolution of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Resolution::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Resolution> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
     }
   }
 

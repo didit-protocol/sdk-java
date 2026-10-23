@@ -17,7 +17,7 @@ import org.jspecify.annotations.Nullable;
  * White-label branding for an application: colors, fonts, radii, logo URLs and UI/UX options. Logo URLs are read-only (set them by uploading images). Custom domain and white-label email are not included.
  */
 public final class BrandingCustomization extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("color_primary", "color_secondary", "color_background", "color_panel", "color_panel_10", "color_on_panel_1", "color_on_panel_2", "color_on_background", "color_button_1", "color_button_2", "color_button_text_1", "color_button_text_2", "color_pill_text", "border_radius_panel", "border_radius_buttons", "font_family", "font_weight", "font_url", "logo_square", "logo_rectangular", "favicon", "app_public_name", "privacy_policy_url", "skip_welcome_screen", "disable_login_with_didit", "hide_progress_bar", "callback_seconds");
+  private static final Set<String> KNOWN_FIELDS = Set.of("color_primary", "color_secondary", "color_background", "color_panel", "color_panel_10", "color_on_panel_1", "color_on_panel_2", "color_on_background", "color_button_1", "color_button_2", "color_button_text_1", "color_button_text_2", "color_pill_text", "border_radius_panel", "border_radius_buttons", "font_family", "font_weight", "font_url", "logo_square", "logo_rectangular", "logo_rectangular_dark", "favicon", "app_public_name", "privacy_policy_url", "skip_welcome_screen", "disable_login_with_didit", "hide_progress_bar", "callback_seconds");
 
   private BrandingCustomization(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -250,6 +250,16 @@ public final class BrandingCustomization extends JsonModel {
    */
   public Optional<String> logoRectangular() {
     return Json.optional(json, "logo_rectangular", Conv.STRING);
+  }
+
+  /**
+   * Read-only. Temporary signed URL of the rectangular logo for dark mode, shown on a dark background. <code>null</code> when no dark logo is set or rectangular logos are not shown for your account. Upload it with <code>image_rectangular_dark</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> logoRectangularDark() {
+    return Json.optional(json, "logo_rectangular_dark", Conv.STRING);
   }
 
   /**
@@ -533,6 +543,16 @@ public final class BrandingCustomization extends JsonModel {
      */
     public Builder logoRectangular(@Nullable String logoRectangular) {
       return setNullable("logo_rectangular", Conv.STRING, logoRectangular);
+    }
+
+    /**
+     * Read-only. Temporary signed URL of the rectangular logo for dark mode, shown on a dark background. <code>null</code> when no dark logo is set or rectangular logos are not shown for your account. Upload it with <code>image_rectangular_dark</code>.
+     *
+     * @param logoRectangularDark the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder logoRectangularDark(@Nullable String logoRectangularDark) {
+      return setNullable("logo_rectangular_dark", Conv.STRING, logoRectangularDark);
     }
 
     /**

@@ -77,7 +77,7 @@ public final class BillingResource {
   /**
    * Top up credits
    *
-   * <p>Add credits via a hosted Stripe Checkout session (<b>$50 minimum</b>); not available on annual plans. Redirect the customer to the returned <code>checkout_session_url</code>.
+   * <p>Add credits via a hosted checkout session (<b>$50 minimum</b>); not available on annual plans. Redirect the customer to the returned <code>checkout_session_url</code>.
    *
    * <p>{@code POST /v3/billing/top-up/}
    *

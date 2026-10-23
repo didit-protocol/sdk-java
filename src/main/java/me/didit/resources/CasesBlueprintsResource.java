@@ -12,6 +12,7 @@ import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
 import me.didit.types.CaseBlueprintDetail;
 import me.didit.types.CaseBlueprintListItem;
+import me.didit.types.CaseBlueprintPresetInstallResult;
 import me.didit.types.CasePublicationCaseBlueprint;
 import me.didit.types.CasePublicationPolicyDraft;
 import me.didit.types.CasePublicationPolicyDraftPreconditionRequest;
@@ -20,7 +21,6 @@ import me.didit.types.CasePublicationPolicyDraftWriteRequest;
 import me.didit.types.CasePublicationPolicyRevision;
 import me.didit.types.CasesBlueprintsCreateParams;
 import me.didit.types.CasesBlueprintsInstallPresetsParams;
-import me.didit.types.CasesBlueprintsInstallPresetsResponse;
 import me.didit.types.CasesBlueprintsListHistoryParams;
 import me.didit.types.CasesBlueprintsListParams;
 import me.didit.types.CasesBlueprintsListPresetsResponse;
@@ -419,7 +419,7 @@ public final class CasesBlueprintsResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public CasesBlueprintsInstallPresetsResponse installPresets(CasesBlueprintsInstallPresetsParams params, RequestOptions options) {
+  public CaseBlueprintPresetInstallResult installPresets(CasesBlueprintsInstallPresetsParams params, RequestOptions options) {
     return client.execute(installPresetsRequest(params), options, INSTALL_PRESETS_RESPONSE).data();
   }
 
@@ -430,7 +430,7 @@ public final class CasesBlueprintsResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<CasesBlueprintsInstallPresetsResponse> installPresetsAsync(CasesBlueprintsInstallPresetsParams params, RequestOptions options) {
+  public CompletableFuture<CaseBlueprintPresetInstallResult> installPresetsAsync(CasesBlueprintsInstallPresetsParams params, RequestOptions options) {
     return client.executeAsync(installPresetsRequest(params), options, INSTALL_PRESETS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -440,7 +440,7 @@ public final class CasesBlueprintsResource {
    * @param params the request parameters
    * @return the result
    */
-  public CasesBlueprintsInstallPresetsResponse installPresets(CasesBlueprintsInstallPresetsParams params) {
+  public CaseBlueprintPresetInstallResult installPresets(CasesBlueprintsInstallPresetsParams params) {
     return client.execute(installPresetsRequest(params), RequestOptions.none(), INSTALL_PRESETS_RESPONSE).data();
   }
 
@@ -450,7 +450,7 @@ public final class CasesBlueprintsResource {
    * @param params the request parameters
    * @return a future completed with the result
    */
-  public CompletableFuture<CasesBlueprintsInstallPresetsResponse> installPresetsAsync(CasesBlueprintsInstallPresetsParams params) {
+  public CompletableFuture<CaseBlueprintPresetInstallResult> installPresetsAsync(CasesBlueprintsInstallPresetsParams params) {
     return client.executeAsync(installPresetsRequest(params), RequestOptions.none(), INSTALL_PRESETS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -460,7 +460,7 @@ public final class CasesBlueprintsResource {
    * @param options per-request options
    * @return the result
    */
-  public CasesBlueprintsInstallPresetsResponse installPresets(RequestOptions options) {
+  public CaseBlueprintPresetInstallResult installPresets(RequestOptions options) {
     return client.execute(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), options, INSTALL_PRESETS_RESPONSE).data();
   }
 
@@ -470,7 +470,7 @@ public final class CasesBlueprintsResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<CasesBlueprintsInstallPresetsResponse> installPresetsAsync(RequestOptions options) {
+  public CompletableFuture<CaseBlueprintPresetInstallResult> installPresetsAsync(RequestOptions options) {
     return client.executeAsync(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), options, INSTALL_PRESETS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -479,7 +479,7 @@ public final class CasesBlueprintsResource {
    *
    * @return the result
    */
-  public CasesBlueprintsInstallPresetsResponse installPresets() {
+  public CaseBlueprintPresetInstallResult installPresets() {
     return client.execute(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), RequestOptions.none(), INSTALL_PRESETS_RESPONSE).data();
   }
 
@@ -488,7 +488,7 @@ public final class CasesBlueprintsResource {
    *
    * @return a future completed with the result
    */
-  public CompletableFuture<CasesBlueprintsInstallPresetsResponse> installPresetsAsync() {
+  public CompletableFuture<CaseBlueprintPresetInstallResult> installPresetsAsync() {
     return client.executeAsync(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), RequestOptions.none(), INSTALL_PRESETS_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -821,7 +821,7 @@ public final class CasesBlueprintsResource {
         .build();
   }
 
-  private static final ResponseHandler<CasesBlueprintsInstallPresetsResponse> INSTALL_PRESETS_RESPONSE = Responses.byStatus(CasesBlueprintsInstallPresetsResponse::fromResponse);
+  private static final ResponseHandler<CaseBlueprintPresetInstallResult> INSTALL_PRESETS_RESPONSE = Responses.json(Conv.model(CaseBlueprintPresetInstallResult::fromJson));
 
   private static ApiRequest installPresetsRequest(CasesBlueprintsInstallPresetsParams params) {
     return ApiRequest.builder("POST", "/v3/organization/{organization_id}/application/{application_id}/cases/blueprints/presets/install/")
@@ -1231,7 +1231,7 @@ public final class CasesBlueprintsResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<CasesBlueprintsInstallPresetsResponse> installPresets(CasesBlueprintsInstallPresetsParams params, RequestOptions options) {
+    public RawResponse<CaseBlueprintPresetInstallResult> installPresets(CasesBlueprintsInstallPresetsParams params, RequestOptions options) {
       return client.execute(installPresetsRequest(params), options, INSTALL_PRESETS_RESPONSE);
     }
 
@@ -1242,7 +1242,7 @@ public final class CasesBlueprintsResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<CasesBlueprintsInstallPresetsResponse>> installPresetsAsync(CasesBlueprintsInstallPresetsParams params, RequestOptions options) {
+    public CompletableFuture<RawResponse<CaseBlueprintPresetInstallResult>> installPresetsAsync(CasesBlueprintsInstallPresetsParams params, RequestOptions options) {
       return client.executeAsync(installPresetsRequest(params), options, INSTALL_PRESETS_RESPONSE);
     }
 
@@ -1252,7 +1252,7 @@ public final class CasesBlueprintsResource {
      * @param params the request parameters
      * @return the result
      */
-    public RawResponse<CasesBlueprintsInstallPresetsResponse> installPresets(CasesBlueprintsInstallPresetsParams params) {
+    public RawResponse<CaseBlueprintPresetInstallResult> installPresets(CasesBlueprintsInstallPresetsParams params) {
       return client.execute(installPresetsRequest(params), RequestOptions.none(), INSTALL_PRESETS_RESPONSE);
     }
 
@@ -1262,7 +1262,7 @@ public final class CasesBlueprintsResource {
      * @param params the request parameters
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<CasesBlueprintsInstallPresetsResponse>> installPresetsAsync(CasesBlueprintsInstallPresetsParams params) {
+    public CompletableFuture<RawResponse<CaseBlueprintPresetInstallResult>> installPresetsAsync(CasesBlueprintsInstallPresetsParams params) {
       return client.executeAsync(installPresetsRequest(params), RequestOptions.none(), INSTALL_PRESETS_RESPONSE);
     }
 
@@ -1272,7 +1272,7 @@ public final class CasesBlueprintsResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<CasesBlueprintsInstallPresetsResponse> installPresets(RequestOptions options) {
+    public RawResponse<CaseBlueprintPresetInstallResult> installPresets(RequestOptions options) {
       return client.execute(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), options, INSTALL_PRESETS_RESPONSE);
     }
 
@@ -1282,7 +1282,7 @@ public final class CasesBlueprintsResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<CasesBlueprintsInstallPresetsResponse>> installPresetsAsync(RequestOptions options) {
+    public CompletableFuture<RawResponse<CaseBlueprintPresetInstallResult>> installPresetsAsync(RequestOptions options) {
       return client.executeAsync(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), options, INSTALL_PRESETS_RESPONSE);
     }
 
@@ -1291,7 +1291,7 @@ public final class CasesBlueprintsResource {
      *
      * @return the result
      */
-    public RawResponse<CasesBlueprintsInstallPresetsResponse> installPresets() {
+    public RawResponse<CaseBlueprintPresetInstallResult> installPresets() {
       return client.execute(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), RequestOptions.none(), INSTALL_PRESETS_RESPONSE);
     }
 
@@ -1300,7 +1300,7 @@ public final class CasesBlueprintsResource {
      *
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<CasesBlueprintsInstallPresetsResponse>> installPresetsAsync() {
+    public CompletableFuture<RawResponse<CaseBlueprintPresetInstallResult>> installPresetsAsync() {
       return client.executeAsync(installPresetsRequest(CasesBlueprintsInstallPresetsParams.builder().build()), RequestOptions.none(), INSTALL_PRESETS_RESPONSE);
     }
 

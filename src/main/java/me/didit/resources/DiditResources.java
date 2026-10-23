@@ -12,8 +12,10 @@ public abstract class DiditResources {
   private final AgeEstimationResource ageEstimation;
   private final AmlResource aml;
   private final AmlMonitoringResource amlMonitoring;
+  private final AnalyticsResource analytics;
   private final BillingResource billing;
   private final BiometricTemplatesResource biometricTemplates;
+  private final BlocklistResource blocklist;
   private final BusinessSessionsResource businessSessions;
   private final BusinessesResource businesses;
   private final CasesResource cases;
@@ -26,8 +28,11 @@ public abstract class DiditResources {
   private final FraudChecksResource fraudChecks;
   private final IdVerificationResource idVerification;
   private final IdWalletsResource idWallets;
+  private final InvestigatorResource investigator;
   private final IpResource ip;
   private final KybResource kyb;
+  private final ListsResource lists;
+  private final MonitoringEventsResource monitoringEvents;
   private final NetworksResource networks;
   private final PassiveLivenessResource passiveLiveness;
   private final PhoneResource phone;
@@ -53,8 +58,10 @@ public abstract class DiditResources {
     this.ageEstimation = new AgeEstimationResource(client);
     this.aml = new AmlResource(client);
     this.amlMonitoring = new AmlMonitoringResource(client);
+    this.analytics = new AnalyticsResource(client);
     this.billing = new BillingResource(client);
     this.biometricTemplates = new BiometricTemplatesResource(client);
+    this.blocklist = new BlocklistResource(client);
     this.businessSessions = new BusinessSessionsResource(client);
     this.businesses = new BusinessesResource(client);
     this.cases = new CasesResource(client);
@@ -67,8 +74,11 @@ public abstract class DiditResources {
     this.fraudChecks = new FraudChecksResource(client);
     this.idVerification = new IdVerificationResource(client);
     this.idWallets = new IdWalletsResource(client);
+    this.investigator = new InvestigatorResource(client);
     this.ip = new IpResource(client);
     this.kyb = new KybResource(client);
+    this.lists = new ListsResource(client);
+    this.monitoringEvents = new MonitoringEventsResource(client);
     this.networks = new NetworksResource(client);
     this.passiveLiveness = new PassiveLivenessResource(client);
     this.phone = new PhoneResource(client);
@@ -122,6 +132,15 @@ public abstract class DiditResources {
   }
 
   /**
+   * The {@code analytics} resource.
+   *
+   * @return the resource
+   */
+  public final AnalyticsResource analytics() {
+    return analytics;
+  }
+
+  /**
    * The {@code billing} resource.
    *
    * @return the resource
@@ -137,6 +156,15 @@ public abstract class DiditResources {
    */
   public final BiometricTemplatesResource biometricTemplates() {
     return biometricTemplates;
+  }
+
+  /**
+   * The {@code blocklist} resource.
+   *
+   * @return the resource
+   */
+  public final BlocklistResource blocklist() {
+    return blocklist;
   }
 
   /**
@@ -248,6 +276,15 @@ public abstract class DiditResources {
   }
 
   /**
+   * The {@code investigator} resource.
+   *
+   * @return the resource
+   */
+  public final InvestigatorResource investigator() {
+    return investigator;
+  }
+
+  /**
    * The {@code ip} resource.
    *
    * @return the resource
@@ -263,6 +300,24 @@ public abstract class DiditResources {
    */
   public final KybResource kyb() {
     return kyb;
+  }
+
+  /**
+   * The {@code lists} resource.
+   *
+   * @return the resource
+   */
+  public final ListsResource lists() {
+    return lists;
+  }
+
+  /**
+   * The {@code monitoring_events} resource.
+   *
+   * @return the resource
+   */
+  public final MonitoringEventsResource monitoringEvents() {
+    return monitoringEvents;
   }
 
   /**

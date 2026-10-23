@@ -16,7 +16,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code businesses.update}. */
 public final class BusinessesUpdateParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("display_name", "legal_name", "registration_number", "country_code", "status", "metadata");
+  private static final Set<String> KNOWN_FIELDS = Set.of("display_name", "legal_name", "registration_number", "country_code", "status", "metadata", "reason");
 
   private BusinessesUpdateParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -111,6 +111,16 @@ public final class BusinessesUpdateParams extends JsonModel {
     return Json.optional(json, "metadata", Conv.OBJECT);
   }
 
+  /**
+   * Why the status changed. Recorded on the status-change entry of the company's <b>Activity</b> in the Business Console, only when the status actually changes. Webhooks do not carry it.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> reason() {
+    return Json.optional(json, "reason", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -182,6 +192,16 @@ public final class BusinessesUpdateParams extends JsonModel {
      */
     public Builder metadata(@Nullable Map<String, ?> metadata) {
       return setAny("metadata", metadata);
+    }
+
+    /**
+     * Why the status changed. Recorded on the status-change entry of the company's <b>Activity</b> in the Business Console, only when the status actually changes. Webhooks do not carry it.
+     *
+     * @param reason the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder reason(@Nullable String reason) {
+      return setNullable("reason", Conv.STRING, reason);
     }
 
     /**

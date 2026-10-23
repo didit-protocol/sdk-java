@@ -14,7 +14,9 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.TravelRuleMessageCreateRequest;
 import me.didit.types.TravelRuleOwnershipConfirmRequest;
+import me.didit.types.TravelRuleTestVaspInboundRequest;
 import me.didit.types.TravelRuleTransferPatchRequest;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +28,7 @@ final class TransactionsTravelRuleResourceTest {
 
   @Test
   void updateTransfer() {
-    TravelRuleTransferPatchRequest params = TravelRuleTransferPatchRequest.builder().paymentTxnId("value-payment-txn-id").action(TravelRuleTransferPatchRequest.Action.CANCEL).build();
+    TravelRuleTransferPatchRequest params = TravelRuleTransferPatchRequest.builder().paymentTxnId("value-payment-txn-id").action(TravelRuleTransferPatchRequest.Action.CANCEL).complianceEmail("user@example.com").walletAddress("value-wallet-address").memo("value-memo").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
     var result = client.transactions().travelRule().updateTransfer("00000000-0000-4000-8000-00000002630a", params);
@@ -36,14 +38,14 @@ final class TransactionsTravelRuleResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"payment_txn_id\":\"value-payment-txn-id\",\"action\":\"cancel\"}", request.body());
+    TestJson.assertJsonEquals("{\"payment_txn_id\":\"value-payment-txn-id\",\"action\":\"cancel\",\"compliance_email\":\"user@example.com\",\"wallet_address\":\"value-wallet-address\",\"memo\":\"value-memo\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
   @Test
   void confirmOwnership() {
-    TravelRuleOwnershipConfirmRequest params = TravelRuleOwnershipConfirmRequest.builder().confirmed(true).build();
+    TravelRuleOwnershipConfirmRequest params = TravelRuleOwnershipConfirmRequest.builder().confirmed(true).walletAddress("value-wallet-address").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
     var result = client.transactions().travelRule().confirmOwnership("00000000-0000-4000-8000-0000000293dd", params);
@@ -53,7 +55,57 @@ final class TransactionsTravelRuleResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"confirmed\":true}", request.body());
+    TestJson.assertJsonEquals("{\"confirmed\":true,\"wallet_address\":\"value-wallet-address\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listMessages() {
+    JsonNode example = TestJson.parse("[]");
+    transport.respondJson(200, example);
+    var result = client.transactions().travelRule().listMessages("00000000-0000-4000-8000-000000023686");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/transactions/00000000-0000-4000-8000-000000023686/travel-rule/messages/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void createMessage() {
+    TravelRuleMessageCreateRequest params = TravelRuleMessageCreateRequest.builder().kind(TravelRuleMessageCreateRequest.Kind.MESSAGE).body("value-body").requestedDocuments(List.of("value-requested-documents")).replyTo("00000000-0000-4000-8000-000000000f77").files(List.of("value-files")).build();
+    JsonNode example = TestJson.parse("{}");
+    transport.respondJson(201, example);
+    var result = client.transactions().travelRule().createMessage("00000000-0000-4000-8000-0000000247fb", params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/transactions/00000000-0000-4000-8000-0000000247fb/travel-rule/messages/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"kind\":\"MESSAGE\",\"body\":\"value-body\",\"requested_documents\":[\"value-requested-documents\"],\"reply_to\":\"00000000-0000-4000-8000-000000000f77\",\"files\":[\"value-files\"]}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void triggerTestVaspInbound() {
+    TravelRuleTestVaspInboundRequest params = TravelRuleTestVaspInboundRequest.builder().beneficiaryWalletAddress("value-beneficiary-wallet-address").scenario(TravelRuleTestVaspInboundRequest.Scenario.ACCEPT).chain("value-chain").amount("value-amount").currency("value-currency").reference("value-reference").build();
+    JsonNode example = TestJson.parse("{}");
+    transport.respondJson(201, example);
+    var result = client.transactions().travelRule().triggerTestVaspInbound(params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/travel-rule/test-vasp/inbound/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"beneficiary_wallet_address\":\"value-beneficiary-wallet-address\",\"scenario\":\"accept\",\"chain\":\"value-chain\",\"amount\":\"value-amount\",\"currency\":\"value-currency\",\"reference\":\"value-reference\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

@@ -12,12 +12,13 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import me.didit.core.JsonUnion;
 import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code sessions.create}. */
 public final class SessionsCreateParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("workflow_id", "vendor_data", "callback", "callback_method", "metadata", "language", "contact_details", "expected_details", "portrait_image", "sandbox_scenario");
+  private static final Set<String> KNOWN_FIELDS = Set.of("workflow_id", "vendor_data", "callback", "callback_method", "metadata", "language", "contact_details", "expected_details", "portrait_image", "sandbox_scenario", "sign");
 
   private SessionsCreateParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -73,7 +74,7 @@ public final class SessionsCreateParams extends JsonModel {
   }
 
   /**
-   * URL to redirect the user to after verification completes. Didit automatically appends <code>verificationSessionId</code> and <code>status</code> (Approved, Declined, In Review) as query parameters. Custom URL schemes (e.g. <code>myapp://</code>) are supported for mobile callbacks. If omitted, the workflow's default <code>callback_url</code> is used.
+   * URL to redirect the user to after verification completes. Didit automatically appends <code>verificationSessionId</code> and <code>status</code> (Approved, Declined, In Review) as query parameters. Custom URL schemes (e.g. <code>myapp://</code>) are supported for mobile callbacks. If omitted, the workflow's default <code>callback_url</code> is used. When the application has allowed domains (<code>allowed_domains</code> on <code>PATCH /v3/webhook/</code>), an <code>http</code> or <code>https</code> callback must be on one of those origins (same scheme, host and port), otherwise the request fails with 400 on <code>callback</code>: <code>callback must be on one of the application's allowed domains: https://app.example.com</code>. Custom URL schemes are always accepted.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -152,6 +153,16 @@ public final class SessionsCreateParams extends JsonModel {
     return Json.optional(json, "sandbox_scenario", Conv.STRING);
   }
 
+  /**
+   * Electronic Signature input for this session. <code>documents</code> are the documents to sign, for a workflow whose Electronic Signature step takes documents from the session (<code>signature_documents_source</code> <code>session</code> or <code>both</code>): up to 20 documents and 50 MB in total. <code>field_values</code> fills the fields whose <code>prefill</code> is <code>api.&lt;key&gt;</code>, on workflow and session documents alike. Creating a session again for the same <code>workflow_id</code> and <code>vendor_data</code> returns the pending session; if that call sends <code>sign</code>, its documents, fields and values must be identical to the first ones, and anything different returns <code>400</code> with <code>{"sign": "signature_document_changed"}</code>. See [Electronic signature documents](/sessions-api/create-session#electronic-signature-documents).
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsCreateParams.Sign> sign() {
+    return Json.optional(json, "sign", Conv.model(SessionsCreateParams.Sign::fromJson));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -186,7 +197,7 @@ public final class SessionsCreateParams extends JsonModel {
     }
 
     /**
-     * URL to redirect the user to after verification completes. Didit automatically appends <code>verificationSessionId</code> and <code>status</code> (Approved, Declined, In Review) as query parameters. Custom URL schemes (e.g. <code>myapp://</code>) are supported for mobile callbacks. If omitted, the workflow's default <code>callback_url</code> is used.
+     * URL to redirect the user to after verification completes. Didit automatically appends <code>verificationSessionId</code> and <code>status</code> (Approved, Declined, In Review) as query parameters. Custom URL schemes (e.g. <code>myapp://</code>) are supported for mobile callbacks. If omitted, the workflow's default <code>callback_url</code> is used. When the application has allowed domains (<code>allowed_domains</code> on <code>PATCH /v3/webhook/</code>), an <code>http</code> or <code>https</code> callback must be on one of those origins (same scheme, host and port), otherwise the request fails with 400 on <code>callback</code>: <code>callback must be on one of the application's allowed domains: https://app.example.com</code>. Custom URL schemes are always accepted.
      *
      * @param callback the value
      * @return this builder
@@ -263,6 +274,16 @@ public final class SessionsCreateParams extends JsonModel {
      */
     public Builder sandboxScenario(String sandboxScenario) {
       return set("sandbox_scenario", Conv.STRING, sandboxScenario);
+    }
+
+    /**
+     * Electronic Signature input for this session. <code>documents</code> are the documents to sign, for a workflow whose Electronic Signature step takes documents from the session (<code>signature_documents_source</code> <code>session</code> or <code>both</code>): up to 20 documents and 50 MB in total. <code>field_values</code> fills the fields whose <code>prefill</code> is <code>api.&lt;key&gt;</code>, on workflow and session documents alike. Creating a session again for the same <code>workflow_id</code> and <code>vendor_data</code> returns the pending session; if that call sends <code>sign</code>, its documents, fields and values must be identical to the first ones, and anything different returns <code>400</code> with <code>{"sign": "signature_document_changed"}</code>. See [Electronic signature documents](/sessions-api/create-session#electronic-signature-documents).
+     *
+     * @param sign the value
+     * @return this builder
+     */
+    public Builder sign(SessionsCreateParams.Sign sign) {
+      return set("sign", Conv.model(SessionsCreateParams.Sign::fromJson), sign);
     }
 
     /**
@@ -1338,6 +1359,191 @@ public final class SessionsCreateParams extends JsonModel {
       @Override
       public boolean isKnown() {
         return KNOWN_VALUES.contains(this);
+      }
+    }
+  }
+
+  /**
+   * Electronic Signature input for this session. <code>documents</code> are the documents to sign, for a workflow whose Electronic Signature step takes documents from the session (<code>signature_documents_source</code> <code>session</code> or <code>both</code>): up to 20 documents and 50 MB in total. <code>field_values</code> fills the fields whose <code>prefill</code> is <code>api.&lt;key&gt;</code>, on workflow and session documents alike. Creating a session again for the same <code>workflow_id</code> and <code>vendor_data</code> returns the pending session; if that call sends <code>sign</code>, its documents, fields and values must be identical to the first ones, and anything different returns <code>400</code> with <code>{"sign": "signature_document_changed"}</code>. See [Electronic signature documents](/sessions-api/create-session#electronic-signature-documents).
+   */
+  public static final class Sign extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("documents", "field_values");
+
+    private Sign(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Sign} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Sign fromJson(JsonNode json) {
+      return new Sign(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>documents</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<List<SessionSignDocument>> documents() {
+      return Json.optional(json, "documents", Conv.list(Conv.model(SessionSignDocument::fromJson)));
+    }
+
+    /**
+     * Values keyed by the <code>&lt;key&gt;</code> of each <code>api.&lt;key&gt;</code> pre-fill source: strings of 1 to 500 characters for <code>text</code> and <code>data</code> fields, booleans for a <code>checkbox</code>. <code>400</code> with <code>field_value_unknown</code> for a key no field uses, <code>field_value_missing</code> for a required field without its value, and <code>field_value_invalid</code> for a value that fails its field's validation.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Map<String, SessionsCreateParams.Sign.FieldValuesValue>> fieldValues() {
+      return Json.optional(json, "field_values", Conv.map(Conv.union(SessionsCreateParams.Sign.FieldValuesValue::fromJson)));
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Sign}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Sign from) {
+        super(from);
+      }
+
+      /**
+       * The <code>documents</code> field.
+       *
+       * @param documents the value
+       * @return this builder
+       */
+      public Builder documents(List<SessionSignDocument> documents) {
+        return set("documents", Conv.list(Conv.model(SessionSignDocument::fromJson)), documents);
+      }
+
+      /**
+       * Values keyed by the <code>&lt;key&gt;</code> of each <code>api.&lt;key&gt;</code> pre-fill source: strings of 1 to 500 characters for <code>text</code> and <code>data</code> fields, booleans for a <code>checkbox</code>. <code>400</code> with <code>field_value_unknown</code> for a key no field uses, <code>field_value_missing</code> for a required field without its value, and <code>field_value_invalid</code> for a value that fails its field's validation.
+       *
+       * @param fieldValues the value
+       * @return this builder
+       */
+      public Builder fieldValues(Map<String, SessionsCreateParams.Sign.FieldValuesValue> fieldValues) {
+        return set("field_values", Conv.map(Conv.union(SessionsCreateParams.Sign.FieldValuesValue::fromJson)), fieldValues);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Sign}
+       */
+      public Sign build() {
+        return new Sign(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     *
+     * <p>One of: {@code String}, {@code Boolean}. Check with the {@code is...}
+     * methods and read with the {@code as...} methods.
+     */
+    public static final class FieldValuesValue extends JsonUnion {
+      private FieldValuesValue(JsonNode json) {
+        super(json);
+      }
+
+      /**
+       * Reads a {@code FieldValuesValue} from JSON.
+       *
+       * @param json any JSON value
+       * @return the union
+       */
+      public static FieldValuesValue fromJson(JsonNode json) {
+        return new FieldValuesValue(json.deepCopy());
+      }
+
+      /**
+       * Wraps a {@code String} value.
+       *
+       * @param value the value
+       * @return the union
+       */
+      public static FieldValuesValue ofString(String value) {
+        return new FieldValuesValue(Conv.STRING.write(value));
+      }
+
+      /**
+       * Whether this value is a {@code String}.
+       *
+       * @return true when it matches
+       */
+      public boolean isString() {
+        return json.isTextual();
+      }
+
+      /**
+       * Reads this value as a {@code String}.
+       *
+       * @return the value, or empty when {@link #isString()} is false
+       */
+      public Optional<String> asString() {
+        return isString() ? Optional.of(Conv.STRING.read(json)) : Optional.empty();
+      }
+
+      /**
+       * Wraps a {@code Boolean} value.
+       *
+       * @param value the value
+       * @return the union
+       */
+      public static FieldValuesValue ofBoolean(Boolean value) {
+        return new FieldValuesValue(Conv.BOOLEAN.write(value));
+      }
+
+      /**
+       * Whether this value is a {@code Boolean}.
+       *
+       * @return true when it matches
+       */
+      public boolean isBoolean() {
+        return json.isBoolean();
+      }
+
+      /**
+       * Reads this value as a {@code Boolean}.
+       *
+       * @return the value, or empty when {@link #isBoolean()} is false
+       */
+      public Optional<Boolean> asBoolean() {
+        return isBoolean() ? Optional.of(Conv.BOOLEAN.read(json)) : Optional.empty();
       }
     }
   }

@@ -60,7 +60,7 @@ public final class BillingTopUpParams extends JsonModel {
   }
 
   /**
-   * URL Stripe redirects the customer to after a successful payment. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable. Append the literal placeholder <code>{CHECKOUT_SESSION_ID}</code> if you want Stripe to substitute the session ID.
+   * URL the hosted checkout redirects the customer to after a successful payment. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable. Append the literal placeholder <code>{CHECKOUT_SESSION_ID}</code> if you want the hosted checkout to substitute the session ID.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -70,7 +70,7 @@ public final class BillingTopUpParams extends JsonModel {
   }
 
   /**
-   * URL Stripe redirects the customer to when they abort or close the Checkout window. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable.
+   * URL the hosted checkout redirects the customer to when they abort or close the Checkout window. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -103,7 +103,7 @@ public final class BillingTopUpParams extends JsonModel {
     }
 
     /**
-     * URL Stripe redirects the customer to after a successful payment. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable. Append the literal placeholder <code>{CHECKOUT_SESSION_ID}</code> if you want Stripe to substitute the session ID.
+     * URL the hosted checkout redirects the customer to after a successful payment. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable. Append the literal placeholder <code>{CHECKOUT_SESSION_ID}</code> if you want the hosted checkout to substitute the session ID.
      *
      * @param successUrl the value
      * @return this builder
@@ -113,7 +113,7 @@ public final class BillingTopUpParams extends JsonModel {
     }
 
     /**
-     * URL Stripe redirects the customer to when they abort or close the Checkout window. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable.
+     * URL the hosted checkout redirects the customer to when they abort or close the Checkout window. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable.
      *
      * @param cancelUrl the value
      * @return this builder

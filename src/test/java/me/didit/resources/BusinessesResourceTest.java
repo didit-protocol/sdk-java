@@ -19,10 +19,11 @@ import me.didit.types.BusinessesBatchDeleteParams;
 import me.didit.types.BusinessesCreateParams;
 import me.didit.types.BusinessesListParams;
 import me.didit.types.BusinessesSetAmlMonitoringParams;
-import me.didit.types.BusinessesSetOngoingMonitoringParams;
 import me.didit.types.BusinessesSetSessionOngoingMonitoringParams;
 import me.didit.types.BusinessesUpdateParams;
 import me.didit.types.BusinessesUpdateStatusParams;
+import me.didit.types.EntityStatusUpdateRequest;
+import me.didit.types.OngoingMonitoringToggleRequest;
 import org.junit.jupiter.api.Test;
 
 /** One test per operation of {@code businesses}, against a stubbed HTTP layer. */
@@ -67,7 +68,7 @@ final class BusinessesResourceTest {
 
   @Test
   void update() {
-    BusinessesUpdateParams params = BusinessesUpdateParams.builder().displayName("value-display-name").legalName("value-legal-name").registrationNumber("value-registration-number").countryCode("value-country-code").status(BusinessesUpdateParams.Status.ACTIVE).metadata(Map.of("key", "value")).build();
+    BusinessesUpdateParams params = BusinessesUpdateParams.builder().displayName("value-display-name").legalName("value-legal-name").registrationNumber("value-registration-number").countryCode("value-country-code").status(BusinessesUpdateParams.Status.ACTIVE).metadata(Map.of("key", "value")).reason("value-reason").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/businesses/{vendor_data}/", "200");
     transport.respondJson(200, example);
     var result = client.businesses().update("00000000-0000-4000-8000-00000000a594", params);
@@ -77,14 +78,14 @@ final class BusinessesResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"display_name\":\"value-display-name\",\"legal_name\":\"value-legal-name\",\"registration_number\":\"value-registration-number\",\"country_code\":\"value-country-code\",\"status\":\"ACTIVE\",\"metadata\":{\"key\":\"value\"}}", request.body());
+    TestJson.assertJsonEquals("{\"display_name\":\"value-display-name\",\"legal_name\":\"value-legal-name\",\"registration_number\":\"value-registration-number\",\"country_code\":\"value-country-code\",\"status\":\"ACTIVE\",\"metadata\":{\"key\":\"value\"},\"reason\":\"value-reason\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
   @Test
   void updateStatus() {
-    BusinessesUpdateStatusParams params = BusinessesUpdateStatusParams.builder().status(BusinessesUpdateStatusParams.Status.ACTIVE).build();
+    BusinessesUpdateStatusParams params = BusinessesUpdateStatusParams.builder().status(EntityStatusUpdateRequest.Status.ACTIVE).reason("value-reason").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/businesses/{vendor_data}/update-status/", "200");
     transport.respondJson(200, example);
     var result = client.businesses().updateStatus("00000000-0000-4000-8000-0000000104c4", params);
@@ -94,7 +95,7 @@ final class BusinessesResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"status\":\"ACTIVE\"}", request.body());
+    TestJson.assertJsonEquals("{\"status\":\"ACTIVE\",\"reason\":\"value-reason\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
@@ -153,7 +154,7 @@ final class BusinessesResourceTest {
 
   @Test
   void setOngoingMonitoring() {
-    BusinessesSetOngoingMonitoringParams params = BusinessesSetOngoingMonitoringParams.builder().isEnabled(true).estimateOnly(true).updateAll(true).filterSearch("value-filter-search").filterStatus(List.of("value-filter-status")).filterCountry("value-filter-country").filterDateFrom(LocalDate.parse("2026-11-01")).filterDateTo(LocalDate.parse("2026-11-01")).diditInternalIdList(List.of("00000000-0000-4000-8000-0000000068ce")).build();
+    OngoingMonitoringToggleRequest params = OngoingMonitoringToggleRequest.builder().isEnabled(true).estimateOnly(true).updateAll(true).filterSearch("value-filter-search").filterStatus(List.of("value-filter-status")).filterCountry("value-filter-country").filterDateFrom(LocalDate.parse("2026-11-01")).filterDateTo(LocalDate.parse("2026-11-01")).diditInternalIdList(List.of("00000000-0000-4000-8000-0000000068ce")).build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
     var result = client.businesses().setOngoingMonitoring(params);
@@ -233,5 +234,20 @@ final class BusinessesResourceTest {
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
+  }
+
+  @Test
+  void generateSessionPdf() {
+    transport.respondBinary(200, "application/pdf", new byte[] {37, 80, 68, 70});
+    var result = client.businesses().generateSessionPdf("00000000-0000-4000-8000-00000002122a");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/businesses/00000000-0000-4000-8000-00000002122a/pdf/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("application/pdf, application/json", request.header("Accept"));
+    assertEquals(0, request.body().length);
+    assertArrayEquals(new byte[] {37, 80, 68, 70}, result.bytes());
   }
 }
