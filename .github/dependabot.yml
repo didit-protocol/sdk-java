@@ -4,6 +4,10 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    # JUnit 6 requires Java 17, the SDK promises Java 11
+    ignore:
+      - dependency-name: "org.junit:junit-bom"
+        update-types: ["version-update:semver-major"]
     groups:
       build-tools:
         patterns: ["*errorprone*", "*nullaway*", "*spotless*", "*google-java-format*", "*kotlin*", "*junit*", "*maven-publish*"]
