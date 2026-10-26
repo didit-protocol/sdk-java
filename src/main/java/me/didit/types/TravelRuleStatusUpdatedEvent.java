@@ -15,10 +15,10 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /**
- * A Travel Rule exchange changed status. Sent on every transition up to and including <code>FINISHED</code>, <code>CANCELLED</code> or <code>EXPIRED</code>, never after. Sent for live applications only. There is no top-level <code>status</code>.
+ * A Travel Rule exchange changed status. Sent on every transition up to and including <code>FINISHED</code>, <code>CANCELLED</code> or <code>EXPIRED</code>, never after. Sent for live applications and, for Travel Rule exchanges, for sandbox applications too (<code>environment: sandbox</code>). There is no top-level <code>status</code>.
  */
 public final class TravelRuleStatusUpdatedEvent extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("event_id", "timestamp", "created_at", "application_id", "environment", "webhook_type", "transaction_id", "txn_id", "travel_rule_status", "rail", "direction");
+  private static final Set<String> KNOWN_FIELDS = Set.of("event_id", "timestamp", "created_at", "application_id", "environment", "webhook_type", "transaction_id", "txn_id", "travel_rule_status", "rail", "test_vasp", "test_vasp_scenario", "direction");
 
   private TravelRuleStatusUpdatedEvent(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -144,13 +144,33 @@ public final class TravelRuleStatusUpdatedEvent extends JsonModel {
   }
 
   /**
-   * Network the exchange runs on, or an empty string when none could be resolved.
+   * Network the exchange runs on, or an empty string when none could be resolved. <code>TEST_VASP</code> is a sandbox transfer the Didit Test VASP answered.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
   public TravelRuleStatusUpdatedEvent.Rail rail() {
     return Json.required(json, "rail", Conv.enumeration(TravelRuleStatusUpdatedEvent.Rail::of));
+  }
+
+  /**
+   * Present and <code>true</code> only on a sandbox transfer the Didit Test VASP answered.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> testVasp() {
+    return Json.optional(json, "test_vasp", Conv.BOOLEAN);
+  }
+
+  /**
+   * Present only with <code>test_vasp</code>: the sandbox scenario that decided the outcome, or an empty string.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> testVaspScenario() {
+    return Json.optional(json, "test_vasp_scenario", Conv.STRING);
   }
 
   /**
@@ -267,13 +287,33 @@ public final class TravelRuleStatusUpdatedEvent extends JsonModel {
     }
 
     /**
-     * Network the exchange runs on, or an empty string when none could be resolved.
+     * Network the exchange runs on, or an empty string when none could be resolved. <code>TEST_VASP</code> is a sandbox transfer the Didit Test VASP answered.
      *
      * @param rail the value
      * @return this builder
      */
     public Builder rail(TravelRuleStatusUpdatedEvent.Rail rail) {
       return set("rail", Conv.enumeration(TravelRuleStatusUpdatedEvent.Rail::of), rail);
+    }
+
+    /**
+     * Present and <code>true</code> only on a sandbox transfer the Didit Test VASP answered.
+     *
+     * @param testVasp the value
+     * @return this builder
+     */
+    public Builder testVasp(boolean testVasp) {
+      return set("test_vasp", Conv.BOOLEAN, testVasp);
+    }
+
+    /**
+     * Present only with <code>test_vasp</code>: the sandbox scenario that decided the outcome, or an empty string.
+     *
+     * @param testVaspScenario the value
+     * @return this builder
+     */
+    public Builder testVaspScenario(String testVaspScenario) {
+      return set("test_vasp_scenario", Conv.STRING, testVaspScenario);
     }
 
     /**
@@ -430,7 +470,7 @@ public final class TravelRuleStatusUpdatedEvent extends JsonModel {
   }
 
   /**
-   * Network the exchange runs on, or an empty string when none could be resolved.
+   * Network the exchange runs on, or an empty string when none could be resolved. <code>TEST_VASP</code> is a sandbox transfer the Didit Test VASP answered.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -459,7 +499,10 @@ public final class TravelRuleStatusUpdatedEvent extends JsonModel {
     /** The value {@code "EMAIL"}. */
     public static final Rail EMAIL = new Rail("EMAIL");
 
-    private static final List<Rail> KNOWN_VALUES = List.of(EMPTY, INTERNAL, TRP, GTR, TRUST, VERIFYVASP, SYGNA, EMAIL);
+    /** The value {@code "TEST_VASP"}. */
+    public static final Rail TEST_VASP = new Rail("TEST_VASP");
+
+    private static final List<Rail> KNOWN_VALUES = List.of(EMPTY, INTERNAL, TRP, GTR, TRUST, VERIFYVASP, SYGNA, EMAIL, TEST_VASP);
 
     private Rail(String value) {
       super(value);
