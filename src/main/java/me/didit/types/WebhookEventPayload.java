@@ -331,7 +331,7 @@ public final class WebhookEventPayload extends JsonUnion {
   /**
    * Whether this value is a {@code TravelRuleStatusUpdatedEvent}.
    *
-   * A Travel Rule exchange changed status. Sent on every transition up to and including <code>FINISHED</code>, <code>CANCELLED</code> or <code>EXPIRED</code>, never after. Sent for live applications only. There is no top-level <code>status</code>.
+   * A Travel Rule exchange changed status. Sent on every transition up to and including <code>FINISHED</code>, <code>CANCELLED</code> or <code>EXPIRED</code>, never after. Sent for live applications and, for Travel Rule exchanges, for sandbox applications too (<code>environment: sandbox</code>). There is no top-level <code>status</code>.
    *
    * @return true when it matches
    */

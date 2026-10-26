@@ -2900,7 +2900,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * Beneficiary party, as flat fields or one IVMS 101 person. An empty <code>wallet_address</code> is filled from <code>counterparty.payment_method.account_id</code>. It must be an object: anything else is a <code>400</code>. On a memo network <code>memo</code> names the beneficiary wallet's memo or tag; <code>wallet_address</code> and <code>memo</code> win over the counterparty's payment method.
+     * Beneficiary party, as flat fields or one IVMS 101 person. It must be an object: anything else is a <code>400</code>. To route the transfer, Didit reads <code>wallet_address</code> (an empty one is filled from <code>counterparty.payment_method.account_id</code>), <code>chain</code> (filled from <code>transaction_details.crypto_params.crypto_chain</code> or the <code>currency</code> when that names a supported chain), <code>name</code> (falling back to <code>counterparty.full_name</code>), <code>travel_address</code>, <code>counterparty_vasp_name</code>, <code>counterparty_vasp_lei</code> and <code>counterparty_vasp_email</code>. On a memo network <code>memo</code> names the beneficiary wallet's memo or tag; <code>wallet_address</code> and <code>memo</code> win over the counterparty's payment method.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3023,7 +3023,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * Beneficiary party, as flat fields or one IVMS 101 person. An empty <code>wallet_address</code> is filled from <code>counterparty.payment_method.account_id</code>. It must be an object: anything else is a <code>400</code>. On a memo network <code>memo</code> names the beneficiary wallet's memo or tag; <code>wallet_address</code> and <code>memo</code> win over the counterparty's payment method.
+       * Beneficiary party, as flat fields or one IVMS 101 person. It must be an object: anything else is a <code>400</code>. To route the transfer, Didit reads <code>wallet_address</code> (an empty one is filled from <code>counterparty.payment_method.account_id</code>), <code>chain</code> (filled from <code>transaction_details.crypto_params.crypto_chain</code> or the <code>currency</code> when that names a supported chain), <code>name</code> (falling back to <code>counterparty.full_name</code>), <code>travel_address</code>, <code>counterparty_vasp_name</code>, <code>counterparty_vasp_lei</code> and <code>counterparty_vasp_email</code>. On a memo network <code>memo</code> names the beneficiary wallet's memo or tag; <code>wallet_address</code> and <code>memo</code> win over the counterparty's payment method.
        *
        * @param beneficiaryData the value
        * @return this builder
