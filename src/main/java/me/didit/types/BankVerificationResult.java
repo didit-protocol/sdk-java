@@ -16,10 +16,10 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /**
- * One Bank Verification step's result, for User and Business Verification. <code>method</code> says how the account was verified. See [Bank verification methods](/core-technology/bank-verification/verification-methods).
+ * One Bank Verification step's result, for User and Business Verification. <code>method</code> says how the account was verified, and <code>none</code> that the person continued without a bank before any attempt was evaluated. <code>continued_without_bank</code> says the person continued without a bank, also after an evaluated attempt. See [Bank verification methods](/core-technology/bank-verification/verification-methods) and [When the person cannot verify their bank](/core-technology/bank-verification/fallbacks).
  */
 public final class BankVerificationResult extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("schema_version", "bank_verification_id", "node_id", "status", "original_status", "method", "provider", "credential_source", "route", "connection", "account", "ownership", "financial_data", "billing", "reference_identity", "signals", "connection_abandoned", "not_covered", "evidence_purged_at", "warnings", "reason_codes", "created_at", "updated_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("schema_version", "bank_verification_id", "node_id", "status", "original_status", "method", "provider", "credential_source", "route", "connection", "account", "ownership", "financial_data", "billing", "reference_identity", "signals", "connection_abandoned", "not_covered", "continued_without_bank", "continuation", "evidence_purged_at", "warnings", "reason_codes", "created_at", "updated_at");
 
   private BankVerificationResult(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -105,7 +105,7 @@ public final class BankVerificationResult extends JsonModel {
   }
 
   /**
-   * How the account was verified: <code>open_banking</code> (bank sign-in: the person signed in at their bank), <code>account_lookup</code> (account check: the person typed the account details and the bank confirmed the name), <code>microdeposits</code> or <code>statement</code> (a statement upload). <code>null</code> until an account is evaluated. Workflow rules read the same value as <code>bank.method</code>.
+   * How the account was verified: <code>open_banking</code> (bank sign-in: the person signed in at their bank), <code>account_lookup</code> (account check: the person typed the account details and the bank confirmed the name), <code>microdeposits</code> or <code>statement</code> (a statement upload). <code>none</code> when the person continued without a bank before any attempt was evaluated, so no account was verified. After an evaluated attempt, it stays the method of that attempt. <code>null</code> until an account is evaluated, and when the workflow narrows the data it returns. Workflow rules read the same value as <code>bank.method</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -225,13 +225,33 @@ public final class BankVerificationResult extends JsonModel {
   }
 
   /**
-   * Whether the person's bank or country could not be reached on this step.
+   * Whether the person's bank or country could not be reached on this step. Also <code>true</code> when the person continued without a bank because no method could verify their country or bank.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<Boolean> notCovered() {
     return Json.optional(json, "not_covered", Conv.BOOLEAN);
+  }
+
+  /**
+   * Whether the person left the step with <b>Continue without your bank</b>. <code>continuation</code> then says why. <code>method</code> is <code>none</code> when no attempt was evaluated before they continued. After an evaluated attempt, such as a holder that does not match, <code>method</code> stays the method of that attempt and its verdict and reason codes stand. Returned even when the workflow narrows the data it returns.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> continuedWithoutBank() {
+    return Json.optional(json, "continued_without_bank", Conv.BOOLEAN);
+  }
+
+  /**
+   * How the person continued without a bank. <code>null</code> when they did not. When the workflow narrows the data it returns, <code>reason</code> is still returned and every other key is <code>null</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<BankVerificationResult.Continuation> continuation() {
+    return Json.optional(json, "continuation", Conv.model(BankVerificationResult.Continuation::fromJson));
   }
 
   /**
@@ -255,7 +275,7 @@ public final class BankVerificationResult extends JsonModel {
   }
 
   /**
-   * Why the verdict came out the way it did, for example <code>OWNER_NAME_PARTIAL</code>. Several may apply.
+   * Why the verdict came out the way it did, for example <code>OWNER_NAME_PARTIAL</code>. Several may apply. <code>NOT_COVERED</code>: the person continued without a bank because no method could verify their country or bank. <code>SKIPPED</code>: the person chose to continue without a bank while a way to verify was there. Neither is added when an evaluated attempt already decided the step.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -348,7 +368,7 @@ public final class BankVerificationResult extends JsonModel {
     }
 
     /**
-     * How the account was verified: <code>open_banking</code> (bank sign-in: the person signed in at their bank), <code>account_lookup</code> (account check: the person typed the account details and the bank confirmed the name), <code>microdeposits</code> or <code>statement</code> (a statement upload). <code>null</code> until an account is evaluated. Workflow rules read the same value as <code>bank.method</code>.
+     * How the account was verified: <code>open_banking</code> (bank sign-in: the person signed in at their bank), <code>account_lookup</code> (account check: the person typed the account details and the bank confirmed the name), <code>microdeposits</code> or <code>statement</code> (a statement upload). <code>none</code> when the person continued without a bank before any attempt was evaluated, so no account was verified. After an evaluated attempt, it stays the method of that attempt. <code>null</code> until an account is evaluated, and when the workflow narrows the data it returns. Workflow rules read the same value as <code>bank.method</code>.
      *
      * @param method the value, or {@code null} to send JSON null
      * @return this builder
@@ -468,13 +488,33 @@ public final class BankVerificationResult extends JsonModel {
     }
 
     /**
-     * Whether the person's bank or country could not be reached on this step.
+     * Whether the person's bank or country could not be reached on this step. Also <code>true</code> when the person continued without a bank because no method could verify their country or bank.
      *
      * @param notCovered the value, or {@code null} to send JSON null
      * @return this builder
      */
     public Builder notCovered(@Nullable Boolean notCovered) {
       return setNullable("not_covered", Conv.BOOLEAN, notCovered);
+    }
+
+    /**
+     * Whether the person left the step with <b>Continue without your bank</b>. <code>continuation</code> then says why. <code>method</code> is <code>none</code> when no attempt was evaluated before they continued. After an evaluated attempt, such as a holder that does not match, <code>method</code> stays the method of that attempt and its verdict and reason codes stand. Returned even when the workflow narrows the data it returns.
+     *
+     * @param continuedWithoutBank the value
+     * @return this builder
+     */
+    public Builder continuedWithoutBank(boolean continuedWithoutBank) {
+      return set("continued_without_bank", Conv.BOOLEAN, continuedWithoutBank);
+    }
+
+    /**
+     * How the person continued without a bank. <code>null</code> when they did not. When the workflow narrows the data it returns, <code>reason</code> is still returned and every other key is <code>null</code>.
+     *
+     * @param continuation the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder continuation(BankVerificationResult.@Nullable Continuation continuation) {
+      return setNullable("continuation", Conv.model(BankVerificationResult.Continuation::fromJson), continuation);
     }
 
     /**
@@ -498,7 +538,7 @@ public final class BankVerificationResult extends JsonModel {
     }
 
     /**
-     * Why the verdict came out the way it did, for example <code>OWNER_NAME_PARTIAL</code>. Several may apply.
+     * Why the verdict came out the way it did, for example <code>OWNER_NAME_PARTIAL</code>. Several may apply. <code>NOT_COVERED</code>: the person continued without a bank because no method could verify their country or bank. <code>SKIPPED</code>: the person chose to continue without a bank while a way to verify was there. Neither is added when an evaluated attempt already decided the step.
      *
      * @param reasonCodes the value
      * @return this builder
@@ -595,7 +635,7 @@ public final class BankVerificationResult extends JsonModel {
   }
 
   /**
-   * How the account was verified: <code>open_banking</code> (bank sign-in: the person signed in at their bank), <code>account_lookup</code> (account check: the person typed the account details and the bank confirmed the name), <code>microdeposits</code> or <code>statement</code> (a statement upload). <code>null</code> until an account is evaluated. Workflow rules read the same value as <code>bank.method</code>.
+   * How the account was verified: <code>open_banking</code> (bank sign-in: the person signed in at their bank), <code>account_lookup</code> (account check: the person typed the account details and the bank confirmed the name), <code>microdeposits</code> or <code>statement</code> (a statement upload). <code>none</code> when the person continued without a bank before any attempt was evaluated, so no account was verified. After an evaluated attempt, it stays the method of that attempt. <code>null</code> until an account is evaluated, and when the workflow narrows the data it returns. Workflow rules read the same value as <code>bank.method</code>.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -612,7 +652,10 @@ public final class BankVerificationResult extends JsonModel {
     /** The value {@code "statement"}. */
     public static final Method STATEMENT = new Method("statement");
 
-    private static final List<Method> KNOWN_VALUES = List.of(OPEN_BANKING, ACCOUNT_LOOKUP, MICRODEPOSITS, STATEMENT);
+    /** The value {@code "none"}. */
+    public static final Method NONE = new Method("none");
+
+    private static final List<Method> KNOWN_VALUES = List.of(OPEN_BANKING, ACCOUNT_LOOKUP, MICRODEPOSITS, STATEMENT, NONE);
 
     private Method(String value) {
       super(value);
@@ -2469,7 +2512,7 @@ public final class BankVerificationResult extends JsonModel {
     }
 
     /**
-     * The usage line the charge was booked on.
+     * The usage line the charge was booked on: <code>bank_verification</code> for a bank sign-in or an account check, <code>bank_statement_upload</code> for a statement upload with no charged bank attempt before it, and <code>bank_byok_fee</code> for the marketplace fee on your own provider. <code>null</code> when nothing was billed.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2522,7 +2565,7 @@ public final class BankVerificationResult extends JsonModel {
       }
 
       /**
-       * The usage line the charge was booked on.
+       * The usage line the charge was booked on: <code>bank_verification</code> for a bank sign-in or an account check, <code>bank_statement_upload</code> for a statement upload with no charged bank attempt before it, and <code>bank_byok_fee</code> for the marketplace fee on your own provider. <code>null</code> when nothing was billed.
        *
        * @param usageType the value, or {@code null} to send JSON null
        * @return this builder
@@ -2579,6 +2622,285 @@ public final class BankVerificationResult extends JsonModel {
        * @return the known values
        */
       public static List<Route> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+  }
+
+  /**
+   * How the person continued without a bank. <code>null</code> when they did not. When the workflow narrows the data it returns, <code>reason</code> is still returned and every other key is <code>null</code>.
+   */
+  public static final class Continuation extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("reason", "country", "offered", "institution_id", "institution_name", "continued_at");
+
+    private Continuation(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Continuation} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Continuation fromJson(JsonNode json) {
+      return new Continuation(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * Why, as Didit worked it out when the person continued: <code>no_route</code> (no bank sign-in or account check serves their country), <code>institution_unsupported</code> (the bank they picked cannot be used on this step), <code>attempts_exhausted</code> (every attempt was already spent and none was in progress), or <code>person_choice</code> (a way to verify was there and they chose to continue, also when their bank could not be reached right now). <code>no_route</code> and <code>institution_unsupported</code> follow <code>bank_unsupported_action</code>, <code>attempts_exhausted</code> follows <code>bank_attempts_exhausted_action</code>, and <code>person_choice</code> follows <code>bank_skipped_action</code>, unless an evaluated attempt already decided the step.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<BankVerificationResult.Continuation.Reason> reason() {
+      return Json.optional(json, "reason", Conv.enumeration(BankVerificationResult.Continuation.Reason::of));
+    }
+
+    /**
+     * The country the person was verifying in, ISO 3166-1 alpha-3. <code>null</code> when they continued before picking one.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> country() {
+      return Json.optional(json, "country", Conv.STRING);
+    }
+
+    /**
+     * The other ways to verify that country offered the person when they continued, in the order it offered them: <code>statement</code> (a statement upload), then <code>microdeposits</code>. Empty when it offered none.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<List<BankVerificationResult.Continuation.Offered>> offered() {
+      return Json.optional(json, "offered", Conv.list(Conv.enumeration(BankVerificationResult.Continuation.Offered::of)));
+    }
+
+    /**
+     * For <code>institution_unsupported</code>, the ID of the bank the person could not use: the bank they picked, or the bank their last attempt ended on. Didit takes it from its own list of banks, never from the person's device, so a bank that list does not have is <code>null</code>. <code>null</code> for every other reason.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> institutionId() {
+      return Json.optional(json, "institution_id", Conv.STRING);
+    }
+
+    /**
+     * For <code>institution_unsupported</code>, the name of that bank, from the same list as <code>institution_id</code>. <code>null</code> when that list does not have the bank, and for every other reason.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> institutionName() {
+      return Json.optional(json, "institution_name", Conv.STRING);
+    }
+
+    /**
+     * When the person continued.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> continuedAt() {
+      return Json.optional(json, "continued_at", Conv.DATE_TIME);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Continuation}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Continuation from) {
+        super(from);
+      }
+
+      /**
+       * Why, as Didit worked it out when the person continued: <code>no_route</code> (no bank sign-in or account check serves their country), <code>institution_unsupported</code> (the bank they picked cannot be used on this step), <code>attempts_exhausted</code> (every attempt was already spent and none was in progress), or <code>person_choice</code> (a way to verify was there and they chose to continue, also when their bank could not be reached right now). <code>no_route</code> and <code>institution_unsupported</code> follow <code>bank_unsupported_action</code>, <code>attempts_exhausted</code> follows <code>bank_attempts_exhausted_action</code>, and <code>person_choice</code> follows <code>bank_skipped_action</code>, unless an evaluated attempt already decided the step.
+       *
+       * @param reason the value
+       * @return this builder
+       */
+      public Builder reason(BankVerificationResult.Continuation.Reason reason) {
+        return set("reason", Conv.enumeration(BankVerificationResult.Continuation.Reason::of), reason);
+      }
+
+      /**
+       * The country the person was verifying in, ISO 3166-1 alpha-3. <code>null</code> when they continued before picking one.
+       *
+       * @param country the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder country(@Nullable String country) {
+        return setNullable("country", Conv.STRING, country);
+      }
+
+      /**
+       * The other ways to verify that country offered the person when they continued, in the order it offered them: <code>statement</code> (a statement upload), then <code>microdeposits</code>. Empty when it offered none.
+       *
+       * @param offered the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder offered(@Nullable List<BankVerificationResult.Continuation.Offered> offered) {
+        return setNullable("offered", Conv.list(Conv.enumeration(BankVerificationResult.Continuation.Offered::of)), offered);
+      }
+
+      /**
+       * For <code>institution_unsupported</code>, the ID of the bank the person could not use: the bank they picked, or the bank their last attempt ended on. Didit takes it from its own list of banks, never from the person's device, so a bank that list does not have is <code>null</code>. <code>null</code> for every other reason.
+       *
+       * @param institutionId the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder institutionId(@Nullable String institutionId) {
+        return setNullable("institution_id", Conv.STRING, institutionId);
+      }
+
+      /**
+       * For <code>institution_unsupported</code>, the name of that bank, from the same list as <code>institution_id</code>. <code>null</code> when that list does not have the bank, and for every other reason.
+       *
+       * @param institutionName the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder institutionName(@Nullable String institutionName) {
+        return setNullable("institution_name", Conv.STRING, institutionName);
+      }
+
+      /**
+       * When the person continued.
+       *
+       * @param continuedAt the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder continuedAt(@Nullable OffsetDateTime continuedAt) {
+        return setNullable("continued_at", Conv.DATE_TIME, continuedAt);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Continuation}
+       */
+      public Continuation build() {
+        return new Continuation(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     * Why, as Didit worked it out when the person continued: <code>no_route</code> (no bank sign-in or account check serves their country), <code>institution_unsupported</code> (the bank they picked cannot be used on this step), <code>attempts_exhausted</code> (every attempt was already spent and none was in progress), or <code>person_choice</code> (a way to verify was there and they chose to continue, also when their bank could not be reached right now). <code>no_route</code> and <code>institution_unsupported</code> follow <code>bank_unsupported_action</code>, <code>attempts_exhausted</code> follows <code>bank_attempts_exhausted_action</code>, and <code>person_choice</code> follows <code>bank_skipped_action</code>, unless an evaluated attempt already decided the step.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Reason extends StringEnum {
+      /** The value {@code "no_route"}. */
+      public static final Reason NO_ROUTE = new Reason("no_route");
+
+      /** The value {@code "institution_unsupported"}. */
+      public static final Reason INSTITUTION_UNSUPPORTED = new Reason("institution_unsupported");
+
+      /** The value {@code "attempts_exhausted"}. */
+      public static final Reason ATTEMPTS_EXHAUSTED = new Reason("attempts_exhausted");
+
+      /** The value {@code "person_choice"}. */
+      public static final Reason PERSON_CHOICE = new Reason("person_choice");
+
+      private static final List<Reason> KNOWN_VALUES = List.of(NO_ROUTE, INSTITUTION_UNSUPPORTED, ATTEMPTS_EXHAUSTED, PERSON_CHOICE);
+
+      private Reason(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Reason of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Reason::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Reason> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Offered extends StringEnum {
+      /** The value {@code "statement"}. */
+      public static final Offered STATEMENT = new Offered("statement");
+
+      /** The value {@code "microdeposits"}. */
+      public static final Offered MICRODEPOSITS = new Offered("microdeposits");
+
+      private static final List<Offered> KNOWN_VALUES = List.of(STATEMENT, MICRODEPOSITS);
+
+      private Offered(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Offered of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Offered::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Offered> knownValues() {
         return KNOWN_VALUES;
       }
 

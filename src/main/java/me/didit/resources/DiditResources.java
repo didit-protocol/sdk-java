@@ -37,6 +37,7 @@ public abstract class DiditResources {
   private final NetworksResource networks;
   private final PassiveLivenessResource passiveLiveness;
   private final PhoneResource phone;
+  private final PricingResource pricing;
   private final ProofOfAddressResource proofOfAddress;
   private final QuestionnairesResource questionnaires;
   private final RegulatoryReportsResource regulatoryReports;
@@ -84,6 +85,7 @@ public abstract class DiditResources {
     this.networks = new NetworksResource(client);
     this.passiveLiveness = new PassiveLivenessResource(client);
     this.phone = new PhoneResource(client);
+    this.pricing = new PricingResource(client);
     this.proofOfAddress = new ProofOfAddressResource(client);
     this.questionnaires = new QuestionnairesResource(client);
     this.regulatoryReports = new RegulatoryReportsResource(client);
@@ -356,6 +358,15 @@ public abstract class DiditResources {
    */
   public final PhoneResource phone() {
     return phone;
+  }
+
+  /**
+   * The {@code pricing} resource.
+   *
+   * @return the resource
+   */
+  public final PricingResource pricing() {
+    return pricing;
   }
 
   /**

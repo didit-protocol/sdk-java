@@ -283,7 +283,7 @@ public final class SessionDecision extends JsonModel {
   }
 
   /**
-   * Bank Verification results, one item per Bank Verification step, for User and Business Verification. <code>null</code> until a step produces one. Each item's <code>method</code> says how the account was verified: <code>open_banking</code> (bank sign-in) or <code>account_lookup</code> (account check), or a <code>microdeposits</code> or <code>statement</code> fallback. See [Bank verification methods](/core-technology/bank-verification/verification-methods).
+   * Bank Verification results, one item per Bank Verification step, for User and Business Verification. <code>null</code> until a step produces one. Each item's <code>method</code> says how the account was verified: <code>open_banking</code> (bank sign-in) or <code>account_lookup</code> (account check), or a <code>statement</code> or <code>microdeposits</code> fallback, and <code>none</code> when the person continued without a bank before any attempt was evaluated (<code>continued_without_bank</code>). See [Bank verification methods](/core-technology/bank-verification/verification-methods).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -702,7 +702,7 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
-     * Bank Verification results, one item per Bank Verification step, for User and Business Verification. <code>null</code> until a step produces one. Each item's <code>method</code> says how the account was verified: <code>open_banking</code> (bank sign-in) or <code>account_lookup</code> (account check), or a <code>microdeposits</code> or <code>statement</code> fallback. See [Bank verification methods](/core-technology/bank-verification/verification-methods).
+     * Bank Verification results, one item per Bank Verification step, for User and Business Verification. <code>null</code> until a step produces one. Each item's <code>method</code> says how the account was verified: <code>open_banking</code> (bank sign-in) or <code>account_lookup</code> (account check), or a <code>statement</code> or <code>microdeposits</code> fallback, and <code>none</code> when the person continued without a bank before any attempt was evaluated (<code>continued_without_bank</code>). See [Bank verification methods](/core-technology/bank-verification/verification-methods).
      *
      * @param bankVerifications the value, or {@code null} to send JSON null
      * @return this builder

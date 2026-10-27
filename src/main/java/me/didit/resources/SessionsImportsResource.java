@@ -13,9 +13,17 @@ import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
 import me.didit.types.SessionImportError;
 import me.didit.types.SessionImportJob;
+import me.didit.types.SessionsImportsCheckProviderParams;
+import me.didit.types.SessionsImportsCheckProviderResponse;
 import me.didit.types.SessionsImportsCreateParams;
+import me.didit.types.SessionsImportsListActiveJobsResponse;
 import me.didit.types.SessionsImportsListErrorsParams;
+import me.didit.types.SessionsImportsListJobsParams;
+import me.didit.types.SessionsImportsListJobsResponse;
+import me.didit.types.SessionsImportsListProvidersResponse;
 import me.didit.types.SessionsImportsRetrieveTemplateParams;
+import me.didit.types.SessionsImportsRetryParams;
+import me.didit.types.SessionsImportsStartParams;
 
 /** The {@code sessions.imports} resource: {@code client.sessions().imports()}. */
 public final class SessionsImportsResource {
@@ -39,7 +47,7 @@ public final class SessionsImportsResource {
   /**
    * Create a verification import job
    *
-   * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Use this to migrate from providers such as Sumsub, MetaMap, Veriff, Onfido, Persona, Trulioo, Jumio, Incode, iDenfy, or any other provider after transforming the export into Didit's canonical CSV/NDJSON format. Imports are disabled by default and must be enabled per organization by Didit.
+   * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Set <code>source=provider</code> to migrate from another provider: Didit reads Sumsub, Onfido, Persona and ComplyCube with your read-only key, reads Veriff, iDenfy and MetaMap records by the IDs you upload in <code>file</code>, and imports an export file in Didit's format for the other providers. Record IDs are namespaced by provider (<code>sumsub:&lt;id&gt;</code>) so a re-run skips everything already in Didit. Imports are disabled by default and must be enabled per organization by Didit.
    *
    * <p>{@code POST /v3/session/imports/}
    *
@@ -344,6 +352,542 @@ public final class SessionsImportsResource {
     return client.executeAsync(listErrorsRequest(importId, SessionsImportsListErrorsParams.builder().build()), RequestOptions.none(), LIST_ERRORS_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * List migration providers
+   *
+   * <p>The 15 providers you can migrate verifications from: what each needs to connect, whether its API can list records, the permissions its key needs and its default status mapping.
+   *
+   * <p>{@code GET /v3/session/imports/providers/}
+   *
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionsImportsListProvidersResponse listProviders(RequestOptions options) {
+    return client.execute(listProvidersRequest(), options, LIST_PROVIDERS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listProviders(RequestOptions)}.
+   *
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsImportsListProvidersResponse> listProvidersAsync(RequestOptions options) {
+    return client.executeAsync(listProvidersRequest(), options, LIST_PROVIDERS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listProviders(RequestOptions)}, with the client's options.
+   *
+   * @return the result
+   */
+  public SessionsImportsListProvidersResponse listProviders() {
+    return client.execute(listProvidersRequest(), RequestOptions.none(), LIST_PROVIDERS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listProviders(RequestOptions)}, with the client's options.
+   *
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsImportsListProvidersResponse> listProvidersAsync() {
+    return client.executeAsync(listProvidersRequest(), RequestOptions.none(), LIST_PROVIDERS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Check a provider key
+   *
+   * <p>Read the provider with your key before creating a migration. Nothing is stored.
+   *
+   * <p>{@code POST /v3/session/imports/providers/check/}
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionsImportsCheckProviderResponse checkProvider(SessionsImportsCheckProviderParams params, RequestOptions options) {
+    return client.execute(checkProviderRequest(params), options, CHECK_PROVIDER_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #checkProvider(SessionsImportsCheckProviderParams, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsImportsCheckProviderResponse> checkProviderAsync(SessionsImportsCheckProviderParams params, RequestOptions options) {
+    return client.executeAsync(checkProviderRequest(params), options, CHECK_PROVIDER_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #checkProvider(SessionsImportsCheckProviderParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return the result
+   */
+  public SessionsImportsCheckProviderResponse checkProvider(SessionsImportsCheckProviderParams params) {
+    return client.execute(checkProviderRequest(params), RequestOptions.none(), CHECK_PROVIDER_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #checkProvider(SessionsImportsCheckProviderParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsImportsCheckProviderResponse> checkProviderAsync(SessionsImportsCheckProviderParams params) {
+    return client.executeAsync(checkProviderRequest(params), RequestOptions.none(), CHECK_PROVIDER_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Start a dry run
+   *
+   * <p>Start a migration whose dry run finished (<code>READY</code>): the same job imports for real, with the status mapping and face templates choice as sent now.
+   *
+   * <p>{@code POST /v3/session/imports/{importId}/start/}
+   *
+   * @param importId the {@code importId}
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionImportJob start(String importId, SessionsImportsStartParams params, RequestOptions options) {
+    return client.execute(startRequest(importId, params), options, START_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #start(String, SessionsImportsStartParams, RequestOptions)}.
+   *
+   * @param importId the {@code importId}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> startAsync(String importId, SessionsImportsStartParams params, RequestOptions options) {
+    return client.executeAsync(startRequest(importId, params), options, START_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #start(String, SessionsImportsStartParams, RequestOptions)}, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @param params the request parameters
+   * @return the result
+   */
+  public SessionImportJob start(String importId, SessionsImportsStartParams params) {
+    return client.execute(startRequest(importId, params), RequestOptions.none(), START_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #start(String, SessionsImportsStartParams, RequestOptions)}, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> startAsync(String importId, SessionsImportsStartParams params) {
+    return client.executeAsync(startRequest(importId, params), RequestOptions.none(), START_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #start(String, SessionsImportsStartParams, RequestOptions)}, without parameters.
+   *
+   * @param importId the {@code importId}
+   * @param options per-request options
+   * @return the result
+   */
+  public SessionImportJob start(String importId, RequestOptions options) {
+    return client.execute(startRequest(importId, SessionsImportsStartParams.builder().build()), options, START_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #start(String, SessionsImportsStartParams, RequestOptions)}, without parameters.
+   *
+   * @param importId the {@code importId}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> startAsync(String importId, RequestOptions options) {
+    return client.executeAsync(startRequest(importId, SessionsImportsStartParams.builder().build()), options, START_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #start(String, SessionsImportsStartParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @return the result
+   */
+  public SessionImportJob start(String importId) {
+    return client.execute(startRequest(importId, SessionsImportsStartParams.builder().build()), RequestOptions.none(), START_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #start(String, SessionsImportsStartParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> startAsync(String importId) {
+    return client.executeAsync(startRequest(importId, SessionsImportsStartParams.builder().build()), RequestOptions.none(), START_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Pause an import job
+   *
+   * <p>Pause a queued or running import.
+   *
+   * <p>{@code POST /v3/session/imports/{importId}/pause/}
+   *
+   * @param importId the {@code importId}
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionImportJob pause(String importId, RequestOptions options) {
+    return client.execute(pauseRequest(importId), options, PAUSE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #pause(String, RequestOptions)}.
+   *
+   * @param importId the {@code importId}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> pauseAsync(String importId, RequestOptions options) {
+    return client.executeAsync(pauseRequest(importId), options, PAUSE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #pause(String, RequestOptions)}, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @return the result
+   */
+  public SessionImportJob pause(String importId) {
+    return client.execute(pauseRequest(importId), RequestOptions.none(), PAUSE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #pause(String, RequestOptions)}, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> pauseAsync(String importId) {
+    return client.executeAsync(pauseRequest(importId), RequestOptions.none(), PAUSE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Resume an import job
+   *
+   * <p>Resume an import you paused. A job paused by the provider's rate limit resumes by itself.
+   *
+   * <p>{@code POST /v3/session/imports/{importId}/resume/}
+   *
+   * @param importId the {@code importId}
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionImportJob resume(String importId, RequestOptions options) {
+    return client.execute(resumeRequest(importId), options, RESUME_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #resume(String, RequestOptions)}.
+   *
+   * @param importId the {@code importId}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> resumeAsync(String importId, RequestOptions options) {
+    return client.executeAsync(resumeRequest(importId), options, RESUME_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #resume(String, RequestOptions)}, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @return the result
+   */
+  public SessionImportJob resume(String importId) {
+    return client.execute(resumeRequest(importId), RequestOptions.none(), RESUME_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #resume(String, RequestOptions)}, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> resumeAsync(String importId) {
+    return client.executeAsync(resumeRequest(importId), RequestOptions.none(), RESUME_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Cancel an import job
+   *
+   * <p>Cancel an import. What was imported stays; the uploaded file and the key are erased.
+   *
+   * <p>{@code POST /v3/session/imports/{importId}/cancel/}
+   *
+   * @param importId the {@code importId}
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionImportJob cancel(String importId, RequestOptions options) {
+    return client.execute(cancelRequest(importId), options, CANCEL_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #cancel(String, RequestOptions)}.
+   *
+   * @param importId the {@code importId}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> cancelAsync(String importId, RequestOptions options) {
+    return client.executeAsync(cancelRequest(importId), options, CANCEL_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #cancel(String, RequestOptions)}, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @return the result
+   */
+  public SessionImportJob cancel(String importId) {
+    return client.execute(cancelRequest(importId), RequestOptions.none(), CANCEL_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #cancel(String, RequestOptions)}, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> cancelAsync(String importId) {
+    return client.executeAsync(cancelRequest(importId), RequestOptions.none(), CANCEL_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Retry a migration
+   *
+   * <p>Run a migration that ended again as a new job, with a new key (the old one was erased). It keeps the provider, workflow, region, status mapping and face templates choice; everything already in Didit is skipped.
+   *
+   * <p>{@code POST /v3/session/imports/{importId}/retry/}
+   *
+   * @param importId the {@code importId}
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionImportJob retry(String importId, SessionsImportsRetryParams params, RequestOptions options) {
+    return client.execute(retryRequest(importId, params), options, RETRY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retry(String, SessionsImportsRetryParams, RequestOptions)}.
+   *
+   * @param importId the {@code importId}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> retryAsync(String importId, SessionsImportsRetryParams params, RequestOptions options) {
+    return client.executeAsync(retryRequest(importId, params), options, RETRY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retry(String, SessionsImportsRetryParams, RequestOptions)}, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @param params the request parameters
+   * @return the result
+   */
+  public SessionImportJob retry(String importId, SessionsImportsRetryParams params) {
+    return client.execute(retryRequest(importId, params), RequestOptions.none(), RETRY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retry(String, SessionsImportsRetryParams, RequestOptions)}, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> retryAsync(String importId, SessionsImportsRetryParams params) {
+    return client.executeAsync(retryRequest(importId, params), RequestOptions.none(), RETRY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retry(String, SessionsImportsRetryParams, RequestOptions)}, without parameters.
+   *
+   * @param importId the {@code importId}
+   * @param options per-request options
+   * @return the result
+   */
+  public SessionImportJob retry(String importId, RequestOptions options) {
+    return client.execute(retryRequest(importId, SessionsImportsRetryParams.builder().build()), options, RETRY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retry(String, SessionsImportsRetryParams, RequestOptions)}, without parameters.
+   *
+   * @param importId the {@code importId}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> retryAsync(String importId, RequestOptions options) {
+    return client.executeAsync(retryRequest(importId, SessionsImportsRetryParams.builder().build()), options, RETRY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retry(String, SessionsImportsRetryParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @return the result
+   */
+  public SessionImportJob retry(String importId) {
+    return client.execute(retryRequest(importId, SessionsImportsRetryParams.builder().build()), RequestOptions.none(), RETRY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retry(String, SessionsImportsRetryParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> retryAsync(String importId) {
+    return client.executeAsync(retryRequest(importId, SessionsImportsRetryParams.builder().build()), RequestOptions.none(), RETRY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * List import jobs
+   *
+   * <p>Every import of the application in one shape: verification imports and migrations, people and businesses.
+   *
+   * <p>{@code GET /v3/import-jobs/}
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionsImportsListJobsResponse listJobs(SessionsImportsListJobsParams params, RequestOptions options) {
+    return client.execute(listJobsRequest(params), options, LIST_JOBS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsImportsListJobsResponse> listJobsAsync(SessionsImportsListJobsParams params, RequestOptions options) {
+    return client.executeAsync(listJobsRequest(params), options, LIST_JOBS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return the result
+   */
+  public SessionsImportsListJobsResponse listJobs(SessionsImportsListJobsParams params) {
+    return client.execute(listJobsRequest(params), RequestOptions.none(), LIST_JOBS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsImportsListJobsResponse> listJobsAsync(SessionsImportsListJobsParams params) {
+    return client.executeAsync(listJobsRequest(params), RequestOptions.none(), LIST_JOBS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)}, without parameters.
+   *
+   * @param options per-request options
+   * @return the result
+   */
+  public SessionsImportsListJobsResponse listJobs(RequestOptions options) {
+    return client.execute(listJobsRequest(SessionsImportsListJobsParams.builder().build()), options, LIST_JOBS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)}, without parameters.
+   *
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsImportsListJobsResponse> listJobsAsync(RequestOptions options) {
+    return client.executeAsync(listJobsRequest(SessionsImportsListJobsParams.builder().build()), options, LIST_JOBS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @return the result
+   */
+  public SessionsImportsListJobsResponse listJobs() {
+    return client.execute(listJobsRequest(SessionsImportsListJobsParams.builder().build()), RequestOptions.none(), LIST_JOBS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsImportsListJobsResponse> listJobsAsync() {
+    return client.executeAsync(listJobsRequest(SessionsImportsListJobsParams.builder().build()), RequestOptions.none(), LIST_JOBS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * List active import jobs
+   *
+   * <p>What is running or waiting, plus what just ended, for a progress indicator.
+   *
+   * <p>{@code GET /v3/import-jobs/active/}
+   *
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionsImportsListActiveJobsResponse listActiveJobs(RequestOptions options) {
+    return client.execute(listActiveJobsRequest(), options, LIST_ACTIVE_JOBS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listActiveJobs(RequestOptions)}.
+   *
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsImportsListActiveJobsResponse> listActiveJobsAsync(RequestOptions options) {
+    return client.executeAsync(listActiveJobsRequest(), options, LIST_ACTIVE_JOBS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listActiveJobs(RequestOptions)}, with the client's options.
+   *
+   * @return the result
+   */
+  public SessionsImportsListActiveJobsResponse listActiveJobs() {
+    return client.execute(listActiveJobsRequest(), RequestOptions.none(), LIST_ACTIVE_JOBS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listActiveJobs(RequestOptions)}, with the client's options.
+   *
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsImportsListActiveJobsResponse> listActiveJobsAsync() {
+    return client.executeAsync(listActiveJobsRequest(), RequestOptions.none(), LIST_ACTIVE_JOBS_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<SessionImportJob> CREATE_RESPONSE = Responses.json(Conv.model(SessionImportJob::fromJson));
 
   private static ApiRequest createRequest(SessionsImportsCreateParams params) {
@@ -378,6 +922,82 @@ public final class SessionsImportsResource {
         .pathParam("importId", importId)
         .params(params)
         .queryFields("limit", "offset")
+        .build();
+  }
+
+  private static final ResponseHandler<SessionsImportsListProvidersResponse> LIST_PROVIDERS_RESPONSE = Responses.json(Conv.model(SessionsImportsListProvidersResponse::fromJson));
+
+  private static ApiRequest listProvidersRequest() {
+    return ApiRequest.builder("GET", "/v3/session/imports/providers/")
+        .build();
+  }
+
+  private static final ResponseHandler<SessionsImportsCheckProviderResponse> CHECK_PROVIDER_RESPONSE = Responses.json(Conv.model(SessionsImportsCheckProviderResponse::fromJson));
+
+  private static ApiRequest checkProviderRequest(SessionsImportsCheckProviderParams params) {
+    return ApiRequest.builder("POST", "/v3/session/imports/providers/check/")
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<SessionImportJob> START_RESPONSE = Responses.json(Conv.model(SessionImportJob::fromJson));
+
+  private static ApiRequest startRequest(String importId, SessionsImportsStartParams params) {
+    return ApiRequest.builder("POST", "/v3/session/imports/{importId}/start/")
+        .pathParam("importId", importId)
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<SessionImportJob> PAUSE_RESPONSE = Responses.json(Conv.model(SessionImportJob::fromJson));
+
+  private static ApiRequest pauseRequest(String importId) {
+    return ApiRequest.builder("POST", "/v3/session/imports/{importId}/pause/")
+        .pathParam("importId", importId)
+        .build();
+  }
+
+  private static final ResponseHandler<SessionImportJob> RESUME_RESPONSE = Responses.json(Conv.model(SessionImportJob::fromJson));
+
+  private static ApiRequest resumeRequest(String importId) {
+    return ApiRequest.builder("POST", "/v3/session/imports/{importId}/resume/")
+        .pathParam("importId", importId)
+        .build();
+  }
+
+  private static final ResponseHandler<SessionImportJob> CANCEL_RESPONSE = Responses.json(Conv.model(SessionImportJob::fromJson));
+
+  private static ApiRequest cancelRequest(String importId) {
+    return ApiRequest.builder("POST", "/v3/session/imports/{importId}/cancel/")
+        .pathParam("importId", importId)
+        .build();
+  }
+
+  private static final ResponseHandler<SessionImportJob> RETRY_RESPONSE = Responses.json(Conv.model(SessionImportJob::fromJson));
+
+  private static ApiRequest retryRequest(String importId, SessionsImportsRetryParams params) {
+    return ApiRequest.builder("POST", "/v3/session/imports/{importId}/retry/")
+        .pathParam("importId", importId)
+        .params(params)
+        .body(ApiRequest.BodyEncoding.MULTIPART)
+        .build();
+  }
+
+  private static final ResponseHandler<SessionsImportsListJobsResponse> LIST_JOBS_RESPONSE = Responses.json(Conv.model(SessionsImportsListJobsResponse::fromJson));
+
+  private static ApiRequest listJobsRequest(SessionsImportsListJobsParams params) {
+    return ApiRequest.builder("GET", "/v3/import-jobs/")
+        .params(params)
+        .queryFields("scope", "limit")
+        .build();
+  }
+
+  private static final ResponseHandler<SessionsImportsListActiveJobsResponse> LIST_ACTIVE_JOBS_RESPONSE = Responses.json(Conv.model(SessionsImportsListActiveJobsResponse::fromJson));
+
+  private static ApiRequest listActiveJobsRequest() {
+    return ApiRequest.builder("GET", "/v3/import-jobs/active/")
         .build();
   }
 
@@ -677,6 +1297,506 @@ public final class SessionsImportsResource {
      */
     public CompletableFuture<RawResponse<Page<SessionImportError>>> listErrorsAsync(String importId) {
       return client.executeAsync(listErrorsRequest(importId, SessionsImportsListErrorsParams.builder().build()), RequestOptions.none(), LIST_ERRORS_RESPONSE);
+    }
+
+    /**
+     * {@link #listProviders(RequestOptions)} with the raw response.
+     *
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsImportsListProvidersResponse> listProviders(RequestOptions options) {
+      return client.execute(listProvidersRequest(), options, LIST_PROVIDERS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listProviders(RequestOptions)} with the raw response.
+     *
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsImportsListProvidersResponse>> listProvidersAsync(RequestOptions options) {
+      return client.executeAsync(listProvidersRequest(), options, LIST_PROVIDERS_RESPONSE);
+    }
+
+    /**
+     * {@link #listProviders(RequestOptions)} with the raw response, with the client's options.
+     *
+     * @return the result
+     */
+    public RawResponse<SessionsImportsListProvidersResponse> listProviders() {
+      return client.execute(listProvidersRequest(), RequestOptions.none(), LIST_PROVIDERS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listProviders(RequestOptions)} with the raw response, with the client's options.
+     *
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsImportsListProvidersResponse>> listProvidersAsync() {
+      return client.executeAsync(listProvidersRequest(), RequestOptions.none(), LIST_PROVIDERS_RESPONSE);
+    }
+
+    /**
+     * {@link #checkProvider(SessionsImportsCheckProviderParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsImportsCheckProviderResponse> checkProvider(SessionsImportsCheckProviderParams params, RequestOptions options) {
+      return client.execute(checkProviderRequest(params), options, CHECK_PROVIDER_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #checkProvider(SessionsImportsCheckProviderParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsImportsCheckProviderResponse>> checkProviderAsync(SessionsImportsCheckProviderParams params, RequestOptions options) {
+      return client.executeAsync(checkProviderRequest(params), options, CHECK_PROVIDER_RESPONSE);
+    }
+
+    /**
+     * {@link #checkProvider(SessionsImportsCheckProviderParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<SessionsImportsCheckProviderResponse> checkProvider(SessionsImportsCheckProviderParams params) {
+      return client.execute(checkProviderRequest(params), RequestOptions.none(), CHECK_PROVIDER_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #checkProvider(SessionsImportsCheckProviderParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsImportsCheckProviderResponse>> checkProviderAsync(SessionsImportsCheckProviderParams params) {
+      return client.executeAsync(checkProviderRequest(params), RequestOptions.none(), CHECK_PROVIDER_RESPONSE);
+    }
+
+    /**
+     * {@link #start(String, SessionsImportsStartParams, RequestOptions)} with the raw response.
+     *
+     * @param importId the {@code importId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> start(String importId, SessionsImportsStartParams params, RequestOptions options) {
+      return client.execute(startRequest(importId, params), options, START_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #start(String, SessionsImportsStartParams, RequestOptions)} with the raw response.
+     *
+     * @param importId the {@code importId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> startAsync(String importId, SessionsImportsStartParams params, RequestOptions options) {
+      return client.executeAsync(startRequest(importId, params), options, START_RESPONSE);
+    }
+
+    /**
+     * {@link #start(String, SessionsImportsStartParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> start(String importId, SessionsImportsStartParams params) {
+      return client.execute(startRequest(importId, params), RequestOptions.none(), START_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #start(String, SessionsImportsStartParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> startAsync(String importId, SessionsImportsStartParams params) {
+      return client.executeAsync(startRequest(importId, params), RequestOptions.none(), START_RESPONSE);
+    }
+
+    /**
+     * {@link #start(String, SessionsImportsStartParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param importId the {@code importId}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> start(String importId, RequestOptions options) {
+      return client.execute(startRequest(importId, SessionsImportsStartParams.builder().build()), options, START_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #start(String, SessionsImportsStartParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param importId the {@code importId}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> startAsync(String importId, RequestOptions options) {
+      return client.executeAsync(startRequest(importId, SessionsImportsStartParams.builder().build()), options, START_RESPONSE);
+    }
+
+    /**
+     * {@link #start(String, SessionsImportsStartParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> start(String importId) {
+      return client.execute(startRequest(importId, SessionsImportsStartParams.builder().build()), RequestOptions.none(), START_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #start(String, SessionsImportsStartParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> startAsync(String importId) {
+      return client.executeAsync(startRequest(importId, SessionsImportsStartParams.builder().build()), RequestOptions.none(), START_RESPONSE);
+    }
+
+    /**
+     * {@link #pause(String, RequestOptions)} with the raw response.
+     *
+     * @param importId the {@code importId}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> pause(String importId, RequestOptions options) {
+      return client.execute(pauseRequest(importId), options, PAUSE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #pause(String, RequestOptions)} with the raw response.
+     *
+     * @param importId the {@code importId}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> pauseAsync(String importId, RequestOptions options) {
+      return client.executeAsync(pauseRequest(importId), options, PAUSE_RESPONSE);
+    }
+
+    /**
+     * {@link #pause(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> pause(String importId) {
+      return client.execute(pauseRequest(importId), RequestOptions.none(), PAUSE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #pause(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> pauseAsync(String importId) {
+      return client.executeAsync(pauseRequest(importId), RequestOptions.none(), PAUSE_RESPONSE);
+    }
+
+    /**
+     * {@link #resume(String, RequestOptions)} with the raw response.
+     *
+     * @param importId the {@code importId}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> resume(String importId, RequestOptions options) {
+      return client.execute(resumeRequest(importId), options, RESUME_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #resume(String, RequestOptions)} with the raw response.
+     *
+     * @param importId the {@code importId}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> resumeAsync(String importId, RequestOptions options) {
+      return client.executeAsync(resumeRequest(importId), options, RESUME_RESPONSE);
+    }
+
+    /**
+     * {@link #resume(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> resume(String importId) {
+      return client.execute(resumeRequest(importId), RequestOptions.none(), RESUME_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #resume(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> resumeAsync(String importId) {
+      return client.executeAsync(resumeRequest(importId), RequestOptions.none(), RESUME_RESPONSE);
+    }
+
+    /**
+     * {@link #cancel(String, RequestOptions)} with the raw response.
+     *
+     * @param importId the {@code importId}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> cancel(String importId, RequestOptions options) {
+      return client.execute(cancelRequest(importId), options, CANCEL_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #cancel(String, RequestOptions)} with the raw response.
+     *
+     * @param importId the {@code importId}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> cancelAsync(String importId, RequestOptions options) {
+      return client.executeAsync(cancelRequest(importId), options, CANCEL_RESPONSE);
+    }
+
+    /**
+     * {@link #cancel(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> cancel(String importId) {
+      return client.execute(cancelRequest(importId), RequestOptions.none(), CANCEL_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #cancel(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> cancelAsync(String importId) {
+      return client.executeAsync(cancelRequest(importId), RequestOptions.none(), CANCEL_RESPONSE);
+    }
+
+    /**
+     * {@link #retry(String, SessionsImportsRetryParams, RequestOptions)} with the raw response.
+     *
+     * @param importId the {@code importId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> retry(String importId, SessionsImportsRetryParams params, RequestOptions options) {
+      return client.execute(retryRequest(importId, params), options, RETRY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retry(String, SessionsImportsRetryParams, RequestOptions)} with the raw response.
+     *
+     * @param importId the {@code importId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> retryAsync(String importId, SessionsImportsRetryParams params, RequestOptions options) {
+      return client.executeAsync(retryRequest(importId, params), options, RETRY_RESPONSE);
+    }
+
+    /**
+     * {@link #retry(String, SessionsImportsRetryParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> retry(String importId, SessionsImportsRetryParams params) {
+      return client.execute(retryRequest(importId, params), RequestOptions.none(), RETRY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retry(String, SessionsImportsRetryParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> retryAsync(String importId, SessionsImportsRetryParams params) {
+      return client.executeAsync(retryRequest(importId, params), RequestOptions.none(), RETRY_RESPONSE);
+    }
+
+    /**
+     * {@link #retry(String, SessionsImportsRetryParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param importId the {@code importId}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> retry(String importId, RequestOptions options) {
+      return client.execute(retryRequest(importId, SessionsImportsRetryParams.builder().build()), options, RETRY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retry(String, SessionsImportsRetryParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param importId the {@code importId}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> retryAsync(String importId, RequestOptions options) {
+      return client.executeAsync(retryRequest(importId, SessionsImportsRetryParams.builder().build()), options, RETRY_RESPONSE);
+    }
+
+    /**
+     * {@link #retry(String, SessionsImportsRetryParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> retry(String importId) {
+      return client.execute(retryRequest(importId, SessionsImportsRetryParams.builder().build()), RequestOptions.none(), RETRY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retry(String, SessionsImportsRetryParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> retryAsync(String importId) {
+      return client.executeAsync(retryRequest(importId, SessionsImportsRetryParams.builder().build()), RequestOptions.none(), RETRY_RESPONSE);
+    }
+
+    /**
+     * {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsImportsListJobsResponse> listJobs(SessionsImportsListJobsParams params, RequestOptions options) {
+      return client.execute(listJobsRequest(params), options, LIST_JOBS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsImportsListJobsResponse>> listJobsAsync(SessionsImportsListJobsParams params, RequestOptions options) {
+      return client.executeAsync(listJobsRequest(params), options, LIST_JOBS_RESPONSE);
+    }
+
+    /**
+     * {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<SessionsImportsListJobsResponse> listJobs(SessionsImportsListJobsParams params) {
+      return client.execute(listJobsRequest(params), RequestOptions.none(), LIST_JOBS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsImportsListJobsResponse>> listJobsAsync(SessionsImportsListJobsParams params) {
+      return client.executeAsync(listJobsRequest(params), RequestOptions.none(), LIST_JOBS_RESPONSE);
+    }
+
+    /**
+     * {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsImportsListJobsResponse> listJobs(RequestOptions options) {
+      return client.execute(listJobsRequest(SessionsImportsListJobsParams.builder().build()), options, LIST_JOBS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsImportsListJobsResponse>> listJobsAsync(RequestOptions options) {
+      return client.executeAsync(listJobsRequest(SessionsImportsListJobsParams.builder().build()), options, LIST_JOBS_RESPONSE);
+    }
+
+    /**
+     * {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @return the result
+     */
+    public RawResponse<SessionsImportsListJobsResponse> listJobs() {
+      return client.execute(listJobsRequest(SessionsImportsListJobsParams.builder().build()), RequestOptions.none(), LIST_JOBS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listJobs(SessionsImportsListJobsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsImportsListJobsResponse>> listJobsAsync() {
+      return client.executeAsync(listJobsRequest(SessionsImportsListJobsParams.builder().build()), RequestOptions.none(), LIST_JOBS_RESPONSE);
+    }
+
+    /**
+     * {@link #listActiveJobs(RequestOptions)} with the raw response.
+     *
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsImportsListActiveJobsResponse> listActiveJobs(RequestOptions options) {
+      return client.execute(listActiveJobsRequest(), options, LIST_ACTIVE_JOBS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listActiveJobs(RequestOptions)} with the raw response.
+     *
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsImportsListActiveJobsResponse>> listActiveJobsAsync(RequestOptions options) {
+      return client.executeAsync(listActiveJobsRequest(), options, LIST_ACTIVE_JOBS_RESPONSE);
+    }
+
+    /**
+     * {@link #listActiveJobs(RequestOptions)} with the raw response, with the client's options.
+     *
+     * @return the result
+     */
+    public RawResponse<SessionsImportsListActiveJobsResponse> listActiveJobs() {
+      return client.execute(listActiveJobsRequest(), RequestOptions.none(), LIST_ACTIVE_JOBS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listActiveJobs(RequestOptions)} with the raw response, with the client's options.
+     *
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsImportsListActiveJobsResponse>> listActiveJobsAsync() {
+      return client.executeAsync(listActiveJobsRequest(), RequestOptions.none(), LIST_ACTIVE_JOBS_RESPONSE);
     }
   }
 }
