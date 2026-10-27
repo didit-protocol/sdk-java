@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class SessionImportJob extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "import_type", "source_format", "source_filename", "total_rows", "processed_rows", "checkpoint_row", "created_count", "updated_count", "skipped_count", "failed_count", "total_media_bytes", "last_error", "created_at", "updated_at", "started_at", "completed_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "import_type", "source_format", "source_filename", "total_rows", "processed_rows", "checkpoint_row", "created_count", "updated_count", "skipped_count", "failed_count", "total_media_bytes", "last_error", "created_at", "updated_at", "started_at", "completed_at", "state", "source", "provider", "provider_options", "credential_hint", "credentials_expires_at", "resumes_at", "status_mapping", "is_dry_run", "dry_run_summary", "face_templates_enabled", "lawful_basis_confirmed_at", "not_finished_count", "same_person_count", "face_templates_count", "face_duplicates_count", "face_blocklist_hits_count", "created_by_name", "created_by_email");
 
   private SessionImportJob(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -231,6 +231,196 @@ public final class SessionImportJob extends JsonModel {
     return Json.optional(json, "completed_at", Conv.DATE_TIME);
   }
 
+  /**
+   * The job's state as the console shows it; <code>errors</code> is a completed job with rejected rows.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionImportJob.State> state() {
+    return Json.optional(json, "state", Conv.enumeration(SessionImportJob.State::of));
+  }
+
+  /**
+   * The <code>source</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionImportJob.Source> source() {
+    return Json.optional(json, "source", Conv.enumeration(SessionImportJob.Source::of));
+  }
+
+  /**
+   * Migration source; empty for a file or API import.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> provider() {
+    return Json.optional(json, "provider", Conv.STRING);
+  }
+
+  /**
+   * The <code>provider_options</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Map<String, JsonNode>> providerOptions() {
+    return Json.optional(json, "provider_options", Conv.OBJECT);
+  }
+
+  /**
+   * The first characters of the key the migration holds. The key itself is never returned.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> credentialHint() {
+    return Json.optional(json, "credential_hint", Conv.STRING);
+  }
+
+  /**
+   * The <code>credentials_expires_at</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> credentialsExpiresAt() {
+    return Json.optional(json, "credentials_expires_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * When a job paused by the provider's rate limit resumes by itself.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> resumesAt() {
+    return Json.optional(json, "resumes_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * The <code>status_mapping</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Map<String, String>> statusMapping() {
+    return Json.optional(json, "status_mapping", Conv.map(Conv.STRING));
+  }
+
+  /**
+   * The <code>is_dry_run</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> isDryRun() {
+    return Json.optional(json, "is_dry_run", Conv.BOOLEAN);
+  }
+
+  /**
+   * What a dry run found: <code>total</code>, <code>by_status</code>, <code>already_in_didit</code>, <code>same_person</code>, <code>not_finished</code>, <code>failed</code>, <code>unmapped_statuses</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Map<String, JsonNode>> dryRunSummary() {
+    return Json.optional(json, "dry_run_summary", Conv.OBJECT);
+  }
+
+  /**
+   * The <code>face_templates_enabled</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> faceTemplatesEnabled() {
+    return Json.optional(json, "face_templates_enabled", Conv.BOOLEAN);
+  }
+
+  /**
+   * The <code>lawful_basis_confirmed_at</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> lawfulBasisConfirmedAt() {
+    return Json.optional(json, "lawful_basis_confirmed_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * The <code>not_finished_count</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> notFinishedCount() {
+    return Json.optional(json, "not_finished_count", Conv.LONG);
+  }
+
+  /**
+   * The <code>same_person_count</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> samePersonCount() {
+    return Json.optional(json, "same_person_count", Conv.LONG);
+  }
+
+  /**
+   * The <code>face_templates_count</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> faceTemplatesCount() {
+    return Json.optional(json, "face_templates_count", Conv.LONG);
+  }
+
+  /**
+   * The <code>face_duplicates_count</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> faceDuplicatesCount() {
+    return Json.optional(json, "face_duplicates_count", Conv.LONG);
+  }
+
+  /**
+   * The <code>face_blocklist_hits_count</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> faceBlocklistHitsCount() {
+    return Json.optional(json, "face_blocklist_hits_count", Conv.LONG);
+  }
+
+  /**
+   * The <code>created_by_name</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> createdByName() {
+    return Json.optional(json, "created_by_name", Conv.STRING);
+  }
+
+  /**
+   * The <code>created_by_email</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> createdByEmail() {
+    return Json.optional(json, "created_by_email", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -425,6 +615,196 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
+     * The job's state as the console shows it; <code>errors</code> is a completed job with rejected rows.
+     *
+     * @param state the value
+     * @return this builder
+     */
+    public Builder state(SessionImportJob.State state) {
+      return set("state", Conv.enumeration(SessionImportJob.State::of), state);
+    }
+
+    /**
+     * The <code>source</code> field.
+     *
+     * @param source the value
+     * @return this builder
+     */
+    public Builder source(SessionImportJob.Source source) {
+      return set("source", Conv.enumeration(SessionImportJob.Source::of), source);
+    }
+
+    /**
+     * Migration source; empty for a file or API import.
+     *
+     * @param provider the value
+     * @return this builder
+     */
+    public Builder provider(String provider) {
+      return set("provider", Conv.STRING, provider);
+    }
+
+    /**
+     * The <code>provider_options</code> field.
+     *
+     * @param providerOptions the value
+     * @return this builder
+     */
+    public Builder providerOptions(Map<String, ?> providerOptions) {
+      return setAny("provider_options", providerOptions);
+    }
+
+    /**
+     * The first characters of the key the migration holds. The key itself is never returned.
+     *
+     * @param credentialHint the value
+     * @return this builder
+     */
+    public Builder credentialHint(String credentialHint) {
+      return set("credential_hint", Conv.STRING, credentialHint);
+    }
+
+    /**
+     * The <code>credentials_expires_at</code> field.
+     *
+     * @param credentialsExpiresAt the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder credentialsExpiresAt(@Nullable OffsetDateTime credentialsExpiresAt) {
+      return setNullable("credentials_expires_at", Conv.DATE_TIME, credentialsExpiresAt);
+    }
+
+    /**
+     * When a job paused by the provider's rate limit resumes by itself.
+     *
+     * @param resumesAt the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder resumesAt(@Nullable OffsetDateTime resumesAt) {
+      return setNullable("resumes_at", Conv.DATE_TIME, resumesAt);
+    }
+
+    /**
+     * The <code>status_mapping</code> field.
+     *
+     * @param statusMapping the value
+     * @return this builder
+     */
+    public Builder statusMapping(Map<String, String> statusMapping) {
+      return set("status_mapping", Conv.map(Conv.STRING), statusMapping);
+    }
+
+    /**
+     * The <code>is_dry_run</code> field.
+     *
+     * @param isDryRun the value
+     * @return this builder
+     */
+    public Builder isDryRun(boolean isDryRun) {
+      return set("is_dry_run", Conv.BOOLEAN, isDryRun);
+    }
+
+    /**
+     * What a dry run found: <code>total</code>, <code>by_status</code>, <code>already_in_didit</code>, <code>same_person</code>, <code>not_finished</code>, <code>failed</code>, <code>unmapped_statuses</code>.
+     *
+     * @param dryRunSummary the value
+     * @return this builder
+     */
+    public Builder dryRunSummary(Map<String, ?> dryRunSummary) {
+      return setAny("dry_run_summary", dryRunSummary);
+    }
+
+    /**
+     * The <code>face_templates_enabled</code> field.
+     *
+     * @param faceTemplatesEnabled the value
+     * @return this builder
+     */
+    public Builder faceTemplatesEnabled(boolean faceTemplatesEnabled) {
+      return set("face_templates_enabled", Conv.BOOLEAN, faceTemplatesEnabled);
+    }
+
+    /**
+     * The <code>lawful_basis_confirmed_at</code> field.
+     *
+     * @param lawfulBasisConfirmedAt the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder lawfulBasisConfirmedAt(@Nullable OffsetDateTime lawfulBasisConfirmedAt) {
+      return setNullable("lawful_basis_confirmed_at", Conv.DATE_TIME, lawfulBasisConfirmedAt);
+    }
+
+    /**
+     * The <code>not_finished_count</code> field.
+     *
+     * @param notFinishedCount the value
+     * @return this builder
+     */
+    public Builder notFinishedCount(long notFinishedCount) {
+      return set("not_finished_count", Conv.LONG, notFinishedCount);
+    }
+
+    /**
+     * The <code>same_person_count</code> field.
+     *
+     * @param samePersonCount the value
+     * @return this builder
+     */
+    public Builder samePersonCount(long samePersonCount) {
+      return set("same_person_count", Conv.LONG, samePersonCount);
+    }
+
+    /**
+     * The <code>face_templates_count</code> field.
+     *
+     * @param faceTemplatesCount the value
+     * @return this builder
+     */
+    public Builder faceTemplatesCount(long faceTemplatesCount) {
+      return set("face_templates_count", Conv.LONG, faceTemplatesCount);
+    }
+
+    /**
+     * The <code>face_duplicates_count</code> field.
+     *
+     * @param faceDuplicatesCount the value
+     * @return this builder
+     */
+    public Builder faceDuplicatesCount(long faceDuplicatesCount) {
+      return set("face_duplicates_count", Conv.LONG, faceDuplicatesCount);
+    }
+
+    /**
+     * The <code>face_blocklist_hits_count</code> field.
+     *
+     * @param faceBlocklistHitsCount the value
+     * @return this builder
+     */
+    public Builder faceBlocklistHitsCount(long faceBlocklistHitsCount) {
+      return set("face_blocklist_hits_count", Conv.LONG, faceBlocklistHitsCount);
+    }
+
+    /**
+     * The <code>created_by_name</code> field.
+     *
+     * @param createdByName the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder createdByName(@Nullable String createdByName) {
+      return setNullable("created_by_name", Conv.STRING, createdByName);
+    }
+
+    /**
+     * The <code>created_by_email</code> field.
+     *
+     * @param createdByEmail the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder createdByEmail(@Nullable String createdByEmail) {
+      return setNullable("created_by_email", Conv.STRING, createdByEmail);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code SessionImportJob}
@@ -474,7 +854,10 @@ public final class SessionImportJob extends JsonModel {
     /** The value {@code "CANCELLED"}. */
     public static final Status CANCELLED = new Status("CANCELLED");
 
-    private static final List<Status> KNOWN_VALUES = List.of(PENDING, PROCESSING, COMPLETED, FAILED, PAUSED, CANCELLED);
+    /** The value {@code "READY"}. */
+    public static final Status READY = new Status("READY");
+
+    private static final List<Status> KNOWN_VALUES = List.of(PENDING, PROCESSING, COMPLETED, FAILED, PAUSED, CANCELLED, READY);
 
     private Status(String value) {
       super(value);
@@ -586,6 +969,112 @@ public final class SessionImportJob extends JsonModel {
      * @return the known values
      */
     public static List<SourceFormat> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * The job's state as the console shows it; <code>errors</code> is a completed job with rejected rows.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class State extends StringEnum {
+    /** The value {@code "ready"}. */
+    public static final State READY = new State("ready");
+
+    /** The value {@code "queued"}. */
+    public static final State QUEUED = new State("queued");
+
+    /** The value {@code "running"}. */
+    public static final State RUNNING = new State("running");
+
+    /** The value {@code "paused"}. */
+    public static final State PAUSED = new State("paused");
+
+    /** The value {@code "completed"}. */
+    public static final State COMPLETED = new State("completed");
+
+    /** The value {@code "errors"}. */
+    public static final State ERRORS = new State("errors");
+
+    /** The value {@code "failed"}. */
+    public static final State FAILED = new State("failed");
+
+    /** The value {@code "cancelled"}. */
+    public static final State CANCELLED = new State("cancelled");
+
+    private static final List<State> KNOWN_VALUES = List.of(READY, QUEUED, RUNNING, PAUSED, COMPLETED, ERRORS, FAILED, CANCELLED);
+
+    private State(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static State of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, State::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<State> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Source extends StringEnum {
+    /** The value {@code "file"}. */
+    public static final Source FILE = new Source("file");
+
+    /** The value {@code "api"}. */
+    public static final Source API = new Source("api");
+
+    /** The value {@code "provider"}. */
+    public static final Source PROVIDER = new Source("provider");
+
+    private static final List<Source> KNOWN_VALUES = List.of(FILE, API, PROVIDER);
+
+    private Source(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Source of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Source::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Source> knownValues() {
       return KNOWN_VALUES;
     }
 

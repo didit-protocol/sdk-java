@@ -15,9 +15,13 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.SessionsImportsCheckProviderParams;
 import me.didit.types.SessionsImportsCreateParams;
 import me.didit.types.SessionsImportsListErrorsParams;
+import me.didit.types.SessionsImportsListJobsParams;
 import me.didit.types.SessionsImportsRetrieveTemplateParams;
+import me.didit.types.SessionsImportsRetryParams;
+import me.didit.types.SessionsImportsStartParams;
 import org.junit.jupiter.api.Test;
 
 /** One test per operation of {@code sessions.imports}, against a stubbed HTTP layer. */
@@ -28,7 +32,7 @@ final class SessionsImportsResourceTest {
 
   @Test
   void create() {
-    SessionsImportsCreateParams params = SessionsImportsCreateParams.builder().importType(SessionsImportsCreateParams.ImportType.USER_VERIFICATION).workflowId("00000000-0000-4000-8000-000000001b5b").sourceFormat(SessionsImportsCreateParams.SourceFormat.CSV).file(FileUpload.of(new byte[] {37, 80, 68, 70}, "file.pdf", "application/pdf")).sourceFileUrl("https://example.com/callback").build();
+    SessionsImportsCreateParams params = SessionsImportsCreateParams.builder().importType(SessionsImportsCreateParams.ImportType.USER_VERIFICATION).workflowId("00000000-0000-4000-8000-000000001b5b").sourceFormat(SessionsImportsCreateParams.SourceFormat.CSV).file(FileUpload.of(new byte[] {37, 80, 68, 70}, "file.pdf", "application/pdf")).sourceFileUrl("https://example.com/callback").source(SessionsImportsCreateParams.Source.FILE).provider(SessionsImportsCreateParams.Provider.SUMSUB).credentials(Map.of("key", "value-credentials")).options(SessionsImportsCreateParams.Options.builder().region("value-region").build()).statusMapping(Map.of("key", SessionsImportsCreateParams.StatusMappingValue.APPROVED)).dryRun(true).faceTemplates(true).lawfulBasisConfirmed(true).build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/imports/", "201");
     transport.respondJson(201, example);
     var result = client.sessions().imports().create(params);
@@ -38,7 +42,7 @@ final class SessionsImportsResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    assertEquals(Map.ofEntries(Map.entry("import_type", List.of("user_verification")), Map.entry("workflow_id", List.of("00000000-0000-4000-8000-000000001b5b")), Map.entry("source_format", List.of("csv")), Map.entry("source_file_url", List.of("https://example.com/callback"))), request.multipartFields());
+    assertEquals(Map.ofEntries(Map.entry("import_type", List.of("user_verification")), Map.entry("workflow_id", List.of("00000000-0000-4000-8000-000000001b5b")), Map.entry("source_format", List.of("csv")), Map.entry("source_file_url", List.of("https://example.com/callback")), Map.entry("source", List.of("file")), Map.entry("provider", List.of("sumsub")), Map.entry("credentials", List.of("{\"key\":\"value-credentials\"}")), Map.entry("options", List.of("{\"region\":\"value-region\"}")), Map.entry("status_mapping", List.of("{\"key\":\"Approved\"}")), Map.entry("dry_run", List.of("true")), Map.entry("face_templates", List.of("true")), Map.entry("lawful_basis_confirmed", List.of("true"))), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("file", List.of("file.pdf"))), request.multipartFiles());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -92,5 +96,154 @@ final class SessionsImportsResourceTest {
     TestJson.assertJsonEquals(example, result._json());
     assertEquals(example.path("results").size(), result.results().size());
     TestModels.readAll(result.results());
+  }
+
+  @Test
+  void listProviders() {
+    JsonNode example = TestJson.parse("{}");
+    transport.respondJson(200, example);
+    var result = client.sessions().imports().listProviders();
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/session/imports/providers/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void checkProvider() {
+    SessionsImportsCheckProviderParams params = SessionsImportsCheckProviderParams.builder().provider(SessionsImportsCheckProviderParams.Provider.SUMSUB).credentials(Map.of("key", "value-credentials")).options(SessionsImportsCheckProviderParams.Options.builder().region("value-region").build()).recordIds(List.of("value-record-ids")).build();
+    JsonNode example = TestJson.parse("{}");
+    transport.respondJson(200, example);
+    var result = client.sessions().imports().checkProvider(params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/imports/providers/check/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"provider\":\"sumsub\",\"credentials\":{\"key\":\"value-credentials\"},\"options\":{\"region\":\"value-region\"},\"record_ids\":[\"value-record-ids\"]}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void start() {
+    SessionsImportsStartParams params = SessionsImportsStartParams.builder().statusMapping(Map.of("key", SessionsImportsStartParams.StatusMappingValue.APPROVED)).faceTemplates(true).lawfulBasisConfirmed(true).build();
+    JsonNode example = TestJson.parse("{\"created_count\":1,\"failed_count\":1,\"import_type\":\"user_verification\",\"processed_rows\":1,\"skipped_count\":1,\"source_filename\":\"value\",\"source_format\":\"csv\",\"status\":\"PENDING\",\"total_rows\":1,\"updated_count\":1,\"uuid\":\"value\"}");
+    transport.respondJson(200, example);
+    var result = client.sessions().imports().start("00000000-0000-4000-8000-00000000be5b", params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/imports/00000000-0000-4000-8000-00000000be5b/start/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"status_mapping\":{\"key\":\"Approved\"},\"face_templates\":true,\"lawful_basis_confirmed\":true}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void pause() {
+    JsonNode example = TestJson.parse("{\"created_count\":1,\"failed_count\":1,\"import_type\":\"user_verification\",\"processed_rows\":1,\"skipped_count\":1,\"source_filename\":\"value\",\"source_format\":\"csv\",\"status\":\"PENDING\",\"total_rows\":1,\"updated_count\":1,\"uuid\":\"value\"}");
+    transport.respondJson(200, example);
+    var result = client.sessions().imports().pause("00000000-0000-4000-8000-00000000bd17");
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/imports/00000000-0000-4000-8000-00000000bd17/pause/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void resume() {
+    JsonNode example = TestJson.parse("{\"created_count\":1,\"failed_count\":1,\"import_type\":\"user_verification\",\"processed_rows\":1,\"skipped_count\":1,\"source_filename\":\"value\",\"source_format\":\"csv\",\"status\":\"PENDING\",\"total_rows\":1,\"updated_count\":1,\"uuid\":\"value\"}");
+    transport.respondJson(200, example);
+    var result = client.sessions().imports().resume("00000000-0000-4000-8000-00000000ca94");
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/imports/00000000-0000-4000-8000-00000000ca94/resume/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void cancel() {
+    JsonNode example = TestJson.parse("{\"created_count\":1,\"failed_count\":1,\"import_type\":\"user_verification\",\"processed_rows\":1,\"skipped_count\":1,\"source_filename\":\"value\",\"source_format\":\"csv\",\"status\":\"PENDING\",\"total_rows\":1,\"updated_count\":1,\"uuid\":\"value\"}");
+    transport.respondJson(200, example);
+    var result = client.sessions().imports().cancel("00000000-0000-4000-8000-00000000c74d");
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/imports/00000000-0000-4000-8000-00000000c74d/cancel/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void retry() {
+    SessionsImportsRetryParams params = SessionsImportsRetryParams.builder().credentials(Map.of("key", "value-credentials")).file(FileUpload.of(new byte[] {37, 80, 68, 70}, "file.pdf", "application/pdf")).build();
+    JsonNode example = TestJson.parse("{\"created_count\":1,\"failed_count\":1,\"import_type\":\"user_verification\",\"processed_rows\":1,\"skipped_count\":1,\"source_filename\":\"value\",\"source_format\":\"csv\",\"status\":\"PENDING\",\"total_rows\":1,\"updated_count\":1,\"uuid\":\"value\"}");
+    transport.respondJson(201, example);
+    var result = client.sessions().imports().retry("00000000-0000-4000-8000-00000000bf16", params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/imports/00000000-0000-4000-8000-00000000bf16/retry/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(Map.ofEntries(Map.entry("credentials", List.of("{\"key\":\"value-credentials\"}"))), request.multipartFields());
+    assertEquals(Map.ofEntries(Map.entry("file", List.of("file.pdf"))), request.multipartFiles());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listJobs() {
+    SessionsImportsListJobsParams params = SessionsImportsListJobsParams.builder().scope(SessionsImportsListJobsParams.Scope.ALL).limit(1L).build();
+    JsonNode example = TestJson.parse("{}");
+    transport.respondJson(200, example);
+    var result = client.sessions().imports().listJobs(params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/import-jobs/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("scope", List.of("all")), Map.entry("limit", List.of("1"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listActiveJobs() {
+    JsonNode example = TestJson.parse("{}");
+    transport.respondJson(200, example);
+    var result = client.sessions().imports().listActiveJobs();
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/import-jobs/active/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 }

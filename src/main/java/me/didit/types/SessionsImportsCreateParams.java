@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 
 /** Parameters for {&#64;code sessions.imports.create}. */
 public final class SessionsImportsCreateParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("import_type", "workflow_id", "source_format", "file", "source_file_url");
+  private static final Set<String> KNOWN_FIELDS = Set.of("import_type", "workflow_id", "source_format", "file", "source_file_url", "source", "provider", "credentials", "options", "status_mapping", "dry_run", "face_templates", "lawful_basis_confirmed");
 
   private SessionsImportsCreateParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -100,6 +100,86 @@ public final class SessionsImportsCreateParams extends JsonModel {
     return Json.optional(json, "source_file_url", Conv.STRING);
   }
 
+  /**
+   * <code>provider</code> makes this a migration from another identity verification provider. Omit for a file import.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsImportsCreateParams.Source> source() {
+    return Json.optional(json, "source", Conv.enumeration(SessionsImportsCreateParams.Source::of));
+  }
+
+  /**
+   * Migration source, from <code>GET /v3/session/imports/providers/</code>. Required when <code>source</code> is <code>provider</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsImportsCreateParams.Provider> provider() {
+    return Json.optional(json, "provider", Conv.enumeration(SessionsImportsCreateParams.Provider::of));
+  }
+
+  /**
+   * The provider's read-only key, with the field names <code>credential_fields</code> lists. Encrypted at rest, never returned, and erased when the import ends. Send it as a JSON string in multipart.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Map<String, String>> credentials() {
+    return Json.optional(json, "credentials", Conv.map(Conv.STRING));
+  }
+
+  /**
+   * The <code>options</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsImportsCreateParams.Options> options() {
+    return Json.optional(json, "options", Conv.model(SessionsImportsCreateParams.Options::fromJson));
+  }
+
+  /**
+   * Edits to the provider's default status mapping: source status to Didit status. <code>Not Finished</code> and <code>Abandoned</code> are skipped and counted, never imported.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Map<String, SessionsImportsCreateParams.StatusMappingValue>> statusMapping() {
+    return Json.optional(json, "status_mapping", Conv.map(Conv.enumeration(SessionsImportsCreateParams.StatusMappingValue::of)));
+  }
+
+  /**
+   * Count what the migration would import (by status, already in Didit, same person, not finished) and write nothing. The job ends <code>READY</code>; start it with <code>POST /v3/session/imports/{importId}/start/</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> dryRun() {
+    return Json.optional(json, "dry_run", Conv.BOOLEAN);
+  }
+
+  /**
+   * Build face templates from the imported selfies and search them against the application's faces and blocklist. Matches are flagged for review only. Requires <code>lawful_basis_confirmed</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> faceTemplates() {
+    return Json.optional(json, "face_templates", Conv.BOOLEAN);
+  }
+
+  /**
+   * Confirms you have a lawful basis to share these selfies with Didit as processor.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> lawfulBasisConfirmed() {
+    return Json.optional(json, "lawful_basis_confirmed", Conv.BOOLEAN);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -171,6 +251,86 @@ public final class SessionsImportsCreateParams extends JsonModel {
      */
     public Builder sourceFileUrl(String sourceFileUrl) {
       return set("source_file_url", Conv.STRING, sourceFileUrl);
+    }
+
+    /**
+     * <code>provider</code> makes this a migration from another identity verification provider. Omit for a file import.
+     *
+     * @param source the value
+     * @return this builder
+     */
+    public Builder source(SessionsImportsCreateParams.Source source) {
+      return set("source", Conv.enumeration(SessionsImportsCreateParams.Source::of), source);
+    }
+
+    /**
+     * Migration source, from <code>GET /v3/session/imports/providers/</code>. Required when <code>source</code> is <code>provider</code>.
+     *
+     * @param provider the value
+     * @return this builder
+     */
+    public Builder provider(SessionsImportsCreateParams.Provider provider) {
+      return set("provider", Conv.enumeration(SessionsImportsCreateParams.Provider::of), provider);
+    }
+
+    /**
+     * The provider's read-only key, with the field names <code>credential_fields</code> lists. Encrypted at rest, never returned, and erased when the import ends. Send it as a JSON string in multipart.
+     *
+     * @param credentials the value
+     * @return this builder
+     */
+    public Builder credentials(Map<String, String> credentials) {
+      return set("credentials", Conv.map(Conv.STRING), credentials);
+    }
+
+    /**
+     * The <code>options</code> field.
+     *
+     * @param options_ the value
+     * @return this builder
+     */
+    public Builder options(SessionsImportsCreateParams.Options options_) {
+      return set("options", Conv.model(SessionsImportsCreateParams.Options::fromJson), options_);
+    }
+
+    /**
+     * Edits to the provider's default status mapping: source status to Didit status. <code>Not Finished</code> and <code>Abandoned</code> are skipped and counted, never imported.
+     *
+     * @param statusMapping the value
+     * @return this builder
+     */
+    public Builder statusMapping(Map<String, SessionsImportsCreateParams.StatusMappingValue> statusMapping) {
+      return set("status_mapping", Conv.map(Conv.enumeration(SessionsImportsCreateParams.StatusMappingValue::of)), statusMapping);
+    }
+
+    /**
+     * Count what the migration would import (by status, already in Didit, same person, not finished) and write nothing. The job ends <code>READY</code>; start it with <code>POST /v3/session/imports/{importId}/start/</code>.
+     *
+     * @param dryRun the value
+     * @return this builder
+     */
+    public Builder dryRun(boolean dryRun) {
+      return set("dry_run", Conv.BOOLEAN, dryRun);
+    }
+
+    /**
+     * Build face templates from the imported selfies and search them against the application's faces and blocklist. Matches are flagged for review only. Requires <code>lawful_basis_confirmed</code>.
+     *
+     * @param faceTemplates the value
+     * @return this builder
+     */
+    public Builder faceTemplates(boolean faceTemplates) {
+      return set("face_templates", Conv.BOOLEAN, faceTemplates);
+    }
+
+    /**
+     * Confirms you have a lawful basis to share these selfies with Didit as processor.
+     *
+     * @param lawfulBasisConfirmed the value
+     * @return this builder
+     */
+    public Builder lawfulBasisConfirmed(boolean lawfulBasisConfirmed) {
+      return set("lawful_basis_confirmed", Conv.BOOLEAN, lawfulBasisConfirmed);
     }
 
     /**
@@ -271,6 +431,270 @@ public final class SessionsImportsCreateParams extends JsonModel {
      * @return the known values
      */
     public static List<SourceFormat> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * <code>provider</code> makes this a migration from another identity verification provider. Omit for a file import.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Source extends StringEnum {
+    /** The value {@code "file"}. */
+    public static final Source FILE = new Source("file");
+
+    /** The value {@code "provider"}. */
+    public static final Source PROVIDER = new Source("provider");
+
+    private static final List<Source> KNOWN_VALUES = List.of(FILE, PROVIDER);
+
+    private Source(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Source of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Source::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Source> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Migration source, from <code>GET /v3/session/imports/providers/</code>. Required when <code>source</code> is <code>provider</code>.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Provider extends StringEnum {
+    /** The value {@code "sumsub"}. */
+    public static final Provider SUMSUB = new Provider("sumsub");
+
+    /** The value {@code "jumio"}. */
+    public static final Provider JUMIO = new Provider("jumio");
+
+    /** The value {@code "veriff"}. */
+    public static final Provider VERIFF = new Provider("veriff");
+
+    /** The value {@code "onfido"}. */
+    public static final Provider ONFIDO = new Provider("onfido");
+
+    /** The value {@code "persona"}. */
+    public static final Provider PERSONA = new Provider("persona");
+
+    /** The value {@code "metamap"}. */
+    public static final Provider METAMAP = new Provider("metamap");
+
+    /** The value {@code "socure"}. */
+    public static final Provider SOCURE = new Provider("socure");
+
+    /** The value {@code "idnow"}. */
+    public static final Provider IDNOW = new Provider("idnow");
+
+    /** The value {@code "shufti"}. */
+    public static final Provider SHUFTI = new Provider("shufti");
+
+    /** The value {@code "idenfy"}. */
+    public static final Provider IDENFY = new Provider("idenfy");
+
+    /** The value {@code "ondato"}. */
+    public static final Provider ONDATO = new Provider("ondato");
+
+    /** The value {@code "trulioo"}. */
+    public static final Provider TRULIOO = new Provider("trulioo");
+
+    /** The value {@code "au10tix"}. */
+    public static final Provider AU_10_TIX = new Provider("au10tix");
+
+    /** The value {@code "complycube"}. */
+    public static final Provider COMPLYCUBE = new Provider("complycube");
+
+    /** The value {@code "other"}. */
+    public static final Provider OTHER = new Provider("other");
+
+    private static final List<Provider> KNOWN_VALUES = List.of(SUMSUB, JUMIO, VERIFF, ONFIDO, PERSONA, METAMAP, SOCURE, IDNOW, SHUFTI, IDENFY, ONDATO, TRULIOO, AU_10_TIX, COMPLYCUBE, OTHER);
+
+    private Provider(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Provider of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Provider::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Provider> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  public static final class Options extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("region");
+
+    private Options(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Options} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Options fromJson(JsonNode json) {
+      return new Options(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The provider region, one of its <code>regions</code> (Onfido: <code>eu</code>, <code>us</code>, <code>ca</code>).
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> region() {
+      return Json.optional(json, "region", Conv.STRING);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Options}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Options from) {
+        super(from);
+      }
+
+      /**
+       * The provider region, one of its <code>regions</code> (Onfido: <code>eu</code>, <code>us</code>, <code>ca</code>).
+       *
+       * @param region the value
+       * @return this builder
+       */
+      public Builder region(String region) {
+        return set("region", Conv.STRING, region);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Options}
+       */
+      public Options build() {
+        return new Options(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+  }
+
+  /**
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class StatusMappingValue extends StringEnum {
+    /** The value {@code "Approved"}. */
+    public static final StatusMappingValue APPROVED = new StatusMappingValue("Approved");
+
+    /** The value {@code "Declined"}. */
+    public static final StatusMappingValue DECLINED = new StatusMappingValue("Declined");
+
+    /** The value {@code "In Review"}. */
+    public static final StatusMappingValue IN_REVIEW = new StatusMappingValue("In Review");
+
+    /** The value {@code "Expired"}. */
+    public static final StatusMappingValue EXPIRED = new StatusMappingValue("Expired");
+
+    /** The value {@code "Not Finished"}. */
+    public static final StatusMappingValue NOT_FINISHED = new StatusMappingValue("Not Finished");
+
+    /** The value {@code "Abandoned"}. */
+    public static final StatusMappingValue ABANDONED = new StatusMappingValue("Abandoned");
+
+    private static final List<StatusMappingValue> KNOWN_VALUES = List.of(APPROVED, DECLINED, IN_REVIEW, EXPIRED, NOT_FINISHED, ABANDONED);
+
+    private StatusMappingValue(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static StatusMappingValue of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, StatusMappingValue::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<StatusMappingValue> knownValues() {
       return KNOWN_VALUES;
     }
 

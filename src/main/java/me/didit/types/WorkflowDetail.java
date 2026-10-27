@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * The fields below are typed; the object also carries every other column of the workflow configuration (feature toggles, thresholds, warning actions, allowed documents, callbacks) as additional properties. Fields that do not apply to the <code>workflow_type</code> are <code>null</code>.
  */
 public final class WorkflowDetail extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "workflow_id", "workflow_label", "workflow_type", "is_default", "is_archived", "version", "status", "published_at", "is_simple_workflow", "is_editable", "workflow_url", "workflow_graph", "features", "total_price", "min_price", "max_price", "special_add_on_prices", "max_retry_attempts", "retry_window_days", "session_expiration_time", "questionnaire", "kyb_role_settings", "created_at", "updated_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "workflow_id", "workflow_label", "workflow_type", "is_default", "is_archived", "version", "status", "published_at", "is_simple_workflow", "is_editable", "workflow_url", "workflow_graph", "features", "total_price", "min_price", "max_price", "special_add_on_prices", "max_retry_attempts", "retry_window_days", "session_expiration_time", "questionnaire", "kyb_role_settings", "created_at", "updated_at", "is_bank_verification_enabled", "bank_verification_config", "is_geolocation_enabled", "geolocation_config");
 
   private WorkflowDetail(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -304,6 +304,46 @@ public final class WorkflowDetail extends JsonModel {
     return Json.optional(json, "updated_at", Conv.DATE_TIME);
   }
 
+  /**
+   * Whether a simple KYC or KYB workflow runs Bank verification. It runs after the contact steps and before database validation, AML and IP analysis. Set in the console.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> isBankVerificationEnabled() {
+    return Json.optional(json, "is_bank_verification_enabled", Conv.BOOLEAN);
+  }
+
+  /**
+   * Bank verification settings of a simple workflow, with the same keys a <code>BANK_VERIFICATION</code> node takes (for example <code>bank_countries</code> and <code>bank_method_order</code>). Every key is optional and an absent key keeps its default, so <code>{}</code> means all defaults. See [Bank verification settings](/management-api/workflows/feature-configs#bank-verification).
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Map<String, JsonNode>> bankVerificationConfig() {
+    return Json.optional(json, "bank_verification_config", Conv.OBJECT);
+  }
+
+  /**
+   * Whether a simple KYC workflow runs Location verification. It runs after the contact steps and before Bank verification. Never on KYB workflows. Set in the console.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> isGeolocationEnabled() {
+    return Json.optional(json, "is_geolocation_enabled", Conv.BOOLEAN);
+  }
+
+  /**
+   * Location verification settings of a simple workflow, with the same keys a <code>GEOLOCATION</code> node takes (for example <code>is_geolocation_geofencing_enabled</code> and <code>geolocation_max_attempts</code>). Every key is optional and an absent key keeps its default, so <code>{}</code> means all defaults.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Map<String, JsonNode>> geolocationConfig() {
+    return Json.optional(json, "geolocation_config", Conv.OBJECT);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -565,6 +605,46 @@ public final class WorkflowDetail extends JsonModel {
      */
     public Builder updatedAt(OffsetDateTime updatedAt) {
       return set("updated_at", Conv.DATE_TIME, updatedAt);
+    }
+
+    /**
+     * Whether a simple KYC or KYB workflow runs Bank verification. It runs after the contact steps and before database validation, AML and IP analysis. Set in the console.
+     *
+     * @param isBankVerificationEnabled the value
+     * @return this builder
+     */
+    public Builder isBankVerificationEnabled(boolean isBankVerificationEnabled) {
+      return set("is_bank_verification_enabled", Conv.BOOLEAN, isBankVerificationEnabled);
+    }
+
+    /**
+     * Bank verification settings of a simple workflow, with the same keys a <code>BANK_VERIFICATION</code> node takes (for example <code>bank_countries</code> and <code>bank_method_order</code>). Every key is optional and an absent key keeps its default, so <code>{}</code> means all defaults. See [Bank verification settings](/management-api/workflows/feature-configs#bank-verification).
+     *
+     * @param bankVerificationConfig the value
+     * @return this builder
+     */
+    public Builder bankVerificationConfig(Map<String, ?> bankVerificationConfig) {
+      return setAny("bank_verification_config", bankVerificationConfig);
+    }
+
+    /**
+     * Whether a simple KYC workflow runs Location verification. It runs after the contact steps and before Bank verification. Never on KYB workflows. Set in the console.
+     *
+     * @param isGeolocationEnabled the value
+     * @return this builder
+     */
+    public Builder isGeolocationEnabled(boolean isGeolocationEnabled) {
+      return set("is_geolocation_enabled", Conv.BOOLEAN, isGeolocationEnabled);
+    }
+
+    /**
+     * Location verification settings of a simple workflow, with the same keys a <code>GEOLOCATION</code> node takes (for example <code>is_geolocation_geofencing_enabled</code> and <code>geolocation_max_attempts</code>). Every key is optional and an absent key keeps its default, so <code>{}</code> means all defaults.
+     *
+     * @param geolocationConfig the value
+     * @return this builder
+     */
+    public Builder geolocationConfig(Map<String, ?> geolocationConfig) {
+      return setAny("geolocation_config", geolocationConfig);
     }
 
     /**
