@@ -12,7 +12,8 @@
         "gradle.properties",
         "src/main/java/me/didit/core/Version.java",
         "README.md"
-      ]
+      ],
+      "include-component-in-tag": false
     }
   }
 }
