@@ -11,7 +11,7 @@ Java 11 or newer. Gradle (Kotlin DSL):
 
 <!-- x-release-please-start-version -->
 ```kotlin
-implementation("me.didit:didit-java:0.1.0")
+implementation("me.didit:didit-java:1.0.0")
 ```
 
 Maven:
@@ -20,7 +20,7 @@ Maven:
 <dependency>
   <groupId>me.didit</groupId>
   <artifactId>didit-java</artifactId>
-  <version>0.1.0</version>
+  <version>1.0.0</version>
 </dependency>
 ```
 <!-- x-release-please-end -->
