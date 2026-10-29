@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.1](https://github.com/didit-protocol/sdk-java/compare/v1.0.0...v1.0.1) (2026-10-29)
+
+
+### Bug Fixes
+
+* **release:** tag releases as v1.0.0 ([#16](https://github.com/didit-protocol/sdk-java/issues/16)) ([d9b1514](https://github.com/didit-protocol/sdk-java/commit/d9b151405068070465873649f134a55d0f1466f9))
+
+
+### Miscellaneous Chores
+
+* release 1.0.1 ([cfe08da](https://github.com/didit-protocol/sdk-java/commit/cfe08da8d1d7a847ff08548aaa548484c1f2b4d3))
+
 ## [1.0.0](https://github.com/didit-protocol/sdk-java/compare/didit-java-v0.1.0...didit-java-v1.0.0) (2026-10-29)
 
 
