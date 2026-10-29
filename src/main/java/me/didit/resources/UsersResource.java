@@ -341,6 +341,8 @@ public final class UsersResource {
    *
    * <p><b>Biometric templates:</b> every image-free biometric template retained for these users after session deletion (see <code>/v3/biometric-templates/</code>) is purged before the user is deleted, so the person stops matching in duplicate detection and Face Search. If a template cannot be purged because a biometric store is unavailable, the call returns <code>503</code>, no user in the request is deleted, and repeating the request finishes the job.
    *
+   * <p><b>Filed regulatory reports:</b> if the selected data is in a finalized regulatory report, the whole request is refused with <code>409</code> and nothing is deleted. The body uses <code>code: in_filed_report</code> and names each report with <code>uuid</code>, <code>report_number</code>, <code>report_type</code> and <code>case_uuid</code>. Delete the reports, then repeat the request.
+   *
    * <p>{@code POST /v3/users/delete/}
    *
    * @param params the request parameters

@@ -41,7 +41,7 @@ final class WebhooksResourceTest {
 
   @Test
   void updateConfig() {
-    WebhooksUpdateConfigParams params = WebhooksUpdateConfigParams.builder().webhookUrl("https://example.com/callback").webhookVersion(WebhooksUpdateConfigParams.WebhookVersion.V_1).rotateSecretKey(true).captureMethod(WebhooksUpdateConfigParams.CaptureMethod.MOBILE).dataRetentionMonths(1L).faceRetentionPolicy(WebhooksUpdateConfigParams.FaceRetentionPolicy.DELETE_WITH_SESSION).faceRetentionDays(1L).allowedReturnHosts(List.of("value-allowed-return-hosts")).build();
+    WebhooksUpdateConfigParams params = WebhooksUpdateConfigParams.builder().webhookUrl("https://example.com/callback").webhookVersion(WebhooksUpdateConfigParams.WebhookVersion.V_1).rotateSecretKey(true).captureMethod(WebhooksUpdateConfigParams.CaptureMethod.MOBILE).dataRetentionMonths(1L).faceRetentionPolicy(WebhooksUpdateConfigParams.FaceRetentionPolicy.DELETE_WITH_SESSION).faceRetentionDays(1L).biometricConsentMode(WebhooksUpdateConfigParams.BiometricConsentMode.AUTO).allowedReturnHosts(List.of("value-allowed-return-hosts")).build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/webhook/", "200");
     transport.respondJson(200, example);
     var result = client.webhooks().updateConfig(params);
@@ -51,7 +51,7 @@ final class WebhooksResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"webhook_url\":\"https://example.com/callback\",\"webhook_version\":\"v1\",\"rotate_secret_key\":true,\"capture_method\":\"MOBILE\",\"data_retention_months\":1,\"face_retention_policy\":\"delete_with_session\",\"face_retention_days\":1,\"allowed_return_hosts\":[\"value-allowed-return-hosts\"]}", request.body());
+    TestJson.assertJsonEquals("{\"webhook_url\":\"https://example.com/callback\",\"webhook_version\":\"v1\",\"rotate_secret_key\":true,\"capture_method\":\"MOBILE\",\"data_retention_months\":1,\"face_retention_policy\":\"delete_with_session\",\"face_retention_days\":1,\"biometric_consent_mode\":\"auto\",\"allowed_return_hosts\":[\"value-allowed-return-hosts\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

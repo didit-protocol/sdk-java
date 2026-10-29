@@ -16,7 +16,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code webhooks.update_config}. */
 public final class WebhooksUpdateConfigParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("webhook_url", "webhook_version", "rotate_secret_key", "capture_method", "data_retention_months", "face_retention_policy", "face_retention_days", "allowed_return_hosts");
+  private static final Set<String> KNOWN_FIELDS = Set.of("webhook_url", "webhook_version", "rotate_secret_key", "capture_method", "data_retention_months", "face_retention_policy", "face_retention_days", "biometric_consent_mode", "allowed_return_hosts");
 
   private WebhooksUpdateConfigParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -122,6 +122,16 @@ public final class WebhooksUpdateConfigParams extends JsonModel {
   }
 
   /**
+   * When the hosted flow and the native SDKs ask the person for explicit biometric consent before a face capture. <code>auto</code> (default) asks only where a trigger applies: a declared state, the person's IP, or the identity document's issuer is in Illinois, Texas or Colorado, or the person looks to be in the US without a known state. <code>always</code> asks every person whose workflow captures a face. <code>never</code> never shows the step, and you collect consent yourself before the selfie. Each change is recorded in the audit log. See <a href="https://docs.didit.me/getting-started/biometric-consent">Biometric consent</a>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<WebhooksUpdateConfigParams.BiometricConsentMode> biometricConsentMode() {
+    return Json.optional(json, "biometric_consent_mode", Conv.enumeration(WebhooksUpdateConfigParams.BiometricConsentMode::of));
+  }
+
+  /**
    * Replaces the whole list of Digital ID wallet return hosts. Bare hostnames only, such as <code>shop.example.com</code>: no scheme, port, path or wildcard. Values are lowercased and duplicates are dropped. Send <code>[]</code> to clear the list.
    *
    * @return the value, or empty when the field is absent or null
@@ -212,6 +222,16 @@ public final class WebhooksUpdateConfigParams extends JsonModel {
      */
     public Builder faceRetentionDays(@Nullable Long faceRetentionDays) {
       return setNullable("face_retention_days", Conv.LONG, faceRetentionDays);
+    }
+
+    /**
+     * When the hosted flow and the native SDKs ask the person for explicit biometric consent before a face capture. <code>auto</code> (default) asks only where a trigger applies: a declared state, the person's IP, or the identity document's issuer is in Illinois, Texas or Colorado, or the person looks to be in the US without a known state. <code>always</code> asks every person whose workflow captures a face. <code>never</code> never shows the step, and you collect consent yourself before the selfie. Each change is recorded in the audit log. See <a href="https://docs.didit.me/getting-started/biometric-consent">Biometric consent</a>.
+     *
+     * @param biometricConsentMode the value
+     * @return this builder
+     */
+    public Builder biometricConsentMode(WebhooksUpdateConfigParams.BiometricConsentMode biometricConsentMode) {
+      return set("biometric_consent_mode", Conv.enumeration(WebhooksUpdateConfigParams.BiometricConsentMode::of), biometricConsentMode);
     }
 
     /**
@@ -362,6 +382,52 @@ public final class WebhooksUpdateConfigParams extends JsonModel {
      * @return the known values
      */
     public static List<FaceRetentionPolicy> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * When the hosted flow and the native SDKs ask the person for explicit biometric consent before a face capture. <code>auto</code> (default) asks only where a trigger applies: a declared state, the person's IP, or the identity document's issuer is in Illinois, Texas or Colorado, or the person looks to be in the US without a known state. <code>always</code> asks every person whose workflow captures a face. <code>never</code> never shows the step, and you collect consent yourself before the selfie. Each change is recorded in the audit log. See <a href="https://docs.didit.me/getting-started/biometric-consent">Biometric consent</a>.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class BiometricConsentMode extends StringEnum {
+    /** The value {@code "auto"}. */
+    public static final BiometricConsentMode AUTO = new BiometricConsentMode("auto");
+
+    /** The value {@code "always"}. */
+    public static final BiometricConsentMode ALWAYS = new BiometricConsentMode("always");
+
+    /** The value {@code "never"}. */
+    public static final BiometricConsentMode NEVER = new BiometricConsentMode("never");
+
+    private static final List<BiometricConsentMode> KNOWN_VALUES = List.of(AUTO, ALWAYS, NEVER);
+
+    private BiometricConsentMode(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static BiometricConsentMode of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, BiometricConsentMode::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<BiometricConsentMode> knownValues() {
       return KNOWN_VALUES;
     }
 

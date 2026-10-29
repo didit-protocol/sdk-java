@@ -46,7 +46,7 @@ public final class PassiveLivenessResource {
    *
    * <p><b>Blocklist and duplicate screening.</b> Runs on <b>every</b> call — with or without <code>save_api_request</code> — by matching the detected face against your application's face search index. Prior faces with the same <code>vendor_data</code> are excluded from the entire index search — so re-running liveness for the same user does not trigger <code>DUPLICATED_FACE</code>, and a blocklisted face originating from a session with the caller's own <code>vendor_data</code> is also NOT flagged (<code>FACE_IN_BLOCKLIST</code> screening is bypassed for same-<code>vendor_data</code> faces).
    *
-   * <p><b>Billing.</b> Each <code>200</code> response consumes one Passive Liveness API credit (standalone APIs have no free tier). Insufficient balance returns <code>403</code> before any image processing.
+   * <p><b>Billing.</b> Each <code>200</code> response consumes one Passive Liveness API credit (paid from your plan credit or top-up balance). Insufficient balance returns <code>403</code> before any image processing.
    *
    * <p>**Session persistence and face enrollment (<code>save_api_request</code>, default <code>true</code>).** When <code>true</code>, the call is persisted as an API-type session (Business Console, <code>GET /v3/session/{sessionId}/decision/</code> via the returned <code>request_id</code>, <code>status.updated</code> webhook), the reference image and face crop are stored, and the detected face is <b>enrolled into your face search index</b> so later Face Search calls and duplicate checks can match it. When <code>false</code>, the call is one-shot: nothing is stored and the face is not enrolled (blocklist/duplicate screening still runs).
    *

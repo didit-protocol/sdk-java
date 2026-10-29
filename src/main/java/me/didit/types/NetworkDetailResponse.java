@@ -255,7 +255,7 @@ public final class NetworkDetailResponse extends JsonModel {
   }
 
   /**
-   * Whether cross-organization signals apply to this organization. They need both the Identity Enterprise plan and the <code>global</code> sharing mode.
+   * Whether cross-organization signals apply to this organization. They need both the Enterprise plan and the <code>global</code> sharing mode.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -265,7 +265,7 @@ public final class NetworkDetailResponse extends JsonModel {
   }
 
   /**
-   * Why cross-organization signals do not apply, checked in this order. <code>plan</code>: the organization's Identity plan does not include the cross-organization fraud network (it needs Identity Enterprise), whatever the sharing mode. <code>sharing_mode</code>: the plan includes it, but the sharing mode is <code>private</code> or <code>off</code>. Null when <code>cross_org_available</code> is <code>true</code>.
+   * Why cross-organization signals do not apply, checked in this order. <code>plan</code>: the organization's plan does not include the cross-organization fraud network (it needs the Enterprise plan), whatever the sharing mode. <code>sharing_mode</code>: the plan includes it, but the sharing mode is <code>private</code> or <code>off</code>. Null when <code>cross_org_available</code> is <code>true</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -518,7 +518,7 @@ public final class NetworkDetailResponse extends JsonModel {
     }
 
     /**
-     * Whether cross-organization signals apply to this organization. They need both the Identity Enterprise plan and the <code>global</code> sharing mode.
+     * Whether cross-organization signals apply to this organization. They need both the Enterprise plan and the <code>global</code> sharing mode.
      *
      * @param crossOrgAvailable the value
      * @return this builder
@@ -528,7 +528,7 @@ public final class NetworkDetailResponse extends JsonModel {
     }
 
     /**
-     * Why cross-organization signals do not apply, checked in this order. <code>plan</code>: the organization's Identity plan does not include the cross-organization fraud network (it needs Identity Enterprise), whatever the sharing mode. <code>sharing_mode</code>: the plan includes it, but the sharing mode is <code>private</code> or <code>off</code>. Null when <code>cross_org_available</code> is <code>true</code>.
+     * Why cross-organization signals do not apply, checked in this order. <code>plan</code>: the organization's plan does not include the cross-organization fraud network (it needs the Enterprise plan), whatever the sharing mode. <code>sharing_mode</code>: the plan includes it, but the sharing mode is <code>private</code> or <code>off</code>. Null when <code>cross_org_available</code> is <code>true</code>.
      *
      * @param crossOrgUnavailableReason the value, or {@code null} to send JSON null
      * @return this builder
@@ -629,7 +629,7 @@ public final class NetworkDetailResponse extends JsonModel {
   }
 
   /**
-   * Why cross-organization signals do not apply, checked in this order. <code>plan</code>: the organization's Identity plan does not include the cross-organization fraud network (it needs Identity Enterprise), whatever the sharing mode. <code>sharing_mode</code>: the plan includes it, but the sharing mode is <code>private</code> or <code>off</code>. Null when <code>cross_org_available</code> is <code>true</code>.
+   * Why cross-organization signals do not apply, checked in this order. <code>plan</code>: the organization's plan does not include the cross-organization fraud network (it needs the Enterprise plan), whatever the sharing mode. <code>sharing_mode</code>: the plan includes it, but the sharing mode is <code>private</code> or <code>off</code>. Null when <code>cross_org_available</code> is <code>true</code>.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */

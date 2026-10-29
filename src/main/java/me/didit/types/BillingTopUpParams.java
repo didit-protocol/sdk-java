@@ -50,7 +50,7 @@ public final class BillingTopUpParams extends JsonModel {
   }
 
   /**
-   * Amount to charge, in USD. <b>Must be at least 50.</b> Tax is added automatically at checkout based on the customer's billing address.
+   * Amount to charge, in USD. <b>Must be from 50 to 10,000.</b> The balance receives the same amount, with no discount or bonus. Tax is added automatically at checkout based on the customer's billing address.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -93,7 +93,7 @@ public final class BillingTopUpParams extends JsonModel {
     }
 
     /**
-     * Amount to charge, in USD. <b>Must be at least 50.</b> Tax is added automatically at checkout based on the customer's billing address.
+     * Amount to charge, in USD. <b>Must be from 50 to 10,000.</b> The balance receives the same amount, with no discount or bonus. Tax is added automatically at checkout based on the customer's billing address.
      *
      * @param amountInDollars the value
      * @return this builder

@@ -17,7 +17,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class SessionDecision extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_kind", "shared_from_session", "session_number", "session_url", "status", "workflow_id", "features", "vendor_data", "metadata", "expected_details", "contact_details", "callback", "id_verifications", "nfc_skip_reason", "nfc_verifications", "liveness_checks", "face_matches", "phone_verifications", "email_verifications", "poa_verifications", "document_ai_documents", "questionnaire_responses", "bank_verifications", "signatures", "aml_screenings", "ip_analyses", "database_validations", "reviews", "created_at", "expires_at", "registry_checks", "key_people_checks", "document_verifications", "environment", "resubmissions", "investigator");
+  private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_kind", "shared_from_session", "session_number", "session_url", "status", "workflow_id", "features", "vendor_data", "metadata", "expected_details", "contact_details", "callback", "id_verifications", "nfc_skip_reason", "nfc_verifications", "liveness_checks", "face_matches", "phone_verifications", "email_verifications", "poa_verifications", "document_ai_documents", "questionnaire_responses", "bank_verifications", "signatures", "aml_screenings", "ip_analyses", "database_validations", "reviews", "created_at", "expires_at", "registry_checks", "key_people_checks", "document_verifications", "environment", "resubmissions", "biometric_consent", "investigator");
 
   private SessionDecision(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -449,6 +449,16 @@ public final class SessionDecision extends JsonModel {
   }
 
   /**
+   * Whether the session required explicit biometric consent before a face capture, why, and the evidence of the answer. User Verification (KYC) sessions only; the same object is in the <code>decision</code> of session webhooks. <code>null</code> when the session was never evaluated, for example a workflow without a face capture. Fields with no recorded value are <code>null</code>. A native SDK below 4.10.0, or one that does not report its version, cannot show the consent step: its face captures run as before, and a session that required consent then reports <code>status: "pending"</code> with <code>reason: "BIOMETRIC_CONSENT_UNSUPPORTED_SDK"</code>. See [Biometric consent](/getting-started/biometric-consent).
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionDecision.BiometricConsent> biometricConsent() {
+    return Json.optional(json, "biometric_consent", Conv.model(SessionDecision.BiometricConsent::fromJson));
+  }
+
+  /**
    * The item's latest Investigator review, or null when it never had one. Carried by the V3 session and business session decision (and so by <code>status.updated</code> webhooks).
    *
    * @return the value, or empty when the field is absent or null
@@ -865,6 +875,16 @@ public final class SessionDecision extends JsonModel {
      */
     public Builder resubmissions(List<SessionDecision.Resubmissions> resubmissions) {
       return set("resubmissions", Conv.list(Conv.model(SessionDecision.Resubmissions::fromJson)), resubmissions);
+    }
+
+    /**
+     * Whether the session required explicit biometric consent before a face capture, why, and the evidence of the answer. User Verification (KYC) sessions only; the same object is in the <code>decision</code> of session webhooks. <code>null</code> when the session was never evaluated, for example a workflow without a face capture. Fields with no recorded value are <code>null</code>. A native SDK below 4.10.0, or one that does not report its version, cannot show the consent step: its face captures run as before, and a session that required consent then reports <code>status: "pending"</code> with <code>reason: "BIOMETRIC_CONSENT_UNSUPPORTED_SDK"</code>. See [Biometric consent](/getting-started/biometric-consent).
+     *
+     * @param biometricConsent the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder biometricConsent(SessionDecision.@Nullable BiometricConsent biometricConsent) {
+      return setNullable("biometric_consent", Conv.model(SessionDecision.BiometricConsent::fromJson), biometricConsent);
     }
 
     /**
@@ -1622,7 +1642,7 @@ public final class SessionDecision extends JsonModel {
    * One ID verification report - the full report for a single ID Verification step. <code>verification_method</code> says which of the three methods produced it (document capture, non-doc lookup or wallet sign-in) and the method-specific evidence block is populated accordingly.
    */
   public static final class IdVerifications extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "verification_method", "assurance", "wallet_provider", "fallback_from", "id_lookup", "wallet_verification", "status", "document_type", "document_subtype", "document_number", "personal_number", "portrait_image", "front_image", "front_video", "back_image", "back_video", "full_front_image", "full_back_image", "front_image_camera_front", "back_image_camera_front", "date_of_birth", "age", "expiration_date", "date_of_issue", "issuing_state", "issuing_state_name", "first_name", "last_name", "full_name", "gender", "address", "formatted_address", "place_of_birth", "marital_status", "nationality", "extra_fields", "mrz", "parsed_address", "extra_files", "front_image_camera_front_face_match_score", "back_image_camera_front_face_match_score", "document_selfie_face_matches", "front_image_quality_score", "back_image_quality_score", "warnings", "matches", "document_liveness");
+    private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "verification_method", "assurance", "wallet_provider", "fallback_from", "id_lookup", "wallet_verification", "status", "document_type", "document_subtype", "document_number", "personal_number", "portrait_image", "front_image", "front_video", "back_image", "back_video", "full_front_image", "full_back_image", "front_image_camera_front", "back_image_camera_front", "date_of_birth", "age", "expiration_date", "date_of_issue", "issuing_state", "issuing_state_name", "first_name", "last_name", "full_name", "gender", "address", "formatted_address", "place_of_birth", "marital_status", "nationality", "extra_fields", "mrz", "parsed_address", "extra_files", "front_image_camera_front_face_match_score", "back_image_camera_front_face_match_score", "document_selfie_face_matches", "front_image_quality_score", "back_image_quality_score", "warnings", "matches", "document_liveness", "address_validation");
 
     private IdVerifications(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -2137,6 +2157,16 @@ public final class SessionDecision extends JsonModel {
       return Json.optional(json, "document_liveness", Conv.model(SessionDecision.IdVerifications.DocumentLiveness::fromJson));
     }
 
+    /**
+     * Address Validation of the address printed on this document: whether it exists and its normalised form, as the document read it (a later correction of <code>address</code> does not run it again). Present when this ID verification step enabled the Address Validation add-on; <code>null</code> otherwise.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<AddressValidationResult> addressValidation() {
+      return Json.optional(json, "address_validation", Conv.model(AddressValidationResult::fromJson));
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -2628,6 +2658,16 @@ public final class SessionDecision extends JsonModel {
        */
       public Builder documentLiveness(SessionDecision.IdVerifications.@Nullable DocumentLiveness documentLiveness) {
         return setNullable("document_liveness", Conv.model(SessionDecision.IdVerifications.DocumentLiveness::fromJson), documentLiveness);
+      }
+
+      /**
+       * Address Validation of the address printed on this document: whether it exists and its normalised form, as the document read it (a later correction of <code>address</code> does not run it again). Present when this ID verification step enabled the Address Validation add-on; <code>null</code> otherwise.
+       *
+       * @param addressValidation the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder addressValidation(@Nullable AddressValidationResult addressValidation) {
+        return setNullable("address_validation", Conv.model(AddressValidationResult::fromJson), addressValidation);
       }
 
       /**
@@ -15487,7 +15527,7 @@ public final class SessionDecision extends JsonModel {
   }
 
   public static final class PoaVerifications extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "document_file", "issuing_state", "document_type", "document_subtype", "document_language", "document_metadata", "issuer", "issue_date", "expiration_date", "poa_address", "poa_formatted_address", "poa_parsed_address", "name_on_document", "name_match_score_expected_details", "name_match_score_id_verification", "expected_details_address", "expected_details_formatted_address", "expected_details_parsed_address", "extra_fields", "extra_files", "warnings", "detected_codes");
+    private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "document_file", "issuing_state", "document_type", "document_subtype", "document_language", "document_metadata", "issuer", "issue_date", "expiration_date", "poa_address", "poa_formatted_address", "poa_parsed_address", "name_on_document", "name_match_score_expected_details", "name_match_score_id_verification", "expected_details_address", "expected_details_formatted_address", "expected_details_parsed_address", "extra_fields", "extra_files", "warnings", "detected_codes", "address_validation");
 
     private PoaVerifications(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -15762,6 +15802,16 @@ public final class SessionDecision extends JsonModel {
       return Json.optional(json, "detected_codes", Conv.list(Conv.model(DocumentAIDetectedCode::fromJson)));
     }
 
+    /**
+     * Address Validation of the address on this proof of address: whether it exists and its normalised form, as the document read it (a later correction of <code>poa_address</code> does not run it again). Present when this Proof of Address step enabled the Address Validation add-on and the upload passed the document checks; <code>null</code> otherwise.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<AddressValidationResult> addressValidation() {
+      return Json.optional(json, "address_validation", Conv.model(AddressValidationResult::fromJson));
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -16013,6 +16063,16 @@ public final class SessionDecision extends JsonModel {
        */
       public Builder detectedCodes(List<DocumentAIDetectedCode> detectedCodes) {
         return set("detected_codes", Conv.list(Conv.model(DocumentAIDetectedCode::fromJson)), detectedCodes);
+      }
+
+      /**
+       * Address Validation of the address on this proof of address: whether it exists and its normalised form, as the document read it (a later correction of <code>poa_address</code> does not run it again). Present when this Proof of Address step enabled the Address Validation add-on and the upload passed the document checks; <code>null</code> otherwise.
+       *
+       * @param addressValidation the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder addressValidation(@Nullable AddressValidationResult addressValidation) {
+        return setNullable("address_validation", Conv.model(AddressValidationResult::fromJson), addressValidation);
       }
 
       /**
@@ -24258,7 +24318,7 @@ public final class SessionDecision extends JsonModel {
       }
 
       /**
-       * <code>not_requested</code>, <code>pending</code>, <code>delivered</code> or <code>unavailable</code>. Also in <code>ownership.status</code>.
+       * <code>not_requested</code>, <code>pending</code>, <code>delivered</code>, <code>not_held</code> or <code>unavailable</code>. Also in <code>ownership.status</code>.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -24761,7 +24821,7 @@ public final class SessionDecision extends JsonModel {
         }
 
         /**
-         * <code>not_requested</code>, <code>pending</code>, <code>delivered</code> or <code>unavailable</code>. Also in <code>ownership.status</code>.
+         * <code>not_requested</code>, <code>pending</code>, <code>delivered</code>, <code>not_held</code> or <code>unavailable</code>. Also in <code>ownership.status</code>.
          *
          * @param registryOwnershipStatus the value, or {@code null} to send JSON null
          * @return this builder
@@ -32647,6 +32707,801 @@ public final class SessionDecision extends JsonModel {
         protected Builder self() {
           return this;
         }
+      }
+    }
+  }
+
+  /**
+   * Whether the session required explicit biometric consent before a face capture, why, and the evidence of the answer. User Verification (KYC) sessions only; the same object is in the <code>decision</code> of session webhooks. <code>null</code> when the session was never evaluated, for example a workflow without a face capture. Fields with no recorded value are <code>null</code>. A native SDK below 4.10.0, or one that does not report its version, cannot show the consent step: its face captures run as before, and a session that required consent then reports <code>status: "pending"</code> with <code>reason: "BIOMETRIC_CONSENT_UNSUPPORTED_SDK"</code>. See [Biometric consent](/getting-started/biometric-consent).
+   */
+  public static final class BiometricConsent extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("required", "trigger", "status", "given_at", "declined_at", "text_version", "text_hash", "locale", "policy_url", "step", "node_id", "ip_address", "ip_country_code", "ip_state", "ip_city", "user_agent", "detected_ip_address", "detected_country_code", "detected_state", "detected_city", "declared_state", "document_state", "jurisdictions", "retention_months", "reason", "decline_reason", "face_data_deleted_at");
+
+    private BiometricConsent(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code BiometricConsent} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static BiometricConsent fromJson(JsonNode json) {
+      return new BiometricConsent(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * Whether the session must collect explicit biometric consent. Never goes back to <code>false</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Boolean> required() {
+      return Json.optional(json, "required", Conv.BOOLEAN);
+    }
+
+    /**
+     * Why consent is required, or how it was satisfied. <code>declared_state</code>: you declared a covered state (<code>user_state</code>, or a US address in <code>expected_details</code>). <code>ip_state</code>: the person's IP is in a covered state (Illinois, Texas, Colorado). <code>ip_unknown</code>: the evidence places the person in the US but the state cannot be told (the IP is in the US with no state, or cannot be located while your details or the document place the person in the US). <code>document_issuer</code>: the identity document was issued by a covered state. <code>forced</code>: the application's mode is Always. <code>customer_collected</code>: you sent <code>biometric_consent</code> when creating the session. <code>null</code> while not required.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<SessionDecision.BiometricConsent.Trigger> trigger() {
+      return Json.optional(json, "trigger", Conv.enumeration(SessionDecision.BiometricConsent.Trigger::of));
+    }
+
+    /**
+     * <code>not_required</code>; <code>pending</code> (required and not given: the person has not answered yet, or <code>reason</code> says why it was not collected); <code>given</code>; <code>declined</code> (a decline was recorded and the session ended as <code>Declined</code>; no Didit screen offers a decline today).
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<SessionDecision.BiometricConsent.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(SessionDecision.BiometricConsent.Status::of));
+    }
+
+    /**
+     * When consent was given. For <code>customer_collected</code>, the <code>given_at</code> you sent.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> givenAt() {
+      return Json.optional(json, "given_at", Conv.DATE_TIME);
+    }
+
+    /**
+     * When a decline was recorded.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> declinedAt() {
+      return Json.optional(json, "declined_at", Conv.DATE_TIME);
+    }
+
+    /**
+     * Version id of the consent text the person answered, or the one you sent.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> textVersion() {
+      return Json.optional(json, "text_version", Conv.STRING);
+    }
+
+    /**
+     * SHA-256 (hex) of the exact consent text shown, in the language it was shown in.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> textHash() {
+      return Json.optional(json, "text_hash", Conv.STRING);
+    }
+
+    /**
+     * Language the consent text was shown in.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> locale() {
+      return Json.optional(json, "locale", Conv.STRING);
+    }
+
+    /**
+     * The biometric data policy the consent step linked to.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> policyUrl() {
+      return Json.optional(json, "policy_url", Conv.STRING);
+    }
+
+    /**
+     * Workflow step the session was on when the person answered, for example <code>LIVENESS</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> step() {
+      return Json.optional(json, "step", Conv.STRING);
+    }
+
+    /**
+     * Workflow graph node the session was on when the person answered.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> nodeId() {
+      return Json.optional(json, "node_id", Conv.STRING);
+    }
+
+    /**
+     * IP the answer came from.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> ipAddress() {
+      return Json.optional(json, "ip_address", Conv.STRING);
+    }
+
+    /**
+     * ISO 3166-1 alpha-2 country of the answer's IP.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> ipCountryCode() {
+      return Json.optional(json, "ip_country_code", Conv.STRING);
+    }
+
+    /**
+     * ISO 3166-2 subdivision of the answer's IP, for example <code>US-IL</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> ipState() {
+      return Json.optional(json, "ip_state", Conv.STRING);
+    }
+
+    /**
+     * City of the answer's IP.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> ipCity() {
+      return Json.optional(json, "ip_city", Conv.STRING);
+    }
+
+    /**
+     * User agent of the answer's request.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> userAgent() {
+      return Json.optional(json, "user_agent", Conv.STRING);
+    }
+
+    /**
+     * The person's IP the requirement was last evaluated from. Can differ from <code>ip_address</code> when the person answered on another device.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> detectedIpAddress() {
+      return Json.optional(json, "detected_ip_address", Conv.STRING);
+    }
+
+    /**
+     * ISO 3166-1 alpha-2 country of the detected IP.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> detectedCountryCode() {
+      return Json.optional(json, "detected_country_code", Conv.STRING);
+    }
+
+    /**
+     * ISO 3166-2 subdivision of the detected IP.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> detectedState() {
+      return Json.optional(json, "detected_state", Conv.STRING);
+    }
+
+    /**
+     * City of the detected IP.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> detectedCity() {
+      return Json.optional(json, "detected_city", Conv.STRING);
+    }
+
+    /**
+     * ISO 3166-2 subdivision you declared: <code>user_state</code>, or the state of a US address in <code>expected_details</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> declaredState() {
+      return Json.optional(json, "declared_state", Conv.STRING);
+    }
+
+    /**
+     * ISO 3166-2 subdivision that issued the identity document, read at ID capture.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> documentState() {
+      return Json.optional(json, "document_state", Conv.STRING);
+    }
+
+    /**
+     * US states (USPS codes, for example <code>IL</code>) whose biometric law covers the person. <code>US</code> when the evidence places the person in the US but no state is known. Empty when none applies.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<List<String>> jurisdictions() {
+      return Json.optional(json, "jurisdictions", Conv.list(Conv.STRING));
+    }
+
+    /**
+     * The shortest biometric retention limit, in months, among <code>jurisdictions</code>. <code>null</code> when none applies.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Long> retentionMonths() {
+      return Json.optional(json, "retention_months", Conv.LONG);
+    }
+
+    /**
+     * <code>BIOMETRIC_CONSENT_UNSUPPORTED_SDK</code>: consent was required and a native SDK below 4.10.0, or one that did not report its version, captured a face without the consent step; <code>status</code> stays <code>pending</code>, or <code>given</code> if the person later agreed in the hosted flow. <code>BIOMETRIC_CONSENT_DECLINED</code>: a decline was recorded (it replaces the SDK reason). <code>null</code> otherwise, and always <code>null</code> when the session did not require consent.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<SessionDecision.BiometricConsent.Reason> reason() {
+      return Json.optional(json, "reason", Conv.enumeration(SessionDecision.BiometricConsent.Reason::of));
+    }
+
+    /**
+     * <code>BIOMETRIC_CONSENT_DECLINED</code> when a recorded decline ended the session, otherwise <code>null</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<SessionDecision.BiometricConsent.DeclineReason> declineReason() {
+      return Json.optional(json, "decline_reason", Conv.enumeration(SessionDecision.BiometricConsent.DeclineReason::of));
+    }
+
+    /**
+     * When the decline deleted the session's face images, videos and face templates. <code>null</code> unless a decline was recorded.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> faceDataDeletedAt() {
+      return Json.optional(json, "face_data_deleted_at", Conv.DATE_TIME);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link BiometricConsent}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(BiometricConsent from) {
+        super(from);
+      }
+
+      /**
+       * Whether the session must collect explicit biometric consent. Never goes back to <code>false</code>.
+       *
+       * @param required the value
+       * @return this builder
+       */
+      public Builder required(boolean required) {
+        return set("required", Conv.BOOLEAN, required);
+      }
+
+      /**
+       * Why consent is required, or how it was satisfied. <code>declared_state</code>: you declared a covered state (<code>user_state</code>, or a US address in <code>expected_details</code>). <code>ip_state</code>: the person's IP is in a covered state (Illinois, Texas, Colorado). <code>ip_unknown</code>: the evidence places the person in the US but the state cannot be told (the IP is in the US with no state, or cannot be located while your details or the document place the person in the US). <code>document_issuer</code>: the identity document was issued by a covered state. <code>forced</code>: the application's mode is Always. <code>customer_collected</code>: you sent <code>biometric_consent</code> when creating the session. <code>null</code> while not required.
+       *
+       * @param trigger the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder trigger(SessionDecision.BiometricConsent.@Nullable Trigger trigger) {
+        return setNullable("trigger", Conv.enumeration(SessionDecision.BiometricConsent.Trigger::of), trigger);
+      }
+
+      /**
+       * <code>not_required</code>; <code>pending</code> (required and not given: the person has not answered yet, or <code>reason</code> says why it was not collected); <code>given</code>; <code>declined</code> (a decline was recorded and the session ended as <code>Declined</code>; no Didit screen offers a decline today).
+       *
+       * @param status the value
+       * @return this builder
+       */
+      public Builder status(SessionDecision.BiometricConsent.Status status) {
+        return set("status", Conv.enumeration(SessionDecision.BiometricConsent.Status::of), status);
+      }
+
+      /**
+       * When consent was given. For <code>customer_collected</code>, the <code>given_at</code> you sent.
+       *
+       * @param givenAt the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder givenAt(@Nullable OffsetDateTime givenAt) {
+        return setNullable("given_at", Conv.DATE_TIME, givenAt);
+      }
+
+      /**
+       * When a decline was recorded.
+       *
+       * @param declinedAt the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder declinedAt(@Nullable OffsetDateTime declinedAt) {
+        return setNullable("declined_at", Conv.DATE_TIME, declinedAt);
+      }
+
+      /**
+       * Version id of the consent text the person answered, or the one you sent.
+       *
+       * @param textVersion the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder textVersion(@Nullable String textVersion) {
+        return setNullable("text_version", Conv.STRING, textVersion);
+      }
+
+      /**
+       * SHA-256 (hex) of the exact consent text shown, in the language it was shown in.
+       *
+       * @param textHash the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder textHash(@Nullable String textHash) {
+        return setNullable("text_hash", Conv.STRING, textHash);
+      }
+
+      /**
+       * Language the consent text was shown in.
+       *
+       * @param locale the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder locale(@Nullable String locale) {
+        return setNullable("locale", Conv.STRING, locale);
+      }
+
+      /**
+       * The biometric data policy the consent step linked to.
+       *
+       * @param policyUrl the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder policyUrl(@Nullable String policyUrl) {
+        return setNullable("policy_url", Conv.STRING, policyUrl);
+      }
+
+      /**
+       * Workflow step the session was on when the person answered, for example <code>LIVENESS</code>.
+       *
+       * @param step the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder step(@Nullable String step) {
+        return setNullable("step", Conv.STRING, step);
+      }
+
+      /**
+       * Workflow graph node the session was on when the person answered.
+       *
+       * @param nodeId the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder nodeId(@Nullable String nodeId) {
+        return setNullable("node_id", Conv.STRING, nodeId);
+      }
+
+      /**
+       * IP the answer came from.
+       *
+       * @param ipAddress the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder ipAddress(@Nullable String ipAddress) {
+        return setNullable("ip_address", Conv.STRING, ipAddress);
+      }
+
+      /**
+       * ISO 3166-1 alpha-2 country of the answer's IP.
+       *
+       * @param ipCountryCode the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder ipCountryCode(@Nullable String ipCountryCode) {
+        return setNullable("ip_country_code", Conv.STRING, ipCountryCode);
+      }
+
+      /**
+       * ISO 3166-2 subdivision of the answer's IP, for example <code>US-IL</code>.
+       *
+       * @param ipState the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder ipState(@Nullable String ipState) {
+        return setNullable("ip_state", Conv.STRING, ipState);
+      }
+
+      /**
+       * City of the answer's IP.
+       *
+       * @param ipCity the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder ipCity(@Nullable String ipCity) {
+        return setNullable("ip_city", Conv.STRING, ipCity);
+      }
+
+      /**
+       * User agent of the answer's request.
+       *
+       * @param userAgent the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder userAgent(@Nullable String userAgent) {
+        return setNullable("user_agent", Conv.STRING, userAgent);
+      }
+
+      /**
+       * The person's IP the requirement was last evaluated from. Can differ from <code>ip_address</code> when the person answered on another device.
+       *
+       * @param detectedIpAddress the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder detectedIpAddress(@Nullable String detectedIpAddress) {
+        return setNullable("detected_ip_address", Conv.STRING, detectedIpAddress);
+      }
+
+      /**
+       * ISO 3166-1 alpha-2 country of the detected IP.
+       *
+       * @param detectedCountryCode the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder detectedCountryCode(@Nullable String detectedCountryCode) {
+        return setNullable("detected_country_code", Conv.STRING, detectedCountryCode);
+      }
+
+      /**
+       * ISO 3166-2 subdivision of the detected IP.
+       *
+       * @param detectedState the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder detectedState(@Nullable String detectedState) {
+        return setNullable("detected_state", Conv.STRING, detectedState);
+      }
+
+      /**
+       * City of the detected IP.
+       *
+       * @param detectedCity the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder detectedCity(@Nullable String detectedCity) {
+        return setNullable("detected_city", Conv.STRING, detectedCity);
+      }
+
+      /**
+       * ISO 3166-2 subdivision you declared: <code>user_state</code>, or the state of a US address in <code>expected_details</code>.
+       *
+       * @param declaredState the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder declaredState(@Nullable String declaredState) {
+        return setNullable("declared_state", Conv.STRING, declaredState);
+      }
+
+      /**
+       * ISO 3166-2 subdivision that issued the identity document, read at ID capture.
+       *
+       * @param documentState the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder documentState(@Nullable String documentState) {
+        return setNullable("document_state", Conv.STRING, documentState);
+      }
+
+      /**
+       * US states (USPS codes, for example <code>IL</code>) whose biometric law covers the person. <code>US</code> when the evidence places the person in the US but no state is known. Empty when none applies.
+       *
+       * @param jurisdictions the value
+       * @return this builder
+       */
+      public Builder jurisdictions(List<String> jurisdictions) {
+        return set("jurisdictions", Conv.list(Conv.STRING), jurisdictions);
+      }
+
+      /**
+       * The shortest biometric retention limit, in months, among <code>jurisdictions</code>. <code>null</code> when none applies.
+       *
+       * @param retentionMonths the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder retentionMonths(@Nullable Long retentionMonths) {
+        return setNullable("retention_months", Conv.LONG, retentionMonths);
+      }
+
+      /**
+       * <code>BIOMETRIC_CONSENT_UNSUPPORTED_SDK</code>: consent was required and a native SDK below 4.10.0, or one that did not report its version, captured a face without the consent step; <code>status</code> stays <code>pending</code>, or <code>given</code> if the person later agreed in the hosted flow. <code>BIOMETRIC_CONSENT_DECLINED</code>: a decline was recorded (it replaces the SDK reason). <code>null</code> otherwise, and always <code>null</code> when the session did not require consent.
+       *
+       * @param reason the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder reason(SessionDecision.BiometricConsent.@Nullable Reason reason) {
+        return setNullable("reason", Conv.enumeration(SessionDecision.BiometricConsent.Reason::of), reason);
+      }
+
+      /**
+       * <code>BIOMETRIC_CONSENT_DECLINED</code> when a recorded decline ended the session, otherwise <code>null</code>.
+       *
+       * @param declineReason the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder declineReason(SessionDecision.BiometricConsent.@Nullable DeclineReason declineReason) {
+        return setNullable("decline_reason", Conv.enumeration(SessionDecision.BiometricConsent.DeclineReason::of), declineReason);
+      }
+
+      /**
+       * When the decline deleted the session's face images, videos and face templates. <code>null</code> unless a decline was recorded.
+       *
+       * @param faceDataDeletedAt the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder faceDataDeletedAt(@Nullable OffsetDateTime faceDataDeletedAt) {
+        return setNullable("face_data_deleted_at", Conv.DATE_TIME, faceDataDeletedAt);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code BiometricConsent}
+       */
+      public BiometricConsent build() {
+        return new BiometricConsent(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     * Why consent is required, or how it was satisfied. <code>declared_state</code>: you declared a covered state (<code>user_state</code>, or a US address in <code>expected_details</code>). <code>ip_state</code>: the person's IP is in a covered state (Illinois, Texas, Colorado). <code>ip_unknown</code>: the evidence places the person in the US but the state cannot be told (the IP is in the US with no state, or cannot be located while your details or the document place the person in the US). <code>document_issuer</code>: the identity document was issued by a covered state. <code>forced</code>: the application's mode is Always. <code>customer_collected</code>: you sent <code>biometric_consent</code> when creating the session. <code>null</code> while not required.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Trigger extends StringEnum {
+      /** The value {@code "declared_state"}. */
+      public static final Trigger DECLARED_STATE = new Trigger("declared_state");
+
+      /** The value {@code "ip_state"}. */
+      public static final Trigger IP_STATE = new Trigger("ip_state");
+
+      /** The value {@code "ip_unknown"}. */
+      public static final Trigger IP_UNKNOWN = new Trigger("ip_unknown");
+
+      /** The value {@code "document_issuer"}. */
+      public static final Trigger DOCUMENT_ISSUER = new Trigger("document_issuer");
+
+      /** The value {@code "forced"}. */
+      public static final Trigger FORCED = new Trigger("forced");
+
+      /** The value {@code "customer_collected"}. */
+      public static final Trigger CUSTOMER_COLLECTED = new Trigger("customer_collected");
+
+      private static final List<Trigger> KNOWN_VALUES = List.of(DECLARED_STATE, IP_STATE, IP_UNKNOWN, DOCUMENT_ISSUER, FORCED, CUSTOMER_COLLECTED);
+
+      private Trigger(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Trigger of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Trigger::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Trigger> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     * <code>not_required</code>; <code>pending</code> (required and not given: the person has not answered yet, or <code>reason</code> says why it was not collected); <code>given</code>; <code>declined</code> (a decline was recorded and the session ended as <code>Declined</code>; no Didit screen offers a decline today).
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Status extends StringEnum {
+      /** The value {@code "not_required"}. */
+      public static final Status NOT_REQUIRED = new Status("not_required");
+
+      /** The value {@code "pending"}. */
+      public static final Status PENDING = new Status("pending");
+
+      /** The value {@code "given"}. */
+      public static final Status GIVEN = new Status("given");
+
+      /** The value {@code "declined"}. */
+      public static final Status DECLINED = new Status("declined");
+
+      private static final List<Status> KNOWN_VALUES = List.of(NOT_REQUIRED, PENDING, GIVEN, DECLINED);
+
+      private Status(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Status of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Status::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Status> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     * <code>BIOMETRIC_CONSENT_UNSUPPORTED_SDK</code>: consent was required and a native SDK below 4.10.0, or one that did not report its version, captured a face without the consent step; <code>status</code> stays <code>pending</code>, or <code>given</code> if the person later agreed in the hosted flow. <code>BIOMETRIC_CONSENT_DECLINED</code>: a decline was recorded (it replaces the SDK reason). <code>null</code> otherwise, and always <code>null</code> when the session did not require consent.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Reason extends StringEnum {
+      /** The value {@code "BIOMETRIC_CONSENT_UNSUPPORTED_SDK"}. */
+      public static final Reason BIOMETRIC_CONSENT_UNSUPPORTED_SDK = new Reason("BIOMETRIC_CONSENT_UNSUPPORTED_SDK");
+
+      /** The value {@code "BIOMETRIC_CONSENT_DECLINED"}. */
+      public static final Reason BIOMETRIC_CONSENT_DECLINED = new Reason("BIOMETRIC_CONSENT_DECLINED");
+
+      private static final List<Reason> KNOWN_VALUES = List.of(BIOMETRIC_CONSENT_UNSUPPORTED_SDK, BIOMETRIC_CONSENT_DECLINED);
+
+      private Reason(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Reason of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Reason::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Reason> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     * <code>BIOMETRIC_CONSENT_DECLINED</code> when a recorded decline ended the session, otherwise <code>null</code>.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class DeclineReason extends StringEnum {
+      /** The value {@code "BIOMETRIC_CONSENT_DECLINED"}. */
+      public static final DeclineReason BIOMETRIC_CONSENT_DECLINED = new DeclineReason("BIOMETRIC_CONSENT_DECLINED");
+
+      private static final List<DeclineReason> KNOWN_VALUES = List.of(BIOMETRIC_CONSENT_DECLINED);
+
+      private DeclineReason(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static DeclineReason of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, DeclineReason::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<DeclineReason> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
       }
     }
   }

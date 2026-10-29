@@ -102,7 +102,7 @@ public final class SessionsListParams extends JsonModel {
   }
 
   /**
-   * Smart free-text search. A full UUID matches <code>session_id</code>; numeric input matches session-number prefix, document/personal numbers, phone prefix, or <code>vendor_data</code>; input containing <code>&#64;</code> matches email prefixes; other text matches names (accent-insensitive) and <code>vendor_data</code>. Free text containing digits additionally matches document/personal-number search fields and session-number prefixes.
+   * A complete displayed reference such as <code>S-0001</code> (user) or <code>B-0001</code> (business) matches only that session number and kind; leading zeros and letter case do not affect matching. Smart free-text search. A full UUID matches <code>session_id</code>; numeric input matches session-number prefix, document/personal numbers, phone prefix, or <code>vendor_data</code>; input containing <code>&#64;</code> matches email prefixes; other text matches names (accent-insensitive) and <code>vendor_data</code>. Free text containing digits additionally matches document/personal-number search fields and session-number prefixes.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -335,7 +335,7 @@ public final class SessionsListParams extends JsonModel {
     }
 
     /**
-     * Smart free-text search. A full UUID matches <code>session_id</code>; numeric input matches session-number prefix, document/personal numbers, phone prefix, or <code>vendor_data</code>; input containing <code>&#64;</code> matches email prefixes; other text matches names (accent-insensitive) and <code>vendor_data</code>. Free text containing digits additionally matches document/personal-number search fields and session-number prefixes.
+     * A complete displayed reference such as <code>S-0001</code> (user) or <code>B-0001</code> (business) matches only that session number and kind; leading zeros and letter case do not affect matching. Smart free-text search. A full UUID matches <code>session_id</code>; numeric input matches session-number prefix, document/personal numbers, phone prefix, or <code>vendor_data</code>; input containing <code>&#64;</code> matches email prefixes; other text matches names (accent-insensitive) and <code>vendor_data</code>. Free text containing digits additionally matches document/personal-number search fields and session-number prefixes.
      *
      * @param search the value
      * @return this builder

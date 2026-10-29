@@ -28,7 +28,7 @@ final class TransactionsTravelRuleResourceTest {
 
   @Test
   void updateTransfer() {
-    TravelRuleTransferPatchRequest params = TravelRuleTransferPatchRequest.builder().paymentTxnId("value-payment-txn-id").action(TravelRuleTransferPatchRequest.Action.CANCEL).complianceEmail("user@example.com").walletAddress("value-wallet-address").memo("value-memo").build();
+    TravelRuleTransferPatchRequest params = TravelRuleTransferPatchRequest.builder().paymentTxnId("value-payment-txn-id").action(TravelRuleTransferPatchRequest.Action.CANCEL).complianceEmail("user@example.com").walletAddress("value-wallet-address").memo("value-memo").beneficiaryVasp("00000000-0000-4000-8000-000000003908").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
     var result = client.transactions().travelRule().updateTransfer("00000000-0000-4000-8000-00000002630a", params);
@@ -38,7 +38,7 @@ final class TransactionsTravelRuleResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"payment_txn_id\":\"value-payment-txn-id\",\"action\":\"cancel\",\"compliance_email\":\"user@example.com\",\"wallet_address\":\"value-wallet-address\",\"memo\":\"value-memo\"}", request.body());
+    TestJson.assertJsonEquals("{\"payment_txn_id\":\"value-payment-txn-id\",\"action\":\"cancel\",\"compliance_email\":\"user@example.com\",\"wallet_address\":\"value-wallet-address\",\"memo\":\"value-memo\",\"beneficiary_vasp\":\"00000000-0000-4000-8000-000000003908\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

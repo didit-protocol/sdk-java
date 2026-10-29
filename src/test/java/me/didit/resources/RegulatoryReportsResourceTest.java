@@ -16,6 +16,7 @@ import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
 import me.didit.types.RegulatoryReportsCreateParams;
+import me.didit.types.RegulatoryReportsDeleteParams;
 import me.didit.types.RegulatoryReportsListParams;
 import me.didit.types.RegulatoryReportsRetrieveDownloadUrlParams;
 import me.didit.types.RegulatoryReportsUpdateParams;
@@ -97,15 +98,16 @@ final class RegulatoryReportsResourceTest {
 
   @Test
   void delete() {
+    RegulatoryReportsDeleteParams params = RegulatoryReportsDeleteParams.builder().confirmDelete(true).build();
     transport.respond(204, "");
-    client.regulatoryReports().delete("00000000-0000-4000-8000-00000001161b");
+    client.regulatoryReports().delete("00000000-0000-4000-8000-00000001161b", params);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/regulatory-reports/00000000-0000-4000-8000-00000001161b/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals("{\"confirm_delete\":true}", request.body());
   }
 
   @Test

@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class TravelRuleWidgetContext extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("vasp_name", "wallet_address", "chain", "holder_name", "allowed_methods", "transfer_status", "callback_url", "expires_at", "completed_at", "proofs", "max_attempts", "attempts_used", "attempts_remaining", "customization");
+  private static final Set<String> KNOWN_FIELDS = Set.of("vasp_name", "wallet_address", "chain", "chain_family", "holder_name", "allowed_methods", "transfer_status", "callback_url", "expires_at", "completed_at", "proofs", "max_attempts", "attempts_used", "attempts_remaining", "customization");
 
   private TravelRuleWidgetContext(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -72,13 +72,23 @@ public final class TravelRuleWidgetContext extends JsonModel {
   }
 
   /**
-   * The <code>chain</code> field.
+   * The chain the session was minted with, as you sent it.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<String> chain() {
     return Json.optional(json, "chain", Conv.STRING);
+  }
+
+  /**
+   * The key family behind chain: EVM (Ethereum, BNB Chain, Polygon, Arbitrum, Base, Optimism, Avalanche, Linea and the other EVM chains), BTC, SOL or TRON. One EVM key controls the same address on every EVM chain. Null when no signature can be verified on the chain.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleWidgetContext.ChainFamily> chainFamily() {
+    return Json.optional(json, "chain_family", Conv.enumeration(TravelRuleWidgetContext.ChainFamily::of));
   }
 
   /**
@@ -92,7 +102,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
   }
 
   /**
-   * Proof methods available for this session. MESSAGE_SIGNING requires a supported chain family, SATOSHI_TEST requires a satoshi_deposit_address on the session, SCREENSHOT requires the allow_screenshot_proof setting, and SELF_DECLARATION requires the allow_self_declaration setting and an <code>ownership_validation_mode</code> that accepts a declaration for the linked transfer (never in <code>FULL</code>; in <code>SIMPLIFIED</code> only below <code>simplified_validation_threshold</code>). Initiating a SELF_DECLARATION the mode does not accept answers 403.
+   * Proof methods available for this session. MESSAGE_SIGNING requires a chain with a chain_family, SATOSHI_TEST requires a satoshi_deposit_address on the session and a chain whose deposits Didit can read back, SCREENSHOT requires the allow_screenshot_proof setting, and SELF_DECLARATION requires the allow_self_declaration setting.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -225,13 +235,23 @@ public final class TravelRuleWidgetContext extends JsonModel {
     }
 
     /**
-     * The <code>chain</code> field.
+     * The chain the session was minted with, as you sent it.
      *
      * @param chain the value
      * @return this builder
      */
     public Builder chain(String chain) {
       return set("chain", Conv.STRING, chain);
+    }
+
+    /**
+     * The key family behind chain: EVM (Ethereum, BNB Chain, Polygon, Arbitrum, Base, Optimism, Avalanche, Linea and the other EVM chains), BTC, SOL or TRON. One EVM key controls the same address on every EVM chain. Null when no signature can be verified on the chain.
+     *
+     * @param chainFamily the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder chainFamily(TravelRuleWidgetContext.@Nullable ChainFamily chainFamily) {
+      return setNullable("chain_family", Conv.enumeration(TravelRuleWidgetContext.ChainFamily::of), chainFamily);
     }
 
     /**
@@ -245,7 +265,7 @@ public final class TravelRuleWidgetContext extends JsonModel {
     }
 
     /**
-     * Proof methods available for this session. MESSAGE_SIGNING requires a supported chain family, SATOSHI_TEST requires a satoshi_deposit_address on the session, SCREENSHOT requires the allow_screenshot_proof setting, and SELF_DECLARATION requires the allow_self_declaration setting and an <code>ownership_validation_mode</code> that accepts a declaration for the linked transfer (never in <code>FULL</code>; in <code>SIMPLIFIED</code> only below <code>simplified_validation_threshold</code>). Initiating a SELF_DECLARATION the mode does not accept answers 403.
+     * Proof methods available for this session. MESSAGE_SIGNING requires a chain with a chain_family, SATOSHI_TEST requires a satoshi_deposit_address on the session and a chain whose deposits Didit can read back, SCREENSHOT requires the allow_screenshot_proof setting, and SELF_DECLARATION requires the allow_self_declaration setting.
      *
      * @param allowedMethods the value
      * @return this builder
@@ -356,6 +376,55 @@ public final class TravelRuleWidgetContext extends JsonModel {
     @Override
     protected Builder self() {
       return this;
+    }
+  }
+
+  /**
+   * The key family behind chain: EVM (Ethereum, BNB Chain, Polygon, Arbitrum, Base, Optimism, Avalanche, Linea and the other EVM chains), BTC, SOL or TRON. One EVM key controls the same address on every EVM chain. Null when no signature can be verified on the chain.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class ChainFamily extends StringEnum {
+    /** The value {@code "EVM"}. */
+    public static final ChainFamily EVM = new ChainFamily("EVM");
+
+    /** The value {@code "BTC"}. */
+    public static final ChainFamily BTC = new ChainFamily("BTC");
+
+    /** The value {@code "SOL"}. */
+    public static final ChainFamily SOL = new ChainFamily("SOL");
+
+    /** The value {@code "TRON"}. */
+    public static final ChainFamily TRON = new ChainFamily("TRON");
+
+    private static final List<ChainFamily> KNOWN_VALUES = List.of(EVM, BTC, SOL, TRON);
+
+    private ChainFamily(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static ChainFamily of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, ChainFamily::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<ChainFamily> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 

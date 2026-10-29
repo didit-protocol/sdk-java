@@ -300,7 +300,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * Effective membership configuration for each network. No network, including GTR, is included by default. This is not a live health or delivery check.
+   * Per network, how this application would send and why it cannot. No network, including GTR, is included by default: a network is reachable through your own connected membership, or through Didit's membership once Didit's membership of that network is live and your own participant on it is active. Not a live health or delivery check.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -583,7 +583,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * Effective membership configuration for each network. No network, including GTR, is included by default. This is not a live health or delivery check.
+     * Per network, how this application would send and why it cannot. No network, including GTR, is included by default: a network is reachable through your own connected membership, or through Didit's membership once Didit's membership of that network is live and your own participant on it is active. Not a live health or delivery check.
      *
      * @param networks the value
      * @return this builder
@@ -908,7 +908,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * Effective membership configuration for each network. No network, including GTR, is included by default. This is not a live health or delivery check.
+   * Per network, how this application would send and why it cannot. No network, including GTR, is included by default: a network is reachable through your own connected membership, or through Didit's membership once Didit's membership of that network is live and your own participant on it is active. Not a live health or delivery check.
    */
   public static final class Networks extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("gtr", "trust", "verifyvasp", "sygna");
@@ -947,43 +947,43 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * The <code>gtr</code> field.
+     * How Travel Rule messages on one network would be sent for this application, and why they cannot be. Configuration status, not a live health or delivery check.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TravelRuleSettingsDetail.Networks.Gtr> gtr() {
-      return Json.optional(json, "gtr", Conv.model(TravelRuleSettingsDetail.Networks.Gtr::fromJson));
+    public Optional<TravelRuleNetworkState> gtr() {
+      return Json.optional(json, "gtr", Conv.model(TravelRuleNetworkState::fromJson));
     }
 
     /**
-     * The <code>trust</code> field.
+     * How Travel Rule messages on one network would be sent for this application, and why they cannot be. Configuration status, not a live health or delivery check.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TravelRuleSettingsDetail.Networks.Trust> trust() {
-      return Json.optional(json, "trust", Conv.model(TravelRuleSettingsDetail.Networks.Trust::fromJson));
+    public Optional<TravelRuleNetworkState> trust() {
+      return Json.optional(json, "trust", Conv.model(TravelRuleNetworkState::fromJson));
     }
 
     /**
-     * The <code>verifyvasp</code> field.
+     * How Travel Rule messages on one network would be sent for this application, and why they cannot be. Configuration status, not a live health or delivery check.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TravelRuleSettingsDetail.Networks.Verifyvasp> verifyvasp() {
-      return Json.optional(json, "verifyvasp", Conv.model(TravelRuleSettingsDetail.Networks.Verifyvasp::fromJson));
+    public Optional<TravelRuleNetworkState> verifyvasp() {
+      return Json.optional(json, "verifyvasp", Conv.model(TravelRuleNetworkState::fromJson));
     }
 
     /**
-     * The <code>sygna</code> field.
+     * How Travel Rule messages on one network would be sent for this application, and why they cannot be. Configuration status, not a live health or delivery check.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TravelRuleSettingsDetail.Networks.Sygna> sygna() {
-      return Json.optional(json, "sygna", Conv.model(TravelRuleSettingsDetail.Networks.Sygna::fromJson));
+    public Optional<TravelRuleNetworkState> sygna() {
+      return Json.optional(json, "sygna", Conv.model(TravelRuleNetworkState::fromJson));
     }
 
     @Override
@@ -1000,43 +1000,43 @@ public final class TravelRuleSettingsDetail extends JsonModel {
       }
 
       /**
-       * The <code>gtr</code> field.
+       * How Travel Rule messages on one network would be sent for this application, and why they cannot be. Configuration status, not a live health or delivery check.
        *
        * @param gtr the value
        * @return this builder
        */
-      public Builder gtr(TravelRuleSettingsDetail.Networks.Gtr gtr) {
-        return set("gtr", Conv.model(TravelRuleSettingsDetail.Networks.Gtr::fromJson), gtr);
+      public Builder gtr(TravelRuleNetworkState gtr) {
+        return set("gtr", Conv.model(TravelRuleNetworkState::fromJson), gtr);
       }
 
       /**
-       * The <code>trust</code> field.
+       * How Travel Rule messages on one network would be sent for this application, and why they cannot be. Configuration status, not a live health or delivery check.
        *
        * @param trust the value
        * @return this builder
        */
-      public Builder trust(TravelRuleSettingsDetail.Networks.Trust trust) {
-        return set("trust", Conv.model(TravelRuleSettingsDetail.Networks.Trust::fromJson), trust);
+      public Builder trust(TravelRuleNetworkState trust) {
+        return set("trust", Conv.model(TravelRuleNetworkState::fromJson), trust);
       }
 
       /**
-       * The <code>verifyvasp</code> field.
+       * How Travel Rule messages on one network would be sent for this application, and why they cannot be. Configuration status, not a live health or delivery check.
        *
        * @param verifyvasp the value
        * @return this builder
        */
-      public Builder verifyvasp(TravelRuleSettingsDetail.Networks.Verifyvasp verifyvasp) {
-        return set("verifyvasp", Conv.model(TravelRuleSettingsDetail.Networks.Verifyvasp::fromJson), verifyvasp);
+      public Builder verifyvasp(TravelRuleNetworkState verifyvasp) {
+        return set("verifyvasp", Conv.model(TravelRuleNetworkState::fromJson), verifyvasp);
       }
 
       /**
-       * The <code>sygna</code> field.
+       * How Travel Rule messages on one network would be sent for this application, and why they cannot be. Configuration status, not a live health or delivery check.
        *
        * @param sygna the value
        * @return this builder
        */
-      public Builder sygna(TravelRuleSettingsDetail.Networks.Sygna sygna) {
-        return set("sygna", Conv.model(TravelRuleSettingsDetail.Networks.Sygna::fromJson), sygna);
+      public Builder sygna(TravelRuleNetworkState sygna) {
+        return set("sygna", Conv.model(TravelRuleNetworkState::fromJson), sygna);
       }
 
       /**
@@ -1051,938 +1051,6 @@ public final class TravelRuleSettingsDetail extends JsonModel {
       @Override
       protected Builder self() {
         return this;
-      }
-    }
-
-    public static final class Gtr extends JsonModel {
-      private static final Set<String> KNOWN_FIELDS = Set.of("rail", "mode", "platform_available", "connected");
-
-      private Gtr(ObjectNode json, Map<String, List<FileUpload>> files) {
-        super(json, files);
-      }
-
-      /**
-       * Reads a {@code Gtr} from JSON. Unknown fields are kept and readable
-       * through {@link #_additionalProperties()}.
-       *
-       * @param json a JSON object
-       * @return the parsed value
-       */
-      public static Gtr fromJson(JsonNode json) {
-        return new Gtr(Json.copyObject(json), Map.of());
-      }
-
-      /**
-       * Returns an empty builder.
-       *
-       * @return a new builder
-       */
-      public static Builder builder() {
-        return new Builder();
-      }
-
-      /**
-       * Returns a builder holding a copy of every field of this value.
-       *
-       * @return a new builder
-       */
-      public Builder toBuilder() {
-        return new Builder(this);
-      }
-
-      /**
-       * The <code>rail</code> field.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<TravelRuleSettingsDetail.Networks.Gtr.Rail> rail() {
-        return Json.optional(json, "rail", Conv.enumeration(TravelRuleSettingsDetail.Networks.Gtr.Rail::of));
-      }
-
-      /**
-       * own: connected customer membership takes precedence; didit: configured platform membership allowed; off: platform routing disabled with no own membership; unavailable: neither membership available.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<TravelRuleSettingsDetail.Networks.Gtr.Mode> mode() {
-        return Json.optional(json, "mode", Conv.enumeration(TravelRuleSettingsDetail.Networks.Gtr.Mode::of));
-      }
-
-      /**
-       * Whether platform membership is configured; not a live health check.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<Boolean> platformAvailable() {
-        return Json.optional(json, "platform_available", Conv.BOOLEAN);
-      }
-
-      /**
-       * Whether a connected customer membership exists. Credentials are validated locally; network validation occurs on a live exchange.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<Boolean> connected() {
-        return Json.optional(json, "connected", Conv.BOOLEAN);
-      }
-
-      @Override
-      protected Set<String> knownFields() {
-        return KNOWN_FIELDS;
-      }
-
-      /** Builds a {@link Gtr}. */
-      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
-        private Builder() {}
-
-        private Builder(Gtr from) {
-          super(from);
-        }
-
-        /**
-         * The <code>rail</code> field.
-         *
-         * @param rail the value
-         * @return this builder
-         */
-        public Builder rail(TravelRuleSettingsDetail.Networks.Gtr.Rail rail) {
-          return set("rail", Conv.enumeration(TravelRuleSettingsDetail.Networks.Gtr.Rail::of), rail);
-        }
-
-        /**
-         * own: connected customer membership takes precedence; didit: configured platform membership allowed; off: platform routing disabled with no own membership; unavailable: neither membership available.
-         *
-         * @param mode the value
-         * @return this builder
-         */
-        public Builder mode(TravelRuleSettingsDetail.Networks.Gtr.Mode mode) {
-          return set("mode", Conv.enumeration(TravelRuleSettingsDetail.Networks.Gtr.Mode::of), mode);
-        }
-
-        /**
-         * Whether platform membership is configured; not a live health check.
-         *
-         * @param platformAvailable the value
-         * @return this builder
-         */
-        public Builder platformAvailable(boolean platformAvailable) {
-          return set("platform_available", Conv.BOOLEAN, platformAvailable);
-        }
-
-        /**
-         * Whether a connected customer membership exists. Credentials are validated locally; network validation occurs on a live exchange.
-         *
-         * @param connected the value
-         * @return this builder
-         */
-        public Builder connected(boolean connected) {
-          return set("connected", Conv.BOOLEAN, connected);
-        }
-
-        /**
-         * Builds the value.
-         *
-         * @return a new immutable {@code Gtr}
-         */
-        public Gtr build() {
-          return new Gtr(buildJson(), buildFiles());
-        }
-
-        @Override
-        protected Builder self() {
-          return this;
-        }
-      }
-
-      /**
-       *
-       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
-       */
-      public static final class Rail extends StringEnum {
-        /** The value {@code "GTR"}. */
-        public static final Rail GTR = new Rail("GTR");
-
-        private static final List<Rail> KNOWN_VALUES = List.of(GTR);
-
-        private Rail(String value) {
-          super(value);
-        }
-
-        /**
-         * Returns the constant for a known value, or a new instance for any other value.
-         *
-         * @param value the string value
-         * @return the enum value
-         */
-        public static Rail of(String value) {
-          return StringEnum.lookup(KNOWN_VALUES, value, Rail::new);
-        }
-
-        /**
-         * Returns the values known to this SDK version.
-         *
-         * @return the known values
-         */
-        public static List<Rail> knownValues() {
-          return KNOWN_VALUES;
-        }
-
-        @Override
-        public boolean isKnown() {
-          return KNOWN_VALUES.contains(this);
-        }
-      }
-
-      /**
-       * own: connected customer membership takes precedence; didit: configured platform membership allowed; off: platform routing disabled with no own membership; unavailable: neither membership available.
-       *
-       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
-       */
-      public static final class Mode extends StringEnum {
-        /** The value {@code "own"}. */
-        public static final Mode OWN = new Mode("own");
-
-        /** The value {@code "didit"}. */
-        public static final Mode DIDIT = new Mode("didit");
-
-        /** The value {@code "off"}. */
-        public static final Mode OFF = new Mode("off");
-
-        /** The value {@code "unavailable"}. */
-        public static final Mode UNAVAILABLE = new Mode("unavailable");
-
-        private static final List<Mode> KNOWN_VALUES = List.of(OWN, DIDIT, OFF, UNAVAILABLE);
-
-        private Mode(String value) {
-          super(value);
-        }
-
-        /**
-         * Returns the constant for a known value, or a new instance for any other value.
-         *
-         * @param value the string value
-         * @return the enum value
-         */
-        public static Mode of(String value) {
-          return StringEnum.lookup(KNOWN_VALUES, value, Mode::new);
-        }
-
-        /**
-         * Returns the values known to this SDK version.
-         *
-         * @return the known values
-         */
-        public static List<Mode> knownValues() {
-          return KNOWN_VALUES;
-        }
-
-        @Override
-        public boolean isKnown() {
-          return KNOWN_VALUES.contains(this);
-        }
-      }
-    }
-
-    public static final class Trust extends JsonModel {
-      private static final Set<String> KNOWN_FIELDS = Set.of("rail", "mode", "platform_available", "connected");
-
-      private Trust(ObjectNode json, Map<String, List<FileUpload>> files) {
-        super(json, files);
-      }
-
-      /**
-       * Reads a {@code Trust} from JSON. Unknown fields are kept and readable
-       * through {@link #_additionalProperties()}.
-       *
-       * @param json a JSON object
-       * @return the parsed value
-       */
-      public static Trust fromJson(JsonNode json) {
-        return new Trust(Json.copyObject(json), Map.of());
-      }
-
-      /**
-       * Returns an empty builder.
-       *
-       * @return a new builder
-       */
-      public static Builder builder() {
-        return new Builder();
-      }
-
-      /**
-       * Returns a builder holding a copy of every field of this value.
-       *
-       * @return a new builder
-       */
-      public Builder toBuilder() {
-        return new Builder(this);
-      }
-
-      /**
-       * The <code>rail</code> field.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<TravelRuleSettingsDetail.Networks.Trust.Rail> rail() {
-        return Json.optional(json, "rail", Conv.enumeration(TravelRuleSettingsDetail.Networks.Trust.Rail::of));
-      }
-
-      /**
-       * own: connected customer membership takes precedence; didit: configured platform membership allowed; off: platform routing disabled with no own membership; unavailable: neither membership available.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<TravelRuleSettingsDetail.Networks.Trust.Mode> mode() {
-        return Json.optional(json, "mode", Conv.enumeration(TravelRuleSettingsDetail.Networks.Trust.Mode::of));
-      }
-
-      /**
-       * Whether platform membership is configured; not a live health check.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<Boolean> platformAvailable() {
-        return Json.optional(json, "platform_available", Conv.BOOLEAN);
-      }
-
-      /**
-       * Whether a connected customer membership exists. Credentials are validated locally; network validation occurs on a live exchange.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<Boolean> connected() {
-        return Json.optional(json, "connected", Conv.BOOLEAN);
-      }
-
-      @Override
-      protected Set<String> knownFields() {
-        return KNOWN_FIELDS;
-      }
-
-      /** Builds a {@link Trust}. */
-      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
-        private Builder() {}
-
-        private Builder(Trust from) {
-          super(from);
-        }
-
-        /**
-         * The <code>rail</code> field.
-         *
-         * @param rail the value
-         * @return this builder
-         */
-        public Builder rail(TravelRuleSettingsDetail.Networks.Trust.Rail rail) {
-          return set("rail", Conv.enumeration(TravelRuleSettingsDetail.Networks.Trust.Rail::of), rail);
-        }
-
-        /**
-         * own: connected customer membership takes precedence; didit: configured platform membership allowed; off: platform routing disabled with no own membership; unavailable: neither membership available.
-         *
-         * @param mode the value
-         * @return this builder
-         */
-        public Builder mode(TravelRuleSettingsDetail.Networks.Trust.Mode mode) {
-          return set("mode", Conv.enumeration(TravelRuleSettingsDetail.Networks.Trust.Mode::of), mode);
-        }
-
-        /**
-         * Whether platform membership is configured; not a live health check.
-         *
-         * @param platformAvailable the value
-         * @return this builder
-         */
-        public Builder platformAvailable(boolean platformAvailable) {
-          return set("platform_available", Conv.BOOLEAN, platformAvailable);
-        }
-
-        /**
-         * Whether a connected customer membership exists. Credentials are validated locally; network validation occurs on a live exchange.
-         *
-         * @param connected the value
-         * @return this builder
-         */
-        public Builder connected(boolean connected) {
-          return set("connected", Conv.BOOLEAN, connected);
-        }
-
-        /**
-         * Builds the value.
-         *
-         * @return a new immutable {@code Trust}
-         */
-        public Trust build() {
-          return new Trust(buildJson(), buildFiles());
-        }
-
-        @Override
-        protected Builder self() {
-          return this;
-        }
-      }
-
-      /**
-       *
-       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
-       */
-      public static final class Rail extends StringEnum {
-        /** The value {@code "TRUST"}. */
-        public static final Rail TRUST = new Rail("TRUST");
-
-        private static final List<Rail> KNOWN_VALUES = List.of(TRUST);
-
-        private Rail(String value) {
-          super(value);
-        }
-
-        /**
-         * Returns the constant for a known value, or a new instance for any other value.
-         *
-         * @param value the string value
-         * @return the enum value
-         */
-        public static Rail of(String value) {
-          return StringEnum.lookup(KNOWN_VALUES, value, Rail::new);
-        }
-
-        /**
-         * Returns the values known to this SDK version.
-         *
-         * @return the known values
-         */
-        public static List<Rail> knownValues() {
-          return KNOWN_VALUES;
-        }
-
-        @Override
-        public boolean isKnown() {
-          return KNOWN_VALUES.contains(this);
-        }
-      }
-
-      /**
-       * own: connected customer membership takes precedence; didit: configured platform membership allowed; off: platform routing disabled with no own membership; unavailable: neither membership available.
-       *
-       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
-       */
-      public static final class Mode extends StringEnum {
-        /** The value {@code "own"}. */
-        public static final Mode OWN = new Mode("own");
-
-        /** The value {@code "didit"}. */
-        public static final Mode DIDIT = new Mode("didit");
-
-        /** The value {@code "off"}. */
-        public static final Mode OFF = new Mode("off");
-
-        /** The value {@code "unavailable"}. */
-        public static final Mode UNAVAILABLE = new Mode("unavailable");
-
-        private static final List<Mode> KNOWN_VALUES = List.of(OWN, DIDIT, OFF, UNAVAILABLE);
-
-        private Mode(String value) {
-          super(value);
-        }
-
-        /**
-         * Returns the constant for a known value, or a new instance for any other value.
-         *
-         * @param value the string value
-         * @return the enum value
-         */
-        public static Mode of(String value) {
-          return StringEnum.lookup(KNOWN_VALUES, value, Mode::new);
-        }
-
-        /**
-         * Returns the values known to this SDK version.
-         *
-         * @return the known values
-         */
-        public static List<Mode> knownValues() {
-          return KNOWN_VALUES;
-        }
-
-        @Override
-        public boolean isKnown() {
-          return KNOWN_VALUES.contains(this);
-        }
-      }
-    }
-
-    public static final class Verifyvasp extends JsonModel {
-      private static final Set<String> KNOWN_FIELDS = Set.of("rail", "mode", "platform_available", "connected");
-
-      private Verifyvasp(ObjectNode json, Map<String, List<FileUpload>> files) {
-        super(json, files);
-      }
-
-      /**
-       * Reads a {@code Verifyvasp} from JSON. Unknown fields are kept and readable
-       * through {@link #_additionalProperties()}.
-       *
-       * @param json a JSON object
-       * @return the parsed value
-       */
-      public static Verifyvasp fromJson(JsonNode json) {
-        return new Verifyvasp(Json.copyObject(json), Map.of());
-      }
-
-      /**
-       * Returns an empty builder.
-       *
-       * @return a new builder
-       */
-      public static Builder builder() {
-        return new Builder();
-      }
-
-      /**
-       * Returns a builder holding a copy of every field of this value.
-       *
-       * @return a new builder
-       */
-      public Builder toBuilder() {
-        return new Builder(this);
-      }
-
-      /**
-       * The <code>rail</code> field.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<TravelRuleSettingsDetail.Networks.Verifyvasp.Rail> rail() {
-        return Json.optional(json, "rail", Conv.enumeration(TravelRuleSettingsDetail.Networks.Verifyvasp.Rail::of));
-      }
-
-      /**
-       * own: connected customer membership takes precedence; didit: configured platform membership allowed; off: platform routing disabled with no own membership; unavailable: neither membership available.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<TravelRuleSettingsDetail.Networks.Verifyvasp.Mode> mode() {
-        return Json.optional(json, "mode", Conv.enumeration(TravelRuleSettingsDetail.Networks.Verifyvasp.Mode::of));
-      }
-
-      /**
-       * Whether platform membership is configured; not a live health check.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<Boolean> platformAvailable() {
-        return Json.optional(json, "platform_available", Conv.BOOLEAN);
-      }
-
-      /**
-       * Whether a connected customer membership exists. Credentials are validated locally; network validation occurs on a live exchange.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<Boolean> connected() {
-        return Json.optional(json, "connected", Conv.BOOLEAN);
-      }
-
-      @Override
-      protected Set<String> knownFields() {
-        return KNOWN_FIELDS;
-      }
-
-      /** Builds a {@link Verifyvasp}. */
-      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
-        private Builder() {}
-
-        private Builder(Verifyvasp from) {
-          super(from);
-        }
-
-        /**
-         * The <code>rail</code> field.
-         *
-         * @param rail the value
-         * @return this builder
-         */
-        public Builder rail(TravelRuleSettingsDetail.Networks.Verifyvasp.Rail rail) {
-          return set("rail", Conv.enumeration(TravelRuleSettingsDetail.Networks.Verifyvasp.Rail::of), rail);
-        }
-
-        /**
-         * own: connected customer membership takes precedence; didit: configured platform membership allowed; off: platform routing disabled with no own membership; unavailable: neither membership available.
-         *
-         * @param mode the value
-         * @return this builder
-         */
-        public Builder mode(TravelRuleSettingsDetail.Networks.Verifyvasp.Mode mode) {
-          return set("mode", Conv.enumeration(TravelRuleSettingsDetail.Networks.Verifyvasp.Mode::of), mode);
-        }
-
-        /**
-         * Whether platform membership is configured; not a live health check.
-         *
-         * @param platformAvailable the value
-         * @return this builder
-         */
-        public Builder platformAvailable(boolean platformAvailable) {
-          return set("platform_available", Conv.BOOLEAN, platformAvailable);
-        }
-
-        /**
-         * Whether a connected customer membership exists. Credentials are validated locally; network validation occurs on a live exchange.
-         *
-         * @param connected the value
-         * @return this builder
-         */
-        public Builder connected(boolean connected) {
-          return set("connected", Conv.BOOLEAN, connected);
-        }
-
-        /**
-         * Builds the value.
-         *
-         * @return a new immutable {@code Verifyvasp}
-         */
-        public Verifyvasp build() {
-          return new Verifyvasp(buildJson(), buildFiles());
-        }
-
-        @Override
-        protected Builder self() {
-          return this;
-        }
-      }
-
-      /**
-       *
-       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
-       */
-      public static final class Rail extends StringEnum {
-        /** The value {@code "VERIFYVASP"}. */
-        public static final Rail VERIFYVASP = new Rail("VERIFYVASP");
-
-        private static final List<Rail> KNOWN_VALUES = List.of(VERIFYVASP);
-
-        private Rail(String value) {
-          super(value);
-        }
-
-        /**
-         * Returns the constant for a known value, or a new instance for any other value.
-         *
-         * @param value the string value
-         * @return the enum value
-         */
-        public static Rail of(String value) {
-          return StringEnum.lookup(KNOWN_VALUES, value, Rail::new);
-        }
-
-        /**
-         * Returns the values known to this SDK version.
-         *
-         * @return the known values
-         */
-        public static List<Rail> knownValues() {
-          return KNOWN_VALUES;
-        }
-
-        @Override
-        public boolean isKnown() {
-          return KNOWN_VALUES.contains(this);
-        }
-      }
-
-      /**
-       * own: connected customer membership takes precedence; didit: configured platform membership allowed; off: platform routing disabled with no own membership; unavailable: neither membership available.
-       *
-       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
-       */
-      public static final class Mode extends StringEnum {
-        /** The value {@code "own"}. */
-        public static final Mode OWN = new Mode("own");
-
-        /** The value {@code "didit"}. */
-        public static final Mode DIDIT = new Mode("didit");
-
-        /** The value {@code "off"}. */
-        public static final Mode OFF = new Mode("off");
-
-        /** The value {@code "unavailable"}. */
-        public static final Mode UNAVAILABLE = new Mode("unavailable");
-
-        private static final List<Mode> KNOWN_VALUES = List.of(OWN, DIDIT, OFF, UNAVAILABLE);
-
-        private Mode(String value) {
-          super(value);
-        }
-
-        /**
-         * Returns the constant for a known value, or a new instance for any other value.
-         *
-         * @param value the string value
-         * @return the enum value
-         */
-        public static Mode of(String value) {
-          return StringEnum.lookup(KNOWN_VALUES, value, Mode::new);
-        }
-
-        /**
-         * Returns the values known to this SDK version.
-         *
-         * @return the known values
-         */
-        public static List<Mode> knownValues() {
-          return KNOWN_VALUES;
-        }
-
-        @Override
-        public boolean isKnown() {
-          return KNOWN_VALUES.contains(this);
-        }
-      }
-    }
-
-    public static final class Sygna extends JsonModel {
-      private static final Set<String> KNOWN_FIELDS = Set.of("rail", "mode", "platform_available", "connected");
-
-      private Sygna(ObjectNode json, Map<String, List<FileUpload>> files) {
-        super(json, files);
-      }
-
-      /**
-       * Reads a {@code Sygna} from JSON. Unknown fields are kept and readable
-       * through {@link #_additionalProperties()}.
-       *
-       * @param json a JSON object
-       * @return the parsed value
-       */
-      public static Sygna fromJson(JsonNode json) {
-        return new Sygna(Json.copyObject(json), Map.of());
-      }
-
-      /**
-       * Returns an empty builder.
-       *
-       * @return a new builder
-       */
-      public static Builder builder() {
-        return new Builder();
-      }
-
-      /**
-       * Returns a builder holding a copy of every field of this value.
-       *
-       * @return a new builder
-       */
-      public Builder toBuilder() {
-        return new Builder(this);
-      }
-
-      /**
-       * The <code>rail</code> field.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<TravelRuleSettingsDetail.Networks.Sygna.Rail> rail() {
-        return Json.optional(json, "rail", Conv.enumeration(TravelRuleSettingsDetail.Networks.Sygna.Rail::of));
-      }
-
-      /**
-       * own: connected customer membership takes precedence; didit: configured platform membership allowed; off: platform routing disabled with no own membership; unavailable: neither membership available.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<TravelRuleSettingsDetail.Networks.Sygna.Mode> mode() {
-        return Json.optional(json, "mode", Conv.enumeration(TravelRuleSettingsDetail.Networks.Sygna.Mode::of));
-      }
-
-      /**
-       * Whether platform membership is configured; not a live health check.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<Boolean> platformAvailable() {
-        return Json.optional(json, "platform_available", Conv.BOOLEAN);
-      }
-
-      /**
-       * Whether a connected customer membership exists. Credentials are validated locally; network validation occurs on a live exchange.
-       *
-       * @return the value, or empty when the field is absent or null
-       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-       */
-      public Optional<Boolean> connected() {
-        return Json.optional(json, "connected", Conv.BOOLEAN);
-      }
-
-      @Override
-      protected Set<String> knownFields() {
-        return KNOWN_FIELDS;
-      }
-
-      /** Builds a {@link Sygna}. */
-      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
-        private Builder() {}
-
-        private Builder(Sygna from) {
-          super(from);
-        }
-
-        /**
-         * The <code>rail</code> field.
-         *
-         * @param rail the value
-         * @return this builder
-         */
-        public Builder rail(TravelRuleSettingsDetail.Networks.Sygna.Rail rail) {
-          return set("rail", Conv.enumeration(TravelRuleSettingsDetail.Networks.Sygna.Rail::of), rail);
-        }
-
-        /**
-         * own: connected customer membership takes precedence; didit: configured platform membership allowed; off: platform routing disabled with no own membership; unavailable: neither membership available.
-         *
-         * @param mode the value
-         * @return this builder
-         */
-        public Builder mode(TravelRuleSettingsDetail.Networks.Sygna.Mode mode) {
-          return set("mode", Conv.enumeration(TravelRuleSettingsDetail.Networks.Sygna.Mode::of), mode);
-        }
-
-        /**
-         * Whether platform membership is configured; not a live health check.
-         *
-         * @param platformAvailable the value
-         * @return this builder
-         */
-        public Builder platformAvailable(boolean platformAvailable) {
-          return set("platform_available", Conv.BOOLEAN, platformAvailable);
-        }
-
-        /**
-         * Whether a connected customer membership exists. Credentials are validated locally; network validation occurs on a live exchange.
-         *
-         * @param connected the value
-         * @return this builder
-         */
-        public Builder connected(boolean connected) {
-          return set("connected", Conv.BOOLEAN, connected);
-        }
-
-        /**
-         * Builds the value.
-         *
-         * @return a new immutable {@code Sygna}
-         */
-        public Sygna build() {
-          return new Sygna(buildJson(), buildFiles());
-        }
-
-        @Override
-        protected Builder self() {
-          return this;
-        }
-      }
-
-      /**
-       *
-       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
-       */
-      public static final class Rail extends StringEnum {
-        /** The value {@code "SYGNA"}. */
-        public static final Rail SYGNA = new Rail("SYGNA");
-
-        private static final List<Rail> KNOWN_VALUES = List.of(SYGNA);
-
-        private Rail(String value) {
-          super(value);
-        }
-
-        /**
-         * Returns the constant for a known value, or a new instance for any other value.
-         *
-         * @param value the string value
-         * @return the enum value
-         */
-        public static Rail of(String value) {
-          return StringEnum.lookup(KNOWN_VALUES, value, Rail::new);
-        }
-
-        /**
-         * Returns the values known to this SDK version.
-         *
-         * @return the known values
-         */
-        public static List<Rail> knownValues() {
-          return KNOWN_VALUES;
-        }
-
-        @Override
-        public boolean isKnown() {
-          return KNOWN_VALUES.contains(this);
-        }
-      }
-
-      /**
-       * own: connected customer membership takes precedence; didit: configured platform membership allowed; off: platform routing disabled with no own membership; unavailable: neither membership available.
-       *
-       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
-       */
-      public static final class Mode extends StringEnum {
-        /** The value {@code "own"}. */
-        public static final Mode OWN = new Mode("own");
-
-        /** The value {@code "didit"}. */
-        public static final Mode DIDIT = new Mode("didit");
-
-        /** The value {@code "off"}. */
-        public static final Mode OFF = new Mode("off");
-
-        /** The value {@code "unavailable"}. */
-        public static final Mode UNAVAILABLE = new Mode("unavailable");
-
-        private static final List<Mode> KNOWN_VALUES = List.of(OWN, DIDIT, OFF, UNAVAILABLE);
-
-        private Mode(String value) {
-          super(value);
-        }
-
-        /**
-         * Returns the constant for a known value, or a new instance for any other value.
-         *
-         * @param value the string value
-         * @return the enum value
-         */
-        public static Mode of(String value) {
-          return StringEnum.lookup(KNOWN_VALUES, value, Mode::new);
-        }
-
-        /**
-         * Returns the values known to this SDK version.
-         *
-         * @return the known values
-         */
-        public static List<Mode> knownValues() {
-          return KNOWN_VALUES;
-        }
-
-        @Override
-        public boolean isKnown() {
-          return KNOWN_VALUES.contains(this);
-        }
       }
     }
   }

@@ -217,7 +217,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
     }
 
     /**
-     * <code>Approved</code> when no warning resolves to a decline; <code>Declined</code> otherwise — the <code>warnings</code> list explains why.
+     * <code>Approved</code> when no warning resolves to a decline and the requested document-liveness check produced a usable result; <code>In Review</code> when that requested check produced no usable result (<code>DOCUMENT_LIVENESS_NOT_COMPUTED</code>); <code>Declined</code> when a warning resolves to a decline — the <code>warnings</code> list explains why.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -537,7 +537,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
     }
 
     /**
-     * Empty on a clean approval. Every entry explains one detected risk; entries with <code>log_type: "error"</code> set <code>status</code> to <code>Declined</code>.
+     * Empty on a clean approval. Every entry explains one detected risk; entries with <code>log_type: "error"</code> set <code>status</code> to <code>Declined</code>, and <code>DOCUMENT_LIVENESS_NOT_COMPUTED</code> (<code>log_type: "warning"</code>) sets it to <code>In Review</code>.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -570,7 +570,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * <code>Approved</code> when no warning resolves to a decline; <code>Declined</code> otherwise — the <code>warnings</code> list explains why.
+       * <code>Approved</code> when no warning resolves to a decline and the requested document-liveness check produced a usable result; <code>In Review</code> when that requested check produced no usable result (<code>DOCUMENT_LIVENESS_NOT_COMPUTED</code>); <code>Declined</code> when a warning resolves to a decline — the <code>warnings</code> list explains why.
        *
        * @param status the value
        * @return this builder
@@ -890,7 +890,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * Empty on a clean approval. Every entry explains one detected risk; entries with <code>log_type: "error"</code> set <code>status</code> to <code>Declined</code>.
+       * Empty on a clean approval. Every entry explains one detected risk; entries with <code>log_type: "error"</code> set <code>status</code> to <code>Declined</code>, and <code>DOCUMENT_LIVENESS_NOT_COMPUTED</code> (<code>log_type: "warning"</code>) sets it to <code>In Review</code>.
        *
        * @param warnings the value
        * @return this builder
@@ -925,7 +925,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
     }
 
     /**
-     * <code>Approved</code> when no warning resolves to a decline; <code>Declined</code> otherwise — the <code>warnings</code> list explains why.
+     * <code>Approved</code> when no warning resolves to a decline and the requested document-liveness check produced a usable result; <code>In Review</code> when that requested check produced no usable result (<code>DOCUMENT_LIVENESS_NOT_COMPUTED</code>); <code>Declined</code> when a warning resolves to a decline — the <code>warnings</code> list explains why.
      *
      * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
      */
@@ -936,7 +936,10 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       /** The value {@code "Declined"}. */
       public static final Status DECLINED = new Status("Declined");
 
-      private static final List<Status> KNOWN_VALUES = List.of(APPROVED, DECLINED);
+      /** The value {@code "In Review"}. */
+      public static final Status IN_REVIEW = new Status("In Review");
+
+      private static final List<Status> KNOWN_VALUES = List.of(APPROVED, DECLINED, IN_REVIEW);
 
       private Status(String value) {
         super(value);
@@ -2302,7 +2305,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * Machine-readable risk code. Always-decline risks: <code>DOCUMENT_EXPIRED</code>, <code>MINIMUM_AGE_NOT_MET</code>, <code>PORTRAIT_IMAGE_NOT_DETECTED</code>, <code>SCREEN_CAPTURE_DETECTED</code>, <code>PRINTED_COPY_DETECTED</code>, <code>PORTRAIT_MANIPULATION_DETECTED</code>, <code>PUBLIC_DOCUMENT_IMAGE_DETECTED</code>, <code>INVALID_DATE</code>, <code>COULD_NOT_RECOGNIZE_DOCUMENT</code> (400-only, never a warning), <code>DOCUMENT_NUMBER_NOT_DETECTED</code>, <code>COULD_NOT_DETECT_DOCUMENT_TYPE</code>, <code>NAME_NOT_DETECTED</code>, <code>DATE_OF_BIRTH_NOT_DETECTED</code>. Governed by request options: <code>MRZ_NOT_DETECTED</code> / <code>MRZ_VALIDATION_FAILED</code> (<code>invalid_mrz_action</code>), <code>DATA_INCONSISTENT</code> / <code>MRZ_AND_DATA_EXTRACTED_FROM_OCR_NOT_SAME</code> / <code>DOCUMENT_NAME_DIFFERENT_FROM_OTHER_APPROVED_DOCUMENTS</code> (<code>inconsistent_data_action</code>), <code>EXPIRATION_DATE_NOT_DETECTED</code> (<code>expiration_date_not_detected_action</code>). Other risks (e.g. <code>POSSIBLE_DUPLICATED_USER</code>) are informational.
+       * Machine-readable risk code. Always-decline risks: <code>DOCUMENT_EXPIRED</code>, <code>MINIMUM_AGE_NOT_MET</code>, <code>PORTRAIT_IMAGE_NOT_DETECTED</code>, <code>SCREEN_CAPTURE_DETECTED</code>, <code>PRINTED_COPY_DETECTED</code>, <code>PORTRAIT_MANIPULATION_DETECTED</code>, <code>PUBLIC_DOCUMENT_IMAGE_DETECTED</code>, <code>INVALID_DATE</code>, <code>COULD_NOT_RECOGNIZE_DOCUMENT</code> (400-only, never a warning), <code>DOCUMENT_NUMBER_NOT_DETECTED</code>, <code>COULD_NOT_DETECT_DOCUMENT_TYPE</code>, <code>NAME_NOT_DETECTED</code>, <code>DATE_OF_BIRTH_NOT_DETECTED</code>. Governed by request options: <code>MRZ_NOT_DETECTED</code> / <code>MRZ_VALIDATION_FAILED</code> (<code>invalid_mrz_action</code>), <code>DATA_INCONSISTENT</code> / <code>MRZ_AND_DATA_EXTRACTED_FROM_OCR_NOT_SAME</code> / <code>DOCUMENT_NAME_DIFFERENT_FROM_OTHER_APPROVED_DOCUMENTS</code> (<code>inconsistent_data_action</code>), <code>EXPIRATION_DATE_NOT_DETECTED</code> (<code>expiration_date_not_detected_action</code>). Other risks (e.g. <code>POSSIBLE_DUPLICATED_USER</code>) are informational. <code>DOCUMENT_LIVENESS_NOT_COMPUTED</code> is raised when <code>perform_document_liveness=true</code> but the forgery check returned no usable score; it sets <code>status</code> to <code>In Review</code>.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2332,7 +2335,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * Severity. <code>error</code> warnings drive <code>status</code> to <code>Declined</code>; <code>information</code> entries are advisory and never decline on their own. (<code>warning</code> is not produced by this endpoint — its options only accept <code>DECLINE</code> or <code>NO_ACTION</code>.)
+       * Severity. <code>error</code> warnings drive <code>status</code> to <code>Declined</code>; <code>warning</code> (only <code>DOCUMENT_LIVENESS_NOT_COMPUTED</code>, when the requested forgery check produced no usable score) drives <code>status</code> to <code>In Review</code>; <code>information</code> entries are advisory and never change the status.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2375,7 +2378,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * Machine-readable risk code. Always-decline risks: <code>DOCUMENT_EXPIRED</code>, <code>MINIMUM_AGE_NOT_MET</code>, <code>PORTRAIT_IMAGE_NOT_DETECTED</code>, <code>SCREEN_CAPTURE_DETECTED</code>, <code>PRINTED_COPY_DETECTED</code>, <code>PORTRAIT_MANIPULATION_DETECTED</code>, <code>PUBLIC_DOCUMENT_IMAGE_DETECTED</code>, <code>INVALID_DATE</code>, <code>COULD_NOT_RECOGNIZE_DOCUMENT</code> (400-only, never a warning), <code>DOCUMENT_NUMBER_NOT_DETECTED</code>, <code>COULD_NOT_DETECT_DOCUMENT_TYPE</code>, <code>NAME_NOT_DETECTED</code>, <code>DATE_OF_BIRTH_NOT_DETECTED</code>. Governed by request options: <code>MRZ_NOT_DETECTED</code> / <code>MRZ_VALIDATION_FAILED</code> (<code>invalid_mrz_action</code>), <code>DATA_INCONSISTENT</code> / <code>MRZ_AND_DATA_EXTRACTED_FROM_OCR_NOT_SAME</code> / <code>DOCUMENT_NAME_DIFFERENT_FROM_OTHER_APPROVED_DOCUMENTS</code> (<code>inconsistent_data_action</code>), <code>EXPIRATION_DATE_NOT_DETECTED</code> (<code>expiration_date_not_detected_action</code>). Other risks (e.g. <code>POSSIBLE_DUPLICATED_USER</code>) are informational.
+         * Machine-readable risk code. Always-decline risks: <code>DOCUMENT_EXPIRED</code>, <code>MINIMUM_AGE_NOT_MET</code>, <code>PORTRAIT_IMAGE_NOT_DETECTED</code>, <code>SCREEN_CAPTURE_DETECTED</code>, <code>PRINTED_COPY_DETECTED</code>, <code>PORTRAIT_MANIPULATION_DETECTED</code>, <code>PUBLIC_DOCUMENT_IMAGE_DETECTED</code>, <code>INVALID_DATE</code>, <code>COULD_NOT_RECOGNIZE_DOCUMENT</code> (400-only, never a warning), <code>DOCUMENT_NUMBER_NOT_DETECTED</code>, <code>COULD_NOT_DETECT_DOCUMENT_TYPE</code>, <code>NAME_NOT_DETECTED</code>, <code>DATE_OF_BIRTH_NOT_DETECTED</code>. Governed by request options: <code>MRZ_NOT_DETECTED</code> / <code>MRZ_VALIDATION_FAILED</code> (<code>invalid_mrz_action</code>), <code>DATA_INCONSISTENT</code> / <code>MRZ_AND_DATA_EXTRACTED_FROM_OCR_NOT_SAME</code> / <code>DOCUMENT_NAME_DIFFERENT_FROM_OTHER_APPROVED_DOCUMENTS</code> (<code>inconsistent_data_action</code>), <code>EXPIRATION_DATE_NOT_DETECTED</code> (<code>expiration_date_not_detected_action</code>). Other risks (e.g. <code>POSSIBLE_DUPLICATED_USER</code>) are informational. <code>DOCUMENT_LIVENESS_NOT_COMPUTED</code> is raised when <code>perform_document_liveness=true</code> but the forgery check returned no usable score; it sets <code>status</code> to <code>In Review</code>.
          *
          * @param risk the value
          * @return this builder
@@ -2405,7 +2408,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
         }
 
         /**
-         * Severity. <code>error</code> warnings drive <code>status</code> to <code>Declined</code>; <code>information</code> entries are advisory and never decline on their own. (<code>warning</code> is not produced by this endpoint — its options only accept <code>DECLINE</code> or <code>NO_ACTION</code>.)
+         * Severity. <code>error</code> warnings drive <code>status</code> to <code>Declined</code>; <code>warning</code> (only <code>DOCUMENT_LIVENESS_NOT_COMPUTED</code>, when the requested forgery check produced no usable score) drives <code>status</code> to <code>In Review</code>; <code>information</code> entries are advisory and never change the status.
          *
          * @param logType the value
          * @return this builder
@@ -2490,7 +2493,7 @@ public final class IdVerificationVerifyResponse extends JsonModel {
       }
 
       /**
-       * Severity. <code>error</code> warnings drive <code>status</code> to <code>Declined</code>; <code>information</code> entries are advisory and never decline on their own. (<code>warning</code> is not produced by this endpoint — its options only accept <code>DECLINE</code> or <code>NO_ACTION</code>.)
+       * Severity. <code>error</code> warnings drive <code>status</code> to <code>Declined</code>; <code>warning</code> (only <code>DOCUMENT_LIVENESS_NOT_COMPUTED</code>, when the requested forgery check produced no usable score) drives <code>status</code> to <code>In Review</code>; <code>information</code> entries are advisory and never change the status.
        *
        * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
        */

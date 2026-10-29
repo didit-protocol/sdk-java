@@ -325,6 +325,8 @@ public final class BusinessesResource {
    *
    * <p><b>Permanently delete</b> businesses — this cannot be undone. For blocking prefer [Update Business Status](#patch-/v3/businesses/-vendor_data-/update-status/) with <code>BLOCKED</code>.
    *
+   * <p><b>Filed regulatory reports:</b> if the selected data is in a finalized regulatory report, the whole request is refused with <code>409</code> and nothing is deleted. The body uses <code>code: in_filed_report</code> and names each report with <code>uuid</code>, <code>report_number</code>, <code>report_type</code> and <code>case_uuid</code>. Delete the reports, then repeat the request.
+   *
    * <p>{@code POST /v3/businesses/delete/}
    *
    * @param params the request parameters

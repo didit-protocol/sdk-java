@@ -33,16 +33,20 @@ public final class TravelRuleResource {
   private final ApiClient client;
   private final WithRawResponse withRawResponse;
   private final TravelRuleCounterpartyContactsResource counterpartyContacts;
+  private final TravelRuleNetworksResource networks;
   private final TravelRuleTransfersResource transfers;
   private final TravelRuleWalletAddressesResource walletAddresses;
+  private final TravelRuleWalletProofsResource walletProofs;
   private final TravelRuleWorkspaceResource workspace;
 
   TravelRuleResource(ApiClient client) {
     this.client = client;
     this.withRawResponse = new WithRawResponse(client);
     this.counterpartyContacts = new TravelRuleCounterpartyContactsResource(client);
+    this.networks = new TravelRuleNetworksResource(client);
     this.transfers = new TravelRuleTransfersResource(client);
     this.walletAddresses = new TravelRuleWalletAddressesResource(client);
+    this.walletProofs = new TravelRuleWalletProofsResource(client);
     this.workspace = new TravelRuleWorkspaceResource(client);
   }
 
@@ -53,6 +57,15 @@ public final class TravelRuleResource {
    */
   public TravelRuleCounterpartyContactsResource counterpartyContacts() {
     return counterpartyContacts;
+  }
+
+  /**
+   * The {@code travel_rule.networks} resource.
+   *
+   * @return the resource
+   */
+  public TravelRuleNetworksResource networks() {
+    return networks;
   }
 
   /**
@@ -71,6 +84,15 @@ public final class TravelRuleResource {
    */
   public TravelRuleWalletAddressesResource walletAddresses() {
     return walletAddresses;
+  }
+
+  /**
+   * The {@code travel_rule.wallet_proofs} resource.
+   *
+   * @return the resource
+   */
+  public TravelRuleWalletProofsResource walletProofs() {
+    return walletProofs;
   }
 
   /**

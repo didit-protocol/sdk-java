@@ -91,7 +91,7 @@ public final class IdVerificationVerifyParams extends JsonModel {
   }
 
   /**
-   * Screens both images for presentation fraud: screen replays (<code>SCREEN_CAPTURE_DETECTED</code>), printed copies (<code>PRINTED_COPY_DETECTED</code>), and portrait manipulation (<code>PORTRAIT_MANIPULATION_DETECTED</code>). Any of these auto-declines. Enabled by default; set to <code>false</code> to skip fraud screening and reduce latency.
+   * Screens both images for presentation fraud: screen replays (<code>SCREEN_CAPTURE_DETECTED</code>), printed copies (<code>PRINTED_COPY_DETECTED</code>), and portrait manipulation (<code>PORTRAIT_MANIPULATION_DETECTED</code>). Any of these auto-declines. Enabled by default; set to <code>false</code> to skip fraud screening and reduce latency. When enabled and the provider returns no usable score, the response is <code>In Review</code> with a <code>DOCUMENT_LIVENESS_NOT_COMPUTED</code> warning rather than <code>Approved</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -274,7 +274,7 @@ public final class IdVerificationVerifyParams extends JsonModel {
     }
 
     /**
-     * Screens both images for presentation fraud: screen replays (<code>SCREEN_CAPTURE_DETECTED</code>), printed copies (<code>PRINTED_COPY_DETECTED</code>), and portrait manipulation (<code>PORTRAIT_MANIPULATION_DETECTED</code>). Any of these auto-declines. Enabled by default; set to <code>false</code> to skip fraud screening and reduce latency.
+     * Screens both images for presentation fraud: screen replays (<code>SCREEN_CAPTURE_DETECTED</code>), printed copies (<code>PRINTED_COPY_DETECTED</code>), and portrait manipulation (<code>PORTRAIT_MANIPULATION_DETECTED</code>). Any of these auto-declines. Enabled by default; set to <code>false</code> to skip fraud screening and reduce latency. When enabled and the provider returns no usable score, the response is <code>In Review</code> with a <code>DOCUMENT_LIVENESS_NOT_COMPUTED</code> warning rather than <code>Approved</code>.
      *
      * @param performDocumentLiveness the value
      * @return this builder
