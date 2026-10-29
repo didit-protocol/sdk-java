@@ -84,7 +84,7 @@ public final class Application extends JsonModel {
   }
 
   /**
-   * Long-lived secret (also called <code>client_secret</code>). Use as the <code>x-api-key</code> header for every call to <code>https://verification.didit.me/v3/...</code> (sessions, workflows, AML, etc.). Treat as a credential; never expose client-side. New keys start with <code>sk_live_</code> (live application) or <code>sk_test_</code> (sandbox application), followed by 43 URL-safe characters (letters, digits, <code>-</code> and <code>_</code>). Keys created before this format have no prefix and keep working unchanged.
+   * Long-lived secret (also called <code>client_secret</code>). Use as the <code>x-api-key</code> header for every call to <code>https://verification.didit.me/v3/...</code> (sessions, workflows, AML, etc.). Treat as a credential; never expose client-side. New keys start with <code>sk_live_</code> (live application) or <code>sk_test_</code> (sandbox application), followed by 43 URL-safe characters (letters, digits, <code>-</code> and <code>_</code>). Keys created before this format have no prefix and keep working unchanged. For 72 hours after you recovered your account, list, retrieve and update return an empty string here instead of the key.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -207,7 +207,7 @@ public final class Application extends JsonModel {
     }
 
     /**
-     * Long-lived secret (also called <code>client_secret</code>). Use as the <code>x-api-key</code> header for every call to <code>https://verification.didit.me/v3/...</code> (sessions, workflows, AML, etc.). Treat as a credential; never expose client-side. New keys start with <code>sk_live_</code> (live application) or <code>sk_test_</code> (sandbox application), followed by 43 URL-safe characters (letters, digits, <code>-</code> and <code>_</code>). Keys created before this format have no prefix and keep working unchanged.
+     * Long-lived secret (also called <code>client_secret</code>). Use as the <code>x-api-key</code> header for every call to <code>https://verification.didit.me/v3/...</code> (sessions, workflows, AML, etc.). Treat as a credential; never expose client-side. New keys start with <code>sk_live_</code> (live application) or <code>sk_test_</code> (sandbox application), followed by 43 URL-safe characters (letters, digits, <code>-</code> and <code>_</code>). Keys created before this format have no prefix and keep working unchanged. For 72 hours after you recovered your account, list, retrieve and update return an empty string here instead of the key.
      *
      * @param apiKey the value
      * @return this builder

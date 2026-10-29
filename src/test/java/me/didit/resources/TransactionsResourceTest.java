@@ -15,6 +15,7 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.TransactionsBatchDeleteParams;
 import me.didit.types.TransactionsCreateParams;
 import me.didit.types.TransactionsCreateSdkTokenParams;
 import me.didit.types.TransactionsListParams;
@@ -158,5 +159,19 @@ final class TransactionsResourceTest {
     assertEquals("application/pdf, application/json", request.header("Accept"));
     assertEquals(0, request.body().length);
     assertArrayEquals(new byte[] {37, 80, 68, 70}, result.bytes());
+  }
+
+  @Test
+  void batchDelete() {
+    TransactionsBatchDeleteParams params = TransactionsBatchDeleteParams.builder().build();
+    transport.respond(204, "");
+    client.transactions().batchDelete(params);
+    RecordedRequest request = transport.only();
+    assertEquals("DELETE", request.method());
+    assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/transactions/delete/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{}", request.body());
   }
 }

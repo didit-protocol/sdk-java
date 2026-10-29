@@ -422,7 +422,9 @@ public final class CasesResource {
   /**
    * Delete case
    *
-   * <p>Delete a case. There is no undelete endpoint.
+   * <p>Delete a case permanently. Its draft regulatory reports are deleted with it. Linked verifications, people, companies and transactions are not deleted. There is no undelete endpoint.
+   *
+   * <p>If the case has a finalized regulatory report, the whole request is refused with <code>409</code> and nothing is deleted. The body uses <code>code: in_filed_report</code> and names each report with <code>uuid</code>, <code>report_number</code>, <code>report_type</code> and <code>case_uuid</code>. Delete the reports, then repeat the request.
    *
    * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.

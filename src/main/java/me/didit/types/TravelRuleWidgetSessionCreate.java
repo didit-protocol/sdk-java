@@ -60,7 +60,7 @@ public final class TravelRuleWidgetSessionCreate extends JsonModel {
   }
 
   /**
-   * Chain token for the address, for example <code>ETH</code>, <code>BTC</code> or <code>SOL</code>. Use the same token as in your wallet address book. Message signing and the Satoshi test are offered only for a supported chain.
+   * Chain token for the address, for example <code>ETH</code>, <code>BTC</code> or <code>SOL</code>. Use the same token as in your wallet address book. Message signing and the Satoshi test are offered only for a supported chain. The address book entry the proof verifies stores it under its canonical identifier (ETH, BTC, SOL, TRX).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -153,7 +153,7 @@ public final class TravelRuleWidgetSessionCreate extends JsonModel {
     }
 
     /**
-     * Chain token for the address, for example <code>ETH</code>, <code>BTC</code> or <code>SOL</code>. Use the same token as in your wallet address book. Message signing and the Satoshi test are offered only for a supported chain.
+     * Chain token for the address, for example <code>ETH</code>, <code>BTC</code> or <code>SOL</code>. Use the same token as in your wallet address book. Message signing and the Satoshi test are offered only for a supported chain. The address book entry the proof verifies stores it under its canonical identifier (ETH, BTC, SOL, TRX).
      *
      * @param chain the value
      * @return this builder

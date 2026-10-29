@@ -305,7 +305,7 @@ public final class WorkflowDetail extends JsonModel {
   }
 
   /**
-   * Whether a simple KYC or KYB workflow runs Bank verification. It runs after the contact steps and before database validation, AML and IP analysis. Set in the console.
+   * Whether a simple KYC or KYB workflow runs Bank verification. It runs after the contact steps (and Location verification) and before database validation, AML and IP analysis. Bank verification is not generally available yet: turning it on is refused wherever it is not enabled.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -315,7 +315,7 @@ public final class WorkflowDetail extends JsonModel {
   }
 
   /**
-   * Bank verification settings of a simple workflow, with the same keys a <code>BANK_VERIFICATION</code> node takes (for example <code>bank_countries</code> and <code>bank_method_order</code>). Every key is optional and an absent key keeps its default, so <code>{}</code> means all defaults. See [Bank verification settings](/management-api/workflows/feature-configs#bank-verification).
+   * Bank verification settings of a simple workflow, with the same keys a <code>BANK_VERIFICATION</code> node takes (for example <code>bank_countries</code> and <code>bank_method_order</code>). Unknown keys are dropped. Every key is optional and an absent key keeps its default, so <code>{}</code> means all defaults. See [Bank verification settings](/management-api/workflows/feature-configs#bank-verification).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -325,7 +325,7 @@ public final class WorkflowDetail extends JsonModel {
   }
 
   /**
-   * Whether a simple KYC workflow runs Location verification. It runs after the contact steps and before Bank verification. Never on KYB workflows. Set in the console.
+   * Whether a simple KYC workflow runs Location verification. It runs after the contact steps and before Bank verification and database validation. Business (KYB) workflows cannot run it.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -335,7 +335,7 @@ public final class WorkflowDetail extends JsonModel {
   }
 
   /**
-   * Location verification settings of a simple workflow, with the same keys a <code>GEOLOCATION</code> node takes (for example <code>is_geolocation_geofencing_enabled</code> and <code>geolocation_max_attempts</code>). Every key is optional and an absent key keeps its default, so <code>{}</code> means all defaults.
+   * Location verification settings of a simple workflow, with the same keys a <code>GEOLOCATION</code> node takes (for example <code>is_geolocation_geofencing_enabled</code> and <code>geolocation_max_attempts</code>). Unknown keys are dropped. Every key is optional and an absent key keeps its default, so <code>{}</code> means all defaults.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -608,7 +608,7 @@ public final class WorkflowDetail extends JsonModel {
     }
 
     /**
-     * Whether a simple KYC or KYB workflow runs Bank verification. It runs after the contact steps and before database validation, AML and IP analysis. Set in the console.
+     * Whether a simple KYC or KYB workflow runs Bank verification. It runs after the contact steps (and Location verification) and before database validation, AML and IP analysis. Bank verification is not generally available yet: turning it on is refused wherever it is not enabled.
      *
      * @param isBankVerificationEnabled the value
      * @return this builder
@@ -618,7 +618,7 @@ public final class WorkflowDetail extends JsonModel {
     }
 
     /**
-     * Bank verification settings of a simple workflow, with the same keys a <code>BANK_VERIFICATION</code> node takes (for example <code>bank_countries</code> and <code>bank_method_order</code>). Every key is optional and an absent key keeps its default, so <code>{}</code> means all defaults. See [Bank verification settings](/management-api/workflows/feature-configs#bank-verification).
+     * Bank verification settings of a simple workflow, with the same keys a <code>BANK_VERIFICATION</code> node takes (for example <code>bank_countries</code> and <code>bank_method_order</code>). Unknown keys are dropped. Every key is optional and an absent key keeps its default, so <code>{}</code> means all defaults. See [Bank verification settings](/management-api/workflows/feature-configs#bank-verification).
      *
      * @param bankVerificationConfig the value
      * @return this builder
@@ -628,7 +628,7 @@ public final class WorkflowDetail extends JsonModel {
     }
 
     /**
-     * Whether a simple KYC workflow runs Location verification. It runs after the contact steps and before Bank verification. Never on KYB workflows. Set in the console.
+     * Whether a simple KYC workflow runs Location verification. It runs after the contact steps and before Bank verification and database validation. Business (KYB) workflows cannot run it.
      *
      * @param isGeolocationEnabled the value
      * @return this builder
@@ -638,7 +638,7 @@ public final class WorkflowDetail extends JsonModel {
     }
 
     /**
-     * Location verification settings of a simple workflow, with the same keys a <code>GEOLOCATION</code> node takes (for example <code>is_geolocation_geofencing_enabled</code> and <code>geolocation_max_attempts</code>). Every key is optional and an absent key keeps its default, so <code>{}</code> means all defaults.
+     * Location verification settings of a simple workflow, with the same keys a <code>GEOLOCATION</code> node takes (for example <code>is_geolocation_geofencing_enabled</code> and <code>geolocation_max_attempts</code>). Unknown keys are dropped. Every key is optional and an absent key keeps its default, so <code>{}</code> means all defaults.
      *
      * @param geolocationConfig the value
      * @return this builder

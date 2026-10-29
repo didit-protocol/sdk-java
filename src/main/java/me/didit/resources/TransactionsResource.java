@@ -14,12 +14,14 @@ import me.didit.core.Responses;
 import me.didit.types.EntityNetworkMembershipList;
 import me.didit.types.TransactionDetail;
 import me.didit.types.TransactionSummary;
+import me.didit.types.TransactionsBatchDeleteParams;
 import me.didit.types.TransactionsCreateParams;
 import me.didit.types.TransactionsCreateSdkTokenParams;
 import me.didit.types.TransactionsCreateSdkTokenResponse;
 import me.didit.types.TransactionsListParams;
 import me.didit.types.TransactionsListRelatedParams;
 import me.didit.types.TransactionsListResponse;
+import org.jspecify.annotations.Nullable;
 
 /** The {@code transactions} resource: {@code client.transactions()}. */
 public final class TransactionsResource {
@@ -543,6 +545,90 @@ public final class TransactionsResource {
     return client.executeAsync(generatePdfRequest(transactionUuid), RequestOptions.none(), GENERATE_PDF_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Batch delete transactions
+   *
+   * <p>Delete one or more transactions permanently. Select them with <code>transaction_uuids</code>, or delete every transaction in the application with <code>delete_all: true</code>.
+   *
+   * <p>A deleted transaction goes with the records that are only its own: its parties, tags, notes, payment method links, documents and every stored version of their files, rule runs, alerts, provider results, network snapshot and Travel Rule data. Cases, people and companies stay; their link to the deleted transaction is cleared. Draft regulatory reports stop listing it and are rebuilt without it. Deletion is permanent and irreversible; there is no undo endpoint.
+   *
+   * <p>If any selected transaction is listed in a finalized regulatory report, the whole request is refused with <code>409</code> and nothing is deleted. The body uses <code>code: in_filed_report</code> and names each transaction and the reports that list it. Delete those reports, then repeat the request.
+   *
+   * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/transactions/delete/}
+   * <p>Application scoped: the organization and application ids come from the client options.
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   */
+  public void batchDelete(TransactionsBatchDeleteParams params, RequestOptions options) {
+    client.execute(batchDeleteRequest(params), options, BATCH_DELETE_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> batchDeleteAsync(TransactionsBatchDeleteParams params, RequestOptions options) {
+    return client.executeAsync(batchDeleteRequest(params), options, BATCH_DELETE_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * Same as {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   */
+  public void batchDelete(TransactionsBatchDeleteParams params) {
+    client.execute(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> batchDeleteAsync(TransactionsBatchDeleteParams params) {
+    return client.executeAsync(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * Same as {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)}, without parameters.
+   *
+   * @param options per-request options
+   */
+  public void batchDelete(RequestOptions options) {
+    client.execute(batchDeleteRequest(TransactionsBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)}, without parameters.
+   *
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> batchDeleteAsync(RequestOptions options) {
+    return client.executeAsync(batchDeleteRequest(TransactionsBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * Same as {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)}, without parameters, with the client's options.
+   */
+  public void batchDelete() {
+    client.execute(batchDeleteRequest(TransactionsBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> batchDeleteAsync() {
+    return client.executeAsync(batchDeleteRequest(TransactionsBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE).thenAccept(response -> {});
+  }
+
   private static final ResponseHandler<Page<TransactionsListResponse.Results>> LIST_RESPONSE = Responses.page(Conv.model(TransactionsListResponse.Results::fromJson));
 
   private static ApiRequest listRequest(TransactionsListParams params) {
@@ -614,6 +700,16 @@ public final class TransactionsResource {
         .applicationScoped()
         .pathParam("transaction_uuid", transactionUuid)
         .accept("application/pdf")
+        .build();
+  }
+
+  private static final ResponseHandler<@Nullable Void> BATCH_DELETE_RESPONSE = Responses.none();
+
+  private static ApiRequest batchDeleteRequest(TransactionsBatchDeleteParams params) {
+    return ApiRequest.builder("DELETE", "/v3/organization/{organization_id}/application/{application_id}/transactions/delete/")
+        .applicationScoped()
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
         .build();
   }
 
@@ -1047,6 +1143,86 @@ public final class TransactionsResource {
      */
     public CompletableFuture<RawResponse<BinaryResponse>> generatePdfAsync(String transactionUuid) {
       return client.executeAsync(generatePdfRequest(transactionUuid), RequestOptions.none(), GENERATE_PDF_RESPONSE);
+    }
+
+    /**
+     * {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> batchDelete(TransactionsBatchDeleteParams params, RequestOptions options) {
+      return client.execute(batchDeleteRequest(params), options, BATCH_DELETE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> batchDeleteAsync(TransactionsBatchDeleteParams params, RequestOptions options) {
+      return client.executeAsync(batchDeleteRequest(params), options, BATCH_DELETE_RESPONSE);
+    }
+
+    /**
+     * {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> batchDelete(TransactionsBatchDeleteParams params) {
+      return client.execute(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> batchDeleteAsync(TransactionsBatchDeleteParams params) {
+      return client.executeAsync(batchDeleteRequest(params), RequestOptions.none(), BATCH_DELETE_RESPONSE);
+    }
+
+    /**
+     * {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> batchDelete(RequestOptions options) {
+      return client.execute(batchDeleteRequest(TransactionsBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> batchDeleteAsync(RequestOptions options) {
+      return client.executeAsync(batchDeleteRequest(TransactionsBatchDeleteParams.builder().build()), options, BATCH_DELETE_RESPONSE);
+    }
+
+    /**
+     * {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> batchDelete() {
+      return client.execute(batchDeleteRequest(TransactionsBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #batchDelete(TransactionsBatchDeleteParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> batchDeleteAsync() {
+      return client.executeAsync(batchDeleteRequest(TransactionsBatchDeleteParams.builder().build()), RequestOptions.none(), BATCH_DELETE_RESPONSE);
     }
   }
 }

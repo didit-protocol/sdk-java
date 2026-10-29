@@ -4,6 +4,7 @@ package me.didit.types;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -18,7 +19,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code sessions.create}. */
 public final class SessionsCreateParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("workflow_id", "vendor_data", "callback", "callback_method", "metadata", "language", "contact_details", "expected_details", "portrait_image", "sandbox_scenario", "sign");
+  private static final Set<String> KNOWN_FIELDS = Set.of("workflow_id", "vendor_data", "callback", "callback_method", "metadata", "tags", "language", "contact_details", "expected_details", "portrait_image", "sandbox_scenario", "sign", "user_state", "biometric_consent");
 
   private SessionsCreateParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -104,6 +105,16 @@ public final class SessionsCreateParams extends JsonModel {
   }
 
   /**
+   * Tags added to the session when it is created, by name. Up to 10, each up to 50 characters. Names are case-insensitive and stored in upper case. A name that does not exist yet in the application is created as a new tag. The tags show on the session in the console, where you can filter by them.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<String>> tags() {
+    return Json.optional(json, "tags", Conv.list(Conv.STRING));
+  }
+
+  /**
    * Language code (ISO 639-1) for the verification process interface. Controls the language displayed to the end user during verification. If not provided, the browser's language will be automatically detected and used. Check all the supported languages [here](/integration/supported-languages).
    *
    * @return the value, or empty when the field is absent or null
@@ -161,6 +172,26 @@ public final class SessionsCreateParams extends JsonModel {
    */
   public Optional<SessionsCreateParams.Sign> sign() {
     return Json.optional(json, "sign", Conv.model(SessionsCreateParams.Sign::fromJson));
+  }
+
+  /**
+   * Where the person lives, when you know it: an ISO 3166-2 subdivision code (<code>US-IL</code>, <code>ES-M</code>) or a US state code or name (<code>IL</code>, <code>Illinois</code>). A state whose law requires explicit biometric consent (Illinois, Texas, Colorado) makes the verification flow ask for it before capturing a face, with trigger <code>declared_state</code>. An unrecognized value returns <code>400</code>. See [Biometric consent](/getting-started/biometric-consent).
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> userState() {
+    return Json.optional(json, "user_state", Conv.STRING);
+  }
+
+  /**
+   * Explicit biometric consent you already collected from the person. It satisfies the requirement, so the verification flow does not ask again, and the decision records it as <code>status: "given"</code> with trigger <code>customer_collected</code>. An answer the person already gave in the flow is never replaced. See [Biometric consent](/getting-started/biometric-consent).
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionsCreateParams.BiometricConsent> biometricConsent() {
+    return Json.optional(json, "biometric_consent", Conv.model(SessionsCreateParams.BiometricConsent::fromJson));
   }
 
   @Override
@@ -227,6 +258,16 @@ public final class SessionsCreateParams extends JsonModel {
     }
 
     /**
+     * Tags added to the session when it is created, by name. Up to 10, each up to 50 characters. Names are case-insensitive and stored in upper case. A name that does not exist yet in the application is created as a new tag. The tags show on the session in the console, where you can filter by them.
+     *
+     * @param tags the value
+     * @return this builder
+     */
+    public Builder tags(List<String> tags) {
+      return set("tags", Conv.list(Conv.STRING), tags);
+    }
+
+    /**
      * Language code (ISO 639-1) for the verification process interface. Controls the language displayed to the end user during verification. If not provided, the browser's language will be automatically detected and used. Check all the supported languages [here](/integration/supported-languages).
      *
      * @param language the value
@@ -284,6 +325,26 @@ public final class SessionsCreateParams extends JsonModel {
      */
     public Builder sign(SessionsCreateParams.Sign sign) {
       return set("sign", Conv.model(SessionsCreateParams.Sign::fromJson), sign);
+    }
+
+    /**
+     * Where the person lives, when you know it: an ISO 3166-2 subdivision code (<code>US-IL</code>, <code>ES-M</code>) or a US state code or name (<code>IL</code>, <code>Illinois</code>). A state whose law requires explicit biometric consent (Illinois, Texas, Colorado) makes the verification flow ask for it before capturing a face, with trigger <code>declared_state</code>. An unrecognized value returns <code>400</code>. See [Biometric consent](/getting-started/biometric-consent).
+     *
+     * @param userState the value
+     * @return this builder
+     */
+    public Builder userState(String userState) {
+      return set("user_state", Conv.STRING, userState);
+    }
+
+    /**
+     * Explicit biometric consent you already collected from the person. It satisfies the requirement, so the verification flow does not ask again, and the decision records it as <code>status: "given"</code> with trigger <code>customer_collected</code>. An answer the person already gave in the flow is never replaced. See [Biometric consent](/getting-started/biometric-consent).
+     *
+     * @param biometricConsent the value
+     * @return this builder
+     */
+    public Builder biometricConsent(SessionsCreateParams.BiometricConsent biometricConsent) {
+      return set("biometric_consent", Conv.model(SessionsCreateParams.BiometricConsent::fromJson), biometricConsent);
     }
 
     /**
@@ -1544,6 +1605,117 @@ public final class SessionsCreateParams extends JsonModel {
        */
       public Optional<Boolean> asBoolean() {
         return isBoolean() ? Optional.of(Conv.BOOLEAN.read(json)) : Optional.empty();
+      }
+    }
+  }
+
+  /**
+   * Explicit biometric consent you already collected from the person. It satisfies the requirement, so the verification flow does not ask again, and the decision records it as <code>status: "given"</code> with trigger <code>customer_collected</code>. An answer the person already gave in the flow is never replaced. See [Biometric consent](/getting-started/biometric-consent).
+   */
+  public static final class BiometricConsent extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("given_at", "text_version");
+
+    private BiometricConsent(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code BiometricConsent} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static BiometricConsent fromJson(JsonNode json) {
+      return new BiometricConsent(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * When the person gave explicit biometric consent (ISO 8601). Cannot be in the future.
+     *
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+     */
+    public OffsetDateTime givenAt() {
+      return Json.required(json, "given_at", Conv.DATE_TIME);
+    }
+
+    /**
+     * Version id of the consent text the person accepted, in your own records.
+     *
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+     */
+    public String textVersion() {
+      return Json.required(json, "text_version", Conv.STRING);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link BiometricConsent}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(BiometricConsent from) {
+        super(from);
+      }
+
+      /**
+       * When the person gave explicit biometric consent (ISO 8601). Cannot be in the future.
+       *
+       * @param givenAt the value
+       * @return this builder
+       */
+      public Builder givenAt(OffsetDateTime givenAt) {
+        return set("given_at", Conv.DATE_TIME, givenAt);
+      }
+
+      /**
+       * Version id of the consent text the person accepted, in your own records.
+       *
+       * @param textVersion the value
+       * @return this builder
+       */
+      public Builder textVersion(String textVersion) {
+        return set("text_version", Conv.STRING, textVersion);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code BiometricConsent}
+       * @throws IllegalStateException when a required field is missing
+       */
+      public BiometricConsent build() {
+        require("given_at", false);
+        require("text_version", false);
+        return new BiometricConsent(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
       }
     }
   }

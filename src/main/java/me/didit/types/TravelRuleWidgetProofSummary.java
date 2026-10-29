@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class TravelRuleWidgetProofSummary extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("proof_id", "method", "status", "wallet_address", "chain", "deposit_address", "expected_amount", "expires_at", "challenge", "rejection_reason", "created_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("proof_id", "method", "status", "wallet_address", "chain", "deposit_address", "expected_amount", "expires_at", "challenge", "rejection_reason", "created_at", "attempts", "failure_reason");
 
   private TravelRuleWidgetProofSummary(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -72,7 +72,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
   }
 
   /**
-   * PENDING on a SATOSHI_TEST proof means the deposit has been seen on-chain but has not yet reached enough confirmations; a background job automatically rechecks it and moves it to VERIFIED once it confirms, with no resubmission needed. REJECTED means a genuinely wrong deposit was submitted (absent, wrong sender, or wrong amount). EXPIRED means the proof's own test window closed before a valid deposit was seen.
+   * PENDING: the end user picked this method and the proof is not decided yet. A failed signature or a test deposit that is not readable or confirmed yet keeps the proof PENDING with a failure_reason, so the end user can try again; a submitted SATOSHI_TEST deposit is rechecked automatically until its window closes, and a submitted SCREENSHOT waits for your review. VERIFIED: ownership is proven. REJECTED: the test deposit is genuinely wrong (another sender, not the expected amount to the deposit address, older than the challenge, or a transaction that already proved another wallet) or your reviewer rejected the screenshot; failure_reason says which. A rejected proof is final and uses one of the session's attempts. EXPIRED: the proof can no longer be decided (its window closed, the end user switched method, the widget session lapsed, or the wallet's holder changed); failure_reason says which.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
   }
 
   /**
-   * The <code>chain</code> field.
+   * Canonical chain identifier of the address book entry the proof is for, e.g. ETH, BTC, SOL, TRX.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -142,7 +142,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
   }
 
   /**
-   * Why the proof was rejected. Present only when <code>status</code> is REJECTED.
+   * Why the proof was rejected, as an English sentence for the end user. Present only when <code>status</code> is REJECTED; empty when your reviewer rejected a screenshot (your note stays with you).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -159,6 +159,26 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
    */
   public Optional<OffsetDateTime> createdAt() {
     return Json.optional(json, "created_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * How many times evidence was submitted for this proof (signatures, transaction ids, uploads).
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> attempts() {
+    return Json.optional(json, "attempts", Conv.LONG);
+  }
+
+  /**
+   * Why the last attempt fell short, or why the proof closed. Empty when nothing failed.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleWalletProofFailureReason> failureReason() {
+    return Json.optional(json, "failure_reason", Conv.enumeration(TravelRuleWalletProofFailureReason::of));
   }
 
   @Override
@@ -195,7 +215,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
     }
 
     /**
-     * PENDING on a SATOSHI_TEST proof means the deposit has been seen on-chain but has not yet reached enough confirmations; a background job automatically rechecks it and moves it to VERIFIED once it confirms, with no resubmission needed. REJECTED means a genuinely wrong deposit was submitted (absent, wrong sender, or wrong amount). EXPIRED means the proof's own test window closed before a valid deposit was seen.
+     * PENDING: the end user picked this method and the proof is not decided yet. A failed signature or a test deposit that is not readable or confirmed yet keeps the proof PENDING with a failure_reason, so the end user can try again; a submitted SATOSHI_TEST deposit is rechecked automatically until its window closes, and a submitted SCREENSHOT waits for your review. VERIFIED: ownership is proven. REJECTED: the test deposit is genuinely wrong (another sender, not the expected amount to the deposit address, older than the challenge, or a transaction that already proved another wallet) or your reviewer rejected the screenshot; failure_reason says which. A rejected proof is final and uses one of the session's attempts. EXPIRED: the proof can no longer be decided (its window closed, the end user switched method, the widget session lapsed, or the wallet's holder changed); failure_reason says which.
      *
      * @param status the value
      * @return this builder
@@ -215,7 +235,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
     }
 
     /**
-     * The <code>chain</code> field.
+     * Canonical chain identifier of the address book entry the proof is for, e.g. ETH, BTC, SOL, TRX.
      *
      * @param chain the value
      * @return this builder
@@ -265,7 +285,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
     }
 
     /**
-     * Why the proof was rejected. Present only when <code>status</code> is REJECTED.
+     * Why the proof was rejected, as an English sentence for the end user. Present only when <code>status</code> is REJECTED; empty when your reviewer rejected a screenshot (your note stays with you).
      *
      * @param rejectionReason the value
      * @return this builder
@@ -282,6 +302,26 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
      */
     public Builder createdAt(OffsetDateTime createdAt) {
       return set("created_at", Conv.DATE_TIME, createdAt);
+    }
+
+    /**
+     * How many times evidence was submitted for this proof (signatures, transaction ids, uploads).
+     *
+     * @param attempts the value
+     * @return this builder
+     */
+    public Builder attempts(long attempts) {
+      return set("attempts", Conv.LONG, attempts);
+    }
+
+    /**
+     * Why the last attempt fell short, or why the proof closed. Empty when nothing failed.
+     *
+     * @param failureReason the value
+     * @return this builder
+     */
+    public Builder failureReason(TravelRuleWalletProofFailureReason failureReason) {
+      return set("failure_reason", Conv.enumeration(TravelRuleWalletProofFailureReason::of), failureReason);
     }
 
     /**
@@ -348,7 +388,7 @@ public final class TravelRuleWidgetProofSummary extends JsonModel {
   }
 
   /**
-   * PENDING on a SATOSHI_TEST proof means the deposit has been seen on-chain but has not yet reached enough confirmations; a background job automatically rechecks it and moves it to VERIFIED once it confirms, with no resubmission needed. REJECTED means a genuinely wrong deposit was submitted (absent, wrong sender, or wrong amount). EXPIRED means the proof's own test window closed before a valid deposit was seen.
+   * PENDING: the end user picked this method and the proof is not decided yet. A failed signature or a test deposit that is not readable or confirmed yet keeps the proof PENDING with a failure_reason, so the end user can try again; a submitted SATOSHI_TEST deposit is rechecked automatically until its window closes, and a submitted SCREENSHOT waits for your review. VERIFIED: ownership is proven. REJECTED: the test deposit is genuinely wrong (another sender, not the expected amount to the deposit address, older than the challenge, or a transaction that already proved another wallet) or your reviewer rejected the screenshot; failure_reason says which. A rejected proof is final and uses one of the session's attempts. EXPIRED: the proof can no longer be decided (its window closed, the end user switched method, the widget session lapsed, or the wallet's holder changed); failure_reason says which.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */

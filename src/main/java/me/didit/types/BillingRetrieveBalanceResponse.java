@@ -70,7 +70,7 @@ public final class BillingRetrieveBalanceResponse extends JsonModel {
   }
 
   /**
-   * USD amount that will be charged on each auto-refill. <code>null</code> when auto-refill is disabled or unset.
+   * USD amount that will be charged and added to the balance on each auto-refill, at face value. Set from \$50 to \$10,000 in Console → Billing. <code>null</code> when auto-refill is disabled or unset.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -123,7 +123,7 @@ public final class BillingRetrieveBalanceResponse extends JsonModel {
     }
 
     /**
-     * USD amount that will be charged on each auto-refill. <code>null</code> when auto-refill is disabled or unset.
+     * USD amount that will be charged and added to the balance on each auto-refill, at face value. Set from \$50 to \$10,000 in Console → Billing. <code>null</code> when auto-refill is disabled or unset.
      *
      * @param autoRefillAmount the value, or {@code null} to send JSON null
      * @return this builder

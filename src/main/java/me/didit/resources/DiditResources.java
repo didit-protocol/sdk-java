@@ -9,6 +9,7 @@ import me.didit.core.ApiClient;
  */
 public abstract class DiditResources {
   private final AccountResource account;
+  private final AddressValidationResource addressValidation;
   private final AgeEstimationResource ageEstimation;
   private final AmlResource aml;
   private final AmlMonitoringResource amlMonitoring;
@@ -57,6 +58,7 @@ public abstract class DiditResources {
    */
   protected DiditResources(ApiClient client) {
     this.account = new AccountResource(client);
+    this.addressValidation = new AddressValidationResource(client);
     this.ageEstimation = new AgeEstimationResource(client);
     this.aml = new AmlResource(client);
     this.amlMonitoring = new AmlMonitoringResource(client);
@@ -106,6 +108,15 @@ public abstract class DiditResources {
    */
   public final AccountResource account() {
     return account;
+  }
+
+  /**
+   * The {@code address_validation} resource.
+   *
+   * @return the resource
+   */
+  public final AddressValidationResource addressValidation() {
+    return addressValidation;
   }
 
   /**

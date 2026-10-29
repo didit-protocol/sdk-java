@@ -53,7 +53,7 @@ public final class TravelRuleNextAction extends JsonModel {
   }
 
   /**
-   * <code>select_counterparty_vasp</code>: the end user picks the destination VASP in the wallet-ownership widget. <code>declare_self_hosted</code>: the end user declares the wallet self-hosted in the widget. <code>add_vasp_hint</code>: tell Didit who the counterparty is, with a VASP name, LEI or travel address (for example a <code>travel_address</code> on the destination wallet's address-book entry), then resend. <code>update_compliance_email</code> and <code>resend</code> are <code>action</code> values of <code>PATCH /v3/transactions/{transaction_id}/travel-rule/</code>: give the counterparty's compliance email again, and re-run routing.
+   * <code>select_counterparty_vasp</code>: the end user picks the destination VASP in the wallet-ownership widget, or you PATCH <code>action=beneficiary_vasp</code>. <code>declare_self_hosted</code>: the end user declares the wallet self-hosted in the widget. <code>add_vasp_hint</code>: tell Didit who the counterparty is, with a VASP name, LEI or travel address (for example a <code>travel_address</code> on the destination wallet's address-book entry), then resend. <code>update_compliance_email</code> and <code>resend</code> are <code>action</code> values of <code>PATCH /v3/transactions/{transaction_id}/travel-rule/</code>: give the counterparty's compliance email again, and re-run routing.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -86,7 +86,7 @@ public final class TravelRuleNextAction extends JsonModel {
     }
 
     /**
-     * <code>select_counterparty_vasp</code>: the end user picks the destination VASP in the wallet-ownership widget. <code>declare_self_hosted</code>: the end user declares the wallet self-hosted in the widget. <code>add_vasp_hint</code>: tell Didit who the counterparty is, with a VASP name, LEI or travel address (for example a <code>travel_address</code> on the destination wallet's address-book entry), then resend. <code>update_compliance_email</code> and <code>resend</code> are <code>action</code> values of <code>PATCH /v3/transactions/{transaction_id}/travel-rule/</code>: give the counterparty's compliance email again, and re-run routing.
+     * <code>select_counterparty_vasp</code>: the end user picks the destination VASP in the wallet-ownership widget, or you PATCH <code>action=beneficiary_vasp</code>. <code>declare_self_hosted</code>: the end user declares the wallet self-hosted in the widget. <code>add_vasp_hint</code>: tell Didit who the counterparty is, with a VASP name, LEI or travel address (for example a <code>travel_address</code> on the destination wallet's address-book entry), then resend. <code>update_compliance_email</code> and <code>resend</code> are <code>action</code> values of <code>PATCH /v3/transactions/{transaction_id}/travel-rule/</code>: give the counterparty's compliance email again, and re-run routing.
      *
      * @param action the value
      * @return this builder
@@ -123,7 +123,7 @@ public final class TravelRuleNextAction extends JsonModel {
   }
 
   /**
-   * <code>select_counterparty_vasp</code>: the end user picks the destination VASP in the wallet-ownership widget. <code>declare_self_hosted</code>: the end user declares the wallet self-hosted in the widget. <code>add_vasp_hint</code>: tell Didit who the counterparty is, with a VASP name, LEI or travel address (for example a <code>travel_address</code> on the destination wallet's address-book entry), then resend. <code>update_compliance_email</code> and <code>resend</code> are <code>action</code> values of <code>PATCH /v3/transactions/{transaction_id}/travel-rule/</code>: give the counterparty's compliance email again, and re-run routing.
+   * <code>select_counterparty_vasp</code>: the end user picks the destination VASP in the wallet-ownership widget, or you PATCH <code>action=beneficiary_vasp</code>. <code>declare_self_hosted</code>: the end user declares the wallet self-hosted in the widget. <code>add_vasp_hint</code>: tell Didit who the counterparty is, with a VASP name, LEI or travel address (for example a <code>travel_address</code> on the destination wallet's address-book entry), then resend. <code>update_compliance_email</code> and <code>resend</code> are <code>action</code> values of <code>PATCH /v3/transactions/{transaction_id}/travel-rule/</code>: give the counterparty's compliance email again, and re-run routing.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */

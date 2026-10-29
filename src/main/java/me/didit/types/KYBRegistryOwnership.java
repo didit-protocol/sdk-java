@@ -54,7 +54,7 @@ public final class KYBRegistryOwnership extends JsonModel {
   }
 
   /**
-   * <code>delivered</code> when the registry published ownership; <code>unavailable</code> when it did not (see <code>unavailable_reason</code>); <code>pending</code> while the registry is still fetching it; <code>not_requested</code> for the Basic tier.
+   * <code>delivered</code> when the registry published ownership; <code>not_held</code> when the ownership registry answered and does not list the company at all (see <code>unavailable_reason</code>); <code>unavailable</code> when it did not serve the ownership data for any other reason (see <code>unavailable_reason</code>); <code>pending</code> while the registry is still fetching it; <code>not_requested</code> for the Basic tier.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -127,7 +127,7 @@ public final class KYBRegistryOwnership extends JsonModel {
     }
 
     /**
-     * <code>delivered</code> when the registry published ownership; <code>unavailable</code> when it did not (see <code>unavailable_reason</code>); <code>pending</code> while the registry is still fetching it; <code>not_requested</code> for the Basic tier.
+     * <code>delivered</code> when the registry published ownership; <code>not_held</code> when the ownership registry answered and does not list the company at all (see <code>unavailable_reason</code>); <code>unavailable</code> when it did not serve the ownership data for any other reason (see <code>unavailable_reason</code>); <code>pending</code> while the registry is still fetching it; <code>not_requested</code> for the Basic tier.
      *
      * @param status the value, or {@code null} to send JSON null
      * @return this builder
@@ -209,7 +209,7 @@ public final class KYBRegistryOwnership extends JsonModel {
   }
 
   /**
-   * <code>delivered</code> when the registry published ownership; <code>unavailable</code> when it did not (see <code>unavailable_reason</code>); <code>pending</code> while the registry is still fetching it; <code>not_requested</code> for the Basic tier.
+   * <code>delivered</code> when the registry published ownership; <code>not_held</code> when the ownership registry answered and does not list the company at all (see <code>unavailable_reason</code>); <code>unavailable</code> when it did not serve the ownership data for any other reason (see <code>unavailable_reason</code>); <code>pending</code> while the registry is still fetching it; <code>not_requested</code> for the Basic tier.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -223,10 +223,13 @@ public final class KYBRegistryOwnership extends JsonModel {
     /** The value {@code "delivered"}. */
     public static final Status DELIVERED = new Status("delivered");
 
+    /** The value {@code "not_held"}. */
+    public static final Status NOT_HELD = new Status("not_held");
+
     /** The value {@code "unavailable"}. */
     public static final Status UNAVAILABLE = new Status("unavailable");
 
-    private static final List<Status> KNOWN_VALUES = List.of(NOT_REQUESTED, PENDING, DELIVERED, UNAVAILABLE);
+    private static final List<Status> KNOWN_VALUES = List.of(NOT_REQUESTED, PENDING, DELIVERED, NOT_HELD, UNAVAILABLE);
 
     private Status(String value) {
       super(value);

@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class SessionsCreateResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_number", "session_token", "url", "vendor_data", "metadata", "status", "callback", "workflow_id", "workflow_version");
+  private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_number", "session_token", "url", "vendor_data", "metadata", "tags", "status", "callback", "workflow_id", "workflow_version");
 
   private SessionsCreateResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -108,6 +108,16 @@ public final class SessionsCreateResponse extends JsonModel {
    */
   public JsonNode metadata() {
     return Json.required(json, "metadata", Conv.ANY);
+  }
+
+  /**
+   * The tags on the session, by name.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<String>> tags() {
+    return Json.optional(json, "tags", Conv.list(Conv.STRING));
   }
 
   /**
@@ -221,6 +231,16 @@ public final class SessionsCreateResponse extends JsonModel {
      */
     public Builder metadata(@Nullable Object metadata) {
       return setAny("metadata", metadata);
+    }
+
+    /**
+     * The tags on the session, by name.
+     *
+     * @param tags the value
+     * @return this builder
+     */
+    public Builder tags(List<String> tags) {
+      return set("tags", Conv.list(Conv.STRING), tags);
     }
 
     /**

@@ -312,6 +312,8 @@ public final class SessionsResource {
    *
    * <p>To bulk-delete KYC sessions by their numeric <code>session_number</code>, use <code>POST /v3/sessions/delete/</code> instead.
    *
+   * <p><b>Filed regulatory reports:</b> if the selected data is in a finalized regulatory report, the whole request is refused with <code>409</code> and nothing is deleted. The body uses <code>code: in_filed_report</code> and names each report with <code>uuid</code>, <code>report_number</code>, <code>report_type</code> and <code>case_uuid</code>. Delete the reports, then repeat the request.
+   *
    * <p>{@code DELETE /v3/session/{sessionId}/delete/}
    *
    * @param sessionId UUID (`session_id`) of the User Verification (KYC) or Business Verification (KYB) session to delete, as returned when the session was created. Must be a canonical hyphenated UUID — a non-UUID value does not match the route and returns `404`.
@@ -760,6 +762,8 @@ public final class SessionsResource {
    * <p><b>Rate limit:</b> shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
    *
    * <p>This endpoint accepts API keys only. Business Console user Bearer tokens are rejected with <code>403</code> (unlike the single-session delete, which accepts both).
+   *
+   * <p><b>Filed regulatory reports:</b> if the selected data is in a finalized regulatory report, the whole request is refused with <code>409</code> and nothing is deleted. The body uses <code>code: in_filed_report</code> and names each report with <code>uuid</code>, <code>report_number</code>, <code>report_type</code> and <code>case_uuid</code>. Delete the reports, then repeat the request.
    *
    * <p>{@code POST /v3/sessions/delete/}
    *

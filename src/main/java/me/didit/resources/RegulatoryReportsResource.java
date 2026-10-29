@@ -12,6 +12,7 @@ import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
 import me.didit.types.RegulatoryReportDetail;
 import me.didit.types.RegulatoryReportsCreateParams;
+import me.didit.types.RegulatoryReportsDeleteParams;
 import me.didit.types.RegulatoryReportsListParams;
 import me.didit.types.RegulatoryReportsRetrieveDownloadUrlParams;
 import me.didit.types.RegulatoryReportsRetrieveDownloadUrlResponse;
@@ -314,46 +315,92 @@ public final class RegulatoryReportsResource {
   /**
    * Delete report
    *
-   * <p>Delete a draft or validated report. Finalized reports cannot be deleted (409).
+   * <p>Delete a regulatory report permanently. The report, its copied narrative and reasons, its transaction links, and its generated goAML XML and PDF are erased, including every stored version of those files. The report disappears from lists and download URLs stop working. Other records, including the case, transactions, people and companies, are not deleted. There is no undo.
+   *
+   * <p>A draft or validated report can be deleted without a request body. Deleting a finalized report requires <code>confirm_delete: true</code> in the request body. If the report is missing, the request returns <code>404</code>; if a finalized report is sent without confirmation, it returns <code>400</code> and nothing is deleted.
    *
    * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
    *
    * @param reportUuid Report UUID.
+   * @param params the request parameters
    * @param options per-request options that override the client options
    */
-  public void delete(String reportUuid, RequestOptions options) {
-    client.execute(deleteRequest(reportUuid), options, DELETE_RESPONSE);
+  public void delete(String reportUuid, RegulatoryReportsDeleteParams params, RequestOptions options) {
+    client.execute(deleteRequest(reportUuid, params), options, DELETE_RESPONSE);
   }
 
   /**
-   * Asynchronous {@link #delete(String, RequestOptions)}.
+   * Asynchronous {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)}.
+   *
+   * @param reportUuid the {@code report_uuid}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> deleteAsync(String reportUuid, RegulatoryReportsDeleteParams params, RequestOptions options) {
+    return client.executeAsync(deleteRequest(reportUuid, params), options, DELETE_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * Same as {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)}, with the client's options.
+   *
+   * @param reportUuid the {@code report_uuid}
+   * @param params the request parameters
+   */
+  public void delete(String reportUuid, RegulatoryReportsDeleteParams params) {
+    client.execute(deleteRequest(reportUuid, params), RequestOptions.none(), DELETE_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)}, with the client's options.
+   *
+   * @param reportUuid the {@code report_uuid}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> deleteAsync(String reportUuid, RegulatoryReportsDeleteParams params) {
+    return client.executeAsync(deleteRequest(reportUuid, params), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * Same as {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)}, without parameters.
+   *
+   * @param reportUuid the {@code report_uuid}
+   * @param options per-request options
+   */
+  public void delete(String reportUuid, RequestOptions options) {
+    client.execute(deleteRequest(reportUuid, RegulatoryReportsDeleteParams.builder().build()), options, DELETE_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)}, without parameters.
    *
    * @param reportUuid the {@code report_uuid}
    * @param options per-request options
    * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String reportUuid, RequestOptions options) {
-    return client.executeAsync(deleteRequest(reportUuid), options, DELETE_RESPONSE).thenAccept(response -> {});
+    return client.executeAsync(deleteRequest(reportUuid, RegulatoryReportsDeleteParams.builder().build()), options, DELETE_RESPONSE).thenAccept(response -> {});
   }
 
   /**
-   * Same as {@link #delete(String, RequestOptions)}, with the client's options.
+   * Same as {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param reportUuid the {@code report_uuid}
    */
   public void delete(String reportUuid) {
-    client.execute(deleteRequest(reportUuid), RequestOptions.none(), DELETE_RESPONSE);
+    client.execute(deleteRequest(reportUuid, RegulatoryReportsDeleteParams.builder().build()), RequestOptions.none(), DELETE_RESPONSE);
   }
 
   /**
-   * Asynchronous {@link #delete(String, RequestOptions)}, with the client's options.
+   * Asynchronous {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param reportUuid the {@code report_uuid}
    * @return a future completed with the result
    */
   public CompletableFuture<Void> deleteAsync(String reportUuid) {
-    return client.executeAsync(deleteRequest(reportUuid), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
+    return client.executeAsync(deleteRequest(reportUuid, RegulatoryReportsDeleteParams.builder().build()), RequestOptions.none(), DELETE_RESPONSE).thenAccept(response -> {});
   }
 
   /**
@@ -585,10 +632,12 @@ public final class RegulatoryReportsResource {
 
   private static final ResponseHandler<@Nullable Void> DELETE_RESPONSE = Responses.none();
 
-  private static ApiRequest deleteRequest(String reportUuid) {
+  private static ApiRequest deleteRequest(String reportUuid, RegulatoryReportsDeleteParams params) {
     return ApiRequest.builder("DELETE", "/v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/")
         .applicationScoped()
         .pathParam("report_uuid", reportUuid)
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
         .build();
   }
 
@@ -882,45 +931,91 @@ public final class RegulatoryReportsResource {
     }
 
     /**
-     * {@link #delete(String, RequestOptions)} with the raw response.
+     * {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)} with the raw response.
+     *
+     * @param reportUuid the {@code report_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> delete(String reportUuid, RegulatoryReportsDeleteParams params, RequestOptions options) {
+      return client.execute(deleteRequest(reportUuid, params), options, DELETE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)} with the raw response.
+     *
+     * @param reportUuid the {@code report_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String reportUuid, RegulatoryReportsDeleteParams params, RequestOptions options) {
+      return client.executeAsync(deleteRequest(reportUuid, params), options, DELETE_RESPONSE);
+    }
+
+    /**
+     * {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param reportUuid the {@code report_uuid}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> delete(String reportUuid, RegulatoryReportsDeleteParams params) {
+      return client.execute(deleteRequest(reportUuid, params), RequestOptions.none(), DELETE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param reportUuid the {@code report_uuid}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String reportUuid, RegulatoryReportsDeleteParams params) {
+      return client.executeAsync(deleteRequest(reportUuid, params), RequestOptions.none(), DELETE_RESPONSE);
+    }
+
+    /**
+     * {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param reportUuid the {@code report_uuid}
      * @param options per-request options
      * @return the result
      */
     public RawResponse<@Nullable Void> delete(String reportUuid, RequestOptions options) {
-      return client.execute(deleteRequest(reportUuid), options, DELETE_RESPONSE);
+      return client.execute(deleteRequest(reportUuid, RegulatoryReportsDeleteParams.builder().build()), options, DELETE_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response.
+     * Asynchronous {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param reportUuid the {@code report_uuid}
      * @param options per-request options
      * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String reportUuid, RequestOptions options) {
-      return client.executeAsync(deleteRequest(reportUuid), options, DELETE_RESPONSE);
+      return client.executeAsync(deleteRequest(reportUuid, RegulatoryReportsDeleteParams.builder().build()), options, DELETE_RESPONSE);
     }
 
     /**
-     * {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
+     * {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param reportUuid the {@code report_uuid}
      * @return the result
      */
     public RawResponse<@Nullable Void> delete(String reportUuid) {
-      return client.execute(deleteRequest(reportUuid), RequestOptions.none(), DELETE_RESPONSE);
+      return client.execute(deleteRequest(reportUuid, RegulatoryReportsDeleteParams.builder().build()), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #delete(String, RequestOptions)} with the raw response, with the client's options.
+     * Asynchronous {@link #delete(String, RegulatoryReportsDeleteParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param reportUuid the {@code report_uuid}
      * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<@Nullable Void>> deleteAsync(String reportUuid) {
-      return client.executeAsync(deleteRequest(reportUuid), RequestOptions.none(), DELETE_RESPONSE);
+      return client.executeAsync(deleteRequest(reportUuid, RegulatoryReportsDeleteParams.builder().build()), RequestOptions.none(), DELETE_RESPONSE);
     }
 
     /**

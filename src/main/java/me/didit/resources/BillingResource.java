@@ -77,7 +77,7 @@ public final class BillingResource {
   /**
    * Top up credits
    *
-   * <p>Add credits via a hosted checkout session (<b>$50 minimum</b>); not available on annual plans. Redirect the customer to the returned <code>checkout_session_url</code>.
+   * <p>Add credits via a hosted Stripe Checkout session (<b>\$50 to \$10,000</b> per top-up). Top-ups are available on the Free, Growth and Scale plans, added at face value with no discount or bonus, and last 12 months; Enterprise annual contracts cannot top up. Redirect the customer to the returned <code>checkout_session_url</code>.
    *
    * <p>{@code POST /v3/billing/top-up/}
    *

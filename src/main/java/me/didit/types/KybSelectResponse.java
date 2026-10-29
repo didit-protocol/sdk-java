@@ -810,7 +810,7 @@ public final class KybSelectResponse extends JsonModel {
     }
 
     /**
-     * <code>delivered</code> when the ownership data came back, <code>unavailable</code> when an ownership tier was requested but the registry had none for this company (see <code>registry_data.ownership_error</code>), <code>not_requested</code> on the Lite tier.
+     * <code>delivered</code> when the ownership data came back, <code>not_held</code> when the ownership registry answered and does not list this company (see <code>registry_data.ownership_error</code>), <code>unavailable</code> when an ownership tier was requested but the registry had none for this company or could not be asked (see <code>registry_data.ownership_error</code>), <code>not_requested</code> on the Lite tier.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1313,7 +1313,7 @@ public final class KybSelectResponse extends JsonModel {
       }
 
       /**
-       * <code>delivered</code> when the ownership data came back, <code>unavailable</code> when an ownership tier was requested but the registry had none for this company (see <code>registry_data.ownership_error</code>), <code>not_requested</code> on the Lite tier.
+       * <code>delivered</code> when the ownership data came back, <code>not_held</code> when the ownership registry answered and does not list this company (see <code>registry_data.ownership_error</code>), <code>unavailable</code> when an ownership tier was requested but the registry had none for this company or could not be asked (see <code>registry_data.ownership_error</code>), <code>not_requested</code> on the Lite tier.
        *
        * @param registryOwnershipStatus the value, or {@code null} to send JSON null
        * @return this builder
@@ -2820,7 +2820,7 @@ public final class KybSelectResponse extends JsonModel {
     }
 
     /**
-     * <code>delivered</code> when the ownership data came back, <code>unavailable</code> when an ownership tier was requested but the registry had none for this company (see <code>registry_data.ownership_error</code>), <code>not_requested</code> on the Lite tier.
+     * <code>delivered</code> when the ownership data came back, <code>not_held</code> when the ownership registry answered and does not list this company (see <code>registry_data.ownership_error</code>), <code>unavailable</code> when an ownership tier was requested but the registry had none for this company or could not be asked (see <code>registry_data.ownership_error</code>), <code>not_requested</code> on the Lite tier.
      *
      * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
      */
@@ -2831,10 +2831,13 @@ public final class KybSelectResponse extends JsonModel {
       /** The value {@code "delivered"}. */
       public static final RegistryOwnershipStatus DELIVERED = new RegistryOwnershipStatus("delivered");
 
+      /** The value {@code "not_held"}. */
+      public static final RegistryOwnershipStatus NOT_HELD = new RegistryOwnershipStatus("not_held");
+
       /** The value {@code "unavailable"}. */
       public static final RegistryOwnershipStatus UNAVAILABLE = new RegistryOwnershipStatus("unavailable");
 
-      private static final List<RegistryOwnershipStatus> KNOWN_VALUES = List.of(NOT_REQUESTED, DELIVERED, UNAVAILABLE);
+      private static final List<RegistryOwnershipStatus> KNOWN_VALUES = List.of(NOT_REQUESTED, DELIVERED, NOT_HELD, UNAVAILABLE);
 
       private RegistryOwnershipStatus(String value) {
         super(value);

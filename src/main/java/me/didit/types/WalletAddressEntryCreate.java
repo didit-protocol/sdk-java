@@ -59,7 +59,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
   }
 
   /**
-   * Chain token for the address, for example <code>ETH</code> or <code>BTC</code>. When Didit routes or registers a transfer, it matches address book entries on the wallet address and, when the transfer carries a chain, on this value too, ignoring case. A transfer's chain is <code>beneficiary_data.chain</code>, filled from the transaction's crypto chain or currency symbol (for example <code>ETH</code>) when you do not send it, or the <code>chain</code> of an after-deposit registration, so use the same token everywhere. An entry with an empty chain matches any chain.
+   * Chain token for the address, for example <code>ETH</code> or <code>BTC</code>. When Didit routes or registers a transfer, it matches address book entries on the wallet address and, when the transfer carries a chain, on this value too, ignoring case. A transfer's chain is <code>beneficiary_data.chain</code>, filled from the transaction's crypto chain or currency symbol (for example <code>ETH</code>) when you do not send it, or the <code>chain</code> of an after-deposit registration, so use the same token everywhere. An entry with an empty chain matches any chain. Known chains are stored under one canonical identifier whatever spelling you send: "ethereum", "Ethereum" and "ERC20" are all stored as ETH, "BNB Smart Chain" and "BEP20" as BNB, "tron" as TRX. An unknown chain name is kept as given.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -152,7 +152,7 @@ public final class WalletAddressEntryCreate extends JsonModel {
     }
 
     /**
-     * Chain token for the address, for example <code>ETH</code> or <code>BTC</code>. When Didit routes or registers a transfer, it matches address book entries on the wallet address and, when the transfer carries a chain, on this value too, ignoring case. A transfer's chain is <code>beneficiary_data.chain</code>, filled from the transaction's crypto chain or currency symbol (for example <code>ETH</code>) when you do not send it, or the <code>chain</code> of an after-deposit registration, so use the same token everywhere. An entry with an empty chain matches any chain.
+     * Chain token for the address, for example <code>ETH</code> or <code>BTC</code>. When Didit routes or registers a transfer, it matches address book entries on the wallet address and, when the transfer carries a chain, on this value too, ignoring case. A transfer's chain is <code>beneficiary_data.chain</code>, filled from the transaction's crypto chain or currency symbol (for example <code>ETH</code>) when you do not send it, or the <code>chain</code> of an after-deposit registration, so use the same token everywhere. An entry with an empty chain matches any chain. Known chains are stored under one canonical identifier whatever spelling you send: "ethereum", "Ethereum" and "ERC20" are all stored as ETH, "BNB Smart Chain" and "BEP20" as BNB, "tron" as TRX. An unknown chain name is kept as given.
      *
      * @param chain the value
      * @return this builder
