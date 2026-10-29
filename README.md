@@ -3,8 +3,6 @@
 The official Didit Java library, for Java and Kotlin backends.
 Identity verification (KYC), business verification (KYB), AML screening, biometrics, transaction monitoring, Travel Rule and customer authentication, from your server, with a typed method for every endpoint of the [Didit API](https://docs.didit.me).
 
-> In development: not released yet. The first release ships with the Didit release of 2026-11-01.
-
 ## Install
 
 Java 11 or newer. Gradle (Kotlin DSL):

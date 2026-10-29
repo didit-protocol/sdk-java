@@ -1,9 +1,9 @@
-# Release plumbing (DESIGN 13). Off until the repository variable RELEASES_ENABLED is "true":
-# nothing is published before Alex approves the first release, and not before 2026-11-01.
+# Release plumbing (DESIGN 13). Runs while the repository variable RELEASES_ENABLED is "true" (set
+# since the 1.0.0 release on 2026-10-29). Merging the release pull request is the approval.
 #
 # On each push to main, release-please keeps a release pull request up to date (version bump and
 # CHANGELOG.md from conventional commits). Merging it creates the tag and the GitHub release; the
-# publish job then waits for an approval on the "maven-central" environment, builds, signs and
+# publish job then runs in the "maven-central" environment (its secrets, no reviewers), builds, signs and
 # uploads to Maven Central through the Central Portal, and attests the jars (build provenance).
 # Publishing runs in this workflow because a release created with the default token does not
 # start other workflows.

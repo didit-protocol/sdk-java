@@ -50,16 +50,16 @@ You can push commits to the sync branch (for example hand-written webhook or Aut
 
 Releases are cut by release-please from conventional commits; `CHANGELOG.md` is generated and never edited by hand. Nothing is published before Alex approves the first release, and not before 2026-11-01; until then versions stay `0.x`.
 
-1. The workflow `.github/workflows/release-please.yml` is off until the repository variable `RELEASES_ENABLED` is `true`.
+1. The workflow `.github/workflows/release-please.yml` runs while the repository variable `RELEASES_ENABLED` is `true` (set since 1.0.0). Merging the release pull request is the release approval (Alex, 2026-10-29); nobody tags or publishes by hand.
 2. On each push to `main`, release-please updates a release pull request (version in `gradle.properties`, `Version.java` and the README, plus `CHANGELOG.md`).
-3. Merging it creates the `vX.Y.Z` tag and the GitHub release. The `publish` job then waits for a reviewer of the `maven-central` environment, runs `./gradlew check`, signs and uploads to Maven Central (Central Portal), and attests the jars.
+3. Merging it creates the `vX.Y.Z` tag and the GitHub release. The `publish` job then runs in the `maven-central` environment (it holds the secrets; no reviewers), runs `./gradlew check`, signs and uploads to Maven Central (Central Portal), and attests the jars.
 4. If a publish fails after the tag exists: when the cause is outside the code (an expired token, a missing secret, a Central Portal outage), fix it and rerun the failed `publish` job of that workflow run. A rerun builds the tag's commit, so it never picks up a fix merged to `main` later; when the code has to change, merge the fix to `main` and release the next patch version instead.
 
-One-time setup by a repository admin, before the first release:
+One-time setup (done for 1.0.0 on 2026-10-29):
 
 - Maven Central: the `me.didit` namespace verified on central.sonatype.com, and a Central Portal user token.
 - A GPG signing key, with its public key on a key server.
-- Repository secrets `MAVEN_CENTRAL_USERNAME`, `MAVEN_CENTRAL_PASSWORD`, `MAVEN_SIGNING_KEY` (ASCII-armored private key) and `MAVEN_SIGNING_KEY_PASSWORD`.
-- A `maven-central` environment with required reviewers and "Prevent self-review".
+- Secrets of the `maven-central` environment: `MAVEN_CENTRAL_USERNAME`, `MAVEN_CENTRAL_PASSWORD`, `MAVEN_SIGNING_KEY` (ASCII-armored private key) and `MAVEN_SIGNING_KEY_PASSWORD`.
+- A `maven-central` environment holding those secrets, with no required reviewers. The Central Portal token expires on 2027-04-29: generate a new one and replace the two secrets before then.
 - Optionally `RELEASE_PLEASE_TOKEN` and `SPEC_SYNC_TOKEN` (a GitHub App or fine-grained token), so CI runs on the release and sync pull requests.
 - Finally, the variable `RELEASES_ENABLED=true`.
