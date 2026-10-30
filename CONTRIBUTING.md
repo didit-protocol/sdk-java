@@ -48,7 +48,7 @@ You can push commits to the sync branch (for example hand-written webhook or Aut
 
 ## Releases
 
-Releases are cut by release-please from conventional commits; `CHANGELOG.md` is generated and never edited by hand. Nothing is published before Alex approves the first release, and not before 2026-11-01; until then versions stay `0.x`.
+Releases are cut by release-please from conventional commits; `CHANGELOG.md` is generated and never edited by hand. The first release, 1.0.0, shipped on 2026-10-29 with Alex's approval; every release after that publishes straight from the repository (DESIGN 13).
 
 1. The workflow `.github/workflows/release-please.yml` runs while the repository variable `RELEASES_ENABLED` is `true` (set since 1.0.0). Merging the release pull request is the release approval (Alex, 2026-10-29); nobody tags or publishes by hand.
 2. On each push to `main`, release-please updates a release pull request (version in `gradle.properties`, `Version.java` and the README, plus `CHANGELOG.md`).
