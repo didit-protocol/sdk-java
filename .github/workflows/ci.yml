@@ -38,7 +38,7 @@ jobs:
           java-version: |
             ${{ matrix.java }}
             21
-      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
       - name: Unit, generated, contract, webhook and Authentication tests
         run: ./gradlew :test "-PtestJavaVersion=${{ matrix.java }}" "-Porg.gradle.java.installations.fromEnv=JAVA_HOME_${{ matrix.java }}_X64,JAVA_HOME_${{ matrix.java }}_ARM64,JAVA_HOME_21_X64,JAVA_HOME_21_ARM64"
       - name: Core coverage of 90 % or more
@@ -56,7 +56,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
-      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
       - name: Formatting (google-java-format, ktfmt)
         run: ./gradlew spotlessCheck
       - name: Compile with -Werror, errorprone and NullAway
@@ -94,7 +94,7 @@ jobs:
           java-version: |
             17
             21
-      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
       - name: Build the examples (Spring Boot, Javalin, Ktor, Kotlin) and run their tests
         run: ./gradlew :examples:build "-Porg.gradle.java.installations.fromEnv=JAVA_HOME_17_X64,JAVA_HOME_21_X64"
       - name: Quickstart against the local mock API
@@ -131,7 +131,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
-      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
       - name: Smoke tests (skipped without DIDIT_SANDBOX_API_KEY)
         env:
           DIDIT_SANDBOX_API_KEY: ${{ secrets.DIDIT_SANDBOX_API_KEY }}
