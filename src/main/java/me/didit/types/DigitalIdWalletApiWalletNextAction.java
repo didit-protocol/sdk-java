@@ -13,7 +13,7 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 
 public final class DigitalIdWalletApiWalletNextAction extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("type", "url", "verification_code", "poll_interval_seconds");
+  private static final Set<String> KNOWN_FIELDS = Set.of("type", "url", "digital_credentials", "verification_code", "poll_interval_seconds");
 
   private DigitalIdWalletApiWalletNextAction(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -49,10 +49,11 @@ public final class DigitalIdWalletApiWalletNextAction extends JsonModel {
   }
 
   /**
-   * redirect: send the user's browser to url. confirm_in_app: show verification_code to the user, who checks it matches the code in their wallet app and confirms there; then poll.
+   * redirect: send the user's browser to url. confirm_in_app: show verification_code to the user, who checks it matches the code in their wallet app and confirms there; then poll. request_digital_credential: in a user gesture on the origin you started with, ask the wallet with digital_credentials.request, then send what it returns to POST .../verifications/{request_id}/response/.
    *
    * <p>- <code>redirect</code> - redirect
    * - <code>confirm_in_app</code> - confirm_in_app
+   * - <code>request_digital_credential</code> - request_digital_credential
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -69,6 +70,16 @@ public final class DigitalIdWalletApiWalletNextAction extends JsonModel {
    */
   public Optional<String> url() {
     return Json.optional(json, "url", Conv.STRING);
+  }
+
+  /**
+   * request_digital_credential only: the request to hand to the wallet.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<DigitalIdWalletApiWalletDigitalCredentialsRequest> digitalCredentials() {
+    return Json.optional(json, "digital_credentials", Conv.model(DigitalIdWalletApiWalletDigitalCredentialsRequest::fromJson));
   }
 
   /**
@@ -105,10 +116,11 @@ public final class DigitalIdWalletApiWalletNextAction extends JsonModel {
     }
 
     /**
-     * redirect: send the user's browser to url. confirm_in_app: show verification_code to the user, who checks it matches the code in their wallet app and confirms there; then poll.
+     * redirect: send the user's browser to url. confirm_in_app: show verification_code to the user, who checks it matches the code in their wallet app and confirms there; then poll. request_digital_credential: in a user gesture on the origin you started with, ask the wallet with digital_credentials.request, then send what it returns to POST .../verifications/{request_id}/response/.
      *
      * <p>- <code>redirect</code> - redirect
      * - <code>confirm_in_app</code> - confirm_in_app
+     * - <code>request_digital_credential</code> - request_digital_credential
      *
      * @param type the value
      * @return this builder
@@ -125,6 +137,16 @@ public final class DigitalIdWalletApiWalletNextAction extends JsonModel {
      */
     public Builder url(String url) {
       return set("url", Conv.STRING, url);
+    }
+
+    /**
+     * request_digital_credential only: the request to hand to the wallet.
+     *
+     * @param digitalCredentials the value
+     * @return this builder
+     */
+    public Builder digitalCredentials(DigitalIdWalletApiWalletDigitalCredentialsRequest digitalCredentials) {
+      return set("digital_credentials", Conv.model(DigitalIdWalletApiWalletDigitalCredentialsRequest::fromJson), digitalCredentials);
     }
 
     /**
