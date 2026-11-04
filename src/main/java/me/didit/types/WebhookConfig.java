@@ -18,7 +18,7 @@ import org.jspecify.annotations.Nullable;
  * Application-level webhook configuration, retention policy and Digital ID wallet return hosts, with every webhook destination.
  */
 public final class WebhookConfig extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("webhook_url", "webhook_version", "secret_shared_key", "capture_method", "data_retention_months", "face_retention_policy", "face_retention_days", "biometric_consent_mode", "available_events", "allowed_return_hosts", "endpoints");
+  private static final Set<String> KNOWN_FIELDS = Set.of("webhook_url", "webhook_version", "secret_shared_key", "capture_method", "data_retention_months", "face_retention_policy", "face_retention_days", "biometric_consent_mode", "available_events", "allowed_return_hosts", "endpoints", "allowed_domains");
 
   private WebhookConfig(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -163,6 +163,16 @@ public final class WebhookConfig extends JsonModel {
     return Json.required(json, "endpoints", Conv.list(Conv.model(WebhookConfigDestination::fromJson)));
   }
 
+  /**
+   * Origins (for example <code>https://app.example.com</code>; <code>http</code> only for <code>localhost</code>) the hosted verification flow may be embedded in and may send the user back to with a session callback. Server-to-server calls are not affected. An empty list means no restriction. Didit stores each origin in lower case without a default port. An invalid entry fails with <code>400</code> on <code>allowed_domains</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<String>> allowedDomains() {
+    return Json.optional(json, "allowed_domains", Conv.list(Conv.STRING));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -284,6 +294,16 @@ public final class WebhookConfig extends JsonModel {
      */
     public Builder endpoints(List<WebhookConfigDestination> endpoints) {
       return set("endpoints", Conv.list(Conv.model(WebhookConfigDestination::fromJson)), endpoints);
+    }
+
+    /**
+     * Origins (for example <code>https://app.example.com</code>; <code>http</code> only for <code>localhost</code>) the hosted verification flow may be embedded in and may send the user back to with a session callback. Server-to-server calls are not affected. An empty list means no restriction. Didit stores each origin in lower case without a default port. An invalid entry fails with <code>400</code> on <code>allowed_domains</code>.
+     *
+     * @param allowedDomains the value
+     * @return this builder
+     */
+    public Builder allowedDomains(List<String> allowedDomains) {
+      return set("allowed_domains", Conv.list(Conv.STRING), allowedDomains);
     }
 
     /**

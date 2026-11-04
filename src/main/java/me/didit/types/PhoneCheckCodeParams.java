@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 
 /** Parameters for {&#64;code phone.check_code}. */
 public final class PhoneCheckCodeParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("phone_number", "code", "duplicated_phone_number_action", "disposable_number_action", "voip_number_action", "enable_social", "phone_no_social_presence_action");
+  private static final Set<String> KNOWN_FIELDS = Set.of("phone_number", "code", "duplicated_phone_number_action", "disposable_number_action", "voip_number_action", "enable_enrichment", "phone_intelligence_score_action", "phone_type_risk_action", "recent_port_action", "low_phone_trust_action", "enable_social", "phone_no_social_presence_action");
 
   private PhoneCheckCodeParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -101,6 +101,56 @@ public final class PhoneCheckCodeParams extends JsonModel {
   }
 
   /**
+   * When <code>true</code>, also run phone intelligence on the number: a risk score, the line type, whether it was recently ported and a trust index. Billed as one <code>phone_intelligence_api</code> unit per request ($0.05 at list price) in addition to this endpoint's own price. The request returns <code>403</code> when your balance cannot cover it.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> enableEnrichment() {
+    return Json.optional(json, "enable_enrichment", Conv.BOOLEAN);
+  }
+
+  /**
+   * Action when the phone intelligence risk score is above the threshold. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<PhoneCheckCodeParams.PhoneIntelligenceScoreAction> phoneIntelligenceScoreAction() {
+    return Json.optional(json, "phone_intelligence_score_action", Conv.enumeration(PhoneCheckCodeParams.PhoneIntelligenceScoreAction::of));
+  }
+
+  /**
+   * Action when the number is a high-risk line type. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<PhoneCheckCodeParams.PhoneTypeRiskAction> phoneTypeRiskAction() {
+    return Json.optional(json, "phone_type_risk_action", Conv.enumeration(PhoneCheckCodeParams.PhoneTypeRiskAction::of));
+  }
+
+  /**
+   * Action when the number was ported to another carrier recently. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<PhoneCheckCodeParams.RecentPortAction> recentPortAction() {
+    return Json.optional(json, "recent_port_action", Conv.enumeration(PhoneCheckCodeParams.RecentPortAction::of));
+  }
+
+  /**
+   * Action when the phone intelligence trust index is at or below the threshold. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<PhoneCheckCodeParams.LowPhoneTrustAction> lowPhoneTrustAction() {
+    return Json.optional(json, "low_phone_trust_action", Conv.enumeration(PhoneCheckCodeParams.LowPhoneTrustAction::of));
+  }
+
+  /**
    * When true, also look up the social footprint of the number - the messaging, social, e-commerce and professional platforms it is registered on. Billed as one <code>phone_social</code> unit per request in addition to this endpoint's own price.
    *
    * @return the value, or empty when the field is absent or null
@@ -181,6 +231,56 @@ public final class PhoneCheckCodeParams extends JsonModel {
      */
     public Builder voipNumberAction(PhoneCheckCodeParams.VoipNumberAction voipNumberAction) {
       return set("voip_number_action", Conv.enumeration(PhoneCheckCodeParams.VoipNumberAction::of), voipNumberAction);
+    }
+
+    /**
+     * When <code>true</code>, also run phone intelligence on the number: a risk score, the line type, whether it was recently ported and a trust index. Billed as one <code>phone_intelligence_api</code> unit per request ($0.05 at list price) in addition to this endpoint's own price. The request returns <code>403</code> when your balance cannot cover it.
+     *
+     * @param enableEnrichment the value
+     * @return this builder
+     */
+    public Builder enableEnrichment(boolean enableEnrichment) {
+      return set("enable_enrichment", Conv.BOOLEAN, enableEnrichment);
+    }
+
+    /**
+     * Action when the phone intelligence risk score is above the threshold. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+     *
+     * @param phoneIntelligenceScoreAction the value
+     * @return this builder
+     */
+    public Builder phoneIntelligenceScoreAction(PhoneCheckCodeParams.PhoneIntelligenceScoreAction phoneIntelligenceScoreAction) {
+      return set("phone_intelligence_score_action", Conv.enumeration(PhoneCheckCodeParams.PhoneIntelligenceScoreAction::of), phoneIntelligenceScoreAction);
+    }
+
+    /**
+     * Action when the number is a high-risk line type. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+     *
+     * @param phoneTypeRiskAction the value
+     * @return this builder
+     */
+    public Builder phoneTypeRiskAction(PhoneCheckCodeParams.PhoneTypeRiskAction phoneTypeRiskAction) {
+      return set("phone_type_risk_action", Conv.enumeration(PhoneCheckCodeParams.PhoneTypeRiskAction::of), phoneTypeRiskAction);
+    }
+
+    /**
+     * Action when the number was ported to another carrier recently. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+     *
+     * @param recentPortAction the value
+     * @return this builder
+     */
+    public Builder recentPortAction(PhoneCheckCodeParams.RecentPortAction recentPortAction) {
+      return set("recent_port_action", Conv.enumeration(PhoneCheckCodeParams.RecentPortAction::of), recentPortAction);
+    }
+
+    /**
+     * Action when the phone intelligence trust index is at or below the threshold. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+     *
+     * @param lowPhoneTrustAction the value
+     * @return this builder
+     */
+    public Builder lowPhoneTrustAction(PhoneCheckCodeParams.LowPhoneTrustAction lowPhoneTrustAction) {
+      return set("low_phone_trust_action", Conv.enumeration(PhoneCheckCodeParams.LowPhoneTrustAction::of), lowPhoneTrustAction);
     }
 
     /**
@@ -341,6 +441,178 @@ public final class PhoneCheckCodeParams extends JsonModel {
      * @return the known values
      */
     public static List<VoipNumberAction> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Action when the phone intelligence risk score is above the threshold. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class PhoneIntelligenceScoreAction extends StringEnum {
+    /** The value {@code "NO_ACTION"}. */
+    public static final PhoneIntelligenceScoreAction NO_ACTION = new PhoneIntelligenceScoreAction("NO_ACTION");
+
+    /** The value {@code "DECLINE"}. */
+    public static final PhoneIntelligenceScoreAction DECLINE = new PhoneIntelligenceScoreAction("DECLINE");
+
+    private static final List<PhoneIntelligenceScoreAction> KNOWN_VALUES = List.of(NO_ACTION, DECLINE);
+
+    private PhoneIntelligenceScoreAction(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static PhoneIntelligenceScoreAction of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, PhoneIntelligenceScoreAction::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<PhoneIntelligenceScoreAction> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Action when the number is a high-risk line type. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class PhoneTypeRiskAction extends StringEnum {
+    /** The value {@code "NO_ACTION"}. */
+    public static final PhoneTypeRiskAction NO_ACTION = new PhoneTypeRiskAction("NO_ACTION");
+
+    /** The value {@code "DECLINE"}. */
+    public static final PhoneTypeRiskAction DECLINE = new PhoneTypeRiskAction("DECLINE");
+
+    private static final List<PhoneTypeRiskAction> KNOWN_VALUES = List.of(NO_ACTION, DECLINE);
+
+    private PhoneTypeRiskAction(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static PhoneTypeRiskAction of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, PhoneTypeRiskAction::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<PhoneTypeRiskAction> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Action when the number was ported to another carrier recently. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class RecentPortAction extends StringEnum {
+    /** The value {@code "NO_ACTION"}. */
+    public static final RecentPortAction NO_ACTION = new RecentPortAction("NO_ACTION");
+
+    /** The value {@code "DECLINE"}. */
+    public static final RecentPortAction DECLINE = new RecentPortAction("DECLINE");
+
+    private static final List<RecentPortAction> KNOWN_VALUES = List.of(NO_ACTION, DECLINE);
+
+    private RecentPortAction(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static RecentPortAction of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, RecentPortAction::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<RecentPortAction> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Action when the phone intelligence trust index is at or below the threshold. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class LowPhoneTrustAction extends StringEnum {
+    /** The value {@code "NO_ACTION"}. */
+    public static final LowPhoneTrustAction NO_ACTION = new LowPhoneTrustAction("NO_ACTION");
+
+    /** The value {@code "DECLINE"}. */
+    public static final LowPhoneTrustAction DECLINE = new LowPhoneTrustAction("DECLINE");
+
+    private static final List<LowPhoneTrustAction> KNOWN_VALUES = List.of(NO_ACTION, DECLINE);
+
+    private LowPhoneTrustAction(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static LowPhoneTrustAction of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, LowPhoneTrustAction::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<LowPhoneTrustAction> knownValues() {
       return KNOWN_VALUES;
     }
 

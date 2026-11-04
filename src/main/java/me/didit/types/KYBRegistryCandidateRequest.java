@@ -50,7 +50,7 @@ public final class KYBRegistryCandidateRequest extends JsonModel {
   }
 
   /**
-   * Candidate handle from <code>POST /v3/kyb/search/</code> (<code>kyb_registry.companies[].kyb_response_id</code>). Ephemeral — use it shortly after the search that produced it.
+   * Candidate handle from <code>POST /v3/kyb/search/</code> (<code>kyb_registry.companies[].kyb_response_id</code>). Ephemeral: use it shortly after the search that produced it. Handles can be long, so store and send the value exactly as returned, without trimming or assuming a length.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -103,7 +103,7 @@ public final class KYBRegistryCandidateRequest extends JsonModel {
     }
 
     /**
-     * Candidate handle from <code>POST /v3/kyb/search/</code> (<code>kyb_registry.companies[].kyb_response_id</code>). Ephemeral — use it shortly after the search that produced it.
+     * Candidate handle from <code>POST /v3/kyb/search/</code> (<code>kyb_registry.companies[].kyb_response_id</code>). Ephemeral: use it shortly after the search that produced it. Handles can be long, so store and send the value exactly as returned, without trimming or assuming a length.
      *
      * @param kybResponseId the value
      * @return this builder

@@ -512,7 +512,7 @@ public final class AmlScreenResponse extends JsonModel {
       }
 
       /**
-       * Stable identifier of the matched entity in the screening datasets.
+       * Didit's stable identifier for the hit: <code>hit_</code> followed by 24 hexadecimal characters. The same matched entity keeps the same <code>id</code> when the subject is screened again. Pass it as <code>hit_id</code> to the AML hit review endpoints.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -592,13 +592,13 @@ public final class AmlScreenResponse extends JsonModel {
       }
 
       /**
-       * Datasets the entity appears in (e.g. <code>PEP</code>, <code>PEP Level 1</code>, sanctions list names).
+       * Risk categories the entity is listed under: <code>PEP</code> (with its level, <code>PEP Level 1</code> to <code>PEP Level 4</code>), <code>Sanctions</code>, <code>Adverse Media</code>, <code>Warnings and Regulatory Enforcement</code>, <code>Fitness and Probity</code>, <code>SIP</code>, <code>SIE</code> or <code>Insolvency</code>. <code>Other Lists</code> when the entity's source states none of these categories.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<List<String>> datasets() {
-        return Json.optional(json, "datasets", Conv.list(Conv.STRING));
+      public Optional<List<AmlScreenResponse.Aml.Hits.Datasets>> datasets() {
+        return Json.optional(json, "datasets", Conv.list(Conv.enumeration(AmlScreenResponse.Aml.Hits.Datasets::of)));
       }
 
       /**
@@ -765,7 +765,7 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * Stable identifier of the matched entity in the screening datasets.
+         * Didit's stable identifier for the hit: <code>hit_</code> followed by 24 hexadecimal characters. The same matched entity keeps the same <code>id</code> when the subject is screened again. Pass it as <code>hit_id</code> to the AML hit review endpoints.
          *
          * @param id the value, or {@code null} to send JSON null
          * @return this builder
@@ -845,13 +845,13 @@ public final class AmlScreenResponse extends JsonModel {
         }
 
         /**
-         * Datasets the entity appears in (e.g. <code>PEP</code>, <code>PEP Level 1</code>, sanctions list names).
+         * Risk categories the entity is listed under: <code>PEP</code> (with its level, <code>PEP Level 1</code> to <code>PEP Level 4</code>), <code>Sanctions</code>, <code>Adverse Media</code>, <code>Warnings and Regulatory Enforcement</code>, <code>Fitness and Probity</code>, <code>SIP</code>, <code>SIE</code> or <code>Insolvency</code>. <code>Other Lists</code> when the entity's source states none of these categories.
          *
          * @param datasets the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder datasets(@Nullable List<String> datasets) {
-          return setNullable("datasets", Conv.list(Conv.STRING), datasets);
+        public Builder datasets(@Nullable List<AmlScreenResponse.Aml.Hits.Datasets> datasets) {
+          return setNullable("datasets", Conv.list(Conv.enumeration(AmlScreenResponse.Aml.Hits.Datasets::of)), datasets);
         }
 
         /**
@@ -1016,6 +1016,81 @@ public final class AmlScreenResponse extends JsonModel {
         @Override
         protected Builder self() {
           return this;
+        }
+      }
+
+      /**
+       *
+       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+       */
+      public static final class Datasets extends StringEnum {
+        /** The value {@code "PEP"}. */
+        public static final Datasets PEP = new Datasets("PEP");
+
+        /** The value {@code "PEP Level 1"}. */
+        public static final Datasets PEP_LEVEL_1 = new Datasets("PEP Level 1");
+
+        /** The value {@code "PEP Level 2"}. */
+        public static final Datasets PEP_LEVEL_2 = new Datasets("PEP Level 2");
+
+        /** The value {@code "PEP Level 3"}. */
+        public static final Datasets PEP_LEVEL_3 = new Datasets("PEP Level 3");
+
+        /** The value {@code "PEP Level 4"}. */
+        public static final Datasets PEP_LEVEL_4 = new Datasets("PEP Level 4");
+
+        /** The value {@code "Sanctions"}. */
+        public static final Datasets SANCTIONS = new Datasets("Sanctions");
+
+        /** The value {@code "Adverse Media"}. */
+        public static final Datasets ADVERSE_MEDIA = new Datasets("Adverse Media");
+
+        /** The value {@code "Warnings and Regulatory Enforcement"}. */
+        public static final Datasets WARNINGS_AND_REGULATORY_ENFORCEMENT = new Datasets("Warnings and Regulatory Enforcement");
+
+        /** The value {@code "Fitness and Probity"}. */
+        public static final Datasets FITNESS_AND_PROBITY = new Datasets("Fitness and Probity");
+
+        /** The value {@code "SIP"}. */
+        public static final Datasets SIP = new Datasets("SIP");
+
+        /** The value {@code "SIE"}. */
+        public static final Datasets SIE = new Datasets("SIE");
+
+        /** The value {@code "Insolvency"}. */
+        public static final Datasets INSOLVENCY = new Datasets("Insolvency");
+
+        /** The value {@code "Other Lists"}. */
+        public static final Datasets OTHER_LISTS = new Datasets("Other Lists");
+
+        private static final List<Datasets> KNOWN_VALUES = List.of(PEP, PEP_LEVEL_1, PEP_LEVEL_2, PEP_LEVEL_3, PEP_LEVEL_4, SANCTIONS, ADVERSE_MEDIA, WARNINGS_AND_REGULATORY_ENFORCEMENT, FITNESS_AND_PROBITY, SIP, SIE, INSOLVENCY, OTHER_LISTS);
+
+        private Datasets(String value) {
+          super(value);
+        }
+
+        /**
+         * Returns the constant for a known value, or a new instance for any other value.
+         *
+         * @param value the string value
+         * @return the enum value
+         */
+        public static Datasets of(String value) {
+          return StringEnum.lookup(KNOWN_VALUES, value, Datasets::new);
+        }
+
+        /**
+         * Returns the values known to this SDK version.
+         *
+         * @return the known values
+         */
+        public static List<Datasets> knownValues() {
+          return KNOWN_VALUES;
+        }
+
+        @Override
+        public boolean isKnown() {
+          return KNOWN_VALUES.contains(this);
         }
       }
 

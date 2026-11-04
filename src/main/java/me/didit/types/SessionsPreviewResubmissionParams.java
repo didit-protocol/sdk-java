@@ -323,7 +323,10 @@ public final class SessionsPreviewResubmissionParams extends JsonModel {
       /** The value {@code "KYB"}. */
       public static final Feature KYB = new Feature("KYB");
 
-      private static final List<Feature> KNOWN_VALUES = List.of(OCR, OCR_BACK, NFC, AML, FACE, LIVENESS, FACE_MATCH, IP_ANALYSIS, AGE_ESTIMATION, PROOF_OF_ADDRESS, PHONE_VERIFICATION, EMAIL_VERIFICATION, FACE_SEARCH, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_DOCUMENTS, ID_VERIFICATION, POA, PHONE, EMAIL, KYB_REGISTRY, KYB_KEY_PEOPLE, KYB);
+      /** The value {@code "GEOLOCATION"}. */
+      public static final Feature GEOLOCATION = new Feature("GEOLOCATION");
+
+      private static final List<Feature> KNOWN_VALUES = List.of(OCR, OCR_BACK, NFC, AML, FACE, LIVENESS, FACE_MATCH, IP_ANALYSIS, AGE_ESTIMATION, PROOF_OF_ADDRESS, PHONE_VERIFICATION, EMAIL_VERIFICATION, FACE_SEARCH, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_DOCUMENTS, ID_VERIFICATION, POA, PHONE, EMAIL, KYB_REGISTRY, KYB_KEY_PEOPLE, KYB, GEOLOCATION);
 
       private Feature(String value) {
         super(value);

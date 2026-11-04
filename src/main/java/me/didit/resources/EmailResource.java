@@ -50,7 +50,7 @@ public final class EmailResource {
    *
    * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>. Missing or invalid credentials return <code>403</code> - this API never returns <code>401</code>.
    *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests per minute per API key across all POST/PATCH/DELETE endpoints.
+   * <p><b>Rate limit.</b> Shared write budget of 300 requests per minute per API key across POST/PATCH/DELETE endpoints (transaction creates and event ingestion have a separate budget of 600).
    *
    * <p><b>Social footprint.</b> Set <code>enable_social</code> to <code>true</code> to add a <code>email_social</code> block: the online platforms this address is registered on, with per-category counts and any profile details available. <code>profiles_registered: 0</code> means the platforms were checked and the address was found on none of them - a valid, billable answer. The block is absent when the add-on was not requested or the check could not be completed, and it is not billed in that case. Billing adds one <code>email_social</code> unit per request on top of this endpoint's own price.
    *

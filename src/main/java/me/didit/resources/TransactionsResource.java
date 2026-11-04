@@ -634,7 +634,7 @@ public final class TransactionsResource {
   private static ApiRequest listRequest(TransactionsListParams params) {
     return ApiRequest.builder("GET", "/v3/transactions/")
         .params(params)
-        .queryFields("limit", "offset", "travel_rule_status")
+        .queryFields("limit", "offset", "travel_rule_status", "assignee")
         .build();
   }
 

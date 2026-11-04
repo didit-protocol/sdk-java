@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 
 /** Parameters for {&#64;code sessions.list_aml_screening_history}. */
 public final class SessionsListAmlScreeningHistoryParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "limit", "offset", "ordering");
+  private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "month", "limit", "offset", "ordering");
 
   private SessionsListAmlScreeningHistoryParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -57,6 +57,16 @@ public final class SessionsListAmlScreeningHistoryParams extends JsonModel {
    */
   public Optional<String> nodeId() {
     return Json.optional(json, "node_id", Conv.STRING);
+  }
+
+  /**
+   * A UTC calendar month as <code>YYYY-MM</code>. Only screenings completed in that month are returned; without it every month is returned. A malformed month returns <code>400</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> month() {
+    return Json.optional(json, "month", Conv.STRING);
   }
 
   /**
@@ -110,6 +120,16 @@ public final class SessionsListAmlScreeningHistoryParams extends JsonModel {
      */
     public Builder nodeId(String nodeId) {
       return set("node_id", Conv.STRING, nodeId);
+    }
+
+    /**
+     * A UTC calendar month as <code>YYYY-MM</code>. Only screenings completed in that month are returned; without it every month is returned. A malformed month returns <code>400</code>.
+     *
+     * @param month the value
+     * @return this builder
+     */
+    public Builder month(String month) {
+      return set("month", Conv.STRING, month);
     }
 
     /**

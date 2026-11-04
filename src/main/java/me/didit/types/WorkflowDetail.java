@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * The fields below are typed; the object also carries every other column of the workflow configuration (feature toggles, thresholds, warning actions, allowed documents, callbacks) as additional properties. Fields that do not apply to the <code>workflow_type</code> are <code>null</code>.
  */
 public final class WorkflowDetail extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "workflow_id", "workflow_label", "workflow_type", "is_default", "is_archived", "version", "status", "published_at", "is_simple_workflow", "is_editable", "workflow_url", "workflow_graph", "features", "total_price", "min_price", "max_price", "special_add_on_prices", "max_retry_attempts", "retry_window_days", "session_expiration_time", "questionnaire", "kyb_role_settings", "created_at", "updated_at", "is_bank_verification_enabled", "bank_verification_config", "is_geolocation_enabled", "geolocation_config");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "workflow_id", "workflow_label", "workflow_type", "is_default", "is_archived", "version", "status", "published_at", "is_simple_workflow", "is_editable", "workflow_url", "workflow_graph", "features", "total_price", "min_price", "max_price", "special_add_on_prices", "max_retry_attempts", "retry_window_days", "session_expiration_time", "questionnaire", "kyb_role_settings", "created_at", "updated_at", "signature_availability", "is_bank_verification_enabled", "bank_verification_config", "is_geolocation_enabled", "geolocation_config");
 
   private WorkflowDetail(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -302,6 +302,16 @@ public final class WorkflowDetail extends JsonModel {
    */
   public Optional<OffsetDateTime> updatedAt() {
     return Json.optional(json, "updated_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * Which E-signature levels can sign right now. Check it before you set <code>signature_level</code>. Returned on <code>kyc</code>, <code>kyb</code> and graph workflows.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<WorkflowDetail.SignatureAvailability> signatureAvailability() {
+    return Json.optional(json, "signature_availability", Conv.model(WorkflowDetail.SignatureAvailability::fromJson));
   }
 
   /**
@@ -608,6 +618,16 @@ public final class WorkflowDetail extends JsonModel {
     }
 
     /**
+     * Which E-signature levels can sign right now. Check it before you set <code>signature_level</code>. Returned on <code>kyc</code>, <code>kyb</code> and graph workflows.
+     *
+     * @param signatureAvailability the value
+     * @return this builder
+     */
+    public Builder signatureAvailability(WorkflowDetail.SignatureAvailability signatureAvailability) {
+      return set("signature_availability", Conv.model(WorkflowDetail.SignatureAvailability::fromJson), signatureAvailability);
+    }
+
+    /**
      * Whether a simple KYC or KYB workflow runs Bank verification. It runs after the contact steps (and Location verification) and before database validation, AML and IP analysis. Bank verification is not generally available yet: turning it on is refused wherever it is not enabled.
      *
      * @param isBankVerificationEnabled the value
@@ -763,6 +783,134 @@ public final class WorkflowDetail extends JsonModel {
     @Override
     public boolean isKnown() {
       return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Which E-signature levels can sign right now. Check it before you set <code>signature_level</code>. Returned on <code>kyc</code>, <code>kyb</code> and graph workflows.
+   */
+  public static final class SignatureAvailability extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("simple", "aes", "qes");
+
+    private SignatureAvailability(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code SignatureAvailability} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static SignatureAvailability fromJson(JsonNode json) {
+      return new SignatureAvailability(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * Simple is always available.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Boolean> simple() {
+      return Json.optional(json, "simple", Conv.BOOLEAN);
+    }
+
+    /**
+     * Whether Advanced (AES) can sign now. While it is <code>false</code>, saving a new step at <code>signature_level: "aes"</code> is refused with <code>aes_not_available</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Boolean> aes() {
+      return Json.optional(json, "aes", Conv.BOOLEAN);
+    }
+
+    /**
+     * Whether Qualified (QES) can sign now. It is <code>false</code> until a qualified provider is connected.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Boolean> qes() {
+      return Json.optional(json, "qes", Conv.BOOLEAN);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link SignatureAvailability}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(SignatureAvailability from) {
+        super(from);
+      }
+
+      /**
+       * Simple is always available.
+       *
+       * @param simple the value
+       * @return this builder
+       */
+      public Builder simple(boolean simple) {
+        return set("simple", Conv.BOOLEAN, simple);
+      }
+
+      /**
+       * Whether Advanced (AES) can sign now. While it is <code>false</code>, saving a new step at <code>signature_level: "aes"</code> is refused with <code>aes_not_available</code>.
+       *
+       * @param aes the value
+       * @return this builder
+       */
+      public Builder aes(boolean aes) {
+        return set("aes", Conv.BOOLEAN, aes);
+      }
+
+      /**
+       * Whether Qualified (QES) can sign now. It is <code>false</code> until a qualified provider is connected.
+       *
+       * @param qes the value
+       * @return this builder
+       */
+      public Builder qes(boolean qes) {
+        return set("qes", Conv.BOOLEAN, qes);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code SignatureAvailability}
+       */
+      public SignatureAvailability build() {
+        return new SignatureAvailability(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
     }
   }
 }

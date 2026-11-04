@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code database_validation.validate}. */
 public final class DatabaseValidationValidateParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("issuing_state", "services", "validation_type", "consent", "identification_number", "first_name", "last_name", "middle_name", "full_name", "date_of_birth", "personal_number", "tax_number", "document_number", "document_type", "expiration_date", "date_of_issue", "nationality", "gender", "address", "address_element_1", "address_element_2", "address_element_3", "address_element_4", "address_element_5", "postal_code", "driver_license_number", "driver_license_card_number", "driver_license_state", "driver_license_version", "passport_number", "passport_expiration_date", "passport_file_number", "passport_issue_country", "medicare_card_number", "immi_card_number", "immi_card_expiry_date", "citizenship_certificate_number", "birth_registration_number", "birth_registration_date", "birth_registration_state", "marriage_certificate_number", "change_of_name_certificate_number", "first_partner_name", "last_partner_name", "voter_id", "epic_card", "pan", "national_id", "cic", "identificador_ciudadano", "ocr", "voter_number", "emission_number", "bvn", "bank_card_number", "ssn", "phone", "landline", "email", "country_of_residence", "partial_match_action", "no_match_action", "save_api_request", "vendor_data", "metadata", "selfie");
+  private static final Set<String> KNOWN_FIELDS = Set.of("issuing_state", "services", "validation_type", "consent", "identification_number", "first_name", "last_name", "middle_name", "full_name", "date_of_birth", "personal_number", "tax_number", "document_number", "document_type", "expiration_date", "date_of_issue", "nationality", "gender", "address", "address_element_1", "address_element_2", "address_element_3", "address_element_4", "address_element_5", "postal_code", "driver_license_number", "driver_license_card_number", "driver_license_state", "driver_license_version", "passport_number", "passport_expiration_date", "passport_file_number", "passport_issue_country", "medicare_card_number", "immi_card_number", "immi_card_expiry_date", "citizenship_certificate_number", "birth_registration_number", "birth_registration_date", "birth_registration_state", "marriage_certificate_number", "change_of_name_certificate_number", "first_partner_name", "last_partner_name", "voter_id", "epic_card", "pan", "national_id", "cic", "identificador_ciudadano", "ocr", "voter_number", "emission_number", "bvn", "bank_card_number", "company_registration_number", "company_name", "initials", "licence_number", "refugee_file_number", "bank_name", "bank_account_number", "account_type", "phone_number", "right_thumb", "left_thumb", "score_level", "max_matches", "vehicle_register_number", "vehicle_licence_plate", "vin", "ssn", "phone", "landline", "email", "country_of_residence", "partial_match_action", "no_match_action", "save_api_request", "vendor_data", "metadata", "selfie");
 
   private DatabaseValidationValidateParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -605,6 +605,166 @@ public final class DatabaseValidationValidateParams extends JsonModel {
    */
   public Optional<String> bankCardNumber() {
     return Json.optional(json, "bank_card_number", Conv.STRING);
+  }
+
+  /**
+   * Company registration number as issued by the companies register: the CNPJ in Brazil (e.g. <code>11222333000181</code>), the registration number in South Africa (e.g. <code>1936/007721/06</code>). Required by the company registry and company directors services (<code>bra_company_registry</code>, <code>bra_company_directors</code>, <code>zaf_company_registry</code>, <code>zaf_company_directors</code>).
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> companyRegistrationNumber() {
+    return Json.optional(json, "company_registration_number", Conv.STRING);
+  }
+
+  /**
+   * Registered company name, cross-checked against the register entry. Optional for <code>zaf_company_registry</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> companyName() {
+    return Json.optional(json, "company_name", Conv.STRING);
+  }
+
+  /**
+   * The person's initials as printed on the document. Required by <code>zaf_drivers_license</code>; accepted by <code>zaf_bank_account_holder</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> initials() {
+    return Json.optional(json, "initials", Conv.STRING);
+  }
+
+  /**
+   * Driving licence number as printed on the card, for <code>zaf_drivers_license</code>. When omitted, <code>document_number</code> is used.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> licenceNumber() {
+    return Json.optional(json, "licence_number", Conv.STRING);
+  }
+
+  /**
+   * Refugee file number issued by South Africa's Department of Home Affairs. Required by <code>zaf_refugee</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> refugeeFileNumber() {
+    return Json.optional(json, "refugee_file_number", Conv.STRING);
+  }
+
+  /**
+   * Name of the bank that holds the account. Required by <code>zaf_bank_account_holder</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> bankName() {
+    return Json.optional(json, "bank_name", Conv.STRING);
+  }
+
+  /**
+   * Bank account number. Required by <code>zaf_bank_account_holder</code>; accepted by <code>zaf_fraud_prevention</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> bankAccountNumber() {
+    return Json.optional(json, "bank_account_number", Conv.STRING);
+  }
+
+  /**
+   * Bank account type for <code>zaf_bank_account_holder</code>: <code>current</code>, <code>savings</code>, <code>transmission</code>, <code>subscriptionShare</code> or <code>notKnown</code>, case-insensitive. Any other value returns <code>400</code>. Omit it when you do not know the type: the account-type cross-check is then reported as not confirmed.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> accountType() {
+    return Json.optional(json, "account_type", Conv.STRING);
+  }
+
+  /**
+   * Contact mobile number, for the services that cross-check contactability (<code>zaf_bank_account_holder</code>, <code>zaf_fraud_prevention</code>, <code>zaf_refugee</code>).
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> phoneNumber() {
+    return Json.optional(json, "phone_number", Conv.STRING);
+  }
+
+  /**
+   * Base64-encoded right thumb fingerprint for <code>zaf_dha_fingerprint_match</code>, with <code>left_thumb</code> or on its own.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> rightThumb() {
+    return Json.optional(json, "right_thumb", Conv.STRING);
+  }
+
+  /**
+   * Base64-encoded left thumb fingerprint for <code>zaf_dha_fingerprint_match</code>, with <code>right_thumb</code> or on its own.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> leftThumb() {
+    return Json.optional(json, "left_thumb", Conv.STRING);
+  }
+
+  /**
+   * Minimum biometric score level for <code>zaf_criminal_face_screening</code>. Defaults to <code>3</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> scoreLevel() {
+    return Json.optional(json, "score_level", Conv.LONG);
+  }
+
+  /**
+   * Maximum number of candidate matches <code>zaf_criminal_face_screening</code> returns. Defaults to <code>1</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> maxMatches() {
+    return Json.optional(json, "max_matches", Conv.LONG);
+  }
+
+  /**
+   * Vehicle register number. Required, with <code>vehicle_licence_plate</code> and <code>vin</code>, by <code>zaf_vehicle_ownership</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> vehicleRegisterNumber() {
+    return Json.optional(json, "vehicle_register_number", Conv.STRING);
+  }
+
+  /**
+   * Vehicle licence plate number. Required, with <code>vehicle_register_number</code> and <code>vin</code>, by <code>zaf_vehicle_ownership</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> vehicleLicencePlate() {
+    return Json.optional(json, "vehicle_licence_plate", Conv.STRING);
+  }
+
+  /**
+   * Vehicle Identification Number (VIN or chassis number). Required, with <code>vehicle_register_number</code> and <code>vehicle_licence_plate</code>, by <code>zaf_vehicle_ownership</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> vin() {
+    return Json.optional(json, "vin", Conv.STRING);
   }
 
   /**
@@ -1280,6 +1440,166 @@ public final class DatabaseValidationValidateParams extends JsonModel {
      */
     public Builder bankCardNumber(String bankCardNumber) {
       return set("bank_card_number", Conv.STRING, bankCardNumber);
+    }
+
+    /**
+     * Company registration number as issued by the companies register: the CNPJ in Brazil (e.g. <code>11222333000181</code>), the registration number in South Africa (e.g. <code>1936/007721/06</code>). Required by the company registry and company directors services (<code>bra_company_registry</code>, <code>bra_company_directors</code>, <code>zaf_company_registry</code>, <code>zaf_company_directors</code>).
+     *
+     * @param companyRegistrationNumber the value
+     * @return this builder
+     */
+    public Builder companyRegistrationNumber(String companyRegistrationNumber) {
+      return set("company_registration_number", Conv.STRING, companyRegistrationNumber);
+    }
+
+    /**
+     * Registered company name, cross-checked against the register entry. Optional for <code>zaf_company_registry</code>.
+     *
+     * @param companyName the value
+     * @return this builder
+     */
+    public Builder companyName(String companyName) {
+      return set("company_name", Conv.STRING, companyName);
+    }
+
+    /**
+     * The person's initials as printed on the document. Required by <code>zaf_drivers_license</code>; accepted by <code>zaf_bank_account_holder</code>.
+     *
+     * @param initials the value
+     * @return this builder
+     */
+    public Builder initials(String initials) {
+      return set("initials", Conv.STRING, initials);
+    }
+
+    /**
+     * Driving licence number as printed on the card, for <code>zaf_drivers_license</code>. When omitted, <code>document_number</code> is used.
+     *
+     * @param licenceNumber the value
+     * @return this builder
+     */
+    public Builder licenceNumber(String licenceNumber) {
+      return set("licence_number", Conv.STRING, licenceNumber);
+    }
+
+    /**
+     * Refugee file number issued by South Africa's Department of Home Affairs. Required by <code>zaf_refugee</code>.
+     *
+     * @param refugeeFileNumber the value
+     * @return this builder
+     */
+    public Builder refugeeFileNumber(String refugeeFileNumber) {
+      return set("refugee_file_number", Conv.STRING, refugeeFileNumber);
+    }
+
+    /**
+     * Name of the bank that holds the account. Required by <code>zaf_bank_account_holder</code>.
+     *
+     * @param bankName the value
+     * @return this builder
+     */
+    public Builder bankName(String bankName) {
+      return set("bank_name", Conv.STRING, bankName);
+    }
+
+    /**
+     * Bank account number. Required by <code>zaf_bank_account_holder</code>; accepted by <code>zaf_fraud_prevention</code>.
+     *
+     * @param bankAccountNumber the value
+     * @return this builder
+     */
+    public Builder bankAccountNumber(String bankAccountNumber) {
+      return set("bank_account_number", Conv.STRING, bankAccountNumber);
+    }
+
+    /**
+     * Bank account type for <code>zaf_bank_account_holder</code>: <code>current</code>, <code>savings</code>, <code>transmission</code>, <code>subscriptionShare</code> or <code>notKnown</code>, case-insensitive. Any other value returns <code>400</code>. Omit it when you do not know the type: the account-type cross-check is then reported as not confirmed.
+     *
+     * @param accountType the value
+     * @return this builder
+     */
+    public Builder accountType(String accountType) {
+      return set("account_type", Conv.STRING, accountType);
+    }
+
+    /**
+     * Contact mobile number, for the services that cross-check contactability (<code>zaf_bank_account_holder</code>, <code>zaf_fraud_prevention</code>, <code>zaf_refugee</code>).
+     *
+     * @param phoneNumber the value
+     * @return this builder
+     */
+    public Builder phoneNumber(String phoneNumber) {
+      return set("phone_number", Conv.STRING, phoneNumber);
+    }
+
+    /**
+     * Base64-encoded right thumb fingerprint for <code>zaf_dha_fingerprint_match</code>, with <code>left_thumb</code> or on its own.
+     *
+     * @param rightThumb the value
+     * @return this builder
+     */
+    public Builder rightThumb(String rightThumb) {
+      return set("right_thumb", Conv.STRING, rightThumb);
+    }
+
+    /**
+     * Base64-encoded left thumb fingerprint for <code>zaf_dha_fingerprint_match</code>, with <code>right_thumb</code> or on its own.
+     *
+     * @param leftThumb the value
+     * @return this builder
+     */
+    public Builder leftThumb(String leftThumb) {
+      return set("left_thumb", Conv.STRING, leftThumb);
+    }
+
+    /**
+     * Minimum biometric score level for <code>zaf_criminal_face_screening</code>. Defaults to <code>3</code>.
+     *
+     * @param scoreLevel the value
+     * @return this builder
+     */
+    public Builder scoreLevel(long scoreLevel) {
+      return set("score_level", Conv.LONG, scoreLevel);
+    }
+
+    /**
+     * Maximum number of candidate matches <code>zaf_criminal_face_screening</code> returns. Defaults to <code>1</code>.
+     *
+     * @param maxMatches the value
+     * @return this builder
+     */
+    public Builder maxMatches(long maxMatches) {
+      return set("max_matches", Conv.LONG, maxMatches);
+    }
+
+    /**
+     * Vehicle register number. Required, with <code>vehicle_licence_plate</code> and <code>vin</code>, by <code>zaf_vehicle_ownership</code>.
+     *
+     * @param vehicleRegisterNumber the value
+     * @return this builder
+     */
+    public Builder vehicleRegisterNumber(String vehicleRegisterNumber) {
+      return set("vehicle_register_number", Conv.STRING, vehicleRegisterNumber);
+    }
+
+    /**
+     * Vehicle licence plate number. Required, with <code>vehicle_register_number</code> and <code>vin</code>, by <code>zaf_vehicle_ownership</code>.
+     *
+     * @param vehicleLicencePlate the value
+     * @return this builder
+     */
+    public Builder vehicleLicencePlate(String vehicleLicencePlate) {
+      return set("vehicle_licence_plate", Conv.STRING, vehicleLicencePlate);
+    }
+
+    /**
+     * Vehicle Identification Number (VIN or chassis number). Required, with <code>vehicle_register_number</code> and <code>vehicle_licence_plate</code>, by <code>zaf_vehicle_ownership</code>.
+     *
+     * @param vin the value
+     * @return this builder
+     */
+    public Builder vin(String vin) {
+      return set("vin", Conv.STRING, vin);
     }
 
     /**

@@ -20,14 +20,18 @@ import me.didit.types.SandboxSimulateResponse;
 import me.didit.types.SessionDecision;
 import me.didit.types.SessionDeletionJob;
 import me.didit.types.SessionEvent;
+import me.didit.types.SessionFilesExport;
 import me.didit.types.SessionsAddImagesParams;
 import me.didit.types.SessionsAddImagesResponse;
 import me.didit.types.SessionsBatchDeleteParams;
 import me.didit.types.SessionsBatchDeleteResponse;
 import me.didit.types.SessionsBulkUpdateAmlHitStatusParams;
 import me.didit.types.SessionsBulkUpdateAmlHitStatusResponse;
+import me.didit.types.SessionsCreateKybPartyDraftParams;
+import me.didit.types.SessionsCreateKybPartyDraftResponse;
 import me.didit.types.SessionsCreateParams;
 import me.didit.types.SessionsCreateResponse;
+import me.didit.types.SessionsDeleteKybPartyDraftParams;
 import me.didit.types.SessionsDeleteParams;
 import me.didit.types.SessionsDeleteResponse;
 import me.didit.types.SessionsExportAmlScreeningHistoryParams;
@@ -35,6 +39,10 @@ import me.didit.types.SessionsImportSharedParams;
 import me.didit.types.SessionsListAmlScreeningHistoryParams;
 import me.didit.types.SessionsListEventsParams;
 import me.didit.types.SessionsListFeatureOverridesResponse;
+import me.didit.types.SessionsListKybExtractedPartiesParams;
+import me.didit.types.SessionsListKybExtractedPartiesResponse;
+import me.didit.types.SessionsListKybPartyDraftsParams;
+import me.didit.types.SessionsListKybPartyDraftsResponse;
 import me.didit.types.SessionsListParams;
 import me.didit.types.SessionsListResponse;
 import me.didit.types.SessionsPreviewDecisionEmailParams;
@@ -44,6 +52,8 @@ import me.didit.types.SessionsPreviewResubmissionResponse;
 import me.didit.types.SessionsRetrieveDecisionParams;
 import me.didit.types.SessionsShareParams;
 import me.didit.types.SessionsShareResponse;
+import me.didit.types.SessionsSubmitKybPartiesParams;
+import me.didit.types.SessionsSubmitKybPartiesResponse;
 import me.didit.types.SessionsUpdateAmlHitStatusParams;
 import me.didit.types.SessionsUpdateAmlHitStatusResponse;
 import me.didit.types.SessionsUpdateAmlStatusParams;
@@ -56,12 +66,17 @@ import me.didit.types.SessionsUpdateFeatureStatusParams;
 import me.didit.types.SessionsUpdateFeatureStatusResponse;
 import me.didit.types.SessionsUpdateKybCompanyDataParams;
 import me.didit.types.SessionsUpdateKybCompanyDataResponse;
+import me.didit.types.SessionsUpdateKybPartyDraftParams;
+import me.didit.types.SessionsUpdateKybPartyDraftResponse;
 import me.didit.types.SessionsUpdateKybPartyParams;
 import me.didit.types.SessionsUpdateKybPartyResponse;
 import me.didit.types.SessionsUpdatePoaDataParams;
 import me.didit.types.SessionsUpdatePoaDataResponse;
 import me.didit.types.SessionsUpdateStatusParams;
 import me.didit.types.SessionsUpdateStatusResponse;
+import me.didit.types.SessionsUploadKybDocumentsParams;
+import me.didit.types.SessionsUploadKybDocumentsResponse;
+import org.jspecify.annotations.Nullable;
 
 /** The {@code sessions} resource: {@code client.sessions()}. */
 public final class SessionsResource {
@@ -183,7 +198,7 @@ public final class SessionsResource {
    *
    * <p>Retrieve the complete decision report for a verification session — the rolled-up session <code>status</code> plus one report per verification feature the workflow executed. This is the canonical read endpoint for both User Verification (KYC) and Business Verification (KYB) sessions: the same path serves both, and the top-level <code>session_kind</code> discriminator tells you which shape you received (<code>"user"</code> or <code>"business"</code>).
    *
-   * <p><b>Every feature report is a plural array.</b> V3 workflows are graphs that can run the same feature more than once, so each block (<code>id_verifications</code>, <code>nfc_verifications</code>, <code>liveness_checks</code>, <code>face_matches</code>, <code>poa_verifications</code>, <code>document_ai_documents</code>, <code>phone_verifications</code>, <code>email_verifications</code>, <code>aml_screenings</code>, <code>ip_analyses</code>, <code>database_validations</code>, <code>questionnaire_responses</code>) is a JSON array whose items each carry a <code>node_id</code> identifying the workflow graph node that produced them. Read NFC as <code>response.nfc_verifications[0]</code> — never as a singular <code>nfc</code> field. A block is <code>null</code> until the workflow has run that feature at least once; features the workflow does not include never appear with data. Electronic Signature results are in <code>signatures</code>, which is present only when the workflow has an Electronic Signature step.
+   * <p><b>Every feature report is a plural array.</b> V3 workflows are graphs that can run the same feature more than once, so each block (<code>id_verifications</code>, <code>nfc_verifications</code>, <code>liveness_checks</code>, <code>face_matches</code>, <code>poa_verifications</code>, <code>document_ai_documents</code>, <code>phone_verifications</code>, <code>email_verifications</code>, <code>aml_screenings</code>, <code>ip_analyses</code>, <code>database_validations</code>, <code>questionnaire_responses</code>) is a JSON array whose items each carry a <code>node_id</code> identifying the workflow graph node that produced them. Read NFC as <code>response.nfc_verifications[0]</code> — never as a singular <code>nfc</code> field. A block is <code>null</code> until the workflow has run that feature at least once; features the workflow does not include never appear with data. E-signature results are in <code>signatures</code>, which is present only when the workflow has an E-signature step.
    *
    * <p><b>When to call.</b> The recommended pattern is event-driven: wait for the <code>status.updated</code> webhook that fires when the session reaches a decision (<code>Approved</code>, <code>Declined</code>, <code>In Review</code>), then call this endpoint once to fetch the full report. Polling also works — the endpoint can be called at any point in the session lifecycle and returns the data produced so far — but webhook-then-fetch is cheaper and faster. Media URLs in the response (document images, videos, PDFs) are short-lived presigned links: fetch them promptly or re-request the decision to get fresh ones, and do not persist them as long-term references.
    *
@@ -287,7 +302,7 @@ public final class SessionsResource {
    *
    * <p><b>What is deleted:</b>
    * - The session and every verification attempt it holds, including results that a resubmission replaced: the decision, extracted data, all related feature records (ID verification, face, liveness, face match, AML, registry checks, IP analysis, and so on), its reviews and its activity log.
-   * - All stored files owned by the session: document front/back photos (full, cropped, and privacy-blurred variants), document-capture videos, portrait crops, NFC chip portrait and signature images, face reference images, liveness videos, face-match source/target images, Proof of Address documents, and any extra uploaded files (KYC); uploaded company documents and extra files (KYB). Electronic Signature documents, signed PDFs, evidence PDFs and signature images (KYC and KYB): their download paths stop working. Previously issued media URLs (<code>https://&lt;media-host&gt;/...</code>) stop resolving.
+   * - All stored files owned by the session: document front/back photos (full, cropped, and privacy-blurred variants), document-capture videos, portrait crops, NFC chip portrait and signature images, face reference images, liveness videos, face-match source/target images, Proof of Address documents, and any extra uploaded files (KYC); uploaded company documents and extra files (KYB). E-signature documents, signed PDFs, evidence PDFs and signature images (KYC and KYB): their download paths stop working. Previously issued media URLs (<code>https://&lt;media-host&gt;/...</code>) stop resolving.
    * - The session's face data. Its face embedding is deleted too, unless you choose to keep an image-free template (see <b>Face biometric data</b>).
    * - Webhook deliveries still queued for the session, and their retries. Webhooks already delivered are not affected.
    * - For a Business Verification (KYB) session: the verifications it created for its key people (KYC) and its corporate owners (KYB), recursively, reported as <code>deleted_child_verifications</code>. A verification it only links to, such as an existing approved KYC it reused, is not deleted.
@@ -1063,7 +1078,7 @@ public final class SessionsResource {
   /**
    * Update an AML hit review status
    *
-   * <p>Set the review status of a <b>single AML hit</b> (a potential sanction / PEP / watchlist / adverse-media match) returned by AML screening, without changing the overall session decision. Identify the hit by its <code>hit_id</code> (the <code>id</code> of an entry in the AML check's <code>hits</code> array — see the session decision).
+   * <p>Set the review status of a <b>single AML hit</b> (a potential sanction / PEP / watchlist / adverse-media match) returned by AML screening, without changing the overall session decision. Identify the hit by its <code>hit_id</code> (the <code>id</code> of an entry in the AML check's <code>hits</code> array — see the session decision). A hit id returned in the earlier format is still accepted; the response always names the hit by its current <code>id</code>.
    *
    * <p><code>review_status</code> is one of <code>Unreviewed</code>, <code>Confirmed Match</code>, <code>False Positive</code>, or <code>Inconclusive</code>. Reviewer decisions are preserved across ongoing-monitoring updates, so a hit you mark <code>False Positive</code> stays that way when the provider re-screens.
    *
@@ -1833,7 +1848,7 @@ public final class SessionsResource {
   /**
    * List AML screening history
    *
-   * <p>List every completed ongoing-monitoring re-screen of a session's AML check, newest first by <code>completed_at</code>, including the runs where nothing changed: alerts, activity entries and webhooks fire only when a result moves, so this history is the evidence that a clean subject was still being screened. Works for KYC and KYB session IDs; pass <code>node_id</code> when the session ran more than one AML step. Only ongoing-monitoring re-screens are listed (the first screening is part of the session decision) and runs from before this history existed are not reconstructed, so a session without ongoing monitoring returns an empty list. <code>count</code> is exact up to 100 and capped at 100 above that, so follow <code>next</code> until it is <code>null</code>. A scoped API key needs <code>decisions: read</code>; see <a href="https://docs.didit.me/core-technology/aml-screening/continuous-monitoring-aml-screening">Continuous AML monitoring</a>.
+   * <p>List every completed ongoing-monitoring re-screen of a session's AML check, newest first by <code>completed_at</code>, including the runs where nothing changed: alerts, activity entries and webhooks fire only when a result moves, so this history is the evidence that a clean subject was still being screened. Works for KYC and KYB session IDs; pass <code>node_id</code> when the session ran more than one AML step. Only ongoing-monitoring re-screens are listed (the first screening is part of the session decision) and runs from before this history existed are not reconstructed, so a session without ongoing monitoring returns an empty list. <code>count</code> is exact up to 100 and capped at 100 above that, so follow <code>next</code> until it is <code>null</code>. Pass <code>month</code> to read one calendar month at a time. A scoped API key needs <code>decisions: read</code>; see <a href="https://docs.didit.me/core-technology/aml-screening/continuous-monitoring-aml-screening">Continuous AML monitoring</a>.
    *
    * <p>{@code GET /v3/session/{sessionId}/aml-screening-history/}
    * <p>Returns one page; iterate it to fetch every following page automatically.
@@ -1926,7 +1941,7 @@ public final class SessionsResource {
   /**
    * Export AML screening history as CSV
    *
-   * <p>Download the same ongoing-monitoring history as <code>GET /v3/session/{sessionId}/aml-screening-history/</code> as a CSV file, one line per completed re-screen, newest first, ready to hand to an auditor. The file is streamed whole (no pagination) and starts with a header line; an empty cell means unknown, dataset dates are never estimated, and a value that would start a spreadsheet formula is prefixed with an apostrophe. Works for KYC and KYB session IDs; pass <code>node_id</code> when the session ran more than one AML step. Errors are returned as JSON, not CSV. A scoped API key needs <code>decisions: read</code> and <code>media: read</code>: the response is a file, so a key without <code>media: read</code> gets <code>403</code>.
+   * <p>Download the same ongoing-monitoring history as <code>GET /v3/session/{sessionId}/aml-screening-history/</code> as a CSV file, one line per completed re-screen, newest first, ready to hand to an auditor. The file is streamed whole (no pagination) and starts with a header line; an empty cell means unknown, dataset dates are never estimated, and a value that would start a spreadsheet formula is prefixed with an apostrophe. Works for KYC and KYB session IDs; pass <code>node_id</code> when the session ran more than one AML step. Pass <code>month</code> to export one calendar month. Errors are returned as JSON, not CSV. A scoped API key needs <code>decisions: read</code> and <code>media: read</code>: the response is a file, so a key without <code>media: read</code> gets <code>403</code>.
    *
    * <p>{@code GET /v3/session/{sessionId}/aml-screening-history/export/}
    * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
@@ -2332,6 +2347,676 @@ public final class SessionsResource {
     return client.executeAsync(previewDecisionEmailRequest(sessionId, params), RequestOptions.none(), PREVIEW_DECISION_EMAIL_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Upload KYB documents to a session
+   *
+   * <p>Upload one or more corporate documents (articles of incorporation, shareholder register, certificate of incorporation, ...) to the KYB Documents step of a Business Verification session, from your own server instead of the hosted page. Didit runs the hosted pipeline: compression, OCR, tampering and cross-document checks, document grouping, and advances the session when the required document groups are satisfied. The step costs one flat fee however many files you send. The session must be open and on the KYB Documents step, and the company chosen at the registry step must exist. Read the people the documents name with <code>GET /v3/session/{sessionId}/kyb/extracted-parties/</code>. Requires <code>write:businesses</code>.
+   *
+   * <p>{@code POST /v3/session/{sessionId}/kyb/documents/}
+   *
+   * @param sessionId UUID of the Business Verification (KYB) session. It must belong to the application of the API key.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionsUploadKybDocumentsResponse uploadKybDocuments(String sessionId, SessionsUploadKybDocumentsParams params, RequestOptions options) {
+    return client.execute(uploadKybDocumentsRequest(sessionId, params), options, UPLOAD_KYB_DOCUMENTS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #uploadKybDocuments(String, SessionsUploadKybDocumentsParams, RequestOptions)}.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsUploadKybDocumentsResponse> uploadKybDocumentsAsync(String sessionId, SessionsUploadKybDocumentsParams params, RequestOptions options) {
+    return client.executeAsync(uploadKybDocumentsRequest(sessionId, params), options, UPLOAD_KYB_DOCUMENTS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #uploadKybDocuments(String, SessionsUploadKybDocumentsParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @return the result
+   */
+  public SessionsUploadKybDocumentsResponse uploadKybDocuments(String sessionId, SessionsUploadKybDocumentsParams params) {
+    return client.execute(uploadKybDocumentsRequest(sessionId, params), RequestOptions.none(), UPLOAD_KYB_DOCUMENTS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #uploadKybDocuments(String, SessionsUploadKybDocumentsParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsUploadKybDocumentsResponse> uploadKybDocumentsAsync(String sessionId, SessionsUploadKybDocumentsParams params) {
+    return client.executeAsync(uploadKybDocumentsRequest(sessionId, params), RequestOptions.none(), UPLOAD_KYB_DOCUMENTS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * List the parties named by the uploaded documents
+   *
+   * <p>Return the shareholders and directors that the documents uploaded to this KYB session name, merged per person and attributed to the documents that named them. Show them to your applicant to confirm, then declare them with the party draft endpoints. A range stays a range: <code>ownership_percent.text</code> keeps the verbatim figure and <code>min</code> / <code>max</code> the numbers read from it. Nobody is labelled a UBO here; that is decided when the parties are submitted, from the role settings and ownership thresholds of the workflow. The same list is in the session decision as <code>document_verifications[].extracted_parties</code>. Requires <code>read:businesses</code> or <code>read:sessions</code>.
+   *
+   * <p>{@code GET /v3/session/{sessionId}/kyb/extracted-parties/}
+   *
+   * @param sessionId UUID of the Business Verification (KYB) session. It must belong to the application of the API key.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionsListKybExtractedPartiesResponse listKybExtractedParties(String sessionId, SessionsListKybExtractedPartiesParams params, RequestOptions options) {
+    return client.execute(listKybExtractedPartiesRequest(sessionId, params), options, LIST_KYB_EXTRACTED_PARTIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)}.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsListKybExtractedPartiesResponse> listKybExtractedPartiesAsync(String sessionId, SessionsListKybExtractedPartiesParams params, RequestOptions options) {
+    return client.executeAsync(listKybExtractedPartiesRequest(sessionId, params), options, LIST_KYB_EXTRACTED_PARTIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @return the result
+   */
+  public SessionsListKybExtractedPartiesResponse listKybExtractedParties(String sessionId, SessionsListKybExtractedPartiesParams params) {
+    return client.execute(listKybExtractedPartiesRequest(sessionId, params), RequestOptions.none(), LIST_KYB_EXTRACTED_PARTIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsListKybExtractedPartiesResponse> listKybExtractedPartiesAsync(String sessionId, SessionsListKybExtractedPartiesParams params) {
+    return client.executeAsync(listKybExtractedPartiesRequest(sessionId, params), RequestOptions.none(), LIST_KYB_EXTRACTED_PARTIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)}, without parameters.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param options per-request options
+   * @return the result
+   */
+  public SessionsListKybExtractedPartiesResponse listKybExtractedParties(String sessionId, RequestOptions options) {
+    return client.execute(listKybExtractedPartiesRequest(sessionId, SessionsListKybExtractedPartiesParams.builder().build()), options, LIST_KYB_EXTRACTED_PARTIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)}, without parameters.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsListKybExtractedPartiesResponse> listKybExtractedPartiesAsync(String sessionId, RequestOptions options) {
+    return client.executeAsync(listKybExtractedPartiesRequest(sessionId, SessionsListKybExtractedPartiesParams.builder().build()), options, LIST_KYB_EXTRACTED_PARTIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @return the result
+   */
+  public SessionsListKybExtractedPartiesResponse listKybExtractedParties(String sessionId) {
+    return client.execute(listKybExtractedPartiesRequest(sessionId, SessionsListKybExtractedPartiesParams.builder().build()), RequestOptions.none(), LIST_KYB_EXTRACTED_PARTIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsListKybExtractedPartiesResponse> listKybExtractedPartiesAsync(String sessionId) {
+    return client.executeAsync(listKybExtractedPartiesRequest(sessionId, SessionsListKybExtractedPartiesParams.builder().build()), RequestOptions.none(), LIST_KYB_EXTRACTED_PARTIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * List the KYB party drafts
+   *
+   * <p>List the parties you are preparing for this KYB session, oldest first. A draft is not a declared party: it does not appear in the decision or the console and creates no verification session until you submit it with <code>POST /v3/session/{sessionId}/kyb/parties/submit/</code>. Requires <code>write:businesses</code>.
+   *
+   * <p>{@code GET /v3/session/{sessionId}/kyb/parties/drafts/}
+   *
+   * @param sessionId UUID of the Business Verification (KYB) session. It must belong to the application of the API key.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionsListKybPartyDraftsResponse listKybPartyDrafts(String sessionId, SessionsListKybPartyDraftsParams params, RequestOptions options) {
+    return client.execute(listKybPartyDraftsRequest(sessionId, params), options, LIST_KYB_PARTY_DRAFTS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)}.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsListKybPartyDraftsResponse> listKybPartyDraftsAsync(String sessionId, SessionsListKybPartyDraftsParams params, RequestOptions options) {
+    return client.executeAsync(listKybPartyDraftsRequest(sessionId, params), options, LIST_KYB_PARTY_DRAFTS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @return the result
+   */
+  public SessionsListKybPartyDraftsResponse listKybPartyDrafts(String sessionId, SessionsListKybPartyDraftsParams params) {
+    return client.execute(listKybPartyDraftsRequest(sessionId, params), RequestOptions.none(), LIST_KYB_PARTY_DRAFTS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsListKybPartyDraftsResponse> listKybPartyDraftsAsync(String sessionId, SessionsListKybPartyDraftsParams params) {
+    return client.executeAsync(listKybPartyDraftsRequest(sessionId, params), RequestOptions.none(), LIST_KYB_PARTY_DRAFTS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)}, without parameters.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param options per-request options
+   * @return the result
+   */
+  public SessionsListKybPartyDraftsResponse listKybPartyDrafts(String sessionId, RequestOptions options) {
+    return client.execute(listKybPartyDraftsRequest(sessionId, SessionsListKybPartyDraftsParams.builder().build()), options, LIST_KYB_PARTY_DRAFTS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)}, without parameters.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsListKybPartyDraftsResponse> listKybPartyDraftsAsync(String sessionId, RequestOptions options) {
+    return client.executeAsync(listKybPartyDraftsRequest(sessionId, SessionsListKybPartyDraftsParams.builder().build()), options, LIST_KYB_PARTY_DRAFTS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @return the result
+   */
+  public SessionsListKybPartyDraftsResponse listKybPartyDrafts(String sessionId) {
+    return client.execute(listKybPartyDraftsRequest(sessionId, SessionsListKybPartyDraftsParams.builder().build()), RequestOptions.none(), LIST_KYB_PARTY_DRAFTS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsListKybPartyDraftsResponse> listKybPartyDraftsAsync(String sessionId) {
+    return client.executeAsync(listKybPartyDraftsRequest(sessionId, SessionsListKybPartyDraftsParams.builder().build()), RequestOptions.none(), LIST_KYB_PARTY_DRAFTS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Create a KYB party draft
+   *
+   * <p>Add a party (a person or a company) to the list you are preparing for this KYB session. The same fields and rules as the hosted Key People screen apply: a person needs <code>full_name</code> or <code>first_name</code> and <code>last_name</code>, at least one role and a nationality; a company needs <code>company_name</code> and the country of incorporation in <code>nationality</code>. Nothing is declared or billed until <code>POST /v3/session/{sessionId}/kyb/parties/submit/</code>. Requires <code>write:businesses</code>.
+   *
+   * <p>{@code POST /v3/session/{sessionId}/kyb/parties/drafts/}
+   *
+   * @param sessionId UUID of the Business Verification (KYB) session. It must belong to the application of the API key.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionsCreateKybPartyDraftResponse createKybPartyDraft(String sessionId, SessionsCreateKybPartyDraftParams params, RequestOptions options) {
+    return client.execute(createKybPartyDraftRequest(sessionId, params), options, CREATE_KYB_PARTY_DRAFT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #createKybPartyDraft(String, SessionsCreateKybPartyDraftParams, RequestOptions)}.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsCreateKybPartyDraftResponse> createKybPartyDraftAsync(String sessionId, SessionsCreateKybPartyDraftParams params, RequestOptions options) {
+    return client.executeAsync(createKybPartyDraftRequest(sessionId, params), options, CREATE_KYB_PARTY_DRAFT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #createKybPartyDraft(String, SessionsCreateKybPartyDraftParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @return the result
+   */
+  public SessionsCreateKybPartyDraftResponse createKybPartyDraft(String sessionId, SessionsCreateKybPartyDraftParams params) {
+    return client.execute(createKybPartyDraftRequest(sessionId, params), RequestOptions.none(), CREATE_KYB_PARTY_DRAFT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #createKybPartyDraft(String, SessionsCreateKybPartyDraftParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsCreateKybPartyDraftResponse> createKybPartyDraftAsync(String sessionId, SessionsCreateKybPartyDraftParams params) {
+    return client.executeAsync(createKybPartyDraftRequest(sessionId, params), RequestOptions.none(), CREATE_KYB_PARTY_DRAFT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Edit a KYB party draft
+   *
+   * <p>Change fields of one party draft. The edit is merged into the stored draft and the merged party is validated as a whole, so an edit that would leave the party incomplete is rejected. Changing <code>first_name</code> or <code>last_name</code> replaces the stored full name. Requires <code>write:businesses</code>.
+   *
+   * <p>{@code PATCH /v3/session/{sessionId}/kyb/parties/drafts/{draftId}/}
+   *
+   * @param sessionId UUID of the Business Verification (KYB) session. It must belong to the application of the API key.
+   * @param draftId UUID of the party draft (`draft_id` returned when it was created).
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionsUpdateKybPartyDraftResponse updateKybPartyDraft(String sessionId, String draftId, SessionsUpdateKybPartyDraftParams params, RequestOptions options) {
+    return client.execute(updateKybPartyDraftRequest(sessionId, draftId, params), options, UPDATE_KYB_PARTY_DRAFT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)}.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param draftId the {@code draftId}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsUpdateKybPartyDraftResponse> updateKybPartyDraftAsync(String sessionId, String draftId, SessionsUpdateKybPartyDraftParams params, RequestOptions options) {
+    return client.executeAsync(updateKybPartyDraftRequest(sessionId, draftId, params), options, UPDATE_KYB_PARTY_DRAFT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param draftId the {@code draftId}
+   * @param params the request parameters
+   * @return the result
+   */
+  public SessionsUpdateKybPartyDraftResponse updateKybPartyDraft(String sessionId, String draftId, SessionsUpdateKybPartyDraftParams params) {
+    return client.execute(updateKybPartyDraftRequest(sessionId, draftId, params), RequestOptions.none(), UPDATE_KYB_PARTY_DRAFT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param draftId the {@code draftId}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsUpdateKybPartyDraftResponse> updateKybPartyDraftAsync(String sessionId, String draftId, SessionsUpdateKybPartyDraftParams params) {
+    return client.executeAsync(updateKybPartyDraftRequest(sessionId, draftId, params), RequestOptions.none(), UPDATE_KYB_PARTY_DRAFT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)}, without parameters.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param draftId the {@code draftId}
+   * @param options per-request options
+   * @return the result
+   */
+  public SessionsUpdateKybPartyDraftResponse updateKybPartyDraft(String sessionId, String draftId, RequestOptions options) {
+    return client.execute(updateKybPartyDraftRequest(sessionId, draftId, SessionsUpdateKybPartyDraftParams.builder().build()), options, UPDATE_KYB_PARTY_DRAFT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)}, without parameters.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param draftId the {@code draftId}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsUpdateKybPartyDraftResponse> updateKybPartyDraftAsync(String sessionId, String draftId, RequestOptions options) {
+    return client.executeAsync(updateKybPartyDraftRequest(sessionId, draftId, SessionsUpdateKybPartyDraftParams.builder().build()), options, UPDATE_KYB_PARTY_DRAFT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param draftId the {@code draftId}
+   * @return the result
+   */
+  public SessionsUpdateKybPartyDraftResponse updateKybPartyDraft(String sessionId, String draftId) {
+    return client.execute(updateKybPartyDraftRequest(sessionId, draftId, SessionsUpdateKybPartyDraftParams.builder().build()), RequestOptions.none(), UPDATE_KYB_PARTY_DRAFT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param draftId the {@code draftId}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsUpdateKybPartyDraftResponse> updateKybPartyDraftAsync(String sessionId, String draftId) {
+    return client.executeAsync(updateKybPartyDraftRequest(sessionId, draftId, SessionsUpdateKybPartyDraftParams.builder().build()), RequestOptions.none(), UPDATE_KYB_PARTY_DRAFT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Delete a KYB party draft
+   *
+   * <p>Drop one party draft. Declared parties are not affected. Requires <code>write:businesses</code>.
+   *
+   * <p>{@code DELETE /v3/session/{sessionId}/kyb/parties/drafts/{draftId}/}
+   *
+   * @param sessionId UUID of the Business Verification (KYB) session. It must belong to the application of the API key.
+   * @param draftId UUID of the party draft (`draft_id` returned when it was created).
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   */
+  public void deleteKybPartyDraft(String sessionId, String draftId, SessionsDeleteKybPartyDraftParams params, RequestOptions options) {
+    client.execute(deleteKybPartyDraftRequest(sessionId, draftId, params), options, DELETE_KYB_PARTY_DRAFT_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)}.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param draftId the {@code draftId}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> deleteKybPartyDraftAsync(String sessionId, String draftId, SessionsDeleteKybPartyDraftParams params, RequestOptions options) {
+    return client.executeAsync(deleteKybPartyDraftRequest(sessionId, draftId, params), options, DELETE_KYB_PARTY_DRAFT_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * Same as {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param draftId the {@code draftId}
+   * @param params the request parameters
+   */
+  public void deleteKybPartyDraft(String sessionId, String draftId, SessionsDeleteKybPartyDraftParams params) {
+    client.execute(deleteKybPartyDraftRequest(sessionId, draftId, params), RequestOptions.none(), DELETE_KYB_PARTY_DRAFT_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param draftId the {@code draftId}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> deleteKybPartyDraftAsync(String sessionId, String draftId, SessionsDeleteKybPartyDraftParams params) {
+    return client.executeAsync(deleteKybPartyDraftRequest(sessionId, draftId, params), RequestOptions.none(), DELETE_KYB_PARTY_DRAFT_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * Same as {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)}, without parameters.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param draftId the {@code draftId}
+   * @param options per-request options
+   */
+  public void deleteKybPartyDraft(String sessionId, String draftId, RequestOptions options) {
+    client.execute(deleteKybPartyDraftRequest(sessionId, draftId, SessionsDeleteKybPartyDraftParams.builder().build()), options, DELETE_KYB_PARTY_DRAFT_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)}, without parameters.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param draftId the {@code draftId}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> deleteKybPartyDraftAsync(String sessionId, String draftId, RequestOptions options) {
+    return client.executeAsync(deleteKybPartyDraftRequest(sessionId, draftId, SessionsDeleteKybPartyDraftParams.builder().build()), options, DELETE_KYB_PARTY_DRAFT_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * Same as {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param draftId the {@code draftId}
+   */
+  public void deleteKybPartyDraft(String sessionId, String draftId) {
+    client.execute(deleteKybPartyDraftRequest(sessionId, draftId, SessionsDeleteKybPartyDraftParams.builder().build()), RequestOptions.none(), DELETE_KYB_PARTY_DRAFT_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param draftId the {@code draftId}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> deleteKybPartyDraftAsync(String sessionId, String draftId) {
+    return client.executeAsync(deleteKybPartyDraftRequest(sessionId, draftId, SessionsDeleteKybPartyDraftParams.builder().build()), RequestOptions.none(), DELETE_KYB_PARTY_DRAFT_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * Submit the KYB party drafts
+   *
+   * <p>Declare the stored drafts as the company's key people. This is the hosted Key People step under your API key: Didit decides from the role settings and ownership thresholds of the workflow which parties must be verified, creates one individual KYC session (or a KYB sub-session for a corporate owner) for each of them, sends the emails the workflow asks for, and advances the session. Each child session is billed like in the hosted flow. The drafts are consumed. Repeating the call after a successful submit changes nothing and answers <code>200</code> with <code>already_submitted: true</code> and the parties that already exist. The session must be on the Key People step. Send each person's <code>kyc_session_url</code> to them, or embed it. Requires <code>write:businesses</code>.
+   *
+   * <p>{@code POST /v3/session/{sessionId}/kyb/parties/submit/}
+   *
+   * @param sessionId UUID of the Business Verification (KYB) session. It must belong to the application of the API key.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionsSubmitKybPartiesResponse submitKybParties(String sessionId, SessionsSubmitKybPartiesParams params, RequestOptions options) {
+    return client.execute(submitKybPartiesRequest(sessionId, params), options, SUBMIT_KYB_PARTIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)}.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsSubmitKybPartiesResponse> submitKybPartiesAsync(String sessionId, SessionsSubmitKybPartiesParams params, RequestOptions options) {
+    return client.executeAsync(submitKybPartiesRequest(sessionId, params), options, SUBMIT_KYB_PARTIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @return the result
+   */
+  public SessionsSubmitKybPartiesResponse submitKybParties(String sessionId, SessionsSubmitKybPartiesParams params) {
+    return client.execute(submitKybPartiesRequest(sessionId, params), RequestOptions.none(), SUBMIT_KYB_PARTIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsSubmitKybPartiesResponse> submitKybPartiesAsync(String sessionId, SessionsSubmitKybPartiesParams params) {
+    return client.executeAsync(submitKybPartiesRequest(sessionId, params), RequestOptions.none(), SUBMIT_KYB_PARTIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)}, without parameters.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param options per-request options
+   * @return the result
+   */
+  public SessionsSubmitKybPartiesResponse submitKybParties(String sessionId, RequestOptions options) {
+    return client.execute(submitKybPartiesRequest(sessionId, SessionsSubmitKybPartiesParams.builder().build()), options, SUBMIT_KYB_PARTIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)}, without parameters.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsSubmitKybPartiesResponse> submitKybPartiesAsync(String sessionId, RequestOptions options) {
+    return client.executeAsync(submitKybPartiesRequest(sessionId, SessionsSubmitKybPartiesParams.builder().build()), options, SUBMIT_KYB_PARTIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @return the result
+   */
+  public SessionsSubmitKybPartiesResponse submitKybParties(String sessionId) {
+    return client.execute(submitKybPartiesRequest(sessionId, SessionsSubmitKybPartiesParams.builder().build()), RequestOptions.none(), SUBMIT_KYB_PARTIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionsSubmitKybPartiesResponse> submitKybPartiesAsync(String sessionId) {
+    return client.executeAsync(submitKybPartiesRequest(sessionId, SessionsSubmitKybPartiesParams.builder().build()), RequestOptions.none(), SUBMIT_KYB_PARTIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Export every file of a session
+   *
+   * <p>Start preparing one ZIP with every image, video and document of a User Verification (KYC) or Business Verification (KYB) session, in original quality: the files are stored in the ZIP as they were captured, never recompressed. Answers <code>202</code> with the export; read it with <code>GET /v3/session/{sessionId}/files-export/{exportId}/</code> until <code>status</code> is <code>READY</code>, then download <code>download_url</code>. While an export of the same session is still being prepared, that export is returned instead of a new one.
+   *
+   * <p>The ZIP is deleted 24 hours after it is ready, and at once when the session is deleted. A deleted session cannot be exported. Every export and every download link handed out is written to the session's audit log. A scoped API key needs <code>media: read</code> and <code>decisions: read</code>; a console user needs the privilege to read sessions.
+   *
+   * <p>{@code POST /v3/session/{sessionId}/files-export/}
+   *
+   * @param sessionId UUID of the verification session (the `session_id` returned by `POST /v3/session/`). Accepts both User Verification (KYC) and Business Verification (KYB) session IDs. A deleted session returns `404`.
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionFilesExport exportFiles(String sessionId, RequestOptions options) {
+    return client.execute(exportFilesRequest(sessionId), options, EXPORT_FILES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #exportFiles(String, RequestOptions)}.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionFilesExport> exportFilesAsync(String sessionId, RequestOptions options) {
+    return client.executeAsync(exportFilesRequest(sessionId), options, EXPORT_FILES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #exportFiles(String, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @return the result
+   */
+  public SessionFilesExport exportFiles(String sessionId) {
+    return client.execute(exportFilesRequest(sessionId), RequestOptions.none(), EXPORT_FILES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #exportFiles(String, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionFilesExport> exportFilesAsync(String sessionId) {
+    return client.executeAsync(exportFilesRequest(sessionId), RequestOptions.none(), EXPORT_FILES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Get a session files export
+   *
+   * <p>Progress of an export started with <code>POST /v3/session/{sessionId}/files-export/</code>. Once <code>status</code> is <code>READY</code>, <code>download_url</code> is a signed URL of the ZIP that stays valid for a short time; read the export again for a new one until <code>expires_at</code>. Each read that hands out a download link is written to the session's audit log. An export of a deleted session returns <code>404</code>.
+   *
+   * <p>{@code GET /v3/session/{sessionId}/files-export/{exportId}/}
+   *
+   * @param sessionId UUID of the verification session (the `session_id` returned by `POST /v3/session/`). Accepts both User Verification (KYC) and Business Verification (KYB) session IDs. A deleted session returns `404`.
+   * @param exportId The `export_id` returned by `POST /v3/session/{sessionId}/files-export/`.
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionFilesExport getFilesExport(String sessionId, String exportId, RequestOptions options) {
+    return client.execute(getFilesExportRequest(sessionId, exportId), options, GET_FILES_EXPORT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #getFilesExport(String, String, RequestOptions)}.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param exportId the {@code exportId}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionFilesExport> getFilesExportAsync(String sessionId, String exportId, RequestOptions options) {
+    return client.executeAsync(getFilesExportRequest(sessionId, exportId), options, GET_FILES_EXPORT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #getFilesExport(String, String, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param exportId the {@code exportId}
+   * @return the result
+   */
+  public SessionFilesExport getFilesExport(String sessionId, String exportId) {
+    return client.execute(getFilesExportRequest(sessionId, exportId), RequestOptions.none(), GET_FILES_EXPORT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #getFilesExport(String, String, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param exportId the {@code exportId}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionFilesExport> getFilesExportAsync(String sessionId, String exportId) {
+    return client.executeAsync(getFilesExportRequest(sessionId, exportId), RequestOptions.none(), GET_FILES_EXPORT_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<SessionsCreateResponse> CREATE_RESPONSE = Responses.json(Conv.model(SessionsCreateResponse::fromJson));
 
   private static ApiRequest createRequest(SessionsCreateParams params) {
@@ -2385,7 +3070,7 @@ public final class SessionsResource {
   private static ApiRequest listRequest(SessionsListParams params) {
     return ApiRequest.builder("GET", "/v3/sessions/")
         .params(params)
-        .queryFields("session_kind", "limit", "offset", "status", "vendor_data", "search", "workflow_id", "date_from", "date_to", "country", "document_type", "document_name", "region", "didit_internal_id", "session_type", "api_service", "screened_full_name", "warning", "status_initialized_as_in_review", "is_kyc_to_be_reviewed", "euuid", "organization_name")
+        .queryFields("session_kind", "limit", "offset", "status", "vendor_data", "search", "workflow_id", "date_from", "date_to", "tags", "decided_from", "decided_to", "country", "document_type", "document_name", "region", "didit_internal_id", "session_type", "api_service", "screened_full_name", "warning", "status_initialized_as_in_review", "is_kyc_to_be_reviewed", "euuid", "organization_name")
         .build();
   }
 
@@ -2557,7 +3242,7 @@ public final class SessionsResource {
     return ApiRequest.builder("GET", "/v3/session/{sessionId}/aml-screening-history/")
         .pathParam("sessionId", sessionId)
         .params(params)
-        .queryFields("node_id", "limit", "offset", "ordering")
+        .queryFields("node_id", "month", "limit", "offset", "ordering")
         .build();
   }
 
@@ -2567,7 +3252,7 @@ public final class SessionsResource {
     return ApiRequest.builder("GET", "/v3/session/{sessionId}/aml-screening-history/export/")
         .pathParam("sessionId", sessionId)
         .params(params)
-        .queryFields("node_id")
+        .queryFields("node_id", "month")
         .accept("text/csv")
         .build();
   }
@@ -2627,6 +3312,99 @@ public final class SessionsResource {
         .pathParam("sessionId", sessionId)
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<SessionsUploadKybDocumentsResponse> UPLOAD_KYB_DOCUMENTS_RESPONSE = Responses.json(Conv.model(SessionsUploadKybDocumentsResponse::fromJson));
+
+  private static ApiRequest uploadKybDocumentsRequest(String sessionId, SessionsUploadKybDocumentsParams params) {
+    return ApiRequest.builder("POST", "/v3/session/{sessionId}/kyb/documents/")
+        .pathParam("sessionId", sessionId)
+        .params(params)
+        .queryFields("node_id")
+        .body(ApiRequest.BodyEncoding.MULTIPART)
+        .build();
+  }
+
+  private static final ResponseHandler<SessionsListKybExtractedPartiesResponse> LIST_KYB_EXTRACTED_PARTIES_RESPONSE = Responses.json(Conv.model(SessionsListKybExtractedPartiesResponse::fromJson));
+
+  private static ApiRequest listKybExtractedPartiesRequest(String sessionId, SessionsListKybExtractedPartiesParams params) {
+    return ApiRequest.builder("GET", "/v3/session/{sessionId}/kyb/extracted-parties/")
+        .pathParam("sessionId", sessionId)
+        .params(params)
+        .queryFields("node_id")
+        .build();
+  }
+
+  private static final ResponseHandler<SessionsListKybPartyDraftsResponse> LIST_KYB_PARTY_DRAFTS_RESPONSE = Responses.json(Conv.model(SessionsListKybPartyDraftsResponse::fromJson));
+
+  private static ApiRequest listKybPartyDraftsRequest(String sessionId, SessionsListKybPartyDraftsParams params) {
+    return ApiRequest.builder("GET", "/v3/session/{sessionId}/kyb/parties/drafts/")
+        .pathParam("sessionId", sessionId)
+        .params(params)
+        .queryFields("node_id")
+        .build();
+  }
+
+  private static final ResponseHandler<SessionsCreateKybPartyDraftResponse> CREATE_KYB_PARTY_DRAFT_RESPONSE = Responses.json(Conv.model(SessionsCreateKybPartyDraftResponse::fromJson));
+
+  private static ApiRequest createKybPartyDraftRequest(String sessionId, SessionsCreateKybPartyDraftParams params) {
+    return ApiRequest.builder("POST", "/v3/session/{sessionId}/kyb/parties/drafts/")
+        .pathParam("sessionId", sessionId)
+        .params(params)
+        .queryFields("node_id")
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<SessionsUpdateKybPartyDraftResponse> UPDATE_KYB_PARTY_DRAFT_RESPONSE = Responses.json(Conv.model(SessionsUpdateKybPartyDraftResponse::fromJson));
+
+  private static ApiRequest updateKybPartyDraftRequest(String sessionId, String draftId, SessionsUpdateKybPartyDraftParams params) {
+    return ApiRequest.builder("PATCH", "/v3/session/{sessionId}/kyb/parties/drafts/{draftId}/")
+        .pathParam("sessionId", sessionId)
+        .pathParam("draftId", draftId)
+        .params(params)
+        .queryFields("node_id")
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<@Nullable Void> DELETE_KYB_PARTY_DRAFT_RESPONSE = Responses.none();
+
+  private static ApiRequest deleteKybPartyDraftRequest(String sessionId, String draftId, SessionsDeleteKybPartyDraftParams params) {
+    return ApiRequest.builder("DELETE", "/v3/session/{sessionId}/kyb/parties/drafts/{draftId}/")
+        .pathParam("sessionId", sessionId)
+        .pathParam("draftId", draftId)
+        .params(params)
+        .queryFields("node_id")
+        .build();
+  }
+
+  private static final ResponseHandler<SessionsSubmitKybPartiesResponse> SUBMIT_KYB_PARTIES_RESPONSE = Responses.json(Conv.model(SessionsSubmitKybPartiesResponse::fromJson));
+
+  private static ApiRequest submitKybPartiesRequest(String sessionId, SessionsSubmitKybPartiesParams params) {
+    return ApiRequest.builder("POST", "/v3/session/{sessionId}/kyb/parties/submit/")
+        .pathParam("sessionId", sessionId)
+        .params(params)
+        .queryFields("node_id")
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<SessionFilesExport> EXPORT_FILES_RESPONSE = Responses.json(Conv.model(SessionFilesExport::fromJson));
+
+  private static ApiRequest exportFilesRequest(String sessionId) {
+    return ApiRequest.builder("POST", "/v3/session/{sessionId}/files-export/")
+        .pathParam("sessionId", sessionId)
+        .build();
+  }
+
+  private static final ResponseHandler<SessionFilesExport> GET_FILES_EXPORT_RESPONSE = Responses.json(Conv.model(SessionFilesExport::fromJson));
+
+  private static ApiRequest getFilesExportRequest(String sessionId, String exportId) {
+    return ApiRequest.builder("GET", "/v3/session/{sessionId}/files-export/{exportId}/")
+        .pathParam("sessionId", sessionId)
+        .pathParam("exportId", exportId)
         .build();
   }
 
@@ -4504,6 +5282,642 @@ public final class SessionsResource {
      */
     public CompletableFuture<RawResponse<SessionsPreviewDecisionEmailResponse>> previewDecisionEmailAsync(String sessionId, SessionsPreviewDecisionEmailParams params) {
       return client.executeAsync(previewDecisionEmailRequest(sessionId, params), RequestOptions.none(), PREVIEW_DECISION_EMAIL_RESPONSE);
+    }
+
+    /**
+     * {@link #uploadKybDocuments(String, SessionsUploadKybDocumentsParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsUploadKybDocumentsResponse> uploadKybDocuments(String sessionId, SessionsUploadKybDocumentsParams params, RequestOptions options) {
+      return client.execute(uploadKybDocumentsRequest(sessionId, params), options, UPLOAD_KYB_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #uploadKybDocuments(String, SessionsUploadKybDocumentsParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsUploadKybDocumentsResponse>> uploadKybDocumentsAsync(String sessionId, SessionsUploadKybDocumentsParams params, RequestOptions options) {
+      return client.executeAsync(uploadKybDocumentsRequest(sessionId, params), options, UPLOAD_KYB_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * {@link #uploadKybDocuments(String, SessionsUploadKybDocumentsParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<SessionsUploadKybDocumentsResponse> uploadKybDocuments(String sessionId, SessionsUploadKybDocumentsParams params) {
+      return client.execute(uploadKybDocumentsRequest(sessionId, params), RequestOptions.none(), UPLOAD_KYB_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #uploadKybDocuments(String, SessionsUploadKybDocumentsParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsUploadKybDocumentsResponse>> uploadKybDocumentsAsync(String sessionId, SessionsUploadKybDocumentsParams params) {
+      return client.executeAsync(uploadKybDocumentsRequest(sessionId, params), RequestOptions.none(), UPLOAD_KYB_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsListKybExtractedPartiesResponse> listKybExtractedParties(String sessionId, SessionsListKybExtractedPartiesParams params, RequestOptions options) {
+      return client.execute(listKybExtractedPartiesRequest(sessionId, params), options, LIST_KYB_EXTRACTED_PARTIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsListKybExtractedPartiesResponse>> listKybExtractedPartiesAsync(String sessionId, SessionsListKybExtractedPartiesParams params, RequestOptions options) {
+      return client.executeAsync(listKybExtractedPartiesRequest(sessionId, params), options, LIST_KYB_EXTRACTED_PARTIES_RESPONSE);
+    }
+
+    /**
+     * {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<SessionsListKybExtractedPartiesResponse> listKybExtractedParties(String sessionId, SessionsListKybExtractedPartiesParams params) {
+      return client.execute(listKybExtractedPartiesRequest(sessionId, params), RequestOptions.none(), LIST_KYB_EXTRACTED_PARTIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsListKybExtractedPartiesResponse>> listKybExtractedPartiesAsync(String sessionId, SessionsListKybExtractedPartiesParams params) {
+      return client.executeAsync(listKybExtractedPartiesRequest(sessionId, params), RequestOptions.none(), LIST_KYB_EXTRACTED_PARTIES_RESPONSE);
+    }
+
+    /**
+     * {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsListKybExtractedPartiesResponse> listKybExtractedParties(String sessionId, RequestOptions options) {
+      return client.execute(listKybExtractedPartiesRequest(sessionId, SessionsListKybExtractedPartiesParams.builder().build()), options, LIST_KYB_EXTRACTED_PARTIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsListKybExtractedPartiesResponse>> listKybExtractedPartiesAsync(String sessionId, RequestOptions options) {
+      return client.executeAsync(listKybExtractedPartiesRequest(sessionId, SessionsListKybExtractedPartiesParams.builder().build()), options, LIST_KYB_EXTRACTED_PARTIES_RESPONSE);
+    }
+
+    /**
+     * {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @return the result
+     */
+    public RawResponse<SessionsListKybExtractedPartiesResponse> listKybExtractedParties(String sessionId) {
+      return client.execute(listKybExtractedPartiesRequest(sessionId, SessionsListKybExtractedPartiesParams.builder().build()), RequestOptions.none(), LIST_KYB_EXTRACTED_PARTIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listKybExtractedParties(String, SessionsListKybExtractedPartiesParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsListKybExtractedPartiesResponse>> listKybExtractedPartiesAsync(String sessionId) {
+      return client.executeAsync(listKybExtractedPartiesRequest(sessionId, SessionsListKybExtractedPartiesParams.builder().build()), RequestOptions.none(), LIST_KYB_EXTRACTED_PARTIES_RESPONSE);
+    }
+
+    /**
+     * {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsListKybPartyDraftsResponse> listKybPartyDrafts(String sessionId, SessionsListKybPartyDraftsParams params, RequestOptions options) {
+      return client.execute(listKybPartyDraftsRequest(sessionId, params), options, LIST_KYB_PARTY_DRAFTS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsListKybPartyDraftsResponse>> listKybPartyDraftsAsync(String sessionId, SessionsListKybPartyDraftsParams params, RequestOptions options) {
+      return client.executeAsync(listKybPartyDraftsRequest(sessionId, params), options, LIST_KYB_PARTY_DRAFTS_RESPONSE);
+    }
+
+    /**
+     * {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<SessionsListKybPartyDraftsResponse> listKybPartyDrafts(String sessionId, SessionsListKybPartyDraftsParams params) {
+      return client.execute(listKybPartyDraftsRequest(sessionId, params), RequestOptions.none(), LIST_KYB_PARTY_DRAFTS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsListKybPartyDraftsResponse>> listKybPartyDraftsAsync(String sessionId, SessionsListKybPartyDraftsParams params) {
+      return client.executeAsync(listKybPartyDraftsRequest(sessionId, params), RequestOptions.none(), LIST_KYB_PARTY_DRAFTS_RESPONSE);
+    }
+
+    /**
+     * {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsListKybPartyDraftsResponse> listKybPartyDrafts(String sessionId, RequestOptions options) {
+      return client.execute(listKybPartyDraftsRequest(sessionId, SessionsListKybPartyDraftsParams.builder().build()), options, LIST_KYB_PARTY_DRAFTS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsListKybPartyDraftsResponse>> listKybPartyDraftsAsync(String sessionId, RequestOptions options) {
+      return client.executeAsync(listKybPartyDraftsRequest(sessionId, SessionsListKybPartyDraftsParams.builder().build()), options, LIST_KYB_PARTY_DRAFTS_RESPONSE);
+    }
+
+    /**
+     * {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @return the result
+     */
+    public RawResponse<SessionsListKybPartyDraftsResponse> listKybPartyDrafts(String sessionId) {
+      return client.execute(listKybPartyDraftsRequest(sessionId, SessionsListKybPartyDraftsParams.builder().build()), RequestOptions.none(), LIST_KYB_PARTY_DRAFTS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listKybPartyDrafts(String, SessionsListKybPartyDraftsParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsListKybPartyDraftsResponse>> listKybPartyDraftsAsync(String sessionId) {
+      return client.executeAsync(listKybPartyDraftsRequest(sessionId, SessionsListKybPartyDraftsParams.builder().build()), RequestOptions.none(), LIST_KYB_PARTY_DRAFTS_RESPONSE);
+    }
+
+    /**
+     * {@link #createKybPartyDraft(String, SessionsCreateKybPartyDraftParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsCreateKybPartyDraftResponse> createKybPartyDraft(String sessionId, SessionsCreateKybPartyDraftParams params, RequestOptions options) {
+      return client.execute(createKybPartyDraftRequest(sessionId, params), options, CREATE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #createKybPartyDraft(String, SessionsCreateKybPartyDraftParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsCreateKybPartyDraftResponse>> createKybPartyDraftAsync(String sessionId, SessionsCreateKybPartyDraftParams params, RequestOptions options) {
+      return client.executeAsync(createKybPartyDraftRequest(sessionId, params), options, CREATE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * {@link #createKybPartyDraft(String, SessionsCreateKybPartyDraftParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<SessionsCreateKybPartyDraftResponse> createKybPartyDraft(String sessionId, SessionsCreateKybPartyDraftParams params) {
+      return client.execute(createKybPartyDraftRequest(sessionId, params), RequestOptions.none(), CREATE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #createKybPartyDraft(String, SessionsCreateKybPartyDraftParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsCreateKybPartyDraftResponse>> createKybPartyDraftAsync(String sessionId, SessionsCreateKybPartyDraftParams params) {
+      return client.executeAsync(createKybPartyDraftRequest(sessionId, params), RequestOptions.none(), CREATE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsUpdateKybPartyDraftResponse> updateKybPartyDraft(String sessionId, String draftId, SessionsUpdateKybPartyDraftParams params, RequestOptions options) {
+      return client.execute(updateKybPartyDraftRequest(sessionId, draftId, params), options, UPDATE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsUpdateKybPartyDraftResponse>> updateKybPartyDraftAsync(String sessionId, String draftId, SessionsUpdateKybPartyDraftParams params, RequestOptions options) {
+      return client.executeAsync(updateKybPartyDraftRequest(sessionId, draftId, params), options, UPDATE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<SessionsUpdateKybPartyDraftResponse> updateKybPartyDraft(String sessionId, String draftId, SessionsUpdateKybPartyDraftParams params) {
+      return client.execute(updateKybPartyDraftRequest(sessionId, draftId, params), RequestOptions.none(), UPDATE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsUpdateKybPartyDraftResponse>> updateKybPartyDraftAsync(String sessionId, String draftId, SessionsUpdateKybPartyDraftParams params) {
+      return client.executeAsync(updateKybPartyDraftRequest(sessionId, draftId, params), RequestOptions.none(), UPDATE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsUpdateKybPartyDraftResponse> updateKybPartyDraft(String sessionId, String draftId, RequestOptions options) {
+      return client.execute(updateKybPartyDraftRequest(sessionId, draftId, SessionsUpdateKybPartyDraftParams.builder().build()), options, UPDATE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsUpdateKybPartyDraftResponse>> updateKybPartyDraftAsync(String sessionId, String draftId, RequestOptions options) {
+      return client.executeAsync(updateKybPartyDraftRequest(sessionId, draftId, SessionsUpdateKybPartyDraftParams.builder().build()), options, UPDATE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @return the result
+     */
+    public RawResponse<SessionsUpdateKybPartyDraftResponse> updateKybPartyDraft(String sessionId, String draftId) {
+      return client.execute(updateKybPartyDraftRequest(sessionId, draftId, SessionsUpdateKybPartyDraftParams.builder().build()), RequestOptions.none(), UPDATE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #updateKybPartyDraft(String, String, SessionsUpdateKybPartyDraftParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsUpdateKybPartyDraftResponse>> updateKybPartyDraftAsync(String sessionId, String draftId) {
+      return client.executeAsync(updateKybPartyDraftRequest(sessionId, draftId, SessionsUpdateKybPartyDraftParams.builder().build()), RequestOptions.none(), UPDATE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> deleteKybPartyDraft(String sessionId, String draftId, SessionsDeleteKybPartyDraftParams params, RequestOptions options) {
+      return client.execute(deleteKybPartyDraftRequest(sessionId, draftId, params), options, DELETE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> deleteKybPartyDraftAsync(String sessionId, String draftId, SessionsDeleteKybPartyDraftParams params, RequestOptions options) {
+      return client.executeAsync(deleteKybPartyDraftRequest(sessionId, draftId, params), options, DELETE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> deleteKybPartyDraft(String sessionId, String draftId, SessionsDeleteKybPartyDraftParams params) {
+      return client.execute(deleteKybPartyDraftRequest(sessionId, draftId, params), RequestOptions.none(), DELETE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> deleteKybPartyDraftAsync(String sessionId, String draftId, SessionsDeleteKybPartyDraftParams params) {
+      return client.executeAsync(deleteKybPartyDraftRequest(sessionId, draftId, params), RequestOptions.none(), DELETE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> deleteKybPartyDraft(String sessionId, String draftId, RequestOptions options) {
+      return client.execute(deleteKybPartyDraftRequest(sessionId, draftId, SessionsDeleteKybPartyDraftParams.builder().build()), options, DELETE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> deleteKybPartyDraftAsync(String sessionId, String draftId, RequestOptions options) {
+      return client.executeAsync(deleteKybPartyDraftRequest(sessionId, draftId, SessionsDeleteKybPartyDraftParams.builder().build()), options, DELETE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> deleteKybPartyDraft(String sessionId, String draftId) {
+      return client.execute(deleteKybPartyDraftRequest(sessionId, draftId, SessionsDeleteKybPartyDraftParams.builder().build()), RequestOptions.none(), DELETE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #deleteKybPartyDraft(String, String, SessionsDeleteKybPartyDraftParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param draftId the {@code draftId}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> deleteKybPartyDraftAsync(String sessionId, String draftId) {
+      return client.executeAsync(deleteKybPartyDraftRequest(sessionId, draftId, SessionsDeleteKybPartyDraftParams.builder().build()), RequestOptions.none(), DELETE_KYB_PARTY_DRAFT_RESPONSE);
+    }
+
+    /**
+     * {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsSubmitKybPartiesResponse> submitKybParties(String sessionId, SessionsSubmitKybPartiesParams params, RequestOptions options) {
+      return client.execute(submitKybPartiesRequest(sessionId, params), options, SUBMIT_KYB_PARTIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsSubmitKybPartiesResponse>> submitKybPartiesAsync(String sessionId, SessionsSubmitKybPartiesParams params, RequestOptions options) {
+      return client.executeAsync(submitKybPartiesRequest(sessionId, params), options, SUBMIT_KYB_PARTIES_RESPONSE);
+    }
+
+    /**
+     * {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<SessionsSubmitKybPartiesResponse> submitKybParties(String sessionId, SessionsSubmitKybPartiesParams params) {
+      return client.execute(submitKybPartiesRequest(sessionId, params), RequestOptions.none(), SUBMIT_KYB_PARTIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsSubmitKybPartiesResponse>> submitKybPartiesAsync(String sessionId, SessionsSubmitKybPartiesParams params) {
+      return client.executeAsync(submitKybPartiesRequest(sessionId, params), RequestOptions.none(), SUBMIT_KYB_PARTIES_RESPONSE);
+    }
+
+    /**
+     * {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionsSubmitKybPartiesResponse> submitKybParties(String sessionId, RequestOptions options) {
+      return client.execute(submitKybPartiesRequest(sessionId, SessionsSubmitKybPartiesParams.builder().build()), options, SUBMIT_KYB_PARTIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsSubmitKybPartiesResponse>> submitKybPartiesAsync(String sessionId, RequestOptions options) {
+      return client.executeAsync(submitKybPartiesRequest(sessionId, SessionsSubmitKybPartiesParams.builder().build()), options, SUBMIT_KYB_PARTIES_RESPONSE);
+    }
+
+    /**
+     * {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @return the result
+     */
+    public RawResponse<SessionsSubmitKybPartiesResponse> submitKybParties(String sessionId) {
+      return client.execute(submitKybPartiesRequest(sessionId, SessionsSubmitKybPartiesParams.builder().build()), RequestOptions.none(), SUBMIT_KYB_PARTIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #submitKybParties(String, SessionsSubmitKybPartiesParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionsSubmitKybPartiesResponse>> submitKybPartiesAsync(String sessionId) {
+      return client.executeAsync(submitKybPartiesRequest(sessionId, SessionsSubmitKybPartiesParams.builder().build()), RequestOptions.none(), SUBMIT_KYB_PARTIES_RESPONSE);
+    }
+
+    /**
+     * {@link #exportFiles(String, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionFilesExport> exportFiles(String sessionId, RequestOptions options) {
+      return client.execute(exportFilesRequest(sessionId), options, EXPORT_FILES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #exportFiles(String, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionFilesExport>> exportFilesAsync(String sessionId, RequestOptions options) {
+      return client.executeAsync(exportFilesRequest(sessionId), options, EXPORT_FILES_RESPONSE);
+    }
+
+    /**
+     * {@link #exportFiles(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @return the result
+     */
+    public RawResponse<SessionFilesExport> exportFiles(String sessionId) {
+      return client.execute(exportFilesRequest(sessionId), RequestOptions.none(), EXPORT_FILES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #exportFiles(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionFilesExport>> exportFilesAsync(String sessionId) {
+      return client.executeAsync(exportFilesRequest(sessionId), RequestOptions.none(), EXPORT_FILES_RESPONSE);
+    }
+
+    /**
+     * {@link #getFilesExport(String, String, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param exportId the {@code exportId}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionFilesExport> getFilesExport(String sessionId, String exportId, RequestOptions options) {
+      return client.execute(getFilesExportRequest(sessionId, exportId), options, GET_FILES_EXPORT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #getFilesExport(String, String, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param exportId the {@code exportId}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionFilesExport>> getFilesExportAsync(String sessionId, String exportId, RequestOptions options) {
+      return client.executeAsync(getFilesExportRequest(sessionId, exportId), options, GET_FILES_EXPORT_RESPONSE);
+    }
+
+    /**
+     * {@link #getFilesExport(String, String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param exportId the {@code exportId}
+     * @return the result
+     */
+    public RawResponse<SessionFilesExport> getFilesExport(String sessionId, String exportId) {
+      return client.execute(getFilesExportRequest(sessionId, exportId), RequestOptions.none(), GET_FILES_EXPORT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #getFilesExport(String, String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param exportId the {@code exportId}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionFilesExport>> getFilesExportAsync(String sessionId, String exportId) {
+      return client.executeAsync(getFilesExportRequest(sessionId, exportId), RequestOptions.none(), GET_FILES_EXPORT_RESPONSE);
     }
   }
 }

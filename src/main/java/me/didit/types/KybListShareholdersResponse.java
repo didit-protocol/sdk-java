@@ -314,7 +314,7 @@ public final class KybListShareholdersResponse extends JsonModel {
 
   /** Full registry company profile. */
   public static final class KybRegistry extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "node_id", "status", "registry_status", "data_resolved", "company_name", "registration_number", "country_code", "region", "company_type", "incorporation_date", "registered_address", "tax_number", "risk_level", "verification_status", "is_from_registry", "fetch_status", "alternative_names", "nature_of_business", "registered_capital", "registered_capital_amount", "registered_capital_currency", "website", "email", "phone", "legal_entity_identifier", "location_of_registration", "vat_number", "vat_validation_status", "vat_validated_number", "vat_validation_source", "vat_validated_name", "vat_validated_address", "vat_checked_at", "financial_summary", "officers", "beneficial_owners", "addresses", "industries", "accounts", "registry_data", "user_provided_data", "confirmed_by_user_at", "last_console_edit_at", "is_editable", "registry_tier_delivered", "registry_ownership_status", "ownership", "registry_tier");
+    private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "node_id", "status", "registry_status", "data_resolved", "company_name", "registration_number", "country_code", "region", "company_type", "incorporation_date", "registered_address", "tax_number", "risk_level", "verification_status", "is_from_registry", "fetch_status", "alternative_names", "nature_of_business", "registered_capital", "registered_capital_amount", "registered_capital_currency", "website", "email", "phone", "legal_entity_identifier", "location_of_registration", "vat_number", "vat_validation_status", "vat_validated_number", "vat_validation_source", "vat_validated_name", "vat_validated_address", "vat_checked_at", "financial_summary", "officers", "beneficial_owners", "addresses", "industries", "accounts", "registry_data", "user_provided_data", "confirmed_by_user_at", "last_console_edit_at", "is_editable", "registry_tier_delivered", "registry_ownership_status", "ownership", "registry_tier", "registry_monitoring");
 
     private KybRegistry(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -750,13 +750,13 @@ public final class KybListShareholdersResponse extends JsonModel {
     }
 
     /**
-     * Raw record returned by the registry source, kept for reviewers. Its shape differs by country and source and is not a stable contract: read the canonical fields (<code>addresses</code>, <code>industries</code>, <code>ownership</code>, <code>beneficial_owners[].shareholding</code>) instead.
+     * Didit's normalized registry detail for the company: the ownership outcome (<code>ownership_error</code>, <code>section_errors</code>, <code>ubo_resolution</code>, <code>lite_enrichment</code>), the corrections made with update-data, and registry facts that have no field of their own. It never carries the registry source's own record. Every key is optional and present only when the company has a value for it; new keys may be added. Read the canonical fields (<code>addresses</code>, <code>industries</code>, <code>ownership</code>, <code>beneficial_owners[].shareholding</code>) for anything they cover.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<Map<String, JsonNode>> registryData() {
-      return Json.optional(json, "registry_data", Conv.OBJECT);
+    public Optional<KYBRegistryData> registryData() {
+      return Json.optional(json, "registry_data", Conv.model(KYBRegistryData::fromJson));
     }
 
     /**
@@ -837,6 +837,16 @@ public final class KybListShareholdersResponse extends JsonModel {
      */
     public Optional<String> registryTier() {
       return Json.optional(json, "registry_tier", Conv.STRING);
+    }
+
+    /**
+     * The latest registry monitor for the company, or <code>null</code> when none exists.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<KybListShareholdersResponse.KybRegistry.RegistryMonitoring> registryMonitoring() {
+      return Json.optional(json, "registry_monitoring", Conv.model(KybListShareholdersResponse.KybRegistry.RegistryMonitoring::fromJson));
     }
 
     @Override
@@ -1253,13 +1263,13 @@ public final class KybListShareholdersResponse extends JsonModel {
       }
 
       /**
-       * Raw record returned by the registry source, kept for reviewers. Its shape differs by country and source and is not a stable contract: read the canonical fields (<code>addresses</code>, <code>industries</code>, <code>ownership</code>, <code>beneficial_owners[].shareholding</code>) instead.
+       * Didit's normalized registry detail for the company: the ownership outcome (<code>ownership_error</code>, <code>section_errors</code>, <code>ubo_resolution</code>, <code>lite_enrichment</code>), the corrections made with update-data, and registry facts that have no field of their own. It never carries the registry source's own record. Every key is optional and present only when the company has a value for it; new keys may be added. Read the canonical fields (<code>addresses</code>, <code>industries</code>, <code>ownership</code>, <code>beneficial_owners[].shareholding</code>) for anything they cover.
        *
-       * @param registryData the value
+       * @param registryData the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder registryData(Map<String, ?> registryData) {
-        return setAny("registry_data", registryData);
+      public Builder registryData(@Nullable KYBRegistryData registryData) {
+        return setNullable("registry_data", Conv.model(KYBRegistryData::fromJson), registryData);
       }
 
       /**
@@ -1340,6 +1350,16 @@ public final class KybListShareholdersResponse extends JsonModel {
        */
       public Builder registryTier(@Nullable String registryTier) {
         return setNullable("registry_tier", Conv.STRING, registryTier);
+      }
+
+      /**
+       * The latest registry monitor for the company, or <code>null</code> when none exists.
+       *
+       * @param registryMonitoring the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder registryMonitoring(KybListShareholdersResponse.KybRegistry.@Nullable RegistryMonitoring registryMonitoring) {
+        return setNullable("registry_monitoring", Conv.model(KybListShareholdersResponse.KybRegistry.RegistryMonitoring::fromJson), registryMonitoring);
       }
 
       /**
@@ -2868,6 +2888,272 @@ public final class KybListShareholdersResponse extends JsonModel {
       @Override
       public boolean isKnown() {
         return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /** The latest registry monitor for the company, or <code>null</code> when none exists. */
+    public static final class RegistryMonitoring extends JsonModel {
+      private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "unavailable_reason", "enrolled_at", "cancelled_at", "last_bill_date", "next_bill_date", "last_event_at", "events_count", "watched_fields");
+
+      private RegistryMonitoring(ObjectNode json, Map<String, List<FileUpload>> files) {
+        super(json, files);
+      }
+
+      /**
+       * Reads a {@code RegistryMonitoring} from JSON. Unknown fields are kept and readable
+       * through {@link #_additionalProperties()}.
+       *
+       * @param json a JSON object
+       * @return the parsed value
+       */
+      public static RegistryMonitoring fromJson(JsonNode json) {
+        return new RegistryMonitoring(Json.copyObject(json), Map.of());
+      }
+
+      /**
+       * Returns an empty builder.
+       *
+       * @return a new builder
+       */
+      public static Builder builder() {
+        return new Builder();
+      }
+
+      /**
+       * Returns a builder holding a copy of every field of this value.
+       *
+       * @return a new builder
+       */
+      public Builder toBuilder() {
+        return new Builder(this);
+      }
+
+      /**
+       * The <code>uuid</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> uuid() {
+        return Json.optional(json, "uuid", Conv.STRING);
+      }
+
+      /**
+       * The <code>status</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> status() {
+        return Json.optional(json, "status", Conv.STRING);
+      }
+
+      /**
+       * The <code>unavailable_reason</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> unavailableReason() {
+        return Json.optional(json, "unavailable_reason", Conv.STRING);
+      }
+
+      /**
+       * The <code>enrolled_at</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<OffsetDateTime> enrolledAt() {
+        return Json.optional(json, "enrolled_at", Conv.DATE_TIME);
+      }
+
+      /**
+       * The <code>cancelled_at</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<OffsetDateTime> cancelledAt() {
+        return Json.optional(json, "cancelled_at", Conv.DATE_TIME);
+      }
+
+      /**
+       * The <code>last_bill_date</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<LocalDate> lastBillDate() {
+        return Json.optional(json, "last_bill_date", Conv.DATE);
+      }
+
+      /**
+       * The <code>next_bill_date</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<LocalDate> nextBillDate() {
+        return Json.optional(json, "next_bill_date", Conv.DATE);
+      }
+
+      /**
+       * The <code>last_event_at</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<OffsetDateTime> lastEventAt() {
+        return Json.optional(json, "last_event_at", Conv.DATE_TIME);
+      }
+
+      /**
+       * The <code>events_count</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<Long> eventsCount() {
+        return Json.optional(json, "events_count", Conv.LONG);
+      }
+
+      /**
+       * The company fields the monitor watches.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<JsonNode> watchedFields() {
+        return Json.optional(json, "watched_fields", Conv.ANY);
+      }
+
+      @Override
+      protected Set<String> knownFields() {
+        return KNOWN_FIELDS;
+      }
+
+      /** Builds a {@link RegistryMonitoring}. */
+      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+        private Builder() {}
+
+        private Builder(RegistryMonitoring from) {
+          super(from);
+        }
+
+        /**
+         * The <code>uuid</code> field.
+         *
+         * @param uuid the value
+         * @return this builder
+         */
+        public Builder uuid(String uuid) {
+          return set("uuid", Conv.STRING, uuid);
+        }
+
+        /**
+         * The <code>status</code> field.
+         *
+         * @param status the value
+         * @return this builder
+         */
+        public Builder status(String status) {
+          return set("status", Conv.STRING, status);
+        }
+
+        /**
+         * The <code>unavailable_reason</code> field.
+         *
+         * @param unavailableReason the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder unavailableReason(@Nullable String unavailableReason) {
+          return setNullable("unavailable_reason", Conv.STRING, unavailableReason);
+        }
+
+        /**
+         * The <code>enrolled_at</code> field.
+         *
+         * @param enrolledAt the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder enrolledAt(@Nullable OffsetDateTime enrolledAt) {
+          return setNullable("enrolled_at", Conv.DATE_TIME, enrolledAt);
+        }
+
+        /**
+         * The <code>cancelled_at</code> field.
+         *
+         * @param cancelledAt the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder cancelledAt(@Nullable OffsetDateTime cancelledAt) {
+          return setNullable("cancelled_at", Conv.DATE_TIME, cancelledAt);
+        }
+
+        /**
+         * The <code>last_bill_date</code> field.
+         *
+         * @param lastBillDate the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder lastBillDate(@Nullable LocalDate lastBillDate) {
+          return setNullable("last_bill_date", Conv.DATE, lastBillDate);
+        }
+
+        /**
+         * The <code>next_bill_date</code> field.
+         *
+         * @param nextBillDate the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder nextBillDate(@Nullable LocalDate nextBillDate) {
+          return setNullable("next_bill_date", Conv.DATE, nextBillDate);
+        }
+
+        /**
+         * The <code>last_event_at</code> field.
+         *
+         * @param lastEventAt the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder lastEventAt(@Nullable OffsetDateTime lastEventAt) {
+          return setNullable("last_event_at", Conv.DATE_TIME, lastEventAt);
+        }
+
+        /**
+         * The <code>events_count</code> field.
+         *
+         * @param eventsCount the value
+         * @return this builder
+         */
+        public Builder eventsCount(long eventsCount) {
+          return set("events_count", Conv.LONG, eventsCount);
+        }
+
+        /**
+         * The company fields the monitor watches.
+         *
+         * @param watchedFields the value
+         * @return this builder
+         */
+        public Builder watchedFields(@Nullable Object watchedFields) {
+          return setAny("watched_fields", watchedFields);
+        }
+
+        /**
+         * Builds the value.
+         *
+         * @return a new immutable {@code RegistryMonitoring}
+         */
+        public RegistryMonitoring build() {
+          return new RegistryMonitoring(buildJson(), buildFiles());
+        }
+
+        @Override
+        protected Builder self() {
+          return this;
+        }
       }
     }
   }

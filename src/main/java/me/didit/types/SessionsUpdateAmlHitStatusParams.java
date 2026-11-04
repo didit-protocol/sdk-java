@@ -61,7 +61,7 @@ public final class SessionsUpdateAmlHitStatusParams extends JsonModel {
   }
 
   /**
-   * The <code>id</code> of the hit in the AML check's <code>hits</code> array.
+   * The <code>id</code> of the hit in the AML check's <code>hits</code> array (<code>hit_...</code>). A hit id returned in the earlier format is still accepted.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -114,7 +114,7 @@ public final class SessionsUpdateAmlHitStatusParams extends JsonModel {
     }
 
     /**
-     * The <code>id</code> of the hit in the AML check's <code>hits</code> array.
+     * The <code>id</code> of the hit in the AML check's <code>hits</code> array (<code>hit_...</code>). A hit id returned in the earlier format is still accepted.
      *
      * @param hitId the value
      * @return this builder

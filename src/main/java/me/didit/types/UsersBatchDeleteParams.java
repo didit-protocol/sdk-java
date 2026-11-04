@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 
 /** Parameters for {&#64;code users.batch_delete}. */
 public final class UsersBatchDeleteParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("vendor_data_list", "didit_internal_id_list", "delete_all");
+  private static final Set<String> KNOWN_FIELDS = Set.of("vendor_data_list", "didit_internal_id_list", "delete_all", "retain_face_embeddings", "face_retention_days");
 
   private UsersBatchDeleteParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -79,6 +79,26 @@ public final class UsersBatchDeleteParams extends JsonModel {
     return Json.optional(json, "delete_all", Conv.BOOLEAN);
   }
 
+  /**
+   * Your explicit choice to keep one image-free biometric template of each deleted person for duplicate detection, for <code>face_retention_days</code>. Everything else about the person is deleted. Omit it, or send <code>false</code>, to delete the templates with the users. When <code>true</code>, <code>face_retention_days</code> is required.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> retainFaceEmbeddings() {
+    return Json.optional(json, "retain_face_embeddings", Conv.BOOLEAN);
+  }
+
+  /**
+   * Number of days the image-free biometric template is kept when <code>retain_face_embeddings</code> is <code>true</code>. Required with it, and rejected without it with a <code>400</code> on <code>face_retention_days</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> faceRetentionDays() {
+    return Json.optional(json, "face_retention_days", Conv.LONG);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -120,6 +140,26 @@ public final class UsersBatchDeleteParams extends JsonModel {
      */
     public Builder deleteAll(boolean deleteAll) {
       return set("delete_all", Conv.BOOLEAN, deleteAll);
+    }
+
+    /**
+     * Your explicit choice to keep one image-free biometric template of each deleted person for duplicate detection, for <code>face_retention_days</code>. Everything else about the person is deleted. Omit it, or send <code>false</code>, to delete the templates with the users. When <code>true</code>, <code>face_retention_days</code> is required.
+     *
+     * @param retainFaceEmbeddings the value
+     * @return this builder
+     */
+    public Builder retainFaceEmbeddings(boolean retainFaceEmbeddings) {
+      return set("retain_face_embeddings", Conv.BOOLEAN, retainFaceEmbeddings);
+    }
+
+    /**
+     * Number of days the image-free biometric template is kept when <code>retain_face_embeddings</code> is <code>true</code>. Required with it, and rejected without it with a <code>400</code> on <code>face_retention_days</code>.
+     *
+     * @param faceRetentionDays the value
+     * @return this builder
+     */
+    public Builder faceRetentionDays(long faceRetentionDays) {
+      return set("face_retention_days", Conv.LONG, faceRetentionDays);
     }
 
     /**

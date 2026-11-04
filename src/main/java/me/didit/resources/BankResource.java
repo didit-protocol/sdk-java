@@ -34,6 +34,8 @@ public final class BankResource {
   /**
    * Check a bank account
    *
+   * <p><b>Not available in production yet.</b> Bank Verification is switched off in production, so until it is switched on this endpoint answers <code>404</code> with <code>bank_verification_not_available</code>. Do not build on it yet. The rest of this description is what the endpoint does once it is available.
+   *
    * <p>Check that a bank account belongs to the person or company you name, before you send money to it. No session and no sign-in: send the name and the account, read the result. It is the [account check](/core-technology/bank-verification/account-check) of the Bank Verification step, run from your backend.
    *
    * <p><b>What you send.</b> The account's <code>country</code> (ISO 3166-1 alpha-3), the <code>account</code> the way that country writes it, and the <code>holder</code> name: <code>full_name</code> for a person or <code>business_name</code> for a company. A business name checks a business account.
@@ -44,7 +46,7 @@ public final class BankResource {
    *
    * <p><b>Every request is a new check.</b> There is no idempotency key and no endpoint to read a check back, so a retried request runs, and is billed, again. Store the response.
    *
-   * <p><b>Sandbox.</b> A sandbox key calls no bank and is charged nothing. The last 4 characters of the IBAN, else of the account number, choose the answer: <code>0001</code> a <code>close_match</code> with a <code>holder_name</code>, <code>0002</code> a <code>close_match</code> without one, <code>0003</code> and <code>0006</code> a <code>no_match</code>, <code>0004</code> <code>cannot_verify</code>, <code>0005</code> a <code>503</code> and <code>0009</code> a <code>400</code>. Any other ending is a <code>match</code>.
+   * <p><b>Sandbox.</b> Where Bank Verification is available, a sandbox key calls no bank and is charged nothing. The last 4 characters of the IBAN, else of the account number, choose the answer: <code>0001</code> a <code>close_match</code> with a <code>holder_name</code>, <code>0002</code> a <code>close_match</code> without one, <code>0003</code> and <code>0006</code> a <code>no_match</code>, <code>0004</code> <code>cannot_verify</code>, <code>0005</code> a <code>503</code> and <code>0009</code> a <code>400</code>. Any other ending is a <code>match</code>.
    *
    * <p><b>API keys.</b> A scoped API key needs write access to sessions.
    *

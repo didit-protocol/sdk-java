@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 
 /** Parameters for {&#64;code transactions.list}. */
 public final class TransactionsListParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("limit", "offset", "travel_rule_status");
+  private static final Set<String> KNOWN_FIELDS = Set.of("limit", "offset", "travel_rule_status", "assignee");
 
   private TransactionsListParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -79,6 +79,16 @@ public final class TransactionsListParams extends JsonModel {
     return Json.optional(json, "travel_rule_status", Conv.STRING);
   }
 
+  /**
+   * Comma-separated; a transaction matches when it meets any value. <code>unassigned</code> is what nobody holds yet, <code>rules</code> is what the rules decided on their own without a reviewer, and a member email matches the reviewer assigned to it. <code>me</code> is the signed-in Console reviewer, so an API key sending <code>me</code> gets <code>400</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> assignee() {
+    return Json.optional(json, "assignee", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -120,6 +130,16 @@ public final class TransactionsListParams extends JsonModel {
      */
     public Builder travelRuleStatus(String travelRuleStatus) {
       return set("travel_rule_status", Conv.STRING, travelRuleStatus);
+    }
+
+    /**
+     * Comma-separated; a transaction matches when it meets any value. <code>unassigned</code> is what nobody holds yet, <code>rules</code> is what the rules decided on their own without a reviewer, and a member email matches the reviewer assigned to it. <code>me</code> is the signed-in Console reviewer, so an API key sending <code>me</code> gets <code>400</code>.
+     *
+     * @param assignee the value
+     * @return this builder
+     */
+    public Builder assignee(String assignee) {
+      return set("assignee", Conv.STRING, assignee);
     }
 
     /**

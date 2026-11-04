@@ -418,7 +418,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * Transaction amount (up to 18 decimal places). Send it as a decimal string (e.g. <code>"0.123456789012345678"</code>) when exact precision matters: a JSON number is parsed as a binary float first, so digits beyond about 15 significant digits are rounded before the amount is stored.
+     * Transaction amount (up to 18 decimal places). Send it as a decimal string (e.g. <code>"0.123456789012345678"</code>) when exact precision matters: a JSON number is parsed as a binary float first, so digits beyond about 15 significant digits are rounded before the amount is stored. Must be zero or greater: the direction carries the sign, and a negative amount returns <code>400</code>.
      *
      * @return the value
      * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -448,7 +448,7 @@ public final class TransactionsCreateParams extends JsonModel {
     }
 
     /**
-     * Pre-converted amount in the default currency. If omitted, automatic FX conversion is attempted.
+     * Pre-converted amount in the default currency. If omitted, automatic FX conversion is attempted. Must be zero or greater.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -531,7 +531,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * Transaction amount (up to 18 decimal places). Send it as a decimal string (e.g. <code>"0.123456789012345678"</code>) when exact precision matters: a JSON number is parsed as a binary float first, so digits beyond about 15 significant digits are rounded before the amount is stored.
+       * Transaction amount (up to 18 decimal places). Send it as a decimal string (e.g. <code>"0.123456789012345678"</code>) when exact precision matters: a JSON number is parsed as a binary float first, so digits beyond about 15 significant digits are rounded before the amount is stored. Must be zero or greater: the direction carries the sign, and a negative amount returns <code>400</code>.
        *
        * @param amount the value
        * @return this builder
@@ -561,7 +561,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * Pre-converted amount in the default currency. If omitted, automatic FX conversion is attempted.
+       * Pre-converted amount in the default currency. If omitted, automatic FX conversion is attempted. Must be zero or greater.
        *
        * @param amountInDefaultCurrency the value, or {@code null} to send JSON null
        * @return this builder
@@ -728,7 +728,7 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
-       * Actual network used for screening. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism) and ARB (Arbitrum One). Always specify this for multi-network tokens. When it is missing for USDT, USDC or ETH sent with a 0x transaction hash, Didit looks the hash up on Ethereum, BNB Chain, Polygon, Base, Arbitrum and Optimism and screens it on the network where it is found; if no network has it, the transaction is not screened and custom_values.aml_screening_status is FAILED with the reason in custom_values.aml_screening_error. When it is missing for USDT or USDC screened by wallet (no transaction hash), a Tron address is screened on Tron, a Solana address on Solana, and a 0x address on the first of those six networks where it has sent a transaction or holds the token, or on Ethereum when it is active on none of them. Connected-provider coverage varies; LIGHTNING requires a supported connected provider.
+       * Actual network used for screening. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism), ARB (Arbitrum One), AVAX (Avalanche C-Chain), ADA (Cardano), XLM (Stellar) and HBAR (Hedera). Common network names are accepted too, for example POLYGON or POL for MATIC, BSC for BNB and TRON for TRX. Always specify this for multi-network tokens. When it is missing for USDT, USDC or ETH sent with a 0x transaction hash, Didit looks the hash up on Ethereum, BNB Chain, Polygon, Base, Arbitrum and Optimism and screens it on the network where it is found; if no network has it, the transaction is not screened and custom_values.aml_screening_status is FAILED with the reason in custom_values.aml_screening_error. When it is missing for USDT or USDC screened by wallet (no transaction hash), a Tron address is screened on Tron, a Solana address on Solana, and a 0x address on the first of those six networks where it has sent a transaction or holds the token, or on Ethereum when it is active on none of them. Connected-provider coverage varies; LIGHTNING requires a supported connected provider.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -751,7 +751,7 @@ public final class TransactionsCreateParams extends JsonModel {
         }
 
         /**
-         * Actual network used for screening. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism) and ARB (Arbitrum One). Always specify this for multi-network tokens. When it is missing for USDT, USDC or ETH sent with a 0x transaction hash, Didit looks the hash up on Ethereum, BNB Chain, Polygon, Base, Arbitrum and Optimism and screens it on the network where it is found; if no network has it, the transaction is not screened and custom_values.aml_screening_status is FAILED with the reason in custom_values.aml_screening_error. When it is missing for USDT or USDC screened by wallet (no transaction hash), a Tron address is screened on Tron, a Solana address on Solana, and a 0x address on the first of those six networks where it has sent a transaction or holds the token, or on Ethereum when it is active on none of them. Connected-provider coverage varies; LIGHTNING requires a supported connected provider.
+         * Actual network used for screening. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism), ARB (Arbitrum One), AVAX (Avalanche C-Chain), ADA (Cardano), XLM (Stellar) and HBAR (Hedera). Common network names are accepted too, for example POLYGON or POL for MATIC, BSC for BNB and TRON for TRX. Always specify this for multi-network tokens. When it is missing for USDT, USDC or ETH sent with a 0x transaction hash, Didit looks the hash up on Ethereum, BNB Chain, Polygon, Base, Arbitrum and Optimism and screens it on the network where it is found; if no network has it, the transaction is not screened and custom_values.aml_screening_status is FAILED with the reason in custom_values.aml_screening_error. When it is missing for USDT or USDC screened by wallet (no transaction hash), a Tron address is screened on Tron, a Solana address on Solana, and a 0x address on the first of those six networks where it has sent a transaction or holds the token, or on Ethereum when it is active on none of them. Connected-provider coverage varies; LIGHTNING requires a supported connected provider.
          *
          * @param cryptoChain the value
          * @return this builder

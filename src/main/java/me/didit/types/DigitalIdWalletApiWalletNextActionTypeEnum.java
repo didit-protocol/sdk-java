@@ -7,6 +7,7 @@ import me.didit.core.StringEnum;
 /**
  * - <code>redirect</code> - redirect
  * - <code>confirm_in_app</code> - confirm_in_app
+ * - <code>request_digital_credential</code> - request_digital_credential
  *
  * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
  */
@@ -17,7 +18,10 @@ public final class DigitalIdWalletApiWalletNextActionTypeEnum extends StringEnum
   /** The value {@code "confirm_in_app"}. */
   public static final DigitalIdWalletApiWalletNextActionTypeEnum CONFIRM_IN_APP = new DigitalIdWalletApiWalletNextActionTypeEnum("confirm_in_app");
 
-  private static final List<DigitalIdWalletApiWalletNextActionTypeEnum> KNOWN_VALUES = List.of(REDIRECT, CONFIRM_IN_APP);
+  /** The value {@code "request_digital_credential"}. */
+  public static final DigitalIdWalletApiWalletNextActionTypeEnum REQUEST_DIGITAL_CREDENTIAL = new DigitalIdWalletApiWalletNextActionTypeEnum("request_digital_credential");
+
+  private static final List<DigitalIdWalletApiWalletNextActionTypeEnum> KNOWN_VALUES = List.of(REDIRECT, CONFIRM_IN_APP, REQUEST_DIGITAL_CREDENTIAL);
 
   private DigitalIdWalletApiWalletNextActionTypeEnum(String value) {
     super(value);

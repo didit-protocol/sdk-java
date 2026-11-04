@@ -16,6 +16,7 @@ import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
 import me.didit.types.AnalyticsRetrieveParams;
+import me.didit.types.AnalyticsRetrieveTodayParams;
 import org.junit.jupiter.api.Test;
 
 /** One test per operation of {@code analytics}, against a stubbed HTTP layer. */
@@ -34,6 +35,23 @@ final class AnalyticsResourceTest {
     assertEquals("GET", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/analytics/", request.path());
     assertEquals(Map.ofEntries(Map.entry("start_date", List.of("2026-11-01")), Map.entry("end_date", List.of("2026-11-01")), Map.entry("scope", List.of("home")), Map.entry("widget_keys", List.of("value-widget-keys")), Map.entry("workflow_ids", List.of("value-workflow-ids")), Map.entry("versions", List.of("value-versions")), Map.entry("branch_path_ids", List.of("value-branch-path-ids")), Map.entry("tag", List.of("value-tag")), Map.entry("transaction_type", List.of("value-transaction-type")), Map.entry("action_type", List.of("value-action-type"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void retrieveToday() {
+    AnalyticsRetrieveTodayParams params = AnalyticsRetrieveTodayParams.builder().tz("value-tz").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/organization/{organization_id}/application/{application_id}/analytics/today/", "200");
+    transport.respondJson(200, example);
+    var result = client.analytics().retrieveToday(params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/analytics/today/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("tz", List.of("value-tz"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);

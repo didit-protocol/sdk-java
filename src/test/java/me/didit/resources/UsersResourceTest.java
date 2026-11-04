@@ -100,7 +100,7 @@ final class UsersResourceTest {
 
   @Test
   void batchDelete() {
-    UsersBatchDeleteParams params = UsersBatchDeleteParams.builder().vendorDataList(List.of("value-vendor-data-list")).diditInternalIdList(List.of("00000000-0000-4000-8000-0000000068ce")).deleteAll(true).build();
+    UsersBatchDeleteParams params = UsersBatchDeleteParams.builder().vendorDataList(List.of("value-vendor-data-list")).diditInternalIdList(List.of("00000000-0000-4000-8000-0000000068ce")).deleteAll(true).retainFaceEmbeddings(true).faceRetentionDays(1L).build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/users/delete/", "200");
     transport.respondJson(200, example);
     var result = client.users().batchDelete(params);
@@ -110,7 +110,7 @@ final class UsersResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"vendor_data_list\":[\"value-vendor-data-list\"],\"didit_internal_id_list\":[\"00000000-0000-4000-8000-0000000068ce\"],\"delete_all\":true}", request.body());
+    TestJson.assertJsonEquals("{\"vendor_data_list\":[\"value-vendor-data-list\"],\"didit_internal_id_list\":[\"00000000-0000-4000-8000-0000000068ce\"],\"delete_all\":true,\"retain_face_embeddings\":true,\"face_retention_days\":1}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

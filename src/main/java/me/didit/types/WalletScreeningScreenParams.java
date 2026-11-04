@@ -61,13 +61,13 @@ public final class WalletScreeningScreenParams extends JsonModel {
   }
 
   /**
-   * Network identifier. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism), and ARB (Arbitrum One). USDT and USDC are legacy Ethereum aliases, not multi-network searches. Connected-provider coverage varies. LIGHTNING requires a supported connected provider. CELO (Celo), MODE (Mode) and PLUME (Plume) are screened through a connected TRM Labs account; managed screening answers 400 for them. Alias: <code>currency</code>.
+   * Optional network identifier. When omitted, the network is read from the address format: <code>bc1</code>, <code>1</code> and <code>3</code> addresses are Bitcoin (BTC), <code>T</code> addresses are Tron (TRX) and base58 public keys are Solana (SOL). A <code>0x</code> address is valid on every EVM network, so omitting <code>blockchain</code> for it answers 422 with the candidate networks in <code>candidate_chains</code>. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism), ARB (Arbitrum One), AVAX (Avalanche C-Chain), ADA (Cardano), XLM (Stellar) and HBAR (Hedera). USDT and USDC are legacy Ethereum aliases, not multi-network searches. Connected-provider coverage varies. LIGHTNING requires a supported connected provider. CELO (Celo), MODE (Mode) and PLUME (Plume) are screened through a connected TRM Labs account; managed screening answers 400 for them. Alias: <code>currency</code>.
    *
-   * @return the value
-   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public WalletScreeningScreenParams.Blockchain blockchain() {
-    return Json.required(json, "blockchain", Conv.enumeration(WalletScreeningScreenParams.Blockchain::of));
+  public Optional<WalletScreeningScreenParams.Blockchain> blockchain() {
+    return Json.optional(json, "blockchain", Conv.enumeration(WalletScreeningScreenParams.Blockchain::of));
   }
 
   /**
@@ -104,7 +104,7 @@ public final class WalletScreeningScreenParams extends JsonModel {
     }
 
     /**
-     * Network identifier. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism), and ARB (Arbitrum One). USDT and USDC are legacy Ethereum aliases, not multi-network searches. Connected-provider coverage varies. LIGHTNING requires a supported connected provider. CELO (Celo), MODE (Mode) and PLUME (Plume) are screened through a connected TRM Labs account; managed screening answers 400 for them. Alias: <code>currency</code>.
+     * Optional network identifier. When omitted, the network is read from the address format: <code>bc1</code>, <code>1</code> and <code>3</code> addresses are Bitcoin (BTC), <code>T</code> addresses are Tron (TRX) and base58 public keys are Solana (SOL). A <code>0x</code> address is valid on every EVM network, so omitting <code>blockchain</code> for it answers 422 with the candidate networks in <code>candidate_chains</code>. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism), ARB (Arbitrum One), AVAX (Avalanche C-Chain), ADA (Cardano), XLM (Stellar) and HBAR (Hedera). USDT and USDC are legacy Ethereum aliases, not multi-network searches. Connected-provider coverage varies. LIGHTNING requires a supported connected provider. CELO (Celo), MODE (Mode) and PLUME (Plume) are screened through a connected TRM Labs account; managed screening answers 400 for them. Alias: <code>currency</code>.
      *
      * @param blockchain the value
      * @return this builder
@@ -131,7 +131,6 @@ public final class WalletScreeningScreenParams extends JsonModel {
      */
     public WalletScreeningScreenParams build() {
       require("wallet_address", false);
-      require("blockchain", false);
       return new WalletScreeningScreenParams(buildJson(), buildFiles());
     }
 
@@ -142,7 +141,7 @@ public final class WalletScreeningScreenParams extends JsonModel {
   }
 
   /**
-   * Network identifier. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism), and ARB (Arbitrum One). USDT and USDC are legacy Ethereum aliases, not multi-network searches. Connected-provider coverage varies. LIGHTNING requires a supported connected provider. CELO (Celo), MODE (Mode) and PLUME (Plume) are screened through a connected TRM Labs account; managed screening answers 400 for them. Alias: <code>currency</code>.
+   * Optional network identifier. When omitted, the network is read from the address format: <code>bc1</code>, <code>1</code> and <code>3</code> addresses are Bitcoin (BTC), <code>T</code> addresses are Tron (TRX) and base58 public keys are Solana (SOL). A <code>0x</code> address is valid on every EVM network, so omitting <code>blockchain</code> for it answers 422 with the candidate networks in <code>candidate_chains</code>. Managed screening supports BTC, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, BASE (Base), OP (Optimism), ARB (Arbitrum One), AVAX (Avalanche C-Chain), ADA (Cardano), XLM (Stellar) and HBAR (Hedera). USDT and USDC are legacy Ethereum aliases, not multi-network searches. Connected-provider coverage varies. LIGHTNING requires a supported connected provider. CELO (Celo), MODE (Mode) and PLUME (Plume) are screened through a connected TRM Labs account; managed screening answers 400 for them. Alias: <code>currency</code>.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -195,6 +194,18 @@ public final class WalletScreeningScreenParams extends JsonModel {
     /** The value {@code "ARB"}. */
     public static final Blockchain ARB = new Blockchain("ARB");
 
+    /** The value {@code "AVAX"}. */
+    public static final Blockchain AVAX = new Blockchain("AVAX");
+
+    /** The value {@code "ADA"}. */
+    public static final Blockchain ADA = new Blockchain("ADA");
+
+    /** The value {@code "XLM"}. */
+    public static final Blockchain XLM = new Blockchain("XLM");
+
+    /** The value {@code "HBAR"}. */
+    public static final Blockchain HBAR = new Blockchain("HBAR");
+
     /** The value {@code "CELO"}. */
     public static final Blockchain CELO = new Blockchain("CELO");
 
@@ -204,7 +215,7 @@ public final class WalletScreeningScreenParams extends JsonModel {
     /** The value {@code "PLUME"}. */
     public static final Blockchain PLUME = new Blockchain("PLUME");
 
-    private static final List<Blockchain> KNOWN_VALUES = List.of(BTC, LIGHTNING, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, USDT, USDC, BASE, OP, ARB, CELO, MODE, PLUME);
+    private static final List<Blockchain> KNOWN_VALUES = List.of(BTC, LIGHTNING, ETH, LTC, XRP, BCH, DOGE, TRX, SOL, MATIC, BNB, USDT, USDC, BASE, OP, ARB, AVAX, ADA, XLM, HBAR, CELO, MODE, PLUME);
 
     private Blockchain(String value) {
       super(value);

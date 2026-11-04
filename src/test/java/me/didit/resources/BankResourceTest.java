@@ -27,7 +27,7 @@ final class BankResourceTest {
 
   @Test
   void accountCheck() {
-    BankAccountCheckRequest params = BankAccountCheckRequest.builder().country("value-country").account(BankAccountCheckRequest.Account.builder().iban("value-iban").accountNumber("value-account-number").build()).holder(BankAccountCheckHolder.ofBankAccountCheckPersonHolder(BankAccountCheckPersonHolder.builder().fullName("value-full-name").build())).vendorData("value-vendor-data").build();
+    BankAccountCheckRequest params = BankAccountCheckRequest.builder().country("value-country").account(BankAccountCheckRequest.Account.builder().iban("value-iban").accountNumber("value-account-number").build()).holder(BankAccountCheckHolder.ofBankAccountCheckPersonHolder(BankAccountCheckPersonHolder.builder().fullName("value-full-name").build())).vendorData("value-vendor-data").consent(true).build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/bank/account-check/", "200");
     transport.respondJson(200, example);
     var result = client.bank().accountCheck(params);
@@ -37,7 +37,7 @@ final class BankResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"country\":\"value-country\",\"account\":{\"iban\":\"value-iban\",\"account_number\":\"value-account-number\"},\"holder\":{\"full_name\":\"value-full-name\"},\"vendor_data\":\"value-vendor-data\"}", request.body());
+    TestJson.assertJsonEquals("{\"country\":\"value-country\",\"account\":{\"iban\":\"value-iban\",\"account_number\":\"value-account-number\"},\"holder\":{\"full_name\":\"value-full-name\"},\"vendor_data\":\"value-vendor-data\",\"consent\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

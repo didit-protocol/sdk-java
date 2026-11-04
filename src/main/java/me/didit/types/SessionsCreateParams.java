@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code sessions.create}. */
 public final class SessionsCreateParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("workflow_id", "vendor_data", "callback", "callback_method", "metadata", "tags", "language", "contact_details", "expected_details", "portrait_image", "sandbox_scenario", "sign", "user_state", "biometric_consent");
+  private static final Set<String> KNOWN_FIELDS = Set.of("workflow_id", "vendor_data", "multi_account_segment", "callback", "callback_method", "metadata", "tags", "language", "contact_details", "expected_details", "portrait_image", "sandbox_scenario", "sign", "user_state", "biometric_consent");
 
   private SessionsCreateParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -72,6 +72,16 @@ public final class SessionsCreateParams extends JsonModel {
    */
   public Optional<String> vendorData() {
     return Json.optional(json, "vendor_data", Conv.STRING);
+  }
+
+  /**
+   * Optional duplicate-detection realm inside your organization. Duplicate face checks compare this session only with other sessions that carry the same segment, so separate account bases (personal and business accounts, or one per B2B sub-client) do not flag a person who legitimately holds one account in each. Omit it to use the single default realm, which is what every session uses today. Blocklist and allowlist matching ignore this field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> multiAccountSegment() {
+    return Json.optional(json, "multi_account_segment", Conv.STRING);
   }
 
   /**
@@ -165,7 +175,7 @@ public final class SessionsCreateParams extends JsonModel {
   }
 
   /**
-   * Electronic Signature input for this session. <code>documents</code> are the documents to sign, for a workflow whose Electronic Signature step takes documents from the session (<code>signature_documents_source</code> <code>session</code> or <code>both</code>): up to 20 documents and 50 MB in total. <code>field_values</code> fills the fields whose <code>prefill</code> is <code>api.&lt;key&gt;</code>, on workflow and session documents alike. Creating a session again for the same <code>workflow_id</code> and <code>vendor_data</code> returns the pending session; if that call sends <code>sign</code>, its documents, fields and values must be identical to the first ones, and anything different returns <code>400</code> with <code>{"sign": "signature_document_changed"}</code>. See [Electronic signature documents](/sessions-api/create-session#electronic-signature-documents).
+   * E-signature input for this session. <code>documents</code> are the documents to sign, for a workflow whose E-signature step takes documents from the session (<code>signature_documents_source</code> <code>session</code> or <code>both</code>): up to 20 documents and 50 MB in total. <code>field_values</code> fills the fields whose <code>prefill</code> is <code>api.&lt;key&gt;</code>, on workflow and session documents alike. Creating a session again for the same <code>workflow_id</code> and <code>vendor_data</code> returns the pending session; if that call sends <code>sign</code>, its documents, fields and values must be identical to the first ones, and anything different returns <code>400</code> with <code>{"sign": "signature_document_changed"}</code>. See [E-signature documents](/sessions-api/create-session#e-signature-documents).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -225,6 +235,16 @@ public final class SessionsCreateParams extends JsonModel {
      */
     public Builder vendorData(String vendorData) {
       return set("vendor_data", Conv.STRING, vendorData);
+    }
+
+    /**
+     * Optional duplicate-detection realm inside your organization. Duplicate face checks compare this session only with other sessions that carry the same segment, so separate account bases (personal and business accounts, or one per B2B sub-client) do not flag a person who legitimately holds one account in each. Omit it to use the single default realm, which is what every session uses today. Blocklist and allowlist matching ignore this field.
+     *
+     * @param multiAccountSegment the value
+     * @return this builder
+     */
+    public Builder multiAccountSegment(String multiAccountSegment) {
+      return set("multi_account_segment", Conv.STRING, multiAccountSegment);
     }
 
     /**
@@ -318,7 +338,7 @@ public final class SessionsCreateParams extends JsonModel {
     }
 
     /**
-     * Electronic Signature input for this session. <code>documents</code> are the documents to sign, for a workflow whose Electronic Signature step takes documents from the session (<code>signature_documents_source</code> <code>session</code> or <code>both</code>): up to 20 documents and 50 MB in total. <code>field_values</code> fills the fields whose <code>prefill</code> is <code>api.&lt;key&gt;</code>, on workflow and session documents alike. Creating a session again for the same <code>workflow_id</code> and <code>vendor_data</code> returns the pending session; if that call sends <code>sign</code>, its documents, fields and values must be identical to the first ones, and anything different returns <code>400</code> with <code>{"sign": "signature_document_changed"}</code>. See [Electronic signature documents](/sessions-api/create-session#electronic-signature-documents).
+     * E-signature input for this session. <code>documents</code> are the documents to sign, for a workflow whose E-signature step takes documents from the session (<code>signature_documents_source</code> <code>session</code> or <code>both</code>): up to 20 documents and 50 MB in total. <code>field_values</code> fills the fields whose <code>prefill</code> is <code>api.&lt;key&gt;</code>, on workflow and session documents alike. Creating a session again for the same <code>workflow_id</code> and <code>vendor_data</code> returns the pending session; if that call sends <code>sign</code>, its documents, fields and values must be identical to the first ones, and anything different returns <code>400</code> with <code>{"sign": "signature_document_changed"}</code>. See [E-signature documents](/sessions-api/create-session#e-signature-documents).
      *
      * @param sign the value
      * @return this builder
@@ -1425,7 +1445,7 @@ public final class SessionsCreateParams extends JsonModel {
   }
 
   /**
-   * Electronic Signature input for this session. <code>documents</code> are the documents to sign, for a workflow whose Electronic Signature step takes documents from the session (<code>signature_documents_source</code> <code>session</code> or <code>both</code>): up to 20 documents and 50 MB in total. <code>field_values</code> fills the fields whose <code>prefill</code> is <code>api.&lt;key&gt;</code>, on workflow and session documents alike. Creating a session again for the same <code>workflow_id</code> and <code>vendor_data</code> returns the pending session; if that call sends <code>sign</code>, its documents, fields and values must be identical to the first ones, and anything different returns <code>400</code> with <code>{"sign": "signature_document_changed"}</code>. See [Electronic signature documents](/sessions-api/create-session#electronic-signature-documents).
+   * E-signature input for this session. <code>documents</code> are the documents to sign, for a workflow whose E-signature step takes documents from the session (<code>signature_documents_source</code> <code>session</code> or <code>both</code>): up to 20 documents and 50 MB in total. <code>field_values</code> fills the fields whose <code>prefill</code> is <code>api.&lt;key&gt;</code>, on workflow and session documents alike. Creating a session again for the same <code>workflow_id</code> and <code>vendor_data</code> returns the pending session; if that call sends <code>sign</code>, its documents, fields and values must be identical to the first ones, and anything different returns <code>400</code> with <code>{"sign": "signature_document_changed"}</code>. See [E-signature documents](/sessions-api/create-session#e-signature-documents).
    */
   public static final class Sign extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("documents", "field_values");

@@ -11,6 +11,7 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -133,13 +134,13 @@ public final class PhoneIntelligence extends JsonModel {
   }
 
   /**
-   * Machine-readable codes explaining the score. Values can grow over time, so do not reject unknown codes.
+   * Signals that explain the score, each with a stable Didit code, a direction, a message and an impact level. New codes can appear over time, so do not reject unknown codes.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<String>> reasonCodes() {
-    return Json.optional(json, "reason_codes", Conv.list(Conv.STRING));
+  public Optional<List<PhoneIntelligence.ReasonCodes>> reasonCodes() {
+    return Json.optional(json, "reason_codes", Conv.list(Conv.model(PhoneIntelligence.ReasonCodes::fromJson)));
   }
 
   @Override
@@ -236,13 +237,13 @@ public final class PhoneIntelligence extends JsonModel {
     }
 
     /**
-     * Machine-readable codes explaining the score. Values can grow over time, so do not reject unknown codes.
+     * Signals that explain the score, each with a stable Didit code, a direction, a message and an impact level. New codes can appear over time, so do not reject unknown codes.
      *
      * @param reasonCodes the value
      * @return this builder
      */
-    public Builder reasonCodes(List<String> reasonCodes) {
-      return set("reason_codes", Conv.list(Conv.STRING), reasonCodes);
+    public Builder reasonCodes(List<PhoneIntelligence.ReasonCodes> reasonCodes) {
+      return set("reason_codes", Conv.list(Conv.model(PhoneIntelligence.ReasonCodes::fromJson)), reasonCodes);
     }
 
     /**
@@ -257,6 +258,214 @@ public final class PhoneIntelligence extends JsonModel {
     @Override
     protected Builder self() {
       return this;
+    }
+  }
+
+  public static final class ReasonCodes extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("code", "value", "direction", "message", "impact_level");
+
+    private ReasonCodes(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code ReasonCodes} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static ReasonCodes fromJson(JsonNode json) {
+      return new ReasonCodes(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * Stable Didit identifier of the signal, for example <code>IR-5AC67A32</code>. Opaque: group and filter on it, do not parse it.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> code() {
+      return Json.optional(json, "code", Conv.STRING);
+    }
+
+    /**
+     * For a risk flag (for example <code>voip</code>, <code>leaked</code>, <code>disposable</code>, <code>spam_trap</code>), its value: a boolean, a level or a date. Null for a scored reason code.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<JsonNode> value() {
+      return Json.optional(json, "value", Conv.ANY);
+    }
+
+    /**
+     * Whether the signal raised the risk or added trust.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<PhoneIntelligence.ReasonCodes.Direction> direction() {
+      return Json.optional(json, "direction", Conv.enumeration(PhoneIntelligence.ReasonCodes.Direction::of));
+    }
+
+    /**
+     * Human-readable explanation of the signal, in English.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> message() {
+      return Json.optional(json, "message", Conv.STRING);
+    }
+
+    /**
+     * How strongly the signal moved the score, for example <code>low</code>, <code>medium</code> or <code>high</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> impactLevel() {
+      return Json.optional(json, "impact_level", Conv.STRING);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link ReasonCodes}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(ReasonCodes from) {
+        super(from);
+      }
+
+      /**
+       * Stable Didit identifier of the signal, for example <code>IR-5AC67A32</code>. Opaque: group and filter on it, do not parse it.
+       *
+       * @param code the value
+       * @return this builder
+       */
+      public Builder code(String code) {
+        return set("code", Conv.STRING, code);
+      }
+
+      /**
+       * For a risk flag (for example <code>voip</code>, <code>leaked</code>, <code>disposable</code>, <code>spam_trap</code>), its value: a boolean, a level or a date. Null for a scored reason code.
+       *
+       * @param value the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder value(@Nullable Object value) {
+        return setAny("value", value);
+      }
+
+      /**
+       * Whether the signal raised the risk or added trust.
+       *
+       * @param direction the value
+       * @return this builder
+       */
+      public Builder direction(PhoneIntelligence.ReasonCodes.Direction direction) {
+        return set("direction", Conv.enumeration(PhoneIntelligence.ReasonCodes.Direction::of), direction);
+      }
+
+      /**
+       * Human-readable explanation of the signal, in English.
+       *
+       * @param message the value
+       * @return this builder
+       */
+      public Builder message(String message) {
+        return set("message", Conv.STRING, message);
+      }
+
+      /**
+       * How strongly the signal moved the score, for example <code>low</code>, <code>medium</code> or <code>high</code>.
+       *
+       * @param impactLevel the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder impactLevel(@Nullable String impactLevel) {
+        return setNullable("impact_level", Conv.STRING, impactLevel);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code ReasonCodes}
+       */
+      public ReasonCodes build() {
+        return new ReasonCodes(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     * Whether the signal raised the risk or added trust.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Direction extends StringEnum {
+      /** The value {@code "risk"}. */
+      public static final Direction RISK = new Direction("risk");
+
+      /** The value {@code "trust"}. */
+      public static final Direction TRUST = new Direction("trust");
+
+      private static final List<Direction> KNOWN_VALUES = List.of(RISK, TRUST);
+
+      private Direction(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Direction of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Direction::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Direction> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
     }
   }
 }

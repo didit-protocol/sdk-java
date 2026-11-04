@@ -409,7 +409,7 @@ public final class AMLScreening extends JsonModel {
     }
 
     /**
-     * Unique identifier of the match
+     * Didit's stable identifier for the hit: <code>hit_</code> followed by 24 hexadecimal characters. The same matched entity keeps the same <code>id</code> when the subject is screened again. Pass it as <code>hit_id</code> to the AML hit review endpoints.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -472,7 +472,7 @@ public final class AMLScreening extends JsonModel {
     }
 
     /**
-     * List of dataset categories where the match was found. Indicates whether the entity appeared in PEP lists (with level), sanctions databases, adverse media, warnings/regulatory enforcement, or other compliance datasets.
+     * List of dataset categories where the match was found. Indicates whether the entity appeared in PEP lists (with level), sanctions databases, adverse media, warnings/regulatory enforcement, or other compliance datasets. <code>Other Lists</code> when the entity's source states none of these categories.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -665,7 +665,7 @@ public final class AMLScreening extends JsonModel {
       }
 
       /**
-       * Unique identifier of the match
+       * Didit's stable identifier for the hit: <code>hit_</code> followed by 24 hexadecimal characters. The same matched entity keeps the same <code>id</code> when the subject is screened again. Pass it as <code>hit_id</code> to the AML hit review endpoints.
        *
        * @param id the value
        * @return this builder
@@ -728,7 +728,7 @@ public final class AMLScreening extends JsonModel {
       }
 
       /**
-       * List of dataset categories where the match was found. Indicates whether the entity appeared in PEP lists (with level), sanctions databases, adverse media, warnings/regulatory enforcement, or other compliance datasets.
+       * List of dataset categories where the match was found. Indicates whether the entity appeared in PEP lists (with level), sanctions databases, adverse media, warnings/regulatory enforcement, or other compliance datasets. <code>Other Lists</code> when the entity's source states none of these categories.
        *
        * @param datasets the value
        * @return this builder
@@ -963,7 +963,10 @@ public final class AMLScreening extends JsonModel {
       /** The value {@code "Insolvency"}. */
       public static final Datasets INSOLVENCY = new Datasets("Insolvency");
 
-      private static final List<Datasets> KNOWN_VALUES = List.of(PEP, PEP_LEVEL_1, PEP_LEVEL_2, PEP_LEVEL_3, PEP_LEVEL_4, SANCTIONS, ADVERSE_MEDIA, WARNINGS_AND_REGULATORY_ENFORCEMENT, FITNESS_AND_PROBITY, SIP, SIE, INSOLVENCY);
+      /** The value {@code "Other Lists"}. */
+      public static final Datasets OTHER_LISTS = new Datasets("Other Lists");
+
+      private static final List<Datasets> KNOWN_VALUES = List.of(PEP, PEP_LEVEL_1, PEP_LEVEL_2, PEP_LEVEL_3, PEP_LEVEL_4, SANCTIONS, ADVERSE_MEDIA, WARNINGS_AND_REGULATORY_ENFORCEMENT, FITNESS_AND_PROBITY, SIP, SIE, INSOLVENCY, OTHER_LISTS);
 
       private Datasets(String value) {
         super(value);
@@ -4862,7 +4865,13 @@ public final class AMLScreening extends JsonModel {
       /** The value {@code "KYB_KEY_PEOPLE"}. */
       public static final Feature KYB_KEY_PEOPLE = new Feature("KYB_KEY_PEOPLE");
 
-      private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE);
+      /** The value {@code "GEOLOCATION"}. */
+      public static final Feature GEOLOCATION = new Feature("GEOLOCATION");
+
+      /** The value {@code "SIGNATURE"}. */
+      public static final Feature SIGNATURE = new Feature("SIGNATURE");
+
+      private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE, GEOLOCATION, SIGNATURE);
 
       private Feature(String value) {
         super(value);

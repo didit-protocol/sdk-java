@@ -39,6 +39,8 @@ import me.didit.types.DigitalIdWalletApiFranceconnectWalletVerificationStartRequ
 import me.didit.types.DigitalIdWalletApiFrejaidWalletVerificationStartRequest;
 import me.didit.types.DigitalIdWalletApiFtnWalletVerificationStartCountryEnum;
 import me.didit.types.DigitalIdWalletApiFtnWalletVerificationStartRequest;
+import me.didit.types.DigitalIdWalletApiGoogleWalletWalletVerificationStartCountryEnum;
+import me.didit.types.DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest;
 import me.didit.types.DigitalIdWalletApiGovbrWalletVerificationStartCountryEnum;
 import me.didit.types.DigitalIdWalletApiGovbrWalletVerificationStartRequest;
 import me.didit.types.DigitalIdWalletApiGovukWalletWalletVerificationStartRequest;
@@ -61,6 +63,7 @@ import me.didit.types.DigitalIdWalletApiSmartIdWalletVerificationStartRequest;
 import me.didit.types.DigitalIdWalletApiUaePassWalletVerificationStartCountryEnum;
 import me.didit.types.DigitalIdWalletApiUaePassWalletVerificationStartRequest;
 import me.didit.types.DigitalIdWalletApiVippsWalletVerificationStartRequest;
+import me.didit.types.DigitalIdWalletApiWalletDigitalCredentialResponseRequest;
 import org.junit.jupiter.api.Test;
 
 /** One test per operation of {@code id_wallets}, against a stubbed HTTP layer. */
@@ -604,6 +607,42 @@ final class IdWalletsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"AUT\",\"return_url\":\"https://example.com/callback\",\"device\":\"same_device\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void submitVerificationResponse() {
+    DigitalIdWalletApiWalletDigitalCredentialResponseRequest params = DigitalIdWalletApiWalletDigitalCredentialResponseRequest.builder().response(Map.of("key", "value")).build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/id-verification/wallets/verifications/{request_id}/response/", "200");
+    transport.respondJson(200, example);
+    var result = client.idWallets().submitVerificationResponse("00000000-0000-4000-8000-000000020032", params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/id-verification/wallets/verifications/00000000-0000-4000-8000-000000020032/response/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"response\":{\"key\":\"value\"}}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void startGoogleWallet() {
+    DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest params = DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest.builder().vendorData("value-vendor-data").metadata(Map.of("key", "value")).sandboxScenario("value-sandbox-scenario").country(DigitalIdWalletApiGoogleWalletWalletVerificationStartCountryEnum.USA).origin("value-origin").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/id-verification/wallets/google-wallet/", "201");
+    transport.respondJson(201, example);
+    var result = client.idWallets().startGoogleWallet(params, options);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/id-verification/wallets/google-wallet/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"sandbox_scenario\":\"value-sandbox-scenario\",\"country\":\"USA\",\"origin\":\"value-origin\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

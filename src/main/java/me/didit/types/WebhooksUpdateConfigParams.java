@@ -16,7 +16,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code webhooks.update_config}. */
 public final class WebhooksUpdateConfigParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("webhook_url", "webhook_version", "rotate_secret_key", "capture_method", "data_retention_months", "face_retention_policy", "face_retention_days", "biometric_consent_mode", "allowed_return_hosts");
+  private static final Set<String> KNOWN_FIELDS = Set.of("webhook_url", "webhook_version", "rotate_secret_key", "capture_method", "data_retention_months", "face_retention_policy", "face_retention_days", "biometric_consent_mode", "allowed_return_hosts", "allowed_domains");
 
   private WebhooksUpdateConfigParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -141,6 +141,16 @@ public final class WebhooksUpdateConfigParams extends JsonModel {
     return Json.optional(json, "allowed_return_hosts", Conv.list(Conv.STRING));
   }
 
+  /**
+   * Replaces the whole list of allowed origins. Origins (for example <code>https://app.example.com</code>; <code>http</code> only for <code>localhost</code>) the hosted verification flow may be embedded in and may send the user back to with a session callback. Server-to-server calls are not affected. An empty list means no restriction. Didit stores each origin in lower case without a default port. An invalid entry fails with <code>400</code> on <code>allowed_domains</code>. Send <code>[]</code> to remove the restriction.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<String>> allowedDomains() {
+    return Json.optional(json, "allowed_domains", Conv.list(Conv.STRING));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -242,6 +252,16 @@ public final class WebhooksUpdateConfigParams extends JsonModel {
      */
     public Builder allowedReturnHosts(List<String> allowedReturnHosts) {
       return set("allowed_return_hosts", Conv.list(Conv.STRING), allowedReturnHosts);
+    }
+
+    /**
+     * Replaces the whole list of allowed origins. Origins (for example <code>https://app.example.com</code>; <code>http</code> only for <code>localhost</code>) the hosted verification flow may be embedded in and may send the user back to with a session callback. Server-to-server calls are not affected. An empty list means no restriction. Didit stores each origin in lower case without a default port. An invalid entry fails with <code>400</code> on <code>allowed_domains</code>. Send <code>[]</code> to remove the restriction.
+     *
+     * @param allowedDomains the value
+     * @return this builder
+     */
+    public Builder allowedDomains(List<String> allowedDomains) {
+      return set("allowed_domains", Conv.list(Conv.STRING), allowedDomains);
     }
 
     /**

@@ -46,7 +46,7 @@ public final class IpResource {
    *
    * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>. Missing or invalid credentials return <code>403</code> - this API never returns <code>401</code>.
    *
-   * <p><b>Rate limit.</b> Shared write budget of 300 requests per minute per API key across all POST/PATCH/DELETE endpoints.
+   * <p><b>Rate limit.</b> Shared write budget of 300 requests per minute per API key across POST/PATCH/DELETE endpoints (transaction creates and event ingestion have a separate budget of 600).
    *
    * <p>{@code POST /v3/ip/risk/}
    *

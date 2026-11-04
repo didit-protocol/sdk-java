@@ -35,6 +35,7 @@ public final class TravelRuleResource {
   private final TravelRuleCounterpartyContactsResource counterpartyContacts;
   private final TravelRuleNetworksResource networks;
   private final TravelRuleTransfersResource transfers;
+  private final TravelRuleUnmatchedDepositsResource unmatchedDeposits;
   private final TravelRuleWalletAddressesResource walletAddresses;
   private final TravelRuleWalletProofsResource walletProofs;
   private final TravelRuleWorkspaceResource workspace;
@@ -45,6 +46,7 @@ public final class TravelRuleResource {
     this.counterpartyContacts = new TravelRuleCounterpartyContactsResource(client);
     this.networks = new TravelRuleNetworksResource(client);
     this.transfers = new TravelRuleTransfersResource(client);
+    this.unmatchedDeposits = new TravelRuleUnmatchedDepositsResource(client);
     this.walletAddresses = new TravelRuleWalletAddressesResource(client);
     this.walletProofs = new TravelRuleWalletProofsResource(client);
     this.workspace = new TravelRuleWorkspaceResource(client);
@@ -75,6 +77,15 @@ public final class TravelRuleResource {
    */
   public TravelRuleTransfersResource transfers() {
     return transfers;
+  }
+
+  /**
+   * The {@code travel_rule.unmatched_deposits} resource.
+   *
+   * @return the resource
+   */
+  public TravelRuleUnmatchedDepositsResource unmatchedDeposits() {
+    return unmatchedDeposits;
   }
 
   /**

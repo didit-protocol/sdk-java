@@ -377,7 +377,7 @@ public final class TransactionDetail extends JsonModel {
   }
 
   /**
-   * Alerts raised by rules and providers.
+   * Always empty today. An open alert is a transaction with status <code>IN_REVIEW</code> or <code>AWAITING_USER</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -790,7 +790,7 @@ public final class TransactionDetail extends JsonModel {
     }
 
     /**
-     * Alerts raised by rules and providers.
+     * Always empty today. An open alert is a transaction with status <code>IN_REVIEW</code> or <code>AWAITING_USER</code>.
      *
      * @param alerts the value
      * @return this builder

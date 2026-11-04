@@ -62,7 +62,7 @@ final class EmailResourceTest {
 
   @Test
   void checkCode() {
-    EmailCheckCodeParams params = EmailCheckCodeParams.builder().email("user@example.com").code("value-code").duplicatedEmailAction(EmailCheckCodeParams.DuplicatedEmailAction.NO_ACTION).breachedEmailAction(EmailCheckCodeParams.BreachedEmailAction.NO_ACTION).disposableEmailAction(EmailCheckCodeParams.DisposableEmailAction.NO_ACTION).enableSocial(true).emailNoSocialPresenceAction(EmailCheckCodeParams.EmailNoSocialPresenceAction.NO_ACTION).build();
+    EmailCheckCodeParams params = EmailCheckCodeParams.builder().email("user@example.com").code("value-code").duplicatedEmailAction(EmailCheckCodeParams.DuplicatedEmailAction.NO_ACTION).breachedEmailAction(EmailCheckCodeParams.BreachedEmailAction.NO_ACTION).disposableEmailAction(EmailCheckCodeParams.DisposableEmailAction.NO_ACTION).enableEnrichment(true).emailIntelligenceScoreAction(EmailCheckCodeParams.EmailIntelligenceScoreAction.NO_ACTION).recentEmailBreachAction(EmailCheckCodeParams.RecentEmailBreachAction.NO_ACTION).frequentEmailBreachAction(EmailCheckCodeParams.FrequentEmailBreachAction.NO_ACTION).enableSocial(true).emailNoSocialPresenceAction(EmailCheckCodeParams.EmailNoSocialPresenceAction.NO_ACTION).build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/email/check/", "200");
     transport.respondJson(200, example);
     var result = client.email().checkCode(params);
@@ -72,7 +72,7 @@ final class EmailResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"email\":\"user@example.com\",\"code\":\"value-code\",\"duplicated_email_action\":\"NO_ACTION\",\"breached_email_action\":\"NO_ACTION\",\"disposable_email_action\":\"NO_ACTION\",\"enable_social\":true,\"email_no_social_presence_action\":\"NO_ACTION\"}", request.body());
+    TestJson.assertJsonEquals("{\"email\":\"user@example.com\",\"code\":\"value-code\",\"duplicated_email_action\":\"NO_ACTION\",\"breached_email_action\":\"NO_ACTION\",\"disposable_email_action\":\"NO_ACTION\",\"enable_enrichment\":true,\"email_intelligence_score_action\":\"NO_ACTION\",\"recent_email_breach_action\":\"NO_ACTION\",\"frequent_email_breach_action\":\"NO_ACTION\",\"enable_social\":true,\"email_no_social_presence_action\":\"NO_ACTION\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

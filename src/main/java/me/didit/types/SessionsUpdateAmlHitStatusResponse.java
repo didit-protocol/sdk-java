@@ -59,7 +59,7 @@ public final class SessionsUpdateAmlHitStatusResponse extends JsonModel {
   }
 
   /**
-   * The updated hit, with surrounding whitespace removed.
+   * The <code>id</code> of the updated hit, as the session decision returns it, also when the request named the hit by an id in the earlier format.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -102,7 +102,7 @@ public final class SessionsUpdateAmlHitStatusResponse extends JsonModel {
     }
 
     /**
-     * The updated hit, with surrounding whitespace removed.
+     * The <code>id</code> of the updated hit, as the session decision returns it, also when the request named the hit by an id in the earlier format.
      *
      * @param hitId the value
      * @return this builder

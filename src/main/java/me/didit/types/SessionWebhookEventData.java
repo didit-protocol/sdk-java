@@ -94,7 +94,7 @@ public final class SessionWebhookEventData extends JsonModel {
   }
 
   /**
-   * Present when the event was not produced by the verification flow itself, for example <code>manual_review</code>, <code>manual_step_update</code>, <code>ongoing_monitoring</code>, <code>webhook_reconciliation</code>, <code>manual_webhook_recovery</code>, <code>kyb_registry_change</code> or a <code>console_*</code> edit.
+   * Present when the event was not produced by the verification flow itself, for example <code>manual_review</code>, <code>manual_step_update</code>, <code>ongoing_monitoring</code>, <code>webhook_reconciliation</code> (a <code>status.updated</code> resent because the first terminal webhook was never created, so you may receive a second event for a decision you already got: deduplicate on <code>session_id</code> and <code>status</code>), <code>manual_webhook_recovery</code>, <code>kyb_registry_change</code>, <code>biometric_retention</code> (a <code>data.updated</code> sent when the session's live biometric data is deleted on schedule) or a <code>console_*</code> edit such as <code>console_registry_edit</code>, <code>console_key_people_skip</code> or <code>console_key_people_regenerate</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -237,7 +237,7 @@ public final class SessionWebhookEventData extends JsonModel {
     }
 
     /**
-     * Present when the event was not produced by the verification flow itself, for example <code>manual_review</code>, <code>manual_step_update</code>, <code>ongoing_monitoring</code>, <code>webhook_reconciliation</code>, <code>manual_webhook_recovery</code>, <code>kyb_registry_change</code> or a <code>console_*</code> edit.
+     * Present when the event was not produced by the verification flow itself, for example <code>manual_review</code>, <code>manual_step_update</code>, <code>ongoing_monitoring</code>, <code>webhook_reconciliation</code> (a <code>status.updated</code> resent because the first terminal webhook was never created, so you may receive a second event for a decision you already got: deduplicate on <code>session_id</code> and <code>status</code>), <code>manual_webhook_recovery</code>, <code>kyb_registry_change</code>, <code>biometric_retention</code> (a <code>data.updated</code> sent when the session's live biometric data is deleted on schedule) or a <code>console_*</code> edit such as <code>console_registry_edit</code>, <code>console_key_people_skip</code> or <code>console_key_people_regenerate</code>.
      *
      * @param trigger the value
      * @return this builder
