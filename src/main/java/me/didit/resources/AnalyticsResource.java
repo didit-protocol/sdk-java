@@ -11,6 +11,8 @@ import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
 import me.didit.types.AnalyticsRetrieveParams;
 import me.didit.types.AnalyticsRetrieveResponse;
+import me.didit.types.AnalyticsRetrieveTodayParams;
+import me.didit.types.ApplicationAnalyticsToday;
 
 /** The {@code analytics} resource: {@code client.analytics()}. */
 public final class AnalyticsResource {
@@ -120,6 +122,93 @@ public final class AnalyticsResource {
     return client.executeAsync(retrieveRequest(AnalyticsRetrieveParams.builder().build()), RequestOptions.none(), RETRIEVE_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Get today's verifications by hour
+   *
+   * <p>Today's user verification (KYC) sessions, from local midnight in <code>tz</code>, counted per local hour they were created in, next to the same hours of the same weekday one week before, and split by the outcome each one holds now: approved, in review or declined. This is the volume card of the Business Console's Home.
+   *
+   * <p><code>total</code> is today so far. <code>previous_total_so_far</code> counts the comparison day only up to the same local time, so a change between them compares the same part of both days. The hours still to come today are <code>0</code>. A day on which the clocks change has 23 or 25 hours: the missing hour stays <code>0</code> and the repeated hour holds both.
+   *
+   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/analytics/today/}
+   * <p>Application scoped: the organization and application ids come from the client options.
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public ApplicationAnalyticsToday retrieveToday(AnalyticsRetrieveTodayParams params, RequestOptions options) {
+    return client.execute(retrieveTodayRequest(params), options, RETRIEVE_TODAY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<ApplicationAnalyticsToday> retrieveTodayAsync(AnalyticsRetrieveTodayParams params, RequestOptions options) {
+    return client.executeAsync(retrieveTodayRequest(params), options, RETRIEVE_TODAY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return the result
+   */
+  public ApplicationAnalyticsToday retrieveToday(AnalyticsRetrieveTodayParams params) {
+    return client.execute(retrieveTodayRequest(params), RequestOptions.none(), RETRIEVE_TODAY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<ApplicationAnalyticsToday> retrieveTodayAsync(AnalyticsRetrieveTodayParams params) {
+    return client.executeAsync(retrieveTodayRequest(params), RequestOptions.none(), RETRIEVE_TODAY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)}, without parameters.
+   *
+   * @param options per-request options
+   * @return the result
+   */
+  public ApplicationAnalyticsToday retrieveToday(RequestOptions options) {
+    return client.execute(retrieveTodayRequest(AnalyticsRetrieveTodayParams.builder().build()), options, RETRIEVE_TODAY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)}, without parameters.
+   *
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<ApplicationAnalyticsToday> retrieveTodayAsync(RequestOptions options) {
+    return client.executeAsync(retrieveTodayRequest(AnalyticsRetrieveTodayParams.builder().build()), options, RETRIEVE_TODAY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @return the result
+   */
+  public ApplicationAnalyticsToday retrieveToday() {
+    return client.execute(retrieveTodayRequest(AnalyticsRetrieveTodayParams.builder().build()), RequestOptions.none(), RETRIEVE_TODAY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @return a future completed with the result
+   */
+  public CompletableFuture<ApplicationAnalyticsToday> retrieveTodayAsync() {
+    return client.executeAsync(retrieveTodayRequest(AnalyticsRetrieveTodayParams.builder().build()), RequestOptions.none(), RETRIEVE_TODAY_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<AnalyticsRetrieveResponse> RETRIEVE_RESPONSE = Responses.json(Conv.union(AnalyticsRetrieveResponse::fromJson));
 
   private static ApiRequest retrieveRequest(AnalyticsRetrieveParams params) {
@@ -127,6 +216,16 @@ public final class AnalyticsResource {
         .applicationScoped()
         .params(params)
         .queryFields("start_date", "end_date", "scope", "widget_keys", "workflow_ids", "versions", "branch_path_ids", "tag", "transaction_type", "action_type")
+        .build();
+  }
+
+  private static final ResponseHandler<ApplicationAnalyticsToday> RETRIEVE_TODAY_RESPONSE = Responses.json(Conv.model(ApplicationAnalyticsToday::fromJson));
+
+  private static ApiRequest retrieveTodayRequest(AnalyticsRetrieveTodayParams params) {
+    return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/analytics/today/")
+        .applicationScoped()
+        .params(params)
+        .queryFields("tz")
         .build();
   }
 
@@ -216,6 +315,86 @@ public final class AnalyticsResource {
      */
     public CompletableFuture<RawResponse<AnalyticsRetrieveResponse>> retrieveAsync() {
       return client.executeAsync(retrieveRequest(AnalyticsRetrieveParams.builder().build()), RequestOptions.none(), RETRIEVE_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<ApplicationAnalyticsToday> retrieveToday(AnalyticsRetrieveTodayParams params, RequestOptions options) {
+      return client.execute(retrieveTodayRequest(params), options, RETRIEVE_TODAY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<ApplicationAnalyticsToday>> retrieveTodayAsync(AnalyticsRetrieveTodayParams params, RequestOptions options) {
+      return client.executeAsync(retrieveTodayRequest(params), options, RETRIEVE_TODAY_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<ApplicationAnalyticsToday> retrieveToday(AnalyticsRetrieveTodayParams params) {
+      return client.execute(retrieveTodayRequest(params), RequestOptions.none(), RETRIEVE_TODAY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<ApplicationAnalyticsToday>> retrieveTodayAsync(AnalyticsRetrieveTodayParams params) {
+      return client.executeAsync(retrieveTodayRequest(params), RequestOptions.none(), RETRIEVE_TODAY_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<ApplicationAnalyticsToday> retrieveToday(RequestOptions options) {
+      return client.execute(retrieveTodayRequest(AnalyticsRetrieveTodayParams.builder().build()), options, RETRIEVE_TODAY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<ApplicationAnalyticsToday>> retrieveTodayAsync(RequestOptions options) {
+      return client.executeAsync(retrieveTodayRequest(AnalyticsRetrieveTodayParams.builder().build()), options, RETRIEVE_TODAY_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @return the result
+     */
+    public RawResponse<ApplicationAnalyticsToday> retrieveToday() {
+      return client.execute(retrieveTodayRequest(AnalyticsRetrieveTodayParams.builder().build()), RequestOptions.none(), RETRIEVE_TODAY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveToday(AnalyticsRetrieveTodayParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<ApplicationAnalyticsToday>> retrieveTodayAsync() {
+      return client.executeAsync(retrieveTodayRequest(AnalyticsRetrieveTodayParams.builder().build()), RequestOptions.none(), RETRIEVE_TODAY_RESPONSE);
     }
   }
 }

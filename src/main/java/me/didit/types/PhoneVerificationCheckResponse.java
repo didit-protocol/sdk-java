@@ -272,7 +272,7 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
    * Full phone report. Present (non-null) only on finalized outcomes (<code>Approved</code>/<code>Declined</code>); <code>null</code> on <code>Failed</code> and absent on <code>Expired or Not Found</code>.
    */
   public static final class Phone extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("status", "phone_number_prefix", "phone_number", "full_number", "country_code", "country_name", "carrier", "is_disposable", "is_virtual", "verification_method", "verification_attempts", "verified_at", "warnings", "lifecycle", "matches", "phone_social");
+    private static final Set<String> KNOWN_FIELDS = Set.of("status", "phone_number_prefix", "phone_number", "full_number", "country_code", "country_name", "carrier", "is_disposable", "is_virtual", "verification_method", "verification_attempts", "verified_at", "warnings", "lifecycle", "matches", "phone_social", "phone_intelligence");
 
     private Phone(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -467,6 +467,16 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
       return Json.optional(json, "phone_social", Conv.model(PhoneSocialFootprint::fromJson));
     }
 
+    /**
+     * Phone intelligence signals. Present only when <code>enable_enrichment</code> was <code>true</code> on the check.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<PhoneIntelligence> phoneIntelligence() {
+      return Json.optional(json, "phone_intelligence", Conv.model(PhoneIntelligence::fromJson));
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -638,6 +648,16 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
        */
       public Builder phoneSocial(@Nullable PhoneSocialFootprint phoneSocial) {
         return setNullable("phone_social", Conv.model(PhoneSocialFootprint::fromJson), phoneSocial);
+      }
+
+      /**
+       * Phone intelligence signals. Present only when <code>enable_enrichment</code> was <code>true</code> on the check.
+       *
+       * @param phoneIntelligence the value
+       * @return this builder
+       */
+      public Builder phoneIntelligence(PhoneIntelligence phoneIntelligence) {
+        return set("phone_intelligence", Conv.model(PhoneIntelligence::fromJson), phoneIntelligence);
       }
 
       /**

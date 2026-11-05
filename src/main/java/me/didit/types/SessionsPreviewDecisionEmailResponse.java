@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class SessionsPreviewDecisionEmailResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("recipient", "recipient_source", "sender", "sender_name", "sender_email", "sender_kind", "subject", "html", "language", "will_be_sent", "not_sent_reason", "preview_token");
+  private static final Set<String> KNOWN_FIELDS = Set.of("recipient", "recipient_source", "sender", "sender_name", "sender_email", "sender_kind", "subject", "html", "text", "language", "will_be_sent", "not_sent_reason", "preview_token");
 
   private SessionsPreviewDecisionEmailResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -128,6 +128,16 @@ public final class SessionsPreviewDecisionEmailResponse extends JsonModel {
    */
   public String html() {
     return Json.required(json, "html", Conv.STRING);
+  }
+
+  /**
+   * The email's words as plain text, as the person's Messages thread keeps them, for a compact preview (the HTML stays the email the person receives).
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public String text() {
+    return Json.required(json, "text", Conv.STRING);
   }
 
   /**
@@ -264,6 +274,16 @@ public final class SessionsPreviewDecisionEmailResponse extends JsonModel {
     }
 
     /**
+     * The email's words as plain text, as the person's Messages thread keeps them, for a compact preview (the HTML stays the email the person receives).
+     *
+     * @param text the value
+     * @return this builder
+     */
+    public Builder text(String text) {
+      return set("text", Conv.STRING, text);
+    }
+
+    /**
      * The language the email is written in. English (<code>en</code>) when the <code>email_language</code> you asked for is not offered.
      *
      * @param language the value
@@ -318,6 +338,7 @@ public final class SessionsPreviewDecisionEmailResponse extends JsonModel {
       require("sender_kind", false);
       require("subject", false);
       require("html", false);
+      require("text", false);
       require("language", false);
       require("will_be_sent", false);
       require("not_sent_reason", true);

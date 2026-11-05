@@ -58,7 +58,7 @@ public final class SessionsBulkUpdateAmlHitStatusResponse extends JsonModel {
   }
 
   /**
-   * The <code>hit_id</code> of every entry in <code>hit_updates</code>, in request order, including hits whose status did not change.
+   * The <code>id</code> of the hit each entry in <code>hit_updates</code> names, as the session decision returns it, in request order, including hits whose status did not change.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -91,7 +91,7 @@ public final class SessionsBulkUpdateAmlHitStatusResponse extends JsonModel {
     }
 
     /**
-     * The <code>hit_id</code> of every entry in <code>hit_updates</code>, in request order, including hits whose status did not change.
+     * The <code>id</code> of the hit each entry in <code>hit_updates</code> names, as the session decision returns it, in request order, including hits whose status did not change.
      *
      * @param updatedHits the value
      * @return this builder

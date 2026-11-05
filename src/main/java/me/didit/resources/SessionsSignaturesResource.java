@@ -36,15 +36,15 @@ public final class SessionsSignaturesResource {
   /**
    * Download a signed document
    *
-   * <p>Download the signed PDF of one document of an Electronic Signature step. Use the <code>signed_file</code> path of <code>signatures[].documents[]</code> in the decision. The PDF holds the document the signer was shown with their field values stamped, the evidence page (unless <code>signature_evidence_page</code> is off) and the PAdES signature with its timestamp. Didit checks the file against <code>sha256_signed</code> before returning it.
+   * <p>Download the signed PDF of one document of an E-signature step. Use the <code>signed_file</code> path of <code>signatures[].documents[]</code> in the decision. The PDF holds the document the signer was shown with their field values stamped and the evidence page (unless <code>signature_evidence_page</code> is off). An Advanced (AES) PDF also carries the PAdES signature with its timestamp; a Simple PDF has no digital signature, seal or timestamp. Didit checks the file against <code>sha256_signed</code> before returning it.
    *
-   * <p>Works for User Verification (KYC) and Business Verification (KYB) sessions. Needs <code>read:sessions</code>; your API key works. See the [Electronic Signature report](/core-technology/electronic-signature/report-electronic-signature#download-the-signed-documents).
+   * <p>Works for User Verification (KYC) and Business Verification (KYB) sessions. Needs <code>read:sessions</code>; your API key works. See the [E-signature report](/core-technology/electronic-signature/report-electronic-signature#download-the-signed-documents).
    *
    * <p>{@code GET /v3/session/{sessionId}/signatures/{nodeId}/documents/{documentId}/file/}
    * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
    *
    * @param sessionId The User Verification (KYC) or Business Verification (KYB) session.
-   * @param nodeId The Electronic Signature step: `node_id` of the item in `signatures[]`.
+   * @param nodeId The E-signature step: `node_id` of the item in `signatures[]`.
    * @param documentId `id` of the document in `signatures[].documents[]`.
    * @param options per-request options that override the client options
    * @return the response body
@@ -93,7 +93,7 @@ public final class SessionsSignaturesResource {
   /**
    * Download the signature evidence
    *
-   * <p>Download a signer's evidence PDF: the level and format, the signer and their verified identity session, the code confirmation, the IP address, each document with its original SHA-256 and field values, the certificate, the timestamp and the SHA-256 of every signed file. Use the <code>evidence_file</code> path of the signer's item in <code>signatures[]</code>.
+   * <p>Download a signer's evidence PDF: the level and format, the signer, the IP address, each document with its original SHA-256 and field values and the SHA-256 of every signed file, plus, for an Advanced (AES) signature, the verified identity session, the code confirmation, the certificate and the timestamp. Use the <code>evidence_file</code> path of the signer's item in <code>signatures[]</code>.
    *
    * <p>Always pass <code>signature_id</code> when a Business Verification step has several signers: without it, the route picks one of the step's signers. Needs <code>read:sessions</code>; your API key works.
    *
@@ -101,7 +101,7 @@ public final class SessionsSignaturesResource {
    * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
    *
    * @param sessionId The User Verification (KYC) or Business Verification (KYB) session.
-   * @param nodeId The Electronic Signature step: `node_id` of the item in `signatures[]`.
+   * @param nodeId The E-signature step: `node_id` of the item in `signatures[]`.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
@@ -202,7 +202,7 @@ public final class SessionsSignaturesResource {
    * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
    *
    * @param sessionId The User Verification (KYC) or Business Verification (KYB) session.
-   * @param nodeId The Electronic Signature step: `node_id` of the item in `signatures[]`.
+   * @param nodeId The E-signature step: `node_id` of the item in `signatures[]`.
    * @param fieldId The field on this signer's copy, as in the field's `image_url`.
    * @param options per-request options that override the client options
    * @return the response body
@@ -251,14 +251,14 @@ public final class SessionsSignaturesResource {
   /**
    * Validate signatures again
    *
-   * <p>Re-check the signed documents of an Electronic Signature step. Didit re-reads every signed PDF, checks its SHA-256 and validates the PAdES signature, the certificate, the revocation data and the timestamp, then saves the result in each signer's <code>validation</code> and returns the updated items. Nothing is signed again. Send <code>signature_id</code> to check one signer; without it, every signer of the step is checked, and the call fails if any of them hasn't signed.
+   * <p>Re-check the signed documents of an E-signature step. Didit re-reads every signed PDF, checks its SHA-256 and, for an Advanced (AES) signature, validates the PAdES signature, the certificate, the revocation data and the timestamp (a Simple signature has no digital signature, so only the file integrity is checked), then saves the result in each signer's <code>validation</code> and returns the updated items. Nothing is signed again. Send <code>signature_id</code> to check one signer; without it, every signer of the step is checked, and the call fails if any of them hasn't signed.
    *
    * <p>Needs <code>write:sessions</code>; your API key works. In the console it's the <b>Validate again</b> button.
    *
    * <p>{@code POST /v3/session/{sessionId}/signatures/{nodeId}/validate/}
    *
    * @param sessionId The User Verification (KYC) or Business Verification (KYB) session.
-   * @param nodeId The Electronic Signature step: `node_id` of the item in `signatures[]`.
+   * @param nodeId The E-signature step: `node_id` of the item in `signatures[]`.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body

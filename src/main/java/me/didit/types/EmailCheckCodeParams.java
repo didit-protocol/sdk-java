@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 
 /** Parameters for {&#64;code email.check_code}. */
 public final class EmailCheckCodeParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("email", "code", "duplicated_email_action", "breached_email_action", "disposable_email_action", "enable_social", "email_no_social_presence_action");
+  private static final Set<String> KNOWN_FIELDS = Set.of("email", "code", "duplicated_email_action", "breached_email_action", "disposable_email_action", "enable_enrichment", "email_intelligence_score_action", "recent_email_breach_action", "frequent_email_breach_action", "enable_social", "email_no_social_presence_action");
 
   private EmailCheckCodeParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -101,6 +101,46 @@ public final class EmailCheckCodeParams extends JsonModel {
   }
 
   /**
+   * When <code>true</code>, also run email intelligence on the address: a risk score and its breach history. Billed as one <code>email_intelligence_api</code> unit per request ($0.05 at list price) in addition to this endpoint's own price. The request returns <code>403</code> when your balance cannot cover it.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> enableEnrichment() {
+    return Json.optional(json, "enable_enrichment", Conv.BOOLEAN);
+  }
+
+  /**
+   * Action when the email intelligence risk score is above the threshold. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<EmailCheckCodeParams.EmailIntelligenceScoreAction> emailIntelligenceScoreAction() {
+    return Json.optional(json, "email_intelligence_score_action", Conv.enumeration(EmailCheckCodeParams.EmailIntelligenceScoreAction::of));
+  }
+
+  /**
+   * Action when the address appears in a recent known data breach. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<EmailCheckCodeParams.RecentEmailBreachAction> recentEmailBreachAction() {
+    return Json.optional(json, "recent_email_breach_action", Conv.enumeration(EmailCheckCodeParams.RecentEmailBreachAction::of));
+  }
+
+  /**
+   * Action when the address appears in many known data breaches. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<EmailCheckCodeParams.FrequentEmailBreachAction> frequentEmailBreachAction() {
+    return Json.optional(json, "frequent_email_breach_action", Conv.enumeration(EmailCheckCodeParams.FrequentEmailBreachAction::of));
+  }
+
+  /**
    * When true, also look up the social footprint of the address - the email, social, professional, e-commerce and entertainment platforms it is registered on. Billed as one <code>email_social</code> unit per request in addition to this endpoint's own price.
    *
    * @return the value, or empty when the field is absent or null
@@ -181,6 +221,46 @@ public final class EmailCheckCodeParams extends JsonModel {
      */
     public Builder disposableEmailAction(EmailCheckCodeParams.DisposableEmailAction disposableEmailAction) {
       return set("disposable_email_action", Conv.enumeration(EmailCheckCodeParams.DisposableEmailAction::of), disposableEmailAction);
+    }
+
+    /**
+     * When <code>true</code>, also run email intelligence on the address: a risk score and its breach history. Billed as one <code>email_intelligence_api</code> unit per request ($0.05 at list price) in addition to this endpoint's own price. The request returns <code>403</code> when your balance cannot cover it.
+     *
+     * @param enableEnrichment the value
+     * @return this builder
+     */
+    public Builder enableEnrichment(boolean enableEnrichment) {
+      return set("enable_enrichment", Conv.BOOLEAN, enableEnrichment);
+    }
+
+    /**
+     * Action when the email intelligence risk score is above the threshold. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+     *
+     * @param emailIntelligenceScoreAction the value
+     * @return this builder
+     */
+    public Builder emailIntelligenceScoreAction(EmailCheckCodeParams.EmailIntelligenceScoreAction emailIntelligenceScoreAction) {
+      return set("email_intelligence_score_action", Conv.enumeration(EmailCheckCodeParams.EmailIntelligenceScoreAction::of), emailIntelligenceScoreAction);
+    }
+
+    /**
+     * Action when the address appears in a recent known data breach. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+     *
+     * @param recentEmailBreachAction the value
+     * @return this builder
+     */
+    public Builder recentEmailBreachAction(EmailCheckCodeParams.RecentEmailBreachAction recentEmailBreachAction) {
+      return set("recent_email_breach_action", Conv.enumeration(EmailCheckCodeParams.RecentEmailBreachAction::of), recentEmailBreachAction);
+    }
+
+    /**
+     * Action when the address appears in many known data breaches. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+     *
+     * @param frequentEmailBreachAction the value
+     * @return this builder
+     */
+    public Builder frequentEmailBreachAction(EmailCheckCodeParams.FrequentEmailBreachAction frequentEmailBreachAction) {
+      return set("frequent_email_breach_action", Conv.enumeration(EmailCheckCodeParams.FrequentEmailBreachAction::of), frequentEmailBreachAction);
     }
 
     /**
@@ -341,6 +421,135 @@ public final class EmailCheckCodeParams extends JsonModel {
      * @return the known values
      */
     public static List<DisposableEmailAction> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Action when the email intelligence risk score is above the threshold. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class EmailIntelligenceScoreAction extends StringEnum {
+    /** The value {@code "NO_ACTION"}. */
+    public static final EmailIntelligenceScoreAction NO_ACTION = new EmailIntelligenceScoreAction("NO_ACTION");
+
+    /** The value {@code "DECLINE"}. */
+    public static final EmailIntelligenceScoreAction DECLINE = new EmailIntelligenceScoreAction("DECLINE");
+
+    private static final List<EmailIntelligenceScoreAction> KNOWN_VALUES = List.of(NO_ACTION, DECLINE);
+
+    private EmailIntelligenceScoreAction(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static EmailIntelligenceScoreAction of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, EmailIntelligenceScoreAction::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<EmailIntelligenceScoreAction> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Action when the address appears in a recent known data breach. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class RecentEmailBreachAction extends StringEnum {
+    /** The value {@code "NO_ACTION"}. */
+    public static final RecentEmailBreachAction NO_ACTION = new RecentEmailBreachAction("NO_ACTION");
+
+    /** The value {@code "DECLINE"}. */
+    public static final RecentEmailBreachAction DECLINE = new RecentEmailBreachAction("DECLINE");
+
+    private static final List<RecentEmailBreachAction> KNOWN_VALUES = List.of(NO_ACTION, DECLINE);
+
+    private RecentEmailBreachAction(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static RecentEmailBreachAction of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, RecentEmailBreachAction::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<RecentEmailBreachAction> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Action when the address appears in many known data breaches. <code>DECLINE</code> flips the final <code>status</code> to <code>Declined</code>; <code>NO_ACTION</code> records the signal without declining. Only takes effect when <code>enable_enrichment</code> is <code>true</code>.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class FrequentEmailBreachAction extends StringEnum {
+    /** The value {@code "NO_ACTION"}. */
+    public static final FrequentEmailBreachAction NO_ACTION = new FrequentEmailBreachAction("NO_ACTION");
+
+    /** The value {@code "DECLINE"}. */
+    public static final FrequentEmailBreachAction DECLINE = new FrequentEmailBreachAction("DECLINE");
+
+    private static final List<FrequentEmailBreachAction> KNOWN_VALUES = List.of(NO_ACTION, DECLINE);
+
+    private FrequentEmailBreachAction(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static FrequentEmailBreachAction of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, FrequentEmailBreachAction::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<FrequentEmailBreachAction> knownValues() {
       return KNOWN_VALUES;
     }
 

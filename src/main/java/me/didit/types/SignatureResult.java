@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /**
- * One signer's result for one Electronic Signature step. See the [Electronic Signature report](/core-technology/electronic-signature/report-electronic-signature).
+ * One signer's result for one E-signature step. See the [E-signature report](/core-technology/electronic-signature/report-electronic-signature).
  */
 public final class SignatureResult extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("id", "node_id", "status", "verdict", "level", "format", "profile", "signer", "identity_used", "certificate", "confirmation", "timestamp", "documents", "adopted_signature", "electronic_signature_consent_at", "evidence_file", "warnings", "validation", "declined_at", "declined_action", "signed_at", "expires_at", "email_sent_at", "email_unavailable_reason", "ip_address", "place", "place_unavailable_reason");
@@ -95,7 +95,7 @@ public final class SignatureResult extends JsonModel {
   }
 
   /**
-   * <code>aes</code>. <code>qes</code> (Qualified Electronic Signature, QES) is coming soon.
+   * <code>simple</code> (default) or <code>aes</code>. <code>qes</code> (Qualified Electronic Signature, QES) is an add-on that is not available yet.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -105,7 +105,7 @@ public final class SignatureResult extends JsonModel {
   }
 
   /**
-   * The <code>format</code> field.
+   * <code>pdf</code> for a Simple signature, <code>pades</code> for Advanced (AES).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -115,7 +115,7 @@ public final class SignatureResult extends JsonModel {
   }
 
   /**
-   * <code>PAdES-B-LT</code> once signed.
+   * <code>PAdES-B-LT</code> once an Advanced (AES) signature is signed, otherwise null.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -135,7 +135,7 @@ public final class SignatureResult extends JsonModel {
   }
 
   /**
-   * The <code>identity_used</code> field.
+   * The verified identity the signature relies on. Empty for a Simple signature with no verified identity.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -145,7 +145,7 @@ public final class SignatureResult extends JsonModel {
   }
 
   /**
-   * The certificate the documents were signed with. <code>null</code> until signed.
+   * The certificate the documents were signed with. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -165,7 +165,7 @@ public final class SignatureResult extends JsonModel {
   }
 
   /**
-   * The trusted timestamp in the signature. <code>null</code> until signed.
+   * The RFC 3161 timestamp in the signature, issued by Didit. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -215,7 +215,7 @@ public final class SignatureResult extends JsonModel {
   }
 
   /**
-   * Warnings raised for this signer. See [Electronic Signature warnings](/core-technology/electronic-signature/warnings-electronic-signature).
+   * Warnings raised for this signer. See [E-signature warnings](/core-technology/electronic-signature/warnings-electronic-signature).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -378,7 +378,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * <code>aes</code>. <code>qes</code> (Qualified Electronic Signature, QES) is coming soon.
+     * <code>simple</code> (default) or <code>aes</code>. <code>qes</code> (Qualified Electronic Signature, QES) is an add-on that is not available yet.
      *
      * @param level the value
      * @return this builder
@@ -388,7 +388,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * The <code>format</code> field.
+     * <code>pdf</code> for a Simple signature, <code>pades</code> for Advanced (AES).
      *
      * @param format the value
      * @return this builder
@@ -398,7 +398,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * <code>PAdES-B-LT</code> once signed.
+     * <code>PAdES-B-LT</code> once an Advanced (AES) signature is signed, otherwise null.
      *
      * @param profile the value, or {@code null} to send JSON null
      * @return this builder
@@ -418,7 +418,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * The <code>identity_used</code> field.
+     * The verified identity the signature relies on. Empty for a Simple signature with no verified identity.
      *
      * @param identityUsed the value
      * @return this builder
@@ -428,7 +428,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * The certificate the documents were signed with. <code>null</code> until signed.
+     * The certificate the documents were signed with. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
      *
      * @param certificate the value, or {@code null} to send JSON null
      * @return this builder
@@ -448,7 +448,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * The trusted timestamp in the signature. <code>null</code> until signed.
+     * The RFC 3161 timestamp in the signature, issued by Didit. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
      *
      * @param timestamp the value, or {@code null} to send JSON null
      * @return this builder
@@ -498,7 +498,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * Warnings raised for this signer. See [Electronic Signature warnings](/core-technology/electronic-signature/warnings-electronic-signature).
+     * Warnings raised for this signer. See [E-signature warnings](/core-technology/electronic-signature/warnings-electronic-signature).
      *
      * @param warnings the value
      * @return this builder
@@ -727,18 +727,21 @@ public final class SignatureResult extends JsonModel {
   }
 
   /**
-   * <code>aes</code>. <code>qes</code> (Qualified Electronic Signature, QES) is coming soon.
+   * <code>simple</code> (default) or <code>aes</code>. <code>qes</code> (Qualified Electronic Signature, QES) is an add-on that is not available yet.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
   public static final class Level extends StringEnum {
+    /** The value {@code "simple"}. */
+    public static final Level SIMPLE = new Level("simple");
+
     /** The value {@code "aes"}. */
     public static final Level AES = new Level("aes");
 
     /** The value {@code "qes"}. */
     public static final Level QES = new Level("qes");
 
-    private static final List<Level> KNOWN_VALUES = List.of(AES, QES);
+    private static final List<Level> KNOWN_VALUES = List.of(SIMPLE, AES, QES);
 
     private Level(String value) {
       super(value);
@@ -770,14 +773,18 @@ public final class SignatureResult extends JsonModel {
   }
 
   /**
+   * <code>pdf</code> for a Simple signature, <code>pades</code> for Advanced (AES).
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
   public static final class Format extends StringEnum {
+    /** The value {@code "pdf"}. */
+    public static final Format PDF = new Format("pdf");
+
     /** The value {@code "pades"}. */
     public static final Format PADES = new Format("pades");
 
-    private static final List<Format> KNOWN_VALUES = List.of(PADES);
+    private static final List<Format> KNOWN_VALUES = List.of(PDF, PADES);
 
     private Format(String value) {
       super(value);
@@ -845,7 +852,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * Verified name.
+     * The signer's name. Verified (from the approved ID verification or the session) except at the Simple level without a verified session name, where it is the name the signer typed and is not verified.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -918,7 +925,7 @@ public final class SignatureResult extends JsonModel {
       }
 
       /**
-       * Verified name.
+       * The signer's name. Verified (from the approved ID verification or the session) except at the Simple level without a verified session name, where it is the name the signer typed and is not verified.
        *
        * @param name the value, or {@code null} to send JSON null
        * @return this builder
@@ -1035,6 +1042,9 @@ public final class SignatureResult extends JsonModel {
     }
   }
 
+  /**
+   * The verified identity the signature relies on. Empty for a Simple signature with no verified identity.
+   */
   public static final class IdentityUsed extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "kyc_id", "verified", "expected_name");
 
@@ -1180,7 +1190,9 @@ public final class SignatureResult extends JsonModel {
     }
   }
 
-  /** The certificate the documents were signed with. <code>null</code> until signed. */
+  /**
+   * The certificate the documents were signed with. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
+   */
   public static final class Certificate extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("issuer", "issued_to", "serial", "valid_from", "valid_until");
 
@@ -1383,7 +1395,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * The <code>channel</code> field.
+     * <code>null</code> for a Simple signature, which has no code.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1436,13 +1448,13 @@ public final class SignatureResult extends JsonModel {
       }
 
       /**
-       * The <code>channel</code> field.
+       * <code>null</code> for a Simple signature, which has no code.
        *
-       * @param channel the value
+       * @param channel the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder channel(SignatureResult.Confirmation.Channel channel) {
-        return set("channel", Conv.enumeration(SignatureResult.Confirmation.Channel::of), channel);
+      public Builder channel(SignatureResult.Confirmation.@Nullable Channel channel) {
+        return setNullable("channel", Conv.enumeration(SignatureResult.Confirmation.Channel::of), channel);
       }
 
       /**
@@ -1491,6 +1503,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
+     * <code>null</code> for a Simple signature, which has no code.
      *
      * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
      */
@@ -1533,7 +1546,9 @@ public final class SignatureResult extends JsonModel {
     }
   }
 
-  /** The trusted timestamp in the signature. <code>null</code> until signed. */
+  /**
+   * The RFC 3161 timestamp in the signature, issued by Didit. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
+   */
   public static final class Timestamp extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("time", "qualified", "valid");
 
@@ -3028,7 +3043,7 @@ public final class SignatureResult extends JsonModel {
       }
 
       /**
-       * The certificate the documents were signed with. <code>null</code> until signed.
+       * The certificate the documents were signed with. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3038,7 +3053,7 @@ public final class SignatureResult extends JsonModel {
       }
 
       /**
-       * The trusted timestamp in the signature. <code>null</code> until signed.
+       * The RFC 3161 timestamp in the signature, issued by Didit. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3131,7 +3146,7 @@ public final class SignatureResult extends JsonModel {
         }
 
         /**
-         * The certificate the documents were signed with. <code>null</code> until signed.
+         * The certificate the documents were signed with. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
          *
          * @param certificate the value, or {@code null} to send JSON null
          * @return this builder
@@ -3141,7 +3156,7 @@ public final class SignatureResult extends JsonModel {
         }
 
         /**
-         * The trusted timestamp in the signature. <code>null</code> until signed.
+         * The RFC 3161 timestamp in the signature, issued by Didit. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
          *
          * @param timestamp the value, or {@code null} to send JSON null
          * @return this builder
@@ -3273,7 +3288,9 @@ public final class SignatureResult extends JsonModel {
         }
       }
 
-      /** The certificate the documents were signed with. <code>null</code> until signed. */
+      /**
+       * The certificate the documents were signed with. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
+       */
       public static final class Certificate extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("issuer", "issued_to", "serial", "valid_from", "valid_until");
 
@@ -3439,7 +3456,9 @@ public final class SignatureResult extends JsonModel {
         }
       }
 
-      /** The trusted timestamp in the signature. <code>null</code> until signed. */
+      /**
+       * The RFC 3161 timestamp in the signature, issued by Didit. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
+       */
       public static final class Timestamp extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("time", "qualified", "valid");
 

@@ -17,7 +17,7 @@ import org.jspecify.annotations.Nullable;
 
 /** One completed ongoing-monitoring re-screen of an AML check. */
 public final class AMLScreeningRun extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "completed_at", "started_at", "outcome", "trigger", "provider", "status", "score", "total_hits", "dataset_freshness");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "run_id", "completed_at", "started_at", "outcome", "trigger", "provider", "status", "score", "total_hits", "new_hits", "entities_screened", "dataset_freshness");
 
   private AMLScreeningRun(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -60,6 +60,16 @@ public final class AMLScreeningRun extends JsonModel {
    */
   public String uuid() {
     return Json.required(json, "uuid", Conv.STRING);
+  }
+
+  /**
+   * The monitoring run this screening belongs to. Every verification screened in the same run shares it.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public String runId() {
+    return Json.required(json, "run_id", Conv.STRING);
   }
 
   /**
@@ -143,6 +153,26 @@ public final class AMLScreeningRun extends JsonModel {
   }
 
   /**
+   * Number of hits this run found that the check did not have before it. <code>0</code> when nothing new was found; <code>null</code> when the run failed or was recorded before this count existed.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> newHits() {
+    return Json.optional(json, "new_hits", Conv.LONG);
+  }
+
+  /**
+   * Number of entities this run screened for the verification: <code>1</code> when the subject was screened, <code>0</code> when the run failed.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public long entitiesScreened() {
+    return Json.required(json, "entities_screened", Conv.LONG);
+  }
+
+  /**
    * Dataset freshness behind this run, or <code>null</code> when no dates were available.
    *
    * @return the value, or empty when the field is absent or null
@@ -173,6 +203,16 @@ public final class AMLScreeningRun extends JsonModel {
      */
     public Builder uuid(String uuid) {
       return set("uuid", Conv.STRING, uuid);
+    }
+
+    /**
+     * The monitoring run this screening belongs to. Every verification screened in the same run shares it.
+     *
+     * @param runId the value
+     * @return this builder
+     */
+    public Builder runId(String runId) {
+      return set("run_id", Conv.STRING, runId);
     }
 
     /**
@@ -256,6 +296,26 @@ public final class AMLScreeningRun extends JsonModel {
     }
 
     /**
+     * Number of hits this run found that the check did not have before it. <code>0</code> when nothing new was found; <code>null</code> when the run failed or was recorded before this count existed.
+     *
+     * @param newHits the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder newHits(@Nullable Long newHits) {
+      return setNullable("new_hits", Conv.LONG, newHits);
+    }
+
+    /**
+     * Number of entities this run screened for the verification: <code>1</code> when the subject was screened, <code>0</code> when the run failed.
+     *
+     * @param entitiesScreened the value
+     * @return this builder
+     */
+    public Builder entitiesScreened(long entitiesScreened) {
+      return set("entities_screened", Conv.LONG, entitiesScreened);
+    }
+
+    /**
      * Dataset freshness behind this run, or <code>null</code> when no dates were available.
      *
      * @param datasetFreshness the value, or {@code null} to send JSON null
@@ -273,6 +333,7 @@ public final class AMLScreeningRun extends JsonModel {
      */
     public AMLScreeningRun build() {
       require("uuid", false);
+      require("run_id", false);
       require("completed_at", false);
       require("started_at", false);
       require("outcome", false);
@@ -281,6 +342,8 @@ public final class AMLScreeningRun extends JsonModel {
       require("status", true);
       require("score", true);
       require("total_hits", true);
+      require("new_hits", true);
+      require("entities_screened", false);
       require("dataset_freshness", true);
       return new AMLScreeningRun(buildJson(), buildFiles());
     }

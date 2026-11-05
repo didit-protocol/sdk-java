@@ -456,13 +456,13 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
   }
 
   /**
-   * Raw registry payload snapshot. Every key you PATCH is merged into this map (dates serialized as ISO strings), so the "extracted from registry" view reflects operator corrections.
+   * Didit's normalized registry detail for the company: the ownership outcome (<code>ownership_error</code>, <code>section_errors</code>, <code>ubo_resolution</code>, <code>lite_enrichment</code>), the corrections made with update-data, and registry facts that have no field of their own. It never carries the registry source's own record. Every key is optional and present only when the company has a value for it; new keys may be added. Read the canonical fields (<code>addresses</code>, <code>industries</code>, <code>ownership</code>, <code>beneficial_owners[].shareholding</code>) for anything they cover.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<Map<String, JsonNode>> registryData() {
-    return Json.optional(json, "registry_data", Conv.OBJECT);
+  public Optional<KYBRegistryData> registryData() {
+    return Json.optional(json, "registry_data", Conv.model(KYBRegistryData::fromJson));
   }
 
   /**
@@ -919,13 +919,13 @@ public final class SessionsUpdateKybCompanyDataResponse extends JsonModel {
     }
 
     /**
-     * Raw registry payload snapshot. Every key you PATCH is merged into this map (dates serialized as ISO strings), so the "extracted from registry" view reflects operator corrections.
+     * Didit's normalized registry detail for the company: the ownership outcome (<code>ownership_error</code>, <code>section_errors</code>, <code>ubo_resolution</code>, <code>lite_enrichment</code>), the corrections made with update-data, and registry facts that have no field of their own. It never carries the registry source's own record. Every key is optional and present only when the company has a value for it; new keys may be added. Read the canonical fields (<code>addresses</code>, <code>industries</code>, <code>ownership</code>, <code>beneficial_owners[].shareholding</code>) for anything they cover.
      *
      * @param registryData the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder registryData(@Nullable Map<String, ?> registryData) {
-      return setAny("registry_data", registryData);
+    public Builder registryData(@Nullable KYBRegistryData registryData) {
+      return setNullable("registry_data", Conv.model(KYBRegistryData::fromJson), registryData);
     }
 
     /**

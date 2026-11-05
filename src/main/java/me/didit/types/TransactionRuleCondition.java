@@ -74,7 +74,7 @@ public final class TransactionRuleCondition extends JsonModel {
   }
 
   /**
-   * Comparison value. Its shape depends on the operator and value_type; omit for the presence-check operators.
+   * Comparison value. Its shape depends on the operator and value_type; omit it for the presence-check operators. Every other operator needs a value that is not <code>null</code> or an empty list, otherwise the rule is refused with <code>400</code>. <code>contains_any</code> needs a list of strings, and <code>contains</code>, <code>not_contains</code> and <code>regex</code> need a single string.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -167,7 +167,7 @@ public final class TransactionRuleCondition extends JsonModel {
     }
 
     /**
-     * Comparison value. Its shape depends on the operator and value_type; omit for the presence-check operators.
+     * Comparison value. Its shape depends on the operator and value_type; omit it for the presence-check operators. Every other operator needs a value that is not <code>null</code> or an empty list, otherwise the rule is refused with <code>400</code>. <code>contains_any</code> needs a list of strings, and <code>contains</code>, <code>not_contains</code> and <code>regex</code> need a single string.
      *
      * @param value the value
      * @return this builder

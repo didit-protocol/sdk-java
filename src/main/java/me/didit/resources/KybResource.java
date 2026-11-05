@@ -154,7 +154,7 @@ public final class KybResource {
    *
    * <p>Retrieve the Lite profile <b>plus the direct shareholders</b> (natural persons and corporate entities, with their ownership bands) of one candidate returned by <code>POST /v3/kyb/search/</code>.
    *
-   * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
+   * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. Search at the tier you intend to buy (<code>tier</code> on <code>POST /v3/kyb/search/</code>), because the search runs on the registry chain that serves that tier and an empty Lite search is not proof that the registry does not hold the company. When the country's ownership data lives at another registry, Didit re-finds the company there by registration number, at no extra cost.
    *
    * <p><b>Billing.</b> Billed at the country's Shareholders price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). When the registry holds no shareholder record for the company (or the country offers no ownership data at all) the Lite profile is delivered and billed instead: read <code>registry_tier_delivered</code> and <code>registry_ownership_status</code>. The balance is checked against the Shareholders price before any registry call (<code>403</code> when short).
    *
@@ -208,7 +208,7 @@ public final class KybResource {
    *
    * <p>Retrieve the Lite profile, the direct shareholders <b>and the ultimate beneficial owners</b> resolved through the ownership chain (<code>registry_data.ubo_resolution</code> carries the corporate parent chain) of one candidate returned by <code>POST /v3/kyb/search/</code>.
    *
-   * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. The search runs on the Lite registry chain; when the country's ownership data lives at another registry Didit re-finds the company there by registration number, at no extra cost.
+   * <p><b>Pairing with search.</b> Pass the candidate's <code>kyb_response_id</code> exactly as returned by a search of the same application. Search at the tier you intend to buy (<code>tier</code> on <code>POST /v3/kyb/search/</code>), because the search runs on the registry chain that serves that tier and an empty Lite search is not proof that the registry does not hold the company. When the country's ownership data lives at another registry, Didit re-finds the company there by registration number, at no extra cost.
    *
    * <p><b>Billing.</b> Billed at the country's UBO price - see [KYB registry pricing](/getting-started/kyb-registry-pricing). The tier delivered is the highest the country and the registry can serve: Shareholders when the resolved report names no natural person as a beneficial owner, Lite when there is no ownership record at all; <code>registry_tier_delivered</code> names what was billed. The balance is checked against the UBO price before any registry call (<code>403</code> when short).
    *

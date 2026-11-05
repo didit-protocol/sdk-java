@@ -21,6 +21,7 @@ import me.didit.types.DigitalIdWalletApiEudiWalletVerificationStartRequest;
 import me.didit.types.DigitalIdWalletApiFranceconnectWalletVerificationStartRequest;
 import me.didit.types.DigitalIdWalletApiFrejaidWalletVerificationStartRequest;
 import me.didit.types.DigitalIdWalletApiFtnWalletVerificationStartRequest;
+import me.didit.types.DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest;
 import me.didit.types.DigitalIdWalletApiGovbrWalletVerificationStartRequest;
 import me.didit.types.DigitalIdWalletApiGovukWalletWalletVerificationStartRequest;
 import me.didit.types.DigitalIdWalletApiIdcardEeWalletVerificationStartRequest;
@@ -35,6 +36,7 @@ import me.didit.types.DigitalIdWalletApiSmartIdWalletVerificationStartRequest;
 import me.didit.types.DigitalIdWalletApiUaePassWalletVerificationStartRequest;
 import me.didit.types.DigitalIdWalletApiVippsWalletVerificationStartRequest;
 import me.didit.types.DigitalIdWalletApiWalletCatalogResponse;
+import me.didit.types.DigitalIdWalletApiWalletDigitalCredentialResponseRequest;
 import me.didit.types.DigitalIdWalletApiWalletVerificationResponse;
 
 /** The {@code id_wallets} resource: {@code client.idWallets()}. */
@@ -1411,6 +1413,103 @@ public final class IdWalletsResource {
     return client.executeAsync(startEudiRequest(params), RequestOptions.none(), START_EUDI_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Submit a wallet response
+   *
+   * <p>Digital Credentials API wallets (Google Wallet): send what the wallet returned to your page or app for a verification whose next_action is request_digital_credential. Didit decrypts it, checks the issuer's signature against the trusted issuer roots, every returned value against its signed digest, and the device signature over your origin and this request, then decides the verification: verified (billed once) or declined with the error code. Single use: a second submit returns the decided verification.
+   *
+   * <p>{@code POST /v3/id-verification/wallets/verifications/{request_id}/response/}
+   *
+   * @param requestId The request_id the start endpoint returned.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public DigitalIdWalletApiWalletVerificationResponse submitVerificationResponse(String requestId, DigitalIdWalletApiWalletDigitalCredentialResponseRequest params, RequestOptions options) {
+    return client.execute(submitVerificationResponseRequest(requestId, params), options, SUBMIT_VERIFICATION_RESPONSE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #submitVerificationResponse(String, DigitalIdWalletApiWalletDigitalCredentialResponseRequest, RequestOptions)}.
+   *
+   * @param requestId the {@code request_id}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> submitVerificationResponseAsync(String requestId, DigitalIdWalletApiWalletDigitalCredentialResponseRequest params, RequestOptions options) {
+    return client.executeAsync(submitVerificationResponseRequest(requestId, params), options, SUBMIT_VERIFICATION_RESPONSE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #submitVerificationResponse(String, DigitalIdWalletApiWalletDigitalCredentialResponseRequest, RequestOptions)}, with the client's options.
+   *
+   * @param requestId the {@code request_id}
+   * @param params the request parameters
+   * @return the result
+   */
+  public DigitalIdWalletApiWalletVerificationResponse submitVerificationResponse(String requestId, DigitalIdWalletApiWalletDigitalCredentialResponseRequest params) {
+    return client.execute(submitVerificationResponseRequest(requestId, params), RequestOptions.none(), SUBMIT_VERIFICATION_RESPONSE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #submitVerificationResponse(String, DigitalIdWalletApiWalletDigitalCredentialResponseRequest, RequestOptions)}, with the client's options.
+   *
+   * @param requestId the {@code request_id}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> submitVerificationResponseAsync(String requestId, DigitalIdWalletApiWalletDigitalCredentialResponseRequest params) {
+    return client.executeAsync(submitVerificationResponseRequest(requestId, params), RequestOptions.none(), SUBMIT_VERIFICATION_RESPONSE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Start Google Wallet verification
+   *
+   * <p>Start a Google Wallet sign-in (Google Wallet (ID pass) and US state issuers (mobile driving licence); USA, GBR, BRA, SGP, TWN) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=request_digital_credential with a request Didit signed for your application, usable only from origin. In a user gesture there, pass next_action.digital_credentials.request to navigator.credentials.get({digital: ...}) (or to Android Credential Manager as GetDigitalCredentialOption requestJson), then POST what the wallet returns to /v3/id-verification/wallets/verifications/{request_id}/response/. The browser offers its own QR code when the wallet is on another device. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider.
+   *
+   * <p>{@code POST /v3/id-verification/wallets/google-wallet/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public DigitalIdWalletApiWalletVerificationResponse startGoogleWallet(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest params, RequestOptions options) {
+    return client.execute(startGoogleWalletRequest(params), options, START_GOOGLE_WALLET_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #startGoogleWallet(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startGoogleWalletAsync(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest params, RequestOptions options) {
+    return client.executeAsync(startGoogleWalletRequest(params), options, START_GOOGLE_WALLET_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #startGoogleWallet(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return the result
+   */
+  public DigitalIdWalletApiWalletVerificationResponse startGoogleWallet(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest params) {
+    return client.execute(startGoogleWalletRequest(params), RequestOptions.none(), START_GOOGLE_WALLET_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #startGoogleWallet(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<DigitalIdWalletApiWalletVerificationResponse> startGoogleWalletAsync(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest params) {
+    return client.executeAsync(startGoogleWalletRequest(params), RequestOptions.none(), START_GOOGLE_WALLET_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<DigitalIdWalletApiWalletCatalogResponse> LIST_RESPONSE = Responses.json(Conv.model(DigitalIdWalletApiWalletCatalogResponse::fromJson));
 
   private static ApiRequest listRequest() {
@@ -1662,6 +1761,25 @@ public final class IdWalletsResource {
 
   private static ApiRequest startEudiRequest(DigitalIdWalletApiEudiWalletVerificationStartRequest params) {
     return ApiRequest.builder("POST", "/v3/id-verification/wallets/eudi/")
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<DigitalIdWalletApiWalletVerificationResponse> SUBMIT_VERIFICATION_RESPONSE_RESPONSE = Responses.json(Conv.model(DigitalIdWalletApiWalletVerificationResponse::fromJson));
+
+  private static ApiRequest submitVerificationResponseRequest(String requestId, DigitalIdWalletApiWalletDigitalCredentialResponseRequest params) {
+    return ApiRequest.builder("POST", "/v3/id-verification/wallets/verifications/{request_id}/response/")
+        .pathParam("request_id", requestId)
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<DigitalIdWalletApiWalletVerificationResponse> START_GOOGLE_WALLET_RESPONSE = Responses.json(Conv.model(DigitalIdWalletApiWalletVerificationResponse::fromJson));
+
+  private static ApiRequest startGoogleWalletRequest(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest params) {
+    return ApiRequest.builder("POST", "/v3/id-verification/wallets/google-wallet/")
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
         .build();
@@ -2887,6 +3005,94 @@ public final class IdWalletsResource {
      */
     public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startEudiAsync(DigitalIdWalletApiEudiWalletVerificationStartRequest params) {
       return client.executeAsync(startEudiRequest(params), RequestOptions.none(), START_EUDI_RESPONSE);
+    }
+
+    /**
+     * {@link #submitVerificationResponse(String, DigitalIdWalletApiWalletDigitalCredentialResponseRequest, RequestOptions)} with the raw response.
+     *
+     * @param requestId the {@code request_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<DigitalIdWalletApiWalletVerificationResponse> submitVerificationResponse(String requestId, DigitalIdWalletApiWalletDigitalCredentialResponseRequest params, RequestOptions options) {
+      return client.execute(submitVerificationResponseRequest(requestId, params), options, SUBMIT_VERIFICATION_RESPONSE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #submitVerificationResponse(String, DigitalIdWalletApiWalletDigitalCredentialResponseRequest, RequestOptions)} with the raw response.
+     *
+     * @param requestId the {@code request_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> submitVerificationResponseAsync(String requestId, DigitalIdWalletApiWalletDigitalCredentialResponseRequest params, RequestOptions options) {
+      return client.executeAsync(submitVerificationResponseRequest(requestId, params), options, SUBMIT_VERIFICATION_RESPONSE_RESPONSE);
+    }
+
+    /**
+     * {@link #submitVerificationResponse(String, DigitalIdWalletApiWalletDigitalCredentialResponseRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param requestId the {@code request_id}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<DigitalIdWalletApiWalletVerificationResponse> submitVerificationResponse(String requestId, DigitalIdWalletApiWalletDigitalCredentialResponseRequest params) {
+      return client.execute(submitVerificationResponseRequest(requestId, params), RequestOptions.none(), SUBMIT_VERIFICATION_RESPONSE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #submitVerificationResponse(String, DigitalIdWalletApiWalletDigitalCredentialResponseRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param requestId the {@code request_id}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> submitVerificationResponseAsync(String requestId, DigitalIdWalletApiWalletDigitalCredentialResponseRequest params) {
+      return client.executeAsync(submitVerificationResponseRequest(requestId, params), RequestOptions.none(), SUBMIT_VERIFICATION_RESPONSE_RESPONSE);
+    }
+
+    /**
+     * {@link #startGoogleWallet(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startGoogleWallet(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest params, RequestOptions options) {
+      return client.execute(startGoogleWalletRequest(params), options, START_GOOGLE_WALLET_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #startGoogleWallet(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startGoogleWalletAsync(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest params, RequestOptions options) {
+      return client.executeAsync(startGoogleWalletRequest(params), options, START_GOOGLE_WALLET_RESPONSE);
+    }
+
+    /**
+     * {@link #startGoogleWallet(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<DigitalIdWalletApiWalletVerificationResponse> startGoogleWallet(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest params) {
+      return client.execute(startGoogleWalletRequest(params), RequestOptions.none(), START_GOOGLE_WALLET_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #startGoogleWallet(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<DigitalIdWalletApiWalletVerificationResponse>> startGoogleWalletAsync(DigitalIdWalletApiGoogleWalletWalletVerificationStartRequest params) {
+      return client.executeAsync(startGoogleWalletRequest(params), RequestOptions.none(), START_GOOGLE_WALLET_RESPONSE);
     }
   }
 }

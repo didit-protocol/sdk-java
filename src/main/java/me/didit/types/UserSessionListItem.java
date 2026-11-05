@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * Summary row for a User Verification (KYC) session. Identity fields (<code>full_name</code>, <code>country</code>, <code>document_type</code>, <code>portrait_image</code>, contact fields) are populated progressively as the user completes verification steps, and are <code>null</code> until the relevant step finishes. Fields restricted by the workflow's response-attributes configuration are also returned as <code>null</code>.
  */
 public final class UserSessionListItem extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_kind", "session_number", "session_url", "portrait_image", "document_type", "full_name", "country", "status", "vendor_data", "didit_internal_id", "created_at", "features", "phone_number", "email_address", "additional_details");
+  private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_kind", "session_number", "session_url", "portrait_image", "document_type", "full_name", "country", "status", "vendor_data", "didit_internal_id", "created_at", "features", "phone_number", "email_address", "additional_details", "assignee", "waiting_since", "sla_due_at", "top_warnings", "warnings_count");
 
   private UserSessionListItem(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -214,6 +214,56 @@ public final class UserSessionListItem extends JsonModel {
     return Json.optional(json, "additional_details", Conv.model(UserSessionListItem.AdditionalDetails::fromJson));
   }
 
+  /**
+   * The Console reviewer the session is assigned to, or <code>null</code> when nobody holds it.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<UserSessionListItem.Assignee> assignee() {
+    return Json.optional(json, "assignee", Conv.model(UserSessionListItem.Assignee::fromJson));
+  }
+
+  /**
+   * When the session started waiting for review. <code>null</code> unless the session is <code>In Review</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> waitingSince() {
+    return Json.optional(json, "waiting_since", Conv.DATE_TIME);
+  }
+
+  /**
+   * When the review is due, from the review deadline set for your application in the Console. <code>null</code> unless the session is <code>In Review</code> and a deadline is set.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> slaDueAt() {
+    return Json.optional(json, "sla_due_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * Up to a few of the session's most important warnings, for a quick triage view. The full list is in the decision.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<UserSessionListItem.TopWarnings>> topWarnings() {
+    return Json.optional(json, "top_warnings", Conv.list(Conv.model(UserSessionListItem.TopWarnings::fromJson)));
+  }
+
+  /**
+   * Number of warnings on the session.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> warningsCount() {
+    return Json.optional(json, "warnings_count", Conv.LONG);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -385,6 +435,56 @@ public final class UserSessionListItem extends JsonModel {
      */
     public Builder additionalDetails(UserSessionListItem.@Nullable AdditionalDetails additionalDetails) {
       return setNullable("additional_details", Conv.model(UserSessionListItem.AdditionalDetails::fromJson), additionalDetails);
+    }
+
+    /**
+     * The Console reviewer the session is assigned to, or <code>null</code> when nobody holds it.
+     *
+     * @param assignee the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder assignee(UserSessionListItem.@Nullable Assignee assignee) {
+      return setNullable("assignee", Conv.model(UserSessionListItem.Assignee::fromJson), assignee);
+    }
+
+    /**
+     * When the session started waiting for review. <code>null</code> unless the session is <code>In Review</code>.
+     *
+     * @param waitingSince the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder waitingSince(@Nullable OffsetDateTime waitingSince) {
+      return setNullable("waiting_since", Conv.DATE_TIME, waitingSince);
+    }
+
+    /**
+     * When the review is due, from the review deadline set for your application in the Console. <code>null</code> unless the session is <code>In Review</code> and a deadline is set.
+     *
+     * @param slaDueAt the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder slaDueAt(@Nullable OffsetDateTime slaDueAt) {
+      return setNullable("sla_due_at", Conv.DATE_TIME, slaDueAt);
+    }
+
+    /**
+     * Up to a few of the session's most important warnings, for a quick triage view. The full list is in the decision.
+     *
+     * @param topWarnings the value
+     * @return this builder
+     */
+    public Builder topWarnings(List<UserSessionListItem.TopWarnings> topWarnings) {
+      return set("top_warnings", Conv.list(Conv.model(UserSessionListItem.TopWarnings::fromJson)), topWarnings);
+    }
+
+    /**
+     * Number of warnings on the session.
+     *
+     * @param warningsCount the value
+     * @return this builder
+     */
+    public Builder warningsCount(long warningsCount) {
+      return set("warnings_count", Conv.LONG, warningsCount);
     }
 
     /**
@@ -730,7 +830,10 @@ public final class UserSessionListItem extends JsonModel {
       /** The value {@code "DATABASE_VALIDATION"}. */
       public static final Feature DATABASE_VALIDATION = new Feature("DATABASE_VALIDATION");
 
-      private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACE_MATCH, POA, QUESTIONNAIRE, EMAIL_VERIFICATION, PHONE, AML, IP_ANALYSIS, AGE_ESTIMATION, DATABASE_VALIDATION);
+      /** The value {@code "GEOLOCATION"}. */
+      public static final Feature GEOLOCATION = new Feature("GEOLOCATION");
+
+      private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACE_MATCH, POA, QUESTIONNAIRE, EMAIL_VERIFICATION, PHONE, AML, IP_ANALYSIS, AGE_ESTIMATION, DATABASE_VALIDATION, GEOLOCATION);
 
       private Feature(String value) {
         super(value);
@@ -2308,6 +2411,259 @@ public final class UserSessionListItem extends JsonModel {
         protected Builder self() {
           return this;
         }
+      }
+    }
+  }
+
+  /**
+   * The Console reviewer the session is assigned to, or <code>null</code> when nobody holds it.
+   */
+  public static final class Assignee extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("email", "assigned_at");
+
+    private Assignee(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Assignee} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Assignee fromJson(JsonNode json) {
+      return new Assignee(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>email</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> email() {
+      return Json.optional(json, "email", Conv.STRING);
+    }
+
+    /**
+     * The <code>assigned_at</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> assignedAt() {
+      return Json.optional(json, "assigned_at", Conv.DATE_TIME);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Assignee}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Assignee from) {
+        super(from);
+      }
+
+      /**
+       * The <code>email</code> field.
+       *
+       * @param email the value
+       * @return this builder
+       */
+      public Builder email(String email) {
+        return set("email", Conv.STRING, email);
+      }
+
+      /**
+       * The <code>assigned_at</code> field.
+       *
+       * @param assignedAt the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder assignedAt(@Nullable OffsetDateTime assignedAt) {
+        return setNullable("assigned_at", Conv.DATE_TIME, assignedAt);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Assignee}
+       */
+      public Assignee build() {
+        return new Assignee(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+  }
+
+  public static final class TopWarnings extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("risk", "feature", "log_type", "short_description");
+
+    private TopWarnings(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code TopWarnings} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static TopWarnings fromJson(JsonNode json) {
+      return new TopWarnings(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * Warning code, for example <code>FACE_MATCH_LOW_SIMILARITY</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> risk() {
+      return Json.optional(json, "risk", Conv.STRING);
+    }
+
+    /**
+     * The feature that raised it.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> feature() {
+      return Json.optional(json, "feature", Conv.STRING);
+    }
+
+    /**
+     * <code>error</code> or <code>warning</code>; <code>null</code> for a legacy entry.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> logType() {
+      return Json.optional(json, "log_type", Conv.STRING);
+    }
+
+    /**
+     * The <code>short_description</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> shortDescription() {
+      return Json.optional(json, "short_description", Conv.STRING);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link TopWarnings}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(TopWarnings from) {
+        super(from);
+      }
+
+      /**
+       * Warning code, for example <code>FACE_MATCH_LOW_SIMILARITY</code>.
+       *
+       * @param risk the value
+       * @return this builder
+       */
+      public Builder risk(String risk) {
+        return set("risk", Conv.STRING, risk);
+      }
+
+      /**
+       * The feature that raised it.
+       *
+       * @param feature the value
+       * @return this builder
+       */
+      public Builder feature(String feature) {
+        return set("feature", Conv.STRING, feature);
+      }
+
+      /**
+       * <code>error</code> or <code>warning</code>; <code>null</code> for a legacy entry.
+       *
+       * @param logType the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder logType(@Nullable String logType) {
+        return setNullable("log_type", Conv.STRING, logType);
+      }
+
+      /**
+       * The <code>short_description</code> field.
+       *
+       * @param shortDescription the value
+       * @return this builder
+       */
+      public Builder shortDescription(String shortDescription) {
+        return set("short_description", Conv.STRING, shortDescription);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code TopWarnings}
+       */
+      public TopWarnings build() {
+        return new TopWarnings(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
       }
     }
   }

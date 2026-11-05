@@ -273,7 +273,7 @@ public final class EmailVerificationCheckResponse extends JsonModel {
    * Full email report. Present (non-null) only on finalized outcomes (<code>Approved</code>/<code>Declined</code>); <code>null</code> on <code>Failed</code> and absent on <code>Expired or Not Found</code>.
    */
   public static final class Email extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("status", "email", "is_breached", "breaches", "is_disposable", "is_undeliverable", "verification_attempts", "verified_at", "warnings", "lifecycle", "matches", "email_social");
+    private static final Set<String> KNOWN_FIELDS = Set.of("status", "email", "is_breached", "breaches", "is_disposable", "is_undeliverable", "verification_attempts", "verified_at", "warnings", "lifecycle", "matches", "email_social", "email_intelligence");
 
     private Email(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -428,6 +428,16 @@ public final class EmailVerificationCheckResponse extends JsonModel {
       return Json.optional(json, "email_social", Conv.model(EmailSocialFootprint::fromJson));
     }
 
+    /**
+     * Email intelligence signals. Present only when <code>enable_enrichment</code> was <code>true</code> on the check.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<EmailIntelligence> emailIntelligence() {
+      return Json.optional(json, "email_intelligence", Conv.model(EmailIntelligence::fromJson));
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -559,6 +569,16 @@ public final class EmailVerificationCheckResponse extends JsonModel {
        */
       public Builder emailSocial(@Nullable EmailSocialFootprint emailSocial) {
         return setNullable("email_social", Conv.model(EmailSocialFootprint::fromJson), emailSocial);
+      }
+
+      /**
+       * Email intelligence signals. Present only when <code>enable_enrichment</code> was <code>true</code> on the check.
+       *
+       * @param emailIntelligence the value
+       * @return this builder
+       */
+      public Builder emailIntelligence(EmailIntelligence emailIntelligence) {
+        return set("email_intelligence", Conv.model(EmailIntelligence::fromJson), emailIntelligence);
       }
 
       /**

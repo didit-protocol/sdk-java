@@ -22,26 +22,33 @@ import me.didit.types.SessionSignDocument;
 import me.didit.types.SessionsAddImagesParams;
 import me.didit.types.SessionsBatchDeleteParams;
 import me.didit.types.SessionsBulkUpdateAmlHitStatusParams;
+import me.didit.types.SessionsCreateKybPartyDraftParams;
 import me.didit.types.SessionsCreateParams;
+import me.didit.types.SessionsDeleteKybPartyDraftParams;
 import me.didit.types.SessionsDeleteParams;
 import me.didit.types.SessionsExportAmlScreeningHistoryParams;
 import me.didit.types.SessionsImportSharedParams;
 import me.didit.types.SessionsListAmlScreeningHistoryParams;
 import me.didit.types.SessionsListEventsParams;
+import me.didit.types.SessionsListKybExtractedPartiesParams;
+import me.didit.types.SessionsListKybPartyDraftsParams;
 import me.didit.types.SessionsListParams;
 import me.didit.types.SessionsPreviewDecisionEmailParams;
 import me.didit.types.SessionsPreviewResubmissionParams;
 import me.didit.types.SessionsRetrieveDecisionParams;
 import me.didit.types.SessionsShareParams;
+import me.didit.types.SessionsSubmitKybPartiesParams;
 import me.didit.types.SessionsUpdateAmlHitStatusParams;
 import me.didit.types.SessionsUpdateAmlStatusParams;
 import me.didit.types.SessionsUpdateDataParams;
 import me.didit.types.SessionsUpdateDocumentAiDataParams;
 import me.didit.types.SessionsUpdateFeatureStatusParams;
 import me.didit.types.SessionsUpdateKybCompanyDataParams;
+import me.didit.types.SessionsUpdateKybPartyDraftParams;
 import me.didit.types.SessionsUpdateKybPartyParams;
 import me.didit.types.SessionsUpdatePoaDataParams;
 import me.didit.types.SessionsUpdateStatusParams;
+import me.didit.types.SessionsUploadKybDocumentsParams;
 import me.didit.types.SignatureField;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +60,7 @@ final class SessionsResourceTest {
 
   @Test
   void create() {
-    SessionsCreateParams params = SessionsCreateParams.builder().workflowId("00000000-0000-4000-8000-000000001b5b").vendorData("value-vendor-data").callback("value-callback").callbackMethod(SessionsCreateParams.CallbackMethod.INITIATOR).metadata("value").tags(List.of("value-tags")).language(SessionsCreateParams.Language.EN).contactDetails(SessionsCreateParams.ContactDetails.builder().email("user@example.com").sendNotificationEmails(true).build()).expectedDetails(SessionsCreateParams.ExpectedDetails.builder().firstName("value-first-name").lastName("value-last-name").build()).portraitImage("value-portrait-image").sandboxScenario("value-sandbox-scenario").sign(SessionsCreateParams.Sign.builder().documents(List.of(SessionSignDocument.builder().title("value-title").fileName("value-file-name").contentBase64("value-content-base64").fields(List.of(SignatureField.builder().key("value-key").type(SignatureField.Type.SIGNATURE).role(SignatureField.Role.VERIFIED_PERSON).page(1L).build())).build())).fieldValues(Map.of("key", SessionsCreateParams.Sign.FieldValuesValue.ofString("value-field-values"))).build()).userState("value-user-state").biometricConsent(SessionsCreateParams.BiometricConsent.builder().givenAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).textVersion("value-text-version").build()).build();
+    SessionsCreateParams params = SessionsCreateParams.builder().workflowId("00000000-0000-4000-8000-000000001b5b").vendorData("value-vendor-data").multiAccountSegment("value-multi-account-segment").callback("value-callback").callbackMethod(SessionsCreateParams.CallbackMethod.INITIATOR).metadata("value").tags(List.of("value-tags")).language(SessionsCreateParams.Language.EN).contactDetails(SessionsCreateParams.ContactDetails.builder().email("user@example.com").sendNotificationEmails(true).build()).expectedDetails(SessionsCreateParams.ExpectedDetails.builder().firstName("value-first-name").lastName("value-last-name").build()).portraitImage("value-portrait-image").sandboxScenario("value-sandbox-scenario").sign(SessionsCreateParams.Sign.builder().documents(List.of(SessionSignDocument.builder().title("value-title").fileName("value-file-name").contentBase64("value-content-base64").fields(List.of(SignatureField.builder().key("value-key").type(SignatureField.Type.SIGNATURE).role(SignatureField.Role.VERIFIED_PERSON).page(1L).build())).build())).fieldValues(Map.of("key", SessionsCreateParams.Sign.FieldValuesValue.ofString("value-field-values"))).build()).userState("value-user-state").biometricConsent(SessionsCreateParams.BiometricConsent.builder().givenAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).textVersion("value-text-version").build()).build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/", "201");
     transport.respondJson(201, example);
     var result = client.sessions().create(params);
@@ -63,7 +70,7 @@ final class SessionsResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"workflow_id\":\"00000000-0000-4000-8000-000000001b5b\",\"vendor_data\":\"value-vendor-data\",\"callback\":\"value-callback\",\"callback_method\":\"initiator\",\"metadata\":\"value\",\"tags\":[\"value-tags\"],\"language\":\"en\",\"contact_details\":{\"email\":\"user@example.com\",\"send_notification_emails\":true},\"expected_details\":{\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\"},\"portrait_image\":\"value-portrait-image\",\"sandbox_scenario\":\"value-sandbox-scenario\",\"sign\":{\"documents\":[{\"title\":\"value-title\",\"file_name\":\"value-file-name\",\"content_base64\":\"value-content-base64\",\"fields\":[{\"key\":\"value-key\",\"type\":\"signature\",\"role\":\"verified_person\",\"page\":1}]}],\"field_values\":{\"key\":\"value-field-values\"}},\"user_state\":\"value-user-state\",\"biometric_consent\":{\"given_at\":\"2026-11-01T10:15:30Z\",\"text_version\":\"value-text-version\"}}", request.body());
+    TestJson.assertJsonEquals("{\"workflow_id\":\"00000000-0000-4000-8000-000000001b5b\",\"vendor_data\":\"value-vendor-data\",\"multi_account_segment\":\"value-multi-account-segment\",\"callback\":\"value-callback\",\"callback_method\":\"initiator\",\"metadata\":\"value\",\"tags\":[\"value-tags\"],\"language\":\"en\",\"contact_details\":{\"email\":\"user@example.com\",\"send_notification_emails\":true},\"expected_details\":{\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\"},\"portrait_image\":\"value-portrait-image\",\"sandbox_scenario\":\"value-sandbox-scenario\",\"sign\":{\"documents\":[{\"title\":\"value-title\",\"file_name\":\"value-file-name\",\"content_base64\":\"value-content-base64\",\"fields\":[{\"key\":\"value-key\",\"type\":\"signature\",\"role\":\"verified_person\",\"page\":1}]}],\"field_values\":{\"key\":\"value-field-values\"}},\"user_state\":\"value-user-state\",\"biometric_consent\":{\"given_at\":\"2026-11-01T10:15:30Z\",\"text_version\":\"value-text-version\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
@@ -136,14 +143,14 @@ final class SessionsResourceTest {
 
   @Test
   void list() {
-    SessionsListParams params = SessionsListParams.builder().sessionKind(SessionsListParams.SessionKind.USER).limit(1L).offset(1L).status("value-status").vendorData("value-vendor-data").search("value-search").workflowId("value-workflow-id").dateFrom(LocalDate.parse("2026-11-01")).dateTo(LocalDate.parse("2026-11-01")).country("value-country").documentType("value-document-type").documentName("value-document-name").region("value-region").diditInternalId("00000000-0000-4000-8000-000000003e81").sessionType("value-session-type").apiService(SessionsListParams.ApiService.ID_VERIFICATION).screenedFullName("value-screened-full-name").warning("value-warning").statusInitializedAsInReview(true).isKycToBeReviewed(true).euuid("00000000-0000-4000-8000-000000000646").organizationName("value-organization-name").build();
+    SessionsListParams params = SessionsListParams.builder().sessionKind(SessionsListParams.SessionKind.USER).limit(1L).offset(1L).status("value-status").vendorData("value-vendor-data").search("value-search").workflowId("value-workflow-id").dateFrom(LocalDate.parse("2026-11-01")).dateTo(LocalDate.parse("2026-11-01")).tags("value-tags").decidedFrom(OffsetDateTime.parse("2026-11-01T10:15:30Z")).decidedTo(OffsetDateTime.parse("2026-11-01T10:15:30Z")).country("value-country").documentType("value-document-type").documentName("value-document-name").region("value-region").diditInternalId("00000000-0000-4000-8000-000000003e81").sessionType("value-session-type").apiService(SessionsListParams.ApiService.ID_VERIFICATION).screenedFullName("value-screened-full-name").warning("value-warning").statusInitializedAsInReview(true).isKycToBeReviewed(true).euuid("00000000-0000-4000-8000-000000000646").organizationName("value-organization-name").build();
     JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/sessions/", "200");
     transport.respondJson(200, example);
     var result = client.sessions().list(params);
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/v3/sessions/", request.path());
-    assertEquals(Map.ofEntries(Map.entry("session_kind", List.of("user")), Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1")), Map.entry("status", List.of("value-status")), Map.entry("vendor_data", List.of("value-vendor-data")), Map.entry("search", List.of("value-search")), Map.entry("workflow_id", List.of("value-workflow-id")), Map.entry("date_from", List.of("2026-11-01")), Map.entry("date_to", List.of("2026-11-01")), Map.entry("country", List.of("value-country")), Map.entry("document_type", List.of("value-document-type")), Map.entry("document_name", List.of("value-document-name")), Map.entry("region", List.of("value-region")), Map.entry("didit_internal_id", List.of("00000000-0000-4000-8000-000000003e81")), Map.entry("session_type", List.of("value-session-type")), Map.entry("api_service", List.of("ID_VERIFICATION")), Map.entry("screened_full_name", List.of("value-screened-full-name")), Map.entry("warning", List.of("value-warning")), Map.entry("status_initialized_as_in_review", List.of("true")), Map.entry("is_kyc_to_be_reviewed", List.of("true")), Map.entry("euuid", List.of("00000000-0000-4000-8000-000000000646")), Map.entry("organization_name", List.of("value-organization-name"))), request.query());
+    assertEquals(Map.ofEntries(Map.entry("session_kind", List.of("user")), Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1")), Map.entry("status", List.of("value-status")), Map.entry("vendor_data", List.of("value-vendor-data")), Map.entry("search", List.of("value-search")), Map.entry("workflow_id", List.of("value-workflow-id")), Map.entry("date_from", List.of("2026-11-01")), Map.entry("date_to", List.of("2026-11-01")), Map.entry("tags", List.of("value-tags")), Map.entry("decided_from", List.of("2026-11-01T10:15:30Z")), Map.entry("decided_to", List.of("2026-11-01T10:15:30Z")), Map.entry("country", List.of("value-country")), Map.entry("document_type", List.of("value-document-type")), Map.entry("document_name", List.of("value-document-name")), Map.entry("region", List.of("value-region")), Map.entry("didit_internal_id", List.of("00000000-0000-4000-8000-000000003e81")), Map.entry("session_type", List.of("value-session-type")), Map.entry("api_service", List.of("ID_VERIFICATION")), Map.entry("screened_full_name", List.of("value-screened-full-name")), Map.entry("warning", List.of("value-warning")), Map.entry("status_initialized_as_in_review", List.of("true")), Map.entry("is_kyc_to_be_reviewed", List.of("true")), Map.entry("euuid", List.of("00000000-0000-4000-8000-000000000646")), Map.entry("organization_name", List.of("value-organization-name"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
@@ -369,7 +376,6 @@ final class SessionsResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"nodes_to_resubmit\":[{\"node_id\":\"value-node-id\",\"feature\":\"OCR\"}],\"email_address\":\"user@example.com\",\"email_language\":\"value-email-language\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
-    TestModels.readAll(result);
   }
 
   @Test
@@ -425,14 +431,14 @@ final class SessionsResourceTest {
 
   @Test
   void listAmlScreeningHistory() {
-    SessionsListAmlScreeningHistoryParams params = SessionsListAmlScreeningHistoryParams.builder().nodeId("value-node-id").limit(1L).offset(1L).ordering("value-ordering").build();
+    SessionsListAmlScreeningHistoryParams params = SessionsListAmlScreeningHistoryParams.builder().nodeId("value-node-id").month("value-month").limit(1L).offset(1L).ordering("value-ordering").build();
     JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/session/{sessionId}/aml-screening-history/", "200");
     transport.respondJson(200, example);
     var result = client.sessions().listAmlScreeningHistory("00000000-0000-4000-8000-000000019ab8", params);
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-000000019ab8/aml-screening-history/", request.path());
-    assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id")), Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1")), Map.entry("ordering", List.of("value-ordering"))), request.query());
+    assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id")), Map.entry("month", List.of("value-month")), Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1")), Map.entry("ordering", List.of("value-ordering"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
@@ -443,13 +449,13 @@ final class SessionsResourceTest {
 
   @Test
   void exportAmlScreeningHistory() {
-    SessionsExportAmlScreeningHistoryParams params = SessionsExportAmlScreeningHistoryParams.builder().nodeId("value-node-id").build();
+    SessionsExportAmlScreeningHistoryParams params = SessionsExportAmlScreeningHistoryParams.builder().nodeId("value-node-id").month("value-month").build();
     transport.respondBinary(200, "text/csv", new byte[] {37, 80, 68, 70});
     var result = client.sessions().exportAmlScreeningHistory("00000000-0000-4000-8000-00000001c16a", params);
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-00000001c16a/aml-screening-history/export/", request.path());
-    assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
+    assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id")), Map.entry("month", List.of("value-month"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("text/csv, application/json", request.header("Accept"));
@@ -554,6 +560,154 @@ final class SessionsResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     TestJson.assertJsonEquals("{\"new_status\":\"Approved\",\"email_language\":\"value-email-language\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+  }
+
+  @Test
+  void uploadKybDocuments() {
+    SessionsUploadKybDocumentsParams params = SessionsUploadKybDocumentsParams.builder().nodeId("value-node-id").documents(List.of(FileUpload.of(new byte[] {37, 80, 68, 70}, "documents.pdf", "application/pdf"))).documentPasswords(List.of("value-document-passwords")).documentGroup(SessionsUploadKybDocumentsParams.DocumentGroup.LEGAL_PRESENCE).locale("value-locale").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/kyb/documents/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().uploadKybDocuments("00000000-0000-4000-8000-000000013176", params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-000000013176/kyb/documents/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(Map.ofEntries(Map.entry("document_passwords", List.of("value-document-passwords")), Map.entry("document_group", List.of("LEGAL_PRESENCE")), Map.entry("locale", List.of("value-locale"))), request.multipartFields());
+    assertEquals(Map.ofEntries(Map.entry("documents", List.of("documents.pdf"))), request.multipartFiles());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listKybExtractedParties() {
+    SessionsListKybExtractedPartiesParams params = SessionsListKybExtractedPartiesParams.builder().nodeId("value-node-id").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/session/{sessionId}/kyb/extracted-parties/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().listKybExtractedParties("00000000-0000-4000-8000-000000019841", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-000000019841/kyb/extracted-parties/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listKybPartyDrafts() {
+    SessionsListKybPartyDraftsParams params = SessionsListKybPartyDraftsParams.builder().nodeId("value-node-id").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/session/{sessionId}/kyb/parties/drafts/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().listKybPartyDrafts("00000000-0000-4000-8000-000000014266", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-000000014266/kyb/parties/drafts/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void createKybPartyDraft() {
+    SessionsCreateKybPartyDraftParams params = SessionsCreateKybPartyDraftParams.builder().nodeId("value-node-id").entityType(SessionsCreateKybPartyDraftParams.EntityType.PERSON).fullName("value-full-name").firstName("value-first-name").lastName("value-last-name").role(SessionsCreateKybPartyDraftParams.Role.DIRECTOR).roles(List.of(SessionsCreateKybPartyDraftParams.Roles.DIRECTOR)).position("value-position").dateOfBirth(LocalDate.parse("2026-11-01")).companyName("value-company-name").registrationNumber("value-registration-number").email("user@example.com").ownershipPercent(1.5).nationality("value-nationality").phoneNumber("value-phone-number").customFields(Map.of("key", "value")).skipVerification(true).build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/kyb/parties/drafts/", "201");
+    transport.respondJson(201, example);
+    var result = client.sessions().createKybPartyDraft("00000000-0000-4000-8000-000000015092", params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-000000015092/kyb/parties/drafts/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"entity_type\":\"person\",\"full_name\":\"value-full-name\",\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\",\"role\":\"director\",\"roles\":[\"director\"],\"position\":\"value-position\",\"date_of_birth\":\"2026-11-01\",\"company_name\":\"value-company-name\",\"registration_number\":\"value-registration-number\",\"email\":\"user@example.com\",\"ownership_percent\":1.5,\"nationality\":\"value-nationality\",\"phone_number\":\"value-phone-number\",\"custom_fields\":{\"key\":\"value\"},\"skip_verification\":true}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void updateKybPartyDraft() {
+    SessionsUpdateKybPartyDraftParams params = SessionsUpdateKybPartyDraftParams.builder().nodeId("value-node-id").entityType(SessionsUpdateKybPartyDraftParams.EntityType.PERSON).fullName("value-full-name").firstName("value-first-name").lastName("value-last-name").role(SessionsUpdateKybPartyDraftParams.Role.DIRECTOR).roles(List.of(SessionsUpdateKybPartyDraftParams.Roles.DIRECTOR)).position("value-position").dateOfBirth(LocalDate.parse("2026-11-01")).companyName("value-company-name").registrationNumber("value-registration-number").email("user@example.com").ownershipPercent(1.5).nationality("value-nationality").phoneNumber("value-phone-number").customFields(Map.of("key", "value")).skipVerification(true).build();
+    JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/kyb/parties/drafts/{draftId}/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().updateKybPartyDraft("00000000-0000-4000-8000-000000015124", "00000000-0000-4000-8000-000000012c99", params);
+    RecordedRequest request = transport.only();
+    assertEquals("PATCH", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-000000015124/kyb/parties/drafts/00000000-0000-4000-8000-000000012c99/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"entity_type\":\"person\",\"full_name\":\"value-full-name\",\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\",\"role\":\"director\",\"roles\":[\"director\"],\"position\":\"value-position\",\"date_of_birth\":\"2026-11-01\",\"company_name\":\"value-company-name\",\"registration_number\":\"value-registration-number\",\"email\":\"user@example.com\",\"ownership_percent\":1.5,\"nationality\":\"value-nationality\",\"phone_number\":\"value-phone-number\",\"custom_fields\":{\"key\":\"value\"},\"skip_verification\":true}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void deleteKybPartyDraft() {
+    SessionsDeleteKybPartyDraftParams params = SessionsDeleteKybPartyDraftParams.builder().nodeId("value-node-id").build();
+    transport.respond(204, "");
+    client.sessions().deleteKybPartyDraft("00000000-0000-4000-8000-000000015095", "00000000-0000-4000-8000-000000012c0a", params);
+    RecordedRequest request = transport.only();
+    assertEquals("DELETE", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-000000015095/kyb/parties/drafts/00000000-0000-4000-8000-000000012c0a/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+  }
+
+  @Test
+  void submitKybParties() {
+    SessionsSubmitKybPartiesParams params = SessionsSubmitKybPartiesParams.builder().nodeId("value-node-id").locale("value-locale").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/kyb/parties/submit/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().submitKybParties("00000000-0000-4000-8000-00000001127a", params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-00000001127a/kyb/parties/submit/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"locale\":\"value-locale\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void exportFiles() {
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/files-export/", "202");
+    transport.respondJson(202, example);
+    var result = client.sessions().exportFiles("00000000-0000-4000-8000-00000000bf11");
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-00000000bf11/files-export/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void getFilesExport() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/session/{sessionId}/files-export/{exportId}/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().getFilesExport("00000000-0000-4000-8000-00000000f5ad", "00000000-0000-4000-8000-00000000e8b6");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/session/00000000-0000-4000-8000-00000000f5ad/files-export/00000000-0000-4000-8000-00000000e8b6/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

@@ -10,7 +10,7 @@ import me.didit.core.JsonUnion;
 /**
  * Body of a signed webhook delivery, discriminated by <code>webhook_type</code>. <code>activity.created</code> can be subscribed to but is not sent today. Treat any other <code>webhook_type</code> as a new event type and keep the raw body.
  *
- * <p>One of: {@code SessionStatusUpdatedEvent}, {@code SessionDataUpdatedEvent}, {@code UserStatusUpdatedEvent}, {@code UserDataUpdatedEvent}, {@code BusinessStatusUpdatedEvent}, {@code BusinessDataUpdatedEvent}, {@code TransactionCreatedEvent}, {@code TransactionStatusUpdatedEvent}, {@code TravelRuleStatusUpdatedEvent}, {@code WorkflowComplianceChangedEvent}. Check with the {@code is...}
+ * <p>One of: {@code SessionStatusUpdatedEvent}, {@code SessionDataUpdatedEvent}, {@code UserStatusUpdatedEvent}, {@code UserDataUpdatedEvent}, {@code BusinessStatusUpdatedEvent}, {@code BusinessDataUpdatedEvent}, {@code TransactionCreatedEvent}, {@code TransactionStatusUpdatedEvent}, {@code TravelRuleStatusUpdatedEvent}, {@code WorkflowComplianceChangedEvent}, {@code TransactionRuleSuggestionsCreatedEvent}. Check with the {@code is...}
  * methods and read with the {@code as...} methods; the fields every variant has are readable directly.
  */
 public final class WebhookEventPayload extends JsonUnion {
@@ -376,5 +376,35 @@ public final class WebhookEventPayload extends JsonUnion {
    */
   public Optional<WorkflowComplianceChangedEvent> asWorkflowComplianceChangedEvent() {
     return isWorkflowComplianceChangedEvent() ? Optional.of(Conv.model(WorkflowComplianceChangedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code TransactionRuleSuggestionsCreatedEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofTransactionRuleSuggestionsCreatedEvent(TransactionRuleSuggestionsCreatedEvent value) {
+    return new WebhookEventPayload(Conv.model(TransactionRuleSuggestionsCreatedEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code TransactionRuleSuggestionsCreatedEvent}.
+   *
+   * A transaction rule suggestion run proposed new rule changes for your application. Sent when the rule-suggestion settings have webhook notifications on. There is no top-level <code>status</code>.
+   *
+   * @return true when it matches
+   */
+  public boolean isTransactionRuleSuggestionsCreatedEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code TransactionRuleSuggestionsCreatedEvent}.
+   *
+   * @return the value, or empty when {@link #isTransactionRuleSuggestionsCreatedEvent()} is false
+   */
+  public Optional<TransactionRuleSuggestionsCreatedEvent> asTransactionRuleSuggestionsCreatedEvent() {
+    return isTransactionRuleSuggestionsCreatedEvent() ? Optional.of(Conv.model(TransactionRuleSuggestionsCreatedEvent::fromJson).read(json)) : Optional.empty();
   }
 }

@@ -112,6 +112,7 @@ public final class DigitalIdWalletApiWalletCatalogEntry extends JsonModel {
   /**
    * - <code>redirect</code> - redirect
    * - <code>in_app</code> - in_app
+   * - <code>digital_credentials</code> - digital_credentials
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -216,6 +217,7 @@ public final class DigitalIdWalletApiWalletCatalogEntry extends JsonModel {
     /**
      * - <code>redirect</code> - redirect
      * - <code>in_app</code> - in_app
+     * - <code>digital_credentials</code> - digital_credentials
      *
      * @param interaction the value
      * @return this builder

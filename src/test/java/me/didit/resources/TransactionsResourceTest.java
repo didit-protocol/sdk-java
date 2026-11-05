@@ -30,14 +30,14 @@ final class TransactionsResourceTest {
 
   @Test
   void list() {
-    TransactionsListParams params = TransactionsListParams.builder().limit(1L).offset(1L).travelRuleStatus("value-travel-rule-status").build();
+    TransactionsListParams params = TransactionsListParams.builder().limit(1L).offset(1L).travelRuleStatus("value-travel-rule-status").assignee("value-assignee").build();
     JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/transactions/", "200");
     transport.respondJson(200, example);
     var result = client.transactions().list(params);
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/v3/transactions/", request.path());
-    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1")), Map.entry("travel_rule_status", List.of("value-travel-rule-status"))), request.query());
+    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1")), Map.entry("travel_rule_status", List.of("value-travel-rule-status")), Map.entry("assignee", List.of("value-assignee"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);

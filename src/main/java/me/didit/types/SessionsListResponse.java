@@ -52,7 +52,7 @@ public final class SessionsListResponse extends JsonModel {
   }
 
   /**
-   * Number of sessions matching the filters. Exact for KYC rows; for KYB rows it is capped at 100 (use <code>next</code> to know whether more pages exist). For <code>session_kind=all</code> it is the sum of both kinds.
+   * Number of sessions matching the filters: exact up to 100 and capped at 100 beyond that, so do not use it as a total. Use <code>next</code> to know whether more pages exist. For <code>session_kind=all</code> it is the sum of both kinds, each capped at 100.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -105,7 +105,7 @@ public final class SessionsListResponse extends JsonModel {
     }
 
     /**
-     * Number of sessions matching the filters. Exact for KYC rows; for KYB rows it is capped at 100 (use <code>next</code> to know whether more pages exist). For <code>session_kind=all</code> it is the sum of both kinds.
+     * Number of sessions matching the filters: exact up to 100 and capped at 100 beyond that, so do not use it as a total. Use <code>next</code> to know whether more pages exist. For <code>session_kind=all</code> it is the sum of both kinds, each capped at 100.
      *
      * @param count the value
      * @return this builder

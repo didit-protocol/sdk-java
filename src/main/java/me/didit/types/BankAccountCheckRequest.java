@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 import org.jspecify.annotations.Nullable;
 
 public final class BankAccountCheckRequest extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("country", "account", "holder", "vendor_data");
+  private static final Set<String> KNOWN_FIELDS = Set.of("country", "account", "holder", "vendor_data", "consent");
 
   private BankAccountCheckRequest(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -89,6 +89,16 @@ public final class BankAccountCheckRequest extends JsonModel {
     return Json.optional(json, "vendor_data", Conv.STRING);
   }
 
+  /**
+   * Set to <code>true</code> when the account holder has explicitly consented to this check. Required in the countries whose account check needs that consent: without it the check is refused with a <code>400</code> whose <code>field</code> is <code>consent</code> and whose <code>reason</code> is <code>required</code>, and nothing is billed. Elsewhere it is optional, and Didit records it with the check's charge when you send it.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> consent() {
+    return Json.optional(json, "consent", Conv.BOOLEAN);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -140,6 +150,16 @@ public final class BankAccountCheckRequest extends JsonModel {
      */
     public Builder vendorData(@Nullable String vendorData) {
       return setNullable("vendor_data", Conv.STRING, vendorData);
+    }
+
+    /**
+     * Set to <code>true</code> when the account holder has explicitly consented to this check. Required in the countries whose account check needs that consent: without it the check is refused with a <code>400</code> whose <code>field</code> is <code>consent</code> and whose <code>reason</code> is <code>required</code>, and nothing is billed. Elsewhere it is optional, and Didit records it with the check's charge when you send it.
+     *
+     * @param consent the value
+     * @return this builder
+     */
+    public Builder consent(boolean consent) {
+      return set("consent", Conv.BOOLEAN, consent);
     }
 
     /**

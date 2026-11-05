@@ -17,7 +17,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class SessionDecision extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_kind", "shared_from_session", "session_number", "session_url", "status", "workflow_id", "features", "vendor_data", "metadata", "expected_details", "contact_details", "callback", "id_verifications", "nfc_skip_reason", "nfc_verifications", "liveness_checks", "face_matches", "phone_verifications", "email_verifications", "poa_verifications", "document_ai_documents", "questionnaire_responses", "bank_verifications", "signatures", "aml_screenings", "ip_analyses", "database_validations", "reviews", "created_at", "expires_at", "registry_checks", "key_people_checks", "document_verifications", "environment", "resubmissions", "biometric_consent", "investigator");
+  private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_kind", "shared_from_session", "shared_from_session_number", "session_number", "session_url", "status", "status_override", "decision_trace", "linked_records", "workflow_id", "features", "vendor_data", "metadata", "expected_details", "contact_details", "callback", "id_verifications", "nfc_skip_reason", "nfc_verifications", "liveness_checks", "face_matches", "phone_verifications", "email_verifications", "poa_verifications", "document_ai_documents", "questionnaire_responses", "bank_verifications", "signatures", "aml_screenings", "ip_analyses", "geolocation_checks", "geolocation_attempts", "database_validations", "database_validation_not_performed_reason", "reviews", "assignee", "waiting_since", "sla_due_at", "created_at", "expires_at", "registry_checks", "key_people_checks", "document_verifications", "environment", "sandbox_scenario", "resubmissions", "biometric_consent", "investigator", "biometric_retention", "fraud_check", "full_session_video", "full_session_video_recorded_at");
 
   private SessionDecision(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -83,6 +83,16 @@ public final class SessionDecision extends JsonModel {
   }
 
   /**
+   * <code>session_number</code> of the source session when this session was imported from another application of your organization. <code>null</code> otherwise.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> sharedFromSessionNumber() {
+    return Json.optional(json, "shared_from_session_number", Conv.LONG);
+  }
+
+  /**
    * The number of the session.
    *
    * @return the value, or empty when the field is absent or null
@@ -113,6 +123,36 @@ public final class SessionDecision extends JsonModel {
   }
 
   /**
+   * Present when a reviewer set <code>status</code> by hand. <code>null</code> when the status is the automatic one. Use it to tell a manual approval from an automatic one.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionDecision.StatusOverride> statusOverride() {
+    return Json.optional(json, "status_override", Conv.model(SessionDecision.StatusOverride::fromJson));
+  }
+
+  /**
+   * How the status was reached: who set it and which warnings did.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionDecision.DecisionTrace> decisionTrace() {
+    return Json.optional(json, "decision_trace", Conv.model(SessionDecision.DecisionTrace::fromJson));
+  }
+
+  /**
+   * A summary of other records linked to the session. <code>null</code> when there is nothing to show, and for workflows that declare an age assurance standard.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionDecision.LinkedRecords> linkedRecords() {
+    return Json.optional(json, "linked_records", Conv.model(SessionDecision.LinkedRecords::fromJson));
+  }
+
+  /**
    * Stable identifier of the workflow group that produced this session. Workflows are versioned — this value identifies the workflow itself, not the specific version.
    *
    * @return the value, or empty when the field is absent or null
@@ -123,7 +163,7 @@ public final class SessionDecision extends JsonModel {
   }
 
   /**
-   * List of verification features configured for this session, as display names: <code>ID_VERIFICATION</code>, <code>NFC</code>, <code>LIVENESS</code>, <code>FACE_MATCH</code>, <code>POA</code>, <code>PHONE</code>, <code>EMAIL_VERIFICATION</code>, <code>AML</code>, <code>IP_ANALYSIS</code>, <code>DATABASE_VALIDATION</code>, <code>QUESTIONNAIRE</code>, <code>AGE_ESTIMATION</code>, <code>FACE_SEARCH</code> (Business Verification sessions use the KYB feature set: <code>KYB_REGISTRY</code>, <code>KYB_DOCUMENTS</code>, <code>KYB_KEY_PEOPLE</code>, <code>AML</code>, <code>PHONE</code>, <code>EMAIL_VERIFICATION</code>, <code>IP_ANALYSIS</code>, <code>QUESTIONNAIRE</code>). With <code>include=events</code> each entry becomes an object <code>{feature, node_id}</code> instead of a plain string, and the email feature is renamed: it appears as <code>EMAIL</code> in events mode instead of the <code>EMAIL_VERIFICATION</code> used here.
+   * List of verification features configured for this session, as display names: <code>ID_VERIFICATION</code>, <code>NFC</code>, <code>LIVENESS</code>, <code>FACE_MATCH</code>, <code>POA</code>, <code>PHONE</code>, <code>EMAIL_VERIFICATION</code>, <code>AML</code>, <code>IP_ANALYSIS</code>, <code>DATABASE_VALIDATION</code>, <code>QUESTIONNAIRE</code>, <code>AGE_ESTIMATION</code>, <code>FACE_SEARCH</code>, <code>GEOLOCATION</code> (Location verification) (Business Verification sessions use the KYB feature set: <code>KYB_REGISTRY</code>, <code>KYB_DOCUMENTS</code>, <code>KYB_KEY_PEOPLE</code>, <code>AML</code>, <code>PHONE</code>, <code>EMAIL_VERIFICATION</code>, <code>IP_ANALYSIS</code>, <code>QUESTIONNAIRE</code>). With <code>include=events</code> each entry becomes an object <code>{feature, node_id}</code> instead of a plain string, and the email feature is renamed: it appears as <code>EMAIL</code> in events mode instead of the <code>EMAIL_VERIFICATION</code> used here.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -283,7 +323,7 @@ public final class SessionDecision extends JsonModel {
   }
 
   /**
-   * Bank Verification results, one item per Bank Verification step, for User and Business Verification. <code>null</code> until a step produces one. Each item's <code>method</code> says how the account was verified: <code>open_banking</code> (bank sign-in) or <code>account_lookup</code> (account check), or a <code>statement</code> or <code>microdeposits</code> fallback, and <code>none</code> when the person continued without a bank before any attempt was evaluated (<code>continued_without_bank</code>). See [Bank verification methods](/core-technology/bank-verification/verification-methods).
+   * Bank Verification results, one item per Bank Verification step, for User and Business Verification. <code>null</code> until a step produces one. Each item's <code>method</code> says how the account was verified: <code>open_banking</code> (bank sign-in) or <code>account_lookup</code> (account check), or a <code>statement</code> or <code>microdeposits</code> fallback, and <code>none</code> when the person continued without a bank before any attempt was evaluated (<code>continued_without_bank</code>). See [Bank verification methods](/core-technology/bank-verification/verification-methods). Bank Verification is not enabled in production yet, so this stays <code>null</code> on production sessions until it is.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -293,7 +333,7 @@ public final class SessionDecision extends JsonModel {
   }
 
   /**
-   * Electronic Signature results, one item per signer and signature step, for User and Business Verification. Present only when the workflow has an Electronic Signature step; an empty array until a signer reaches it. See the [Electronic Signature report](/core-technology/electronic-signature/report-electronic-signature).
+   * E-signature results, one item per signer and signature step, for User and Business Verification. Present only when the workflow has an E-signature step; an empty array until a signer reaches it. See the [E-signature report](/core-technology/electronic-signature/report-electronic-signature).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -320,6 +360,26 @@ public final class SessionDecision extends JsonModel {
    */
   public Optional<List<SessionDecision.IpAnalyses>> ipAnalyses() {
     return Json.optional(json, "ip_analyses", Conv.list(Conv.model(SessionDecision.IpAnalyses::fromJson)));
+  }
+
+  /**
+   * <b>Array of Location verification results</b>, one per Location verification step: that step's accepted attempt. <code>null</code> until a Location verification step has produced data. Earlier attempts of the same step are in <code>geolocation_attempts</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<GeolocationCheck>> geolocationChecks() {
+    return Json.optional(json, "geolocation_checks", Conv.list(Conv.model(GeolocationCheck::fromJson)));
+  }
+
+  /**
+   * Every attempt of every Location verification step of this session, oldest first. Attempts that a resubmission replaced are left out. A workflow that withholds <code>geolocation_checks</code> through its response attributes withholds this list too.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<GeolocationAttempt>> geolocationAttempts() {
+    return Json.optional(json, "geolocation_attempts", Conv.list(Conv.model(GeolocationAttempt::fromJson)));
   }
 
   /**
@@ -369,6 +429,16 @@ public final class SessionDecision extends JsonModel {
   }
 
   /**
+   * Why a configured database validation produced no result, as <code>{code, message}</code> plus context fields. Present only when <code>database_validations</code> is <code>null</code> for a workflow that has the step, so you can tell "the registry agreed" from "nothing ran". <code>null</code> otherwise.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionDecision.DatabaseValidationNotPerformedReason> databaseValidationNotPerformedReason() {
+    return Json.optional(json, "database_validation_not_performed_reason", Conv.model(SessionDecision.DatabaseValidationNotPerformedReason::fromJson));
+  }
+
+  /**
    * The <code>reviews</code> field.
    *
    * @return the value, or empty when the field is absent or null
@@ -376,6 +446,36 @@ public final class SessionDecision extends JsonModel {
    */
   public Optional<List<SessionDecision.Reviews>> reviews() {
     return Json.optional(json, "reviews", Conv.list(Conv.model(SessionDecision.Reviews::fromJson)));
+  }
+
+  /**
+   * The Console reviewer the session is assigned to, or <code>null</code> when nobody holds it.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionDecision.Assignee> assignee() {
+    return Json.optional(json, "assignee", Conv.model(SessionDecision.Assignee::fromJson));
+  }
+
+  /**
+   * When the session started waiting for review. <code>null</code> unless the session is <code>In Review</code> and your application sets a review deadline.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> waitingSince() {
+    return Json.optional(json, "waiting_since", Conv.DATE_TIME);
+  }
+
+  /**
+   * When the review is due. <code>null</code> unless the session is <code>In Review</code> and your application sets a review deadline.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> slaDueAt() {
+    return Json.optional(json, "sla_due_at", Conv.DATE_TIME);
   }
 
   /**
@@ -439,6 +539,16 @@ public final class SessionDecision extends JsonModel {
   }
 
   /**
+   * The sandbox scenario the session was created with. <code>null</code> for live sessions and for sandbox sessions created without one.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> sandboxScenario() {
+    return Json.optional(json, "sandbox_scenario", Conv.STRING);
+  }
+
+  /**
    * Returned only with <code>include=resubmissions</code>, for user and business sessions. One entry per resubmission request, oldest first. Each entry carries the results the resubmitted steps returned before the request, so earlier submissions stay readable. Deleting the session deletes every submission.
    *
    * @return the value, or empty when the field is absent or null
@@ -466,6 +576,46 @@ public final class SessionDecision extends JsonModel {
    */
   public Optional<InvestigatorBlock> investigator() {
     return Json.optional(json, "investigator", Conv.model(InvestigatorBlock::fromJson));
+  }
+
+  /**
+   * When the live biometric data of this session is deleted.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<BiometricRetention> biometricRetention() {
+    return Json.optional(json, "biometric_retention", Conv.model(BiometricRetention::fromJson));
+  }
+
+  /**
+   * The result of a Fraud Check API call. <code>null</code> for every other session.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Map<String, JsonNode>> fraudCheck() {
+    return Json.optional(json, "fraud_check", Conv.OBJECT);
+  }
+
+  /**
+   * Expiring URL of the full-session recording. Returned only when your organization records full-session video.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> fullSessionVideo() {
+    return Json.optional(json, "full_session_video", Conv.STRING);
+  }
+
+  /**
+   * When the full-session recording was made. Returned only when your organization records full-session video.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> fullSessionVideoRecordedAt() {
+    return Json.optional(json, "full_session_video_recorded_at", Conv.DATE_TIME);
   }
 
   @Override
@@ -512,6 +662,16 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
+     * <code>session_number</code> of the source session when this session was imported from another application of your organization. <code>null</code> otherwise.
+     *
+     * @param sharedFromSessionNumber the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder sharedFromSessionNumber(@Nullable Long sharedFromSessionNumber) {
+      return setNullable("shared_from_session_number", Conv.LONG, sharedFromSessionNumber);
+    }
+
+    /**
      * The number of the session.
      *
      * @param sessionNumber the value, or {@code null} to send JSON null
@@ -542,6 +702,36 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
+     * Present when a reviewer set <code>status</code> by hand. <code>null</code> when the status is the automatic one. Use it to tell a manual approval from an automatic one.
+     *
+     * @param statusOverride the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder statusOverride(SessionDecision.@Nullable StatusOverride statusOverride) {
+      return setNullable("status_override", Conv.model(SessionDecision.StatusOverride::fromJson), statusOverride);
+    }
+
+    /**
+     * How the status was reached: who set it and which warnings did.
+     *
+     * @param decisionTrace the value
+     * @return this builder
+     */
+    public Builder decisionTrace(SessionDecision.DecisionTrace decisionTrace) {
+      return set("decision_trace", Conv.model(SessionDecision.DecisionTrace::fromJson), decisionTrace);
+    }
+
+    /**
+     * A summary of other records linked to the session. <code>null</code> when there is nothing to show, and for workflows that declare an age assurance standard.
+     *
+     * @param linkedRecords the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder linkedRecords(SessionDecision.@Nullable LinkedRecords linkedRecords) {
+      return setNullable("linked_records", Conv.model(SessionDecision.LinkedRecords::fromJson), linkedRecords);
+    }
+
+    /**
      * Stable identifier of the workflow group that produced this session. Workflows are versioned — this value identifies the workflow itself, not the specific version.
      *
      * @param workflowId the value, or {@code null} to send JSON null
@@ -552,7 +742,7 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
-     * List of verification features configured for this session, as display names: <code>ID_VERIFICATION</code>, <code>NFC</code>, <code>LIVENESS</code>, <code>FACE_MATCH</code>, <code>POA</code>, <code>PHONE</code>, <code>EMAIL_VERIFICATION</code>, <code>AML</code>, <code>IP_ANALYSIS</code>, <code>DATABASE_VALIDATION</code>, <code>QUESTIONNAIRE</code>, <code>AGE_ESTIMATION</code>, <code>FACE_SEARCH</code> (Business Verification sessions use the KYB feature set: <code>KYB_REGISTRY</code>, <code>KYB_DOCUMENTS</code>, <code>KYB_KEY_PEOPLE</code>, <code>AML</code>, <code>PHONE</code>, <code>EMAIL_VERIFICATION</code>, <code>IP_ANALYSIS</code>, <code>QUESTIONNAIRE</code>). With <code>include=events</code> each entry becomes an object <code>{feature, node_id}</code> instead of a plain string, and the email feature is renamed: it appears as <code>EMAIL</code> in events mode instead of the <code>EMAIL_VERIFICATION</code> used here.
+     * List of verification features configured for this session, as display names: <code>ID_VERIFICATION</code>, <code>NFC</code>, <code>LIVENESS</code>, <code>FACE_MATCH</code>, <code>POA</code>, <code>PHONE</code>, <code>EMAIL_VERIFICATION</code>, <code>AML</code>, <code>IP_ANALYSIS</code>, <code>DATABASE_VALIDATION</code>, <code>QUESTIONNAIRE</code>, <code>AGE_ESTIMATION</code>, <code>FACE_SEARCH</code>, <code>GEOLOCATION</code> (Location verification) (Business Verification sessions use the KYB feature set: <code>KYB_REGISTRY</code>, <code>KYB_DOCUMENTS</code>, <code>KYB_KEY_PEOPLE</code>, <code>AML</code>, <code>PHONE</code>, <code>EMAIL_VERIFICATION</code>, <code>IP_ANALYSIS</code>, <code>QUESTIONNAIRE</code>). With <code>include=events</code> each entry becomes an object <code>{feature, node_id}</code> instead of a plain string, and the email feature is renamed: it appears as <code>EMAIL</code> in events mode instead of the <code>EMAIL_VERIFICATION</code> used here.
      *
      * @param features the value
      * @return this builder
@@ -712,7 +902,7 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
-     * Bank Verification results, one item per Bank Verification step, for User and Business Verification. <code>null</code> until a step produces one. Each item's <code>method</code> says how the account was verified: <code>open_banking</code> (bank sign-in) or <code>account_lookup</code> (account check), or a <code>statement</code> or <code>microdeposits</code> fallback, and <code>none</code> when the person continued without a bank before any attempt was evaluated (<code>continued_without_bank</code>). See [Bank verification methods](/core-technology/bank-verification/verification-methods).
+     * Bank Verification results, one item per Bank Verification step, for User and Business Verification. <code>null</code> until a step produces one. Each item's <code>method</code> says how the account was verified: <code>open_banking</code> (bank sign-in) or <code>account_lookup</code> (account check), or a <code>statement</code> or <code>microdeposits</code> fallback, and <code>none</code> when the person continued without a bank before any attempt was evaluated (<code>continued_without_bank</code>). See [Bank verification methods](/core-technology/bank-verification/verification-methods). Bank Verification is not enabled in production yet, so this stays <code>null</code> on production sessions until it is.
      *
      * @param bankVerifications the value, or {@code null} to send JSON null
      * @return this builder
@@ -722,7 +912,7 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
-     * Electronic Signature results, one item per signer and signature step, for User and Business Verification. Present only when the workflow has an Electronic Signature step; an empty array until a signer reaches it. See the [Electronic Signature report](/core-technology/electronic-signature/report-electronic-signature).
+     * E-signature results, one item per signer and signature step, for User and Business Verification. Present only when the workflow has an E-signature step; an empty array until a signer reaches it. See the [E-signature report](/core-technology/electronic-signature/report-electronic-signature).
      *
      * @param signatures the value
      * @return this builder
@@ -749,6 +939,26 @@ public final class SessionDecision extends JsonModel {
      */
     public Builder ipAnalyses(@Nullable List<SessionDecision.IpAnalyses> ipAnalyses) {
       return setNullable("ip_analyses", Conv.list(Conv.model(SessionDecision.IpAnalyses::fromJson)), ipAnalyses);
+    }
+
+    /**
+     * <b>Array of Location verification results</b>, one per Location verification step: that step's accepted attempt. <code>null</code> until a Location verification step has produced data. Earlier attempts of the same step are in <code>geolocation_attempts</code>.
+     *
+     * @param geolocationChecks the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder geolocationChecks(@Nullable List<GeolocationCheck> geolocationChecks) {
+      return setNullable("geolocation_checks", Conv.list(Conv.model(GeolocationCheck::fromJson)), geolocationChecks);
+    }
+
+    /**
+     * Every attempt of every Location verification step of this session, oldest first. Attempts that a resubmission replaced are left out. A workflow that withholds <code>geolocation_checks</code> through its response attributes withholds this list too.
+     *
+     * @param geolocationAttempts the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder geolocationAttempts(@Nullable List<GeolocationAttempt> geolocationAttempts) {
+      return setNullable("geolocation_attempts", Conv.list(Conv.model(GeolocationAttempt::fromJson)), geolocationAttempts);
     }
 
     /**
@@ -798,6 +1008,16 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
+     * Why a configured database validation produced no result, as <code>{code, message}</code> plus context fields. Present only when <code>database_validations</code> is <code>null</code> for a workflow that has the step, so you can tell "the registry agreed" from "nothing ran". <code>null</code> otherwise.
+     *
+     * @param databaseValidationNotPerformedReason the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder databaseValidationNotPerformedReason(SessionDecision.@Nullable DatabaseValidationNotPerformedReason databaseValidationNotPerformedReason) {
+      return setNullable("database_validation_not_performed_reason", Conv.model(SessionDecision.DatabaseValidationNotPerformedReason::fromJson), databaseValidationNotPerformedReason);
+    }
+
+    /**
      * The <code>reviews</code> field.
      *
      * @param reviews the value
@@ -805,6 +1025,36 @@ public final class SessionDecision extends JsonModel {
      */
     public Builder reviews(List<SessionDecision.Reviews> reviews) {
       return set("reviews", Conv.list(Conv.model(SessionDecision.Reviews::fromJson)), reviews);
+    }
+
+    /**
+     * The Console reviewer the session is assigned to, or <code>null</code> when nobody holds it.
+     *
+     * @param assignee the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder assignee(SessionDecision.@Nullable Assignee assignee) {
+      return setNullable("assignee", Conv.model(SessionDecision.Assignee::fromJson), assignee);
+    }
+
+    /**
+     * When the session started waiting for review. <code>null</code> unless the session is <code>In Review</code> and your application sets a review deadline.
+     *
+     * @param waitingSince the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder waitingSince(@Nullable OffsetDateTime waitingSince) {
+      return setNullable("waiting_since", Conv.DATE_TIME, waitingSince);
+    }
+
+    /**
+     * When the review is due. <code>null</code> unless the session is <code>In Review</code> and your application sets a review deadline.
+     *
+     * @param slaDueAt the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder slaDueAt(@Nullable OffsetDateTime slaDueAt) {
+      return setNullable("sla_due_at", Conv.DATE_TIME, slaDueAt);
     }
 
     /**
@@ -868,6 +1118,16 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
+     * The sandbox scenario the session was created with. <code>null</code> for live sessions and for sandbox sessions created without one.
+     *
+     * @param sandboxScenario the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder sandboxScenario(@Nullable String sandboxScenario) {
+      return setNullable("sandbox_scenario", Conv.STRING, sandboxScenario);
+    }
+
+    /**
      * Returned only with <code>include=resubmissions</code>, for user and business sessions. One entry per resubmission request, oldest first. Each entry carries the results the resubmitted steps returned before the request, so earlier submissions stay readable. Deleting the session deletes every submission.
      *
      * @param resubmissions the value
@@ -895,6 +1155,46 @@ public final class SessionDecision extends JsonModel {
      */
     public Builder investigator(@Nullable InvestigatorBlock investigator) {
       return setNullable("investigator", Conv.model(InvestigatorBlock::fromJson), investigator);
+    }
+
+    /**
+     * When the live biometric data of this session is deleted.
+     *
+     * @param biometricRetention the value
+     * @return this builder
+     */
+    public Builder biometricRetention(BiometricRetention biometricRetention) {
+      return set("biometric_retention", Conv.model(BiometricRetention::fromJson), biometricRetention);
+    }
+
+    /**
+     * The result of a Fraud Check API call. <code>null</code> for every other session.
+     *
+     * @param fraudCheck the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder fraudCheck(@Nullable Map<String, ?> fraudCheck) {
+      return setAny("fraud_check", fraudCheck);
+    }
+
+    /**
+     * Expiring URL of the full-session recording. Returned only when your organization records full-session video.
+     *
+     * @param fullSessionVideo the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder fullSessionVideo(@Nullable String fullSessionVideo) {
+      return setNullable("full_session_video", Conv.STRING, fullSessionVideo);
+    }
+
+    /**
+     * When the full-session recording was made. Returned only when your organization records full-session video.
+     *
+     * @param fullSessionVideoRecordedAt the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder fullSessionVideoRecordedAt(@Nullable OffsetDateTime fullSessionVideoRecordedAt) {
+      return setNullable("full_session_video_recorded_at", Conv.DATE_TIME, fullSessionVideoRecordedAt);
     }
 
     /**
@@ -1019,6 +1319,1491 @@ public final class SessionDecision extends JsonModel {
     @Override
     public boolean isKnown() {
       return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Present when a reviewer set <code>status</code> by hand. <code>null</code> when the status is the automatic one. Use it to tell a manual approval from an automatic one.
+   */
+  public static final class StatusOverride extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("overridden_at", "automatic_status");
+
+    private StatusOverride(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code StatusOverride} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static StatusOverride fromJson(JsonNode json) {
+      return new StatusOverride(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>overridden_at</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> overriddenAt() {
+      return Json.optional(json, "overridden_at", Conv.DATE_TIME);
+    }
+
+    /**
+     * The status the platform's own checks conclude.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> automaticStatus() {
+      return Json.optional(json, "automatic_status", Conv.STRING);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link StatusOverride}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(StatusOverride from) {
+        super(from);
+      }
+
+      /**
+       * The <code>overridden_at</code> field.
+       *
+       * @param overriddenAt the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder overriddenAt(@Nullable OffsetDateTime overriddenAt) {
+        return setNullable("overridden_at", Conv.DATE_TIME, overriddenAt);
+      }
+
+      /**
+       * The status the platform's own checks conclude.
+       *
+       * @param automaticStatus the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder automaticStatus(@Nullable String automaticStatus) {
+        return setNullable("automatic_status", Conv.STRING, automaticStatus);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code StatusOverride}
+       */
+      public StatusOverride build() {
+        return new StatusOverride(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+  }
+
+  /** How the status was reached: who set it and which warnings did. */
+  public static final class DecisionTrace extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("status", "decided_by", "decided_at", "automatic_status", "terminal_node_id", "actor", "warning_counts", "status_warnings");
+
+    private DecisionTrace(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code DecisionTrace} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static DecisionTrace fromJson(JsonNode json) {
+      return new DecisionTrace(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The session status.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> status() {
+      return Json.optional(json, "status", Conv.STRING);
+    }
+
+    /**
+     * Who set the status. <code>null</code> while the session is not decided.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<SessionDecision.DecisionTrace.DecidedBy> decidedBy() {
+      return Json.optional(json, "decided_by", Conv.enumeration(SessionDecision.DecisionTrace.DecidedBy::of));
+    }
+
+    /**
+     * The <code>decided_at</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> decidedAt() {
+      return Json.optional(json, "decided_at", Conv.DATE_TIME);
+    }
+
+    /**
+     * What the platform's own checks conclude, which differs from <code>status</code> after a manual decision.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> automaticStatus() {
+      return Json.optional(json, "automatic_status", Conv.STRING);
+    }
+
+    /**
+     * The workflow status node that ended the session, when one did.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> terminalNodeId() {
+      return Json.optional(json, "terminal_node_id", Conv.STRING);
+    }
+
+    /**
+     * The reviewer behind a manual decision.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<SessionDecision.DecisionTrace.Actor> actor() {
+      return Json.optional(json, "actor", Conv.model(SessionDecision.DecisionTrace.Actor::fromJson));
+    }
+
+    /**
+     * Warnings per <code>log_type</code> (<code>error</code>, <code>warning</code>, <code>information</code>) and <code>total</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Map<String, Long>> warningCounts() {
+      return Json.optional(json, "warning_counts", Conv.map(Conv.LONG));
+    }
+
+    /**
+     * The warnings that set a <code>Declined</code> or <code>In Review</code> status.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<List<SessionDecision.DecisionTrace.StatusWarnings>> statusWarnings() {
+      return Json.optional(json, "status_warnings", Conv.list(Conv.model(SessionDecision.DecisionTrace.StatusWarnings::fromJson)));
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link DecisionTrace}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(DecisionTrace from) {
+        super(from);
+      }
+
+      /**
+       * The session status.
+       *
+       * @param status the value
+       * @return this builder
+       */
+      public Builder status(String status) {
+        return set("status", Conv.STRING, status);
+      }
+
+      /**
+       * Who set the status. <code>null</code> while the session is not decided.
+       *
+       * @param decidedBy the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder decidedBy(SessionDecision.DecisionTrace.@Nullable DecidedBy decidedBy) {
+        return setNullable("decided_by", Conv.enumeration(SessionDecision.DecisionTrace.DecidedBy::of), decidedBy);
+      }
+
+      /**
+       * The <code>decided_at</code> field.
+       *
+       * @param decidedAt the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder decidedAt(@Nullable OffsetDateTime decidedAt) {
+        return setNullable("decided_at", Conv.DATE_TIME, decidedAt);
+      }
+
+      /**
+       * What the platform's own checks conclude, which differs from <code>status</code> after a manual decision.
+       *
+       * @param automaticStatus the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder automaticStatus(@Nullable String automaticStatus) {
+        return setNullable("automatic_status", Conv.STRING, automaticStatus);
+      }
+
+      /**
+       * The workflow status node that ended the session, when one did.
+       *
+       * @param terminalNodeId the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder terminalNodeId(@Nullable String terminalNodeId) {
+        return setNullable("terminal_node_id", Conv.STRING, terminalNodeId);
+      }
+
+      /**
+       * The reviewer behind a manual decision.
+       *
+       * @param actor the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder actor(SessionDecision.DecisionTrace.@Nullable Actor actor) {
+        return setNullable("actor", Conv.model(SessionDecision.DecisionTrace.Actor::fromJson), actor);
+      }
+
+      /**
+       * Warnings per <code>log_type</code> (<code>error</code>, <code>warning</code>, <code>information</code>) and <code>total</code>.
+       *
+       * @param warningCounts the value
+       * @return this builder
+       */
+      public Builder warningCounts(Map<String, Long> warningCounts) {
+        return set("warning_counts", Conv.map(Conv.LONG), warningCounts);
+      }
+
+      /**
+       * The warnings that set a <code>Declined</code> or <code>In Review</code> status.
+       *
+       * @param statusWarnings the value
+       * @return this builder
+       */
+      public Builder statusWarnings(List<SessionDecision.DecisionTrace.StatusWarnings> statusWarnings) {
+        return set("status_warnings", Conv.list(Conv.model(SessionDecision.DecisionTrace.StatusWarnings::fromJson)), statusWarnings);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code DecisionTrace}
+       */
+      public DecisionTrace build() {
+        return new DecisionTrace(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     * Who set the status. <code>null</code> while the session is not decided.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class DecidedBy extends StringEnum {
+      /** The value {@code "manual"}. */
+      public static final DecidedBy MANUAL = new DecidedBy("manual");
+
+      /** The value {@code "automatic"}. */
+      public static final DecidedBy AUTOMATIC = new DecidedBy("automatic");
+
+      /** The value {@code "investigator"}. */
+      public static final DecidedBy INVESTIGATOR = new DecidedBy("investigator");
+
+      private static final List<DecidedBy> KNOWN_VALUES = List.of(MANUAL, AUTOMATIC, INVESTIGATOR);
+
+      private DecidedBy(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static DecidedBy of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, DecidedBy::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<DecidedBy> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /** The reviewer behind a manual decision. */
+    public static final class Actor extends JsonModel {
+      private static final Set<String> KNOWN_FIELDS = Set.of("user", "actor_type");
+
+      private Actor(ObjectNode json, Map<String, List<FileUpload>> files) {
+        super(json, files);
+      }
+
+      /**
+       * Reads a {@code Actor} from JSON. Unknown fields are kept and readable
+       * through {@link #_additionalProperties()}.
+       *
+       * @param json a JSON object
+       * @return the parsed value
+       */
+      public static Actor fromJson(JsonNode json) {
+        return new Actor(Json.copyObject(json), Map.of());
+      }
+
+      /**
+       * Returns an empty builder.
+       *
+       * @return a new builder
+       */
+      public static Builder builder() {
+        return new Builder();
+      }
+
+      /**
+       * Returns a builder holding a copy of every field of this value.
+       *
+       * @return a new builder
+       */
+      public Builder toBuilder() {
+        return new Builder(this);
+      }
+
+      /**
+       * The <code>user</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> user() {
+        return Json.optional(json, "user", Conv.STRING);
+      }
+
+      /**
+       * The <code>actor_type</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> actorType() {
+        return Json.optional(json, "actor_type", Conv.STRING);
+      }
+
+      @Override
+      protected Set<String> knownFields() {
+        return KNOWN_FIELDS;
+      }
+
+      /** Builds a {@link Actor}. */
+      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+        private Builder() {}
+
+        private Builder(Actor from) {
+          super(from);
+        }
+
+        /**
+         * The <code>user</code> field.
+         *
+         * @param user the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder user(@Nullable String user) {
+          return setNullable("user", Conv.STRING, user);
+        }
+
+        /**
+         * The <code>actor_type</code> field.
+         *
+         * @param actorType the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder actorType(@Nullable String actorType) {
+          return setNullable("actor_type", Conv.STRING, actorType);
+        }
+
+        /**
+         * Builds the value.
+         *
+         * @return a new immutable {@code Actor}
+         */
+        public Actor build() {
+          return new Actor(buildJson(), buildFiles());
+        }
+
+        @Override
+        protected Builder self() {
+          return this;
+        }
+      }
+    }
+
+    public static final class StatusWarnings extends JsonModel {
+      private static final Set<String> KNOWN_FIELDS = Set.of("risk", "feature", "node_id", "log_type", "check_status", "source", "short_description");
+
+      private StatusWarnings(ObjectNode json, Map<String, List<FileUpload>> files) {
+        super(json, files);
+      }
+
+      /**
+       * Reads a {@code StatusWarnings} from JSON. Unknown fields are kept and readable
+       * through {@link #_additionalProperties()}.
+       *
+       * @param json a JSON object
+       * @return the parsed value
+       */
+      public static StatusWarnings fromJson(JsonNode json) {
+        return new StatusWarnings(Json.copyObject(json), Map.of());
+      }
+
+      /**
+       * Returns an empty builder.
+       *
+       * @return a new builder
+       */
+      public static Builder builder() {
+        return new Builder();
+      }
+
+      /**
+       * Returns a builder holding a copy of every field of this value.
+       *
+       * @return a new builder
+       */
+      public Builder toBuilder() {
+        return new Builder(this);
+      }
+
+      /**
+       * The <code>risk</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> risk() {
+        return Json.optional(json, "risk", Conv.STRING);
+      }
+
+      /**
+       * The <code>feature</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> feature() {
+        return Json.optional(json, "feature", Conv.STRING);
+      }
+
+      /**
+       * The <code>node_id</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> nodeId() {
+        return Json.optional(json, "node_id", Conv.STRING);
+      }
+
+      /**
+       * The <code>log_type</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> logType() {
+        return Json.optional(json, "log_type", Conv.STRING);
+      }
+
+      /**
+       * The <code>check_status</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> checkStatus() {
+        return Json.optional(json, "check_status", Conv.STRING);
+      }
+
+      /**
+       * The payload list the warning came from, for example <code>id_verifications</code>.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> source() {
+        return Json.optional(json, "source", Conv.STRING);
+      }
+
+      /**
+       * The <code>short_description</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> shortDescription() {
+        return Json.optional(json, "short_description", Conv.STRING);
+      }
+
+      @Override
+      protected Set<String> knownFields() {
+        return KNOWN_FIELDS;
+      }
+
+      /** Builds a {@link StatusWarnings}. */
+      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+        private Builder() {}
+
+        private Builder(StatusWarnings from) {
+          super(from);
+        }
+
+        /**
+         * The <code>risk</code> field.
+         *
+         * @param risk the value
+         * @return this builder
+         */
+        public Builder risk(String risk) {
+          return set("risk", Conv.STRING, risk);
+        }
+
+        /**
+         * The <code>feature</code> field.
+         *
+         * @param feature the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder feature(@Nullable String feature) {
+          return setNullable("feature", Conv.STRING, feature);
+        }
+
+        /**
+         * The <code>node_id</code> field.
+         *
+         * @param nodeId the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder nodeId(@Nullable String nodeId) {
+          return setNullable("node_id", Conv.STRING, nodeId);
+        }
+
+        /**
+         * The <code>log_type</code> field.
+         *
+         * @param logType the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder logType(@Nullable String logType) {
+          return setNullable("log_type", Conv.STRING, logType);
+        }
+
+        /**
+         * The <code>check_status</code> field.
+         *
+         * @param checkStatus the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder checkStatus(@Nullable String checkStatus) {
+          return setNullable("check_status", Conv.STRING, checkStatus);
+        }
+
+        /**
+         * The payload list the warning came from, for example <code>id_verifications</code>.
+         *
+         * @param source the value
+         * @return this builder
+         */
+        public Builder source(String source) {
+          return set("source", Conv.STRING, source);
+        }
+
+        /**
+         * The <code>short_description</code> field.
+         *
+         * @param shortDescription the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder shortDescription(@Nullable String shortDescription) {
+          return setNullable("short_description", Conv.STRING, shortDescription);
+        }
+
+        /**
+         * Builds the value.
+         *
+         * @return a new immutable {@code StatusWarnings}
+         */
+        public StatusWarnings build() {
+          return new StatusWarnings(buildJson(), buildFiles());
+        }
+
+        @Override
+        protected Builder self() {
+          return this;
+        }
+      }
+    }
+  }
+
+  /**
+   * A summary of other records linked to the session. <code>null</code> when there is nothing to show, and for workflows that declare an age assurance standard.
+   */
+  public static final class LinkedRecords extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("same_face", "earlier_verifications", "networks");
+
+    private LinkedRecords(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code LinkedRecords} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static LinkedRecords fromJson(JsonNode json) {
+      return new LinkedRecords(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * Other people whose face matched one of this session's face searches.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<SessionDecision.LinkedRecords.SameFace> sameFace() {
+      return Json.optional(json, "same_face", Conv.model(SessionDecision.LinkedRecords.SameFace::fromJson));
+    }
+
+    /**
+     * The <code>earlier_verifications</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<SessionDecision.LinkedRecords.EarlierVerifications> earlierVerifications() {
+      return Json.optional(json, "earlier_verifications", Conv.model(SessionDecision.LinkedRecords.EarlierVerifications::fromJson));
+    }
+
+    /**
+     * The <code>networks</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<SessionDecision.LinkedRecords.Networks> networks() {
+      return Json.optional(json, "networks", Conv.model(SessionDecision.LinkedRecords.Networks::fromJson));
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link LinkedRecords}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(LinkedRecords from) {
+        super(from);
+      }
+
+      /**
+       * Other people whose face matched one of this session's face searches.
+       *
+       * @param sameFace the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder sameFace(SessionDecision.LinkedRecords.@Nullable SameFace sameFace) {
+        return setNullable("same_face", Conv.model(SessionDecision.LinkedRecords.SameFace::fromJson), sameFace);
+      }
+
+      /**
+       * The <code>earlier_verifications</code> field.
+       *
+       * @param earlierVerifications the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder earlierVerifications(SessionDecision.LinkedRecords.@Nullable EarlierVerifications earlierVerifications) {
+        return setNullable("earlier_verifications", Conv.model(SessionDecision.LinkedRecords.EarlierVerifications::fromJson), earlierVerifications);
+      }
+
+      /**
+       * The <code>networks</code> field.
+       *
+       * @param networks the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder networks(SessionDecision.LinkedRecords.@Nullable Networks networks) {
+        return setNullable("networks", Conv.model(SessionDecision.LinkedRecords.Networks::fromJson), networks);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code LinkedRecords}
+       */
+      public LinkedRecords build() {
+        return new LinkedRecords(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /** Other people whose face matched one of this session's face searches. */
+    public static final class SameFace extends JsonModel {
+      private static final Set<String> KNOWN_FIELDS = Set.of("count", "best_match");
+
+      private SameFace(ObjectNode json, Map<String, List<FileUpload>> files) {
+        super(json, files);
+      }
+
+      /**
+       * Reads a {@code SameFace} from JSON. Unknown fields are kept and readable
+       * through {@link #_additionalProperties()}.
+       *
+       * @param json a JSON object
+       * @return the parsed value
+       */
+      public static SameFace fromJson(JsonNode json) {
+        return new SameFace(Json.copyObject(json), Map.of());
+      }
+
+      /**
+       * Returns an empty builder.
+       *
+       * @return a new builder
+       */
+      public static Builder builder() {
+        return new Builder();
+      }
+
+      /**
+       * Returns a builder holding a copy of every field of this value.
+       *
+       * @return a new builder
+       */
+      public Builder toBuilder() {
+        return new Builder(this);
+      }
+
+      /**
+       * The <code>count</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<Long> count() {
+        return Json.optional(json, "count", Conv.LONG);
+      }
+
+      /**
+       * The <code>best_match</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<SessionDecision.LinkedRecords.SameFace.BestMatch> bestMatch() {
+        return Json.optional(json, "best_match", Conv.model(SessionDecision.LinkedRecords.SameFace.BestMatch::fromJson));
+      }
+
+      @Override
+      protected Set<String> knownFields() {
+        return KNOWN_FIELDS;
+      }
+
+      /** Builds a {@link SameFace}. */
+      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+        private Builder() {}
+
+        private Builder(SameFace from) {
+          super(from);
+        }
+
+        /**
+         * The <code>count</code> field.
+         *
+         * @param count the value
+         * @return this builder
+         */
+        public Builder count(long count) {
+          return set("count", Conv.LONG, count);
+        }
+
+        /**
+         * The <code>best_match</code> field.
+         *
+         * @param bestMatch the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder bestMatch(SessionDecision.LinkedRecords.SameFace.@Nullable BestMatch bestMatch) {
+          return setNullable("best_match", Conv.model(SessionDecision.LinkedRecords.SameFace.BestMatch::fromJson), bestMatch);
+        }
+
+        /**
+         * Builds the value.
+         *
+         * @return a new immutable {@code SameFace}
+         */
+        public SameFace build() {
+          return new SameFace(buildJson(), buildFiles());
+        }
+
+        @Override
+        protected Builder self() {
+          return this;
+        }
+      }
+
+      public static final class BestMatch extends JsonModel {
+        private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_number", "vendor_user_id", "similarity_percentage");
+
+        private BestMatch(ObjectNode json, Map<String, List<FileUpload>> files) {
+          super(json, files);
+        }
+
+        /**
+         * Reads a {@code BestMatch} from JSON. Unknown fields are kept and readable
+         * through {@link #_additionalProperties()}.
+         *
+         * @param json a JSON object
+         * @return the parsed value
+         */
+        public static BestMatch fromJson(JsonNode json) {
+          return new BestMatch(Json.copyObject(json), Map.of());
+        }
+
+        /**
+         * Returns an empty builder.
+         *
+         * @return a new builder
+         */
+        public static Builder builder() {
+          return new Builder();
+        }
+
+        /**
+         * Returns a builder holding a copy of every field of this value.
+         *
+         * @return a new builder
+         */
+        public Builder toBuilder() {
+          return new Builder(this);
+        }
+
+        /**
+         * The <code>session_id</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<String> sessionId() {
+          return Json.optional(json, "session_id", Conv.STRING);
+        }
+
+        /**
+         * The <code>session_number</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Long> sessionNumber() {
+          return Json.optional(json, "session_number", Conv.LONG);
+        }
+
+        /**
+         * The <code>vendor_user_id</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<String> vendorUserId() {
+          return Json.optional(json, "vendor_user_id", Conv.STRING);
+        }
+
+        /**
+         * The <code>similarity_percentage</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Double> similarityPercentage() {
+          return Json.optional(json, "similarity_percentage", Conv.DOUBLE);
+        }
+
+        @Override
+        protected Set<String> knownFields() {
+          return KNOWN_FIELDS;
+        }
+
+        /** Builds a {@link BestMatch}. */
+        public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+          private Builder() {}
+
+          private Builder(BestMatch from) {
+            super(from);
+          }
+
+          /**
+           * The <code>session_id</code> field.
+           *
+           * @param sessionId the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder sessionId(@Nullable String sessionId) {
+            return setNullable("session_id", Conv.STRING, sessionId);
+          }
+
+          /**
+           * The <code>session_number</code> field.
+           *
+           * @param sessionNumber the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder sessionNumber(@Nullable Long sessionNumber) {
+            return setNullable("session_number", Conv.LONG, sessionNumber);
+          }
+
+          /**
+           * The <code>vendor_user_id</code> field.
+           *
+           * @param vendorUserId the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder vendorUserId(@Nullable String vendorUserId) {
+            return setNullable("vendor_user_id", Conv.STRING, vendorUserId);
+          }
+
+          /**
+           * The <code>similarity_percentage</code> field.
+           *
+           * @param similarityPercentage the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder similarityPercentage(@Nullable Double similarityPercentage) {
+            return setNullable("similarity_percentage", Conv.DOUBLE, similarityPercentage);
+          }
+
+          /**
+           * Builds the value.
+           *
+           * @return a new immutable {@code BestMatch}
+           */
+          public BestMatch build() {
+            return new BestMatch(buildJson(), buildFiles());
+          }
+
+          @Override
+          protected Builder self() {
+            return this;
+          }
+        }
+      }
+    }
+
+    public static final class EarlierVerifications extends JsonModel {
+      private static final Set<String> KNOWN_FIELDS = Set.of("count", "vendor_user_id");
+
+      private EarlierVerifications(ObjectNode json, Map<String, List<FileUpload>> files) {
+        super(json, files);
+      }
+
+      /**
+       * Reads a {@code EarlierVerifications} from JSON. Unknown fields are kept and readable
+       * through {@link #_additionalProperties()}.
+       *
+       * @param json a JSON object
+       * @return the parsed value
+       */
+      public static EarlierVerifications fromJson(JsonNode json) {
+        return new EarlierVerifications(Json.copyObject(json), Map.of());
+      }
+
+      /**
+       * Returns an empty builder.
+       *
+       * @return a new builder
+       */
+      public static Builder builder() {
+        return new Builder();
+      }
+
+      /**
+       * Returns a builder holding a copy of every field of this value.
+       *
+       * @return a new builder
+       */
+      public Builder toBuilder() {
+        return new Builder(this);
+      }
+
+      /**
+       * The <code>count</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<Long> count() {
+        return Json.optional(json, "count", Conv.LONG);
+      }
+
+      /**
+       * The <code>vendor_user_id</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> vendorUserId() {
+        return Json.optional(json, "vendor_user_id", Conv.STRING);
+      }
+
+      @Override
+      protected Set<String> knownFields() {
+        return KNOWN_FIELDS;
+      }
+
+      /** Builds a {@link EarlierVerifications}. */
+      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+        private Builder() {}
+
+        private Builder(EarlierVerifications from) {
+          super(from);
+        }
+
+        /**
+         * The <code>count</code> field.
+         *
+         * @param count the value
+         * @return this builder
+         */
+        public Builder count(long count) {
+          return set("count", Conv.LONG, count);
+        }
+
+        /**
+         * The <code>vendor_user_id</code> field.
+         *
+         * @param vendorUserId the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder vendorUserId(@Nullable String vendorUserId) {
+          return setNullable("vendor_user_id", Conv.STRING, vendorUserId);
+        }
+
+        /**
+         * Builds the value.
+         *
+         * @return a new immutable {@code EarlierVerifications}
+         */
+        public EarlierVerifications build() {
+          return new EarlierVerifications(buildJson(), buildFiles());
+        }
+
+        @Override
+        protected Builder self() {
+          return this;
+        }
+      }
+    }
+
+    public static final class Networks extends JsonModel {
+      private static final Set<String> KNOWN_FIELDS = Set.of("count", "open", "dismissed", "items");
+
+      private Networks(ObjectNode json, Map<String, List<FileUpload>> files) {
+        super(json, files);
+      }
+
+      /**
+       * Reads a {@code Networks} from JSON. Unknown fields are kept and readable
+       * through {@link #_additionalProperties()}.
+       *
+       * @param json a JSON object
+       * @return the parsed value
+       */
+      public static Networks fromJson(JsonNode json) {
+        return new Networks(Json.copyObject(json), Map.of());
+      }
+
+      /**
+       * Returns an empty builder.
+       *
+       * @return a new builder
+       */
+      public static Builder builder() {
+        return new Builder();
+      }
+
+      /**
+       * Returns a builder holding a copy of every field of this value.
+       *
+       * @return a new builder
+       */
+      public Builder toBuilder() {
+        return new Builder(this);
+      }
+
+      /**
+       * The <code>count</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<Long> count() {
+        return Json.optional(json, "count", Conv.LONG);
+      }
+
+      /**
+       * The <code>open</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<Long> open() {
+        return Json.optional(json, "open", Conv.LONG);
+      }
+
+      /**
+       * The <code>dismissed</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<Long> dismissed() {
+        return Json.optional(json, "dismissed", Conv.LONG);
+      }
+
+      /**
+       * The <code>items</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<List<SessionDecision.LinkedRecords.Networks.Items>> items() {
+        return Json.optional(json, "items", Conv.list(Conv.model(SessionDecision.LinkedRecords.Networks.Items::fromJson)));
+      }
+
+      @Override
+      protected Set<String> knownFields() {
+        return KNOWN_FIELDS;
+      }
+
+      /** Builds a {@link Networks}. */
+      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+        private Builder() {}
+
+        private Builder(Networks from) {
+          super(from);
+        }
+
+        /**
+         * The <code>count</code> field.
+         *
+         * @param count the value
+         * @return this builder
+         */
+        public Builder count(long count) {
+          return set("count", Conv.LONG, count);
+        }
+
+        /**
+         * The <code>open</code> field.
+         *
+         * @param open the value
+         * @return this builder
+         */
+        public Builder open(long open) {
+          return set("open", Conv.LONG, open);
+        }
+
+        /**
+         * The <code>dismissed</code> field.
+         *
+         * @param dismissed the value
+         * @return this builder
+         */
+        public Builder dismissed(long dismissed) {
+          return set("dismissed", Conv.LONG, dismissed);
+        }
+
+        /**
+         * The <code>items</code> field.
+         *
+         * @param items the value
+         * @return this builder
+         */
+        public Builder items(List<SessionDecision.LinkedRecords.Networks.Items> items) {
+          return set("items", Conv.list(Conv.model(SessionDecision.LinkedRecords.Networks.Items::fromJson)), items);
+        }
+
+        /**
+         * Builds the value.
+         *
+         * @return a new immutable {@code Networks}
+         */
+        public Networks build() {
+          return new Networks(buildJson(), buildFiles());
+        }
+
+        @Override
+        protected Builder self() {
+          return this;
+        }
+      }
+
+      public static final class Items extends JsonModel {
+        private static final Set<String> KNOWN_FIELDS = Set.of("network_id", "display_number", "name", "status", "risk_score");
+
+        private Items(ObjectNode json, Map<String, List<FileUpload>> files) {
+          super(json, files);
+        }
+
+        /**
+         * Reads a {@code Items} from JSON. Unknown fields are kept and readable
+         * through {@link #_additionalProperties()}.
+         *
+         * @param json a JSON object
+         * @return the parsed value
+         */
+        public static Items fromJson(JsonNode json) {
+          return new Items(Json.copyObject(json), Map.of());
+        }
+
+        /**
+         * Returns an empty builder.
+         *
+         * @return a new builder
+         */
+        public static Builder builder() {
+          return new Builder();
+        }
+
+        /**
+         * Returns a builder holding a copy of every field of this value.
+         *
+         * @return a new builder
+         */
+        public Builder toBuilder() {
+          return new Builder(this);
+        }
+
+        /**
+         * The <code>network_id</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<String> networkId() {
+          return Json.optional(json, "network_id", Conv.STRING);
+        }
+
+        /**
+         * The <code>display_number</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Long> displayNumber() {
+          return Json.optional(json, "display_number", Conv.LONG);
+        }
+
+        /**
+         * The <code>name</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<String> name() {
+          return Json.optional(json, "name", Conv.STRING);
+        }
+
+        /**
+         * The <code>status</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<String> status() {
+          return Json.optional(json, "status", Conv.STRING);
+        }
+
+        /**
+         * The <code>risk_score</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Double> riskScore() {
+          return Json.optional(json, "risk_score", Conv.DOUBLE);
+        }
+
+        @Override
+        protected Set<String> knownFields() {
+          return KNOWN_FIELDS;
+        }
+
+        /** Builds a {@link Items}. */
+        public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+          private Builder() {}
+
+          private Builder(Items from) {
+            super(from);
+          }
+
+          /**
+           * The <code>network_id</code> field.
+           *
+           * @param networkId the value
+           * @return this builder
+           */
+          public Builder networkId(String networkId) {
+            return set("network_id", Conv.STRING, networkId);
+          }
+
+          /**
+           * The <code>display_number</code> field.
+           *
+           * @param displayNumber the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder displayNumber(@Nullable Long displayNumber) {
+            return setNullable("display_number", Conv.LONG, displayNumber);
+          }
+
+          /**
+           * The <code>name</code> field.
+           *
+           * @param name the value
+           * @return this builder
+           */
+          public Builder name(String name) {
+            return set("name", Conv.STRING, name);
+          }
+
+          /**
+           * The <code>status</code> field.
+           *
+           * @param status the value
+           * @return this builder
+           */
+          public Builder status(String status) {
+            return set("status", Conv.STRING, status);
+          }
+
+          /**
+           * The <code>risk_score</code> field.
+           *
+           * @param riskScore the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder riskScore(@Nullable Double riskScore) {
+            return setNullable("risk_score", Conv.DOUBLE, riskScore);
+          }
+
+          /**
+           * Builds the value.
+           *
+           * @return a new immutable {@code Items}
+           */
+          public Items build() {
+            return new Items(buildJson(), buildFiles());
+          }
+
+          @Override
+          protected Builder self() {
+            return this;
+          }
+        }
+      }
     }
   }
 
@@ -1642,7 +3427,7 @@ public final class SessionDecision extends JsonModel {
    * One ID verification report - the full report for a single ID Verification step. <code>verification_method</code> says which of the three methods produced it (document capture, non-doc lookup or wallet sign-in) and the method-specific evidence block is populated accordingly.
    */
   public static final class IdVerifications extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "verification_method", "assurance", "wallet_provider", "fallback_from", "id_lookup", "wallet_verification", "status", "document_type", "document_subtype", "document_number", "personal_number", "portrait_image", "front_image", "front_video", "back_image", "back_video", "full_front_image", "full_back_image", "front_image_camera_front", "back_image_camera_front", "date_of_birth", "age", "expiration_date", "date_of_issue", "issuing_state", "issuing_state_name", "first_name", "last_name", "full_name", "gender", "address", "formatted_address", "place_of_birth", "marital_status", "nationality", "extra_fields", "mrz", "parsed_address", "extra_files", "front_image_camera_front_face_match_score", "back_image_camera_front_face_match_score", "document_selfie_face_matches", "front_image_quality_score", "back_image_quality_score", "warnings", "matches", "document_liveness", "address_validation");
+    private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "verification_method", "assurance", "wallet_provider", "fallback_from", "id_lookup", "wallet_verification", "status", "document_type", "document_subtype", "document_number", "personal_number", "portrait_image", "front_image", "front_video", "back_image", "back_video", "full_front_image", "full_back_image", "front_image_camera_front", "back_image_camera_front", "date_of_birth", "age", "expiration_date", "date_of_issue", "issuing_state", "issuing_state_name", "first_name", "last_name", "full_name", "gender", "address", "formatted_address", "place_of_birth", "marital_status", "nationality", "extra_fields", "mrz", "parsed_address", "extra_files", "front_image_camera_front_face_match_score", "back_image_camera_front_face_match_score", "document_selfie_face_matches", "front_image_quality_score", "back_image_quality_score", "warnings", "matches", "document_liveness", "address_validation", "region", "extracted_data", "barcodes");
 
     private IdVerifications(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -2167,6 +3952,36 @@ public final class SessionDecision extends JsonModel {
       return Json.optional(json, "address_validation", Conv.model(AddressValidationResult::fromJson));
     }
 
+    /**
+     * Region or state of the document's issuing country where the document identifies one.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> region() {
+      return Json.optional(json, "region", Conv.STRING);
+    }
+
+    /**
+     * Snapshot of the data extracted from the document that the person was shown to review, kept next to the confirmed values so you can compare what was read with what the person confirmed. <code>null</code> when the person was not asked to review.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Map<String, JsonNode>> extractedData() {
+      return Json.optional(json, "extracted_data", Conv.OBJECT);
+    }
+
+    /**
+     * Data read from the document's barcodes. Empty when the document has none or none was read.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<List<Map<String, JsonNode>>> barcodes() {
+      return Json.optional(json, "barcodes", Conv.list(Conv.OBJECT));
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -2668,6 +4483,36 @@ public final class SessionDecision extends JsonModel {
        */
       public Builder addressValidation(@Nullable AddressValidationResult addressValidation) {
         return setNullable("address_validation", Conv.model(AddressValidationResult::fromJson), addressValidation);
+      }
+
+      /**
+       * Region or state of the document's issuing country where the document identifies one.
+       *
+       * @param region the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder region(@Nullable String region) {
+        return setNullable("region", Conv.STRING, region);
+      }
+
+      /**
+       * Snapshot of the data extracted from the document that the person was shown to review, kept next to the confirmed values so you can compare what was read with what the person confirmed. <code>null</code> when the person was not asked to review.
+       *
+       * @param extractedData the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder extractedData(@Nullable Map<String, ?> extractedData) {
+        return setAny("extracted_data", extractedData);
+      }
+
+      /**
+       * Data read from the document's barcodes. Empty when the document has none or none was read.
+       *
+       * @param barcodes the value
+       * @return this builder
+       */
+      public Builder barcodes(List<? extends Map<String, ?>> barcodes) {
+        return setAny("barcodes", barcodes);
       }
 
       /**
@@ -7439,7 +9284,13 @@ public final class SessionDecision extends JsonModel {
         /** The value {@code "KYB_KEY_PEOPLE"}. */
         public static final Feature KYB_KEY_PEOPLE = new Feature("KYB_KEY_PEOPLE");
 
-        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE);
+        /** The value {@code "GEOLOCATION"}. */
+        public static final Feature GEOLOCATION = new Feature("GEOLOCATION");
+
+        /** The value {@code "SIGNATURE"}. */
+        public static final Feature SIGNATURE = new Feature("SIGNATURE");
+
+        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE, GEOLOCATION, SIGNATURE);
 
         private Feature(String value) {
           super(value);
@@ -10941,7 +12792,13 @@ public final class SessionDecision extends JsonModel {
         /** The value {@code "KYB_KEY_PEOPLE"}. */
         public static final Feature KYB_KEY_PEOPLE = new Feature("KYB_KEY_PEOPLE");
 
-        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE);
+        /** The value {@code "GEOLOCATION"}. */
+        public static final Feature GEOLOCATION = new Feature("GEOLOCATION");
+
+        /** The value {@code "SIGNATURE"}. */
+        public static final Feature SIGNATURE = new Feature("SIGNATURE");
+
+        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE, GEOLOCATION, SIGNATURE);
 
         private Feature(String value) {
           super(value);
@@ -12088,7 +13945,13 @@ public final class SessionDecision extends JsonModel {
         /** The value {@code "KYB_KEY_PEOPLE"}. */
         public static final Feature KYB_KEY_PEOPLE = new Feature("KYB_KEY_PEOPLE");
 
-        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE);
+        /** The value {@code "GEOLOCATION"}. */
+        public static final Feature GEOLOCATION = new Feature("GEOLOCATION");
+
+        /** The value {@code "SIGNATURE"}. */
+        public static final Feature SIGNATURE = new Feature("SIGNATURE");
+
+        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE, GEOLOCATION, SIGNATURE);
 
         private Feature(String value) {
           super(value);
@@ -12123,7 +13986,7 @@ public final class SessionDecision extends JsonModel {
 
   /** One face-match report — the full report. */
   public static final class FaceMatches extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "score", "source_image_session_id", "source_image", "target_image", "warnings");
+    private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "score", "source_image_session_id", "source_image", "target_image", "warnings", "face_coverage");
 
     private FaceMatches(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -12228,6 +14091,16 @@ public final class SessionDecision extends JsonModel {
       return Json.optional(json, "warnings", Conv.list(Conv.model(SessionDecision.FaceMatches.Warnings::fromJson)));
     }
 
+    /**
+     * Whether the eyes, mouth and face are covered in the captured image. Returned by <code>GET /v3/session/{sessionId}/decision/</code> only; it is not part of webhook payloads. <code>null</code> when no coverage reading exists.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<SessionDecision.FaceMatches.FaceCoverage> faceCoverage() {
+      return Json.optional(json, "face_coverage", Conv.model(SessionDecision.FaceMatches.FaceCoverage::fromJson));
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -12309,6 +14182,16 @@ public final class SessionDecision extends JsonModel {
        */
       public Builder warnings(List<SessionDecision.FaceMatches.Warnings> warnings) {
         return set("warnings", Conv.list(Conv.model(SessionDecision.FaceMatches.Warnings::fromJson)), warnings);
+      }
+
+      /**
+       * Whether the eyes, mouth and face are covered in the captured image. Returned by <code>GET /v3/session/{sessionId}/decision/</code> only; it is not part of webhook payloads. <code>null</code> when no coverage reading exists.
+       *
+       * @param faceCoverage the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder faceCoverage(SessionDecision.FaceMatches.@Nullable FaceCoverage faceCoverage) {
+        return setNullable("face_coverage", Conv.model(SessionDecision.FaceMatches.FaceCoverage::fromJson), faceCoverage);
       }
 
       /**
@@ -12633,7 +14516,13 @@ public final class SessionDecision extends JsonModel {
         /** The value {@code "KYB_KEY_PEOPLE"}. */
         public static final Feature KYB_KEY_PEOPLE = new Feature("KYB_KEY_PEOPLE");
 
-        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE);
+        /** The value {@code "GEOLOCATION"}. */
+        public static final Feature GEOLOCATION = new Feature("GEOLOCATION");
+
+        /** The value {@code "SIGNATURE"}. */
+        public static final Feature SIGNATURE = new Feature("SIGNATURE");
+
+        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE, GEOLOCATION, SIGNATURE);
 
         private Feature(String value) {
           super(value);
@@ -12664,10 +14553,513 @@ public final class SessionDecision extends JsonModel {
         }
       }
     }
+
+    /**
+     * Whether the eyes, mouth and face are covered in the captured image. Returned by <code>GET /v3/session/{sessionId}/decision/</code> only; it is not part of webhook payloads. <code>null</code> when no coverage reading exists.
+     */
+    public static final class FaceCoverage extends JsonModel {
+      private static final Set<String> KNOWN_FIELDS = Set.of("eyes", "mouth", "face");
+
+      private FaceCoverage(ObjectNode json, Map<String, List<FileUpload>> files) {
+        super(json, files);
+      }
+
+      /**
+       * Reads a {@code FaceCoverage} from JSON. Unknown fields are kept and readable
+       * through {@link #_additionalProperties()}.
+       *
+       * @param json a JSON object
+       * @return the parsed value
+       */
+      public static FaceCoverage fromJson(JsonNode json) {
+        return new FaceCoverage(Json.copyObject(json), Map.of());
+      }
+
+      /**
+       * Returns an empty builder.
+       *
+       * @return a new builder
+       */
+      public static Builder builder() {
+        return new Builder();
+      }
+
+      /**
+       * Returns a builder holding a copy of every field of this value.
+       *
+       * @return a new builder
+       */
+      public Builder toBuilder() {
+        return new Builder(this);
+      }
+
+      /**
+       * The <code>eyes</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<SessionDecision.FaceMatches.FaceCoverage.Eyes> eyes() {
+        return Json.optional(json, "eyes", Conv.model(SessionDecision.FaceMatches.FaceCoverage.Eyes::fromJson));
+      }
+
+      /**
+       * The <code>mouth</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<SessionDecision.FaceMatches.FaceCoverage.Mouth> mouth() {
+        return Json.optional(json, "mouth", Conv.model(SessionDecision.FaceMatches.FaceCoverage.Mouth::fromJson));
+      }
+
+      /**
+       * The <code>face</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<SessionDecision.FaceMatches.FaceCoverage.Face> face() {
+        return Json.optional(json, "face", Conv.model(SessionDecision.FaceMatches.FaceCoverage.Face::fromJson));
+      }
+
+      @Override
+      protected Set<String> knownFields() {
+        return KNOWN_FIELDS;
+      }
+
+      /** Builds a {@link FaceCoverage}. */
+      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+        private Builder() {}
+
+        private Builder(FaceCoverage from) {
+          super(from);
+        }
+
+        /**
+         * The <code>eyes</code> field.
+         *
+         * @param eyes the value
+         * @return this builder
+         */
+        public Builder eyes(SessionDecision.FaceMatches.FaceCoverage.Eyes eyes) {
+          return set("eyes", Conv.model(SessionDecision.FaceMatches.FaceCoverage.Eyes::fromJson), eyes);
+        }
+
+        /**
+         * The <code>mouth</code> field.
+         *
+         * @param mouth the value
+         * @return this builder
+         */
+        public Builder mouth(SessionDecision.FaceMatches.FaceCoverage.Mouth mouth) {
+          return set("mouth", Conv.model(SessionDecision.FaceMatches.FaceCoverage.Mouth::fromJson), mouth);
+        }
+
+        /**
+         * The <code>face</code> field.
+         *
+         * @param face the value
+         * @return this builder
+         */
+        public Builder face(SessionDecision.FaceMatches.FaceCoverage.Face face) {
+          return set("face", Conv.model(SessionDecision.FaceMatches.FaceCoverage.Face::fromJson), face);
+        }
+
+        /**
+         * Builds the value.
+         *
+         * @return a new immutable {@code FaceCoverage}
+         */
+        public FaceCoverage build() {
+          return new FaceCoverage(buildJson(), buildFiles());
+        }
+
+        @Override
+        protected Builder self() {
+          return this;
+        }
+      }
+
+      public static final class Eyes extends JsonModel {
+        private static final Set<String> KNOWN_FIELDS = Set.of("covered", "calibrated", "visibility_score");
+
+        private Eyes(ObjectNode json, Map<String, List<FileUpload>> files) {
+          super(json, files);
+        }
+
+        /**
+         * Reads a {@code Eyes} from JSON. Unknown fields are kept and readable
+         * through {@link #_additionalProperties()}.
+         *
+         * @param json a JSON object
+         * @return the parsed value
+         */
+        public static Eyes fromJson(JsonNode json) {
+          return new Eyes(Json.copyObject(json), Map.of());
+        }
+
+        /**
+         * Returns an empty builder.
+         *
+         * @return a new builder
+         */
+        public static Builder builder() {
+          return new Builder();
+        }
+
+        /**
+         * Returns a builder holding a copy of every field of this value.
+         *
+         * @return a new builder
+         */
+        public Builder toBuilder() {
+          return new Builder(this);
+        }
+
+        /**
+         * The <code>covered</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Boolean> covered() {
+          return Json.optional(json, "covered", Conv.BOOLEAN);
+        }
+
+        /**
+         * <code>false</code> means the reading is shadow evidence only and no warning acts on it.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Boolean> calibrated() {
+          return Json.optional(json, "calibrated", Conv.BOOLEAN);
+        }
+
+        /**
+         * The <code>visibility_score</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Double> visibilityScore() {
+          return Json.optional(json, "visibility_score", Conv.DOUBLE);
+        }
+
+        @Override
+        protected Set<String> knownFields() {
+          return KNOWN_FIELDS;
+        }
+
+        /** Builds a {@link Eyes}. */
+        public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+          private Builder() {}
+
+          private Builder(Eyes from) {
+            super(from);
+          }
+
+          /**
+           * The <code>covered</code> field.
+           *
+           * @param covered the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder covered(@Nullable Boolean covered) {
+            return setNullable("covered", Conv.BOOLEAN, covered);
+          }
+
+          /**
+           * <code>false</code> means the reading is shadow evidence only and no warning acts on it.
+           *
+           * @param calibrated the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder calibrated(@Nullable Boolean calibrated) {
+            return setNullable("calibrated", Conv.BOOLEAN, calibrated);
+          }
+
+          /**
+           * The <code>visibility_score</code> field.
+           *
+           * @param visibilityScore the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder visibilityScore(@Nullable Double visibilityScore) {
+            return setNullable("visibility_score", Conv.DOUBLE, visibilityScore);
+          }
+
+          /**
+           * Builds the value.
+           *
+           * @return a new immutable {@code Eyes}
+           */
+          public Eyes build() {
+            return new Eyes(buildJson(), buildFiles());
+          }
+
+          @Override
+          protected Builder self() {
+            return this;
+          }
+        }
+      }
+
+      public static final class Mouth extends JsonModel {
+        private static final Set<String> KNOWN_FIELDS = Set.of("covered", "calibrated", "visibility_score");
+
+        private Mouth(ObjectNode json, Map<String, List<FileUpload>> files) {
+          super(json, files);
+        }
+
+        /**
+         * Reads a {@code Mouth} from JSON. Unknown fields are kept and readable
+         * through {@link #_additionalProperties()}.
+         *
+         * @param json a JSON object
+         * @return the parsed value
+         */
+        public static Mouth fromJson(JsonNode json) {
+          return new Mouth(Json.copyObject(json), Map.of());
+        }
+
+        /**
+         * Returns an empty builder.
+         *
+         * @return a new builder
+         */
+        public static Builder builder() {
+          return new Builder();
+        }
+
+        /**
+         * Returns a builder holding a copy of every field of this value.
+         *
+         * @return a new builder
+         */
+        public Builder toBuilder() {
+          return new Builder(this);
+        }
+
+        /**
+         * The <code>covered</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Boolean> covered() {
+          return Json.optional(json, "covered", Conv.BOOLEAN);
+        }
+
+        /**
+         * <code>false</code> means the reading is shadow evidence only and no warning acts on it.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Boolean> calibrated() {
+          return Json.optional(json, "calibrated", Conv.BOOLEAN);
+        }
+
+        /**
+         * The <code>visibility_score</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Double> visibilityScore() {
+          return Json.optional(json, "visibility_score", Conv.DOUBLE);
+        }
+
+        @Override
+        protected Set<String> knownFields() {
+          return KNOWN_FIELDS;
+        }
+
+        /** Builds a {@link Mouth}. */
+        public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+          private Builder() {}
+
+          private Builder(Mouth from) {
+            super(from);
+          }
+
+          /**
+           * The <code>covered</code> field.
+           *
+           * @param covered the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder covered(@Nullable Boolean covered) {
+            return setNullable("covered", Conv.BOOLEAN, covered);
+          }
+
+          /**
+           * <code>false</code> means the reading is shadow evidence only and no warning acts on it.
+           *
+           * @param calibrated the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder calibrated(@Nullable Boolean calibrated) {
+            return setNullable("calibrated", Conv.BOOLEAN, calibrated);
+          }
+
+          /**
+           * The <code>visibility_score</code> field.
+           *
+           * @param visibilityScore the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder visibilityScore(@Nullable Double visibilityScore) {
+            return setNullable("visibility_score", Conv.DOUBLE, visibilityScore);
+          }
+
+          /**
+           * Builds the value.
+           *
+           * @return a new immutable {@code Mouth}
+           */
+          public Mouth build() {
+            return new Mouth(buildJson(), buildFiles());
+          }
+
+          @Override
+          protected Builder self() {
+            return this;
+          }
+        }
+      }
+
+      public static final class Face extends JsonModel {
+        private static final Set<String> KNOWN_FIELDS = Set.of("covered", "calibrated", "visibility_score");
+
+        private Face(ObjectNode json, Map<String, List<FileUpload>> files) {
+          super(json, files);
+        }
+
+        /**
+         * Reads a {@code Face} from JSON. Unknown fields are kept and readable
+         * through {@link #_additionalProperties()}.
+         *
+         * @param json a JSON object
+         * @return the parsed value
+         */
+        public static Face fromJson(JsonNode json) {
+          return new Face(Json.copyObject(json), Map.of());
+        }
+
+        /**
+         * Returns an empty builder.
+         *
+         * @return a new builder
+         */
+        public static Builder builder() {
+          return new Builder();
+        }
+
+        /**
+         * Returns a builder holding a copy of every field of this value.
+         *
+         * @return a new builder
+         */
+        public Builder toBuilder() {
+          return new Builder(this);
+        }
+
+        /**
+         * The <code>covered</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Boolean> covered() {
+          return Json.optional(json, "covered", Conv.BOOLEAN);
+        }
+
+        /**
+         * <code>false</code> means the reading is shadow evidence only and no warning acts on it.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Boolean> calibrated() {
+          return Json.optional(json, "calibrated", Conv.BOOLEAN);
+        }
+
+        /**
+         * The <code>visibility_score</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Double> visibilityScore() {
+          return Json.optional(json, "visibility_score", Conv.DOUBLE);
+        }
+
+        @Override
+        protected Set<String> knownFields() {
+          return KNOWN_FIELDS;
+        }
+
+        /** Builds a {@link Face}. */
+        public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+          private Builder() {}
+
+          private Builder(Face from) {
+            super(from);
+          }
+
+          /**
+           * The <code>covered</code> field.
+           *
+           * @param covered the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder covered(@Nullable Boolean covered) {
+            return setNullable("covered", Conv.BOOLEAN, covered);
+          }
+
+          /**
+           * <code>false</code> means the reading is shadow evidence only and no warning acts on it.
+           *
+           * @param calibrated the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder calibrated(@Nullable Boolean calibrated) {
+            return setNullable("calibrated", Conv.BOOLEAN, calibrated);
+          }
+
+          /**
+           * The <code>visibility_score</code> field.
+           *
+           * @param visibilityScore the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder visibilityScore(@Nullable Double visibilityScore) {
+            return setNullable("visibility_score", Conv.DOUBLE, visibilityScore);
+          }
+
+          /**
+           * Builds the value.
+           *
+           * @return a new immutable {@code Face}
+           */
+          public Face build() {
+            return new Face(buildJson(), buildFiles());
+          }
+
+          @Override
+          protected Builder self() {
+            return this;
+          }
+        }
+      }
+    }
   }
 
   public static final class PhoneVerifications extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "phone_number_prefix", "phone_number", "full_number", "country_code", "country_name", "carrier", "is_disposable", "is_virtual", "verification_method", "verification_attempts", "verified_at", "lifecycle", "warnings", "matches");
+    private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "phone_number_prefix", "phone_number", "full_number", "country_code", "country_name", "carrier", "is_disposable", "is_virtual", "verification_method", "verification_attempts", "verified_at", "lifecycle", "warnings", "matches", "phone_intelligence", "phone_social");
 
     private PhoneVerifications(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -12862,6 +15254,26 @@ public final class SessionDecision extends JsonModel {
       return Json.optional(json, "matches", Conv.list(Conv.model(SessionDecision.PhoneVerifications.Matches::fromJson)));
     }
 
+    /**
+     * Phone intelligence signals. Present only when the phone intelligence add-on ran for this number.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<PhoneIntelligence> phoneIntelligence() {
+      return Json.optional(json, "phone_intelligence", Conv.model(PhoneIntelligence::fromJson));
+    }
+
+    /**
+     * Social footprint of the number. Present only when the social footprint add-on ran for this number.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<PhoneSocialFootprint> phoneSocial() {
+      return Json.optional(json, "phone_social", Conv.model(PhoneSocialFootprint::fromJson));
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -13033,6 +15445,26 @@ public final class SessionDecision extends JsonModel {
        */
       public Builder matches(List<SessionDecision.PhoneVerifications.Matches> matches) {
         return set("matches", Conv.list(Conv.model(SessionDecision.PhoneVerifications.Matches::fromJson)), matches);
+      }
+
+      /**
+       * Phone intelligence signals. Present only when the phone intelligence add-on ran for this number.
+       *
+       * @param phoneIntelligence the value
+       * @return this builder
+       */
+      public Builder phoneIntelligence(PhoneIntelligence phoneIntelligence) {
+        return set("phone_intelligence", Conv.model(PhoneIntelligence::fromJson), phoneIntelligence);
+      }
+
+      /**
+       * Social footprint of the number. Present only when the social footprint add-on ran for this number.
+       *
+       * @param phoneSocial the value
+       * @return this builder
+       */
+      public Builder phoneSocial(PhoneSocialFootprint phoneSocial) {
+        return set("phone_social", Conv.model(PhoneSocialFootprint::fromJson), phoneSocial);
       }
 
       /**
@@ -13775,7 +16207,13 @@ public final class SessionDecision extends JsonModel {
         /** The value {@code "KYB_KEY_PEOPLE"}. */
         public static final Feature KYB_KEY_PEOPLE = new Feature("KYB_KEY_PEOPLE");
 
-        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE);
+        /** The value {@code "GEOLOCATION"}. */
+        public static final Feature GEOLOCATION = new Feature("GEOLOCATION");
+
+        /** The value {@code "SIGNATURE"}. */
+        public static final Feature SIGNATURE = new Feature("SIGNATURE");
+
+        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE, GEOLOCATION, SIGNATURE);
 
         private Feature(String value) {
           super(value);
@@ -14097,7 +16535,7 @@ public final class SessionDecision extends JsonModel {
   }
 
   public static final class EmailVerifications extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "email", "is_breached", "breaches", "is_disposable", "is_undeliverable", "verification_attempts", "verified_at", "warnings", "lifecycle", "matches");
+    private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "email", "is_breached", "breaches", "is_disposable", "is_undeliverable", "verification_attempts", "verified_at", "warnings", "lifecycle", "matches", "email_intelligence", "email_social");
 
     private EmailVerifications(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -14252,6 +16690,26 @@ public final class SessionDecision extends JsonModel {
       return Json.optional(json, "matches", Conv.list(Conv.model(SessionDecision.EmailVerifications.Matches::fromJson)));
     }
 
+    /**
+     * Email intelligence signals. Present only when the email intelligence add-on ran for this address.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<EmailIntelligence> emailIntelligence() {
+      return Json.optional(json, "email_intelligence", Conv.model(EmailIntelligence::fromJson));
+    }
+
+    /**
+     * Social footprint of the address. Present only when the social footprint add-on ran for this address.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<EmailSocialFootprint> emailSocial() {
+      return Json.optional(json, "email_social", Conv.model(EmailSocialFootprint::fromJson));
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -14383,6 +16841,26 @@ public final class SessionDecision extends JsonModel {
        */
       public Builder matches(List<SessionDecision.EmailVerifications.Matches> matches) {
         return set("matches", Conv.list(Conv.model(SessionDecision.EmailVerifications.Matches::fromJson)), matches);
+      }
+
+      /**
+       * Email intelligence signals. Present only when the email intelligence add-on ran for this address.
+       *
+       * @param emailIntelligence the value
+       * @return this builder
+       */
+      public Builder emailIntelligence(EmailIntelligence emailIntelligence) {
+        return set("email_intelligence", Conv.model(EmailIntelligence::fromJson), emailIntelligence);
+      }
+
+      /**
+       * Social footprint of the address. Present only when the social footprint add-on ran for this address.
+       *
+       * @param emailSocial the value
+       * @return this builder
+       */
+      public Builder emailSocial(EmailSocialFootprint emailSocial) {
+        return set("email_social", Conv.model(EmailSocialFootprint::fromJson), emailSocial);
       }
 
       /**
@@ -14932,7 +17410,13 @@ public final class SessionDecision extends JsonModel {
         /** The value {@code "KYB_KEY_PEOPLE"}. */
         public static final Feature KYB_KEY_PEOPLE = new Feature("KYB_KEY_PEOPLE");
 
-        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE);
+        /** The value {@code "GEOLOCATION"}. */
+        public static final Feature GEOLOCATION = new Feature("GEOLOCATION");
+
+        /** The value {@code "SIGNATURE"}. */
+        public static final Feature SIGNATURE = new Feature("SIGNATURE");
+
+        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE, GEOLOCATION, SIGNATURE);
 
         private Feature(String value) {
           super(value);
@@ -17714,7 +20198,13 @@ public final class SessionDecision extends JsonModel {
         /** The value {@code "KYB_KEY_PEOPLE"}. */
         public static final Feature KYB_KEY_PEOPLE = new Feature("KYB_KEY_PEOPLE");
 
-        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE);
+        /** The value {@code "GEOLOCATION"}. */
+        public static final Feature GEOLOCATION = new Feature("GEOLOCATION");
+
+        /** The value {@code "SIGNATURE"}. */
+        public static final Feature SIGNATURE = new Feature("SIGNATURE");
+
+        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE, GEOLOCATION, SIGNATURE);
 
         private Feature(String value) {
           super(value);
@@ -19543,7 +22033,7 @@ public final class SessionDecision extends JsonModel {
   }
 
   public static final class IpAnalyses extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "device_brand", "device_model", "browser_family", "os_family", "platform", "device_fingerprint", "ip_country", "ip_country_code", "ip_state", "ip_city", "latitude", "longitude", "ip_address", "isp", "organization", "is_vpn_or_tor", "is_data_center", "time_zone", "time_zone_offset", "ip", "id_document", "poa_document", "warnings", "matches");
+    private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "device_brand", "device_model", "browser_family", "os_family", "platform", "device_fingerprint", "ip_country", "ip_country_code", "ip_state", "ip_city", "latitude", "longitude", "ip_address", "isp", "organization", "is_vpn_or_tor", "is_data_center", "time_zone", "time_zone_offset", "ip", "id_document", "poa_document", "warnings", "matches", "browser_version", "os_version", "user_agent", "accept_language", "session_identifier", "session_age_ms", "coords_accuracy", "raw_device_data");
 
     private IpAnalyses(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -19838,6 +22328,86 @@ public final class SessionDecision extends JsonModel {
       return Json.optional(json, "matches", Conv.list(Conv.model(SessionDecision.IpAnalyses.Matches::fromJson)));
     }
 
+    /**
+     * The <code>browser_version</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> browserVersion() {
+      return Json.optional(json, "browser_version", Conv.STRING);
+    }
+
+    /**
+     * The <code>os_version</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> osVersion() {
+      return Json.optional(json, "os_version", Conv.STRING);
+    }
+
+    /**
+     * The browser's user agent string.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> userAgent() {
+      return Json.optional(json, "user_agent", Conv.STRING);
+    }
+
+    /**
+     * The <code>Accept-Language</code> header the browser sent.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> acceptLanguage() {
+      return Json.optional(json, "accept_language", Conv.STRING);
+    }
+
+    /**
+     * Identifier of the browsing session the verification ran in.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> sessionIdentifier() {
+      return Json.optional(json, "session_identifier", Conv.STRING);
+    }
+
+    /**
+     * Age of that browsing session in milliseconds when the step ran.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Long> sessionAgeMs() {
+      return Json.optional(json, "session_age_ms", Conv.LONG);
+    }
+
+    /**
+     * Accuracy radius, in metres, of the coordinates the device reported.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Double> coordsAccuracy() {
+      return Json.optional(json, "coords_accuracy", Conv.DOUBLE);
+    }
+
+    /**
+     * Raw device signals collected for the step.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Map<String, JsonNode>> rawDeviceData() {
+      return Json.optional(json, "raw_device_data", Conv.OBJECT);
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -20109,6 +22679,86 @@ public final class SessionDecision extends JsonModel {
        */
       public Builder matches(List<SessionDecision.IpAnalyses.Matches> matches) {
         return set("matches", Conv.list(Conv.model(SessionDecision.IpAnalyses.Matches::fromJson)), matches);
+      }
+
+      /**
+       * The <code>browser_version</code> field.
+       *
+       * @param browserVersion the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder browserVersion(@Nullable String browserVersion) {
+        return setNullable("browser_version", Conv.STRING, browserVersion);
+      }
+
+      /**
+       * The <code>os_version</code> field.
+       *
+       * @param osVersion the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder osVersion(@Nullable String osVersion) {
+        return setNullable("os_version", Conv.STRING, osVersion);
+      }
+
+      /**
+       * The browser's user agent string.
+       *
+       * @param userAgent the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder userAgent(@Nullable String userAgent) {
+        return setNullable("user_agent", Conv.STRING, userAgent);
+      }
+
+      /**
+       * The <code>Accept-Language</code> header the browser sent.
+       *
+       * @param acceptLanguage the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder acceptLanguage(@Nullable String acceptLanguage) {
+        return setNullable("accept_language", Conv.STRING, acceptLanguage);
+      }
+
+      /**
+       * Identifier of the browsing session the verification ran in.
+       *
+       * @param sessionIdentifier the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder sessionIdentifier(@Nullable String sessionIdentifier) {
+        return setNullable("session_identifier", Conv.STRING, sessionIdentifier);
+      }
+
+      /**
+       * Age of that browsing session in milliseconds when the step ran.
+       *
+       * @param sessionAgeMs the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder sessionAgeMs(@Nullable Long sessionAgeMs) {
+        return setNullable("session_age_ms", Conv.LONG, sessionAgeMs);
+      }
+
+      /**
+       * Accuracy radius, in metres, of the coordinates the device reported.
+       *
+       * @param coordsAccuracy the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder coordsAccuracy(@Nullable Double coordsAccuracy) {
+        return setNullable("coords_accuracy", Conv.DOUBLE, coordsAccuracy);
+      }
+
+      /**
+       * Raw device signals collected for the step.
+       *
+       * @param rawDeviceData the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder rawDeviceData(@Nullable Map<String, ?> rawDeviceData) {
+        return setAny("raw_device_data", rawDeviceData);
       }
 
       /**
@@ -21135,7 +23785,13 @@ public final class SessionDecision extends JsonModel {
         /** The value {@code "KYB_KEY_PEOPLE"}. */
         public static final Feature KYB_KEY_PEOPLE = new Feature("KYB_KEY_PEOPLE");
 
-        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE);
+        /** The value {@code "GEOLOCATION"}. */
+        public static final Feature GEOLOCATION = new Feature("GEOLOCATION");
+
+        /** The value {@code "SIGNATURE"}. */
+        public static final Feature SIGNATURE = new Feature("SIGNATURE");
+
+        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE, GEOLOCATION, SIGNATURE);
 
         private Feature(String value) {
           super(value);
@@ -23433,7 +26089,13 @@ public final class SessionDecision extends JsonModel {
         /** The value {@code "KYB_KEY_PEOPLE"}. */
         public static final Feature KYB_KEY_PEOPLE = new Feature("KYB_KEY_PEOPLE");
 
-        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE);
+        /** The value {@code "GEOLOCATION"}. */
+        public static final Feature GEOLOCATION = new Feature("GEOLOCATION");
+
+        /** The value {@code "SIGNATURE"}. */
+        public static final Feature SIGNATURE = new Feature("SIGNATURE");
+
+        private static final List<Feature> KNOWN_VALUES = List.of(ID_VERIFICATION, NFC, LIVENESS, FACEMATCH, PROOF_OF_ADDRESS, PHONE, EMAIL, AML, LOCATION, DATABASE_VALIDATION, QUESTIONNAIRE, DOCUMENT_AI, KYB_REGISTRY, KYB_DOCUMENTS, KYB_KEY_PEOPLE, GEOLOCATION, SIGNATURE);
 
         private Feature(String value) {
           super(value);
@@ -23462,6 +26124,114 @@ public final class SessionDecision extends JsonModel {
         public boolean isKnown() {
           return KNOWN_VALUES.contains(this);
         }
+      }
+    }
+  }
+
+  /**
+   * Why a configured database validation produced no result, as <code>{code, message}</code> plus context fields. Present only when <code>database_validations</code> is <code>null</code> for a workflow that has the step, so you can tell "the registry agreed" from "nothing ran". <code>null</code> otherwise.
+   */
+  public static final class DatabaseValidationNotPerformedReason extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("code", "message");
+
+    private DatabaseValidationNotPerformedReason(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code DatabaseValidationNotPerformedReason} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static DatabaseValidationNotPerformedReason fromJson(JsonNode json) {
+      return new DatabaseValidationNotPerformedReason(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * Stable machine-readable reason.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> code() {
+      return Json.optional(json, "code", Conv.STRING);
+    }
+
+    /**
+     * Human-readable explanation.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> message() {
+      return Json.optional(json, "message", Conv.STRING);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link DatabaseValidationNotPerformedReason}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(DatabaseValidationNotPerformedReason from) {
+        super(from);
+      }
+
+      /**
+       * Stable machine-readable reason.
+       *
+       * @param code the value
+       * @return this builder
+       */
+      public Builder code(String code) {
+        return set("code", Conv.STRING, code);
+      }
+
+      /**
+       * Human-readable explanation.
+       *
+       * @param message the value
+       * @return this builder
+       */
+      public Builder message(String message) {
+        return set("message", Conv.STRING, message);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code DatabaseValidationNotPerformedReason}
+       */
+      public DatabaseValidationNotPerformedReason build() {
+        return new DatabaseValidationNotPerformedReason(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
       }
     }
   }
@@ -23612,6 +26382,114 @@ public final class SessionDecision extends JsonModel {
   }
 
   /**
+   * The Console reviewer the session is assigned to, or <code>null</code> when nobody holds it.
+   */
+  public static final class Assignee extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("email", "assigned_at");
+
+    private Assignee(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Assignee} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Assignee fromJson(JsonNode json) {
+      return new Assignee(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>email</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> email() {
+      return Json.optional(json, "email", Conv.STRING);
+    }
+
+    /**
+     * The <code>assigned_at</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> assignedAt() {
+      return Json.optional(json, "assigned_at", Conv.DATE_TIME);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Assignee}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Assignee from) {
+        super(from);
+      }
+
+      /**
+       * The <code>email</code> field.
+       *
+       * @param email the value
+       * @return this builder
+       */
+      public Builder email(String email) {
+        return set("email", Conv.STRING, email);
+      }
+
+      /**
+       * The <code>assigned_at</code> field.
+       *
+       * @param assignedAt the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder assignedAt(@Nullable OffsetDateTime assignedAt) {
+        return setNullable("assigned_at", Conv.DATE_TIME, assignedAt);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Assignee}
+       */
+      public Assignee build() {
+        return new Assignee(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+  }
+
+  /**
    * One company registry check — the full company-registry payload enriched with ownership structure and warnings. Present only when <code>session_kind = business</code>.
    */
   public static final class RegistryChecks extends JsonModel {
@@ -23691,13 +26569,13 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
-     * Raw ownership snapshot kept for reviewers; its shape differs by registry source and is not a stable contract. Read <code>company.beneficial_owners</code> and <code>company.ownership</code> instead.
+     * The cap table the registry proved, as it stood when the ownership tier was delivered: direct <code>shareholders</code> and <code>beneficial_owners</code>. Null when the registry proved no ownership. It never carries the registry source's own rows; read <code>company.beneficial_owners</code> and <code>company.ownership</code> for the current record.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<Map<String, JsonNode>> ownershipStructure() {
-      return Json.optional(json, "ownership_structure", Conv.OBJECT);
+    public Optional<KYBOwnershipStructure> ownershipStructure() {
+      return Json.optional(json, "ownership_structure", Conv.model(KYBOwnershipStructure::fromJson));
     }
 
     /**
@@ -23764,13 +26642,13 @@ public final class SessionDecision extends JsonModel {
       }
 
       /**
-       * Raw ownership snapshot kept for reviewers; its shape differs by registry source and is not a stable contract. Read <code>company.beneficial_owners</code> and <code>company.ownership</code> instead.
+       * The cap table the registry proved, as it stood when the ownership tier was delivered: direct <code>shareholders</code> and <code>beneficial_owners</code>. Null when the registry proved no ownership. It never carries the registry source's own rows; read <code>company.beneficial_owners</code> and <code>company.ownership</code> for the current record.
        *
-       * @param ownershipStructure the value
+       * @param ownershipStructure the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder ownershipStructure(Map<String, ?> ownershipStructure) {
-        return setAny("ownership_structure", ownershipStructure);
+      public Builder ownershipStructure(@Nullable KYBOwnershipStructure ownershipStructure) {
+        return setNullable("ownership_structure", Conv.model(KYBOwnershipStructure::fromJson), ownershipStructure);
       }
 
       /**
@@ -23802,7 +26680,7 @@ public final class SessionDecision extends JsonModel {
      * Full registry payload for the company (registry record merged with any user-provided or console-edited data).
      */
     public static final class Company extends JsonModel {
-      private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "node_id", "status", "registry_status", "data_resolved", "company_name", "registration_number", "country_code", "region", "company_type", "incorporation_date", "registered_address", "tax_number", "risk_level", "verification_status", "is_from_registry", "fetch_status", "alternative_names", "nature_of_business", "registered_capital", "registered_capital_amount", "registered_capital_currency", "website", "email", "phone", "legal_entity_identifier", "location_of_registration", "vat_number", "vat_validation_status", "vat_validated_number", "vat_validation_source", "vat_validated_name", "vat_validated_address", "vat_checked_at", "financial_summary", "officers", "beneficial_owners", "addresses", "industries", "accounts", "registry_data", "user_provided_data", "confirmed_by_user_at", "last_console_edit_at", "is_editable", "ownership", "registry_tier", "registry_tier_delivered", "registry_ownership_status");
+      private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "node_id", "status", "registry_status", "data_resolved", "company_name", "registration_number", "country_code", "region", "company_type", "incorporation_date", "registered_address", "tax_number", "risk_level", "verification_status", "is_from_registry", "fetch_status", "alternative_names", "nature_of_business", "registered_capital", "registered_capital_amount", "registered_capital_currency", "website", "email", "phone", "legal_entity_identifier", "location_of_registration", "vat_number", "vat_validation_status", "vat_validated_number", "vat_validation_source", "vat_validated_name", "vat_validated_address", "vat_checked_at", "financial_summary", "officers", "beneficial_owners", "addresses", "industries", "accounts", "registry_data", "user_provided_data", "confirmed_by_user_at", "last_console_edit_at", "is_editable", "ownership", "registry_tier", "registry_tier_delivered", "registry_ownership_status", "registry_monitoring");
 
       private Company(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
@@ -24238,13 +27116,13 @@ public final class SessionDecision extends JsonModel {
       }
 
       /**
-       * Raw record returned by the registry source, kept for reviewers. Its shape differs by country and source and is not a stable contract: read the canonical fields (<code>addresses</code>, <code>industries</code>, <code>ownership</code>, <code>beneficial_owners[].shareholding</code>) instead.
+       * Didit's normalized registry detail for the company: the ownership outcome (<code>ownership_error</code>, <code>section_errors</code>, <code>ubo_resolution</code>, <code>lite_enrichment</code>), the corrections made with update-data, and registry facts that have no field of their own. It never carries the registry source's own record. Every key is optional and present only when the company has a value for it; new keys may be added. Read the canonical fields (<code>addresses</code>, <code>industries</code>, <code>ownership</code>, <code>beneficial_owners[].shareholding</code>) for anything they cover.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<Map<String, JsonNode>> registryData() {
-        return Json.optional(json, "registry_data", Conv.OBJECT);
+      public Optional<KYBRegistryData> registryData() {
+        return Json.optional(json, "registry_data", Conv.model(KYBRegistryData::fromJson));
       }
 
       /**
@@ -24325,6 +27203,16 @@ public final class SessionDecision extends JsonModel {
        */
       public Optional<String> registryOwnershipStatus() {
         return Json.optional(json, "registry_ownership_status", Conv.STRING);
+      }
+
+      /**
+       * The latest registry monitor for the company, or <code>null</code> when none exists.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<SessionDecision.RegistryChecks.Company.RegistryMonitoring> registryMonitoring() {
+        return Json.optional(json, "registry_monitoring", Conv.model(SessionDecision.RegistryChecks.Company.RegistryMonitoring::fromJson));
       }
 
       @Override
@@ -24741,13 +27629,13 @@ public final class SessionDecision extends JsonModel {
         }
 
         /**
-         * Raw record returned by the registry source, kept for reviewers. Its shape differs by country and source and is not a stable contract: read the canonical fields (<code>addresses</code>, <code>industries</code>, <code>ownership</code>, <code>beneficial_owners[].shareholding</code>) instead.
+         * Didit's normalized registry detail for the company: the ownership outcome (<code>ownership_error</code>, <code>section_errors</code>, <code>ubo_resolution</code>, <code>lite_enrichment</code>), the corrections made with update-data, and registry facts that have no field of their own. It never carries the registry source's own record. Every key is optional and present only when the company has a value for it; new keys may be added. Read the canonical fields (<code>addresses</code>, <code>industries</code>, <code>ownership</code>, <code>beneficial_owners[].shareholding</code>) for anything they cover.
          *
-         * @param registryData the value
+         * @param registryData the value, or {@code null} to send JSON null
          * @return this builder
          */
-        public Builder registryData(Map<String, ?> registryData) {
-          return setAny("registry_data", registryData);
+        public Builder registryData(@Nullable KYBRegistryData registryData) {
+          return setNullable("registry_data", Conv.model(KYBRegistryData::fromJson), registryData);
         }
 
         /**
@@ -24828,6 +27716,16 @@ public final class SessionDecision extends JsonModel {
          */
         public Builder registryOwnershipStatus(@Nullable String registryOwnershipStatus) {
           return setNullable("registry_ownership_status", Conv.STRING, registryOwnershipStatus);
+        }
+
+        /**
+         * The latest registry monitor for the company, or <code>null</code> when none exists.
+         *
+         * @param registryMonitoring the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder registryMonitoring(SessionDecision.RegistryChecks.Company.@Nullable RegistryMonitoring registryMonitoring) {
+          return setNullable("registry_monitoring", Conv.model(SessionDecision.RegistryChecks.Company.RegistryMonitoring::fromJson), registryMonitoring);
         }
 
         /**
@@ -26050,6 +28948,272 @@ public final class SessionDecision extends JsonModel {
           @Override
           public boolean isKnown() {
             return KNOWN_VALUES.contains(this);
+          }
+        }
+      }
+
+      /** The latest registry monitor for the company, or <code>null</code> when none exists. */
+      public static final class RegistryMonitoring extends JsonModel {
+        private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "unavailable_reason", "enrolled_at", "cancelled_at", "last_bill_date", "next_bill_date", "last_event_at", "events_count", "watched_fields");
+
+        private RegistryMonitoring(ObjectNode json, Map<String, List<FileUpload>> files) {
+          super(json, files);
+        }
+
+        /**
+         * Reads a {@code RegistryMonitoring} from JSON. Unknown fields are kept and readable
+         * through {@link #_additionalProperties()}.
+         *
+         * @param json a JSON object
+         * @return the parsed value
+         */
+        public static RegistryMonitoring fromJson(JsonNode json) {
+          return new RegistryMonitoring(Json.copyObject(json), Map.of());
+        }
+
+        /**
+         * Returns an empty builder.
+         *
+         * @return a new builder
+         */
+        public static Builder builder() {
+          return new Builder();
+        }
+
+        /**
+         * Returns a builder holding a copy of every field of this value.
+         *
+         * @return a new builder
+         */
+        public Builder toBuilder() {
+          return new Builder(this);
+        }
+
+        /**
+         * The <code>uuid</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<String> uuid() {
+          return Json.optional(json, "uuid", Conv.STRING);
+        }
+
+        /**
+         * The <code>status</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<String> status() {
+          return Json.optional(json, "status", Conv.STRING);
+        }
+
+        /**
+         * The <code>unavailable_reason</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<String> unavailableReason() {
+          return Json.optional(json, "unavailable_reason", Conv.STRING);
+        }
+
+        /**
+         * The <code>enrolled_at</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<OffsetDateTime> enrolledAt() {
+          return Json.optional(json, "enrolled_at", Conv.DATE_TIME);
+        }
+
+        /**
+         * The <code>cancelled_at</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<OffsetDateTime> cancelledAt() {
+          return Json.optional(json, "cancelled_at", Conv.DATE_TIME);
+        }
+
+        /**
+         * The <code>last_bill_date</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<LocalDate> lastBillDate() {
+          return Json.optional(json, "last_bill_date", Conv.DATE);
+        }
+
+        /**
+         * The <code>next_bill_date</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<LocalDate> nextBillDate() {
+          return Json.optional(json, "next_bill_date", Conv.DATE);
+        }
+
+        /**
+         * The <code>last_event_at</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<OffsetDateTime> lastEventAt() {
+          return Json.optional(json, "last_event_at", Conv.DATE_TIME);
+        }
+
+        /**
+         * The <code>events_count</code> field.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Long> eventsCount() {
+          return Json.optional(json, "events_count", Conv.LONG);
+        }
+
+        /**
+         * The company fields the monitor watches.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<JsonNode> watchedFields() {
+          return Json.optional(json, "watched_fields", Conv.ANY);
+        }
+
+        @Override
+        protected Set<String> knownFields() {
+          return KNOWN_FIELDS;
+        }
+
+        /** Builds a {@link RegistryMonitoring}. */
+        public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+          private Builder() {}
+
+          private Builder(RegistryMonitoring from) {
+            super(from);
+          }
+
+          /**
+           * The <code>uuid</code> field.
+           *
+           * @param uuid the value
+           * @return this builder
+           */
+          public Builder uuid(String uuid) {
+            return set("uuid", Conv.STRING, uuid);
+          }
+
+          /**
+           * The <code>status</code> field.
+           *
+           * @param status the value
+           * @return this builder
+           */
+          public Builder status(String status) {
+            return set("status", Conv.STRING, status);
+          }
+
+          /**
+           * The <code>unavailable_reason</code> field.
+           *
+           * @param unavailableReason the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder unavailableReason(@Nullable String unavailableReason) {
+            return setNullable("unavailable_reason", Conv.STRING, unavailableReason);
+          }
+
+          /**
+           * The <code>enrolled_at</code> field.
+           *
+           * @param enrolledAt the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder enrolledAt(@Nullable OffsetDateTime enrolledAt) {
+            return setNullable("enrolled_at", Conv.DATE_TIME, enrolledAt);
+          }
+
+          /**
+           * The <code>cancelled_at</code> field.
+           *
+           * @param cancelledAt the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder cancelledAt(@Nullable OffsetDateTime cancelledAt) {
+            return setNullable("cancelled_at", Conv.DATE_TIME, cancelledAt);
+          }
+
+          /**
+           * The <code>last_bill_date</code> field.
+           *
+           * @param lastBillDate the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder lastBillDate(@Nullable LocalDate lastBillDate) {
+            return setNullable("last_bill_date", Conv.DATE, lastBillDate);
+          }
+
+          /**
+           * The <code>next_bill_date</code> field.
+           *
+           * @param nextBillDate the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder nextBillDate(@Nullable LocalDate nextBillDate) {
+            return setNullable("next_bill_date", Conv.DATE, nextBillDate);
+          }
+
+          /**
+           * The <code>last_event_at</code> field.
+           *
+           * @param lastEventAt the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder lastEventAt(@Nullable OffsetDateTime lastEventAt) {
+            return setNullable("last_event_at", Conv.DATE_TIME, lastEventAt);
+          }
+
+          /**
+           * The <code>events_count</code> field.
+           *
+           * @param eventsCount the value
+           * @return this builder
+           */
+          public Builder eventsCount(long eventsCount) {
+            return set("events_count", Conv.LONG, eventsCount);
+          }
+
+          /**
+           * The company fields the monitor watches.
+           *
+           * @param watchedFields the value
+           * @return this builder
+           */
+          public Builder watchedFields(@Nullable Object watchedFields) {
+            return setAny("watched_fields", watchedFields);
+          }
+
+          /**
+           * Builds the value.
+           *
+           * @return a new immutable {@code RegistryMonitoring}
+           */
+          public RegistryMonitoring build() {
+            return new RegistryMonitoring(buildJson(), buildFiles());
+          }
+
+          @Override
+          protected Builder self() {
+            return this;
           }
         }
       }

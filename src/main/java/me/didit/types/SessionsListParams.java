@@ -4,6 +4,7 @@ package me.didit.types;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -16,7 +17,7 @@ import me.didit.core.StringEnum;
 
 /** Parameters for {&#64;code sessions.list}. */
 public final class SessionsListParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("session_kind", "limit", "offset", "status", "vendor_data", "search", "workflow_id", "date_from", "date_to", "country", "document_type", "document_name", "region", "didit_internal_id", "session_type", "api_service", "screened_full_name", "warning", "status_initialized_as_in_review", "is_kyc_to_be_reviewed", "euuid", "organization_name");
+  private static final Set<String> KNOWN_FIELDS = Set.of("session_kind", "limit", "offset", "status", "vendor_data", "search", "workflow_id", "date_from", "date_to", "tags", "decided_from", "decided_to", "country", "document_type", "document_name", "region", "didit_internal_id", "session_type", "api_service", "screened_full_name", "warning", "status_initialized_as_in_review", "is_kyc_to_be_reviewed", "euuid", "organization_name");
 
   private SessionsListParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -139,6 +140,36 @@ public final class SessionsListParams extends JsonModel {
    */
   public Optional<LocalDate> dateTo() {
     return Json.optional(json, "date_to", Conv.DATE);
+  }
+
+  /**
+   * Comma-separated tag ids (<code>tags</code> of your application). Returns the sessions that carry any of them. Ids that are not valid UUIDs are ignored, and when none is valid the list is empty.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> tags() {
+    return Json.optional(json, "tags", Conv.STRING);
+  }
+
+  /**
+   * ISO 8601 datetime. Returns the sessions whose status last changed at or after it. It filters on the time of the last status change, not on creation time.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> decidedFrom() {
+    return Json.optional(json, "decided_from", Conv.DATE_TIME);
+  }
+
+  /**
+   * ISO 8601 datetime. Returns the sessions whose status last changed before it. Combine with <code>decided_from</code> for a half-open window.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> decidedTo() {
+    return Json.optional(json, "decided_to", Conv.DATE_TIME);
   }
 
   /**
@@ -372,6 +403,36 @@ public final class SessionsListParams extends JsonModel {
      */
     public Builder dateTo(LocalDate dateTo) {
       return set("date_to", Conv.DATE, dateTo);
+    }
+
+    /**
+     * Comma-separated tag ids (<code>tags</code> of your application). Returns the sessions that carry any of them. Ids that are not valid UUIDs are ignored, and when none is valid the list is empty.
+     *
+     * @param tags the value
+     * @return this builder
+     */
+    public Builder tags(String tags) {
+      return set("tags", Conv.STRING, tags);
+    }
+
+    /**
+     * ISO 8601 datetime. Returns the sessions whose status last changed at or after it. It filters on the time of the last status change, not on creation time.
+     *
+     * @param decidedFrom the value
+     * @return this builder
+     */
+    public Builder decidedFrom(OffsetDateTime decidedFrom) {
+      return set("decided_from", Conv.DATE_TIME, decidedFrom);
+    }
+
+    /**
+     * ISO 8601 datetime. Returns the sessions whose status last changed before it. Combine with <code>decided_from</code> for a half-open window.
+     *
+     * @param decidedTo the value
+     * @return this builder
+     */
+    public Builder decidedTo(OffsetDateTime decidedTo) {
+      return set("decided_to", Conv.DATE_TIME, decidedTo);
     }
 
     /**
