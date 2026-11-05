@@ -130,7 +130,7 @@ public final class AccountApplicationsResource {
   /**
    * Create Application
    *
-   * <p>Create an application inside an organization. The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
+   * <p>Create an application inside an organization, in the data location you choose (<code>data_location</code>, the European Union by default; it can't be changed afterwards). The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
    *
    * <p>{@code POST /organizations/me/{org_id}/applications/}
    *
@@ -272,7 +272,7 @@ public final class AccountApplicationsResource {
   /**
    * Update Application
    *
-   * <p>Update application metadata (name, URLs, redirect URIs). <code>api_key</code> and <code>client_id</code> are never rotated. <code>products</code> is read-only: a <code>products</code> key in the body is ignored. Requires owner/admin JWT.
+   * <p>Update application metadata (name, URLs, redirect URIs). <code>api_key</code> and <code>client_id</code> are never rotated. <code>products</code> is read-only: a <code>products</code> key in the body is ignored. <code>data_location</code> can't be changed after the application is created, except once on the live application created with your organization, while it is unused (see the request body). Requires owner/admin JWT.
    *
    * <p>{@code PATCH /organizations/me/{org_id}/applications/{app_id}/}
    *

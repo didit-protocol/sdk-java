@@ -490,13 +490,13 @@ public final class KybListShareholdersResponse extends JsonModel {
     }
 
     /**
-     * Registry verification status, when available.
+     * Cross-jurisdiction verification status: <code>verified</code> when the registry status establishes standing (<code>active</code>), <code>failed</code> when it says the company is no longer standing (for example <code>dissolved</code>), otherwise <code>unknown</code>. <code>null</code> for a company that did not come from a registry and while a selection is still <code>pending</code>.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<String> verificationStatus() {
-      return Json.optional(json, "verification_status", Conv.STRING);
+    public Optional<KybListShareholdersResponse.KybRegistry.VerificationStatus> verificationStatus() {
+      return Json.optional(json, "verification_status", Conv.enumeration(KybListShareholdersResponse.KybRegistry.VerificationStatus::of));
     }
 
     /**
@@ -1003,13 +1003,13 @@ public final class KybListShareholdersResponse extends JsonModel {
       }
 
       /**
-       * Registry verification status, when available.
+       * Cross-jurisdiction verification status: <code>verified</code> when the registry status establishes standing (<code>active</code>), <code>failed</code> when it says the company is no longer standing (for example <code>dissolved</code>), otherwise <code>unknown</code>. <code>null</code> for a company that did not come from a registry and while a selection is still <code>pending</code>.
        *
        * @param verificationStatus the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder verificationStatus(@Nullable String verificationStatus) {
-        return setNullable("verification_status", Conv.STRING, verificationStatus);
+      public Builder verificationStatus(KybListShareholdersResponse.KybRegistry.@Nullable VerificationStatus verificationStatus) {
+        return setNullable("verification_status", Conv.enumeration(KybListShareholdersResponse.KybRegistry.VerificationStatus::of), verificationStatus);
       }
 
       /**
@@ -1487,6 +1487,52 @@ public final class KybListShareholdersResponse extends JsonModel {
        * @return the known values
        */
       public static List<RegistryStatus> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     * Cross-jurisdiction verification status: <code>verified</code> when the registry status establishes standing (<code>active</code>), <code>failed</code> when it says the company is no longer standing (for example <code>dissolved</code>), otherwise <code>unknown</code>. <code>null</code> for a company that did not come from a registry and while a selection is still <code>pending</code>.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class VerificationStatus extends StringEnum {
+      /** The value {@code "verified"}. */
+      public static final VerificationStatus VERIFIED = new VerificationStatus("verified");
+
+      /** The value {@code "failed"}. */
+      public static final VerificationStatus FAILED = new VerificationStatus("failed");
+
+      /** The value {@code "unknown"}. */
+      public static final VerificationStatus UNKNOWN = new VerificationStatus("unknown");
+
+      private static final List<VerificationStatus> KNOWN_VALUES = List.of(VERIFIED, FAILED, UNKNOWN);
+
+      private VerificationStatus(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static VerificationStatus of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, VerificationStatus::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<VerificationStatus> knownValues() {
         return KNOWN_VALUES;
       }
 

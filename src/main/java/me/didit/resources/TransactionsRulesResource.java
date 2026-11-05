@@ -129,7 +129,7 @@ public final class TransactionsRulesResource {
   /**
    * Create rule
    *
-   * <p>Create a CUSTOM transaction-monitoring rule. Titles are unique per application (duplicate -&gt; 400). A <code>change_status</code> action targeting <code>AWAITING_USER</code> must carry <code>workflow_id</code>. Rules created in ACTIVE mode apply to new transactions immediately - the recommended workflow is create in TEST mode, backtest, then switch mode to ACTIVE.
+   * <p>Create a CUSTOM transaction-monitoring rule. Titles are unique per application (duplicate -&gt; 400). A <code>change_status</code> action targeting <code>AWAITING_USER</code> must carry <code>workflow_id</code>. Rules created in ACTIVE mode apply to new transactions immediately - the recommended workflow is create in TEST mode, backtest, then switch mode to ACTIVE. To change a library rule, create it as a copy: send the library rule's definition with <code>metadata.based_on</code> (its library key) and <code>metadata.based_on_rule_uuid</code>.
    *
    * <p>{@code POST /v3/transactions/rules/}
    *
@@ -221,7 +221,7 @@ public final class TransactionsRulesResource {
   /**
    * Update rule
    *
-   * <p>Partially update a rule. Custom rules accept every configuration field. Library (PRESET) rules accept only <code>mode</code> - use it to activate, disable, or switch a preset to TEST; any other field returns 400. An installed copy of a withheld library rule is switched off: setting its <code>mode</code> to anything but <code>DISABLED</code> answers 400 ("This library rule cannot run yet: its conditions read data the rules engine cannot evaluate.").
+   * <p>Partially update a rule. Custom rules accept every configuration field. Library (PRESET) rules accept only <code>mode</code> - use it to activate, disable, or switch a preset to TEST; any other field returns 400, because Didit maintains library rules and applies their updates automatically. To change a library rule's conditions, create a custom copy with <code>POST /v3/transactions/rules/</code> using the library rule's definition and <code>metadata.based_on</code> (the library key) and <code>metadata.based_on_rule_uuid</code>, then switch the library rule off with <code>mode: DISABLED</code> so a transaction does not alert twice. An installed copy of a withheld library rule is switched off: setting its <code>mode</code> to anything but <code>DISABLED</code> answers 400 ("This library rule cannot run yet: its conditions read data the rules engine cannot evaluate.").
    *
    * <p>{@code PATCH /v3/transactions/rules/{rule_uuid}/}
    *

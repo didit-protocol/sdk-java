@@ -16,7 +16,7 @@ import me.didit.core.JsonModel;
  * Minimal application shape returned inline by <code>POST /programmatic/verify-email/</code>. Persist the <code>api_key</code> immediately.
  */
 public final class ApplicationCredentialsSummary extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "client_id", "api_key");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "client_id", "api_key", "data_location");
 
   private ApplicationCredentialsSummary(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -91,6 +91,16 @@ public final class ApplicationCredentialsSummary extends JsonModel {
     return Json.optional(json, "api_key", Conv.STRING);
   }
 
+  /**
+   * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney) and <code>mx</code> (Mexico) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<ApplicationDataLocation> dataLocation() {
+    return Json.optional(json, "data_location", Conv.enumeration(ApplicationDataLocation::of));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -142,6 +152,16 @@ public final class ApplicationCredentialsSummary extends JsonModel {
      */
     public Builder apiKey(String apiKey) {
       return set("api_key", Conv.STRING, apiKey);
+    }
+
+    /**
+     * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney) and <code>mx</code> (Mexico) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
+     *
+     * @param dataLocation the value
+     * @return this builder
+     */
+    public Builder dataLocation(ApplicationDataLocation dataLocation) {
+      return set("data_location", Conv.enumeration(ApplicationDataLocation::of), dataLocation);
     }
 
     /**
