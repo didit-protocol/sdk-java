@@ -13,10 +13,10 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 
 /**
- * All fields are optional. Sending an empty body creates an application with a default name.
+ * All fields are optional. Sending an empty body creates an application with a default name, in the European Union.
  */
 public final class ApplicationCreateRequest extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("name", "website_url", "redirect_uris", "terms_url", "privacy_url", "description");
+  private static final Set<String> KNOWN_FIELDS = Set.of("name", "website_url", "redirect_uris", "terms_url", "privacy_url", "description", "data_location");
 
   private ApplicationCreateRequest(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -111,6 +111,16 @@ public final class ApplicationCreateRequest extends JsonModel {
     return Json.optional(json, "description", Conv.STRING);
   }
 
+  /**
+   * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney) and <code>mx</code> (Mexico) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<ApplicationDataLocation> dataLocation() {
+    return Json.optional(json, "data_location", Conv.enumeration(ApplicationDataLocation::of));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -182,6 +192,16 @@ public final class ApplicationCreateRequest extends JsonModel {
      */
     public Builder description(String description) {
       return set("description", Conv.STRING, description);
+    }
+
+    /**
+     * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney) and <code>mx</code> (Mexico) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
+     *
+     * @param dataLocation the value
+     * @return this builder
+     */
+    public Builder dataLocation(ApplicationDataLocation dataLocation) {
+      return set("data_location", Conv.enumeration(ApplicationDataLocation::of), dataLocation);
     }
 
     /**

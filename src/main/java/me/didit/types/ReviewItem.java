@@ -175,7 +175,7 @@ public final class ReviewItem extends JsonModel {
   }
 
   /**
-   * Extra context for system-generated entries. Console detail-page views carry <code>{"system_event": "DETAIL_VIEWED", "detail_type": "verification"}</code> so they can be filtered out of notification logic. <code>null</code> for ordinary entries.
+   * Extra context for system-generated entries. Console detail-page views carry <code>{"system_event": "DETAIL_VIEWED", "detail_type": "verification"}</code> so they can be filtered out of notification logic. A <code>COMMENT</code> its author edited in the Console carries <code>edited_at</code>, the ISO 8601 time of the last edit (<code>comment</code> and <code>mentioned_emails</code> then hold the edited text and its mentions). <code>null</code> for ordinary entries.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -328,7 +328,7 @@ public final class ReviewItem extends JsonModel {
     }
 
     /**
-     * Extra context for system-generated entries. Console detail-page views carry <code>{"system_event": "DETAIL_VIEWED", "detail_type": "verification"}</code> so they can be filtered out of notification logic. <code>null</code> for ordinary entries.
+     * Extra context for system-generated entries. Console detail-page views carry <code>{"system_event": "DETAIL_VIEWED", "detail_type": "verification"}</code> so they can be filtered out of notification logic. A <code>COMMENT</code> its author edited in the Console carries <code>edited_at</code>, the ISO 8601 time of the last edit (<code>comment</code> and <code>mentioned_emails</code> then hold the edited text and its mentions). <code>null</code> for ordinary entries.
      *
      * @param metadata the value, or {@code null} to send JSON null
      * @return this builder

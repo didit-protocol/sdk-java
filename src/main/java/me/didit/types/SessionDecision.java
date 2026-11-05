@@ -3503,7 +3503,7 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
-     * Why a non-document method ended the ID step. Set on the declined report when a lookup or a wallet sign-in failed and the country's fallback switch was <code>decline</code>. <code>null</code> otherwise.
+     * Why a non-document method did not end the ID step. Set when a lookup or a wallet sign-in failed: on the document verification the user continued with when the country's fallback switch was <code>fallback_to_document</code> (<code>action</code> is <code>fallback_to_document</code>), or on the declined report when it was <code>decline</code>. <code>null</code> otherwise.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4036,7 +4036,7 @@ public final class SessionDecision extends JsonModel {
       }
 
       /**
-       * Why a non-document method ended the ID step. Set on the declined report when a lookup or a wallet sign-in failed and the country's fallback switch was <code>decline</code>. <code>null</code> otherwise.
+       * Why a non-document method did not end the ID step. Set when a lookup or a wallet sign-in failed: on the document verification the user continued with when the country's fallback switch was <code>fallback_to_document</code> (<code>action</code> is <code>fallback_to_document</code>), or on the declined report when it was <code>decline</code>. <code>null</code> otherwise.
        *
        * @param fallbackFrom the value, or {@code null} to send JSON null
        * @return this builder
@@ -4623,7 +4623,7 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
-     * Why a non-document method ended the ID step. Set on the declined report when a lookup or a wallet sign-in failed and the country's fallback switch was <code>decline</code>. <code>null</code> otherwise.
+     * Why a non-document method did not end the ID step. Set when a lookup or a wallet sign-in failed: on the document verification the user continued with when the country's fallback switch was <code>fallback_to_document</code> (<code>action</code> is <code>fallback_to_document</code>), or on the declined report when it was <code>decline</code>. <code>null</code> otherwise.
      */
     public static final class FallbackFrom extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("method", "reason", "action");
@@ -4682,13 +4682,13 @@ public final class SessionDecision extends JsonModel {
       }
 
       /**
-       * The configured action that was taken, e.g. <code>decline</code>.
+       * The configured action that was taken: <code>fallback_to_document</code> or <code>decline</code>.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
-      public Optional<String> action() {
-        return Json.optional(json, "action", Conv.STRING);
+      public Optional<SessionDecision.IdVerifications.FallbackFrom.Action> action() {
+        return Json.optional(json, "action", Conv.enumeration(SessionDecision.IdVerifications.FallbackFrom.Action::of));
       }
 
       @Override
@@ -4725,13 +4725,13 @@ public final class SessionDecision extends JsonModel {
         }
 
         /**
-         * The configured action that was taken, e.g. <code>decline</code>.
+         * The configured action that was taken: <code>fallback_to_document</code> or <code>decline</code>.
          *
          * @param action the value
          * @return this builder
          */
-        public Builder action(String action) {
-          return set("action", Conv.STRING, action);
+        public Builder action(SessionDecision.IdVerifications.FallbackFrom.Action action) {
+          return set("action", Conv.enumeration(SessionDecision.IdVerifications.FallbackFrom.Action::of), action);
         }
 
         /**
@@ -4783,6 +4783,49 @@ public final class SessionDecision extends JsonModel {
          * @return the known values
          */
         public static List<Method> knownValues() {
+          return KNOWN_VALUES;
+        }
+
+        @Override
+        public boolean isKnown() {
+          return KNOWN_VALUES.contains(this);
+        }
+      }
+
+      /**
+       * The configured action that was taken: <code>fallback_to_document</code> or <code>decline</code>.
+       *
+       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+       */
+      public static final class Action extends StringEnum {
+        /** The value {@code "fallback_to_document"}. */
+        public static final Action FALLBACK_TO_DOCUMENT = new Action("fallback_to_document");
+
+        /** The value {@code "decline"}. */
+        public static final Action DECLINE = new Action("decline");
+
+        private static final List<Action> KNOWN_VALUES = List.of(FALLBACK_TO_DOCUMENT, DECLINE);
+
+        private Action(String value) {
+          super(value);
+        }
+
+        /**
+         * Returns the constant for a known value, or a new instance for any other value.
+         *
+         * @param value the string value
+         * @return the enum value
+         */
+        public static Action of(String value) {
+          return StringEnum.lookup(KNOWN_VALUES, value, Action::new);
+        }
+
+        /**
+         * Returns the values known to this SDK version.
+         *
+         * @return the known values
+         */
+        public static List<Action> knownValues() {
           return KNOWN_VALUES;
         }
 

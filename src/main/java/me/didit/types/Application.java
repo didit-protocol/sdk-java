@@ -15,10 +15,10 @@ import me.didit.core.JsonModel;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Full application record. <code>uuid</code>, <code>client_id</code>, and <code>api_key</code> never change after creation.
+ * Full application record. <code>uuid</code>, <code>client_id</code>, and <code>api_key</code> never change after creation. <code>data_location</code> doesn't either, except once on the live application created with your organization, before it is used (see the update request).
  */
 public final class Application extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "client_id", "api_key", "website_url", "redirect_uris", "terms_url", "privacy_url", "description", "created_at", "products");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "client_id", "api_key", "website_url", "redirect_uris", "terms_url", "privacy_url", "description", "created_at", "data_location", "products");
 
   private Application(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -154,6 +154,16 @@ public final class Application extends JsonModel {
   }
 
   /**
+   * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney) and <code>mx</code> (Mexico) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<ApplicationDataLocation> dataLocation() {
+    return Json.optional(json, "data_location", Conv.enumeration(ApplicationDataLocation::of));
+  }
+
+  /**
    * The application's products. Always all three, in this order: <code>identity</code>, <code>transactions</code>, <code>authentication</code>. A new application has <code>identity</code> enabled with every module on, and <code>transactions</code> and <code>authentication</code> disabled. Read-only: a <code>products</code> key in a create or update body is ignored.
    *
    * @return the value, or empty when the field is absent or null
@@ -274,6 +284,16 @@ public final class Application extends JsonModel {
      */
     public Builder createdAt(OffsetDateTime createdAt) {
       return set("created_at", Conv.DATE_TIME, createdAt);
+    }
+
+    /**
+     * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney) and <code>mx</code> (Mexico) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
+     *
+     * @param dataLocation the value
+     * @return this builder
+     */
+    public Builder dataLocation(ApplicationDataLocation dataLocation) {
+      return set("data_location", Conv.enumeration(ApplicationDataLocation::of), dataLocation);
     }
 
     /**
