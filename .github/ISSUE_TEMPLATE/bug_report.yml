@@ -1,0 +1,38 @@
+name: Bug report
+description: Something in the Java or Kotlin SDK does not work as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Never paste API keys, webhook secrets, tokens or personal data. Security issues go to
+        GitHub private vulnerability reporting or support@didit.me (see SECURITY.md).
+  - type: input
+    id: version
+    attributes:
+      label: SDK version
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: input
+    id: runtime
+    attributes:
+      label: Java or Kotlin version and OS
+      placeholder: Java 21, Linux
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Code to reproduce
+      render: java
+  - type: input
+    id: request-id
+    attributes:
+      label: Request id from the error, if any
