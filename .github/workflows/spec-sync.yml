@@ -1,10 +1,25 @@
 # DESIGN 3.1: keeps the SDK current with the published API. Daily and on demand, it downloads the
 # OpenAPI documents, regenerates the code, runs every check and opens (or updates) a pull request
-# titled "chore(spec): sync API spec YYYY-MM-DD" with an operation-level summary.
+# titled "<type>(spec): sync API spec YYYY-MM-DD" with an operation-level summary.
+#
+# The type comes from codegen/spec_sync.py (DESIGN 3.1 and 13): feat(spec) when a caller can
+# observe the change, a minor release even when it can break typed code; chore(spec) when only
+# documentation changed, which releases nothing on its own. Never "!" or a BREAKING CHANGE footer.
+# The body opens with "Breaking changes" and ends with a BEGIN_COMMIT_OVERRIDE block that
+# release-please reads instead of the merged commit: the sync line plus one nested api(spec) commit
+# per breaking change, which release-please-config.json lists under "API changes that can break
+# typed code". Merge with "Squash and merge": after a merge commit release-please reads the block
+# once per commit, and every line would appear twice in the release notes. When the block does not
+# fit the description (hundreds of breaking changes), the body says so and the sync commit's message,
+# which holds every line, becomes the squash commit's.
+#
+# The scheduled run syncs main on chore/spec-sync. A manual run syncs the branch it was started
+# from, so a change to this workflow can be tried before it merges; for another branch than main
+# it uses its own sync branch (chore/spec-sync-<branch>), never main's.
 #
 # It never overwrites commits people added to the sync branch: when the open sync pull request has
 # a commit not made by this workflow, the run stops and says so. Otherwise it rebuilds the branch
-# from main and pushes with --force-with-lease against the head it saw, so a concurrent push wins.
+# from its base and pushes with --force-with-lease against the head it saw, so a concurrent push wins.
 #
 # Set the SPEC_SYNC_TOKEN secret (a GitHub App or fine-grained token with contents and pull
 # requests write) so CI runs on the sync pull request; with the default token it does not.
@@ -24,7 +39,6 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  BRANCH: chore/spec-sync
   BOT_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
   BOT_NAME: github-actions[bot]
 
@@ -32,9 +46,18 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
+      - name: Name the base and the sync branch
+        env:
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          branch=chore/spec-sync
+          if [ "$REF_NAME" != "main" ]; then
+            branch="${branch}-$(printf '%s' "$REF_NAME" | tr -c 'A-Za-z0-9._-' '-')"
+          fi
+          { echo "BASE=${REF_NAME}"; echo "SYNC_BRANCH=${branch}"; } >> "$GITHUB_ENV"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: main
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
           persist-credentials: false
       - name: Leave branches with people's commits alone
@@ -47,13 +70,13 @@ jobs:
           # The checkout keeps no credentials and the repository may be private, so read with the
           # token; a failed read stops the job instead of looking like a missing branch.
           remote="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          head=$(git ls-remote --heads "$remote" "refs/heads/${BRANCH}" | cut -f1)
+          head=$(git ls-remote --heads "$remote" "refs/heads/${SYNC_BRANCH}" | cut -f1)
           echo "head=${head}" >> "$GITHUB_OUTPUT"
           if [ -z "$head" ]; then exit 0; fi
-          pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          pr=$(gh pr list --head "$SYNC_BRANCH" --base "$BASE" --state open --json number --jq '.[0].number // empty')
           if [ -z "$pr" ]; then exit 0; fi
-          git fetch --quiet "$remote" "+refs/heads/${BRANCH}:refs/remotes/origin/${BRANCH}"
-          authors=$(git log --format='%ae%n%ce' "origin/main..origin/${BRANCH}")
+          git fetch --quiet "$remote" "+refs/heads/${SYNC_BRANCH}:refs/remotes/origin/${SYNC_BRANCH}"
+          authors=$(git log --format='%ae%n%ce' "origin/${BASE}..origin/${SYNC_BRANCH}")
           others=$(printf '%s\n' "$authors" | sort -u | grep -vxF -e "$BOT_EMAIL" -e '' || true)
           if [ -n "$others" ]; then
             echo "::notice::Pull request #${pr} has commits by people; this run does not touch it."
@@ -73,7 +96,12 @@ jobs:
       - name: Download the API documents
         id: sync
         if: steps.guard.outputs.skip != 'true'
-        run: python3 codegen/spec_sync.py --summary "$RUNNER_TEMP/summary.md"
+        # Writes changed, type (feat or chore), date and breaking (a count) to $GITHUB_OUTPUT, the
+        # summary (breaking changes first) and the commit message release-please reads.
+        run: |
+          python3 codegen/spec_sync.py --summary "$RUNNER_TEMP/summary.md" \
+            --commit-message "$RUNNER_TEMP/commit-message.txt"
+          cat "$RUNNER_TEMP/summary.md" >> "$GITHUB_STEP_SUMMARY"
       - name: Regenerate and run every check
         id: checks
         if: steps.sync.outputs.changed == 'true'
@@ -88,33 +116,84 @@ jobs:
           GH_TOKEN: ${{ secrets.SPEC_SYNC_TOKEN || github.token }}
           PUSH_TOKEN: ${{ secrets.SPEC_SYNC_TOKEN || github.token }}
           SEEN_HEAD: ${{ steps.guard.outputs.head }}
-          BREAKING: ${{ steps.sync.outputs.breaking }}
+          TYPE: ${{ steps.sync.outputs.type }}
+          DATE: ${{ steps.sync.outputs.date }}
           CHECKS: ${{ steps.checks.outcome }}
         run: |
-          today=$(date -u +%Y-%m-%d)
-          title="chore(spec): sync API spec ${today}"
-          body="$RUNNER_TEMP/body.md"
-          cp "$RUNNER_TEMP/summary.md" "$body"
+          set -euo pipefail
+          case "$TYPE" in
+            feat | chore) ;;
+            *)
+              echo "::error::Unexpected spec sync type '${TYPE}'."
+              exit 1
+              ;;
+          esac
+          title="${TYPE}(spec): sync API spec ${DATE}"
+          message="$RUNNER_TEMP/commit-message.txt"
+          first=$(head -n 1 "$message")
+          if [ "$first" != "$title" ] || grep -q 'BREAKING CHANGE' "$message"; then
+            echo "::error::A spec sync is never a major version: no '!' and no BREAKING CHANGE footer."
+            exit 1
+          fi
+          checks="$RUNNER_TEMP/checks.md"
+          tail="$RUNNER_TEMP/tail.md"
+          : > "$checks"
           if [ "$CHECKS" != "success" ]; then
             printf '\n**The checks failed on this sync**; see the workflow run %s.\n' \
-              "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> "$body"
+              "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" > "$checks"
           fi
+          {
+            cat "$checks"
+            echo
+            echo "## Release notes"
+            echo
+            echo "release-please reads the block below instead of the merged commit, so the release type (\`${TYPE}(spec)\`, never a major version) and the lines under \"API changes that can break typed code\" do not depend on how the commit is titled. Merge with **Squash and merge** and keep the block when you edit this description: after a merge commit release-please reads the block once per commit, and every line would appear twice."
+            echo
+            echo "BEGIN_COMMIT_OVERRIDE"
+            cat "$message"
+            echo "END_COMMIT_OVERRIDE"
+          } > "$tail"
+          # Hundreds of breaking changes do not fit at all. Then the description leaves the block
+          # out and release-please reads the squashed commit, whose message (the sync commit's)
+          # holds every line. The prose never names the block's marker: release-please would take
+          # any occurrence as the start of one.
+          if [ "$(wc -c < "$tail")" -gt 60000 ]; then
+            count=$(grep -c '^BEGIN_NESTED_COMMIT$' "$message")
+            {
+              cat "$checks"
+              echo
+              echo "## Release notes"
+              echo
+              echo "The ${count} lines for \"API changes that can break typed code\" do not fit this description, so it has no override block and release-please reads the merged commit instead. Merge with **Squash and merge** and use the message of this branch's sync commit as the commit message: it holds every line, each as its own nested commit."
+            } > "$tail"
+            echo "::warning::${count} breaking changes do not fit the pull request description; squash with the sync commit's message so that the release notes list them."
+          fi
+          # A pull request description holds 65536 characters: shorten the report, never the block
+          # release-please reads. The full report is in the sync step's summary.
+          body="$RUNNER_TEMP/body.md"
+          limit=$((65000 - $(wc -c < "$tail")))
+          if [ "$(wc -c < "$RUNNER_TEMP/summary.md")" -gt "$limit" ]; then
+            {
+              head -c "$((limit - 200))" "$RUNNER_TEMP/summary.md" | sed '$d'
+              echo
+              echo "_Shortened to fit the pull request description; the full report is in the summary of this run._"
+            } > "$body"
+          else
+            cp "$RUNNER_TEMP/summary.md" "$body"
+          fi
+          cat "$tail" >> "$body"
           git config user.name "$BOT_NAME"
           git config user.email "$BOT_EMAIL"
-          git checkout -B "$BRANCH"
+          git checkout -B "$SYNC_BRANCH"
           git add openapi src codegen
-          message="$title"
-          if [ "$BREAKING" = "true" ]; then
-            message="$(printf '%s\n\nBREAKING CHANGE: the API removed or renamed operations or schemas; see the pull request.' "$title")"
-          fi
-          git commit --quiet -m "$message"
+          git commit --quiet -F "$message"
           remote="https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git push --force-with-lease="${BRANCH}:${SEEN_HEAD}" "$remote" "HEAD:refs/heads/${BRANCH}"
-          pr=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          git push --force-with-lease="${SYNC_BRANCH}:${SEEN_HEAD}" "$remote" "HEAD:refs/heads/${SYNC_BRANCH}"
+          pr=$(gh pr list --head "$SYNC_BRANCH" --base "$BASE" --state open --json number --jq '.[0].number // empty')
           if [ -n "$pr" ]; then
             gh pr edit "$pr" --title "$title" --body-file "$body"
           elif [ "$CHECKS" = "success" ]; then
-            gh pr create --base main --head "$BRANCH" --title "$title" --body-file "$body"
+            gh pr create --base "$BASE" --head "$SYNC_BRANCH" --title "$title" --body-file "$body"
           else
-            gh pr create --base main --head "$BRANCH" --title "$title" --body-file "$body" --draft
+            gh pr create --base "$BASE" --head "$SYNC_BRANCH" --title "$title" --body-file "$body" --draft
           fi
