@@ -45,7 +45,13 @@ import re
 import sys
 import urllib.request
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from didit_codegen import model as java_model  # noqa: E402
+from didit_codegen.spec import SpecError as GeneratorError  # noqa: E402
+from didit_codegen.spec import load as load_openapi  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 UPSTREAM = {
@@ -738,6 +744,24 @@ class SyncResult:
         return message
 
 
+def java_variant_names(root: Path) -> dict[tuple[str, str], tuple[str, list[str]]] | None:
+    """Every union type the generator builds from ``root``/openapi: (document, pointer) -> (Java
+    type, its variants' names). None when the generator cannot build the documents, which the
+    sync's checks then report."""
+    try:
+        built = java_model.build(load_openapi(root))
+    except GeneratorError:
+        return None
+    found: dict[tuple[str, str], tuple[str, list[str]]] = {}
+    todo = list(built.classes)
+    while todo:
+        cls = todo.pop()
+        todo.extend(cls.nested)
+        if cls.kind == "union":
+            found[(cls.doc_name, cls.pointer)] = (cls.qualified, [v.name for v in cls.variants])
+    return found
+
+
 def _name(sdk: Json) -> str:
     return f"{sdk['resource']}.{sdk['method']}"
 
@@ -771,6 +795,7 @@ def sync(
     if not changed_files:
         return SyncResult(False, "The upstream API documents are unchanged.\n", today)
 
+    old_variant_names = java_variant_names(root)
     remove_in = next_minor(version or current_version(root))
     overlay_path = openapi / "overlay.json"
     overlay_doc = json.loads(overlay_path.read_text(encoding="utf-8"))
@@ -988,11 +1013,49 @@ def sync(
         lines.append(f"Dropped {len(dropped)} overlay entries that upstream now carries.")
         lines.append("")
 
+    # Write the files; the generator then reads the new state.
+    for name in changed_files:
+        (openapi / name).write_bytes(downloads[name])
+    source_path = openapi / "SOURCE.json"
+    source = json.loads(source_path.read_text(encoding="utf-8")) if source_path.exists() else {}
+    for name, data in downloads.items():
+        entry = source.setdefault(name, {})
+        entry["url"] = UPSTREAM[name]
+        entry["sha256"] = hashlib.sha256(data).hexdigest()
+        if name in changed_files:
+            entry["fetched_at"] = now
+    source_path.write_text(json.dumps(source, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    overlay_doc["operations"] = dict(sorted(overlay.items()))
+    overlay_path.write_text(json.dumps(overlay_doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    if deprecated_doc["methods"] or deprecated_path.exists():
+        deprecated_doc["methods"] = dict(sorted(deprecated_doc["methods"].items()))
+        deprecated_path.write_text(json.dumps(deprecated_doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    # A union variant's Java name can come from its title or description (model.Builder._union),
+    # so documentation can rename Java types: listed, not counted, and feat.
+    renamed_variants: list[str] = []
+    new_variant_names = java_variant_names(root)
+    if old_variant_names is not None and new_variant_names is not None:
+        for key in sorted(set(old_variant_names) & set(new_variant_names)):
+            (java_type, before), (_, after) = old_variant_names[key], new_variant_names[key]
+            if before != after:
+                renamed_variants.append(
+                    f"- `{java_type}`: " + ", ".join(f"`{n}`" for n in before) + " -> " + ", ".join(f"`{n}`" for n in after)
+                )
+    if renamed_variants:
+        lines.append(f"## Java union variant names ({len(renamed_variants)})")
+        lines.append(
+            "A variant's name (its class and its `is`, `as` and `of` methods) can come from a title or a description, "
+            "so these changed in Java. Listed, not counted in the breaking changes above, which every SDK reports the same."
+        )
+        lines.extend(renamed_variants)
+        lines.append("")
+
     # feat when a caller can observe anything: the documents without documentation, or the
     # effective naming (upstream adopting an overlay entry unchanged is no change).
     breaking = list(dict.fromkeys(breaking))
     observable_change = (
-        bool(breaking or added or removed)
+        bool(breaking or added or removed or renamed_variants)
         or any(old_naming(key) != new_naming(key) for key in common)
         or any(observable(old_docs[n]) != observable(new_docs[n]) for n in changed_files)
     )
@@ -1022,23 +1085,6 @@ def sync(
         "",
     ]
 
-    # Write the files.
-    for name in changed_files:
-        (openapi / name).write_bytes(downloads[name])
-    source_path = openapi / "SOURCE.json"
-    source = json.loads(source_path.read_text(encoding="utf-8")) if source_path.exists() else {}
-    for name, data in downloads.items():
-        entry = source.setdefault(name, {})
-        entry["url"] = UPSTREAM[name]
-        entry["sha256"] = hashlib.sha256(data).hexdigest()
-        if name in changed_files:
-            entry["fetched_at"] = now
-    source_path.write_text(json.dumps(source, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
-    overlay_doc["operations"] = dict(sorted(overlay.items()))
-    overlay_path.write_text(json.dumps(overlay_doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
-    if deprecated_doc["methods"] or deprecated_path.exists():
-        deprecated_doc["methods"] = dict(sorted(deprecated_doc["methods"].items()))
-        deprecated_path.write_text(json.dumps(deprecated_doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     return SyncResult(True, "\n".join(lines).rstrip() + "\n", today, commit_type, breaking)
 
 
