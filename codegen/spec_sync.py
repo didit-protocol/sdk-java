@@ -1040,15 +1040,16 @@ def sync(
     if old_variant_names is not None and new_variant_names is not None:
         for key in sorted(set(old_variant_names) & set(new_variant_names)):
             (java_type, before), (_, after) = old_variant_names[key], new_variant_names[key]
-            if before != after:
-                renamed_variants.append(
-                    f"- `{java_type}`: " + ", ".join(f"`{n}`" for n in before) + " -> " + ", ".join(f"`{n}`" for n in after)
-                )
+            gone = [f"`{n}`" for n in before if n not in after]
+            if gone:
+                new_names = [f"`{n}`" for n in after if n not in before]
+                renamed_variants.append(f"- `{java_type}`: {', '.join(gone)} -> {', '.join(new_names) or 'removed'}")
     if renamed_variants:
         lines.append(f"## Java union variant names ({len(renamed_variants)})")
         lines.append(
-            "A variant's name (its class and its `is`, `as` and `of` methods) can come from a title or a description, "
-            "so these changed in Java. Listed, not counted in the breaking changes above, which every SDK reports the same."
+            "Variant names that are gone, with their class and their `is`, `as` and `of` methods. The generator names a "
+            "variant after its title or description when no component or discriminator names it, so documentation can "
+            "rename one. Listed, not counted in the breaking changes above, which every SDK reports the same."
         )
         lines.extend(renamed_variants)
         lines.append("")

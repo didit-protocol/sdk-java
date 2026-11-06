@@ -687,8 +687,13 @@ class CommitTypeTest(unittest.TestCase):
                 self.assertEqual(commit_type, result.commit_type)
                 self.assertEqual([], result.breaking)
                 self.assertEqual(commit_type == "feat", "## Java union variant names (1)" in result.summary)
+        # A variant the API adds renames none (it is listed with the operations that return it).
+        added = sync_variant(
+            lambda s: s["components"]["schemas"]["AMLMonitoringToggleResult"]["oneOf"].append({"type": "string"})
+        )
+        self.assertNotIn("## Java union variant names", added)
         self.assertIn(
-            "- `AMLMonitoringToggleResult`: `CostPreview`, `Variant2` -> `EstimatedCost`, `Variant2`",
+            "- `AMLMonitoringToggleResult`: `CostPreview` -> `EstimatedCost`",
             section(
                 sync_variant(lambda s: variant(s).update(description="Estimated cost. Nothing is written.")),
                 "Java union variant names",
