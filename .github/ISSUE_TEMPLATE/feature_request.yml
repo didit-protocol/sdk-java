@@ -1,0 +1,14 @@
+name: Feature request
+description: Suggest an improvement to the Java or Kotlin SDK.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What you want to do
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: How the SDK could help
