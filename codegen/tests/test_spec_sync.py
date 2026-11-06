@@ -520,6 +520,7 @@ class DetectionTest(unittest.TestCase):
             [
                 ("", "type changed from array or object to array or object or string", True),
                 ("(oneOf 1)[].service_id", retyped, True),
+                added,
             ],
             diff(
                 {"oneOf": [listed, c]},
@@ -706,7 +707,11 @@ class CommitTypeTest(unittest.TestCase):
         for variant in ("CostPreview", "Variant2"):
             self.assertIn(f"public boolean is{variant}()", union)
         # Documents the generator cannot build compare no names; its own check reports them.
-        self.assertIsNone(spec_sync.java_variant_names(Path(tempfile.mkdtemp())))
+        root = repo_copy()
+        spec = json.loads((root / "openapi/verification.json").read_text(encoding="utf-8"))
+        spec["paths"]["/v3/unnamed/"] = {"get": {"responses": {"200": json_response(OBJ)}}}
+        (root / "openapi/verification.json").write_text(json.dumps(spec), encoding="utf-8")
+        self.assertIsNone(spec_sync.java_variant_names(root))
 
     def test_a_new_webhook_event_is_feat(self) -> None:
         root = repo_copy()
