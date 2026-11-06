@@ -174,7 +174,8 @@ final class AuthenticationContractTest {
   static String camel(String snake) {
     StringBuilder out = new StringBuilder();
     boolean upper = false;
-    for (char c : snake.toCharArray()) {
+    for (int i = 0; i < snake.length(); i++) {
+      char c = snake.charAt(i);
       if (c == '_') {
         upper = true;
       } else {
