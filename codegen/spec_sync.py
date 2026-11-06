@@ -603,17 +603,28 @@ def _successes(doc: Json, op: Json) -> dict[str, dict[str, Json]]:
 
 
 def _diff_content(old: dict[str, Json], new: dict[str, Json], where: str, *, request: bool, out: list[Change]) -> None:
-    """Compares a body per media type; when none is shared, the first against the first, so that
-    a body that changes content type, appears or disappears is compared too."""
+    """Compares a body per media type. A media type the new body no longer has is compared with
+    the one that replaces it (an added one first, then the one with the most fields in common), so
+    that a field only it carried (a multipart file) is not lost; a body that appears or disappears
+    is compared field by field."""
     if old and new and set(old) != set(new):
         out.append(Change(where, "", f"content type {', '.join(sorted(old))} -> {', '.join(sorted(new))}"))
-    pairs = [(m, m) for m in sorted(set(old) & set(new))]
-    if not pairs and (old or new):
-        old = old or {"": NO_SCHEMA}
-        new = new or {"": NO_SCHEMA}
-        pairs = [(min(old), min(new))]
-    for before, after in pairs:
-        diff_schema(old[before], new[after], where, request=request, out=out)
+    if not old:
+        for media in sorted(new):
+            diff_schema(NO_SCHEMA, new[media], where, request=request, out=out)
+        return
+    added = sorted(set(new) - set(old))
+    for media in sorted(old):
+        if media in new:
+            diff_schema(old[media], new[media], where, request=request, out=out)
+        elif not new:
+            diff_schema(old[media], NO_SCHEMA, where, request=request, out=out)
+        else:
+            fields = _field_names(old[media])
+            after = min(added or sorted(new), key=lambda m: -len(fields & _field_names(new[m])))
+            if after in added:
+                added.remove(after)
+            diff_schema(old[media], new[after], where, request=request, out=out)
 
 
 def _diff_statuses(old: dict[str, dict[str, Json]], new: dict[str, dict[str, Json]]) -> list[Change]:
