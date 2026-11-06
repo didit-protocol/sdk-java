@@ -17,7 +17,7 @@
 #
 # It never overwrites commits people added to the sync branch: when the open sync pull request has
 # a commit not made by this workflow, the run stops and says so. Otherwise it rebuilds the branch
-# from main and pushes with --force-with-lease against the head it saw, so a concurrent push wins.
+# from its base and pushes with --force-with-lease against the head it saw, so a concurrent push wins.
 #
 # Set the SPEC_SYNC_TOKEN secret (a GitHub App or fine-grained token with contents and pull
 # requests write) so CI runs on the sync pull request; with the default token it does not.
