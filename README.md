@@ -283,7 +283,10 @@ Choices this SDK makes where the shared design leaves room:
 ## Supported runtimes and versioning
 
 - Java 11, 17, 21 and 25 on Linux, macOS and Windows; Kotlin 2.x.
-- Semantic versioning: a breaking change to the public SDK surface is a major version. The first release, 1.0.0, shipped on 2026-10-29; every release after that is cut by release-please, and merging its pull request is the release approval.
+- Semantic versioning, with one rule for API changes: a change that mirrors the Didit API is a minor version, even when it can break typed code (a field whose type changed or that can now be null, a removed field, endpoint or enum value). The API already behaves that way for every caller, so staying on an older SDK version does not protect you. The release notes list these changes under "API changes that can break typed code": read that section and recompile when you upgrade.
+- A major version is only for a change to the SDK's own design: renaming or removing a method or resource the API still has, changing client configuration, errors, retries, pagination or webhook verification behaviour, or dropping a supported Java version.
+- A sync that only changes the API documentation releases nothing on its own; it ships with the next release.
+- The first release, 1.0.0, shipped on 2026-10-29; every release after that is cut by release-please, and merging its pull request is the release approval.
 - The SDK is generated from the OpenAPI documents Didit publishes at docs.didit.me and is updated when they change: endpoints the API removes stay one minor version, deprecated, before they go.
 - Releases and their notes are in [CHANGELOG.md](CHANGELOG.md).
 
