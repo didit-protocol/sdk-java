@@ -616,18 +616,15 @@ def _diff_content(old: dict[str, Json], new: dict[str, Json], where: str, *, req
         return
     added = sorted(set(new) - set(old))
     for media in sorted(old):
-        if media in new:
-            diff_schema(old[media], new[media], where, request=request, out=out)
-        elif not new:
-            diff_schema(old[media], NO_SCHEMA, where, request=request, out=out)
-        elif added:
-            fields = _field_names(old[media])
-            after = min(added, key=lambda m: -len(fields & _field_names(new[m])))
+        if media in new or not new:
+            diff_schema(old[media], new.get(media, NO_SCHEMA), where, request=request, out=out)
+            continue
+        fields = _field_names(old[media])
+        after = min(added or sorted(new), key=lambda m: -len(fields & _field_names(new[m])))
+        if after in added:
             added.remove(after)
             diff_schema(old[media], new[after], where, request=request, out=out)
         else:
-            fields = _field_names(old[media])
-            after = min(sorted(new), key=lambda m: -len(fields & _field_names(new[m])))
             found: list[Change] = []
             diff_schema(old[media], new[after], where, request=request, out=found)
             out.extend(c for c in found if c.breaking)
