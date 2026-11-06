@@ -620,7 +620,9 @@ class DetectionTest(unittest.TestCase):
 
         def changes(old: dict[str, Any], new: dict[str, Any]) -> list[tuple[str, str, bool]]:
             def body(content: dict[str, Any]) -> dict[str, Any]:
-                return {**op(), "requestBody": {"content": {m: {"schema": s} for m, s in content.items()}}} if content else op()
+                if not content:
+                    return op()
+                return {**op(), "requestBody": {"content": {m: {"schema": s} for m, s in content.items()}}}
 
             return [(c.path, c.kind, c.breaking) for c in spec_sync.describe_change({}, body(old), {}, body(new))]
 
@@ -630,7 +632,8 @@ class DetectionTest(unittest.TestCase):
         # Against a media type both bodies have, only what breaks counts: the rest was already there.
         only_json = {"application/json": as_json}
         self.assertEqual(
-            [moved(both, only_json), ("file", "removed", True), ("url", "added (required)", True)], changes(both, only_json)
+            [moved(both, only_json), ("file", "removed", True), ("url", "added (required)", True)],
+            changes(both, only_json),
         )
         # A media type that changes name is compared in full.
         extra = {**as_json, "properties": {**as_json["properties"], "extra": text}}
