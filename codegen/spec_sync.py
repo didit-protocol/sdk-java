@@ -17,15 +17,17 @@ OpenAPI 3 document with paths, and when any of them changed it:
     (DESIGN 10) and AuthenticationContractTest holds it to the document;
   - picks the commit type (DESIGN 3.1 and 13): feat when anything a caller can observe changed,
     chore when only documentation did. Never "!" or a BREAKING CHANGE footer: a change that
-    mirrors the API is a minor version;
+    mirrors the API is a minor version. A union variant the generator names after its title or
+    description is observable in Java, so renaming it is feat too (listed, not counted);
   - writes a Markdown summary that opens with "Breaking changes": every change that can break
     typed code (a field or parameter whose type changed or that can now be null, a removed
     operation, field or enum value, a newly required parameter or request field) in parameters,
     request bodies and 2xx responses, following $refs, array items, allOf and unions; then the
-    added, removed, renamed and changed operations and schemas;
+    added, removed, renamed and changed operations and schemas. The rules are sdk-python's, so
+    that all seven SDKs list the same changes;
   - writes the commit message release-please reads (--commit-message): the sync line, then one
-    nested api(spec) commit per breaking change, which release-please-config.json lists under
-    "API changes that can break typed code".
+    nested api(spec) commit per breaking change, every one of them, which
+    release-please-config.json lists under "API changes that can break typed code".
 
 It prints the summary, then changed=true|false, type=feat|chore, date and breaking (the number of
 breaking changes), which it also writes to $GITHUB_OUTPUT when set.
