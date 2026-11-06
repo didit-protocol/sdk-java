@@ -74,6 +74,9 @@ tasks.test {
   }
   maxHeapSize = "1g"
   systemProperty("didit.repoRoot", rootDir.absolutePath)
+  // The contract tests read openapi/ directly: a sync that changes only a document (such as
+  // authentication.json, which generates no code) must still rerun them instead of using the cache.
+  inputs.dir("openapi").withPathSensitivity(PathSensitivity.RELATIVE)
   testLogging {
     events("failed", "skipped")
     exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
