@@ -112,10 +112,10 @@ final class AuthenticationContractTest {
         JsonNode content = deref(op.path("requestBody")).path("content");
         Set<String> contentTypes = new TreeSet<>();
         content.fieldNames().forEachRemaining(contentTypes::add);
-        Iterator<JsonNode> media = content.elements();
+        Iterator<JsonNode> mediaTypes = content.elements();
         String grantProperty =
-            media.hasNext()
-                ? deref(media.next().path("schema"))
+            mediaTypes.hasNext()
+                ? deref(mediaTypes.next().path("schema"))
                     .path("discriminator")
                     .path("propertyName")
                     .asText("")
