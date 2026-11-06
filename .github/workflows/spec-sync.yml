@@ -37,7 +37,6 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  BRANCH: chore/spec-sync
   BOT_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
   BOT_NAME: github-actions[bot]
 
@@ -47,13 +46,13 @@ jobs:
     steps:
       - name: Name the base and the sync branch
         env:
-          BASE: ${{ github.ref_name }}
-          DEFAULT: ${{ github.event.repository.default_branch }}
+          REF_NAME: ${{ github.ref_name }}
         run: |
-          echo "BASE=${BASE}" >> "$GITHUB_ENV"
-          if [ "$BASE" != "$DEFAULT" ]; then
-            echo "BRANCH=${BRANCH}-$(printf '%s' "$BASE" | tr -c 'A-Za-z0-9._-' '-')" >> "$GITHUB_ENV"
+          branch=chore/spec-sync
+          if [ "$REF_NAME" != "main" ]; then
+            branch="${branch}-$(printf '%s' "$REF_NAME" | tr -c 'A-Za-z0-9._-' '-')"
           fi
+          { echo "BASE=${REF_NAME}"; echo "SYNC_BRANCH=${branch}"; } >> "$GITHUB_ENV"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.ref_name }}
@@ -69,13 +68,13 @@ jobs:
           # The checkout keeps no credentials and the repository may be private, so read with the
           # token; a failed read stops the job instead of looking like a missing branch.
           remote="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          head=$(git ls-remote --heads "$remote" "refs/heads/${BRANCH}" | cut -f1)
+          head=$(git ls-remote --heads "$remote" "refs/heads/${SYNC_BRANCH}" | cut -f1)
           echo "head=${head}" >> "$GITHUB_OUTPUT"
           if [ -z "$head" ]; then exit 0; fi
-          pr=$(gh pr list --head "$BRANCH" --base "$BASE" --state open --json number --jq '.[0].number // empty')
+          pr=$(gh pr list --head "$SYNC_BRANCH" --base "$BASE" --state open --json number --jq '.[0].number // empty')
           if [ -z "$pr" ]; then exit 0; fi
-          git fetch --quiet "$remote" "+refs/heads/${BRANCH}:refs/remotes/origin/${BRANCH}"
-          authors=$(git log --format='%ae%n%ce' "origin/${BASE}..origin/${BRANCH}")
+          git fetch --quiet "$remote" "+refs/heads/${SYNC_BRANCH}:refs/remotes/origin/${SYNC_BRANCH}"
+          authors=$(git log --format='%ae%n%ce' "origin/${BASE}..origin/${SYNC_BRANCH}")
           others=$(printf '%s\n' "$authors" | sort -u | grep -vxF -e "$BOT_EMAIL" -e '' || true)
           if [ -n "$others" ]; then
             echo "::notice::Pull request #${pr} has commits by people; this run does not touch it."
@@ -129,7 +128,8 @@ jobs:
           esac
           title="${TYPE}(spec): sync API spec ${DATE}"
           message="$RUNNER_TEMP/commit-message.txt"
-          if head -n 1 "$message" | grep -q '!' || grep -q 'BREAKING' "$message"; then
+          first=$(head -n 1 "$message")
+          if [ "$first" != "$title" ] || grep -q 'BREAKING CHANGE' "$message"; then
             echo "::error::A spec sync is never a major version: no '!' and no BREAKING CHANGE footer."
             exit 1
           fi
@@ -164,16 +164,16 @@ jobs:
           cat "$tail" >> "$body"
           git config user.name "$BOT_NAME"
           git config user.email "$BOT_EMAIL"
-          git checkout -B "$BRANCH"
+          git checkout -B "$SYNC_BRANCH"
           git add openapi src codegen
           git commit --quiet -F "$message"
           remote="https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git push --force-with-lease="${BRANCH}:${SEEN_HEAD}" "$remote" "HEAD:refs/heads/${BRANCH}"
-          pr=$(gh pr list --head "$BRANCH" --base "$BASE" --state open --json number --jq '.[0].number // empty')
+          git push --force-with-lease="${SYNC_BRANCH}:${SEEN_HEAD}" "$remote" "HEAD:refs/heads/${SYNC_BRANCH}"
+          pr=$(gh pr list --head "$SYNC_BRANCH" --base "$BASE" --state open --json number --jq '.[0].number // empty')
           if [ -n "$pr" ]; then
             gh pr edit "$pr" --title "$title" --body-file "$body"
           elif [ "$CHECKS" = "success" ]; then
-            gh pr create --base "$BASE" --head "$BRANCH" --title "$title" --body-file "$body"
+            gh pr create --base "$BASE" --head "$SYNC_BRANCH" --title "$title" --body-file "$body"
           else
-            gh pr create --base "$BASE" --head "$BRANCH" --title "$title" --body-file "$body" --draft
+            gh pr create --base "$BASE" --head "$SYNC_BRANCH" --title "$title" --body-file "$body" --draft
           fi
