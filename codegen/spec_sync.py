@@ -45,7 +45,7 @@ import re
 import sys
 import urllib.request
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 ROOT = Path(__file__).resolve().parent.parent
 UPSTREAM = {
@@ -412,44 +412,19 @@ def _join(path: str, name: str) -> str:
     return f"{path}.{name}" if path else name
 
 
-def diff_schema(
+def _diff_members(
     old: Json,
     new: Json,
     where: str,
-    path: str = "",
+    path: str,
     *,
     request: bool,
     out: list[Change],
-    depth: int = 0,
+    depth: int,
+    note: Callable[..., None],
 ) -> None:
-    """Appends a Change for every difference between two dereferenced schemas.
-
-    Breaking (DESIGN 3.1, the same in requests and responses): a type change in either
-    direction, a value that can now be null, a removed field, enum value or union variant, and in
-    a request (``request``) a field that is newly required. Everything else is listed, not counted.
-    """
-    if depth > MAX_DEPTH or _shape(old) == _shape(new):
-        return
-    start = len(out)
-
-    def note(kind: str, breaking: bool = False, at: str = path) -> None:
-        out.append(Change(where, at, kind, breaking))
-
-    if not isinstance(old, dict) or not isinstance(new, dict):
-        note("schema replaced", True)
-        return
-    if _nullable(new) and not _nullable(old):
-        note("can now be null", True)
-    elif _nullable(old) and not _nullable(new):
-        note("no longer accepts null" if request else "can no longer be null")
-    raw_old, raw_new = old, new
-    old, new = _single(old), _single(new)
-    old_kinds, new_kinds = _kinds(old), _kinds(new)
-    if old_kinds and new_kinds and old_kinds != new_kinds:
-        before, after = " or ".join(sorted(old_kinds)), " or ".join(sorted(new_kinds))
-        note(f"type changed from {before} to {after}", True)
-        return
-
+    """The part of diff_schema for two schemas of the same type: enum values, fields, array items
+    and map values."""
     old_enum, new_enum = _enum(old), _enum(new)
     if old_enum is not None and new_enum is not None:
         for value in old_enum:
@@ -491,16 +466,61 @@ def diff_schema(
                 out=out,
                 depth=depth + 1,
             )
+
+
+def diff_schema(
+    old: Json,
+    new: Json,
+    where: str,
+    path: str = "",
+    *,
+    request: bool,
+    out: list[Change],
+    depth: int = 0,
+) -> None:
+    """Appends a Change for every difference between two dereferenced schemas.
+
+    Breaking (DESIGN 3.1, the same in requests and responses): a type change in either
+    direction, a value that can now be null, a removed field, enum value or union variant, and in
+    a request (``request``) a field that is newly required. Everything else is listed, not counted.
+    """
+    if depth > MAX_DEPTH or _shape(old) == _shape(new):
+        return
+    start = len(out)
+
+    def note(kind: str, breaking: bool = False, at: str = path) -> None:
+        out.append(Change(where, at, kind, breaking))
+
+    if not isinstance(old, dict) or not isinstance(new, dict):
+        note("schema replaced", True)
+        return
+    if _nullable(new) and not _nullable(old):
+        note("can now be null", True)
+    elif _nullable(old) and not _nullable(new):
+        note("no longer accepts null" if request else "can no longer be null")
+    raw_old, raw_new = old, new
+    old, new = _single(old), _single(new)
+    old_kinds, new_kinds = _kinds(old), _kinds(new)
+    retyped = bool(old_kinds and new_kinds and old_kinds != new_kinds)
+    if retyped:
+        before, after = " or ".join(sorted(old_kinds)), " or ".join(sorted(new_kinds))
+        note(f"type changed from {before} to {after}", True)
+        if len(_variants(raw_old)) <= 1 and len(_variants(raw_new)) <= 1:
+            return
+        # A union that gains or loses a type: its remaining variants are still compared below.
+    else:
+        _diff_members(old, new, where, path, request=request, out=out, depth=depth, note=note)
     for keyword in ("oneOf", "anyOf"):
         old_vars, new_vars = _variants(raw_old, keyword), _variants(raw_new, keyword)
         if len(old_vars) <= 1 and len(new_vars) <= 1:
             continue  # one variant each was compared as the schema itself, above
         # A plain schema is a union of one variant: [X, null] against X loses no variant.
-        pairs, removed, added_count = _pair_variants(old_vars or [old], new_vars or [new])
-        if removed:
+        pairs, removed, added = _pair_variants(old_vars or [old], new_vars or [new])
+        # The type change above already reports variants of another type coming or going.
+        if removed and not retyped:
             note(f"type changed: {removed} {keyword} variant(s) removed", True)
-        if added_count:
-            note(f"{added_count} {keyword} variant(s) added")
+        if added and not retyped:
+            note(f"{added} {keyword} variant(s) added")
         for index, a, b in pairs:
             diff_schema(a, b, where, f"{path}({keyword} {index + 1})", request=request, out=out, depth=depth + 1)
     if len(out) == start:
