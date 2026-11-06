@@ -9,7 +9,9 @@
 # release-please reads instead of the merged commit: the sync line plus one nested api(spec) commit
 # per breaking change, which release-please-config.json lists under "API changes that can break
 # typed code". Merge with "Squash and merge": after a merge commit release-please reads the block
-# once per commit, and every line would appear twice in the release notes.
+# once per commit, and every line would appear twice in the release notes. When the block does not
+# fit the description (hundreds of breaking changes), the body says so and the sync commit's message,
+# which holds every line, becomes the squash commit's.
 #
 # The scheduled run syncs main on chore/spec-sync. A manual run syncs the branch it was started
 # from, so a change to this workflow can be tried before it merges; for another branch than main
@@ -133,12 +135,15 @@ jobs:
             echo "::error::A spec sync is never a major version: no '!' and no BREAKING CHANGE footer."
             exit 1
           fi
+          checks="$RUNNER_TEMP/checks.md"
           tail="$RUNNER_TEMP/tail.md"
+          : > "$checks"
+          if [ "$CHECKS" != "success" ]; then
+            printf '\n**The checks failed on this sync**; see the workflow run %s.\n' \
+              "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" > "$checks"
+          fi
           {
-            if [ "$CHECKS" != "success" ]; then
-              printf '\n**The checks failed on this sync**; see the workflow run %s.\n' \
-                "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-            fi
+            cat "$checks"
             echo
             echo "## Release notes"
             echo
@@ -148,6 +153,21 @@ jobs:
             cat "$message"
             echo "END_COMMIT_OVERRIDE"
           } > "$tail"
+          # Hundreds of breaking changes do not fit at all. Then the description leaves the block
+          # out and release-please reads the squashed commit, whose message (the sync commit's)
+          # holds every line. The prose never names the block's marker: release-please would take
+          # any occurrence as the start of one.
+          if [ "$(wc -c < "$tail")" -gt 60000 ]; then
+            count=$(grep -c '^BEGIN_NESTED_COMMIT$' "$message")
+            {
+              cat "$checks"
+              echo
+              echo "## Release notes"
+              echo
+              echo "The ${count} lines for \"API changes that can break typed code\" do not fit this description, so it has no override block and release-please reads the merged commit instead. Merge with **Squash and merge** and use the message of this branch's sync commit as the commit message: it holds every line, each as its own nested commit."
+            } > "$tail"
+            echo "::warning::${count} breaking changes do not fit the pull request description; squash with the sync commit's message so that the release notes list them."
+          fi
           # A pull request description holds 65536 characters: shorten the report, never the block
           # release-please reads. The full report is in the sync step's summary.
           body="$RUNNER_TEMP/body.md"
