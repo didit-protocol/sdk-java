@@ -611,6 +611,41 @@ class DetectionTest(unittest.TestCase):
         found = spec_sync.describe_change({}, op(), {}, op(body={**OBJ, "required": []}))
         self.assertEqual([("request body", "a", "added", False)], [(c.where, c.path, c.kind, c.breaking) for c in found])
 
+    def test_a_removed_media_type_is_compared_with_the_one_that_replaces_it(self) -> None:
+        # The generated Params class reads the multipart body when only it carries files.
+        text = {"type": "string"}
+        as_json = {"type": "object", "properties": {"url": text, "note": text}, "required": ["url"]}
+        multipart = {"type": "object", "properties": {"file": {"type": "string", "format": "binary"}, "note": text}}
+        both = {"application/json": as_json, "multipart/form-data": multipart}
+
+        def changes(old: dict[str, Any], new: dict[str, Any]) -> list[tuple[str, str, bool]]:
+            def body(content: dict[str, Any]) -> dict[str, Any]:
+                if not content:
+                    return op()
+                return {**op(), "requestBody": {"content": {m: {"schema": s} for m, s in content.items()}}}
+
+            return [(c.path, c.kind, c.breaking) for c in spec_sync.describe_change({}, body(old), {}, body(new))]
+
+        def moved(old: dict[str, Any], new: dict[str, Any]) -> tuple[str, str, bool]:
+            return ("", f"content type {', '.join(sorted(old))} -> {', '.join(sorted(new))}", False)
+
+        # Against a media type both bodies have, only what breaks counts: the rest was already there.
+        only_json = {"application/json": as_json}
+        self.assertEqual(
+            [moved(both, only_json), ("file", "removed", True), ("url", "added (required)", True)],
+            changes(both, only_json),
+        )
+        # A media type that changes name is compared in full.
+        extra = {**as_json, "properties": {**as_json["properties"], "extra": text}}
+        renamed = {"application/vnd.didit+json": extra, "multipart/form-data": multipart}
+        self.assertEqual([moved(both, renamed), ("extra", "added", False)], changes(both, renamed))
+        # An identical media type removed changes nothing else.
+        form = {"application/json": as_json, "application/x-www-form-urlencoded": as_json}
+        self.assertEqual([moved(form, only_json)], changes(form, only_json))
+        # A body that disappears loses the fields of every media type.
+        gone = [("note", "removed", True), ("url", "removed", True), ("file", "removed", True)]
+        self.assertEqual(gone, changes(both, {}))
+
     def test_references_are_followed(self) -> None:
         doc = {"components": {"schemas": {"Obj": OBJ}}}
         new_doc = {"components": {"schemas": {"Obj": {**OBJ, "properties": {}}}}}
