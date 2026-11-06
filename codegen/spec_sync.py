@@ -89,8 +89,8 @@ NAME_MAPS = frozenset(
 # The extension a caller can observe (the webhook events). Every other x- key documents;
 # x-didit-sdk is compared as the effective naming, together with overlay.json.
 OBSERVABLE_EXTENSIONS = frozenset({"x-webhooks"})
-# Where dereference() records the component a schema came from: a union variant that refers to a
-# component is named after it, never after a title.
+# Where dereference() records the component a schema came from. Its title is the component's, so
+# union variants never pair by it (as in sdk-python, which drops those titles).
 REF_KEY = "x-didit-ref"
 # String formats with their own type in the generated code (OffsetDateTime, LocalDate or a file):
 # adding, removing or changing one changes the field's type.
