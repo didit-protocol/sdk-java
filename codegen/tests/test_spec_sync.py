@@ -92,6 +92,14 @@ def sync(root: Path, downloads: dict[str, bytes]) -> spec_sync.SyncResult:
     return spec_sync.sync(root, downloads, TODAY, NOW)
 
 
+def sync_variant(change: Any) -> str:
+    """The summary of a sync of this repository's verification.json after ``change``."""
+    root = repo_copy()
+    spec = json.loads((root / "openapi/verification.json").read_text(encoding="utf-8"))
+    change(spec)
+    return sync(root, {"verification.json": as_bytes(spec)}).summary
+
+
 def sync_pair(before: str, after: str) -> spec_sync.SyncResult:
     root = repo_copy()
     (root / "openapi/verification.json").write_bytes(pinned(before))
@@ -317,15 +325,10 @@ class ReleaseNotesTest(unittest.TestCase):
             self.assertIs(True, sections[kind]["hidden"], kind)
         self.assertEqual("simple", package["release-type"])
 
-    def test_release_notes_are_capped(self) -> None:
-        many = [
-            spec_sync.BreakingChange(f"GET /v3/thing-{i}/", "response", "a", "removed")
-            for i in range(spec_sync.MAX_RELEASE_NOTES + 3)
-        ]
+    def test_release_notes_list_every_breaking_change(self) -> None:
+        many = [spec_sync.BreakingChange(f"GET /v3/thing-{i}/", "response", "a", "removed") for i in range(503)]
         message = spec_sync.SyncResult(True, "", TODAY, "feat", many).commit_message()
-        found = nested(message)
-        self.assertEqual(spec_sync.MAX_RELEASE_NOTES + 1, len(found))
-        self.assertEqual("api(spec): 3 more, listed in the spec sync pull request", found[-1])
+        self.assertEqual([f"api(spec): {b.describe()}" for b in many], nested(message))
 
 
 OBJ: dict[str, Any] = {"type": "object", "properties": {"a": {"type": "string"}}, "required": ["a"]}
@@ -393,6 +396,49 @@ class DetectionTest(unittest.TestCase):
                     diff({"oneOf": [{"type": "string"}, {"type": "integer"}]}, {"type": "string"}, request=request),
                 )
 
+    def test_a_string_format_with_its_own_type_is_a_type_change(self) -> None:
+        # The generated code types these strings as OffsetDateTime, LocalDate and a file.
+        plain = {"type": "string"}
+        stamp = {"type": ["string", "null"], "format": "date-time"}
+        listed = {"type": "array", "items": plain}
+        for request in (True, False):
+            with self.subTest(request=request):
+                for fmt in ("date-time", "date", "binary"):
+                    typed = {"type": "string", "format": fmt}
+                    self.assertEqual(
+                        [("", f"type changed from string to string ({fmt})", True)], diff(plain, typed, request=request)
+                    )
+                    self.assertEqual(
+                        [("", f"type changed from string ({fmt}) to string", True)], diff(typed, plain, request=request)
+                    )
+                self.assertEqual(
+                    [("", NULL, True), ("", "type changed from string (date) to string (date-time)", True)],
+                    diff({"type": "string", "format": "date"}, stamp, request=request),
+                )
+                self.assertEqual(
+                    [("[]", NULL, True), ("[]", "type changed from string to string (date-time)", True)],
+                    diff(listed, {**listed, "items": stamp}, request=request),
+                )
+
+    def test_a_schema_that_allows_any_value_is_a_type_change(self) -> None:
+        # Without a type the generated code types a value as JsonNode.
+        uuid = {"type": "string", "format": "uuid"}
+        listed = {"type": "array", "items": uuid}
+        either = {"oneOf": [{"type": "string"}, {"type": "integer"}]}
+        for request in (True, False):
+            with self.subTest(request=request):
+                self.assertEqual(
+                    [("", "type changed from string to any", True)], diff(uuid, {"format": "uuid"}, request=request)
+                )
+                self.assertEqual([("", "type changed from any to integer", True)], diff({}, {"type": "integer"}, request=request))
+                self.assertEqual(
+                    [("[]", "type changed from string to any", True)], diff(listed, {"type": "array"}, request=request)
+                )
+                self.assertEqual(
+                    [("", "type changed from integer or string to any", True)],
+                    diff(either, {"oneOf": [{"type": "string"}, {}]}, request=request),
+                )
+
     def test_newly_required_request_fields_count_and_response_requiredness_does_not(self) -> None:
         optional = {**OBJ, "required": []}
         self.assertEqual([("a", "now required", True)], diff(optional, OBJ, request=True))
@@ -413,7 +459,7 @@ class DetectionTest(unittest.TestCase):
         )
         self.assertEqual(
             [("", "other constraints changed (format, pattern, limits or default)", False)],
-            diff({"type": "string"}, {"type": "string", "format": "date-time"}),
+            diff({"type": "string"}, {"type": "string", "format": "uuid"}),
         )
         self.assertEqual(
             [("", "1 oneOf variant(s) added", False)],
@@ -440,34 +486,48 @@ class DetectionTest(unittest.TestCase):
             ),
         )
 
-    def test_union_variants_are_compared_when_variants_come_or_go(self) -> None:
-        first = {"type": "object", "properties": {"service_id": {"type": "string"}, "outcome": {"type": "string"}}}
-        retyped = {**first, "properties": {**first["properties"], "service_id": {"type": "integer"}}}
-        other = {"type": "object", "properties": {"other": {"type": "string"}}}
-        listed = {"type": "array", "items": first}
-        # A variant of the same type added next to a changed one.
+    def test_union_variants_are_compared_with_the_variant_they_became(self) -> None:
+        a = {"type": "object", "title": "A", "properties": {"kind": STATUS}}
+        b = {"type": "object", "properties": {"code": {"type": "string"}, "score": {"type": "number"}}}
+        c = {"type": "object", "properties": {"url": {"type": "string"}}}
+        b2 = {**b, "properties": {**b["properties"], "code": {"type": "integer"}}}
+        retyped = "type changed from string to integer"
+        added = ("", "1 oneOf variant(s) added", False)
+        # A variant added, wherever it goes, or removed hides no change in the others; a variant is
+        # named by its new position.
+        self.assertEqual([("(oneOf 2).code", retyped, True), added], diff({"oneOf": [a, b]}, {"oneOf": [a, b2, c]}))
+        self.assertEqual([("(oneOf 3).code", retyped, True), added], diff({"oneOf": [a, b]}, {"oneOf": [c, a, b2]}))
         self.assertEqual(
-            [("", "1 oneOf variant(s) added", False), ("(oneOf 1).service_id", "type changed from string to integer", True)],
-            diff({"oneOf": [first, listed]}, {"oneOf": [listed, retyped, other]}),
+            [("(oneOf 2).code", retyped, True), ("", "type changed: 1 oneOf variant(s) removed", True)],
+            diff({"oneOf": [a, b, c]}, {"oneOf": [a, b2]}),
         )
-        # A variant of another type added: the union's type changes, and its variants still compare.
+        # A schema that becomes a union is compared with the variant it became.
+        self.assertEqual([("(oneOf 1).code", retyped, True), added], diff(b, {"oneOf": [b2, c]}))
+        self.assertEqual(
+            [("code", retyped, True), ("", "type changed: 1 anyOf variant(s) removed", True)], diff({"anyOf": [b, c]}, b2)
+        )
+        # A variant of a new type changes the union's type and still compares the others.
+        self.assertEqual(
+            [("", "type changed from object to object or string", True), ("(oneOf 2).code", retyped, True), added],
+            diff({"oneOf": [a, b]}, {"oneOf": [a, b2, {"type": "string"}]}),
+        )
+        # Variants in another order are the same union.
+        self.assertEqual([("", "oneOf variants reordered", False)], diff({"oneOf": [a, b]}, {"oneOf": [b, a]}))
+        # Arrays of objects pair with arrays, whatever else comes or goes.
+        first = {"type": "object", "properties": {"service_id": {"type": "string"}, "outcome": {"type": "string"}}}
+        listed = {"type": "array", "items": first}
         self.assertEqual(
             [
                 ("", "type changed from array or object to array or object or string", True),
-                ("(oneOf 1)[].service_id", "type changed from string to integer", True),
+                ("(oneOf 1)[].service_id", retyped, True),
             ],
             diff(
-                {"oneOf": [listed, other]},
-                {"oneOf": [{"type": "array", "items": retyped}, other, {"type": "string"}]},
+                {"oneOf": [listed, c]},
+                {"oneOf": [{"type": "array", "items": {**first, "properties": {**first["properties"], "service_id": {"type": "integer"}}}}, c, {"type": "string"}]},
             ),
         )
-        # A variant removed next to a changed one.
-        self.assertEqual(
-            [("", "type changed: 1 oneOf variant(s) removed", True), ("(oneOf 2).service_id", "type changed from string to integer", True)],
-            diff({"oneOf": [other, first]}, {"oneOf": [retyped]}),
-        )
 
-    def test_union_variants_pair_by_component(self) -> None:
+    def test_union_variants_that_refer_to_components_are_followed(self) -> None:
         doc = {"components": {"schemas": {"A": OBJ, "B": {**OBJ, "properties": {"b": {"type": "string"}}}}}}
         new_doc = {"components": {"schemas": {"A": OBJ, "B": {**OBJ, "properties": {"b": {"type": "integer"}}}}}}
         union = {"oneOf": [{"$ref": "#/components/schemas/B"}, {"$ref": "#/components/schemas/A"}]}
@@ -475,7 +535,15 @@ class DetectionTest(unittest.TestCase):
         found = spec_sync.describe_change(
             doc, op(responses={"200": json_response(union)}), new_doc, op(responses={"200": json_response(reordered)})
         )
-        self.assertIn(("response", "(oneOf 1).b", "type changed from string to integer", True), [(c.where, c.path, c.kind, c.breaking) for c in found])
+        self.assertEqual(
+            [
+                ("", "type changed from object to object or string", True),
+                ("(oneOf 2).b", "type changed from string to integer", True),
+                ("", "1 oneOf variant(s) added", False),
+                ("", "oneOf variants reordered", False),
+            ],
+            [(c.path, c.kind, c.breaking) for c in found],
+        )
 
     def test_documentation_never_counts_but_a_field_named_like_it_does(self) -> None:
         documented = {**OBJ, "description": "now documented", "title": "Thing", "example": {"a": "z"}, "x-codeSamples": []}
@@ -516,6 +584,31 @@ class DetectionTest(unittest.TestCase):
         only_202 = op(responses={"200": json_response(OBJ), "202": json_response(gone)})
         found = spec_sync.describe_change({}, old, {}, only_202)
         self.assertEqual([("a", "removed")], [(c.path, c.kind) for c in found])
+
+    def test_a_success_status_only_one_side_has_changes_the_result(self) -> None:
+        # The method returns every 2xx body, and null when a 2xx response has no body.
+        job = {"type": "object", "properties": {"job_id": {"type": "string"}}}
+        one = {"200": json_response(OBJ)}
+        no_body = {"204": {"description": "No content"}}
+
+        def changes(old: Any, new: Any) -> list[tuple[str, bool]]:
+            found = spec_sync.describe_change({}, op(responses=old), {}, op(responses=new))
+            return [(c.kind, c.breaking) for c in found]
+
+        self.assertEqual([("can now be null (status 204 has no body)", True)], changes(one, {**one, **no_body}))
+        self.assertEqual([("can no longer be null (status 204 removed)", False)], changes({**one, **no_body}, one))
+        two = {**one, "202": json_response(job)}
+        self.assertEqual([("status 202 added with another body", False)], changes(one, two))
+        removed = "type changed: status 202 removed, and no other status returns its body"
+        self.assertEqual([(removed, True)], changes(two, one))
+        # The same body under one more or one less status changes no type.
+        same = {**one, "202": json_response(OBJ)}
+        self.assertEqual([("status 202 added", False)], changes(one, same))
+        self.assertEqual([("status 202 removed", False)], changes(same, one))
+
+    def test_a_body_that_appears_is_compared_field_by_field(self) -> None:
+        found = spec_sync.describe_change({}, op(), {}, op(body={**OBJ, "required": []}))
+        self.assertEqual([("request body", "a", "added", False)], [(c.where, c.path, c.kind, c.breaking) for c in found])
 
     def test_references_are_followed(self) -> None:
         doc = {"components": {"schemas": {"Obj": OBJ}}}
@@ -566,6 +659,54 @@ class CommitTypeTest(unittest.TestCase):
                 self.assertEqual(commit_type, result.commit_type)
                 self.assertEqual([], result.breaking)
                 self.assertEqual(f"{commit_type}(spec): sync API spec 2026-11-06\n", result.commit_message())
+
+    def test_a_description_that_names_a_java_variant_is_feat(self) -> None:
+        # The generator names an inline union variant after its title or the first sentence of its
+        # description (model.Builder._union): AMLMonitoringToggleResult.CostPreview.
+        def variant(spec: Any) -> Any:
+            first = spec["components"]["schemas"]["AMLMonitoringToggleResult"]["oneOf"][0]
+            self.assertTrue(first["description"].startswith("Cost preview. "))
+            return first
+
+        cases = {
+            "renames the variant": (lambda s: variant(s).update(description="Estimated cost. Nothing is written."), "feat"),
+            "same Java name": (lambda s: variant(s).update(description="Cost Preview. Nothing is written."), "chore"),
+            "names a numbered variant": (lambda s: variant(s).update(title="Cost estimate"), "feat"),
+            "title outside a union": (
+                lambda s: s["components"]["schemas"]["TransactionVerificationSessionAction"].update(title="Renamed"),
+                "chore",
+            ),
+        }
+        for name, (change, commit_type) in cases.items():
+            with self.subTest(name):
+                root = repo_copy()
+                spec = json.loads((root / "openapi/verification.json").read_text(encoding="utf-8"))
+                change(spec)
+                result = sync(root, {"verification.json": as_bytes(spec)})
+                self.assertEqual(commit_type, result.commit_type)
+                self.assertEqual([], result.breaking)
+                self.assertEqual(commit_type == "feat", "## Java union variant names (1)" in result.summary)
+        self.assertIn(
+            "- `AMLMonitoringToggleResult`: `CostPreview`, `Variant2` -> `EstimatedCost`, `Variant2`",
+            section(
+                sync_variant(lambda s: variant(s).update(description="Estimated cost. Nothing is written.")),
+                "Java union variant names",
+            ),
+        )
+
+    def test_java_variant_names_are_the_generated_ones(self) -> None:
+        names = spec_sync.java_variant_names(REPO)
+        assert names is not None
+        self.assertEqual(
+            ("AMLMonitoringToggleResult", ["CostPreview", "Variant2"]),
+            names[("verification.json", "#/components/schemas/AMLMonitoringToggleResult")],
+        )
+        # Every generated union, and its is/as/of methods, has the names the sync compares.
+        union = (REPO / "src/main/java/me/didit/types/AMLMonitoringToggleResult.java").read_text(encoding="utf-8")
+        for variant in ("CostPreview", "Variant2"):
+            self.assertIn(f"public boolean is{variant}()", union)
+        # Documents the generator cannot build compare no names; its own check reports them.
+        self.assertIsNone(spec_sync.java_variant_names(Path(tempfile.mkdtemp())))
 
     def test_a_new_webhook_event_is_feat(self) -> None:
         root = repo_copy()
