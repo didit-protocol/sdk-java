@@ -45,7 +45,7 @@ final class AuthenticationContractTest {
   private static final Set<String> HTTP = Set.of("get", "post", "put", "patch", "delete");
 
   /** Public methods that are not API operations. */
-  private static final Set<String> HELPERS = Set.of("issuer");
+  private static final Set<String> HELPERS = Set.of("issuer", "toString");
 
   /**
    * Token verification fetches the discovery document and the keys itself (DESIGN 10): these
