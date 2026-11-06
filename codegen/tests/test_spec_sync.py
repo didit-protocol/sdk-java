@@ -515,7 +515,7 @@ class DetectionTest(unittest.TestCase):
         self.assertEqual([("", "oneOf variants reordered", False)], diff({"oneOf": [a, b]}, {"oneOf": [b, a]}))
         # Arrays of objects pair with arrays, whatever else comes or goes.
         first = {"type": "object", "properties": {"service_id": {"type": "string"}, "outcome": {"type": "string"}}}
-        listed = {"type": "array", "items": first}
+        changed = {**first, "properties": {**first["properties"], "service_id": {"type": "integer"}}}
         self.assertEqual(
             [
                 ("", "type changed from array or object to array or object or string", True),
@@ -523,8 +523,8 @@ class DetectionTest(unittest.TestCase):
                 added,
             ],
             diff(
-                {"oneOf": [listed, c]},
-                {"oneOf": [{"type": "array", "items": {**first, "properties": {**first["properties"], "service_id": {"type": "integer"}}}}, c, {"type": "string"}]},
+                {"oneOf": [{"type": "array", "items": first}, c]},
+                {"oneOf": [{"type": "array", "items": changed}, c, {"type": "string"}]},
             ),
         )
 
