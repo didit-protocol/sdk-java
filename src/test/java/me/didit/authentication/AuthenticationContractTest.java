@@ -2,9 +2,11 @@ package me.didit.authentication;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -14,6 +16,7 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -109,11 +112,14 @@ final class AuthenticationContractTest {
         JsonNode content = deref(op.path("requestBody")).path("content");
         Set<String> contentTypes = new TreeSet<>();
         content.fieldNames().forEachRemaining(contentTypes::add);
-        String grantProperty = "";
-        for (JsonNode media : content) {
-          grantProperty = deref(media.path("schema")).path("discriminator").path("propertyName").asText("");
-          break;
-        }
+        Iterator<JsonNode> media = content.elements();
+        String grantProperty =
+            media.hasNext()
+                ? deref(media.next().path("schema"))
+                    .path("discriminator")
+                    .path("propertyName")
+                    .asText("")
+                : "";
         Map<Integer, List<JsonNode>> examples = new TreeMap<>();
         for (Map.Entry<String, JsonNode> response : op.get("responses").properties()) {
           if (!response.getKey().startsWith("2")) {
@@ -144,7 +150,7 @@ final class AuthenticationContractTest {
                       grantProperty,
                       variant.path("discriminator").asText(""),
                       examples));
-          assertTrue(previous == null, "two operations name the method " + name);
+          assertNull(previous, "two operations name the method " + name);
         }
       }
     }
@@ -241,7 +247,7 @@ final class AuthenticationContractTest {
       for (Map.Entry<Integer, List<JsonNode>> response : operation.examples.entrySet()) {
         List<JsonNode> bodies = new ArrayList<>(response.getValue());
         if (bodies.isEmpty()) {
-          bodies.add(TestJson.parse("null"));
+          bodies.add(NullNode.getInstance());
         }
         for (JsonNode body : bodies) {
           check(method, operation, response.getKey(), body);
@@ -253,8 +259,7 @@ final class AuthenticationContractTest {
   private static void check(String method, Operation operation, int status, JsonNode body) {
     StubIssuer issuer = new StubIssuer();
     ObjectNode discovery =
-        (ObjectNode)
-            operations().get("getOpenidConfiguration").examples.get(200).get(0).deepCopy();
+        (ObjectNode) operations().get("getOpenidConfiguration").examples.get(200).get(0).deepCopy();
     issuer.routes.put(
         "GET /.well-known/openid-configuration",
         r -> StubIssuer.json(200, discovery, issuer.cacheControl));
@@ -284,7 +289,9 @@ final class AuthenticationContractTest {
     }
     if (fetched) {
       // The key set is the one the discovery example names; the verified claims come back.
-      assertEquals(discovery.get("jwks_uri").asText(), issuer.last("GET /.well-known/jwks.json").uri().toString());
+      assertEquals(
+          discovery.get("jwks_uri").asText(),
+          issuer.last("GET /.well-known/jwks.json").uri().toString());
       assertTrue(result instanceof AccessTokenClaims, method);
     } else if (body.isObject()) {
       assertEquals(body, ((JsonView) result)._json(), method + " reads the documented " + status);
@@ -296,9 +303,11 @@ final class AuthenticationContractTest {
     switch (method) {
       case "getOpenidConfiguration":
       case "getJwks":
-        ObjectNode claims = issuer.accessClaims(NOW);
-        claims.put("iss", ISSUER);
-        return auth.verifyAccessToken(issuer.sign(issuer.header("at+jwt"), claims));
+        {
+          ObjectNode claims = issuer.accessClaims(NOW);
+          claims.put("iss", ISSUER);
+          return auth.verifyAccessToken(issuer.sign(issuer.header("at+jwt"), claims));
+        }
       case "exchangeCode":
         return auth.exchangeCode("code-1", "verifier-1", "https://app.example.com/callback");
       case "refresh":
@@ -334,7 +343,8 @@ final class AuthenticationContractTest {
       }
     }
     if (found == null) {
-      throw new AssertionError(method + ": no " + operation.http + " " + operation.path + " was sent");
+      throw new AssertionError(
+          method + ": no " + operation.http + " " + operation.path + " was sent");
     }
     return found;
   }
