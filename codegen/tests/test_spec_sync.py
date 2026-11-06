@@ -169,8 +169,8 @@ class SpecSyncTest(unittest.TestCase):
         self.assertIn("moved to `GET /v3/animals/{pet_id}/report/`", result.summary)
         self.assertIn(
             "- `pets.reports.download` moved from `GET /v3/pets/{pet_id}/report/` to "
-            "`GET /v3/animals/{pet_id}/report/`: same parameters, body and response",
-            result.summary,
+            "`GET /v3/animals/{pet_id}/report/`: x-didit-sdk: now ",
+            section(result.summary, "Moved or reassigned methods"),
         )
         self.assertFalse((self.root / "openapi/deprecated-operations.json").exists())
 
