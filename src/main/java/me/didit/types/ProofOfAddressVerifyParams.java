@@ -151,7 +151,7 @@ public final class ProofOfAddressVerifyParams extends JsonModel {
   }
 
   /**
-   * What to do when document manipulation is suspected (<code>SUSPECTED_DOCUMENT_MANIPULATION</code>) — e.g. the PDF was modified after digital signing, processed by a known PDF editor, shows overlay-text manipulation, or has inconsistent EXIF dates.
+   * What to do when document manipulation is suspected (<code>SUSPECTED_DOCUMENT_MANIPULATION</code>) — e.g. the PDF was modified after digital signing, processed by a known PDF editor, shows overlay-text manipulation, or has inconsistent EXIF dates. Also governs <code>POA_DOCUMENT_UNPROVEN_TEXT_REPLACEMENT</code> (a re-typed text field the file cannot prove changed or unchanged): <code>DECLINE</code> declines it too, <code>NO_ACTION</code> keeps it as a warning.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -344,7 +344,7 @@ public final class ProofOfAddressVerifyParams extends JsonModel {
     }
 
     /**
-     * What to do when document manipulation is suspected (<code>SUSPECTED_DOCUMENT_MANIPULATION</code>) — e.g. the PDF was modified after digital signing, processed by a known PDF editor, shows overlay-text manipulation, or has inconsistent EXIF dates.
+     * What to do when document manipulation is suspected (<code>SUSPECTED_DOCUMENT_MANIPULATION</code>) — e.g. the PDF was modified after digital signing, processed by a known PDF editor, shows overlay-text manipulation, or has inconsistent EXIF dates. Also governs <code>POA_DOCUMENT_UNPROVEN_TEXT_REPLACEMENT</code> (a re-typed text field the file cannot prove changed or unchanged): <code>DECLINE</code> declines it too, <code>NO_ACTION</code> keeps it as a warning.
      *
      * @param poaDocumentAuthenticityAction the value
      * @return this builder
@@ -517,7 +517,7 @@ public final class ProofOfAddressVerifyParams extends JsonModel {
   }
 
   /**
-   * What to do when document manipulation is suspected (<code>SUSPECTED_DOCUMENT_MANIPULATION</code>) — e.g. the PDF was modified after digital signing, processed by a known PDF editor, shows overlay-text manipulation, or has inconsistent EXIF dates.
+   * What to do when document manipulation is suspected (<code>SUSPECTED_DOCUMENT_MANIPULATION</code>) — e.g. the PDF was modified after digital signing, processed by a known PDF editor, shows overlay-text manipulation, or has inconsistent EXIF dates. Also governs <code>POA_DOCUMENT_UNPROVEN_TEXT_REPLACEMENT</code> (a re-typed text field the file cannot prove changed or unchanged): <code>DECLINE</code> declines it too, <code>NO_ACTION</code> keeps it as a warning.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
