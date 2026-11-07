@@ -1,0 +1,23 @@
+version: 2
+updates:
+  - package-ecosystem: gradle
+    directory: /
+    schedule:
+      interval: weekly
+    # JUnit 6 requires Java 17, the SDK promises Java 11
+    ignore:
+      - dependency-name: "org.junit:junit-bom"
+        update-types: ["version-update:semver-major"]
+    groups:
+      build-tools:
+        patterns: ["*errorprone*", "*nullaway*", "*spotless*", "*google-java-format*", "*kotlin*", "*junit*", "*maven-publish*"]
+      examples:
+        patterns: ["*spring*", "*javalin*", "*ktor*", "*slf4j*"]
+    commit-message:
+      prefix: "chore(deps)"
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: "ci(deps)"
