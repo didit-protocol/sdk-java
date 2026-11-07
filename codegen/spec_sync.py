@@ -801,7 +801,9 @@ def describe_change(old_doc: Json, old: Json, new_doc: Json, new: Json) -> list[
     # status changed (200 to 201), the old body against the new one. The other statuses, and a
     # body that came or went, change what the method returns.
     old_responses, new_responses = _successes(old_doc, old), _successes(new_doc, new)
-    statuses = [(s, s) for s in old_responses if s in new_responses and bool(old_responses[s]) == bool(new_responses[s])]
+    statuses = [
+        (s, s) for s in old_responses if s in new_responses and bool(old_responses[s]) == bool(new_responses[s])
+    ]
     if not statuses and len(old_responses) == 1 == len(new_responses):
         [(before, old_content)], [(after, new_content)] = old_responses.items(), new_responses.items()
         if bool(old_content) == bool(new_content):
