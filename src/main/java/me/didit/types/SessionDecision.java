@@ -19060,7 +19060,7 @@ public final class SessionDecision extends JsonModel {
        * PDF forensic analysis for suspected overlay-text manipulation. Null when no overlay manipulation evidence was found or the document was not a PDF.
        */
       public static final class OverlayManipulation extends JsonModel {
-        private static final Set<String> KNOWN_FIELDS = Set.of("detected", "analyzed", "signals", "manipulated_regions");
+        private static final Set<String> KNOWN_FIELDS = Set.of("detected", "analyzed", "analysis_incomplete", "signals", "manipulated_regions");
 
         private OverlayManipulation(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
@@ -19116,6 +19116,16 @@ public final class SessionDecision extends JsonModel {
         }
 
         /**
+         * Present and true only when the file could not be checked in full. What was checked keeps its findings where it can, and the document raises the unproven text replacement warning.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Boolean> analysisIncomplete() {
+          return Json.optional(json, "analysis_incomplete", Conv.BOOLEAN);
+        }
+
+        /**
          * Forensic signals that fired, such as duplicate_font_subset or glyph_fragmentation.
          *
          * @return the value, or empty when the field is absent or null
@@ -19166,6 +19176,16 @@ public final class SessionDecision extends JsonModel {
            */
           public Builder analyzed(boolean analyzed) {
             return set("analyzed", Conv.BOOLEAN, analyzed);
+          }
+
+          /**
+           * Present and true only when the file could not be checked in full. What was checked keeps its findings where it can, and the document raises the unproven text replacement warning.
+           *
+           * @param analysisIncomplete the value
+           * @return this builder
+           */
+          public Builder analysisIncomplete(boolean analysisIncomplete) {
+            return set("analysis_incomplete", Conv.BOOLEAN, analysisIncomplete);
           }
 
           /**
@@ -34882,7 +34902,7 @@ public final class SessionDecision extends JsonModel {
          * PDF forensic analysis for suspected overlay-text manipulation. Null when no overlay manipulation evidence was found or the document was not a PDF.
          */
         public static final class OverlayManipulation extends JsonModel {
-          private static final Set<String> KNOWN_FIELDS = Set.of("detected", "analyzed", "signals", "manipulated_regions");
+          private static final Set<String> KNOWN_FIELDS = Set.of("detected", "analyzed", "analysis_incomplete", "signals", "manipulated_regions");
 
           private OverlayManipulation(ObjectNode json, Map<String, List<FileUpload>> files) {
             super(json, files);
@@ -34938,6 +34958,16 @@ public final class SessionDecision extends JsonModel {
           }
 
           /**
+           * Present and true only when the file could not be checked in full. What was checked keeps its findings where it can, and the document raises the unproven text replacement warning.
+           *
+           * @return the value, or empty when the field is absent or null
+           * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+           */
+          public Optional<Boolean> analysisIncomplete() {
+            return Json.optional(json, "analysis_incomplete", Conv.BOOLEAN);
+          }
+
+          /**
            * Forensic signals that fired, such as duplicate_font_subset or glyph_fragmentation.
            *
            * @return the value, or empty when the field is absent or null
@@ -34988,6 +35018,16 @@ public final class SessionDecision extends JsonModel {
              */
             public Builder analyzed(boolean analyzed) {
               return set("analyzed", Conv.BOOLEAN, analyzed);
+            }
+
+            /**
+             * Present and true only when the file could not be checked in full. What was checked keeps its findings where it can, and the document raises the unproven text replacement warning.
+             *
+             * @param analysisIncomplete the value
+             * @return this builder
+             */
+            public Builder analysisIncomplete(boolean analysisIncomplete) {
+              return set("analysis_incomplete", Conv.BOOLEAN, analysisIncomplete);
             }
 
             /**
