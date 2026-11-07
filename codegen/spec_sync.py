@@ -790,7 +790,7 @@ def describe_change(old_doc: Json, old: Json, new_doc: Json, new: Json) -> list[
         )
 
     old_body, new_body = old.get("requestBody") or {}, new.get("requestBody") or {}
-    was, now = (dereference(doc, body).get("required") is True for doc, body in ((old_doc, old_body), (new_doc, new_body)))
+    was, now = (dereference(d, body).get("required") is True for d, body in ((old_doc, old_body), (new_doc, new_body)))
     if now and not was:
         found.append(Change("request body", "", "now required", True, "body now required"))
     elif was and not now:
@@ -801,6 +801,7 @@ def describe_change(old_doc: Json, old: Json, new_doc: Json, new: Json) -> list[
     # status changed (200 to 201), the old body against the new one. The other statuses, and a
     # body that came or went, change what the method returns.
     old_responses, new_responses = _successes(old_doc, old), _successes(new_doc, new)
+    has_body = {s: bool(content) for responses in (old_responses, new_responses) for s, content in responses.items()}
     statuses = [(s, s) for s in old_responses if s in new_responses and bool(old_responses[s]) == bool(new_responses[s])]
     only = len(old_responses) == 1 == len(new_responses)
     if not statuses and only and bool(next(iter(old_responses.values()))) == bool(next(iter(new_responses.values()))):
@@ -809,7 +810,8 @@ def describe_change(old_doc: Json, old: Json, new_doc: Json, new: Json) -> list[
     else:
         compared = {s for s, _ in statuses}
         removed = [s for s in old_responses if s not in compared]
-        found.extend(_diff_statuses(old_responses, new_responses, removed, [s for s in new_responses if s not in compared]))
+        added = [s for s in new_responses if s not in compared]
+        found.extend(_diff_statuses(old_responses, new_responses, removed, added))
     for before, after in statuses:
         _diff_content(old_responses[before], new_responses[after], "response", request=False, out=found)
 
