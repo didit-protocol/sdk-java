@@ -370,7 +370,8 @@ class DetectionTest(unittest.TestCase):
                 self.assertEqual(
                     [("", OBJECT, True)], diff({"type": "string"}, {"type": "object", "properties": {}}, request=request)
                 )
-                # A value that can now be null, however the document says it.
+                # A value that can now be null, however the document says it, counts in a response;
+                # in a request it only widens what a caller may send.
                 for nullable in (
                     {"type": "string", "nullable": True},
                     {"type": ["string", "null"]},
@@ -378,8 +379,12 @@ class DetectionTest(unittest.TestCase):
                     {"oneOf": [{"type": "string"}, {"enum": [None]}]},
                     {"allOf": [{"type": "string"}], "nullable": True},
                 ):
-                    self.assertEqual([("", NULL, True)], diff({"type": "string"}, nullable, request=request), nullable)
-                self.assertEqual([("", NULL, True)], diff(STATUS, {**STATUS, "enum": ["a", "b", None]}, request=request))
+                    self.assertEqual(
+                        [("", NULL, not request)], diff({"type": "string"}, nullable, request=request), nullable
+                    )
+                self.assertEqual(
+                    [("", NULL, not request)], diff(STATUS, {**STATUS, "enum": ["a", "b", None]}, request=request)
+                )
                 # A removed field or enum value, nested in objects and array items.
                 self.assertEqual([("a", "removed", True)], diff(OBJ, {"type": "object", "properties": {}}, request=request))
                 self.assertEqual([("", 'enum value "b" removed', True)], diff(STATUS, {**STATUS, "enum": ["a"]}, request=request))
@@ -412,11 +417,11 @@ class DetectionTest(unittest.TestCase):
                         [("", f"type changed from string ({fmt}) to string", True)], diff(typed, plain, request=request)
                     )
                 self.assertEqual(
-                    [("", NULL, True), ("", "type changed from string (date) to string (date-time)", True)],
+                    [("", NULL, not request), ("", "type changed from string (date) to string (date-time)", True)],
                     diff({"type": "string", "format": "date"}, stamp, request=request),
                 )
                 self.assertEqual(
-                    [("[]", NULL, True), ("[]", "type changed from string to string (date-time)", True)],
+                    [("[]", NULL, not request), ("[]", "type changed from string to string (date-time)", True)],
                     diff(listed, {**listed, "items": stamp}, request=request),
                 )
 
@@ -434,19 +439,20 @@ class DetectionTest(unittest.TestCase):
                 self.assertEqual(
                     [("[]", "type changed from string to any", True)], diff(listed, {"type": "array"}, request=request)
                 )
+                # A union made "any" by an untyped variant still compares the variants it pairs.
                 self.assertEqual(
-                    [("", "type changed from integer or string to any", True)],
+                    [("", "type changed from integer or string to any", True), ("(oneOf 2)", "type changed from integer to any", True)],
                     diff(either, {"oneOf": [{"type": "string"}, {}]}, request=request),
                 )
 
-    def test_newly_required_request_fields_count_and_response_requiredness_does_not(self) -> None:
+    def test_newly_required_request_fields_and_response_fields_no_longer_required_count(self) -> None:
         optional = {**OBJ, "required": []}
         self.assertEqual([("a", "now required", True)], diff(optional, OBJ, request=True))
         added = {"type": "object", "properties": {**OBJ["properties"], "b": {"type": "string"}}}
         self.assertEqual([("b", "added (required)", True)], diff(optional, {**added, "required": ["b"]}, request=True))
         self.assertEqual([("b", "added", False)], diff(optional, added, request=True))
         self.assertEqual([("a", "now always present", False)], diff(optional, OBJ))
-        self.assertEqual([("a", "no longer always present", False)], diff(OBJ, optional))
+        self.assertEqual([("a", "no longer always present", True)], diff(OBJ, optional))
         self.assertEqual([("a", "no longer required", False)], diff(OBJ, optional, request=True))
 
     def test_listed_but_not_counted(self) -> None:
@@ -561,20 +567,25 @@ class DetectionTest(unittest.TestCase):
 
     def test_parameters(self) -> None:
         limit = {"name": "limit", "in": "query", "schema": {"type": "integer"}}
-        where = "parameter `limit` (query)"
+        where = ("query", "limit")
 
-        def changes(old: Any, new: Any) -> list[tuple[str, str, bool]]:
-            return [(c.where, c.kind, c.breaking) for c in spec_sync.describe_change({}, old, {}, new)]
+        def changes(old: Any, new: Any) -> list[tuple[tuple[str, str], str, bool]]:
+            return [((c.where, c.path), c.kind, c.breaking) for c in spec_sync.describe_change({}, old, {}, new)]
 
         required_null = {**limit, "required": True, "schema": {"type": "integer", "nullable": True}}
-        self.assertEqual([(where, "now required", True), (where, NULL, True)], changes(op(limit), op(required_null)))
+        self.assertEqual([(where, "now required", True), (where, NULL, False)], changes(op(limit), op(required_null)))
+        self.assertEqual([(where, "no longer required", False)], changes(op(required_null), op({**limit, "schema": required_null["schema"]})))
         self.assertEqual(
             [(where, "type changed from integer to string", True)], changes(op(limit), op({**limit, "schema": {"type": "string"}}))
         )
         self.assertEqual(
-            [(where, "removed", False), ("parameter `page` (query)", "added", False)], changes(op(limit), op({**limit, "name": "page"}))
+            [(where, "removed", True), (("query", "page"), "added", False)], changes(op(limit), op({**limit, "name": "page"}))
         )
         self.assertEqual([(where, "added (required)", True)], changes(op(), op({**limit, "required": True})))
+        # The summary and the release notes name the parameter and its location.
+        found = spec_sync.describe_change({}, op(limit), {}, op())[0]
+        self.assertEqual("parameter `limit` (query): removed", found.text())
+        self.assertEqual("GET /x/ query limit: removed", spec_sync.BreakingChange("GET /x/", found.where, found.path, found.kind, found.code).normalized())
 
     def test_every_success_response_is_compared_and_reported_once(self) -> None:
         gone = {"type": "object", "properties": {}}
