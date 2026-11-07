@@ -17,14 +17,13 @@ OpenAPI 3 document with paths, and when any of them changed it:
     (DESIGN 10) and AuthenticationContractTest holds it to the document;
   - picks the commit type (DESIGN 3.1 and 13): feat when anything a caller can observe changed,
     chore when only documentation did. Never "!" or a BREAKING CHANGE footer: a change that
-    mirrors the API is a minor version. A union variant the generator names after its title or
-    description is observable in Java, so renaming it is feat too (listed, not counted);
-  - writes a Markdown summary that opens with "Breaking changes": every change that can break
-    typed code (a field or parameter whose type changed or that can now be null, a removed
-    operation, field or enum value, a newly required parameter or request field) in parameters,
-    request bodies and 2xx responses, following $refs, array items, allOf and unions; then the
-    added, removed, renamed and changed operations and schemas. The rules are sdk-python's, so
-    that all seven SDKs list the same changes;
+    mirrors the API is a minor version. A union variant's title, and in Java its description,
+    can name its type, so renaming one is feat too (listed, not counted);
+  - writes a Markdown summary that opens with "Breaking changes": every change DESIGN 3.1 counts
+    in parameters, request bodies and 2xx responses, following $refs, array items, allOf and
+    unions, and every removed server operation; then the added, removed, renamed and changed
+    operations and schemas. openapi/breaking-vectors.json, generated in sdk-python, holds the
+    cases all seven SDKs must classify the same way (codegen/tests/test_breaking_vectors.py);
   - writes the commit message release-please reads (--commit-message): the sync line, then one
     nested api(spec) commit per breaking change, every one of them, which
     release-please-config.json lists under "API changes that can break typed code".
@@ -52,6 +51,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from didit_codegen import model as java_model  # noqa: E402
+from didit_codegen import names as java_names  # noqa: E402
 from didit_codegen.spec import SpecError as GeneratorError  # noqa: E402
 from didit_codegen.spec import load as load_openapi  # noqa: E402
 
@@ -95,6 +95,9 @@ REF_KEY = "x-didit-ref"
 # String formats with their own type in the generated code (OffsetDateTime, LocalDate or a file):
 # adding, removing or changing one changes the field's type.
 TYPED_FORMATS = frozenset({"date-time", "date", "binary"})
+PARAMETER_LOCATIONS = frozenset({"path", "query", "header", "cookie"})
+# Counted kinds the vectors write for the operation itself, without <where> <field>.
+OPERATION_KINDS = frozenset({"operation removed", "body now required"})
 MAX_NOTES = 25
 MAX_DEPTH = 32
 NO_DIFFERENCE = "descriptions, examples or other details changed"
@@ -211,11 +214,21 @@ def dereference(doc: Json, node: Json, depth: int = 0) -> Json:
 # What a caller can observe -------------------------------------------------------------------
 
 
+def _variant_title(schema: Json) -> str | None:
+    """The type name an inline oneOf/anyOf variant's title gives it (model.Builder._union); None
+    without a title, or for a component, which is named after itself."""
+    if not isinstance(schema, dict) or "$ref" in schema or REF_KEY in schema:
+        return None
+    title = schema.get("title")
+    return java_names.pascal(title) if isinstance(title, str) and title.strip() else None
+
+
 def _shape(node: Json, names: bool = False) -> Json:
     """``node`` without documentation, so that only what is sent or received compares.
 
     ``names`` marks a map whose keys are names (properties, paths, status codes...), which all
-    stay. ``required`` and ``type`` lists compare in any order.
+    stay. ``required`` and ``type`` lists compare in any order. An inline oneOf/anyOf variant
+    keeps its title, which can name its type (DESIGN 3.1: renaming one is listed).
     """
     if isinstance(node, dict):
         out: dict[str, Json] = {}
@@ -224,6 +237,11 @@ def _shape(node: Json, names: bool = False) -> Json:
                 continue
             if not names and k in ("required", "type") and isinstance(v, list):
                 out[k] = sorted(v, key=str)
+            elif not names and k in ("oneOf", "anyOf") and isinstance(v, list):
+                out[k] = [_shape(member) for member in v]
+                for member, shape in zip(v, out[k]):
+                    if (title := _variant_title(member)) is not None:
+                        shape["title"] = title
             else:
                 out[k] = _shape(v, not names and k in NAME_MAPS)
         return out
@@ -241,18 +259,29 @@ def observable(doc: Json) -> Json:
 # Schema comparison ---------------------------------------------------------------------------
 
 
+def _target(where: str, path: str) -> str:
+    """Where a change is, as the summary and the release notes say it."""
+    if where in PARAMETER_LOCATIONS:
+        return f"parameter `{path}` ({where})"
+    return f"{where} `{path}`" if path else where
+
+
 @dataclasses.dataclass(frozen=True)
 class Change:
-    """One difference of an operation; ``breaking`` when it is in the DESIGN 3.1 list."""
+    """One difference of an operation; ``breaking`` when DESIGN 3.1 counts it."""
 
-    where: str  # "response", "request body", "parameter `limit` (query)", "operation"
-    path: str  # the field, for example "registry_checks[].company.registry_data"; "" for all
+    where: str  # "response", "request body", "query" (a parameter's location), "operation"
+    # The field, for example "registry_checks[].company.registry_data", or a parameter's name and
+    # the field in it ("limit", "ids[]"); "" for a whole body.
+    path: str
     kind: str  # "can now be null", "type changed from string to object", "removed", ...
     breaking: bool = False
+    # A counted change's kind as openapi/breaking-vectors.json writes it ("removed",
+    # "type string -> object"); "" when not counted.
+    code: str = ""
 
     def text(self) -> str:
-        target = f"{self.where} `{self.path}`" if self.path else self.where
-        return f"{target}: {self.kind}"
+        return f"{_target(self.where, self.path)}: {self.kind}"
 
 
 @dataclasses.dataclass(frozen=True)
@@ -263,11 +292,20 @@ class BreakingChange:
     where: str
     path: str
     kind: str
+    code: str = ""
 
     def describe(self) -> str:
         # No "<" or ">": release-please escapes them in the release notes.
-        target = " ".join(p for p in (self.where, f"`{self.path}`" if self.path else "") if p)
+        target = _target(self.where, self.path)
         return f"`{self.operation}`{' ' + target if target else ''}: {self.kind}"
+
+    def normalized(self) -> str:
+        """The line openapi/breaking-vectors.json compares in all seven SDKs:
+        ``<METHOD> <path> <where> <field>: <kind>``, without ``<field>`` for a whole body and
+        without ``<where> <field>`` for the operation itself."""
+        if self.code in OPERATION_KINDS:
+            return f"{self.operation}: {self.code}"
+        return " ".join(p for p in (self.operation, self.where, self.path) if p) + f": {self.code}"
 
 
 def _null_only(schema: Json) -> bool:
@@ -278,6 +316,26 @@ def _variants(schema: Json, keyword: str | None = None) -> list[Json]:
     """The oneOf/anyOf variants other than null (of ``keyword``, or of both)."""
     keywords = (keyword,) if keyword else ("oneOf", "anyOf")
     return [v for k in keywords for v in schema.get(k) or [] if not _null_only(v)]
+
+
+def _positions(schema: Json) -> list[str]:
+    """Each of ``_variants(schema)`` as the vectors name it: its keyword and its position from 1
+    in that keyword's list, null variants included (``anyOf 2`` in ``[null, X, Y]``)."""
+    return [
+        f"{keyword} {n}"
+        for keyword in ("oneOf", "anyOf")
+        for n, variant in enumerate(schema.get(keyword) or [], 1)
+        if not _null_only(variant)
+    ]
+
+
+def _with_required(variant: Json, union: Json) -> Json:
+    """``variant`` also requiring the fields its union requires, which apply to every variant."""
+    inherited = {name for name in union.get("required") or [] if isinstance(name, str)}
+    if not inherited or not isinstance(variant, dict):
+        return variant
+    own = {name for name in variant.get("required") or [] if isinstance(name, str)}
+    return {**variant, "required": sorted(own | inherited)}
 
 
 def _nullable(schema: Json, depth: int = 0) -> bool:
@@ -319,8 +377,9 @@ def _single(schema: Json, depth: int = 0) -> Json:
     variants = _variants(schema)
     if len(variants) != 1 or not isinstance(variants[0], dict):
         return schema
-    rest = {k: v for k, v in schema.items() if k not in ("oneOf", "anyOf")}
-    return _single({**variants[0], **rest}, depth + 1)
+    # The union's required fields add to the variant's own.
+    rest = {k: v for k, v in schema.items() if k not in ("oneOf", "anyOf", "required")}
+    return _single({**_with_required(variants[0], schema), **rest}, depth + 1)
 
 
 def _json_type(value: Json) -> str:
@@ -363,14 +422,24 @@ def _kinds(schema: Json, depth: int = 0) -> frozenset[str]:
     return frozenset(kinds)
 
 
-def _type_names(schema: Json, kinds: frozenset[str]) -> str:
-    """``kinds`` as the summary names them: a string with a typed format is its own type
-    (OffsetDateTime, LocalDate or a file in Java), and a schema that does not say allows any
-    value."""
+def _type_names(schema: Json, kinds: frozenset[str], sep: str = " or ") -> str:
+    """``kinds`` as the summary names them (the vectors join them with ``|``): a string with a
+    typed format is its own type (OffsetDateTime, LocalDate or a file in Java), and a schema that
+    does not say allows any value."""
     if not kinds:
         return "any"
     fmt = schema.get("format")
-    return " or ".join(f"string ({fmt})" if kind == "string" and fmt in TYPED_FORMATS else kind for kind in sorted(kinds))
+    return sep.join(f"string ({fmt})" if kind == "string" and fmt in TYPED_FORMATS else kind for kind in sorted(kinds))
+
+
+def _union_names(schemas: list[Json]) -> str:
+    """The types of a union's variants, or of a method's 2xx bodies, as the vectors write them:
+    one per variant, sorted, so that losing one of two objects reads ``object|object -> object``."""
+    found: list[str] = []
+    for schema in schemas:
+        single = _single(schema) if isinstance(schema, dict) else {}
+        found.extend(_type_names(single, _kinds(single), "|").split("|"))
+    return "|".join(sorted(found))
 
 
 def _enum(schema: Json) -> list[Json] | None:
@@ -408,24 +477,26 @@ def diff_schema(
 ) -> None:
     """Appends a Change for every difference between two dereferenced schemas.
 
-    Breaking (DESIGN 3.1, the same in requests and responses): a type change in either
-    direction, a value that can now be null, a removed field, enum value or union variant, and in
-    a request (``request``) a field that is newly required. Everything else is listed, not counted.
+    Counted (DESIGN 3.1), in requests and responses: a type change in either direction (a typed
+    string format and "any" included), a removed field, enum value or union variant. Only in a
+    response: a value that can now be null and a field that is no longer required. Only in a
+    request (``request``): a field that is newly required. Everything else is listed, not counted.
     """
     if depth > MAX_DEPTH or _shape(old) == _shape(new):
         return
     start = len(out)
-    # A body that appears or disappears is compared field by field, not as a type change.
+    # A request body that appears or disappears is compared field by field, not as a type change
+    # (a response's is a success status change, _diff_statuses).
     present = old is not NO_SCHEMA and new is not NO_SCHEMA
 
-    def note(kind: str, breaking: bool = False, at: str = path) -> None:
-        out.append(Change(where, at, kind, breaking))
+    def note(kind: str, breaking: bool = False, at: str = path, code: str = "") -> None:
+        out.append(Change(where, at, kind, breaking, code if breaking else ""))
 
-    if not isinstance(old, dict) or not isinstance(new, dict):
-        note("schema replaced", True)
-        return
+    # A schema that is not an object (``true``) allows any value.
+    old, new = (s if isinstance(s, dict) else {} for s in (old, new))
     if _nullable(new) and not _nullable(old):
-        note("can now be null", True)
+        # A request that accepts null only widens what a caller may send.
+        note("can now be null", not request, code="can now be null")
     elif _nullable(old) and not _nullable(new):
         note("no longer accepts null" if request else "can no longer be null")
     old, new = _single(old), _single(new)
@@ -433,9 +504,11 @@ def diff_schema(
     before, after = _type_names(old, old_kinds), _type_names(new, new_kinds)
     # "any" (a schema that does not say, a JsonNode in Java) against a type counts too.
     if present and (old_kinds or new_kinds) and before != after:
-        note(f"type changed from {before} to {after}", True)
-        if old_kinds and new_kinds:
-            # A union's variants can change too; the type change already covers those removed.
+        code = f"type {_type_names(old, old_kinds, '|')} -> {_type_names(new, new_kinds, '|')}"
+        note(f"type changed from {before} to {after}", True, code=code)
+        if (old_kinds or _variants(old)) and (new_kinds or _variants(new)):
+            # A union's variants can change too, also when an untyped variant made it "any"; the
+            # type change already covers those removed.
             _diff_variants(old, new, where, path, request=request, out=out, depth=depth, retyped=True)
         return
 
@@ -443,7 +516,8 @@ def diff_schema(
     if old_enum is not None and new_enum is not None:
         for value in old_enum:
             if value not in new_enum:
-                note(f"enum value {json.dumps(value, ensure_ascii=False)} removed", True)
+                removed = f"enum value {json.dumps(value, ensure_ascii=False)} removed"
+                note(removed, True, code=removed)
         added = [v for v in new_enum if v not in old_enum]
         if added:
             note(f"enum values added {json.dumps(added, ensure_ascii=False)}")
@@ -457,16 +531,19 @@ def diff_schema(
     # A union's fields live in its variants, compared below.
     if (old_props and new_props) or not (_variants(old) or _variants(new)):
         for name in sorted(set(old_props) - set(new_props)):
-            note("removed", True, _join(path, name))
+            note("removed", True, _join(path, name), "removed")
         for name in sorted(set(new_props) - set(old_props)):
             required = request and name in new_req
-            note("added (required)" if required else "added", required, _join(path, name))
+            note("added (required)" if required else "added", required, _join(path, name), "now required")
         for name in sorted(set(old_props) & set(new_props)):
             at = _join(path, name)
             if name in new_req and name not in old_req:
-                note("now required" if request else "now always present", request, at)
+                note("now required" if request else "now always present", request, at, "now required")
             elif name in old_req and name not in new_req:
-                note("no longer required" if request else "no longer always present", False, at)
+                # A response field that may be missing breaks code that reads it; a request field
+                # a caller may leave out only widens what it may send.
+                kind = "no longer required" if request else "no longer always present"
+                note(kind, not request, at, "no longer required")
             diff_schema(old_props[name], new_props[name], where, at, request=request, out=out, depth=depth + 1)
     for key, suffix in (("items", "[]"), ("additionalProperties", "{}")):
         old_sub, new_sub = old.get(key), new.get(key)
@@ -554,26 +631,38 @@ def _diff_variants(
     """Compares two unions variant by variant; a plain schema is a union of one, so that
     ``[X, null]`` against X loses no variant and X against ``[X', Y]`` compares X with X'. A
     variant added or removed never hides a change inside the others. A variant is named by its
-    new position."""
+    new position, null variants included."""
     old_vars, new_vars = _variants(old) or [old], _variants(new) or [new]
     if len(old_vars) == 1 and len(new_vars) == 1:
         return  # compared as the schema itself
     keyword = _union_keyword(new) or _union_keyword(old)
+    positions = _positions(new)
     pairs, removed, added = _pair_variants(old_vars, new_vars)
     for i, j in pairs:
-        at = f"{path}({keyword} {j + 1})" if len(new_vars) > 1 else path
-        diff_schema(old_vars[i], new_vars[j], where, at, request=request, out=out, depth=depth + 1)
+        at = f"{path}({positions[j]})" if len(new_vars) > 1 else path
+        # The fields the union requires are required in each variant.
+        diff_schema(
+            _with_required(old_vars[i], old),
+            _with_required(new_vars[j], new),
+            where,
+            at,
+            request=request,
+            out=out,
+            depth=depth + 1,
+        )
+        if len(old_vars) > 1 and len(new_vars) > 1:
+            before, after = _variant_title(old_vars[i]), _variant_title(new_vars[j])
+            if before != after:
+                out.append(Change(where, at, f"variant title {before or 'none'} -> {after or 'none'}"))
     if removed and not retyped:
-        out.append(Change(where, path, f"type changed: {len(removed)} {keyword} variant(s) removed", True))
+        kind = f"type changed: {len(removed)} {keyword} variant(s) removed"
+        code = f"type {_union_names(old_vars)} -> {_union_names(new_vars)}"
+        out.append(Change(where, path, kind, True, code))
     if added:
         out.append(Change(where, path, f"{len(added)} {keyword} variant(s) added"))
     order = [j for _, j in sorted(pairs)]
     if order != sorted(order):
         out.append(Change(where, path, f"{keyword} variants reordered"))
-
-
-def _parameter_where(key: tuple[str, str]) -> str:
-    return f"parameter `{key[1]}` ({key[0]})"
 
 
 def _parameters(doc: Json, op: Json) -> dict[tuple[str, str], Json]:
@@ -630,10 +719,14 @@ def _diff_content(old: dict[str, Json], new: dict[str, Json], where: str, *, req
             out.extend(c for c in found if c.breaking)
 
 
-def _diff_statuses(old: dict[str, dict[str, Json]], new: dict[str, dict[str, Json]]) -> list[Change]:
-    """The success statuses only one side has. A method returns every 2xx body, nullable when one
-    has none: a status without a body makes it nullable, and a removed status whose body no other
-    one returns removes a variant of it (DESIGN 3.1)."""
+def _diff_statuses(
+    old: dict[str, dict[str, Json]], new: dict[str, dict[str, Json]], removed: list[str], added: list[str]
+) -> list[Change]:
+    """The success statuses not compared body by body: ``removed`` (only ``old`` has them, or
+    their body went) and ``added`` (only ``new`` has them, or their body came). A method returns
+    every 2xx body, nullable when one has none: a status without a body makes it nullable, and a
+    removed status whose body no other one returns removes a variant of it, null when no body is
+    left (DESIGN 3.1)."""
     found: list[Change] = []
 
     def bodies(responses: dict[str, dict[str, Json]]) -> list[Json]:
@@ -642,21 +735,34 @@ def _diff_statuses(old: dict[str, dict[str, Json]], new: dict[str, dict[str, Jso
     def returns_null(responses: dict[str, dict[str, Json]]) -> bool:
         return any(not content for content in responses.values())
 
-    for status in sorted(set(new) - set(old)):
+    def returned(responses: dict[str, dict[str, Json]]) -> str:
+        """What the method returns as the vectors write it: a type per distinct body."""
+        distinct: dict[str, Json] = {}
+        for content in responses.values():
+            if content:
+                schema = content.get("application/json", content[min(content)])
+                distinct.setdefault(json.dumps(_shape(content, names=True), sort_keys=True), schema)
+        return _union_names(list(distinct.values())) or "null"
+
+    for status in added:
         if not new[status] and bodies(old) and not returns_null(old):
-            found.append(Change("response", "", f"can now be null (status {status} has no body)", True))
+            what = "lost its body" if status in old else "has no body"
+            found.append(Change("response", "", f"can now be null (status {status} {what})", True, "can now be null"))
+        elif status in old:
+            continue  # a body that came or went: said with the old status below
         elif new[status] and _shape(new[status], names=True) not in bodies(old):
             found.append(Change("response", "", f"status {status} added with another body"))
         else:
             found.append(Change("response", "", f"status {status} added"))
-    for status in sorted(set(old) - set(new)):
+    for status in removed:
+        what = "removed" if status not in new else "lost its body" if old[status] else "now has a body"
         if not old[status] and bodies(new) and not returns_null(new):
-            found.append(Change("response", "", f"can no longer be null (status {status} removed)"))
+            found.append(Change("response", "", f"can no longer be null (status {status} {what})"))
         elif old[status] and _shape(old[status], names=True) not in bodies(new):
-            kind = f"type changed: status {status} removed, and no other status returns its body"
-            found.append(Change("response", "", kind, True))
+            kind = f"type changed: status {status} {what}, and no other status returns its body"
+            found.append(Change("response", "", kind, True, f"type {returned(old)} -> {returned(new)}"))
         else:
-            found.append(Change("response", "", f"status {status} removed"))
+            found.append(Change("response", "", f"status {status} {what}"))
     return found
 
 
@@ -664,36 +770,48 @@ def describe_change(old_doc: Json, old: Json, new_doc: Json, new: Json) -> list[
     """Every difference of one operation (or of a method that moved to another one). ``old`` and
     ``new`` carry their path item's parameters (with_path_parameters)."""
     found: list[Change] = []
+    # A parameter is ``where`` (its location) and ``path`` (its name, then the field in it).
     old_params, new_params = _parameters(old_doc, old), _parameters(new_doc, new)
     for key in sorted(set(old_params) - set(new_params)):
-        found.append(Change(_parameter_where(key), "", "removed"))
+        found.append(Change(*key, "removed", True, "removed"))
     for key in sorted(set(new_params) - set(old_params)):
-        required = new_params[key].get("required") is True
-        found.append(Change(_parameter_where(key), "", "added (required)" if required else "added", required))
+        if new_params[key].get("required") is True:
+            found.append(Change(*key, "added (required)", True, "now required"))
+        else:
+            found.append(Change(*key, "added"))
     for key in sorted(set(old_params) & set(new_params)):
-        where = _parameter_where(key)
-        if old_params[key].get("required") is not True and new_params[key].get("required") is True:
-            found.append(Change(where, "", "now required", True))
+        was, now = (params[key].get("required") is True for params in (old_params, new_params))
+        if now and not was:
+            found.append(Change(*key, "now required", True, "now required"))
+        elif was and not now:
+            found.append(Change(*key, "no longer required"))
         diff_schema(
-            old_params[key].get("schema") or {}, new_params[key].get("schema") or {}, where, request=True, out=found
+            old_params[key].get("schema") or {}, new_params[key].get("schema") or {}, *key, request=True, out=found
         )
 
     old_body, new_body = old.get("requestBody") or {}, new.get("requestBody") or {}
-    if dereference(old_doc, old_body).get("required") is not True and (
-        dereference(new_doc, new_body).get("required") is True
-    ):
-        found.append(Change("request body", "", "now required"))
+    was, now = (dereference(d, body).get("required") is True for d, body in ((old_doc, old_body), (new_doc, new_body)))
+    if now and not was:
+        found.append(Change("request body", "", "now required", True, "body now required"))
+    elif was and not now:
+        found.append(Change("request body", "", "no longer required"))
     _diff_content(_content(old_doc, old_body), _content(new_doc, new_body), "request body", request=True, out=found)
 
-    # Every 2xx response both have; when the only success status changed (200 to 201), the old
-    # body against the new one; otherwise the statuses only one side has.
+    # Every 2xx response both have, with a body on both sides or on neither; when the only success
+    # status changed (200 to 201), the old body against the new one. The other statuses, and a
+    # body that came or went, change what the method returns.
     old_responses, new_responses = _successes(old_doc, old), _successes(new_doc, new)
-    statuses = [(s, s) for s in old_responses if s in new_responses]
-    if not statuses and len(old_responses) == 1 and len(new_responses) == 1:
-        statuses = [(next(iter(old_responses)), next(iter(new_responses)))]
-        found.append(Change("response", "", f"status {statuses[0][0]} -> {statuses[0][1]}"))
-    else:
-        found.extend(_diff_statuses(old_responses, new_responses))
+    statuses = [
+        (s, s) for s in old_responses if s in new_responses and bool(old_responses[s]) == bool(new_responses[s])
+    ]
+    if not statuses and len(old_responses) == 1 == len(new_responses):
+        [(before, old_content)], [(after, new_content)] = old_responses.items(), new_responses.items()
+        if bool(old_content) == bool(new_content):
+            statuses = [(before, after)]
+            found.append(Change("response", "", f"status {before} -> {after}"))
+    removed = [s for s in old_responses if s not in {b for b, _ in statuses}]
+    added = [s for s in new_responses if s not in {a for _, a in statuses}]
+    found.extend(_diff_statuses(old_responses, new_responses, removed, added))
     for before, after in statuses:
         _diff_content(old_responses[before], new_responses[after], "response", request=False, out=found)
 
@@ -847,6 +965,12 @@ def sync(
     def merged(entry: tuple[str, Json, Json]) -> Json:
         return with_path_parameters(entry[1], entry[2])
 
+    def exposed(key: str) -> bool:
+        """Whether a server SDK method calls the operation before and after the sync: the changes
+        of one with ``server: false`` are listed, never counted (DESIGN 3.1). One without naming
+        counts: the generator fails until it is named."""
+        return all(n is None or bool(n.get("server")) for n in (old_naming(key), new_naming(key)))
+
     added = sorted(set(new_ops) - set(old_ops))
     removed = sorted(set(old_ops) - set(new_ops))
     common = sorted(set(old_ops) & set(new_ops))
@@ -869,7 +993,7 @@ def sync(
         kept.append(_name(sdk))
 
     def removed_operation(key: str, detail: str) -> None:
-        breaking.append(BreakingChange(key, "", "", f"operation removed{detail}"))
+        breaking.append(BreakingChange(key, "", "", f"operation removed{detail}", "operation removed"))
 
     lines.append(f"## Added operations ({len(added)})")
     for key in added:
@@ -958,7 +1082,7 @@ def sync(
         found = notes(changes) if changes else ["same parameters, body and response"]
         marker = " **(breaking)**" if any(c.breaking for c in changes) else ""
         moves.append(f"- `{method}`{marker} moved from `{old_key}` to `{new_key}`: " + "; ".join(found))
-        breaking.extend(BreakingChange(new_key, c.where, c.path, c.kind) for c in changes if c.breaking)
+        breaking.extend(BreakingChange(new_key, c.where, c.path, c.kind, c.code) for c in changes if c.breaking)
     lines.append(f"## Moved or reassigned methods ({len(moves)})")
     lines.extend(moves)
     lines.append("")
@@ -984,9 +1108,11 @@ def sync(
             if old_op != new_op:
                 documentation_only.append(key)
             continue
+        if not exposed(key):
+            changes = [dataclasses.replace(c, breaking=False, code="") for c in changes]
         marker = " **(breaking)**" if any(c.breaking for c in changes) else ""
         changes_lines.append(f"- `{key}`{marker}: " + "; ".join(notes(changes)))
-        breaking.extend(BreakingChange(key, c.where, c.path, c.kind) for c in changes if c.breaking)
+        breaking.extend(BreakingChange(key, c.where, c.path, c.kind, c.code) for c in changes if c.breaking)
     lines.append(f"## Changed operations ({len(changes_lines) + len(documentation_only)})")
     lines.extend(changes_lines)
     if documentation_only:
