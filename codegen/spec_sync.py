@@ -963,6 +963,12 @@ def sync(
     def merged(entry: tuple[str, Json, Json]) -> Json:
         return with_path_parameters(entry[1], entry[2])
 
+    def exposed(key: str) -> bool:
+        """Whether a server SDK method calls the operation before and after the sync: the changes
+        of one with ``server: false`` are listed, never counted (DESIGN 3.1). One without naming
+        counts: the generator fails until it is named."""
+        return all(n is None or bool(n.get("server")) for n in (old_naming(key), new_naming(key)))
+
     added = sorted(set(new_ops) - set(old_ops))
     removed = sorted(set(old_ops) - set(new_ops))
     common = sorted(set(old_ops) & set(new_ops))
@@ -985,7 +991,7 @@ def sync(
         kept.append(_name(sdk))
 
     def removed_operation(key: str, detail: str) -> None:
-        breaking.append(BreakingChange(key, "", "", f"operation removed{detail}"))
+        breaking.append(BreakingChange(key, "", "", f"operation removed{detail}", "operation removed"))
 
     lines.append(f"## Added operations ({len(added)})")
     for key in added:
@@ -1074,7 +1080,7 @@ def sync(
         found = notes(changes) if changes else ["same parameters, body and response"]
         marker = " **(breaking)**" if any(c.breaking for c in changes) else ""
         moves.append(f"- `{method}`{marker} moved from `{old_key}` to `{new_key}`: " + "; ".join(found))
-        breaking.extend(BreakingChange(new_key, c.where, c.path, c.kind) for c in changes if c.breaking)
+        breaking.extend(BreakingChange(new_key, c.where, c.path, c.kind, c.code) for c in changes if c.breaking)
     lines.append(f"## Moved or reassigned methods ({len(moves)})")
     lines.extend(moves)
     lines.append("")
@@ -1100,9 +1106,11 @@ def sync(
             if old_op != new_op:
                 documentation_only.append(key)
             continue
+        if not exposed(key):
+            changes = [dataclasses.replace(c, breaking=False, code="") for c in changes]
         marker = " **(breaking)**" if any(c.breaking for c in changes) else ""
         changes_lines.append(f"- `{key}`{marker}: " + "; ".join(notes(changes)))
-        breaking.extend(BreakingChange(key, c.where, c.path, c.kind) for c in changes if c.breaking)
+        breaking.extend(BreakingChange(key, c.where, c.path, c.kind, c.code) for c in changes if c.breaking)
     lines.append(f"## Changed operations ({len(changes_lines) + len(documentation_only)})")
     lines.extend(changes_lines)
     if documentation_only:
