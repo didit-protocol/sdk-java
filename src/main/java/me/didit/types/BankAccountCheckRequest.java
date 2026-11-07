@@ -50,7 +50,7 @@ public final class BankAccountCheckRequest extends JsonModel {
   }
 
   /**
-   * The account's country, as an ISO 3166-1 alpha-3 code, for example <code>GBR</code>. Lowercase is accepted.
+   * The account's country, as an ISO 3166-1 alpha-3 code, for example <code>NGA</code>. Lowercase is accepted.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -113,7 +113,7 @@ public final class BankAccountCheckRequest extends JsonModel {
     }
 
     /**
-     * The account's country, as an ISO 3166-1 alpha-3 code, for example <code>GBR</code>. Lowercase is accepted.
+     * The account's country, as an ISO 3166-1 alpha-3 code, for example <code>NGA</code>. Lowercase is accepted.
      *
      * @param country the value
      * @return this builder
