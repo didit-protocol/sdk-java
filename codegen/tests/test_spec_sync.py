@@ -441,7 +441,10 @@ class DetectionTest(unittest.TestCase):
                 )
                 # A union made "any" by an untyped variant still compares the variants it pairs.
                 self.assertEqual(
-                    [("", "type changed from integer or string to any", True), ("(oneOf 2)", "type changed from integer to any", True)],
+                    [
+                        ("", "type changed from integer or string to any", True),
+                        ("(oneOf 2)", "type changed from integer to any", True),
+                    ],
                     diff(either, {"oneOf": [{"type": "string"}, {}]}, request=request),
                 )
 
@@ -573,19 +576,21 @@ class DetectionTest(unittest.TestCase):
             return [((c.where, c.path), c.kind, c.breaking) for c in spec_sync.describe_change({}, old, {}, new)]
 
         required_null = {**limit, "required": True, "schema": {"type": "integer", "nullable": True}}
+        # A parameter that can now be null or is no longer required only widens what a caller may send.
         self.assertEqual([(where, "now required", True), (where, NULL, False)], changes(op(limit), op(required_null)))
-        self.assertEqual([(where, "no longer required", False)], changes(op(required_null), op({**limit, "schema": required_null["schema"]})))
+        optional_null = {**required_null, "required": False}
+        self.assertEqual([(where, "no longer required", False)], changes(op(required_null), op(optional_null)))
         self.assertEqual(
             [(where, "type changed from integer to string", True)], changes(op(limit), op({**limit, "schema": {"type": "string"}}))
         )
-        self.assertEqual(
-            [(where, "removed", True), (("query", "page"), "added", False)], changes(op(limit), op({**limit, "name": "page"}))
-        )
+        page = (("query", "page"), "added", False)
+        self.assertEqual([(where, "removed", True), page], changes(op(limit), op({**limit, "name": "page"})))
         self.assertEqual([(where, "added (required)", True)], changes(op(), op({**limit, "required": True})))
         # The summary and the release notes name the parameter and its location.
         found = spec_sync.describe_change({}, op(limit), {}, op())[0]
         self.assertEqual("parameter `limit` (query): removed", found.text())
-        self.assertEqual("GET /x/ query limit: removed", spec_sync.BreakingChange("GET /x/", found.where, found.path, found.kind, found.code).normalized())
+        breaking = spec_sync.BreakingChange("GET /x/", found.where, found.path, found.kind, found.code)
+        self.assertEqual("GET /x/ query limit: removed", breaking.normalized())
 
     def test_every_success_response_is_compared_and_reported_once(self) -> None:
         gone = {"type": "object", "properties": {}}
