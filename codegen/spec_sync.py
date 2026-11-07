@@ -17,14 +17,13 @@ OpenAPI 3 document with paths, and when any of them changed it:
     (DESIGN 10) and AuthenticationContractTest holds it to the document;
   - picks the commit type (DESIGN 3.1 and 13): feat when anything a caller can observe changed,
     chore when only documentation did. Never "!" or a BREAKING CHANGE footer: a change that
-    mirrors the API is a minor version. A union variant the generator names after its title or
-    description is observable in Java, so renaming it is feat too (listed, not counted);
-  - writes a Markdown summary that opens with "Breaking changes": every change that can break
-    typed code (a field or parameter whose type changed or that can now be null, a removed
-    operation, field or enum value, a newly required parameter or request field) in parameters,
-    request bodies and 2xx responses, following $refs, array items, allOf and unions; then the
-    added, removed, renamed and changed operations and schemas. The rules are sdk-python's, so
-    that all seven SDKs list the same changes;
+    mirrors the API is a minor version. A union variant's title, and in Java its description,
+    can name its type, so renaming one is feat too (listed, not counted);
+  - writes a Markdown summary that opens with "Breaking changes": every change DESIGN 3.1 counts
+    in parameters, request bodies and 2xx responses, following $refs, array items, allOf and
+    unions, and every removed server operation; then the added, removed, renamed and changed
+    operations and schemas. openapi/breaking-vectors.json, generated in sdk-python, holds the
+    cases all seven SDKs must classify the same way (codegen/tests/test_breaking_vectors.py);
   - writes the commit message release-please reads (--commit-message): the sync line, then one
     nested api(spec) commit per breaking change, every one of them, which
     release-please-config.json lists under "API changes that can break typed code".
@@ -52,6 +51,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from didit_codegen import model as java_model  # noqa: E402
+from didit_codegen import names as java_names  # noqa: E402
 from didit_codegen.spec import SpecError as GeneratorError  # noqa: E402
 from didit_codegen.spec import load as load_openapi  # noqa: E402
 
@@ -95,6 +95,9 @@ REF_KEY = "x-didit-ref"
 # String formats with their own type in the generated code (OffsetDateTime, LocalDate or a file):
 # adding, removing or changing one changes the field's type.
 TYPED_FORMATS = frozenset({"date-time", "date", "binary"})
+PARAMETER_LOCATIONS = frozenset({"path", "query", "header", "cookie"})
+# Counted kinds the vectors write for the operation itself, without <where> <field>.
+OPERATION_KINDS = frozenset({"operation removed", "body now required"})
 MAX_NOTES = 25
 MAX_DEPTH = 32
 NO_DIFFERENCE = "descriptions, examples or other details changed"
@@ -211,11 +214,21 @@ def dereference(doc: Json, node: Json, depth: int = 0) -> Json:
 # What a caller can observe -------------------------------------------------------------------
 
 
+def _variant_title(schema: Json) -> str | None:
+    """The type name an inline oneOf/anyOf variant's title gives it (model.Builder._union); None
+    without a title, or for a component, which is named after itself."""
+    if not isinstance(schema, dict) or "$ref" in schema or REF_KEY in schema:
+        return None
+    title = schema.get("title")
+    return java_names.pascal(title) if isinstance(title, str) and title.strip() else None
+
+
 def _shape(node: Json, names: bool = False) -> Json:
     """``node`` without documentation, so that only what is sent or received compares.
 
     ``names`` marks a map whose keys are names (properties, paths, status codes...), which all
-    stay. ``required`` and ``type`` lists compare in any order.
+    stay. ``required`` and ``type`` lists compare in any order. An inline oneOf/anyOf variant
+    keeps its title, which can name its type (DESIGN 3.1: renaming one is listed).
     """
     if isinstance(node, dict):
         out: dict[str, Json] = {}
@@ -224,6 +237,11 @@ def _shape(node: Json, names: bool = False) -> Json:
                 continue
             if not names and k in ("required", "type") and isinstance(v, list):
                 out[k] = sorted(v, key=str)
+            elif not names and k in ("oneOf", "anyOf") and isinstance(v, list):
+                out[k] = [_shape(member) for member in v]
+                for member, shape in zip(v, out[k]):
+                    if (title := _variant_title(member)) is not None:
+                        shape["title"] = title
             else:
                 out[k] = _shape(v, not names and k in NAME_MAPS)
         return out
@@ -241,18 +259,29 @@ def observable(doc: Json) -> Json:
 # Schema comparison ---------------------------------------------------------------------------
 
 
+def _target(where: str, path: str) -> str:
+    """Where a change is, as the summary and the release notes say it."""
+    if where in PARAMETER_LOCATIONS:
+        return f"parameter `{path}` ({where})"
+    return f"{where} `{path}`" if path else where
+
+
 @dataclasses.dataclass(frozen=True)
 class Change:
-    """One difference of an operation; ``breaking`` when it is in the DESIGN 3.1 list."""
+    """One difference of an operation; ``breaking`` when DESIGN 3.1 counts it."""
 
-    where: str  # "response", "request body", "parameter `limit` (query)", "operation"
-    path: str  # the field, for example "registry_checks[].company.registry_data"; "" for all
+    where: str  # "response", "request body", "query" (a parameter's location), "operation"
+    # The field, for example "registry_checks[].company.registry_data", or a parameter's name and
+    # the field in it ("limit", "ids[]"); "" for a whole body.
+    path: str
     kind: str  # "can now be null", "type changed from string to object", "removed", ...
     breaking: bool = False
+    # A counted change's kind as openapi/breaking-vectors.json writes it ("removed",
+    # "type string -> object"); "" when not counted.
+    code: str = ""
 
     def text(self) -> str:
-        target = f"{self.where} `{self.path}`" if self.path else self.where
-        return f"{target}: {self.kind}"
+        return f"{_target(self.where, self.path)}: {self.kind}"
 
 
 @dataclasses.dataclass(frozen=True)
@@ -263,11 +292,20 @@ class BreakingChange:
     where: str
     path: str
     kind: str
+    code: str = ""
 
     def describe(self) -> str:
         # No "<" or ">": release-please escapes them in the release notes.
-        target = " ".join(p for p in (self.where, f"`{self.path}`" if self.path else "") if p)
+        target = _target(self.where, self.path)
         return f"`{self.operation}`{' ' + target if target else ''}: {self.kind}"
+
+    def normalized(self) -> str:
+        """The line openapi/breaking-vectors.json compares in all seven SDKs:
+        ``<METHOD> <path> <where> <field>: <kind>``, without ``<field>`` for a whole body and
+        without ``<where> <field>`` for the operation itself."""
+        if self.code in OPERATION_KINDS:
+            return f"{self.operation}: {self.code}"
+        return " ".join(p for p in (self.operation, self.where, self.path) if p) + f": {self.code}"
 
 
 def _null_only(schema: Json) -> bool:
@@ -278,6 +316,26 @@ def _variants(schema: Json, keyword: str | None = None) -> list[Json]:
     """The oneOf/anyOf variants other than null (of ``keyword``, or of both)."""
     keywords = (keyword,) if keyword else ("oneOf", "anyOf")
     return [v for k in keywords for v in schema.get(k) or [] if not _null_only(v)]
+
+
+def _positions(schema: Json) -> list[str]:
+    """Each of ``_variants(schema)`` as the vectors name it: its keyword and its position from 1
+    in that keyword's list, null variants included (``anyOf 2`` in ``[null, X, Y]``)."""
+    return [
+        f"{keyword} {n}"
+        for keyword in ("oneOf", "anyOf")
+        for n, variant in enumerate(schema.get(keyword) or [], 1)
+        if not _null_only(variant)
+    ]
+
+
+def _with_required(variant: Json, union: Json) -> Json:
+    """``variant`` also requiring the fields its union requires, which apply to every variant."""
+    inherited = {name for name in union.get("required") or [] if isinstance(name, str)}
+    if not inherited or not isinstance(variant, dict):
+        return variant
+    own = {name for name in variant.get("required") or [] if isinstance(name, str)}
+    return {**variant, "required": sorted(own | inherited)}
 
 
 def _nullable(schema: Json, depth: int = 0) -> bool:
@@ -319,8 +377,9 @@ def _single(schema: Json, depth: int = 0) -> Json:
     variants = _variants(schema)
     if len(variants) != 1 or not isinstance(variants[0], dict):
         return schema
-    rest = {k: v for k, v in schema.items() if k not in ("oneOf", "anyOf")}
-    return _single({**variants[0], **rest}, depth + 1)
+    # The union's required fields add to the variant's own.
+    rest = {k: v for k, v in schema.items() if k not in ("oneOf", "anyOf", "required")}
+    return _single({**_with_required(variants[0], schema), **rest}, depth + 1)
 
 
 def _json_type(value: Json) -> str:
@@ -363,14 +422,24 @@ def _kinds(schema: Json, depth: int = 0) -> frozenset[str]:
     return frozenset(kinds)
 
 
-def _type_names(schema: Json, kinds: frozenset[str]) -> str:
-    """``kinds`` as the summary names them: a string with a typed format is its own type
-    (OffsetDateTime, LocalDate or a file in Java), and a schema that does not say allows any
-    value."""
+def _type_names(schema: Json, kinds: frozenset[str], sep: str = " or ") -> str:
+    """``kinds`` as the summary names them (the vectors join them with ``|``): a string with a
+    typed format is its own type (OffsetDateTime, LocalDate or a file in Java), and a schema that
+    does not say allows any value."""
     if not kinds:
         return "any"
     fmt = schema.get("format")
-    return " or ".join(f"string ({fmt})" if kind == "string" and fmt in TYPED_FORMATS else kind for kind in sorted(kinds))
+    return sep.join(f"string ({fmt})" if kind == "string" and fmt in TYPED_FORMATS else kind for kind in sorted(kinds))
+
+
+def _union_names(schemas: list[Json]) -> str:
+    """The types of a union's variants, or of a method's 2xx bodies, as the vectors write them:
+    one per variant, sorted, so that losing one of two objects reads ``object|object -> object``."""
+    found: list[str] = []
+    for schema in schemas:
+        single = _single(schema) if isinstance(schema, dict) else {}
+        found.extend(_type_names(single, _kinds(single), "|").split("|"))
+    return "|".join(sorted(found))
 
 
 def _enum(schema: Json) -> list[Json] | None:
