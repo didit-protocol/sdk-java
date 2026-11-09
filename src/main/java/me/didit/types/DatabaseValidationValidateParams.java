@@ -808,7 +808,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * ISO 3166-1 alpha-2 country of residence. Used by global identity-enrichment services (e.g. <code>glb_identity_enrichment</code>) to focus the lookup.
+   * ISO 3166-1 alpha-2 country of residence. It was used only by the retired global identity-enrichment service (<code>glb_identity_enrichment</code>), which Didit no longer offers.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1643,7 +1643,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * ISO 3166-1 alpha-2 country of residence. Used by global identity-enrichment services (e.g. <code>glb_identity_enrichment</code>) to focus the lookup.
+     * ISO 3166-1 alpha-2 country of residence. It was used only by the retired global identity-enrichment service (<code>glb_identity_enrichment</code>), which Didit no longer offers.
      *
      * @param countryOfResidence the value
      * @return this builder
