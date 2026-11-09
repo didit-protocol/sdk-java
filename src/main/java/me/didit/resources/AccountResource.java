@@ -108,7 +108,7 @@ public final class AccountResource {
   /**
    * Verify Email and Issue Credentials
    *
-   * <p>Step 2 of onboarding. Exchanges the 6-char code for a verified account, a default org+app, and a JWT pair. Persist the returned <code>api_key</code>.
+   * <p>Step 2 of onboarding. Exchanges the 6-char code for a verified account, a default org+app, and a JWT pair. Persist the returned <code>api_key</code>. An account that already has an authenticator app or a passkey gets the same second-factor step as the login instead: <code>2fa_required: true</code> and a <code>temp_token</code>, with no tokens and no application keys.
    *
    * <p>{@code POST /programmatic/verify-email/}
    *

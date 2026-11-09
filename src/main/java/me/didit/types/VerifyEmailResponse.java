@@ -13,7 +13,7 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 
 public final class VerifyEmailResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("access_token", "refresh_token", "expires_in", "organization", "application");
+  private static final Set<String> KNOWN_FIELDS = Set.of("access_token", "refresh_token", "expires_in", "organization", "application", "2fa_required", "temp_token", "has_authenticator", "has_passkeys");
 
   private VerifyEmailResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -98,6 +98,46 @@ public final class VerifyEmailResponse extends JsonModel {
     return Json.optional(json, "application", Conv.model(ApplicationCredentialsSummary::fromJson));
   }
 
+  /**
+   * Present and <code>true</code> when the account already has an authenticator app or a passkey. The response then carries <code>temp_token</code> instead of tokens and application keys.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> _2FaRequired() {
+    return Json.optional(json, "2fa_required", Conv.BOOLEAN);
+  }
+
+  /**
+   * Short-lived token for the second-factor step, sent only with <code>2fa_required</code>. It is not an access token.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> tempToken() {
+    return Json.optional(json, "temp_token", Conv.STRING);
+  }
+
+  /**
+   * With <code>2fa_required</code>: whether the account has an authenticator app.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> hasAuthenticator() {
+    return Json.optional(json, "has_authenticator", Conv.BOOLEAN);
+  }
+
+  /**
+   * With <code>2fa_required</code>: whether the account has a passkey.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> hasPasskeys() {
+    return Json.optional(json, "has_passkeys", Conv.BOOLEAN);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -159,6 +199,46 @@ public final class VerifyEmailResponse extends JsonModel {
      */
     public Builder application(ApplicationCredentialsSummary application) {
       return set("application", Conv.model(ApplicationCredentialsSummary::fromJson), application);
+    }
+
+    /**
+     * Present and <code>true</code> when the account already has an authenticator app or a passkey. The response then carries <code>temp_token</code> instead of tokens and application keys.
+     *
+     * @param _2FaRequired the value
+     * @return this builder
+     */
+    public Builder _2FaRequired(boolean _2FaRequired) {
+      return set("2fa_required", Conv.BOOLEAN, _2FaRequired);
+    }
+
+    /**
+     * Short-lived token for the second-factor step, sent only with <code>2fa_required</code>. It is not an access token.
+     *
+     * @param tempToken the value
+     * @return this builder
+     */
+    public Builder tempToken(String tempToken) {
+      return set("temp_token", Conv.STRING, tempToken);
+    }
+
+    /**
+     * With <code>2fa_required</code>: whether the account has an authenticator app.
+     *
+     * @param hasAuthenticator the value
+     * @return this builder
+     */
+    public Builder hasAuthenticator(boolean hasAuthenticator) {
+      return set("has_authenticator", Conv.BOOLEAN, hasAuthenticator);
+    }
+
+    /**
+     * With <code>2fa_required</code>: whether the account has a passkey.
+     *
+     * @param hasPasskeys the value
+     * @return this builder
+     */
+    public Builder hasPasskeys(boolean hasPasskeys) {
+      return set("has_passkeys", Conv.BOOLEAN, hasPasskeys);
     }
 
     /**
