@@ -1675,7 +1675,7 @@ public final class SignatureResult extends JsonModel {
   }
 
   public static final class Documents extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("id", "uuid", "title", "file_name", "pages", "size_bytes", "sha256_original", "sha256_signed", "status", "opened_at", "read_at", "read_to_end", "consented_at", "consent", "signed_file", "mode", "source_format", "conversion", "fields");
+    private static final Set<String> KNOWN_FIELDS = Set.of("id", "uuid", "title", "language", "source_revision", "translation_id", "file_name", "pages", "size_bytes", "sha256_original", "sha256_signed", "status", "opened_at", "read_at", "read_to_end", "consented_at", "consent", "signed_file", "mode", "source_format", "conversion", "fields");
 
     private Documents(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -1738,6 +1738,36 @@ public final class SignatureResult extends JsonModel {
      */
     public Optional<String> title() {
       return Json.optional(json, "title", Conv.STRING);
+    }
+
+    /**
+     * Language of the document version selected for this signing attempt, not necessarily the requested interface language. A complete translation matching the signer language (or session language when unset) is selected; otherwise the original is used. Null when the selected version has no language set. Frozen when the attempt starts; once signed, this is the language actually signed.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> language() {
+      return Json.optional(json, "language", Conv.STRING);
+    }
+
+    /**
+     * UUID of the source document revision copied into this signing attempt, including when a translated variant is selected. Distinct from id, which identifies the signer's document copy. Frozen when the attempt starts.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> sourceRevision() {
+      return Json.optional(json, "source_revision", Conv.STRING);
+    }
+
+    /**
+     * UUID of the selected translated variant, or null when the original document is selected. Frozen with the document copy when the attempt starts; later language or translation changes do not replace it.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> translationId() {
+      return Json.optional(json, "translation_id", Conv.STRING);
     }
 
     /**
@@ -1941,6 +1971,36 @@ public final class SignatureResult extends JsonModel {
        */
       public Builder title(String title) {
         return set("title", Conv.STRING, title);
+      }
+
+      /**
+       * Language of the document version selected for this signing attempt, not necessarily the requested interface language. A complete translation matching the signer language (or session language when unset) is selected; otherwise the original is used. Null when the selected version has no language set. Frozen when the attempt starts; once signed, this is the language actually signed.
+       *
+       * @param language the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder language(@Nullable String language) {
+        return setNullable("language", Conv.STRING, language);
+      }
+
+      /**
+       * UUID of the source document revision copied into this signing attempt, including when a translated variant is selected. Distinct from id, which identifies the signer's document copy. Frozen when the attempt starts.
+       *
+       * @param sourceRevision the value
+       * @return this builder
+       */
+      public Builder sourceRevision(String sourceRevision) {
+        return set("source_revision", Conv.STRING, sourceRevision);
+      }
+
+      /**
+       * UUID of the selected translated variant, or null when the original document is selected. Frozen with the document copy when the attempt starts; later language or translation changes do not replace it.
+       *
+       * @param translationId the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder translationId(@Nullable String translationId) {
+        return setNullable("translation_id", Conv.STRING, translationId);
       }
 
       /**

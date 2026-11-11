@@ -65,6 +65,8 @@ public final class CustomerMessagingCaseRequestConfirmRequest extends JsonModel 
    * - <code>business_document</code> - business_document
    * - <code>confirm_details</code> - confirm_details
    * - <code>review_in_progress</code> - review_in_progress
+   * - <code>source_of_funds</code> - Request a document showing the source of payment funds.
+   * - <code>purpose_of_payment</code> - Request a document explaining the payment purpose. Both are available for person and business cases.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -94,7 +96,7 @@ public final class CustomerMessagingCaseRequestConfirmRequest extends JsonModel 
   }
 
   /**
-   * The <code>expires_at</code> field.
+   * Use the expiry covered by the preview token. Source-of-funds and purpose-of-payment requests allow up to 14 days; other purposes allow up to seven days. The default remains seven days. Changing the expiry without a matching preview is rejected.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -142,6 +144,8 @@ public final class CustomerMessagingCaseRequestConfirmRequest extends JsonModel 
      * - <code>business_document</code> - business_document
      * - <code>confirm_details</code> - confirm_details
      * - <code>review_in_progress</code> - review_in_progress
+     * - <code>source_of_funds</code> - Request a document showing the source of payment funds.
+     * - <code>purpose_of_payment</code> - Request a document explaining the payment purpose. Both are available for person and business cases.
      *
      * @param purpose the value
      * @return this builder
@@ -171,7 +175,7 @@ public final class CustomerMessagingCaseRequestConfirmRequest extends JsonModel 
     }
 
     /**
-     * The <code>expires_at</code> field.
+     * Use the expiry covered by the preview token. Source-of-funds and purpose-of-payment requests allow up to 14 days; other purposes allow up to seven days. The default remains seven days. Changing the expiry without a matching preview is rejected.
      *
      * @param expiresAt the value
      * @return this builder

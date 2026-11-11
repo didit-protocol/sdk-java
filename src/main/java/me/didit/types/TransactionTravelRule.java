@@ -16,10 +16,10 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /**
- * A transaction's Travel Rule transfer, as <code>GET /v3/transactions/{transaction_id}/</code>, the <code>201</code> of <code>POST /v3/transactions/</code> and each row of <code>GET /v3/transactions/</code> return it. <code>direction</code>, <code>rail</code>, <code>counterparty_vasp</code>, <code>delivery</code>, <code>discovery</code>, <code>reason</code> and <code>next_actions</code> have the same shape as on <code>PATCH /v3/transactions/{transaction_id}/travel-rule/</code>, so one read of a transaction says why its transfer is stuck and what moves it on.
+ * Travel Rule transfer on transaction detail and creation responses. Includes latest delivery and bounded delivery history. Transaction lists omit the history fields.
  */
 public final class TransactionTravelRule extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "protocol", "required", "obligations_count", "originator_data", "beneficiary_data", "name_match", "data_match", "mismatched_fields", "data_unmasked", "data_masked", "metadata", "direction", "rail", "counterparty_vasp", "delivery", "discovery", "reason", "next_actions", "chain_details", "not_required_reason", "proof_state");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "protocol", "required", "obligations_count", "originator_data", "beneficiary_data", "name_match", "data_match", "mismatched_fields", "data_unmasked", "data_masked", "metadata", "direction", "rail", "counterparty_vasp", "delivery", "discovery", "reason", "next_actions", "chain_details", "deliveries", "deliveries_truncated", "not_required_reason", "proof_state");
 
   private TransactionTravelRule(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -265,6 +265,26 @@ public final class TransactionTravelRule extends JsonModel {
   }
 
   /**
+   * Newest 100 delivery entries, presented oldest first (creation time, then identifier). Empty when no messages exist. Use the paginated delivery endpoint for complete history.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<TravelRuleDeliveryLogEntry>> deliveries() {
+    return Json.optional(json, "deliveries", Conv.list(Conv.model(TravelRuleDeliveryLogEntry::fromJson)));
+  }
+
+  /**
+   * True when older entries were omitted from deliveries. Follow GET /v3/transactions/{transaction_id}/travel-rule/deliveries/ for the complete history.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> deliveriesTruncated() {
+    return Json.optional(json, "deliveries_truncated", Conv.BOOLEAN);
+  }
+
+  /**
    * Null when required is true. Otherwise below_threshold, the recorded chain exemption (for example LIGHTNING_NO_PAYEE_IDENTIFIER, LIGHTNING_BOLT12_BLINDED_PAYEE or LIGHTNING_LNURL_NAMES_NO_PAYEE), or unknown for legacy transfers without a recorded reason.
    *
    * @return the value, or empty when the field is absent or null
@@ -505,6 +525,26 @@ public final class TransactionTravelRule extends JsonModel {
      */
     public Builder chainDetails(TravelRuleChainDetails chainDetails) {
       return set("chain_details", Conv.model(TravelRuleChainDetails::fromJson), chainDetails);
+    }
+
+    /**
+     * Newest 100 delivery entries, presented oldest first (creation time, then identifier). Empty when no messages exist. Use the paginated delivery endpoint for complete history.
+     *
+     * @param deliveries the value
+     * @return this builder
+     */
+    public Builder deliveries(List<TravelRuleDeliveryLogEntry> deliveries) {
+      return set("deliveries", Conv.list(Conv.model(TravelRuleDeliveryLogEntry::fromJson)), deliveries);
+    }
+
+    /**
+     * True when older entries were omitted from deliveries. Follow GET /v3/transactions/{transaction_id}/travel-rule/deliveries/ for the complete history.
+     *
+     * @param deliveriesTruncated the value
+     * @return this builder
+     */
+    public Builder deliveriesTruncated(boolean deliveriesTruncated) {
+      return set("deliveries_truncated", Conv.BOOLEAN, deliveriesTruncated);
     }
 
     /**

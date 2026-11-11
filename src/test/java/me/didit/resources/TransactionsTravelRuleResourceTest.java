@@ -14,6 +14,7 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.TransactionsTravelRuleListDeliveriesParams;
 import me.didit.types.TravelRuleMessageCreateRequest;
 import me.didit.types.TravelRuleOwnershipConfirmRequest;
 import me.didit.types.TravelRuleTestVaspInboundRequest;
@@ -108,5 +109,23 @@ final class TransactionsTravelRuleResourceTest {
     TestJson.assertJsonEquals("{\"beneficiary_wallet_address\":\"value-beneficiary-wallet-address\",\"scenario\":\"accept\",\"chain\":\"value-chain\",\"amount\":\"value-amount\",\"currency\":\"value-currency\",\"reference\":\"value-reference\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
+  }
+
+  @Test
+  void listDeliveries() {
+    TransactionsTravelRuleListDeliveriesParams params = TransactionsTravelRuleListDeliveriesParams.builder().limit(1L).offset(1L).build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/transactions/{transaction_id}/travel-rule/deliveries/", "200");
+    transport.respondJson(200, example);
+    var result = client.transactions().travelRule().listDeliveries("00000000-0000-4000-8000-00000002632f", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/transactions/00000000-0000-4000-8000-00000002632f/travel-rule/deliveries/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, result._json());
+    assertEquals(example.path("results").size(), result.results().size());
+    TestModels.readAll(result.results());
   }
 }

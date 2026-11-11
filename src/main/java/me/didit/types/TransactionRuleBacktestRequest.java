@@ -17,7 +17,7 @@ import me.didit.core.StringEnum;
  * Hypothetical rule configuration to evaluate against recent transactions. Read-only and free: nothing is created or modified. Send the same conditions, aggregation, evaluation_mode AND scope as the rule you intend to activate. Omitted conditions, aggregation and scope add no constraints of their own; dropping scope can include directions or transaction types the saved rule skips. Omitted evaluation_mode defaults to ALL (which can reduce matches for an ANY rule), and omitted period_days defaults to 90 days, not unlimited history.
  */
 public final class TransactionRuleBacktestRequest extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("conditions", "aggregation", "evaluation_mode", "scope", "period_days");
+  private static final Set<String> KNOWN_FIELDS = Set.of("conditions", "aggregation", "evaluation_mode", "scope", "period_days", "rule_id");
 
   private TransactionRuleBacktestRequest(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -102,6 +102,16 @@ public final class TransactionRuleBacktestRequest extends JsonModel {
     return Json.optional(json, "period_days", Conv.LONG);
   }
 
+  /**
+   * Optional ID of the rule being edited. Excludes that rule from overlap comparisons; does not change the candidate configuration.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> ruleId() {
+    return Json.optional(json, "rule_id", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -163,6 +173,16 @@ public final class TransactionRuleBacktestRequest extends JsonModel {
      */
     public Builder periodDays(long periodDays) {
       return set("period_days", Conv.LONG, periodDays);
+    }
+
+    /**
+     * Optional ID of the rule being edited. Excludes that rule from overlap comparisons; does not change the candidate configuration.
+     *
+     * @param ruleId the value
+     * @return this builder
+     */
+    public Builder ruleId(String ruleId) {
+      return set("rule_id", Conv.STRING, ruleId);
     }
 
     /**

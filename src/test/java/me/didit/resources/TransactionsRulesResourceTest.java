@@ -116,7 +116,7 @@ final class TransactionsRulesResourceTest {
 
   @Test
   void backtest() {
-    TransactionRuleBacktestRequest params = TransactionRuleBacktestRequest.builder().conditions(List.of(TransactionRuleCondition.builder().field("value-field").operator(TransactionRuleCondition.Operator.EQ).value("value").valueType(TransactionRuleCondition.ValueType.LIST).build())).aggregation(List.of(TransactionRuleAggregation.builder().metric(TransactionRuleAggregation.Metric.COUNT).field("value-field").value(1.5).build())).evaluationMode(TransactionRuleBacktestRequest.EvaluationMode.ALL).scope(TransactionRuleScope.builder().transactionTypes(List.of("value-transaction-types")).directions(List.of(TransactionRuleScope.Directions.INBOUND)).build()).periodDays(1L).build();
+    TransactionRuleBacktestRequest params = TransactionRuleBacktestRequest.builder().conditions(List.of(TransactionRuleCondition.builder().field("value-field").operator(TransactionRuleCondition.Operator.EQ).value("value").valueType(TransactionRuleCondition.ValueType.LIST).build())).aggregation(List.of(TransactionRuleAggregation.builder().metric(TransactionRuleAggregation.Metric.COUNT).field("value-field").value(1.5).build())).evaluationMode(TransactionRuleBacktestRequest.EvaluationMode.ALL).scope(TransactionRuleScope.builder().transactionTypes(List.of("value-transaction-types")).directions(List.of(TransactionRuleScope.Directions.INBOUND)).build()).periodDays(1L).ruleId("00000000-0000-4000-8000-000000000b41").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/transactions/rules/backtest/", "200");
     transport.respondJson(200, example);
     var result = client.transactions().rules().backtest(params);
@@ -126,7 +126,7 @@ final class TransactionsRulesResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"conditions\":[{\"field\":\"value-field\",\"operator\":\"eq\",\"value\":\"value\",\"value_type\":\"list\"}],\"aggregation\":[{\"metric\":\"count\",\"field\":\"value-field\",\"value\":1.5}],\"evaluation_mode\":\"ALL\",\"scope\":{\"transaction_types\":[\"value-transaction-types\"],\"directions\":[\"INBOUND\"]},\"period_days\":1}", request.body());
+    TestJson.assertJsonEquals("{\"conditions\":[{\"field\":\"value-field\",\"operator\":\"eq\",\"value\":\"value\",\"value_type\":\"list\"}],\"aggregation\":[{\"metric\":\"count\",\"field\":\"value-field\",\"value\":1.5}],\"evaluation_mode\":\"ALL\",\"scope\":{\"transaction_types\":[\"value-transaction-types\"],\"directions\":[\"INBOUND\"]},\"period_days\":1,\"rule_id\":\"00000000-0000-4000-8000-000000000b41\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
