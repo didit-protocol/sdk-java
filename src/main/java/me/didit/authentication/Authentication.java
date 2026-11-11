@@ -968,7 +968,10 @@ public final class Authentication {
     List<String> secrets = new java.util.ArrayList<>();
     secrets.add(accessToken);
     secrets.add(body.path("challenge").asText());
-    collectStrings(body.path("assertion"), secrets);
+    // Read from the JSON the request carries (written with the request's encoder, parsed back), so
+    // a
+    // POJO or other non-plain node nested in the assertion counts exactly as it is sent.
+    collectStrings(Json.parse(Json.write(body)).path("assertion"), secrets);
     return send(
             "POST", runtime("agents/consent/"), jsonHeaders(accessToken), jsonBody(body), secrets)
         .thenApply(

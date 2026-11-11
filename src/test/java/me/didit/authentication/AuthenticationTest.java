@@ -1066,6 +1066,23 @@ final class AuthenticationTest {
   }
 
   @Test
+  void consentRedactionCoversAPojoNestedInTheAssertion() {
+    String nested = "nested-credential-string-0123456789";
+    ObjectNode assertion = assertionOf("short", "s");
+    assertion.putObject("clientExtensionResults").putPOJO("credProps", Map.of("value", nested));
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertion,
+            400,
+            "application/json",
+            "{\"error\":\"invalid_grant\",\"echo\":\"" + nested + "\"}");
+    assertEquals(
+        "{\"error\":\"invalid_grant\",\"echo\":\"[redacted]\",\"detail\":\"invalid_grant\"}",
+        e.body().orElseThrow().toString());
+    assertFalse(shown(e).contains(nested));
+  }
+
+  @Test
   void consentRedactionReplacesANonJsonBody() {
     me.didit.errors.ApiStatusException e =
         consentFailure(
