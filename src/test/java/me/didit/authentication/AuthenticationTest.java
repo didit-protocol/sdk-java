@@ -1121,6 +1121,35 @@ final class AuthenticationTest {
   }
 
   @Test
+  void consentRedactionCoversTheRequestIdAndHeaders() {
+    String credential = "credential-string-0123456789";
+    issuer.routes.put(
+        "POST /agents/consent/",
+        r ->
+            new TransportResponse(
+                400,
+                Headers.of(
+                    Map.of(
+                        "Content-Type", List.of("application/json"),
+                        "X-Request-ID", List.of("req-" + credential),
+                        "X-Echo", List.of(credential))),
+                "{\"error\":\"invalid_grant\"}".getBytes(StandardCharsets.UTF_8)));
+    me.didit.errors.ApiStatusException e =
+        assertThrows(
+            me.didit.errors.ApiStatusException.class,
+            () ->
+                auth()
+                    .submitAgentConsent(
+                        "TOKEN-m4rk",
+                        AgentConsentParams.approve("pending-agent-request-secret")
+                            .assertion(assertionOf(credential, "s"))
+                            .build()));
+    assertFalse(e.getMessage().contains(credential));
+    assertEquals("[redacted]", e.requestId().orElse(""));
+    assertFalse(e.headers().map().toString().contains(credential));
+  }
+
+  @Test
   void consentRedactionReplacesANonJsonBody() {
     me.didit.errors.ApiStatusException e =
         consentFailure(
