@@ -1136,7 +1136,8 @@ public final class Authentication {
     try (TransportResponse r = response) {
       bytes = r.body().readAllBytes();
     } catch (IOException e) {
-      bytes = new byte[0];
+      // A body that fails mid-read is a connection error with a fixed message and no cause.
+      throw new CompletionException(consentReadFailure());
     }
     String body = REDACTED;
     if (bytes.length > 0) {
@@ -1255,7 +1256,15 @@ public final class Authentication {
       return parse.get();
     } catch (UnexpectedResponseException e) {
       throw new UnexpectedResponseException(redact(String.valueOf(e.getMessage()), secrets));
+    } catch (ApiConnectionException e) {
+      // The body failed mid-read: the underlying message and cause are never kept.
+      throw consentReadFailure();
     }
+  }
+
+  private static ApiConnectionException consentReadFailure() {
+    return new ApiConnectionException(
+        "Connection error while reading the agent consent response", null);
   }
 
   /** Puts {@code error: error_description} first so the exception message names the error. */

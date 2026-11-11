@@ -1298,6 +1298,37 @@ final class AuthenticationTest {
   }
 
   @Test
+  void consentBodyReadFailureIsAFixedMessageConnectionError() {
+    for (int status : new int[] {200, 400}) {
+      issuer.routes.put(
+          "POST /agents/consent/",
+          r ->
+              new TransportResponse(
+                  status,
+                  Headers.of(Map.of("Content-Type", List.of("application/json"))),
+                  new java.io.InputStream() {
+                    @Override
+                    public int read() throws IOException {
+                      throw new IOException("credential-string-0123456789 broken stream");
+                    }
+                  }));
+      Exception e =
+          assertThrows(
+              Exception.class,
+              () ->
+                  auth()
+                      .submitAgentConsent(
+                          "TOKEN-m4rk",
+                          AgentConsentParams.approve("pending-agent-request-secret")
+                              .assertion(assertionOf("x", "s"))
+                              .build()));
+      assertTrue(e instanceof me.didit.errors.ApiConnectionException);
+      assertEquals("Connection error while reading the agent consent response", e.getMessage());
+      assertNull(e.getCause());
+    }
+  }
+
+  @Test
   void consentRedactionReplacesANonJsonBody() {
     me.didit.errors.ApiStatusException e =
         consentFailure(
