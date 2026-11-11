@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.FileUpload;
@@ -12,7 +13,7 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 
 public final class TravelRuleWorkspaceClaimRequest extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("vasp_id");
+  private static final Set<String> KNOWN_FIELDS = Set.of("vasp_id", "licence");
 
   private TravelRuleWorkspaceClaimRequest(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -57,6 +58,16 @@ public final class TravelRuleWorkspaceClaimRequest extends JsonModel {
     return Json.required(json, "vasp_id", Conv.STRING);
   }
 
+  /**
+   * Optional licence or registration reference, up to 255 characters; empty clears it. Omission preserves it for the same directory entry and clears it when claiming a different entry. Applied to the VASP profile only when the claim is granted.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> licence() {
+    return Json.optional(json, "licence", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -78,6 +89,16 @@ public final class TravelRuleWorkspaceClaimRequest extends JsonModel {
      */
     public Builder vaspId(String vaspId) {
       return set("vasp_id", Conv.STRING, vaspId);
+    }
+
+    /**
+     * Optional licence or registration reference, up to 255 characters; empty clears it. Omission preserves it for the same directory entry and clears it when claiming a different entry. Applied to the VASP profile only when the claim is granted.
+     *
+     * @param licence the value
+     * @return this builder
+     */
+    public Builder licence(String licence) {
+      return set("licence", Conv.STRING, licence);
     }
 
     /**

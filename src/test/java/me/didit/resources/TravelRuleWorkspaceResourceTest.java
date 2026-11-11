@@ -43,7 +43,7 @@ final class TravelRuleWorkspaceResourceTest {
 
   @Test
   void claim() {
-    TravelRuleWorkspaceClaimRequest params = TravelRuleWorkspaceClaimRequest.builder().vaspId("00000000-0000-4000-8000-000000000b5e").build();
+    TravelRuleWorkspaceClaimRequest params = TravelRuleWorkspaceClaimRequest.builder().vaspId("00000000-0000-4000-8000-000000000b5e").licence("value-licence").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
     var result = client.travelRule().workspace().claim(params);
@@ -53,7 +53,7 @@ final class TravelRuleWorkspaceResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"vasp_id\":\"00000000-0000-4000-8000-000000000b5e\"}", request.body());
+    TestJson.assertJsonEquals("{\"vasp_id\":\"00000000-0000-4000-8000-000000000b5e\",\"licence\":\"value-licence\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

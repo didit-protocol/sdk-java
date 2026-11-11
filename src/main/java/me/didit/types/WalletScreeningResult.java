@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class WalletScreeningResult extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("provider", "screening_type", "risk_score", "severity", "status", "summary", "wallet_address", "transaction_hash", "blockchain", "block_timestamp", "total_value_usd", "fee_usd", "sender_rows", "receiver_rows", "transaction_flows", "transaction_flows_status", "transaction_flows_error", "source_of_funds", "destination_of_funds", "counterparty_connections", "network_nodes", "network_edges", "sanctions_hit", "pep_counterparty", "dominant_risk_category", "risk_factors", "raw_response", "report_signature");
+  private static final Set<String> KNOWN_FIELDS = Set.of("provider", "screening_type", "risk_score", "severity", "status", "summary", "wallet_address", "transaction_hash", "blockchain", "block_timestamp", "total_value_usd", "fee_usd", "sender_rows", "receiver_rows", "transaction_flows", "transaction_flows_status", "transaction_flows_error", "source_of_funds", "destination_of_funds", "counterparty_connections", "network_nodes", "network_edges", "sanctions_hit", "pep_counterparty", "dominant_risk_category", "risk_factors", "fallback_from_provider", "fallback_reason", "raw_response", "report_signature");
 
   private WalletScreeningResult(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -51,7 +51,7 @@ public final class WalletScreeningResult extends JsonModel {
   }
 
   /**
-   * Provider that performed the screening (e.g. <code>merklescience</code>, <code>crystal</code>).
+   * Provider that performed the screening (e.g. <code>merklescience</code>, <code>crystal</code>). When the provider you connected in the Marketplace rejected or failed the screening and that connection's fallback to Didit is on, this names Didit's managed screening, not the provider you connected, and <code>fallback_from_provider</code> names the provider that failed.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -311,6 +311,26 @@ public final class WalletScreeningResult extends JsonModel {
   }
 
   /**
+   * Set when the provider you connected in the Marketplace rejected or failed this screening and it ran on Didit's managed provider instead, because that connection's <b>Fall back to Didit</b> setting is on: the key of the provider that failed (<code>crystal</code>, <code>chainalysis</code>, <code>elliptic</code> or <code>trmlabs</code>). The screening is billed at the managed rate and the failed call is not billed. <code>null</code> on every other screening.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> fallbackFromProvider() {
+    return Json.optional(json, "fallback_from_provider", Conv.STRING);
+  }
+
+  /**
+   * Why the provider you connected failed, when <code>fallback_from_provider</code> is set, for example <code>Your Crystal account has reached its call limit. Raise the limit with Crystal to screen with it again.</code> <code>null</code> on every other screening.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> fallbackReason() {
+    return Json.optional(json, "fallback_reason", Conv.STRING);
+  }
+
+  /**
    * The provider's own payload. Its shape is provider-specific and can change without notice: read the normalised fields instead of parsing it.
    *
    * @return the value, or empty when the field is absent or null
@@ -344,7 +364,7 @@ public final class WalletScreeningResult extends JsonModel {
     }
 
     /**
-     * Provider that performed the screening (e.g. <code>merklescience</code>, <code>crystal</code>).
+     * Provider that performed the screening (e.g. <code>merklescience</code>, <code>crystal</code>). When the provider you connected in the Marketplace rejected or failed the screening and that connection's fallback to Didit is on, this names Didit's managed screening, not the provider you connected, and <code>fallback_from_provider</code> names the provider that failed.
      *
      * @param provider the value
      * @return this builder
@@ -601,6 +621,26 @@ public final class WalletScreeningResult extends JsonModel {
      */
     public Builder riskFactors(List<WalletScreeningResult.RiskFactors> riskFactors) {
       return set("risk_factors", Conv.list(Conv.model(WalletScreeningResult.RiskFactors::fromJson)), riskFactors);
+    }
+
+    /**
+     * Set when the provider you connected in the Marketplace rejected or failed this screening and it ran on Didit's managed provider instead, because that connection's <b>Fall back to Didit</b> setting is on: the key of the provider that failed (<code>crystal</code>, <code>chainalysis</code>, <code>elliptic</code> or <code>trmlabs</code>). The screening is billed at the managed rate and the failed call is not billed. <code>null</code> on every other screening.
+     *
+     * @param fallbackFromProvider the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder fallbackFromProvider(@Nullable String fallbackFromProvider) {
+      return setNullable("fallback_from_provider", Conv.STRING, fallbackFromProvider);
+    }
+
+    /**
+     * Why the provider you connected failed, when <code>fallback_from_provider</code> is set, for example <code>Your Crystal account has reached its call limit. Raise the limit with Crystal to screen with it again.</code> <code>null</code> on every other screening.
+     *
+     * @param fallbackReason the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder fallbackReason(@Nullable String fallbackReason) {
+      return setNullable("fallback_reason", Conv.STRING, fallbackReason);
     }
 
     /**

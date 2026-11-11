@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * A transaction's Travel Rule transfer, as <code>GET /v3/transactions/{transaction_id}/</code>, the <code>201</code> of <code>POST /v3/transactions/</code> and each row of <code>GET /v3/transactions/</code> return it. <code>direction</code>, <code>rail</code>, <code>counterparty_vasp</code>, <code>delivery</code>, <code>discovery</code>, <code>reason</code> and <code>next_actions</code> have the same shape as on <code>PATCH /v3/transactions/{transaction_id}/travel-rule/</code>, so one read of a transaction says why its transfer is stuck and what moves it on.
  */
 public final class TransactionTravelRule extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "protocol", "required", "obligations_count", "originator_data", "beneficiary_data", "name_match", "data_match", "mismatched_fields", "data_unmasked", "data_masked", "metadata", "direction", "rail", "counterparty_vasp", "delivery", "discovery", "reason", "next_actions", "chain_details");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "protocol", "required", "obligations_count", "originator_data", "beneficiary_data", "name_match", "data_match", "mismatched_fields", "data_unmasked", "data_masked", "metadata", "direction", "rail", "counterparty_vasp", "delivery", "discovery", "reason", "next_actions", "chain_details", "not_required_reason", "proof_state");
 
   private TransactionTravelRule(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -264,6 +264,26 @@ public final class TransactionTravelRule extends JsonModel {
     return Json.optional(json, "chain_details", Conv.model(TravelRuleChainDetails::fromJson));
   }
 
+  /**
+   * Null when required is true. Otherwise below_threshold, the recorded chain exemption (for example LIGHTNING_NO_PAYEE_IDENTIFIER, LIGHTNING_BOLT12_BLINDED_PAYEE or LIGHTNING_LNURL_NAMES_NO_PAYEE), or unknown for legacy transfers without a recorded reason.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> notRequiredReason() {
+    return Json.optional(json, "not_required_reason", Conv.STRING);
+  }
+
+  /**
+   * not_required when the transfer is not required; otherwise confirmed or not_confirmed follows ownership_confirmed. With no verdict, requested means an active outbound ownership widget matches this transfer and subject; otherwise not_requested. A request is not completed proof.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TransactionTravelRule.ProofState> proofState() {
+    return Json.optional(json, "proof_state", Conv.enumeration(TransactionTravelRule.ProofState::of));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -485,6 +505,26 @@ public final class TransactionTravelRule extends JsonModel {
      */
     public Builder chainDetails(TravelRuleChainDetails chainDetails) {
       return set("chain_details", Conv.model(TravelRuleChainDetails::fromJson), chainDetails);
+    }
+
+    /**
+     * Null when required is true. Otherwise below_threshold, the recorded chain exemption (for example LIGHTNING_NO_PAYEE_IDENTIFIER, LIGHTNING_BOLT12_BLINDED_PAYEE or LIGHTNING_LNURL_NAMES_NO_PAYEE), or unknown for legacy transfers without a recorded reason.
+     *
+     * @param notRequiredReason the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder notRequiredReason(@Nullable String notRequiredReason) {
+      return setNullable("not_required_reason", Conv.STRING, notRequiredReason);
+    }
+
+    /**
+     * not_required when the transfer is not required; otherwise confirmed or not_confirmed follows ownership_confirmed. With no verdict, requested means an active outbound ownership widget matches this transfer and subject; otherwise not_requested. A request is not completed proof.
+     *
+     * @param proofState the value
+     * @return this builder
+     */
+    public Builder proofState(TransactionTravelRule.ProofState proofState) {
+      return set("proof_state", Conv.enumeration(TransactionTravelRule.ProofState::of), proofState);
     }
 
     /**
@@ -853,6 +893,58 @@ public final class TransactionTravelRule extends JsonModel {
           return this;
         }
       }
+    }
+  }
+
+  /**
+   * not_required when the transfer is not required; otherwise confirmed or not_confirmed follows ownership_confirmed. With no verdict, requested means an active outbound ownership widget matches this transfer and subject; otherwise not_requested. A request is not completed proof.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class ProofState extends StringEnum {
+    /** The value {@code "not_required"}. */
+    public static final ProofState NOT_REQUIRED = new ProofState("not_required");
+
+    /** The value {@code "confirmed"}. */
+    public static final ProofState CONFIRMED = new ProofState("confirmed");
+
+    /** The value {@code "not_confirmed"}. */
+    public static final ProofState NOT_CONFIRMED = new ProofState("not_confirmed");
+
+    /** The value {@code "requested"}. */
+    public static final ProofState REQUESTED = new ProofState("requested");
+
+    /** The value {@code "not_requested"}. */
+    public static final ProofState NOT_REQUESTED = new ProofState("not_requested");
+
+    private static final List<ProofState> KNOWN_VALUES = List.of(NOT_REQUIRED, CONFIRMED, NOT_CONFIRMED, REQUESTED, NOT_REQUESTED);
+
+    private ProofState(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static ProofState of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, ProofState::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<ProofState> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 }
