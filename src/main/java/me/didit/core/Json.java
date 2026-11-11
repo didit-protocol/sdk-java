@@ -64,6 +64,25 @@ public final class Json {
   }
 
   /**
+   * Parses JSON text that must hold exactly one value: anything after it, a closing delimiter
+   * included, is an error.
+   *
+   * @param text JSON text
+   * @return the parsed value
+   * @throws UnexpectedResponseException when the text is not valid JSON or has trailing content
+   */
+  public static JsonNode parseStrict(String text) {
+    try {
+      return MAPPER
+          .readerFor(JsonNode.class)
+          .with(DeserializationFeature.FAIL_ON_TRAILING_TOKENS)
+          .readTree(text);
+    } catch (JsonProcessingException e) {
+      throw new UnexpectedResponseException("Invalid JSON: " + e.getOriginalMessage(), e);
+    }
+  }
+
+  /**
    * Parses UTF-8 JSON bytes.
    *
    * @param bytes JSON bytes

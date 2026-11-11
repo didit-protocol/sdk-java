@@ -1114,6 +1114,13 @@ final class AuthenticationTest {
   }
 
   @Test
+  void consentRedactionTreatsTrailingContentAsNotJson() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(assertionOf("x", "s"), 400, "application/json", "{\"detail\":\"safe\"}]");
+    assertEquals("\"[redacted]\"", e.body().orElseThrow().toString());
+  }
+
+  @Test
   void consentRedactionReplacesANonJsonBody() {
     me.didit.errors.ApiStatusException e =
         consentFailure(
@@ -1135,6 +1142,54 @@ final class AuthenticationTest {
             "x".repeat(600) + "pending-agent-request-secret");
     assertEquals("\"[redacted]\"", e.body().orElseThrow().toString());
     assertFalse(shown(e).contains("pending-agent-request-secret"));
+  }
+
+  @Test
+  void consentTransportFailureCarriesNoTransportTextEvenForEscapedCredentials() {
+    ObjectNode assertion = Json.nodes().objectNode();
+    assertion.put("id", "cred\"ential\\string-0123456789");
+    Authentication transportAuth =
+        Authentication.builder()
+            .issuer(StubIssuer.ISSUER)
+            .transport(
+                request ->
+                    CompletableFuture.failedFuture(
+                        new IOException(
+                            "write failed: " + new String(request.body(), StandardCharsets.UTF_8))))
+            .clock(clock)
+            .build();
+    Exception error =
+        assertThrows(
+            Exception.class,
+            () ->
+                transportAuth.submitAgentConsent(
+                    "TOKEN-abcdefghijklmnop",
+                    AgentConsentParams.approve("MARK-CHALLENGE-X").assertion(assertion).build()));
+    assertTrue(error instanceof me.didit.errors.ApiConnectionException);
+    for (Throwable t = error; t != null; t = t.getCause()) {
+      String text = t + "\n" + t.getMessage();
+      assertFalse(text.contains("ential"), text);
+      assertFalse(text.contains("write failed"), text);
+    }
+  }
+
+  @Test
+  void consentRedactionTurnsAnEmptyBodyIntoRedacted() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(assertionOf("x", "s"), 502, "text/plain", "");
+    assertEquals("\"[redacted]\"", e.body().orElseThrow().toString());
+  }
+
+  @Test
+  void consentRedactionKeepsASafeKeyNamedRedactedAfterASecretKey() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("SECRET-0123456789abcdef", "s"),
+            400,
+            "application/json",
+            "{\"a-SECRET-0123456789abcdef\":\"x\",\"[redacted]\":\"safe\"}");
+    assertEquals(
+        "{\"[redacted]2\":\"x\",\"[redacted]\":\"safe\"}", e.body().orElseThrow().toString());
   }
 
   @Test

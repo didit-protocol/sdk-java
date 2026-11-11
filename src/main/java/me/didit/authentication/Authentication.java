@@ -1086,10 +1086,13 @@ public final class Authentication {
                 bytes = new byte[0];
               }
               JsonNode parsed = null;
-              if (bytes.length > 0) {
+              if (bytes.length == 0 && !secrets.isEmpty()) {
+                // An empty body is not JSON.
+                parsed = Json.nodes().textNode(REDACTED);
+              } else if (bytes.length > 0) {
                 String text = new String(bytes, StandardCharsets.UTF_8);
                 try {
-                  parsed = Json.parse(text);
+                  parsed = secrets.isEmpty() ? Json.parse(text) : Json.parseStrict(text);
                   if (!secrets.isEmpty()) {
                     parsed = redactNode(parsed, secrets);
                   }
@@ -1172,12 +1175,26 @@ public final class Authentication {
     }
     if (node.isObject()) {
       ObjectNode out = Json.nodes().objectNode();
+      // Reserve every safe key name first, so a placeholder never takes one.
+      java.util.Set<String> taken = new java.util.HashSet<>();
       node.fieldNames()
           .forEachRemaining(
               name -> {
-                String shown = redact(name, secrets);
-                for (int number = 2; out.has(shown); number++) {
-                  shown = REDACTED + number;
+                if (redact(name, secrets).equals(name)) {
+                  taken.add(name);
+                }
+              });
+      int[] next = {1};
+      node.fieldNames()
+          .forEachRemaining(
+              name -> {
+                String shown = name;
+                if (!redact(name, secrets).equals(name)) {
+                  do {
+                    shown = next[0] == 1 ? REDACTED : REDACTED + next[0];
+                    next[0]++;
+                  } while (taken.contains(shown));
+                  taken.add(shown);
                 }
                 out.set(shown, redactNode(node.get(name), secrets));
               });
@@ -1240,16 +1257,13 @@ public final class Authentication {
       return (DiditException) cause;
     }
     if (!secrets.isEmpty()) {
-      // A transport error may quote the request: keep its type and a redacted message only.
+      // A transport error may quote the serialized request in a spelling no match finds: keep the
+      // error type and a fixed cause, none of the underlying text.
       boolean timedOut =
           cause instanceof TimeoutException
               || cause instanceof java.net.http.HttpTimeoutException
               || cause instanceof ApiTimeoutException;
-      Throwable clean =
-          new IOException(
-              cause.getClass().getName()
-                  + ": "
-                  + redact(String.valueOf(cause.getMessage()), secrets));
+      Throwable clean = new IOException("transport failure (details withheld)");
       return timedOut
           ? new ApiTimeoutException("Request timed out: " + where, clean)
           : new ApiConnectionException("Connection error on " + where, clean);
