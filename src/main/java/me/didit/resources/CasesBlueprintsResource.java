@@ -10,6 +10,8 @@ import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
+import me.didit.types.CaseBlueprintAiDraftRequest;
+import me.didit.types.CaseBlueprintAiDraftResponse;
 import me.didit.types.CaseBlueprintDetail;
 import me.didit.types.CaseBlueprintListItem;
 import me.didit.types.CaseBlueprintPresetInstallResult;
@@ -135,7 +137,7 @@ public final class CasesBlueprintsResource {
   /**
    * Create blueprint
    *
-   * <p>Create a case blueprint: general settings (assignment, escalation, transfer, 4-eyes pairing) plus content_config, the six sections that drive the case page. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it.
+   * <p>Create a case blueprint: general settings (assignment, escalation, transfer, 4-eyes pairing) plus content_config, the six sections that drive the case page. Set publish=false to create an unpublished draft; Publish creates its first live version. Discarding a never-published draft deletes it. applies_to accepts the six case-type values. content_config.stages.items[].worked_by is an optional active review-team UUID from this application. These settings are preserved in case policy snapshots; later edits do not change existing snapshots.
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/}
    * <p>Application scoped: the organization and application ids come from the client options.
@@ -229,7 +231,7 @@ public final class CasesBlueprintsResource {
   /**
    * Update blueprint
    *
-   * <p>Partially update a blueprint's general settings or content_config.
+   * <p>Partially update a blueprint's general settings or content_config. applies_to accepts the six case-type values. content_config.stages.items[].worked_by is an optional active review-team UUID from this application. These settings are preserved in case policy snapshots; later edits do not change existing snapshots.
    *
    * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
@@ -764,6 +766,53 @@ public final class CasesBlueprintsResource {
     return client.executeAsync(listHistoryRequest(blueprintUuid, CasesBlueprintsListHistoryParams.builder().build()), RequestOptions.none(), LIST_HISTORY_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Draft case blueprint with AI
+   *
+   * <p>Generate an unsaved blueprint proposal. Requires write:cases. Returns a draft object, not a blueprint UUID; no blueprint or saved policy draft is created. Review the proposal, choose assignees and any teams, approvals or routing, then create or update a blueprint separately. Invalid generated content or generation failure returns 503. See [blueprint AI drafts](/management-api/case-blueprints/ai-draft).
+   *
+   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/ai-draft/}
+   * <p>Application scoped: the organization and application ids come from the client options.
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public CaseBlueprintAiDraftResponse aiDraft(CaseBlueprintAiDraftRequest params, RequestOptions options) {
+    return client.execute(aiDraftRequest(params), options, AI_DRAFT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #aiDraft(CaseBlueprintAiDraftRequest, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<CaseBlueprintAiDraftResponse> aiDraftAsync(CaseBlueprintAiDraftRequest params, RequestOptions options) {
+    return client.executeAsync(aiDraftRequest(params), options, AI_DRAFT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #aiDraft(CaseBlueprintAiDraftRequest, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return the result
+   */
+  public CaseBlueprintAiDraftResponse aiDraft(CaseBlueprintAiDraftRequest params) {
+    return client.execute(aiDraftRequest(params), RequestOptions.none(), AI_DRAFT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #aiDraft(CaseBlueprintAiDraftRequest, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<CaseBlueprintAiDraftResponse> aiDraftAsync(CaseBlueprintAiDraftRequest params) {
+    return client.executeAsync(aiDraftRequest(params), RequestOptions.none(), AI_DRAFT_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<Page<CaseBlueprintListItem>> LIST_RESPONSE = Responses.page(Conv.model(CaseBlueprintListItem::fromJson));
 
   private static ApiRequest listRequest(CasesBlueprintsListParams params) {
@@ -881,6 +930,16 @@ public final class CasesBlueprintsResource {
         .pathParam("blueprint_uuid", blueprintUuid)
         .params(params)
         .queryFields("ordering", "limit", "offset")
+        .build();
+  }
+
+  private static final ResponseHandler<CaseBlueprintAiDraftResponse> AI_DRAFT_RESPONSE = Responses.json(Conv.model(CaseBlueprintAiDraftResponse::fromJson));
+
+  private static ApiRequest aiDraftRequest(CaseBlueprintAiDraftRequest params) {
+    return ApiRequest.builder("POST", "/v3/organization/{organization_id}/application/{application_id}/cases/blueprints/ai-draft/")
+        .applicationScoped()
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
         .build();
   }
 
@@ -1570,6 +1629,48 @@ public final class CasesBlueprintsResource {
      */
     public CompletableFuture<RawResponse<Page<CasePublicationPolicyRevision>>> listHistoryAsync(String blueprintUuid) {
       return client.executeAsync(listHistoryRequest(blueprintUuid, CasesBlueprintsListHistoryParams.builder().build()), RequestOptions.none(), LIST_HISTORY_RESPONSE);
+    }
+
+    /**
+     * {@link #aiDraft(CaseBlueprintAiDraftRequest, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<CaseBlueprintAiDraftResponse> aiDraft(CaseBlueprintAiDraftRequest params, RequestOptions options) {
+      return client.execute(aiDraftRequest(params), options, AI_DRAFT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #aiDraft(CaseBlueprintAiDraftRequest, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<CaseBlueprintAiDraftResponse>> aiDraftAsync(CaseBlueprintAiDraftRequest params, RequestOptions options) {
+      return client.executeAsync(aiDraftRequest(params), options, AI_DRAFT_RESPONSE);
+    }
+
+    /**
+     * {@link #aiDraft(CaseBlueprintAiDraftRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<CaseBlueprintAiDraftResponse> aiDraft(CaseBlueprintAiDraftRequest params) {
+      return client.execute(aiDraftRequest(params), RequestOptions.none(), AI_DRAFT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #aiDraft(CaseBlueprintAiDraftRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<CaseBlueprintAiDraftResponse>> aiDraftAsync(CaseBlueprintAiDraftRequest params) {
+      return client.executeAsync(aiDraftRequest(params), RequestOptions.none(), AI_DRAFT_RESPONSE);
     }
   }
 }

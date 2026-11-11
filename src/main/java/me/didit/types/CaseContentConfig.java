@@ -13,10 +13,10 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 
 /**
- * The six togglable sections that drive which tabs and fields appear on the case page. Unknown sections or keys are rejected.
+ * Case content sections and optional review stages. Unknown sections or keys are rejected. Cases retain the policy snapshot accepted when opened; later blueprint edits do not rewrite it.
  */
 public final class CaseContentConfig extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("checklist", "aml_control", "identity", "verifications", "reporting", "financial");
+  private static final Set<String> KNOWN_FIELDS = Set.of("checklist", "aml_control", "identity", "verifications", "reporting", "financial", "stages");
 
   private CaseContentConfig(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -111,6 +111,16 @@ public final class CaseContentConfig extends JsonModel {
     return Json.optional(json, "financial", Conv.model(CaseContentConfig.Financial::fromJson));
   }
 
+  /**
+   * Ordered review stages. Omitted or empty items use the default Triage, Evidence review and Decision stages.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<CaseContentConfig.Stages> stages() {
+    return Json.optional(json, "stages", Conv.model(CaseContentConfig.Stages::fromJson));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -182,6 +192,16 @@ public final class CaseContentConfig extends JsonModel {
      */
     public Builder financial(CaseContentConfig.Financial financial) {
       return set("financial", Conv.model(CaseContentConfig.Financial::fromJson), financial);
+    }
+
+    /**
+     * Ordered review stages. Omitted or empty items use the default Triage, Evidence review and Decision stages.
+     *
+     * @param stages the value
+     * @return this builder
+     */
+    public Builder stages(CaseContentConfig.Stages stages) {
+      return set("stages", Conv.model(CaseContentConfig.Stages::fromJson), stages);
     }
 
     /**
@@ -1085,6 +1105,94 @@ public final class CaseContentConfig extends JsonModel {
        */
       public Financial build() {
         return new Financial(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+  }
+
+  /**
+   * Ordered review stages. Omitted or empty items use the default Triage, Evidence review and Decision stages.
+   */
+  public static final class Stages extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("items");
+
+    private Stages(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Stages} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Stages fromJson(JsonNode json) {
+      return new Stages(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * At most ten stages with distinct keys. Resolving a case is a status change, not a stage.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<List<CaseBlueprintStage>> items() {
+      return Json.optional(json, "items", Conv.list(Conv.model(CaseBlueprintStage::fromJson)));
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Stages}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Stages from) {
+        super(from);
+      }
+
+      /**
+       * At most ten stages with distinct keys. Resolving a case is a status change, not a stage.
+       *
+       * @param items the value
+       * @return this builder
+       */
+      public Builder items(List<CaseBlueprintStage> items) {
+        return set("items", Conv.list(Conv.model(CaseBlueprintStage::fromJson)), items);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Stages}
+       */
+      public Stages build() {
+        return new Stages(buildJson(), buildFiles());
       }
 
       @Override

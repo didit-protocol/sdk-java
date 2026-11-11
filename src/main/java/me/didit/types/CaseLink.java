@@ -82,7 +82,7 @@ public final class CaseLink extends JsonModel {
   }
 
   /**
-   * session_id/session_number/status for session and business_session links; uuid/txn_id/status for transaction links.
+   * session_id/session_number/status for session and business_session links; uuid/txn_id/status for transaction links. Network links return only {"uuid": "&lt;network-uuid&gt;"}, without network member details.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -145,7 +145,7 @@ public final class CaseLink extends JsonModel {
     }
 
     /**
-     * session_id/session_number/status for session and business_session links; uuid/txn_id/status for transaction links.
+     * session_id/session_number/status for session and business_session links; uuid/txn_id/status for transaction links. Network links return only {"uuid": "&lt;network-uuid&gt;"}, without network member details.
      *
      * @param linkedEntitySummary the value, or {@code null} to send JSON null
      * @return this builder
@@ -193,7 +193,10 @@ public final class CaseLink extends JsonModel {
     /** The value {@code "transaction"}. */
     public static final LinkedEntityType TRANSACTION = new LinkedEntityType("transaction");
 
-    private static final List<LinkedEntityType> KNOWN_VALUES = List.of(SESSION, BUSINESS_SESSION, TRANSACTION);
+    /** The value {@code "network"}. */
+    public static final LinkedEntityType NETWORK = new LinkedEntityType("network");
+
+    private static final List<LinkedEntityType> KNOWN_VALUES = List.of(SESSION, BUSINESS_SESSION, TRANSACTION, NETWORK);
 
     private LinkedEntityType(String value) {
       super(value);

@@ -103,7 +103,7 @@ public final class CasesCreateParams extends JsonModel {
   }
 
   /**
-   * Required unless links is provided; the case's exactly-one subject.
+   * Exactly one user or business. Supply explicitly when any network link is supplied, even alongside other link types; otherwise may be derived from links.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -113,13 +113,13 @@ public final class CasesCreateParams extends JsonModel {
   }
 
   /**
-   * Sessions/business sessions/transactions to attach on creation, e.g. [{"entity_type": "transaction", "entity_uuid": "..."}]. When subject is omitted, the subject is derived from the first link's owner.
+   * Up to 500 session, business_session, transaction or network links; at most 20 when review_duplicates=true. When any network link is present, subject must be supplied explicitly. Otherwise the subject may be derived from a linked record.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<List<Map<String, JsonNode>>> links() {
-    return Json.optional(json, "links", Conv.list(Conv.OBJECT));
+  public Optional<List<CasesLinksCreateParams>> links() {
+    return Json.optional(json, "links", Conv.list(Conv.model(CasesLinksCreateParams::fromJson)));
   }
 
   /**
@@ -226,7 +226,7 @@ public final class CasesCreateParams extends JsonModel {
     }
 
     /**
-     * Required unless links is provided; the case's exactly-one subject.
+     * Exactly one user or business. Supply explicitly when any network link is supplied, even alongside other link types; otherwise may be derived from links.
      *
      * @param subject the value
      * @return this builder
@@ -236,13 +236,13 @@ public final class CasesCreateParams extends JsonModel {
     }
 
     /**
-     * Sessions/business sessions/transactions to attach on creation, e.g. [{"entity_type": "transaction", "entity_uuid": "..."}]. When subject is omitted, the subject is derived from the first link's owner.
+     * Up to 500 session, business_session, transaction or network links; at most 20 when review_duplicates=true. When any network link is present, subject must be supplied explicitly. Otherwise the subject may be derived from a linked record.
      *
      * @param links the value
      * @return this builder
      */
-    public Builder links(List<? extends Map<String, ?>> links) {
-      return setAny("links", links);
+    public Builder links(List<CasesLinksCreateParams> links) {
+      return set("links", Conv.list(Conv.model(CasesLinksCreateParams::fromJson)), links);
     }
 
     /**
@@ -347,7 +347,9 @@ public final class CasesCreateParams extends JsonModel {
     }
   }
 
-  /** Required unless links is provided; the case's exactly-one subject. */
+  /**
+   * Exactly one user or business. Supply explicitly when any network link is supplied, even alongside other link types; otherwise may be derived from links.
+   */
   public static final class Subject extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("type", "uuid");
 

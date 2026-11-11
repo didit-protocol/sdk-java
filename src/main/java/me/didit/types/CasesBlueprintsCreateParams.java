@@ -16,7 +16,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code cases.blueprints.create}. */
 public final class CasesBlueprintsCreateParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("name", "description", "assignee_pool", "assignment_method", "max_active_cases", "escalation_enabled", "escalation_blueprint", "transfer_enabled", "four_eyes_checker_blueprint", "require_resolution_note", "content_config", "is_active", "default_deadline_hours", "publish");
+  private static final Set<String> KNOWN_FIELDS = Set.of("name", "description", "assignee_pool", "assignment_method", "max_active_cases", "escalation_enabled", "escalation_blueprint", "transfer_enabled", "four_eyes_checker_blueprint", "require_resolution_note", "content_config", "is_active", "default_deadline_hours", "publish", "applies_to");
 
   private CasesBlueprintsCreateParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -152,7 +152,7 @@ public final class CasesBlueprintsCreateParams extends JsonModel {
   }
 
   /**
-   * The six togglable sections that drive which tabs and fields appear on the case page. Unknown sections or keys are rejected.
+   * Case content sections and optional review stages. Unknown sections or keys are rejected. Cases retain the policy snapshot accepted when opened; later blueprint edits do not rewrite it.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -189,6 +189,16 @@ public final class CasesBlueprintsCreateParams extends JsonModel {
    */
   public Optional<Boolean> publish() {
     return Json.optional(json, "publish", Conv.BOOLEAN);
+  }
+
+  /**
+   * Case types this blueprint describes. Optional on create and update; new blueprints default to an empty list. Stored in the accepted case policy snapshot.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<CaseBlueprintAppliesTo>> appliesTo() {
+    return Json.optional(json, "applies_to", Conv.list(Conv.enumeration(CaseBlueprintAppliesTo::of)));
   }
 
   @Override
@@ -305,7 +315,7 @@ public final class CasesBlueprintsCreateParams extends JsonModel {
     }
 
     /**
-     * The six togglable sections that drive which tabs and fields appear on the case page. Unknown sections or keys are rejected.
+     * Case content sections and optional review stages. Unknown sections or keys are rejected. Cases retain the policy snapshot accepted when opened; later blueprint edits do not rewrite it.
      *
      * @param contentConfig the value
      * @return this builder
@@ -342,6 +352,16 @@ public final class CasesBlueprintsCreateParams extends JsonModel {
      */
     public Builder publish(boolean publish) {
       return set("publish", Conv.BOOLEAN, publish);
+    }
+
+    /**
+     * Case types this blueprint describes. Optional on create and update; new blueprints default to an empty list. Stored in the accepted case policy snapshot.
+     *
+     * @param appliesTo the value
+     * @return this builder
+     */
+    public Builder appliesTo(List<CaseBlueprintAppliesTo> appliesTo) {
+      return set("applies_to", Conv.list(Conv.enumeration(CaseBlueprintAppliesTo::of)), appliesTo);
     }
 
     /**

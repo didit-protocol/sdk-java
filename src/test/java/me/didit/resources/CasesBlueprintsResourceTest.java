@@ -14,6 +14,8 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.CaseBlueprintAiDraftRequest;
+import me.didit.types.CaseBlueprintAppliesTo;
 import me.didit.types.CaseContentConfig;
 import me.didit.types.CasePublicationPolicyDraftPreconditionRequest;
 import me.didit.types.CasePublicationPolicyDraftWriteRequest;
@@ -50,7 +52,7 @@ final class CasesBlueprintsResourceTest {
 
   @Test
   void create() {
-    CasesBlueprintsCreateParams params = CasesBlueprintsCreateParams.builder().name("value-name").description("value-description").assigneePool(List.of("00000000-0000-4000-8000-0000000025f2")).assignmentMethod(CasesBlueprintsCreateParams.AssignmentMethod.MANUAL).maxActiveCases(1L).escalationEnabled(true).escalationBlueprint("00000000-0000-4000-8000-0000000058a9").transferEnabled(true).fourEyesCheckerBlueprint("00000000-0000-4000-8000-000000009dc3").requireResolutionNote(true).contentConfig(CaseContentConfig.builder().checklist(CaseContentConfig.Checklist.builder().enabled(true).optional(true).build()).amlControl(CaseContentConfig.AmlControl.builder().enabled(true).financial(true).build()).build()).isActive(true).defaultDeadlineHours(1L).publish(true).build();
+    CasesBlueprintsCreateParams params = CasesBlueprintsCreateParams.builder().name("value-name").description("value-description").assigneePool(List.of("00000000-0000-4000-8000-0000000025f2")).assignmentMethod(CasesBlueprintsCreateParams.AssignmentMethod.MANUAL).maxActiveCases(1L).escalationEnabled(true).escalationBlueprint("00000000-0000-4000-8000-0000000058a9").transferEnabled(true).fourEyesCheckerBlueprint("00000000-0000-4000-8000-000000009dc3").requireResolutionNote(true).contentConfig(CaseContentConfig.builder().checklist(CaseContentConfig.Checklist.builder().enabled(true).optional(true).build()).amlControl(CaseContentConfig.AmlControl.builder().enabled(true).financial(true).build()).build()).isActive(true).defaultDeadlineHours(1L).publish(true).appliesTo(List.of(CaseBlueprintAppliesTo.GENERAL)).build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(201, example);
     var result = client.cases().blueprints().create(params);
@@ -60,7 +62,7 @@ final class CasesBlueprintsResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"name\":\"value-name\",\"description\":\"value-description\",\"assignee_pool\":[\"00000000-0000-4000-8000-0000000025f2\"],\"assignment_method\":\"MANUAL\",\"max_active_cases\":1,\"escalation_enabled\":true,\"escalation_blueprint\":\"00000000-0000-4000-8000-0000000058a9\",\"transfer_enabled\":true,\"four_eyes_checker_blueprint\":\"00000000-0000-4000-8000-000000009dc3\",\"require_resolution_note\":true,\"content_config\":{\"checklist\":{\"enabled\":true,\"optional\":true},\"aml_control\":{\"enabled\":true,\"financial\":true}},\"is_active\":true,\"default_deadline_hours\":1,\"publish\":true}", request.body());
+    TestJson.assertJsonEquals("{\"name\":\"value-name\",\"description\":\"value-description\",\"assignee_pool\":[\"00000000-0000-4000-8000-0000000025f2\"],\"assignment_method\":\"MANUAL\",\"max_active_cases\":1,\"escalation_enabled\":true,\"escalation_blueprint\":\"00000000-0000-4000-8000-0000000058a9\",\"transfer_enabled\":true,\"four_eyes_checker_blueprint\":\"00000000-0000-4000-8000-000000009dc3\",\"require_resolution_note\":true,\"content_config\":{\"checklist\":{\"enabled\":true,\"optional\":true},\"aml_control\":{\"enabled\":true,\"financial\":true}},\"is_active\":true,\"default_deadline_hours\":1,\"publish\":true,\"applies_to\":[\"GENERAL\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
@@ -83,7 +85,7 @@ final class CasesBlueprintsResourceTest {
 
   @Test
   void update() {
-    CasesBlueprintsUpdateParams params = CasesBlueprintsUpdateParams.builder().name("value-name").description("value-description").assigneePool(List.of("00000000-0000-4000-8000-0000000025f2")).assignmentMethod(CasesBlueprintsUpdateParams.AssignmentMethod.MANUAL).maxActiveCases(1L).escalationEnabled(true).escalationBlueprint("00000000-0000-4000-8000-0000000058a9").transferEnabled(true).fourEyesCheckerBlueprint("00000000-0000-4000-8000-000000009dc3").requireResolutionNote(true).contentConfig(CaseContentConfig.builder().checklist(CaseContentConfig.Checklist.builder().enabled(true).optional(true).build()).amlControl(CaseContentConfig.AmlControl.builder().enabled(true).financial(true).build()).build()).isActive(true).defaultDeadlineHours(1L).expectedVersion(1L).build();
+    CasesBlueprintsUpdateParams params = CasesBlueprintsUpdateParams.builder().name("value-name").description("value-description").assigneePool(List.of("00000000-0000-4000-8000-0000000025f2")).assignmentMethod(CasesBlueprintsUpdateParams.AssignmentMethod.MANUAL).maxActiveCases(1L).escalationEnabled(true).escalationBlueprint("00000000-0000-4000-8000-0000000058a9").transferEnabled(true).fourEyesCheckerBlueprint("00000000-0000-4000-8000-000000009dc3").requireResolutionNote(true).contentConfig(CaseContentConfig.builder().checklist(CaseContentConfig.Checklist.builder().enabled(true).optional(true).build()).amlControl(CaseContentConfig.AmlControl.builder().enabled(true).financial(true).build()).build()).isActive(true).defaultDeadlineHours(1L).expectedVersion(1L).appliesTo(List.of(CaseBlueprintAppliesTo.GENERAL)).build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
     var result = client.cases().blueprints().update("00000000-0000-4000-8000-0000000123f6", params);
@@ -93,7 +95,7 @@ final class CasesBlueprintsResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"name\":\"value-name\",\"description\":\"value-description\",\"assignee_pool\":[\"00000000-0000-4000-8000-0000000025f2\"],\"assignment_method\":\"MANUAL\",\"max_active_cases\":1,\"escalation_enabled\":true,\"escalation_blueprint\":\"00000000-0000-4000-8000-0000000058a9\",\"transfer_enabled\":true,\"four_eyes_checker_blueprint\":\"00000000-0000-4000-8000-000000009dc3\",\"require_resolution_note\":true,\"content_config\":{\"checklist\":{\"enabled\":true,\"optional\":true},\"aml_control\":{\"enabled\":true,\"financial\":true}},\"is_active\":true,\"default_deadline_hours\":1,\"expected_version\":1}", request.body());
+    TestJson.assertJsonEquals("{\"name\":\"value-name\",\"description\":\"value-description\",\"assignee_pool\":[\"00000000-0000-4000-8000-0000000025f2\"],\"assignment_method\":\"MANUAL\",\"max_active_cases\":1,\"escalation_enabled\":true,\"escalation_blueprint\":\"00000000-0000-4000-8000-0000000058a9\",\"transfer_enabled\":true,\"four_eyes_checker_blueprint\":\"00000000-0000-4000-8000-000000009dc3\",\"require_resolution_note\":true,\"content_config\":{\"checklist\":{\"enabled\":true,\"optional\":true},\"aml_control\":{\"enabled\":true,\"financial\":true}},\"is_active\":true,\"default_deadline_hours\":1,\"expected_version\":1,\"applies_to\":[\"GENERAL\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
@@ -224,5 +226,22 @@ final class CasesBlueprintsResourceTest {
     TestJson.assertJsonEquals(example, result._json());
     assertEquals(example.path("results").size(), result.results().size());
     TestModels.readAll(result.results());
+  }
+
+  @Test
+  void aiDraft() {
+    CaseBlueprintAiDraftRequest params = CaseBlueprintAiDraftRequest.builder().prompt("value-prompt").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/organization/{organization_id}/application/{application_id}/cases/blueprints/ai-draft/", "200");
+    transport.respondJson(200, example);
+    var result = client.cases().blueprints().aiDraft(params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/blueprints/ai-draft/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"prompt\":\"value-prompt\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 }

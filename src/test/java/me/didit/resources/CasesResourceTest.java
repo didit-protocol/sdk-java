@@ -28,6 +28,7 @@ import me.didit.types.CasesAssignParams;
 import me.didit.types.CasesBulkAssignParams;
 import me.didit.types.CasesBulkUpdateStatusParams;
 import me.didit.types.CasesCreateParams;
+import me.didit.types.CasesLinksCreateParams;
 import me.didit.types.CasesListActionReceiptsParams;
 import me.didit.types.CasesListEventsParams;
 import me.didit.types.CasesListParams;
@@ -64,7 +65,7 @@ final class CasesResourceTest {
 
   @Test
   void create() {
-    CasesCreateParams params = CasesCreateParams.builder().title("value-title").blueprint("00000000-0000-4000-8000-00000000136c").priority(CasesCreateParams.Priority.LOW).dueAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).tags(List.of("value-tags")).subject(CasesCreateParams.Subject.builder().type(CasesCreateParams.Subject.Type.USER).uuid("00000000-0000-4000-8000-00000000042a").build()).links(List.of(Map.of("key", "value"))).assignedTo("00000000-0000-4000-8000-000000001b62").reviewDuplicates(true).separateIncidentReason("value-separate-incident-reason").sourceContext(CaseDuplicateCaseFraudSourceContextRequest.builder().checkId("00000000-0000-4000-8000-000000000e3e").requestId("00000000-0000-4000-8000-0000000016cb").sourceSection("value-source-section").build()).build();
+    CasesCreateParams params = CasesCreateParams.builder().title("value-title").blueprint("00000000-0000-4000-8000-00000000136c").priority(CasesCreateParams.Priority.LOW).dueAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).tags(List.of("value-tags")).subject(CasesCreateParams.Subject.builder().type(CasesCreateParams.Subject.Type.USER).uuid("00000000-0000-4000-8000-00000000042a").build()).links(List.of(CasesLinksCreateParams.builder().entityType(CasesLinksCreateParams.EntityType.SESSION).entityUuid("00000000-0000-4000-8000-000000001c1f").build())).assignedTo("00000000-0000-4000-8000-000000001b62").reviewDuplicates(true).separateIncidentReason("value-separate-incident-reason").sourceContext(CaseDuplicateCaseFraudSourceContextRequest.builder().checkId("00000000-0000-4000-8000-000000000e3e").requestId("00000000-0000-4000-8000-0000000016cb").sourceSection("value-source-section").build()).build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(201, example);
     var result = client.cases().create(params);
@@ -74,7 +75,7 @@ final class CasesResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"title\":\"value-title\",\"blueprint\":\"00000000-0000-4000-8000-00000000136c\",\"priority\":\"LOW\",\"due_at\":\"2026-11-01T10:15:30Z\",\"tags\":[\"value-tags\"],\"subject\":{\"type\":\"user\",\"uuid\":\"00000000-0000-4000-8000-00000000042a\"},\"links\":[{\"key\":\"value\"}],\"assigned_to\":\"00000000-0000-4000-8000-000000001b62\",\"review_duplicates\":true,\"separate_incident_reason\":\"value-separate-incident-reason\",\"source_context\":{\"check_id\":\"00000000-0000-4000-8000-000000000e3e\",\"request_id\":\"00000000-0000-4000-8000-0000000016cb\",\"source_section\":\"value-source-section\"}}", request.body());
+    TestJson.assertJsonEquals("{\"title\":\"value-title\",\"blueprint\":\"00000000-0000-4000-8000-00000000136c\",\"priority\":\"LOW\",\"due_at\":\"2026-11-01T10:15:30Z\",\"tags\":[\"value-tags\"],\"subject\":{\"type\":\"user\",\"uuid\":\"00000000-0000-4000-8000-00000000042a\"},\"links\":[{\"entity_type\":\"session\",\"entity_uuid\":\"00000000-0000-4000-8000-000000001c1f\"}],\"assigned_to\":\"00000000-0000-4000-8000-000000001b62\",\"review_duplicates\":true,\"separate_incident_reason\":\"value-separate-incident-reason\",\"source_context\":{\"check_id\":\"00000000-0000-4000-8000-000000000e3e\",\"request_id\":\"00000000-0000-4000-8000-0000000016cb\",\"source_section\":\"value-source-section\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

@@ -51,6 +51,7 @@ public final class CaseDuplicateCaseLinkCreateRequest extends JsonModel {
    * - <code>session</code> - Session
    * - <code>business_session</code> - Business Session
    * - <code>transaction</code> - Transaction
+   * - <code>network</code> - Network containing the selected case subject
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -86,6 +87,7 @@ public final class CaseDuplicateCaseLinkCreateRequest extends JsonModel {
      * - <code>session</code> - Session
      * - <code>business_session</code> - Business Session
      * - <code>transaction</code> - Transaction
+     * - <code>network</code> - Network containing the selected case subject
      *
      * @param entityType the value
      * @return this builder
