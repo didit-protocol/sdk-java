@@ -962,6 +962,40 @@ final class AuthenticationTest {
   }
 
   @Test
+  void agentConsentTransportFailuresNeverCarryTheRequestSecrets() {
+    String challenge = "MARK-CHALLENGE-T";
+    ObjectNode assertion = Json.nodes().objectNode();
+    assertion.put("id", "MARK-ID-T");
+    assertion.putObject("response").put("signature", "MARK-SIG-T");
+    Authentication transportAuth =
+        Authentication.builder()
+            .issuer(StubIssuer.ISSUER)
+            .transport(
+                request ->
+                    CompletableFuture.failedFuture(
+                        new IOException(
+                            "write failed: "
+                                + new String(request.body(), StandardCharsets.UTF_8)
+                                + " Bearer MARK-TOKEN-T")))
+            .clock(clock)
+            .build();
+    Exception error =
+        assertThrows(
+            Exception.class,
+            () ->
+                transportAuth.submitAgentConsent(
+                    "MARK-TOKEN-T",
+                    AgentConsentParams.approve(challenge).assertion(assertion).build()));
+    StringBuilder seen = new StringBuilder();
+    for (Throwable t = error; t != null; t = t.getCause()) {
+      seen.append(t).append('\n').append(t.getMessage()).append('\n');
+    }
+    for (String secret : List.of(challenge, "MARK-ID-T", "MARK-SIG-T", "MARK-TOKEN-T")) {
+      assertFalse(seen.toString().contains(secret), "leaked " + secret);
+    }
+  }
+
+  @Test
   void agentConsentAndApprovalOptions() {
     String secret = "pending-agent-request-secret";
     issuer.routes.put(

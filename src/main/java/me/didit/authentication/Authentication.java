@@ -1069,7 +1069,7 @@ public final class Authentication {
         .handle(
             (response, error) -> {
               if (error != null) {
-                throw new CompletionException(connectionError(where, error));
+                throw new CompletionException(connectionError(where, error, secrets));
               }
               int status = response.statusCode();
               if (status >= 200 && status < 300) {
@@ -1216,10 +1216,24 @@ public final class Authentication {
         : new DiditException("Authentication call failed", cause);
   }
 
-  private static DiditException connectionError(String where, Throwable error) {
+  private static DiditException connectionError(
+      String where, Throwable error, List<String> secrets) {
     Throwable cause = unwrap(error);
     if (cause instanceof DiditException) {
       return (DiditException) cause;
+    }
+    if (!secrets.isEmpty()) {
+      // A transport error may quote the request: keep its type and a redacted message only.
+      boolean timedOut =
+          cause instanceof TimeoutException || cause instanceof java.net.http.HttpTimeoutException;
+      Throwable clean =
+          new IOException(
+              cause.getClass().getName()
+                  + ": "
+                  + redact(String.valueOf(cause.getMessage()), secrets));
+      return timedOut
+          ? new ApiTimeoutException("Request timed out: " + where, clean)
+          : new ApiConnectionException("Connection error on " + where, clean);
     }
     if (cause instanceof TimeoutException || cause instanceof java.net.http.HttpTimeoutException) {
       return new ApiTimeoutException("Request timed out: " + where, cause);
