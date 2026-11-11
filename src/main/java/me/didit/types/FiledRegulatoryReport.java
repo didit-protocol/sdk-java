@@ -192,7 +192,13 @@ public final class FiledRegulatoryReport extends JsonModel {
     /** The value {@code "TFR"}. */
     public static final ReportType TFR = new ReportType("TFR");
 
-    private static final List<ReportType> KNOWN_VALUES = List.of(SAR, STR, CTR, TTR, UTR, IFT, CBR, TFR);
+    /** The value {@code "FFR"}. */
+    public static final ReportType FFR = new ReportType("FFR");
+
+    /** The value {@code "PNMR"}. */
+    public static final ReportType PNMR = new ReportType("PNMR");
+
+    private static final List<ReportType> KNOWN_VALUES = List.of(SAR, STR, CTR, TTR, UTR, IFT, CBR, TFR, FFR, PNMR);
 
     private ReportType(String value) {
       super(value);

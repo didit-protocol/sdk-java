@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * One Travel Rule transfer as the transfers list shows it: VASP names, wallets and memos only, never the originator or beneficiary person data.
  */
 public final class TravelRuleTransferRow extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("id", "transaction_id", "txn_id", "txn_date", "kind", "direction", "status", "reason", "rail", "asset", "amount", "originator_vasp", "beneficiary_vasp", "originator_wallet", "beneficiary_wallet", "originator_memo", "beneficiary_memo", "originator_wallet_type", "beneficiary_wallet_type", "matched_transaction_id", "deadline_at", "created_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("id", "transaction_id", "txn_id", "txn_date", "kind", "direction", "status", "reason", "rail", "asset", "amount", "originator_vasp", "beneficiary_vasp", "originator_wallet", "beneficiary_wallet", "originator_memo", "beneficiary_memo", "originator_wallet_type", "beneficiary_wallet_type", "matched_transaction_id", "scenario", "webhooks_count", "deadline_at", "created_at");
 
   private TravelRuleTransferRow(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -255,6 +255,26 @@ public final class TravelRuleTransferRow extends JsonModel {
   }
 
   /**
+   * The sandbox scenario that answered this transfer, only when <code>rail</code> is <code>TEST_VASP</code> (for example <code>accept</code>, <code>decline</code> or <code>name_mismatch</code>). <code>null</code> for every other transfer, including a live one.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> scenario() {
+    return Json.optional(json, "scenario", Conv.STRING);
+  }
+
+  /**
+   * How many webhook delivery attempts Didit recorded for this transfer's transaction, across every event type. Each retry and each manual resend is a separate attempt and counts. Scoped to the calling application; deleted transactions are not counted.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> webhooksCount() {
+    return Json.optional(json, "webhooks_count", Conv.LONG);
+  }
+
+  /**
    * When the transfer expires if it is still waiting on its counterparty. Set on every transfer you create with <code>POST /v3/transactions/</code> that needs an exchange, outbound or inbound. Null below the threshold, on a Lightning payment the Travel Rule does not apply to, and on inbound transfers Didit creates when a counterparty reaches you (an inbound TRP inquiry, a network message or the INTERNAL inbound leg).
    *
    * @return the value, or empty when the field is absent or null
@@ -485,6 +505,26 @@ public final class TravelRuleTransferRow extends JsonModel {
      */
     public Builder matchedTransactionId(@Nullable String matchedTransactionId) {
       return setNullable("matched_transaction_id", Conv.STRING, matchedTransactionId);
+    }
+
+    /**
+     * The sandbox scenario that answered this transfer, only when <code>rail</code> is <code>TEST_VASP</code> (for example <code>accept</code>, <code>decline</code> or <code>name_mismatch</code>). <code>null</code> for every other transfer, including a live one.
+     *
+     * @param scenario the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder scenario(@Nullable String scenario) {
+      return setNullable("scenario", Conv.STRING, scenario);
+    }
+
+    /**
+     * How many webhook delivery attempts Didit recorded for this transfer's transaction, across every event type. Each retry and each manual resend is a separate attempt and counts. Scoped to the calling application; deleted transactions are not counted.
+     *
+     * @param webhooksCount the value
+     * @return this builder
+     */
+    public Builder webhooksCount(long webhooksCount) {
+      return set("webhooks_count", Conv.LONG, webhooksCount);
     }
 
     /**

@@ -26,6 +26,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 import me.didit.core.Headers;
+import me.didit.core.Json;
 import me.didit.core.TransportRequest;
 import me.didit.core.TransportResponse;
 import me.didit.testing.SpecExamples;
@@ -129,6 +130,24 @@ final class AuthenticationContractTest {
           for (JsonNode media : deref(response.getValue()).path("content")) {
             for (JsonNode example : media.path("examples")) {
               bodies.add(deref(example).get("value"));
+            }
+            // A response may document its body as `example` on the media type, its schema or
+            // each oneOf branch of its schema.
+            if (!media.has("examples")) {
+              if (media.has("example")) {
+                bodies.add(media.get("example"));
+              } else {
+                JsonNode schema = deref(media.path("schema"));
+                if (schema.has("example")) {
+                  bodies.add(schema.get("example"));
+                }
+                for (JsonNode branch : schema.path("oneOf")) {
+                  JsonNode example = deref(branch).get("example");
+                  if (example != null) {
+                    bodies.add(example);
+                  }
+                }
+              }
             }
           }
           examples.put(Integer.parseInt(response.getKey()), bodies);
@@ -328,6 +347,14 @@ final class AuthenticationContractTest {
                 .build());
       case "retrieveStepUp":
         return auth.retrieveStepUp(ACCESS_TOKEN, STEP_UP_ID);
+      case "submitAgentConsent":
+        return auth.submitAgentConsent(
+            ACCESS_TOKEN,
+            AgentConsentParams.approve("pending-agent-request-secret")
+                .assertion(Json.nodes().objectNode().put("id", "c3ludGhldGljLWNyZWRlbnRpYWw"))
+                .build());
+      case "createAgentApprovalOptions":
+        return auth.createAgentApprovalOptions(ACCESS_TOKEN, "pending-agent-request-secret");
       default:
         throw new AssertionError(
             "authentication.json documents " + method + ": add it to Authentication and here");

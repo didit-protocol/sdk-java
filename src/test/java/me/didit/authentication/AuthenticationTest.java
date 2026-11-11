@@ -28,6 +28,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import me.didit.core.Headers;
+import me.didit.core.TransportRequest;
 import me.didit.core.TransportResponse;
 import me.didit.errors.ApiConnectionException;
 import me.didit.errors.ApiTimeoutException;
@@ -36,6 +37,7 @@ import me.didit.errors.BadRequestException;
 import me.didit.errors.ConfigurationException;
 import me.didit.errors.TokenVerificationException;
 import me.didit.errors.TokenVerificationException.Reason;
+import me.didit.testing.TestJson;
 import org.junit.jupiter.api.Test;
 
 final class AuthenticationTest {
@@ -852,6 +854,107 @@ final class AuthenticationTest {
       assertFalse(r.headers().containsKey("Origin"));
       assertTrue(r.headers().get("User-Agent").get(0).startsWith("didit-java/"));
     }
+  }
+
+  @Test
+  void agentConsentAndApprovalOptions() {
+    String secret = "pending-agent-request-secret";
+    issuer.routes.put(
+        "POST /agents/consent/passkey/",
+        r ->
+            StubIssuer.json(
+                200,
+                "{\"options\":{\"challenge\":\"c3ludGhldGljLWNoYWxsZW5nZQ\",\"rpId\":\"app.auth.didit.me\","
+                    + "\"timeout\":60000,\"userVerification\":\"required\",\"allowCredentials\":"
+                    + "[{\"id\":\"cred-1\",\"type\":\"public-key\"}]}}"));
+    AgentApprovalOptions options = auth().createAgentApprovalOptions("at-1", secret);
+    TransportRequest optionsRequest = issuer.last("POST /agents/consent/passkey/");
+    assertEquals("Bearer at-1", optionsRequest.headers().get("Authorization").get(0));
+    assertEquals(
+        "{\"challenge\":\"" + secret + "\"}",
+        new String(optionsRequest.body(), StandardCharsets.UTF_8));
+    assertEquals("c3ludGhldGljLWNoYWxsZW5nZQ", options.webAuthnChallenge().orElseThrow());
+    assertEquals("app.auth.didit.me", options.rpId().orElseThrow());
+    assertEquals(List.of("cred-1"), options.allowedCredentialIds());
+    assertFalse(options.toString().contains("c3ludGhldGljLWNoYWxsZW5nZQ"));
+
+    issuer.routes.put(
+        "POST /agents/consent/",
+        r ->
+            StubIssuer.json(
+                200,
+                "{\"code\":\"single-use-agent-code\",\"redirect_uri\":\"https://agent.example/cb\","
+                    + "\"state\":\"st-1\"}"));
+    AgentConsent approved =
+        auth()
+            .submitAgentConsent(
+                "at-1",
+                AgentConsentParams.approve(secret)
+                    .assertion(
+                        TestJson.parse(
+                            "{\"id\":\"a\",\"rawId\":\"a\",\"type\":\"public-key\",\"response\":{}}"))
+                    .scopes(List.of("read"))
+                    .lifetime(86400)
+                    .build());
+    String sent = new String(issuer.last("POST /agents/consent/").body(), StandardCharsets.UTF_8);
+    assertTrue(sent.contains("\"decision\":\"approve\""));
+    assertTrue(sent.contains("\"assertion\":{\"id\":\"a\""));
+    assertTrue(sent.contains("\"scopes\":[\"read\"]"));
+    assertTrue(sent.contains("\"lifetime\":86400"));
+    assertTrue(approved.isApproved());
+    assertFalse(approved.isDenied());
+    assertEquals("single-use-agent-code", approved.code().orElseThrow());
+    assertEquals("https://agent.example/cb", approved.redirectUri().orElseThrow());
+    assertEquals("st-1", approved.state().orElseThrow());
+    assertFalse(approved.toString().contains("single-use-agent-code"));
+
+    issuer.routes.put(
+        "POST /agents/consent/", r -> StubIssuer.json(200, "{\"status\":\"denied\"}"));
+    AgentConsent denied =
+        auth().submitAgentConsent("at-1", AgentConsentParams.deny(secret).build());
+    assertEquals(
+        "{\"challenge\":\"" + secret + "\",\"decision\":\"deny\"}",
+        new String(issuer.last("POST /agents/consent/").body(), StandardCharsets.UTF_8));
+    assertTrue(denied.isDenied());
+    assertFalse(denied.isApproved());
+    assertTrue(denied.code().isEmpty());
+
+    // Error statuses map to typed errors, and POST is never retried, not even on a 5xx.
+    long before = issuer.count("POST /agents/consent/");
+    issuer.routes.put(
+        "POST /agents/consent/", r -> StubIssuer.json(400, "{\"error\":\"invalid_grant\"}"));
+    assertThrows(
+        me.didit.errors.BadRequestException.class,
+        () -> auth().submitAgentConsent("at-1", AgentConsentParams.approve(secret).build()));
+    issuer.routes.put(
+        "POST /agents/consent/", r -> StubIssuer.json(403, "{\"detail\":\"passkey_required\"}"));
+    assertEquals(
+        403,
+        assertThrows(
+                me.didit.errors.PermissionDeniedException.class,
+                () -> auth().submitAgentConsent("at-1", AgentConsentParams.approve(secret).build()))
+            .statusCode());
+    issuer.routes.put("POST /agents/consent/", r -> StubIssuer.json(503, "{\"detail\":\"busy\"}"));
+    assertThrows(
+        me.didit.errors.InternalServerException.class,
+        () -> auth().submitAgentConsent("at-1", AgentConsentParams.deny(secret).build()));
+    assertEquals(before + 3, issuer.count("POST /agents/consent/"));
+    issuer.routes.put(
+        "POST /agents/consent/passkey/",
+        r -> StubIssuer.json(400, "{\"error\":\"passkey_required\"}"));
+    assertThrows(
+        me.didit.errors.BadRequestException.class,
+        () -> auth().createAgentApprovalOptions("at-1", secret));
+    assertEquals(2, issuer.count("POST /agents/consent/passkey/"));
+
+    // Input checks happen before anything is sent.
+    assertThrows(IllegalArgumentException.class, () -> AgentConsentParams.approve(""));
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> AgentConsentParams.approve(secret).scopes(List.of("admin")));
+    assertThrows(
+        IllegalArgumentException.class, () -> AgentConsentParams.approve(secret).lifetime(5));
+    assertThrows(ConfigurationException.class, () -> auth().createAgentApprovalOptions("at-1", ""));
   }
 
   @Test

@@ -47,7 +47,7 @@ final class AccountApplicationsResourceTest {
 
   @Test
   void create() {
-    ApplicationCreateRequest params = ApplicationCreateRequest.builder().name("value-name").websiteUrl("value-website-url").redirectUris(List.of("value-redirect-uris")).termsUrl("value-terms-url").privacyUrl("value-privacy-url").description("value-description").dataLocation(ApplicationDataLocation.EU).build();
+    ApplicationCreateRequest params = ApplicationCreateRequest.builder().name("value-name").websiteUrl("value-website-url").redirectUris(List.of("value-redirect-uris")).termsUrl("value-terms-url").privacyUrl("value-privacy-url").description("value-description").dataLocation(ApplicationDataLocation.EU).initiateLoginUri("value-initiate-login-uri").build();
     JsonNode example = SpecExamples.response("account.json", "POST", "/organizations/me/{org_id}/applications/", "201");
     transport.respondJson(201, example);
     var result = client.account().applications().create("00000000-0000-4000-8000-00000000e154", params);
@@ -58,7 +58,7 @@ final class AccountApplicationsResourceTest {
     assertEquals("Bearer test-account-token", request.header("Authorization"));
     assertEquals(null, request.header("x-api-key"));
     assertEquals("https://apx.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"name\":\"value-name\",\"website_url\":\"value-website-url\",\"redirect_uris\":[\"value-redirect-uris\"],\"terms_url\":\"value-terms-url\",\"privacy_url\":\"value-privacy-url\",\"description\":\"value-description\",\"data_location\":\"eu\"}", request.body());
+    TestJson.assertJsonEquals("{\"name\":\"value-name\",\"website_url\":\"value-website-url\",\"redirect_uris\":[\"value-redirect-uris\"],\"terms_url\":\"value-terms-url\",\"privacy_url\":\"value-privacy-url\",\"description\":\"value-description\",\"data_location\":\"eu\",\"initiate_login_uri\":\"value-initiate-login-uri\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
@@ -82,7 +82,7 @@ final class AccountApplicationsResourceTest {
 
   @Test
   void update() {
-    ApplicationUpdateRequest params = ApplicationUpdateRequest.builder().name("value-name").websiteUrl("value-website-url").redirectUris(List.of("value-redirect-uris")).termsUrl("value-terms-url").privacyUrl("value-privacy-url").description("value-description").dataLocation(ApplicationDataLocation.EU).build();
+    ApplicationUpdateRequest params = ApplicationUpdateRequest.builder().name("value-name").websiteUrl("value-website-url").redirectUris(List.of("value-redirect-uris")).termsUrl("value-terms-url").privacyUrl("value-privacy-url").description("value-description").dataLocation(ApplicationDataLocation.EU).initiateLoginUri("value-initiate-login-uri").build();
     JsonNode example = SpecExamples.response("account.json", "PATCH", "/organizations/me/{org_id}/applications/{app_id}/", "200");
     transport.respondJson(200, example);
     var result = client.account().applications().update("00000000-0000-4000-8000-00000000e29a", "00000000-0000-4000-8000-00000000e1e6", params);
@@ -93,7 +93,7 @@ final class AccountApplicationsResourceTest {
     assertEquals("Bearer test-account-token", request.header("Authorization"));
     assertEquals(null, request.header("x-api-key"));
     assertEquals("https://apx.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"name\":\"value-name\",\"website_url\":\"value-website-url\",\"redirect_uris\":[\"value-redirect-uris\"],\"terms_url\":\"value-terms-url\",\"privacy_url\":\"value-privacy-url\",\"description\":\"value-description\",\"data_location\":\"eu\"}", request.body());
+    TestJson.assertJsonEquals("{\"name\":\"value-name\",\"website_url\":\"value-website-url\",\"redirect_uris\":[\"value-redirect-uris\"],\"terms_url\":\"value-terms-url\",\"privacy_url\":\"value-privacy-url\",\"description\":\"value-description\",\"data_location\":\"eu\",\"initiate_login_uri\":\"value-initiate-login-uri\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

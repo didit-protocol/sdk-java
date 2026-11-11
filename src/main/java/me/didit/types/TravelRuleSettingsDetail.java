@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 
 public final class TravelRuleSettingsDetail extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("is_enabled", "jurisdiction", "name_matching_strictness", "confirmation_timeout_hours", "timeout_outcome", "threshold_amount", "ownership_validation_mode", "simplified_validation_threshold", "data_sharing_fields", "matching_rules", "legal_name", "lei", "compliance_email", "is_discoverable", "inbound_auto_accept", "allow_self_declaration", "allow_screenshot_proof", "auto_wallet_verification", "vasp_attribution_enabled", "counterparty_screening_enabled", "sunrise_policy", "sunrise_jurisdictions", "non_responsive_policy", "travel_address", "disabled_networks", "networks", "didit_network");
+  private static final Set<String> KNOWN_FIELDS = Set.of("is_enabled", "jurisdiction", "vasp_jurisdiction", "name_matching_strictness", "confirmation_timeout_hours", "timeout_outcome", "threshold_amount", "ownership_validation_mode", "simplified_validation_threshold", "data_sharing_fields", "matching_rules", "legal_name", "lei", "compliance_email", "is_discoverable", "inbound_auto_accept", "allow_self_declaration", "allow_screenshot_proof", "auto_wallet_verification", "vasp_attribution_enabled", "counterparty_screening_enabled", "sunrise_policy", "sunrise_jurisdictions", "non_responsive_policy", "travel_address", "disabled_networks", "networks", "didit_network");
 
   private TravelRuleSettingsDetail(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -60,13 +60,23 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * Your VASP's operating jurisdiction code. Default <code>"EU"</code>. Didit maps it to the regime it stamps on your Travel Rule transactions as <code>travel_rule_regime</code> (for example <code>EU</code> or an EU member code becomes <code>eu</code>), which transaction rules can key on. Other Didit customers see it as your jurisdiction in the VASP directory once the Didit network lists your profile.
+   * Your VASP's regulatory regime code. Default <code>"EU"</code>. Didit maps it to the regime it stamps on your Travel Rule transactions as <code>travel_rule_regime</code> (for example <code>EU</code> or an EU member code becomes <code>eu</code>), which transaction rules can key on, and it decides which data fields the exchange must share. Other Didit customers see <code>vasp_jurisdiction</code> in the VASP directory; while <code>vasp_jurisdiction</code> is empty, the directory shows this value instead.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<String> jurisdiction() {
     return Json.optional(json, "jurisdiction", Conv.STRING);
+  }
+
+  /**
+   * Your VASP profile's own jurisdiction, up to 3 characters (for example <code>GB</code> or <code>USA</code>), shown to other Didit customers in the VASP directory. It is independent of <code>jurisdiction</code>, the regulatory regime Didit stamps on your transfers; while <code>vasp_jurisdiction</code> is empty, the directory shows <code>jurisdiction</code>. Empty until you set it.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> vaspJurisdiction() {
+    return Json.optional(json, "vasp_jurisdiction", Conv.STRING);
   }
 
   /**
@@ -343,13 +353,23 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * Your VASP's operating jurisdiction code. Default <code>"EU"</code>. Didit maps it to the regime it stamps on your Travel Rule transactions as <code>travel_rule_regime</code> (for example <code>EU</code> or an EU member code becomes <code>eu</code>), which transaction rules can key on. Other Didit customers see it as your jurisdiction in the VASP directory once the Didit network lists your profile.
+     * Your VASP's regulatory regime code. Default <code>"EU"</code>. Didit maps it to the regime it stamps on your Travel Rule transactions as <code>travel_rule_regime</code> (for example <code>EU</code> or an EU member code becomes <code>eu</code>), which transaction rules can key on, and it decides which data fields the exchange must share. Other Didit customers see <code>vasp_jurisdiction</code> in the VASP directory; while <code>vasp_jurisdiction</code> is empty, the directory shows this value instead.
      *
      * @param jurisdiction the value
      * @return this builder
      */
     public Builder jurisdiction(String jurisdiction) {
       return set("jurisdiction", Conv.STRING, jurisdiction);
+    }
+
+    /**
+     * Your VASP profile's own jurisdiction, up to 3 characters (for example <code>GB</code> or <code>USA</code>), shown to other Didit customers in the VASP directory. It is independent of <code>jurisdiction</code>, the regulatory regime Didit stamps on your transfers; while <code>vasp_jurisdiction</code> is empty, the directory shows <code>jurisdiction</code>. Empty until you set it.
+     *
+     * @param vaspJurisdiction the value
+     * @return this builder
+     */
+    public Builder vaspJurisdiction(String vaspJurisdiction) {
+      return set("vasp_jurisdiction", Conv.STRING, vaspJurisdiction);
     }
 
     /**

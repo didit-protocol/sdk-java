@@ -3,7 +3,7 @@
   "info": {
     "version": "1.0.0",
     "title": "Didit Auth API",
-    "description": "Programmatic registration and authentication API for developers and AI agents. Register in 2 API calls -- no browser needed. The most agent-friendly identity verification platform.\n\n## Base URL\n\nAll endpoints in this spec are hosted at `https://apx.didit.me/auth/v2`. This is a different host than the verification API (`https://verification.didit.me/v3`). Keep them straight: this auth host issues your **JWT access tokens** and lets you list and manage your **organizations** and **applications**. The verification host is where you call sessions, workflows, AML, etc., authenticated with the **`api_key`** returned by this API.\n\n## How the auth flow works\n\n1. `POST /programmatic/register/` — submit email + password.\n2. Receive a 6-character alphanumeric code by email.\n3. `POST /programmatic/verify-email/` — submit the code. You get back a JWT `access_token`, a `refresh_token`, an organization, and a default application with `client_id` + `api_key`.\n4. Save the `api_key`. Use it as `x-api-key` for every call to `https://verification.didit.me/v3/...`.\n5. From any future machine, `POST /programmatic/login/` exchanges your email + password for a fresh JWT, then call `GET /organizations/me/` and the application endpoints to recover or rotate credentials.\n\nThe JWT is only needed for the **Account Management** endpoints in this spec; verification API traffic uses the long-lived `api_key`, not the JWT.\n\n## Conventions\n\n- All request and response bodies are JSON (`Content-Type: application/json`).\n- **Use a real, deliverable email address when testing `POST /programmatic/register/`.** The endpoint sends the verification code synchronously, so addresses on reserved test domains (`@example.com`, `@example.org`, `@*.test`, `@*.example`, `@*.invalid`) are refused by mail delivery and the request returns a `500`. Substitute the `you@yourdomain.com` placeholder in the samples with an inbox you can actually read.\n- Validation errors return HTTP `400` with one of two envelopes: `{\"field\": [\"message\", ...]}` for field-level problems, or `{\"detail\": \"message\"}` for business-rule errors. A handful of validators (password strength on register, code expiry on verify-email) currently respond with a bare array `[\"message\"]` instead of the field-keyed form -- this is a known server-side inconsistency, so client code should accept both shapes.\n- Authentication errors come back as `{\"detail\": \"...\"}` with HTTP `401` (invalid bearer token) or `403` (missing bearer token / insufficient privileges).\n- Rate-limit responses include a `wait` field with the cooldown in seconds."
+    "description": "Programmatic registration and authentication API for developers and AI agents. Register in 2 API calls -- no browser needed. The most agent-friendly identity verification platform.\n\n## Base URL\n\nAll endpoints in this spec are hosted at `https://apx.didit.me/auth/v2`. This is a different host than the verification API (`https://verification.didit.me/v3`). Keep them straight: this auth host issues your **JWT access tokens** and lets you list and manage your **organizations** and **applications**. The verification host is where you call sessions, workflows, AML, etc., authenticated with the **`api_key`** returned by this API.\n\n## How the auth flow works\n\n1. `POST /programmatic/register/`: submit email + password.\n2. Receive a 6-character alphanumeric code by email.\n3. `POST /programmatic/verify-email/`: submit the code. You get back a JWT `access_token`, a `refresh_token`, an organization and two applications, each with `client_id` + `api_key`: `sandbox_application` (free, every check is mocked and never billed) and `application` (live, every check is billed from the organization's balance, which starts at $0).\n4. Save both `api_key` values. Build and test with the sandbox key as `x-api-key` on every call to `https://verification.didit.me/v3/...`, and switch to the live `application` key only to go live, after adding credit.\n5. From any future machine, `POST /programmatic/login/` exchanges your email + password for a fresh JWT, then call `GET /organizations/me/` and the application endpoints to recover or rotate credentials.\n\nThe JWT is only needed for the **Account Management** endpoints in this spec; verification API traffic uses the long-lived `api_key`, not the JWT.\n\n## Conventions\n\n- All request and response bodies are JSON (`Content-Type: application/json`).\n- **Use a real, deliverable email address when testing `POST /programmatic/register/`.** The address is checked before any account is created: addresses on reserved test domains (`@example.com`, `@example.org`, `@*.test`, `@*.example`, `@*.invalid`) and others that cannot receive the code return `400` with `\"code\": \"email_undeliverable\"` and a `reason`. Substitute the `you@yourdomain.com` placeholder in the samples with an inbox you can actually read.\n- Validation errors return HTTP `400` with one of two envelopes: `{\"field\": [\"message\", ...]}` for field-level problems, or `{\"detail\": \"message\"}` for business-rule errors. A handful of validators (password strength on register, code expiry on verify-email) currently respond with a bare array `[\"message\"]` instead of the field-keyed form -- this is a known server-side inconsistency, so client code should accept both shapes.\n- Authentication errors come back as `{\"detail\": \"...\"}` with HTTP `401` (invalid bearer token) or `403` (missing bearer token / insufficient privileges).\n- Rate-limit responses include a `wait` field with the cooldown in seconds.\n\n## Console identity recovery\n\nIdentity actions are console-only and require a console session; account API tokens, application API keys and end-user access tokens do not grant access. They are not public server SDK operations. See [admin identity actions](https://docs.didit.me/authentication/sign-in-methods#admin-identity-actions) for reset MFA, sign-in links, password reset and bulk status changes. The x-console-identity-actions extension references their request and result schemas without adding callable SDK paths."
   },
   "servers": [
     {
@@ -63,6 +63,24 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "An account with this email is already registered but not verified yet. A new 6-character verification code was emailed (valid for 10 minutes) and nothing else changes: the password sent in this request is ignored. Call `POST /programmatic/verify-email/` next with the new code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterResponse"
+                },
+                "examples": {
+                  "New code sent": {
+                    "value": {
+                      "message": "A new verification code has been sent to your email.",
+                      "email": "you@yourdomain.com"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "201": {
             "description": "Registration successful. A 6-character alphanumeric verification code (e.g., `A3K9F2`) was emailed to the supplied address and is valid for 10 minutes. Call `POST /programmatic/verify-email/` next.",
             "content": {
@@ -301,7 +319,16 @@
                         "name": "developer",
                         "client_id": "S9LIYGSoWNuGMLHsvEt9dQ",
                         "api_key": "sk_live_example_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-                        "data_location": "eu"
+                        "data_location": "eu",
+                        "mode": "live"
+                      },
+                      "sandbox_application": {
+                        "uuid": "c3d4e5f6-7890-12cd-efgh-333333333333",
+                        "name": "developer (Sandbox)",
+                        "client_id": "T0MJZHTpXOvHNMItwFu0eR",
+                        "api_key": "sk_test_example_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                        "data_location": "eu",
+                        "mode": "sandbox"
                       }
                     }
                   },
@@ -370,11 +397,18 @@
             }
           },
           "403": {
-            "description": "The account was recovered and must set up a new sign-in method first. No tokens are issued; a link to do that was emailed to the account's address.",
+            "description": "The account was recovered and must set up a new sign-in method first. No tokens are issued; a link to do that was emailed to the account's address. An account whose organization enforces SSO gets `403` with `error: sso_required`, `organization_name`, `organization_slug` and `sso_url`, with no tokens and no new organization.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RecoverySetupRequiredError"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/RecoverySetupRequiredError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SsoRequiredError"
+                    }
+                  ]
                 },
                 "examples": {
                   "RecoverySetupRequired": {
@@ -384,6 +418,16 @@
                       "setup_link_sent": true,
                       "message": "You recovered your account. Open the link we emailed you to set up a new sign-in method.",
                       "code": "recovery_setup_required"
+                    }
+                  },
+                  "SSORequired": {
+                    "summary": "The account belongs to an organization that requires SSO",
+                    "value": {
+                      "error": "sso_required",
+                      "message": "Your organization 'Acme Corp' requires SSO login.",
+                      "organization_name": "Acme Corp",
+                      "organization_slug": "acme-corp",
+                      "sso_url": "/sso/acme-corp"
                     }
                   }
                 }
@@ -560,18 +604,6 @@
                     "value": {
                       "detail": "Please verify your email address before logging in."
                     }
-                  },
-                  "SSORequired": {
-                    "summary": "The account belongs to an organization that requires SSO",
-                    "value": {
-                      "detail": {
-                        "error": "sso_required",
-                        "message": "Your organization 'Acme Corp' requires SSO login.",
-                        "organization_name": "Acme Corp",
-                        "organization_slug": "acme-corp",
-                        "sso_url": "/sso/acme-corp"
-                      }
-                    }
                   }
                 }
               }
@@ -582,7 +614,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RecoverySetupRequiredError"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/RecoverySetupRequiredError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SsoRequiredError"
+                    }
+                  ]
                 },
                 "examples": {
                   "RecoverySetupRequired": {
@@ -592,6 +631,16 @@
                       "setup_link_sent": true,
                       "message": "You recovered your account. Open the link we emailed you to set up a new sign-in method.",
                       "code": "recovery_setup_required"
+                    }
+                  },
+                  "SSORequired": {
+                    "summary": "The account belongs to an organization that requires SSO",
+                    "value": {
+                      "error": "sso_required",
+                      "message": "Your organization 'Acme Corp' requires SSO login.",
+                      "organization_name": "Acme Corp",
+                      "organization_slug": "acme-corp",
+                      "sso_url": "/sso/acme-corp"
                     }
                   }
                 }
@@ -852,7 +901,7 @@
     "/organizations/me/{org_id}/applications/": {
       "post": {
         "summary": "Create Application",
-        "description": "Create an application inside an organization, in the data location you choose (`data_location`, the European Union by default; it can't be changed afterwards). The response includes `api_key`; persist it now (recoverable via GET). Requires owner/admin JWT.",
+        "description": "Create an application inside an organization, in the data location you choose (`data_location`, the European Union by default; it can't be changed afterwards). The response includes `api_key`; persist it now (recoverable via GET). Requires owner/admin JWT.\n\nSet initiate_login_uri to your HTTPS sign-in page on the exact website_url hostname, or an empty string to disable admin-sent sign-in links. Changing website_url also revalidates the saved sign-in URI. Invalid values return 400 with an initiate_login_uri field error; hostname and URI policy failures use https_url_on_registered_website_required.",
         "operationId": "create_organization_application",
         "x-didit-sdk": {
           "resource": "account.applications",
@@ -912,6 +961,13 @@
                 "Empty": {
                   "summary": "No body at all -- defaults to <org name> App",
                   "value": {}
+                },
+                "AdminSignInURL": {
+                  "summary": "Configure the admin sign-in handoff",
+                  "value": {
+                    "website_url": "https://acme.example",
+                    "initiate_login_uri": "https://acme.example/login"
+                  }
                 }
               }
             }
@@ -972,7 +1028,7 @@
             }
           },
           "400": {
-            "description": "Validation error in the request body: for example a malformed redirect URI, a `data_location` that is not available yet (`au`, `mx`) or one that does not exist. Nothing is created.",
+            "description": "Validation error in the request body: for example a malformed redirect URI, a `data_location` that is not available yet (`au`, `mx`, `ae`) or one that does not exist. Nothing is created.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1029,7 +1085,7 @@
             }
           },
           "403": {
-            "description": "You cannot create applications in this organization. A member of the organization who is not an owner or admin gets `Only organization owners and admins can manage applications.` An owner or admin whose access to the organization is suspended gets `Your access to this organization is suspended.` A request without an `Authorization` header gets `You do not have permission to perform this action.` For 72 hours after you recovered your account the request is refused with `code` `recovery_hold` and `until`, the time the hold ends.",
+            "description": "You cannot create applications in this organization. A member of the organization who is not an owner or admin gets `Only organization owners and admins can manage applications.` An owner or admin whose access to the organization is suspended gets `Your access to this organization is suspended.` A request without an `Authorization` header gets `You do not have permission to perform this action.` For 72 hours after you recovered your account the request is refused with `code` `recovery_hold` and `until`, the time the hold ends. A token issued to an AI agent (MCP) whose consent does not include application management gets `This token's scope does not permit this action.`, and a token limited to verification cannot read or change applications or their API keys.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1067,6 +1123,12 @@
                       "detail": "This action is on hold because you recovered your account.",
                       "code": "recovery_hold",
                       "until": "2026-11-04T10:15:00+00:00"
+                    }
+                  },
+                  "McpScope": {
+                    "summary": "Agent token without application management",
+                    "value": {
+                      "detail": "This token's scope does not permit this action."
                     }
                   }
                 }
@@ -1326,7 +1388,7 @@
             }
           },
           "403": {
-            "description": "You cannot list this organization's applications. A member of the organization who is not an owner or admin gets `Only organization owners and admins can manage applications.` An owner or admin whose access to the organization is suspended gets `Your access to this organization is suspended.` A request without an `Authorization` header gets `You do not have permission to perform this action.`",
+            "description": "You cannot list this organization's applications. A member of the organization who is not an owner or admin gets `Only organization owners and admins can manage applications.` An owner or admin whose access to the organization is suspended gets `Your access to this organization is suspended.` A request without an `Authorization` header gets `You do not have permission to perform this action.` A token issued to an AI agent (MCP) whose consent does not include application management gets `This token's scope does not permit this action.`, and a token limited to verification cannot read or change applications or their API keys.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1349,6 +1411,12 @@
                     "summary": "No Authorization header",
                     "value": {
                       "detail": "You do not have permission to perform this action."
+                    }
+                  },
+                  "McpScope": {
+                    "summary": "Agent token without application management",
+                    "value": {
+                      "detail": "This token's scope does not permit this action."
                     }
                   }
                 }
@@ -1538,7 +1606,7 @@
             }
           },
           "403": {
-            "description": "You cannot read this application. A member of the organization who is not an owner or admin gets `Only organization owners and admins can manage applications.` An owner or admin whose access to the organization is suspended gets `Your access to this organization is suspended.` A request without an `Authorization` header gets `You do not have permission to perform this action.`",
+            "description": "You cannot read this application. A member of the organization who is not an owner or admin gets `Only organization owners and admins can manage applications.` An owner or admin whose access to the organization is suspended gets `Your access to this organization is suspended.` A request without an `Authorization` header gets `You do not have permission to perform this action.` A token issued to an AI agent (MCP) whose consent does not include application management gets `This token's scope does not permit this action.`, and a token limited to verification cannot read or change applications or their API keys.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1561,6 +1629,12 @@
                     "summary": "No Authorization header",
                     "value": {
                       "detail": "You do not have permission to perform this action."
+                    }
+                  },
+                  "McpScope": {
+                    "summary": "Agent token without application management",
+                    "value": {
+                      "detail": "This token's scope does not permit this action."
                     }
                   }
                 }
@@ -1637,7 +1711,7 @@
       },
       "patch": {
         "summary": "Update Application",
-        "description": "Update application metadata (name, URLs, redirect URIs). `api_key` and `client_id` are never rotated. `products` is read-only: a `products` key in the body is ignored. `data_location` can't be changed after the application is created, except once on the live application created with your organization, while it is unused (see the request body). Requires owner/admin JWT.",
+        "description": "Update application metadata (name, URLs, redirect URIs). `api_key` and `client_id` are never rotated. `products` is read-only: a `products` key in the body is ignored. `data_location` can't be changed after the application is created, except once on the live application created with your organization, while it is unused (see the request body). Requires owner/admin JWT.\n\nSet initiate_login_uri to your HTTPS sign-in page on the exact website_url hostname, or an empty string to disable admin-sent sign-in links. Changing website_url also revalidates the saved sign-in URI. Invalid values return 400 with an initiate_login_uri field error; hostname and URI policy failures use https_url_on_registered_website_required.",
         "operationId": "update_organization_application",
         "x-didit-sdk": {
           "resource": "account.applications",
@@ -1687,7 +1761,7 @@
               },
               "examples": {
                 "RenameCustomerApplication": {
-                  "summary": "Rename and move to a new domain",
+                  "summary": "Rename and move domains when no admin sign-in URL is set; otherwise update or clear that URI in the same request.",
                   "value": {
                     "name": "Acme Production App",
                     "website_url": "https://app.acme.example"
@@ -1707,6 +1781,19 @@
                   "value": {
                     "terms_url": "https://acme.example/v2/terms",
                     "privacy_url": "https://acme.example/v2/privacy"
+                  }
+                },
+                "AdminSignInURL": {
+                  "summary": "Configure the admin sign-in handoff",
+                  "value": {
+                    "website_url": "https://acme.example",
+                    "initiate_login_uri": "https://acme.example/login"
+                  }
+                },
+                "ClearAdminSignInURL": {
+                  "summary": "Disable admin-sent sign-in links",
+                  "value": {
+                    "initiate_login_uri": ""
                   }
                 }
               }
@@ -1825,7 +1912,7 @@
             }
           },
           "403": {
-            "description": "You cannot update this application. A member of the organization who is not an owner or admin gets `Only organization owners and admins can manage applications.` An owner or admin whose access to the organization is suspended gets `Your access to this organization is suspended.` A request without an `Authorization` header gets `You do not have permission to perform this action.`",
+            "description": "You cannot update this application. A member of the organization who is not an owner or admin gets `Only organization owners and admins can manage applications.` An owner or admin whose access to the organization is suspended gets `Your access to this organization is suspended.` A request without an `Authorization` header gets `You do not have permission to perform this action.` A token issued to an AI agent (MCP) whose consent does not include application management gets `This token's scope does not permit this action.`, and a token limited to verification cannot read or change applications or their API keys.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1848,6 +1935,12 @@
                     "summary": "No Authorization header",
                     "value": {
                       "detail": "You do not have permission to perform this action."
+                    }
+                  },
+                  "McpScope": {
+                    "summary": "Agent token without application management",
+                    "value": {
+                      "detail": "This token's scope does not permit this action."
                     }
                   }
                 }
@@ -2189,7 +2282,21 @@
             "$ref": "#/components/schemas/OrganizationSummary"
           },
           "application": {
-            "$ref": "#/components/schemas/ApplicationCredentialsSummary"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ApplicationCredentialsSummary"
+              }
+            ],
+            "description": "The organization's live application (`mode: live`): the credentials a production integration ships with. Every check created with its key is billed from the organization's balance."
+          },
+          "sandbox_application": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ApplicationCredentialsSummary"
+              }
+            ],
+            "nullable": true,
+            "description": "The organization's sandbox application (`mode: sandbox`). Use its `api_key` to build and test the integration for free: every check is mocked and never billed. Switch to the live `application` key to go live."
           },
           "2fa_required": {
             "type": "boolean",
@@ -2315,6 +2422,15 @@
           },
           "data_location": {
             "$ref": "#/components/schemas/ApplicationDataLocation"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "live",
+              "sandbox"
+            ],
+            "description": "The application's environment. A `live` application bills every verification session and check created with its key. A `sandbox` application mocks every check and is never billed, so it is where you test (each sandbox application can create 500 test sessions every 24 hours). Read this field to pick the application: never infer the environment from the name.",
+            "example": "live"
           }
         }
       },
@@ -2415,6 +2531,19 @@
                 "modules": {}
               }
             ]
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "live",
+              "sandbox"
+            ],
+            "description": "The application's environment. A `live` application bills every verification session and check created with its key. A `sandbox` application mocks every check and is never billed, so it is where you test (each sandbox application can create 500 test sessions every 24 hours). Read this field to pick the application: never infer the environment from the name.",
+            "example": "live",
+            "readOnly": true
+          },
+          "initiate_login_uri": {
+            "$ref": "#/components/schemas/ApplicationInitiateLoginURI"
           }
         }
       },
@@ -2458,6 +2587,9 @@
           },
           "data_location": {
             "$ref": "#/components/schemas/ApplicationDataLocation"
+          },
+          "initiate_login_uri": {
+            "$ref": "#/components/schemas/ApplicationInitiateLoginURI"
           }
         }
       },
@@ -2499,6 +2631,9 @@
           },
           "data_location": {
             "$ref": "#/components/schemas/ApplicationDataLocation"
+          },
+          "initiate_login_uri": {
+            "$ref": "#/components/schemas/ApplicationInitiateLoginURI"
           }
         }
       },
@@ -2507,9 +2642,10 @@
         "enum": [
           "eu",
           "au",
-          "mx"
+          "mx",
+          "ae"
         ],
-        "description": "Where the application's verification data is stored and processed, chosen when the application is created. `eu` is the European Union (Ireland), the default. `au` (Australia, Sydney) and `mx` (Mexico) are coming soon: a request that names them answers 400 `This data location is not available yet.` An organization's Sandbox application is always in the European Union.",
+        "description": "Where the application's verification data is stored and processed, chosen when the application is created. `eu` is the European Union (Ireland), the default. `au` (Australia, Sydney), `mx` (Mexico) and `ae` (United Arab Emirates) are coming soon: a request that names them answers 400 `This data location is not available yet.` An organization's Sandbox application is always in the European Union.",
         "example": "eu"
       },
       "ValidationError": {
@@ -2748,6 +2884,43 @@
           }
         }
       },
+      "SsoRequiredError": {
+        "type": "object",
+        "description": "The account belongs to an organization that requires SSO sign-in. No tokens, API keys or organizations are issued; sign in through the organization's SSO in a browser instead.",
+        "required": [
+          "error",
+          "message",
+          "organization_name",
+          "organization_slug",
+          "sso_url"
+        ],
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "sso_required"
+            ],
+            "example": "sso_required"
+          },
+          "message": {
+            "type": "string",
+            "example": "Your organization 'Acme Corp' requires SSO login."
+          },
+          "organization_name": {
+            "type": "string",
+            "example": "Acme Corp"
+          },
+          "organization_slug": {
+            "type": "string",
+            "example": "acme-corp"
+          },
+          "sso_url": {
+            "type": "string",
+            "description": "Path of the organization's SSO sign-in page, relative to the console.",
+            "example": "/sso/acme-corp"
+          }
+        }
+      },
       "RecoverySetupRequiredError": {
         "type": "object",
         "description": "The account was recovered and has no sign-in method set up yet. No tokens are issued; a one-time link to set up a new method was emailed to the account's address. Open it, set up the method, then log in again.",
@@ -2792,7 +2965,221 @@
             "example": "data_location_check_unavailable"
           }
         }
+      },
+      "ApplicationInitiateLoginURI": {
+        "type": "string",
+        "maxLength": 2048,
+        "default": "",
+        "example": "https://acme.example/login",
+        "description": "Application sign-in URL for an admin-sent sign-in link. Optional; an empty string disables sending. A nonempty value must use HTTPS and the exact hostname of website_url (subdomains must match), with no userinfo, query, fragment or whitespace and no port other than 443. The server also revalidates the saved URI when website_url changes; update or clear initiate_login_uri in the same PATCH if needed. The hosted handoff adds iss and login_hint, but creates no session or tokens. See /authentication/sign-in-methods#admin-sent-sign-in-link."
+      },
+      "ConsoleIdentityActionRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "action"
+        ],
+        "description": "Console-only action. reset_mfa deletes TOTP, passkeys and recovery codes, invalidates pending challenges, revokes sessions and agent grants, and queues a notice and audit when anything changes. It leaves the password unchanged. send_sign_in_link sends only to the identity email and requires initiate_login_uri. send_password_reset uses the existing 30-minute password-reset flow; it is limited to once per minute per identity. Status actions return the identity; reset and send actions return the corresponding result.",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "block",
+              "unblock",
+              "unlock",
+              "revoke_sessions",
+              "send_password_reset",
+              "reset_mfa",
+              "send_sign_in_link"
+            ],
+            "description": "Identity action to perform."
+          },
+          "notify_users": {
+            "type": "boolean",
+            "default": false,
+            "description": "Only block and unblock accept true. Emails the person when their blocked status changes. Repeating an unchanged status does not send another notice. Requires an email address."
+          }
+        },
+        "example": {
+          "action": "reset_mfa"
+        }
+      },
+      "ConsoleBulkIdentityActionRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "action",
+          "ids"
+        ],
+        "description": "Console-only bulk action. Each identity is handled independently. send_password_reset is single-identity only. Duplicate IDs or an invalid request reject the entire request before processing.",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "block",
+              "unblock",
+              "unlock",
+              "revoke_sessions",
+              "reset_mfa",
+              "send_sign_in_link"
+            ],
+            "description": "Action applied to each identity."
+          },
+          "ids": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "One to 100 distinct identity IDs in this application."
+          },
+          "notify_users": {
+            "type": "boolean",
+            "default": false,
+            "description": "Only block and unblock accept true. Emails the person when their blocked status changes. Repeating an unchanged status does not send another notice. Requires an email address."
+          }
+        },
+        "example": {
+          "action": "reset_mfa",
+          "ids": [
+            "00000000-0000-4000-8000-000000000001"
+          ]
+        }
+      },
+      "ConsoleMFAResetResult": {
+        "type": "object",
+        "required": [
+          "status",
+          "requires_sign_in_link"
+        ],
+        "description": "Successful console MFA reset. A repeated reset with nothing remaining to reset returns the same result without duplicate notices or audit events. An identity without email cannot be reset.",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "applied"
+            ]
+          },
+          "requires_sign_in_link": {
+            "type": "boolean",
+            "description": "True when the person has no usable password. Offer a sign-in link after resetting MFA so they can sign in and enroll a new factor."
+          }
+        },
+        "example": {
+          "status": "applied",
+          "requires_sign_in_link": true
+        }
+      },
+      "ConsoleSignInLinkResult": {
+        "type": "object",
+        "required": [
+          "status",
+          "expires_in"
+        ],
+        "description": "Console sign-in email sent. Never contains the link or token. Missing application URI returns HTTP 400 with error initiate_login_uri_required. An identity without email or a blocked identity is rejected. Rate limits return 429 and delivery failure returns 503.",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "sent"
+            ]
+          },
+          "expires_in": {
+            "type": "integer",
+            "enum": [
+              900
+            ],
+            "description": "Single-use handoff lifetime in seconds; the handoff does not authenticate the person."
+          }
+        },
+        "example": {
+          "status": "sent",
+          "expires_in": 900
+        }
+      },
+      "ConsoleBulkIdentityActionResult": {
+        "type": "object",
+        "required": [
+          "id",
+          "status"
+        ],
+        "description": "Per-identity result. Successful sign-in email uses sent, not applied. Missing identities, including identities from another application, return not_found. An action-level error returns invalid_request; error is included for failed sign-in-link actions only.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "applied",
+              "sent",
+              "not_found",
+              "invalid_request"
+            ]
+          },
+          "requires_sign_in_link": {
+            "type": "boolean",
+            "description": "Present only for a successful reset_mfa."
+          },
+          "expires_in": {
+            "type": "integer",
+            "enum": [
+              900
+            ],
+            "description": "Present only for a successful send_sign_in_link."
+          },
+          "error": {
+            "type": "string",
+            "description": "Sign-in-link failure code, such as initiate_login_uri_required, identity_has_no_email, identity_blocked, rate_limited or delivery_unavailable."
+          }
+        }
+      },
+      "ConsoleBulkIdentityActionResponse": {
+        "type": "object",
+        "required": [
+          "results"
+        ],
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConsoleBulkIdentityActionResult"
+            },
+            "description": "One result per requested identity, in request order. Check each status even when the HTTP response is 200."
+          }
+        },
+        "example": {
+          "results": [
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "status": "applied",
+              "requires_sign_in_link": true
+            }
+          ]
+        }
       }
+    }
+  },
+  "x-console-identity-actions": {
+    "description": "Console-only identity recovery and status actions. Requires write:authentication; reset_mfa and send_sign_in_link additionally require write:authentication_mfa, assigned to Owner/Admin. No public SDK method is exposed.",
+    "request": {
+      "$ref": "#/components/schemas/ConsoleIdentityActionRequest"
+    },
+    "bulkRequest": {
+      "$ref": "#/components/schemas/ConsoleBulkIdentityActionRequest"
+    },
+    "mfaResetResponse": {
+      "$ref": "#/components/schemas/ConsoleMFAResetResult"
+    },
+    "signInLinkResponse": {
+      "$ref": "#/components/schemas/ConsoleSignInLinkResult"
+    },
+    "bulkResponse": {
+      "$ref": "#/components/schemas/ConsoleBulkIdentityActionResponse"
     }
   }
 }
