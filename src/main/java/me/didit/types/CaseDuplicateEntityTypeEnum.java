@@ -8,6 +8,7 @@ import me.didit.core.StringEnum;
  * - <code>session</code> - Session
  * - <code>business_session</code> - Business Session
  * - <code>transaction</code> - Transaction
+ * - <code>network</code> - Network containing the selected case subject
  *
  * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
  */
@@ -21,7 +22,10 @@ public final class CaseDuplicateEntityTypeEnum extends StringEnum {
   /** The value {@code "transaction"}. */
   public static final CaseDuplicateEntityTypeEnum TRANSACTION = new CaseDuplicateEntityTypeEnum("transaction");
 
-  private static final List<CaseDuplicateEntityTypeEnum> KNOWN_VALUES = List.of(SESSION, BUSINESS_SESSION, TRANSACTION);
+  /** The value {@code "network"}. */
+  public static final CaseDuplicateEntityTypeEnum NETWORK = new CaseDuplicateEntityTypeEnum("network");
+
+  private static final List<CaseDuplicateEntityTypeEnum> KNOWN_VALUES = List.of(SESSION, BUSINESS_SESSION, TRANSACTION, NETWORK);
 
   private CaseDuplicateEntityTypeEnum(String value) {
     super(value);

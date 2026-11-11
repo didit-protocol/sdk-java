@@ -235,7 +235,7 @@ public final class CasesResource {
   /**
    * Create case
    *
-   * <p>Create a case anchored to exactly one subject (a user or a business), directly or by deriving the subject from an attached session/transaction link. Source is always <code>MANUAL</code> for API-created cases.
+   * <p>Create a case anchored to exactly one subject (a user or a business), directly or by deriving the subject from an attached session/transaction link. Source is always <code>MANUAL</code> for API-created cases. Network links require write:cases plus read:networks, Networks access and investigation access for the network scope. The network must be visible and contain the case subject. Manually adding links to network-generated cases is not allowed. An explicit subject is required whenever links includes a network.
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/}
    * <p>Application scoped: the organization and application ids come from the client options.

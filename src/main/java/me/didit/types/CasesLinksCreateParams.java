@@ -12,7 +12,6 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 
-/** Parameters for {&#64;code cases.links.create}. */
 public final class CasesLinksCreateParams extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("entity_type", "entity_uuid");
 
@@ -50,7 +49,7 @@ public final class CasesLinksCreateParams extends JsonModel {
   }
 
   /**
-   * The <code>entity_type</code> field.
+   * Type of record to attach. A network must be visible and contain the selected case subject.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -83,7 +82,7 @@ public final class CasesLinksCreateParams extends JsonModel {
     }
 
     /**
-     * The <code>entity_type</code> field.
+     * Type of record to attach. A network must be visible and contain the selected case subject.
      *
      * @param entityType the value
      * @return this builder
@@ -121,6 +120,7 @@ public final class CasesLinksCreateParams extends JsonModel {
   }
 
   /**
+   * Type of record to attach. A network must be visible and contain the selected case subject.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -134,7 +134,10 @@ public final class CasesLinksCreateParams extends JsonModel {
     /** The value {@code "transaction"}. */
     public static final EntityType TRANSACTION = new EntityType("transaction");
 
-    private static final List<EntityType> KNOWN_VALUES = List.of(SESSION, BUSINESS_SESSION, TRANSACTION);
+    /** The value {@code "network"}. */
+    public static final EntityType NETWORK = new EntityType("network");
+
+    private static final List<EntityType> KNOWN_VALUES = List.of(SESSION, BUSINESS_SESSION, TRANSACTION, NETWORK);
 
     private EntityType(String value) {
       super(value);

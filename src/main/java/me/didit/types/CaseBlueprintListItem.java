@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class CaseBlueprintListItem extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "description", "assignment_method", "assignee_pool", "max_active_cases", "escalation_enabled", "transfer_enabled", "require_resolution_note", "is_active", "preset_key", "created_at", "version", "default_deadline_hours");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "description", "assignment_method", "assignee_pool", "max_active_cases", "escalation_enabled", "transfer_enabled", "require_resolution_note", "is_active", "preset_key", "created_at", "version", "default_deadline_hours", "applies_to", "stages");
 
   private CaseBlueprintListItem(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -191,6 +191,26 @@ public final class CaseBlueprintListItem extends JsonModel {
     return Json.optional(json, "default_deadline_hours", Conv.LONG);
   }
 
+  /**
+   * Case types this blueprint describes. Optional on create and update; new blueprints default to an empty list. Stored in the accepted case policy snapshot.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<CaseBlueprintAppliesTo>> appliesTo() {
+    return Json.optional(json, "applies_to", Conv.list(Conv.enumeration(CaseBlueprintAppliesTo::of)));
+  }
+
+  /**
+   * Configured stages, or the default stages when none are configured.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<CaseBlueprintStage>> stages() {
+    return Json.optional(json, "stages", Conv.list(Conv.model(CaseBlueprintStage::fromJson)));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -342,6 +362,26 @@ public final class CaseBlueprintListItem extends JsonModel {
      */
     public Builder defaultDeadlineHours(@Nullable Long defaultDeadlineHours) {
       return setNullable("default_deadline_hours", Conv.LONG, defaultDeadlineHours);
+    }
+
+    /**
+     * Case types this blueprint describes. Optional on create and update; new blueprints default to an empty list. Stored in the accepted case policy snapshot.
+     *
+     * @param appliesTo the value
+     * @return this builder
+     */
+    public Builder appliesTo(List<CaseBlueprintAppliesTo> appliesTo) {
+      return set("applies_to", Conv.list(Conv.enumeration(CaseBlueprintAppliesTo::of)), appliesTo);
+    }
+
+    /**
+     * Configured stages, or the default stages when none are configured.
+     *
+     * @param stages the value
+     * @return this builder
+     */
+    public Builder stages(List<CaseBlueprintStage> stages) {
+      return set("stages", Conv.list(Conv.model(CaseBlueprintStage::fromJson)), stages);
     }
 
     /**

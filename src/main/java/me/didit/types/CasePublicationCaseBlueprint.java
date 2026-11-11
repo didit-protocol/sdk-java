@@ -15,7 +15,7 @@ import me.didit.core.JsonModel;
 import org.jspecify.annotations.Nullable;
 
 public final class CasePublicationCaseBlueprint extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "description", "assignment_method", "assignee_pool", "max_active_cases", "escalation_enabled", "escalation_blueprint", "escalation_blueprint_name", "transfer_enabled", "four_eyes_checker_blueprint", "four_eyes_checker_blueprint_name", "require_resolution_note", "content_config", "version", "default_deadline_hours", "is_active", "preset_key", "creation_sources", "receives_escalation_from", "created_at", "updated_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "description", "assignment_method", "assignee_pool", "max_active_cases", "escalation_enabled", "escalation_blueprint", "escalation_blueprint_name", "transfer_enabled", "four_eyes_checker_blueprint", "four_eyes_checker_blueprint_name", "require_resolution_note", "content_config", "version", "default_deadline_hours", "is_active", "preset_key", "creation_sources", "receives_escalation_from", "created_at", "updated_at", "applies_to", "stages");
 
   private CasePublicationCaseBlueprint(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -182,13 +182,13 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
   }
 
   /**
-   * The <code>content_config</code> field.
+   * Case content sections and optional review stages. Unknown sections or keys are rejected. Cases retain the policy snapshot accepted when opened; later blueprint edits do not rewrite it.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public Optional<JsonNode> contentConfig() {
-    return Json.optional(json, "content_config", Conv.ANY);
+  public Optional<CaseContentConfig> contentConfig() {
+    return Json.optional(json, "content_config", Conv.model(CaseContentConfig::fromJson));
   }
 
   /**
@@ -269,6 +269,26 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
    */
   public OffsetDateTime updatedAt() {
     return Json.required(json, "updated_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * Case types this blueprint describes. Optional on create and update; new blueprints default to an empty list. Stored in the accepted case policy snapshot.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<CaseBlueprintAppliesTo>> appliesTo() {
+    return Json.optional(json, "applies_to", Conv.list(Conv.enumeration(CaseBlueprintAppliesTo::of)));
+  }
+
+  /**
+   * Configured stages, or the default stages when none are configured.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<CaseBlueprintStage>> stages() {
+    return Json.optional(json, "stages", Conv.list(Conv.model(CaseBlueprintStage::fromJson)));
   }
 
   @Override
@@ -416,13 +436,13 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
     }
 
     /**
-     * The <code>content_config</code> field.
+     * Case content sections and optional review stages. Unknown sections or keys are rejected. Cases retain the policy snapshot accepted when opened; later blueprint edits do not rewrite it.
      *
      * @param contentConfig the value
      * @return this builder
      */
-    public Builder contentConfig(@Nullable Object contentConfig) {
-      return setAny("content_config", contentConfig);
+    public Builder contentConfig(CaseContentConfig contentConfig) {
+      return set("content_config", Conv.model(CaseContentConfig::fromJson), contentConfig);
     }
 
     /**
@@ -503,6 +523,26 @@ public final class CasePublicationCaseBlueprint extends JsonModel {
      */
     public Builder updatedAt(OffsetDateTime updatedAt) {
       return set("updated_at", Conv.DATE_TIME, updatedAt);
+    }
+
+    /**
+     * Case types this blueprint describes. Optional on create and update; new blueprints default to an empty list. Stored in the accepted case policy snapshot.
+     *
+     * @param appliesTo the value
+     * @return this builder
+     */
+    public Builder appliesTo(List<CaseBlueprintAppliesTo> appliesTo) {
+      return set("applies_to", Conv.list(Conv.enumeration(CaseBlueprintAppliesTo::of)), appliesTo);
+    }
+
+    /**
+     * Configured stages, or the default stages when none are configured.
+     *
+     * @param stages the value
+     * @return this builder
+     */
+    public Builder stages(List<CaseBlueprintStage> stages) {
+      return set("stages", Conv.list(Conv.model(CaseBlueprintStage::fromJson)), stages);
     }
 
     /**
