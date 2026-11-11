@@ -1082,6 +1082,37 @@ final class AuthenticationTest {
     assertFalse(shown(e).contains(nested));
   }
 
+  /**
+   * A bean whose credential differs on every read after the first, and which throws from the third.
+   */
+  public static final class FlippingBean {
+    private int reads;
+
+    public String getCredential() {
+      reads++;
+      if (reads > 2) {
+        throw new IllegalStateException("serialized twice");
+      }
+      return reads == 1
+          ? "credential-string-actually-sent-0123"
+          : "a-different-credential-string-0123";
+    }
+  }
+
+  @Test
+  void consentSecretsComeFromTheBytesSentNotASecondSerialization() {
+    ObjectNode assertion = assertionOf("short", "s");
+    assertion.putObject("clientExtensionResults").putPOJO("credProps", new FlippingBean());
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertion,
+            400,
+            "application/json",
+            "{\"error\":\"invalid_grant\",\"echo\":\"credential-string-actually-sent-0123\"}");
+    assertFalse(shown(e).contains("credential-string-actually-sent-0123"));
+    assertTrue(shown(e).contains("invalid_grant"));
+  }
+
   @Test
   void consentRedactionReplacesANonJsonBody() {
     me.didit.errors.ApiStatusException e =

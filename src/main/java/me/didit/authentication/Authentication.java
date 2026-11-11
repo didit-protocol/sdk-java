@@ -968,12 +968,12 @@ public final class Authentication {
     List<String> secrets = new java.util.ArrayList<>();
     secrets.add(accessToken);
     secrets.add(body.path("challenge").asText());
-    // Read from the JSON the request carries (written with the request's encoder, parsed back), so
-    // a
-    // POJO or other non-plain node nested in the assertion counts exactly as it is sent.
-    collectStrings(Json.parse(Json.write(body)).path("assertion"), secrets);
-    return send(
-            "POST", runtime("agents/consent/"), jsonHeaders(accessToken), jsonBody(body), secrets)
+    // Written exactly once: these bytes are sent, and the secrets are read from them, so a POJO
+    // nested in
+    // the assertion is never serialized a second time.
+    byte[] sent = jsonBody(body);
+    collectStrings(Json.parse(sent).path("assertion"), secrets);
+    return send("POST", runtime("agents/consent/"), jsonHeaders(accessToken), sent, secrets)
         .thenApply(
             response ->
                 redactingUnexpected(
