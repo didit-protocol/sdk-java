@@ -866,17 +866,17 @@ final class AuthenticationTest {
     String token = "MARK-TOKEN-0";
     List<String> marks =
         List.of(
-            "MARK-ID-1",
-            "MARK-RAWID-2",
-            "MARK-TYPE-3",
-            "MARK-CDJ-4/+=",
-            "MARK-AD-5",
-            "MARK-SIG-6",
-            "MARK-HANDLE-7",
-            "MARK-TRANSPORT-8",
-            "MARK-EXT-9",
-            "MARK-DEEP-10",
-            "MARK-\"QUOTED\"\\-11");
+            "MARK-ID-1-padpad0123456",
+            "MARK-RAWID-2-padpad0123456",
+            "MARK-TYPE-3-padpad0123456",
+            "MARK-CDJ-4/+=-padpad0123456",
+            "MARK-AD-5-padpad0123456",
+            "MARK-SIG-6-padpad0123456",
+            "MARK-HANDLE-7-padpad0123456",
+            "MARK-TRANSPORT-8-padpad0123456",
+            "MARK-EXT-9-padpad0123456",
+            "MARK-DEEP-10-padpad0123456",
+            "MARK-\"QUOTED\"\\-11-padpad0123456");
     ObjectNode assertion = Json.nodes().objectNode();
     assertion.put("id", marks.get(0));
     assertion.put("rawId", marks.get(1));
@@ -958,8 +958,7 @@ final class AuthenticationTest {
                 auth()
                     .submitAgentConsent(
                         token, AgentConsentParams.approve(challenge).assertion(assertion).build()));
-    // The assertion keys ("q", ...) are secrets too, so "passkey_required" is redacted whole.
-    assertTrue(kept.body().orElseThrow().toString().contains("echo"));
+    assertTrue(kept.body().orElseThrow().toString().contains("passkey_required"));
   }
 
   private me.didit.errors.ApiStatusException consentFailure(
@@ -997,24 +996,24 @@ final class AuthenticationTest {
   void consentRedactionLeavesNoFragmentOfAPrefixedSecret() {
     me.didit.errors.ApiStatusException e =
         consentFailure(
-            assertionOf("abc", "abcdef"),
+            assertionOf("abcCREDENTIALID0123", "abcCREDENTIALID0123456"),
             400,
             "application/json",
-            "{\"detail\":\"bad abcdef and abc\",\"other\":\"abcdef\"}");
+            "{\"detail\":\"bad abcCREDENTIALID0123456 and abcCREDENTIALID0123\",\"other\":\"abcCREDENTIALID0123456\"}");
     assertEquals(
         "{\"detail\":\"[redacted]\",\"other\":\"[redacted]\"}", e.body().orElseThrow().toString());
-    assertFalse(shown(e).contains("abc"));
-    assertFalse(shown(e).contains("def"));
+    assertFalse(shown(e).contains("abcCRED"));
+    assertFalse(shown(e).contains("456"));
   }
 
   @Test
   void consentRedactionReplacesTheWholeStringThatContainsASecret() {
     me.didit.errors.ApiStatusException e =
         consentFailure(
-            assertionOf("SECRET", "s"),
+            assertionOf("SECRET-0123456789abcdef", "s"),
             400,
             "application/json",
-            "{\"detail\":\"bad assertion xyzSECRETxyz\",\"keep\":\"fine\"}");
+            "{\"detail\":\"bad assertion xyzSECRET-0123456789abcdefxyz\",\"keep\":\"fine\"}");
     assertEquals(
         "{\"detail\":\"[redacted]\",\"keep\":\"fine\"}", e.body().orElseThrow().toString());
     assertTrue(e.getMessage().contains("[redacted]"));
@@ -1024,27 +1023,46 @@ final class AuthenticationTest {
   void consentRedactionHandlesASecretUsedAsAnObjectKey() {
     me.didit.errors.ApiStatusException e =
         consentFailure(
-            assertionOf("SECRET", "s"),
+            assertionOf("SECRET-0123456789abcdef", "s"),
             400,
             "application/json",
-            "{\"detail\":\"no\",\"echo-SECRET-1\":\"a\",\"echo-SECRET-2\":\"b\"}");
+            "{\"detail\":\"no\",\"echo-SECRET-0123456789abcdef-1\":\"a\",\"echo-SECRET-0123456789abcdef-2\":\"b\"}");
     assertEquals(
         "{\"detail\":\"no\",\"[redacted]\":\"a\",\"[redacted]2\":\"b\"}",
         e.body().orElseThrow().toString());
-    assertFalse(shown(e).contains("SECRET"));
+    assertFalse(shown(e).contains("SECRET-0123456789abcdef"));
   }
 
   @Test
   void consentRedactionIgnoresTheSpellingOfJsonEscapes() {
     me.didit.errors.ApiStatusException e =
         consentFailure(
-            assertionOf("a/b+\u00e9", "s"),
+            assertionOf("a/b+\u00e9-padding0123456", "s"),
             400,
             "application/json",
-            "{\"detail\":\"x\",\"echo\":\"a\\/b+\\u00E9\"}");
+            "{\"detail\":\"x\",\"echo\":\"a\\/b+\\u00E9-padding0123456\"}");
     assertEquals("{\"detail\":\"x\",\"echo\":\"[redacted]\"}", e.body().orElseThrow().toString());
     assertFalse(shown(e).contains("a/b"));
     assertFalse(shown(e).contains("00E9"));
+    assertFalse(shown(e).contains("padding0123456"));
+  }
+
+  @Test
+  void consentRedactionKeepsErrorCodesAndShortAssertionStringsReadable() {
+    String credential = "Y3JlZGVudGlhbC1pZC0xMjM0NTY3ODkw";
+    ObjectNode assertion = assertionOf(credential, "s");
+    assertion.put("type", "public-key");
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertion,
+            400,
+            "application/json",
+            "{\"error\":\"invalid_grant\",\"detail\":\"id public-key " + credential + "\"}");
+    assertEquals(
+        "{\"error\":\"invalid_grant\",\"detail\":\"[redacted]\"}",
+        e.body().orElseThrow().toString());
+    assertTrue(shown(e).contains("invalid_grant"));
+    assertFalse(shown(e).contains(credential));
   }
 
   @Test
@@ -1075,8 +1093,8 @@ final class AuthenticationTest {
   void agentConsentTransportFailuresNeverCarryTheRequestSecrets() {
     String challenge = "MARK-CHALLENGE-T";
     ObjectNode assertion = Json.nodes().objectNode();
-    assertion.put("id", "MARK-ID-T");
-    assertion.putObject("response").put("signature", "MARK-SIG-T");
+    assertion.put("id", "MARK-ID-T-padpad0123456");
+    assertion.putObject("response").put("signature", "MARK-SIG-T-padpad0123456");
     Authentication transportAuth =
         Authentication.builder()
             .issuer(StubIssuer.ISSUER)
@@ -1100,7 +1118,8 @@ final class AuthenticationTest {
     for (Throwable t = error; t != null; t = t.getCause()) {
       seen.append(t).append('\n').append(t.getMessage()).append('\n');
     }
-    for (String secret : List.of(challenge, "MARK-ID-T", "MARK-SIG-T", "MARK-TOKEN-T")) {
+    for (String secret :
+        List.of(challenge, "MARK-ID-T-padpad0123456", "MARK-SIG-T-padpad0123456", "MARK-TOKEN-T")) {
       assertFalse(seen.toString().contains(secret), "leaked " + secret);
     }
   }
@@ -1109,8 +1128,8 @@ final class AuthenticationTest {
   void agentConsentDiditExceptionTransportFailuresNeverCarryTheRequestSecrets() {
     String challenge = "MARK-CHALLENGE-D";
     ObjectNode assertion = Json.nodes().objectNode();
-    assertion.put("id", "MARK-ID-D");
-    assertion.putObject("response").put("signature", "MARK-SIG-D");
+    assertion.put("id", "MARK-ID-D-padpad0123456");
+    assertion.putObject("response").put("signature", "MARK-SIG-D-padpad0123456");
     Authentication transportAuth =
         Authentication.builder()
             .issuer(StubIssuer.ISSUER)
@@ -1135,7 +1154,8 @@ final class AuthenticationTest {
     for (Throwable t = error; t != null; t = t.getCause()) {
       seen.append(t).append('\n').append(t.getMessage()).append('\n');
     }
-    for (String secret : List.of(challenge, "MARK-ID-D", "MARK-SIG-D", "MARK-TOKEN-D")) {
+    for (String secret :
+        List.of(challenge, "MARK-ID-D-padpad0123456", "MARK-SIG-D-padpad0123456", "MARK-TOKEN-D")) {
       assertFalse(seen.toString().contains(secret), "leaked " + secret);
     }
   }

@@ -1106,19 +1106,26 @@ public final class Authentication {
 
   private static final String REDACTED = "[redacted]";
 
-  /** Every non-empty string inside {@code node}, object keys and values, at any depth. */
+  /**
+   * Strings shorter than this are not secrets: field names such as {@code id} and values such as
+   * {@code public-key} would otherwise erase error codes like {@code invalid_grant}.
+   */
+  private static final int MIN_SECRET_LENGTH = 16;
+
+  /**
+   * Every string of at least 16 characters inside {@code node}, object keys and values, at any
+   * depth.
+   */
   private static void collectStrings(JsonNode node, List<String> out) {
     if (node.isTextual()) {
-      if (!node.asText().isEmpty()) {
+      if (node.asText().length() >= MIN_SECRET_LENGTH) {
         out.add(node.asText());
       }
     } else if (node.isObject()) {
       node.properties()
           .forEach(
               field -> {
-                if (!field.getKey().isEmpty()) {
-                  out.add(field.getKey());
-                }
+                collectStrings(Json.nodes().textNode(field.getKey()), out);
                 collectStrings(field.getValue(), out);
               });
     } else if (node.isContainerNode()) {
