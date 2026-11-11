@@ -486,13 +486,13 @@ public final class TransactionsListResponse extends JsonModel {
     }
 
     /**
-     * The transaction's Travel Rule transfer, the same block as <code>travel_rule</code> on <code>GET /v3/transactions/{transaction_id}/</code>, or <code>null</code> when the transaction has none.
+     * Travel Rule summary with latest delivery, or null when absent. Unlike transaction detail, this block omits deliveries and deliveries_truncated.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
      */
-    public Optional<TransactionTravelRule> travelRule() {
-      return Json.optional(json, "travel_rule", Conv.model(TransactionTravelRule::fromJson));
+    public Optional<TransactionListTravelRule> travelRule() {
+      return Json.optional(json, "travel_rule", Conv.model(TransactionListTravelRule::fromJson));
     }
 
     @Override
@@ -779,13 +779,13 @@ public final class TransactionsListResponse extends JsonModel {
       }
 
       /**
-       * The transaction's Travel Rule transfer, the same block as <code>travel_rule</code> on <code>GET /v3/transactions/{transaction_id}/</code>, or <code>null</code> when the transaction has none.
+       * Travel Rule summary with latest delivery, or null when absent. Unlike transaction detail, this block omits deliveries and deliveries_truncated.
        *
        * @param travelRule the value, or {@code null} to send JSON null
        * @return this builder
        */
-      public Builder travelRule(@Nullable TransactionTravelRule travelRule) {
-        return setNullable("travel_rule", Conv.model(TransactionTravelRule::fromJson), travelRule);
+      public Builder travelRule(@Nullable TransactionListTravelRule travelRule) {
+        return setNullable("travel_rule", Conv.model(TransactionListTravelRule::fromJson), travelRule);
       }
 
       /**

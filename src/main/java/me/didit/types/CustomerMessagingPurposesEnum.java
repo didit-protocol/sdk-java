@@ -10,6 +10,8 @@ import me.didit.core.StringEnum;
  * - <code>business_document</code> - business_document
  * - <code>confirm_details</code> - confirm_details
  * - <code>review_in_progress</code> - review_in_progress
+ * - <code>source_of_funds</code> - Request a document showing the source of payment funds.
+ * - <code>purpose_of_payment</code> - Request a document explaining the payment purpose. Both are available for person and business cases.
  *
  * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
  */
@@ -29,7 +31,13 @@ public final class CustomerMessagingPurposesEnum extends StringEnum {
   /** The value {@code "review_in_progress"}. */
   public static final CustomerMessagingPurposesEnum REVIEW_IN_PROGRESS = new CustomerMessagingPurposesEnum("review_in_progress");
 
-  private static final List<CustomerMessagingPurposesEnum> KNOWN_VALUES = List.of(IDENTITY_DOCUMENT, PROOF_OF_ADDRESS, BUSINESS_DOCUMENT, CONFIRM_DETAILS, REVIEW_IN_PROGRESS);
+  /** The value {@code "source_of_funds"}. */
+  public static final CustomerMessagingPurposesEnum SOURCE_OF_FUNDS = new CustomerMessagingPurposesEnum("source_of_funds");
+
+  /** The value {@code "purpose_of_payment"}. */
+  public static final CustomerMessagingPurposesEnum PURPOSE_OF_PAYMENT = new CustomerMessagingPurposesEnum("purpose_of_payment");
+
+  private static final List<CustomerMessagingPurposesEnum> KNOWN_VALUES = List.of(IDENTITY_DOCUMENT, PROOF_OF_ADDRESS, BUSINESS_DOCUMENT, CONFIRM_DETAILS, REVIEW_IN_PROGRESS, SOURCE_OF_FUNDS, PURPOSE_OF_PAYMENT);
 
   private CustomerMessagingPurposesEnum(String value) {
     super(value);

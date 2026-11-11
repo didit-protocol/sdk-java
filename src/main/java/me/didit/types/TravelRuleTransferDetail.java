@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * Full transfer object returned by the ownership-confirmation and finish/cancel endpoints. While an inbound transfer's wallet ownership is unconfirmed, the counterparty's <code>originator_data</code> and <code>beneficiary_data</code> come back masked (the first letter of each word is kept; the wallet, chain and VASP routing stay readable) and <code>data_masked</code> is true.
  */
 public final class TravelRuleTransferDetail extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "direction", "rail", "protocol", "ivms_version", "required", "ownership_confirmed", "deadline_at", "timeline", "counterparty_vasp", "originator_data", "beneficiary_data", "name_match", "data_match", "mismatched_fields", "data_unmasked", "data_masked", "created_at", "delivery", "discovery", "reason", "next_actions", "chain_details", "not_required_reason", "proof_state");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "direction", "rail", "protocol", "ivms_version", "required", "ownership_confirmed", "deadline_at", "timeline", "counterparty_vasp", "originator_data", "beneficiary_data", "name_match", "data_match", "mismatched_fields", "data_unmasked", "data_masked", "created_at", "delivery", "discovery", "reason", "next_actions", "chain_details", "deliveries", "deliveries_truncated", "not_required_reason", "proof_state");
 
   private TravelRuleTransferDetail(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -295,6 +295,26 @@ public final class TravelRuleTransferDetail extends JsonModel {
   }
 
   /**
+   * Newest 100 delivery entries, presented oldest first (creation time, then identifier). Empty when no messages exist. Use the paginated delivery endpoint for complete history.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<TravelRuleDeliveryLogEntry>> deliveries() {
+    return Json.optional(json, "deliveries", Conv.list(Conv.model(TravelRuleDeliveryLogEntry::fromJson)));
+  }
+
+  /**
+   * True when older entries were omitted from deliveries. Follow GET /v3/transactions/{transaction_id}/travel-rule/deliveries/ for the complete history.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> deliveriesTruncated() {
+    return Json.optional(json, "deliveries_truncated", Conv.BOOLEAN);
+  }
+
+  /**
    * Null when required is true. Otherwise below_threshold, the recorded chain exemption (for example LIGHTNING_NO_PAYEE_IDENTIFIER, LIGHTNING_BOLT12_BLINDED_PAYEE or LIGHTNING_LNURL_NAMES_NO_PAYEE), or unknown for legacy transfers without a recorded reason.
    *
    * @return the value, or empty when the field is absent or null
@@ -565,6 +585,26 @@ public final class TravelRuleTransferDetail extends JsonModel {
      */
     public Builder chainDetails(TravelRuleChainDetails chainDetails) {
       return set("chain_details", Conv.model(TravelRuleChainDetails::fromJson), chainDetails);
+    }
+
+    /**
+     * Newest 100 delivery entries, presented oldest first (creation time, then identifier). Empty when no messages exist. Use the paginated delivery endpoint for complete history.
+     *
+     * @param deliveries the value
+     * @return this builder
+     */
+    public Builder deliveries(List<TravelRuleDeliveryLogEntry> deliveries) {
+      return set("deliveries", Conv.list(Conv.model(TravelRuleDeliveryLogEntry::fromJson)), deliveries);
+    }
+
+    /**
+     * True when older entries were omitted from deliveries. Follow GET /v3/transactions/{transaction_id}/travel-rule/deliveries/ for the complete history.
+     *
+     * @param deliveriesTruncated the value
+     * @return this builder
+     */
+    public Builder deliveriesTruncated(boolean deliveriesTruncated) {
+      return set("deliveries_truncated", Conv.BOOLEAN, deliveriesTruncated);
     }
 
     /**

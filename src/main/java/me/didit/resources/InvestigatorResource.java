@@ -320,7 +320,7 @@ public final class InvestigatorResource {
   /**
    * Override a recommendation
    *
-   * <p>Takes another action with a category and a reason. Also overrides a decision the Investigator took on its own while it still stands. Restricted keys need the <code>decisions</code> scope (write); transaction alerts also need <code>transactions</code> (write). Escalating a verification or transaction opens a case.
+   * <p>Takes another action with a category and a reason. Also overrides a decision the Investigator took on its own while it still stands. Restricted keys need the <code>decisions</code> scope (write); transaction alerts also need <code>transactions</code> (write). Escalating a verification or transaction opens a case. Automated transaction decisions can be overridden only while the original decision still stands. The original decision remains unchanged, the override is recorded separately, and an immediate policy question is raised for its recorded situations with the original policy action. The override does not charge for another automated decision.
    *
    * <p>{@code POST /v3/investigator/runs/{run_id}/override/}
    *

@@ -37,7 +37,7 @@ public final class AccountApplicationsResource {
   /**
    * List the organization's applications
    *
-   * <p>List the organization's applications, 50 per page by default. Use this to discover <code>app_id</code> values when recovering credentials from a new machine, then call <code>GET /organizations/me/{org_id}/applications/{app_id}/</code> for the API key. Requires an owner or admin Bearer token.
+   * <p>List the organization's applications, 50 per page by default. Use this to discover <code>app_id</code> values when recovering credentials from a new machine, then call <code>GET /organizations/me/{org_id}/applications/{app_id}/</code> for the API key. Requires an owner or admin Bearer token. An MCP token (a "Log in with Didit" grant, <code>token_use</code> <code>mcp</code>) also needs the <code>didit:management</code> scope, which carries the <code>applications</code> resource; a grant limited to <code>didit:verification</code> is refused with 403 before any application is listed.
    *
    * <p>{@code GET /organizations/me/{org_id}/applications/}
    * <p>Returns one page; iterate it to fetch every following page automatically.
@@ -132,7 +132,7 @@ public final class AccountApplicationsResource {
    *
    * <p>Create an application inside an organization, in the data location you choose (<code>data_location</code>, the European Union by default; it can't be changed afterwards). The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
    *
-   * <p>Set initiate_login_uri to your HTTPS sign-in page on the exact website_url hostname, or an empty string to disable admin-sent sign-in links. Changing website_url also revalidates the saved sign-in URI. Invalid values return 400 with an initiate_login_uri field error; hostname and URI policy failures use https_url_on_registered_website_required.
+   * <p>Set initiate_login_uri to your HTTPS sign-in page on the exact website_url hostname, or an empty string to disable admin-sent sign-in links. Changing website_url also revalidates the saved sign-in URI. Invalid values return 400 with an initiate_login_uri field error; hostname and URI policy failures use https_url_on_registered_website_required. An MCP token (a "Log in with Didit" grant, <code>token_use</code> <code>mcp</code>) also needs the <code>didit:management</code> scope, which carries the <code>applications</code> resource; a grant limited to <code>didit:verification</code> is refused with 403 before anything is created.
    *
    * <p>{@code POST /organizations/me/{org_id}/applications/}
    *
@@ -224,7 +224,7 @@ public final class AccountApplicationsResource {
   /**
    * Get Application Credentials
    *
-   * <p>Read one application's full record including <code>client_id</code> and <code>api_key</code>. Use this to recover a lost <code>api_key</code>.
+   * <p>Read one application's full record including <code>client_id</code> and <code>api_key</code>. Use this to recover a lost <code>api_key</code>. An MCP token (a "Log in with Didit" grant, <code>token_use</code> <code>mcp</code>) also needs the <code>didit:management</code> scope, which carries the <code>applications</code> resource; a grant limited to <code>didit:verification</code> is refused with 403 before the application is read.
    *
    * <p>{@code GET /organizations/me/{org_id}/applications/{app_id}/}
    *
@@ -276,7 +276,7 @@ public final class AccountApplicationsResource {
    *
    * <p>Update application metadata (name, URLs, redirect URIs). <code>api_key</code> and <code>client_id</code> are never rotated. <code>products</code> is read-only: a <code>products</code> key in the body is ignored. <code>data_location</code> can't be changed after the application is created, except once on the live application created with your organization, while it is unused (see the request body). Requires owner/admin JWT.
    *
-   * <p>Set initiate_login_uri to your HTTPS sign-in page on the exact website_url hostname, or an empty string to disable admin-sent sign-in links. Changing website_url also revalidates the saved sign-in URI. Invalid values return 400 with an initiate_login_uri field error; hostname and URI policy failures use https_url_on_registered_website_required.
+   * <p>Set initiate_login_uri to your HTTPS sign-in page on the exact website_url hostname, or an empty string to disable admin-sent sign-in links. Changing website_url also revalidates the saved sign-in URI. Invalid values return 400 with an initiate_login_uri field error; hostname and URI policy failures use https_url_on_registered_website_required. An MCP token (a "Log in with Didit" grant, <code>token_use</code> <code>mcp</code>) also needs the <code>didit:management</code> scope, which carries the <code>applications</code> resource; a grant limited to <code>didit:verification</code> is refused with 403 before anything is changed.
    *
    * <p>{@code PATCH /organizations/me/{org_id}/applications/{app_id}/}
    *

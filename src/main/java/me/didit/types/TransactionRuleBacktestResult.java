@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.FileUpload;
@@ -13,7 +12,7 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 
 public final class TransactionRuleBacktestResult extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("evaluated", "matched", "affected_entities", "period_days");
+  private static final Set<String> KNOWN_FIELDS = Set.of("evaluated", "matched", "affected_entities", "period_days", "truncated", "overlapping_rules", "overlapping_rules_truncated");
 
   private TransactionRuleBacktestResult(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -51,41 +50,71 @@ public final class TransactionRuleBacktestResult extends JsonModel {
   /**
    * Transactions evaluated (most recent first, capped).
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<Long> evaluated() {
-    return Json.optional(json, "evaluated", Conv.LONG);
+  public long evaluated() {
+    return Json.required(json, "evaluated", Conv.LONG);
   }
 
   /**
    * Transactions the configuration would have matched.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<Long> matched() {
-    return Json.optional(json, "matched", Conv.LONG);
+  public long matched() {
+    return Json.required(json, "matched", Conv.LONG);
   }
 
   /**
    * Distinct subjects (by vendor_data) among the matches.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<Long> affectedEntities() {
-    return Json.optional(json, "affected_entities", Conv.LONG);
+  public long affectedEntities() {
+    return Json.required(json, "affected_entities", Conv.LONG);
   }
 
   /**
    * The <code>period_days</code> field.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<Long> periodDays() {
-    return Json.optional(json, "period_days", Conv.LONG);
+  public long periodDays() {
+    return Json.required(json, "period_days", Conv.LONG);
+  }
+
+  /**
+   * True only when additional transactions in the requested period were omitted by the replay cap.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public boolean truncated() {
+    return Json.required(json, "truncated", Conv.BOOLEAN);
+  }
+
+  /**
+   * Active rules matching the candidate hits, excluding rule_id. Empty when none matched within the comparison bounds.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public List<TransactionRuleOverlap> overlappingRules() {
+    return Json.required(json, "overlapping_rules", Conv.list(Conv.model(TransactionRuleOverlap::fromJson)));
+  }
+
+  /**
+   * True when the overlap comparison is partial: more than 50 eligible active rules, more than 1000 rule/transaction comparisons, or a truncated replay with candidate hits and eligible rules. False when there are no candidate hits or no eligible rules, even if truncated is true. Counts are not exhaustive when true.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public boolean overlappingRulesTruncated() {
+    return Json.required(json, "overlapping_rules_truncated", Conv.BOOLEAN);
   }
 
   @Override
@@ -142,11 +171,49 @@ public final class TransactionRuleBacktestResult extends JsonModel {
     }
 
     /**
+     * True only when additional transactions in the requested period were omitted by the replay cap.
+     *
+     * @param truncated the value
+     * @return this builder
+     */
+    public Builder truncated(boolean truncated) {
+      return set("truncated", Conv.BOOLEAN, truncated);
+    }
+
+    /**
+     * Active rules matching the candidate hits, excluding rule_id. Empty when none matched within the comparison bounds.
+     *
+     * @param overlappingRules the value
+     * @return this builder
+     */
+    public Builder overlappingRules(List<TransactionRuleOverlap> overlappingRules) {
+      return set("overlapping_rules", Conv.list(Conv.model(TransactionRuleOverlap::fromJson)), overlappingRules);
+    }
+
+    /**
+     * True when the overlap comparison is partial: more than 50 eligible active rules, more than 1000 rule/transaction comparisons, or a truncated replay with candidate hits and eligible rules. False when there are no candidate hits or no eligible rules, even if truncated is true. Counts are not exhaustive when true.
+     *
+     * @param overlappingRulesTruncated the value
+     * @return this builder
+     */
+    public Builder overlappingRulesTruncated(boolean overlappingRulesTruncated) {
+      return set("overlapping_rules_truncated", Conv.BOOLEAN, overlappingRulesTruncated);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code TransactionRuleBacktestResult}
+     * @throws IllegalStateException when a required field is missing
      */
     public TransactionRuleBacktestResult build() {
+      require("evaluated", false);
+      require("matched", false);
+      require("affected_entities", false);
+      require("period_days", false);
+      require("truncated", false);
+      require("overlapping_rules", false);
+      require("overlapping_rules_truncated", false);
       return new TransactionRuleBacktestResult(buildJson(), buildFiles());
     }
 

@@ -64,6 +64,8 @@ public final class CustomerMessagingCaseRequestPreviewRequest extends JsonModel 
    * - <code>business_document</code> - business_document
    * - <code>confirm_details</code> - confirm_details
    * - <code>review_in_progress</code> - review_in_progress
+   * - <code>source_of_funds</code> - Request a document showing the source of payment funds.
+   * - <code>purpose_of_payment</code> - Request a document explaining the payment purpose. Both are available for person and business cases.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -111,6 +113,8 @@ public final class CustomerMessagingCaseRequestPreviewRequest extends JsonModel 
      * - <code>business_document</code> - business_document
      * - <code>confirm_details</code> - confirm_details
      * - <code>review_in_progress</code> - review_in_progress
+     * - <code>source_of_funds</code> - Request a document showing the source of payment funds.
+     * - <code>purpose_of_payment</code> - Request a document explaining the payment purpose. Both are available for person and business cases.
      *
      * @param purpose the value
      * @return this builder

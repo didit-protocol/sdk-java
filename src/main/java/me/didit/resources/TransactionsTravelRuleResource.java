@@ -6,10 +6,13 @@ import java.util.concurrent.CompletableFuture;
 import me.didit.core.ApiClient;
 import me.didit.core.ApiRequest;
 import me.didit.core.Conv;
+import me.didit.core.Page;
 import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
+import me.didit.types.TransactionsTravelRuleListDeliveriesParams;
+import me.didit.types.TravelRuleDeliveryLogEntry;
 import me.didit.types.TravelRuleMessage;
 import me.didit.types.TravelRuleMessageCreateRequest;
 import me.didit.types.TravelRuleOwnershipConfirmRequest;
@@ -279,6 +282,99 @@ public final class TransactionsTravelRuleResource {
     return client.executeAsync(triggerTestVaspInboundRequest(params), RequestOptions.none(), TRIGGER_TEST_VASP_INBOUND_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * List Travel Rule delivery history
+   *
+   * <p>Read the complete delivery history for a transaction, oldest first. Requires transaction read permission. Unlike the newest 100 entries embedded in detail, this endpoint paginates the full history. See [delivery history](/management-api/travel-rule/list-deliveries).
+   *
+   * <p>{@code GET /v3/transactions/{transaction_id}/travel-rule/deliveries/}
+   * <p>Returns one page; iterate it to fetch every following page automatically.
+   *
+   * @param transactionId Didit-stable transaction UUID that owns the transfer.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public Page<TravelRuleDeliveryLogEntry> listDeliveries(String transactionId, TransactionsTravelRuleListDeliveriesParams params, RequestOptions options) {
+    return client.execute(listDeliveriesRequest(transactionId, params), options, LIST_DELIVERIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)}.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TravelRuleDeliveryLogEntry>> listDeliveriesAsync(String transactionId, TransactionsTravelRuleListDeliveriesParams params, RequestOptions options) {
+    return client.executeAsync(listDeliveriesRequest(transactionId, params), options, LIST_DELIVERIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)}, with the client's options.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @param params the request parameters
+   * @return the result
+   */
+  public Page<TravelRuleDeliveryLogEntry> listDeliveries(String transactionId, TransactionsTravelRuleListDeliveriesParams params) {
+    return client.execute(listDeliveriesRequest(transactionId, params), RequestOptions.none(), LIST_DELIVERIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)}, with the client's options.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TravelRuleDeliveryLogEntry>> listDeliveriesAsync(String transactionId, TransactionsTravelRuleListDeliveriesParams params) {
+    return client.executeAsync(listDeliveriesRequest(transactionId, params), RequestOptions.none(), LIST_DELIVERIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)}, without parameters.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @param options per-request options
+   * @return the result
+   */
+  public Page<TravelRuleDeliveryLogEntry> listDeliveries(String transactionId, RequestOptions options) {
+    return client.execute(listDeliveriesRequest(transactionId, TransactionsTravelRuleListDeliveriesParams.builder().build()), options, LIST_DELIVERIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)}, without parameters.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TravelRuleDeliveryLogEntry>> listDeliveriesAsync(String transactionId, RequestOptions options) {
+    return client.executeAsync(listDeliveriesRequest(transactionId, TransactionsTravelRuleListDeliveriesParams.builder().build()), options, LIST_DELIVERIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @return the result
+   */
+  public Page<TravelRuleDeliveryLogEntry> listDeliveries(String transactionId) {
+    return client.execute(listDeliveriesRequest(transactionId, TransactionsTravelRuleListDeliveriesParams.builder().build()), RequestOptions.none(), LIST_DELIVERIES_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TravelRuleDeliveryLogEntry>> listDeliveriesAsync(String transactionId) {
+    return client.executeAsync(listDeliveriesRequest(transactionId, TransactionsTravelRuleListDeliveriesParams.builder().build()), RequestOptions.none(), LIST_DELIVERIES_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<TravelRuleTransferDetail> UPDATE_TRANSFER_RESPONSE = Responses.json(Conv.model(TravelRuleTransferDetail::fromJson));
 
   private static ApiRequest updateTransferRequest(String transactionId, TravelRuleTransferPatchRequest params) {
@@ -323,6 +419,16 @@ public final class TransactionsTravelRuleResource {
     return ApiRequest.builder("POST", "/v3/travel-rule/test-vasp/inbound/")
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<Page<TravelRuleDeliveryLogEntry>> LIST_DELIVERIES_RESPONSE = Responses.page(Conv.model(TravelRuleDeliveryLogEntry::fromJson));
+
+  private static ApiRequest listDeliveriesRequest(String transactionId, TransactionsTravelRuleListDeliveriesParams params) {
+    return ApiRequest.builder("GET", "/v3/transactions/{transaction_id}/travel-rule/deliveries/")
+        .pathParam("transaction_id", transactionId)
+        .params(params)
+        .queryFields("limit", "offset")
         .build();
   }
 
@@ -554,6 +660,94 @@ public final class TransactionsTravelRuleResource {
      */
     public CompletableFuture<RawResponse<TravelRuleTestVaspInboundResponse>> triggerTestVaspInboundAsync(TravelRuleTestVaspInboundRequest params) {
       return client.executeAsync(triggerTestVaspInboundRequest(params), RequestOptions.none(), TRIGGER_TEST_VASP_INBOUND_RESPONSE);
+    }
+
+    /**
+     * {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)} with the raw response.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<Page<TravelRuleDeliveryLogEntry>> listDeliveries(String transactionId, TransactionsTravelRuleListDeliveriesParams params, RequestOptions options) {
+      return client.execute(listDeliveriesRequest(transactionId, params), options, LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)} with the raw response.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TravelRuleDeliveryLogEntry>>> listDeliveriesAsync(String transactionId, TransactionsTravelRuleListDeliveriesParams params, RequestOptions options) {
+      return client.executeAsync(listDeliveriesRequest(transactionId, params), options, LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<Page<TravelRuleDeliveryLogEntry>> listDeliveries(String transactionId, TransactionsTravelRuleListDeliveriesParams params) {
+      return client.execute(listDeliveriesRequest(transactionId, params), RequestOptions.none(), LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TravelRuleDeliveryLogEntry>>> listDeliveriesAsync(String transactionId, TransactionsTravelRuleListDeliveriesParams params) {
+      return client.executeAsync(listDeliveriesRequest(transactionId, params), RequestOptions.none(), LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<Page<TravelRuleDeliveryLogEntry>> listDeliveries(String transactionId, RequestOptions options) {
+      return client.execute(listDeliveriesRequest(transactionId, TransactionsTravelRuleListDeliveriesParams.builder().build()), options, LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TravelRuleDeliveryLogEntry>>> listDeliveriesAsync(String transactionId, RequestOptions options) {
+      return client.executeAsync(listDeliveriesRequest(transactionId, TransactionsTravelRuleListDeliveriesParams.builder().build()), options, LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @return the result
+     */
+    public RawResponse<Page<TravelRuleDeliveryLogEntry>> listDeliveries(String transactionId) {
+      return client.execute(listDeliveriesRequest(transactionId, TransactionsTravelRuleListDeliveriesParams.builder().build()), RequestOptions.none(), LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listDeliveries(String, TransactionsTravelRuleListDeliveriesParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TravelRuleDeliveryLogEntry>>> listDeliveriesAsync(String transactionId) {
+      return client.executeAsync(listDeliveriesRequest(transactionId, TransactionsTravelRuleListDeliveriesParams.builder().build()), RequestOptions.none(), LIST_DELIVERIES_RESPONSE);
     }
   }
 }
