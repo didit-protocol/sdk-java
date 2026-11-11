@@ -44,6 +44,8 @@ abstract class JsonView {
   private static final Set<String> PERSONAL =
       Set.of(
           "code",
+          "challenge",
+          "assertion",
           "nonce",
           "email",
           "phone",

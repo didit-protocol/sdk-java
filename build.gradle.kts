@@ -44,6 +44,8 @@ tasks.withType<JavaCompile>().configureEach {
     disable("SameNameButDifferent")
     // Generated builders and union accessors are intentionally symmetric.
     disable("InlineMeSuggester")
+    // Generated enums nest a type named Error (SsoRequiredError.Error), as the spec names it.
+    disable("AvoidCommonTypeNames")
   }
 }
 

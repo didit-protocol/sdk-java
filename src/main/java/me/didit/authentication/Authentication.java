@@ -939,6 +939,81 @@ public final class Authentication {
         .thenApply(response -> new StepUp(jsonObject(response, "the step-up")));
   }
 
+  /**
+   * Approves or denies a pending agent request ({@code POST agents/consent/}). When the application
+   * demands a human passkey, first call {@link #createAgentApprovalOptions}, run WebAuthn in the
+   * browser and pass the JSON-serialised assertion within 300 seconds. Needs a session created in
+   * the last five minutes (else 403 {@code reauthentication_required}); a missing assertion is 403
+   * {@code passkey_required} and a bad one 400 {@code invalid_grant}. The challenge and assertion
+   * are never logged and the call is never retried.
+   *
+   * @param accessToken the approving person's access token
+   * @param params the challenge, decision and optional assertion, scopes, organizations, lifetime
+   * @return the approval ({@code code}, {@code redirect_uri}, {@code state}) or the denial
+   */
+  public AgentConsent submitAgentConsent(String accessToken, AgentConsentParams params) {
+    return await(submitAgentConsentAsync(accessToken, params));
+  }
+
+  /**
+   * Approves or denies a pending agent request.
+   *
+   * @param accessToken the approving person's access token
+   * @param params the challenge, decision and optional assertion, scopes, organizations, lifetime
+   * @return a future completed with the approval or the denial
+   */
+  public CompletableFuture<AgentConsent> submitAgentConsentAsync(
+      String accessToken, AgentConsentParams params) {
+    return send(
+            "POST", runtime("agents/consent/"), jsonHeaders(accessToken), jsonBody(params.toJson()))
+        .thenApply(response -> new AgentConsent(jsonObject(response, "the agent consent")));
+  }
+
+  /**
+   * Gets fresh WebAuthn options for a pending agent request ({@code POST agents/consent/passkey/}),
+   * bound to the signed-in person. No enrolled passkey is 400 {@code passkey_required}. Needs a
+   * session created in the last five minutes. The challenge is never logged and the call is never
+   * retried.
+   *
+   * @param accessToken the approving person's access token
+   * @param challenge the pending agent request secret
+   * @return the options
+   */
+  public AgentApprovalOptions createAgentApprovalOptions(String accessToken, String challenge) {
+    return await(createAgentApprovalOptionsAsync(accessToken, challenge));
+  }
+
+  /**
+   * Gets fresh WebAuthn options for a pending agent request.
+   *
+   * @param accessToken the approving person's access token
+   * @param challenge the pending agent request secret
+   * @return a future completed with the options
+   */
+  public CompletableFuture<AgentApprovalOptions> createAgentApprovalOptionsAsync(
+      String accessToken, String challenge) {
+    if (challenge.isEmpty() || challenge.length() > 128) {
+      return CompletableFuture.failedFuture(
+          new ConfigurationException("The challenge must be 1 to 128 characters"));
+    }
+    ObjectNode body = Json.nodes().objectNode();
+    body.put("challenge", challenge);
+    return send(
+            "POST", runtime("agents/consent/passkey/"), jsonHeaders(accessToken), jsonBody(body))
+        .thenApply(
+            response -> new AgentApprovalOptions(jsonObject(response, "the approval options")));
+  }
+
+  private Map<String, String> jsonHeaders(String accessToken) {
+    Map<String, String> headers = new LinkedHashMap<>(bearer(accessToken));
+    headers.put("Content-Type", "application/json");
+    return headers;
+  }
+
+  private static byte[] jsonBody(ObjectNode body) {
+    return Json.write(body).getBytes(StandardCharsets.UTF_8);
+  }
+
   private URI runtime(String path) {
     return URI.create(issuer + "/" + path);
   }
