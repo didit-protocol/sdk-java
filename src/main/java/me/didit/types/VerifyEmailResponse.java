@@ -11,9 +11,10 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import org.jspecify.annotations.Nullable;
 
 public final class VerifyEmailResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("access_token", "refresh_token", "expires_in", "organization", "application", "2fa_required", "temp_token", "has_authenticator", "has_passkeys");
+  private static final Set<String> KNOWN_FIELDS = Set.of("access_token", "refresh_token", "expires_in", "organization", "application", "sandbox_application", "2fa_required", "temp_token", "has_authenticator", "has_passkeys");
 
   private VerifyEmailResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -89,13 +90,23 @@ public final class VerifyEmailResponse extends JsonModel {
   }
 
   /**
-   * Minimal application shape returned inline by <code>POST /programmatic/verify-email/</code>. Persist the <code>api_key</code> immediately.
+   * The organization's live application (<code>mode: live</code>): the credentials a production integration ships with. Every check created with its key is billed from the organization's balance.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<ApplicationCredentialsSummary> application() {
     return Json.optional(json, "application", Conv.model(ApplicationCredentialsSummary::fromJson));
+  }
+
+  /**
+   * The organization's sandbox application (<code>mode: sandbox</code>). Use its <code>api_key</code> to build and test the integration for free: every check is mocked and never billed. Switch to the live <code>application</code> key to go live.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<ApplicationCredentialsSummary> sandboxApplication() {
+    return Json.optional(json, "sandbox_application", Conv.model(ApplicationCredentialsSummary::fromJson));
   }
 
   /**
@@ -192,13 +203,23 @@ public final class VerifyEmailResponse extends JsonModel {
     }
 
     /**
-     * Minimal application shape returned inline by <code>POST /programmatic/verify-email/</code>. Persist the <code>api_key</code> immediately.
+     * The organization's live application (<code>mode: live</code>): the credentials a production integration ships with. Every check created with its key is billed from the organization's balance.
      *
      * @param application the value
      * @return this builder
      */
     public Builder application(ApplicationCredentialsSummary application) {
       return set("application", Conv.model(ApplicationCredentialsSummary::fromJson), application);
+    }
+
+    /**
+     * The organization's sandbox application (<code>mode: sandbox</code>). Use its <code>api_key</code> to build and test the integration for free: every check is mocked and never billed. Switch to the live <code>application</code> key to go live.
+     *
+     * @param sandboxApplication the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder sandboxApplication(@Nullable ApplicationCredentialsSummary sandboxApplication) {
+      return setNullable("sandbox_application", Conv.model(ApplicationCredentialsSummary::fromJson), sandboxApplication);
     }
 
     /**

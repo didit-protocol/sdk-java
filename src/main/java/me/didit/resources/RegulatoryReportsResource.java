@@ -406,7 +406,7 @@ public final class RegulatoryReportsResource {
   /**
    * Validate report
    *
-   * <p>Check the report against the obligatory goAML header fields (reporting entity ID, submission code, local currency, action taken, submission date), plus at least one attached transaction and a 2-letter jurisdiction, without generating any files. Also stores the result on the report: validation_errors and validated_at are updated, and a non-finalized report's status moves to VALIDATED (no errors) or back to DRAFT (errors).
+   * <p>Check the report against the obligatory goAML header fields (reporting entity ID, submission code, local currency, action taken, submission date), plus at least one attached transaction and a 2-letter jurisdiction, without generating any files. For jurisdiction AE, once those pass, the report's goAML XML is also checked against the UAE FIU's goAML XML schema and each problem is returned as a field and a message; finalize refuses a report that fails. FFR and PNMR reports need no attached transaction: they require the case to have a subject, otherwise validation_errors contains an error with field <code>subject</code>. Also stores the result on the report: validation_errors and validated_at are updated, and a non-finalized report's status moves to VALIDATED (no errors) or back to DRAFT (errors).
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/validate/}
    * <p>Application scoped: the organization and application ids come from the client options.
@@ -453,7 +453,7 @@ public final class RegulatoryReportsResource {
   /**
    * Finalize report
    *
-   * <p>Re-validate, then render the goAML XML and PDF and upload both to S3. On SAR/STR/TFR reports, this also moves the case's transaction alerts from Pending SAR to SAR filed.
+   * <p>Re-validate, then render the goAML XML and PDF and upload both to S3. On SAR/STR/TFR reports, this also moves the case's transaction alerts from Pending SAR to SAR filed. FFR and PNMR reports do not move alerts.
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/finalize/}
    * <p>Application scoped: the organization and application ids come from the client options.

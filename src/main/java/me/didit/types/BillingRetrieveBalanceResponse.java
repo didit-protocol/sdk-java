@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 import org.jspecify.annotations.Nullable;
 
 public final class BillingRetrieveBalanceResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("balance", "auto_refill_enabled", "auto_refill_amount", "auto_refill_threshold");
+  private static final Set<String> KNOWN_FIELDS = Set.of("balance", "auto_refill_enabled", "auto_refill_amount", "auto_refill_threshold", "agent_top_up");
 
   private BillingRetrieveBalanceResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -89,6 +89,16 @@ public final class BillingRetrieveBalanceResponse extends JsonModel {
     return Json.optional(json, "auto_refill_threshold", Conv.STRING);
   }
 
+  /**
+   * Whether agents can top up this organization with its saved card. Off by default; a person signed in to the console turns on "Connected AI agents can top up with your saved card" in Billing &gt; Payment methods.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<AgentTopUpSettings> agentTopUp() {
+    return Json.optional(json, "agent_top_up", Conv.model(AgentTopUpSettings::fromJson));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -140,6 +150,16 @@ public final class BillingRetrieveBalanceResponse extends JsonModel {
      */
     public Builder autoRefillThreshold(@Nullable String autoRefillThreshold) {
       return setNullable("auto_refill_threshold", Conv.STRING, autoRefillThreshold);
+    }
+
+    /**
+     * Whether agents can top up this organization with its saved card. Off by default; a person signed in to the console turns on "Connected AI agents can top up with your saved card" in Billing &gt; Payment methods.
+     *
+     * @param agentTopUp the value
+     * @return this builder
+     */
+    public Builder agentTopUp(AgentTopUpSettings agentTopUp) {
+      return set("agent_top_up", Conv.model(AgentTopUpSettings::fromJson), agentTopUp);
     }
 
     /**

@@ -11,10 +11,11 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import me.didit.core.StringEnum;
 
 /** Parameters for {&#64;code billing.top_up}. */
 public final class BillingTopUpParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("amount_in_dollars", "success_url", "cancel_url");
+  private static final Set<String> KNOWN_FIELDS = Set.of("amount_in_dollars", "success_url", "cancel_url", "payment_method");
 
   private BillingTopUpParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -50,7 +51,7 @@ public final class BillingTopUpParams extends JsonModel {
   }
 
   /**
-   * Amount to charge, in USD. <b>Must be from 50 to 20,000.</b> The balance receives the same amount, with no discount or bonus. Tax is added automatically at checkout based on the customer's billing address.
+   * Amount to charge, in USD. <b>Must be from 50 to 20,000.</b> The balance receives the same amount, with no discount or bonus. Tax is added automatically, at checkout or to the saved card charge, based on the customer's billing address.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -60,7 +61,7 @@ public final class BillingTopUpParams extends JsonModel {
   }
 
   /**
-   * URL the hosted checkout redirects the customer to after a successful payment. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable. Append the literal placeholder <code>{CHECKOUT_SESSION_ID}</code> if you want the hosted checkout to substitute the session ID.
+   * Checkout only. URL the hosted checkout redirects the customer to after a successful payment. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable. Append the literal placeholder <code>{CHECKOUT_SESSION_ID}</code> if you want the hosted checkout to substitute the session ID.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -70,13 +71,23 @@ public final class BillingTopUpParams extends JsonModel {
   }
 
   /**
-   * URL the hosted checkout redirects the customer to when they abort or close the Checkout window. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable.
+   * Checkout only. URL the hosted checkout redirects the customer to when they abort or close the Checkout window. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<String> cancelUrl() {
     return Json.optional(json, "cancel_url", Conv.STRING);
+  }
+
+  /**
+   * How the top-up is paid. <code>checkout</code> (default) creates a hosted Checkout session and answers <code>200</code>. <code>saved_card</code> charges the organization's saved primary card off-session, requires the <code>Idempotency-Key</code> header and "Connected AI agents can top up with your saved card" to be on, and answers <code>201</code> or <code>202</code>. <code>success_url</code> and <code>cancel_url</code> apply to <code>checkout</code> only.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<BillingTopUpParams.PaymentMethod> paymentMethod() {
+    return Json.optional(json, "payment_method", Conv.enumeration(BillingTopUpParams.PaymentMethod::of));
   }
 
   @Override
@@ -93,7 +104,7 @@ public final class BillingTopUpParams extends JsonModel {
     }
 
     /**
-     * Amount to charge, in USD. <b>Must be from 50 to 20,000.</b> The balance receives the same amount, with no discount or bonus. Tax is added automatically at checkout based on the customer's billing address.
+     * Amount to charge, in USD. <b>Must be from 50 to 20,000.</b> The balance receives the same amount, with no discount or bonus. Tax is added automatically, at checkout or to the saved card charge, based on the customer's billing address.
      *
      * @param amountInDollars the value
      * @return this builder
@@ -103,7 +114,7 @@ public final class BillingTopUpParams extends JsonModel {
     }
 
     /**
-     * URL the hosted checkout redirects the customer to after a successful payment. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable. Append the literal placeholder <code>{CHECKOUT_SESSION_ID}</code> if you want the hosted checkout to substitute the session ID.
+     * Checkout only. URL the hosted checkout redirects the customer to after a successful payment. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable. Append the literal placeholder <code>{CHECKOUT_SESSION_ID}</code> if you want the hosted checkout to substitute the session ID.
      *
      * @param successUrl the value
      * @return this builder
@@ -113,13 +124,23 @@ public final class BillingTopUpParams extends JsonModel {
     }
 
     /**
-     * URL the hosted checkout redirects the customer to when they abort or close the Checkout window. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable.
+     * Checkout only. URL the hosted checkout redirects the customer to when they abort or close the Checkout window. Currently defaults to <code>https://console.didit.me</code>. Pass a working URL explicitly; the default host is unavailable.
      *
      * @param cancelUrl the value
      * @return this builder
      */
     public Builder cancelUrl(String cancelUrl) {
       return set("cancel_url", Conv.STRING, cancelUrl);
+    }
+
+    /**
+     * How the top-up is paid. <code>checkout</code> (default) creates a hosted Checkout session and answers <code>200</code>. <code>saved_card</code> charges the organization's saved primary card off-session, requires the <code>Idempotency-Key</code> header and "Connected AI agents can top up with your saved card" to be on, and answers <code>201</code> or <code>202</code>. <code>success_url</code> and <code>cancel_url</code> apply to <code>checkout</code> only.
+     *
+     * @param paymentMethod the value
+     * @return this builder
+     */
+    public Builder paymentMethod(BillingTopUpParams.PaymentMethod paymentMethod) {
+      return set("payment_method", Conv.enumeration(BillingTopUpParams.PaymentMethod::of), paymentMethod);
     }
 
     /**
@@ -136,6 +157,49 @@ public final class BillingTopUpParams extends JsonModel {
     @Override
     protected Builder self() {
       return this;
+    }
+  }
+
+  /**
+   * How the top-up is paid. <code>checkout</code> (default) creates a hosted Checkout session and answers <code>200</code>. <code>saved_card</code> charges the organization's saved primary card off-session, requires the <code>Idempotency-Key</code> header and "Connected AI agents can top up with your saved card" to be on, and answers <code>201</code> or <code>202</code>. <code>success_url</code> and <code>cancel_url</code> apply to <code>checkout</code> only.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class PaymentMethod extends StringEnum {
+    /** The value {@code "checkout"}. */
+    public static final PaymentMethod CHECKOUT = new PaymentMethod("checkout");
+
+    /** The value {@code "saved_card"}. */
+    public static final PaymentMethod SAVED_CARD = new PaymentMethod("saved_card");
+
+    private static final List<PaymentMethod> KNOWN_VALUES = List.of(CHECKOUT, SAVED_CARD);
+
+    private PaymentMethod(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static PaymentMethod of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, PaymentMethod::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<PaymentMethod> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 }

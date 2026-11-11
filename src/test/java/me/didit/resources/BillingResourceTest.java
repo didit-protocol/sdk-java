@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -41,18 +42,21 @@ final class BillingResourceTest {
 
   @Test
   void topUp() {
-    BillingTopUpParams params = BillingTopUpParams.builder().amountInDollars(1.5).successUrl("https://example.com/callback").cancelUrl("https://example.com/callback").build();
+    BillingTopUpParams params = BillingTopUpParams.builder().amountInDollars(1.5).successUrl("https://example.com/callback").cancelUrl("https://example.com/callback").paymentMethod(BillingTopUpParams.PaymentMethod.CHECKOUT).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/billing/top-up/", "200");
     transport.respondJson(200, example);
-    var result = client.billing().topUp(params);
+    var result = client.billing().topUp(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/billing/top-up/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"amount_in_dollars\":1.5,\"success_url\":\"https://example.com/callback\",\"cancel_url\":\"https://example.com/callback\"}", request.body());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    TestJson.assertJsonEquals("{\"amount_in_dollars\":1.5,\"success_url\":\"https://example.com/callback\",\"cancel_url\":\"https://example.com/callback\",\"payment_method\":\"checkout\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
+    assertEquals(200, result.statusCode());
     TestModels.readAll(result);
   }
 }

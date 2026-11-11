@@ -15739,7 +15739,7 @@ public final class SessionDecision extends JsonModel {
       }
 
       /**
-       * Event-specific payload. Send events carry <code>status</code>, <code>reason</code>, <code>channel</code>, <code>actual_channel</code>; delivery events carry <code>channel</code>, <code>status</code>; code-check events carry <code>code_tried</code>, <code>status</code>; final status events carry <code>reason</code> — or <code>null</code> when there is no reason to report (e.g. <code>PHONE_VERIFICATION_APPROVED</code>).
+       * Event-specific payload. Send events carry <code>status</code>, <code>reason</code>, <code>channel</code>, <code>actual_channel</code>, <code>attempt</code> (the send's 0-based index, matching the order of the send events) and <code>delivery_status</code> (<code>delivered</code>, <code>undeliverable</code>, or <code>unknown</code> once no report can still arrive; absent while one can); delivery events carry <code>channel</code>, <code>status</code>, <code>attempt</code> and, on <code>PHONE_DELIVERY_UNDELIVERABLE</code>, <code>reason</code> (<code>expired</code>, <code>rejected</code>, <code>unreachable</code>, <code>blocked</code> or <code>unknown</code> for a message; <code>unreachable_number</code>, <code>no_answer</code>, <code>busy</code> or <code>undeliverable</code> for a call — always a fixed word, never a provider status or error code); code-check events carry <code>code_tried</code>, <code>status</code>; final status events carry <code>reason</code> — or <code>null</code> when there is no reason to report (e.g. <code>PHONE_VERIFICATION_APPROVED</code>).
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -15792,7 +15792,7 @@ public final class SessionDecision extends JsonModel {
         }
 
         /**
-         * Event-specific payload. Send events carry <code>status</code>, <code>reason</code>, <code>channel</code>, <code>actual_channel</code>; delivery events carry <code>channel</code>, <code>status</code>; code-check events carry <code>code_tried</code>, <code>status</code>; final status events carry <code>reason</code> — or <code>null</code> when there is no reason to report (e.g. <code>PHONE_VERIFICATION_APPROVED</code>).
+         * Event-specific payload. Send events carry <code>status</code>, <code>reason</code>, <code>channel</code>, <code>actual_channel</code>, <code>attempt</code> (the send's 0-based index, matching the order of the send events) and <code>delivery_status</code> (<code>delivered</code>, <code>undeliverable</code>, or <code>unknown</code> once no report can still arrive; absent while one can); delivery events carry <code>channel</code>, <code>status</code>, <code>attempt</code> and, on <code>PHONE_DELIVERY_UNDELIVERABLE</code>, <code>reason</code> (<code>expired</code>, <code>rejected</code>, <code>unreachable</code>, <code>blocked</code> or <code>unknown</code> for a message; <code>unreachable_number</code>, <code>no_answer</code>, <code>busy</code> or <code>undeliverable</code> for a call — always a fixed word, never a provider status or error code); code-check events carry <code>code_tried</code>, <code>status</code>; final status events carry <code>reason</code> — or <code>null</code> when there is no reason to report (e.g. <code>PHONE_VERIFICATION_APPROVED</code>).
          *
          * @param details the value, or {@code null} to send JSON null
          * @return this builder
@@ -15827,10 +15827,10 @@ public final class SessionDecision extends JsonModel {
       }
 
       /**
-       * Event-specific payload. Send events carry <code>status</code>, <code>reason</code>, <code>channel</code>, <code>actual_channel</code>; delivery events carry <code>channel</code>, <code>status</code>; code-check events carry <code>code_tried</code>, <code>status</code>; final status events carry <code>reason</code> — or <code>null</code> when there is no reason to report (e.g. <code>PHONE_VERIFICATION_APPROVED</code>).
+       * Event-specific payload. Send events carry <code>status</code>, <code>reason</code>, <code>channel</code>, <code>actual_channel</code>, <code>attempt</code> (the send's 0-based index, matching the order of the send events) and <code>delivery_status</code> (<code>delivered</code>, <code>undeliverable</code>, or <code>unknown</code> once no report can still arrive; absent while one can); delivery events carry <code>channel</code>, <code>status</code>, <code>attempt</code> and, on <code>PHONE_DELIVERY_UNDELIVERABLE</code>, <code>reason</code> (<code>expired</code>, <code>rejected</code>, <code>unreachable</code>, <code>blocked</code> or <code>unknown</code> for a message; <code>unreachable_number</code>, <code>no_answer</code>, <code>busy</code> or <code>undeliverable</code> for a call — always a fixed word, never a provider status or error code); code-check events carry <code>code_tried</code>, <code>status</code>; final status events carry <code>reason</code> — or <code>null</code> when there is no reason to report (e.g. <code>PHONE_VERIFICATION_APPROVED</code>).
        */
       public static final class Details extends JsonModel {
-        private static final Set<String> KNOWN_FIELDS = Set.of("status", "reason", "channel", "actual_channel", "code_tried");
+        private static final Set<String> KNOWN_FIELDS = Set.of("status", "reason", "channel", "actual_channel", "attempt", "delivery_status", "code_tried");
 
         private Details(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
@@ -15876,7 +15876,7 @@ public final class SessionDecision extends JsonModel {
         }
 
         /**
-         * The <code>reason</code> field.
+         * Send events: why the send was blocked (<code>invalid_phone_number</code>, <code>repeated_attempts</code>, <code>suspicious</code>, <code>spam</code>, <code>unknown</code>), <code>null</code> otherwise. Delivery events on <code>PHONE_DELIVERY_UNDELIVERABLE</code>: <code>expired</code>, <code>rejected</code>, <code>unreachable</code>, <code>blocked</code> or <code>unknown</code> for a message, and <code>unreachable_number</code>, <code>no_answer</code>, <code>busy</code> or <code>undeliverable</code> for a call — a fixed customer-safe word, never the provider's status or error code.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -15903,6 +15903,26 @@ public final class SessionDecision extends JsonModel {
          */
         public Optional<String> actualChannel() {
           return Json.optional(json, "actual_channel", Conv.STRING);
+        }
+
+        /**
+         * Send events and delivery events: the 0-based index of the send attempt the event belongs to, in the order of the send events.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<Long> attempt() {
+          return Json.optional(json, "attempt", Conv.LONG);
+        }
+
+        /**
+         * Send events: how the send ended. <code>unknown</code> once no delivery report can still arrive (the verification finished without one); absent while one can.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<SessionDecision.PhoneVerifications.Lifecycle.Details.DeliveryStatus> deliveryStatus() {
+          return Json.optional(json, "delivery_status", Conv.enumeration(SessionDecision.PhoneVerifications.Lifecycle.Details.DeliveryStatus::of));
         }
 
         /**
@@ -15939,7 +15959,7 @@ public final class SessionDecision extends JsonModel {
           }
 
           /**
-           * The <code>reason</code> field.
+           * Send events: why the send was blocked (<code>invalid_phone_number</code>, <code>repeated_attempts</code>, <code>suspicious</code>, <code>spam</code>, <code>unknown</code>), <code>null</code> otherwise. Delivery events on <code>PHONE_DELIVERY_UNDELIVERABLE</code>: <code>expired</code>, <code>rejected</code>, <code>unreachable</code>, <code>blocked</code> or <code>unknown</code> for a message, and <code>unreachable_number</code>, <code>no_answer</code>, <code>busy</code> or <code>undeliverable</code> for a call — a fixed customer-safe word, never the provider's status or error code.
            *
            * @param reason the value, or {@code null} to send JSON null
            * @return this builder
@@ -15969,6 +15989,26 @@ public final class SessionDecision extends JsonModel {
           }
 
           /**
+           * Send events and delivery events: the 0-based index of the send attempt the event belongs to, in the order of the send events.
+           *
+           * @param attempt the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder attempt(@Nullable Long attempt) {
+            return setNullable("attempt", Conv.LONG, attempt);
+          }
+
+          /**
+           * Send events: how the send ended. <code>unknown</code> once no delivery report can still arrive (the verification finished without one); absent while one can.
+           *
+           * @param deliveryStatus the value, or {@code null} to send JSON null
+           * @return this builder
+           */
+          public Builder deliveryStatus(SessionDecision.PhoneVerifications.Lifecycle.Details.@Nullable DeliveryStatus deliveryStatus) {
+            return setNullable("delivery_status", Conv.enumeration(SessionDecision.PhoneVerifications.Lifecycle.Details.DeliveryStatus::of), deliveryStatus);
+          }
+
+          /**
            * The <code>code_tried</code> field.
            *
            * @param codeTried the value
@@ -15990,6 +16030,52 @@ public final class SessionDecision extends JsonModel {
           @Override
           protected Builder self() {
             return this;
+          }
+        }
+
+        /**
+         * Send events: how the send ended. <code>unknown</code> once no delivery report can still arrive (the verification finished without one); absent while one can.
+         *
+         * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+         */
+        public static final class DeliveryStatus extends StringEnum {
+          /** The value {@code "delivered"}. */
+          public static final DeliveryStatus DELIVERED = new DeliveryStatus("delivered");
+
+          /** The value {@code "undeliverable"}. */
+          public static final DeliveryStatus UNDELIVERABLE = new DeliveryStatus("undeliverable");
+
+          /** The value {@code "unknown"}. */
+          public static final DeliveryStatus UNKNOWN = new DeliveryStatus("unknown");
+
+          private static final List<DeliveryStatus> KNOWN_VALUES = List.of(DELIVERED, UNDELIVERABLE, UNKNOWN);
+
+          private DeliveryStatus(String value) {
+            super(value);
+          }
+
+          /**
+           * Returns the constant for a known value, or a new instance for any other value.
+           *
+           * @param value the string value
+           * @return the enum value
+           */
+          public static DeliveryStatus of(String value) {
+            return StringEnum.lookup(KNOWN_VALUES, value, DeliveryStatus::new);
+          }
+
+          /**
+           * Returns the values known to this SDK version.
+           *
+           * @return the known values
+           */
+          public static List<DeliveryStatus> knownValues() {
+            return KNOWN_VALUES;
+          }
+
+          @Override
+          public boolean isKnown() {
+            return KNOWN_VALUES.contains(this);
           }
         }
       }

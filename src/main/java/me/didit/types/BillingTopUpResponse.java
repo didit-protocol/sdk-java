@@ -5,116 +5,190 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import me.didit.core.MultiStatusResponse;
 
-public final class BillingTopUpResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("checkout_session_id", "checkout_session_url");
-
-  private BillingTopUpResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
-    super(json, files);
+/** Response of {&#64;code billing.top_up}; the shape depends on the HTTP status. */
+public final class BillingTopUpResponse extends MultiStatusResponse {
+  private BillingTopUpResponse(int statusCode, JsonNode json) {
+    super(statusCode, json);
   }
 
   /**
-   * Reads a {@code BillingTopUpResponse} from JSON. Unknown fields are kept and readable
-   * through {@link #_additionalProperties()}.
+   * Reads the response body received with {@code statusCode}.
    *
-   * @param json a JSON object
-   * @return the parsed value
+   * @param statusCode the HTTP status
+   * @param json the response body
+   * @return the response
    */
-  public static BillingTopUpResponse fromJson(JsonNode json) {
-    return new BillingTopUpResponse(Json.copyObject(json), Map.of());
+  public static BillingTopUpResponse fromResponse(int statusCode, JsonNode json) {
+    return new BillingTopUpResponse(statusCode, json.deepCopy());
   }
 
   /**
-   * Returns an empty builder.
+   * Whether the API answered 200.
    *
-   * @return a new builder
+   * @return true for status 200
    */
-  public static Builder builder() {
-    return new Builder();
+  public boolean isOk() {
+    return statusCode() == 200;
   }
 
   /**
-   * Returns a builder holding a copy of every field of this value.
+   * The body of a 200 response.
    *
-   * @return a new builder
+   * @return the body, or empty for another status
    */
-  public Builder toBuilder() {
-    return new Builder(this);
+  public Optional<BillingTopUpResponse.Ok> asOk() {
+    return isOk() ? Optional.of(Conv.model(BillingTopUpResponse.Ok::fromJson).read(json)) : Optional.empty();
   }
 
   /**
-   * Hosted checkout session identifier (e.g. <code>cs_test_a1B2c3...</code>). Useful for server-side reconciliation.
+   * Whether the API answered 201.
    *
-   * @return the value
-   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   * @return true for status 201
    */
-  public String checkoutSessionId() {
-    return Json.required(json, "checkout_session_id", Conv.STRING);
+  public boolean isCreated() {
+    return statusCode() == 201;
   }
 
   /**
-   * Single-use hosted payment page URL. Redirect the customer here to complete payment.
+   * The body of a 201 response.
    *
-   * @return the value
-   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   * @return the body, or empty for another status
    */
-  public String checkoutSessionUrl() {
-    return Json.required(json, "checkout_session_url", Conv.STRING);
+  public Optional<BillingTopUpCharge> asCreated() {
+    return isCreated() ? Optional.of(Conv.model(BillingTopUpCharge::fromJson).read(json)) : Optional.empty();
   }
 
-  @Override
-  protected Set<String> knownFields() {
-    return KNOWN_FIELDS;
+  /**
+   * Whether the API answered 202.
+   *
+   * @return true for status 202
+   */
+  public boolean isAccepted() {
+    return statusCode() == 202;
   }
 
-  /** Builds a {@link BillingTopUpResponse}. */
-  public static final class Builder extends JsonModel.BaseBuilder<Builder> {
-    private Builder() {}
+  /**
+   * The body of a 202 response.
+   *
+   * @return the body, or empty for another status
+   */
+  public Optional<BillingTopUpCharge> asAccepted() {
+    return isAccepted() ? Optional.of(Conv.model(BillingTopUpCharge::fromJson).read(json)) : Optional.empty();
+  }
 
-    private Builder(BillingTopUpResponse from) {
-      super(from);
+  public static final class Ok extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("checkout_session_id", "checkout_session_url");
+
+    private Ok(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Ok} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Ok fromJson(JsonNode json) {
+      return new Ok(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
     }
 
     /**
      * Hosted checkout session identifier (e.g. <code>cs_test_a1B2c3...</code>). Useful for server-side reconciliation.
      *
-     * @param checkoutSessionId the value
-     * @return this builder
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
      */
-    public Builder checkoutSessionId(String checkoutSessionId) {
-      return set("checkout_session_id", Conv.STRING, checkoutSessionId);
+    public String checkoutSessionId() {
+      return Json.required(json, "checkout_session_id", Conv.STRING);
     }
 
     /**
      * Single-use hosted payment page URL. Redirect the customer here to complete payment.
      *
-     * @param checkoutSessionUrl the value
-     * @return this builder
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
      */
-    public Builder checkoutSessionUrl(String checkoutSessionUrl) {
-      return set("checkout_session_url", Conv.STRING, checkoutSessionUrl);
-    }
-
-    /**
-     * Builds the value.
-     *
-     * @return a new immutable {@code BillingTopUpResponse}
-     * @throws IllegalStateException when a required field is missing
-     */
-    public BillingTopUpResponse build() {
-      require("checkout_session_id", false);
-      require("checkout_session_url", false);
-      return new BillingTopUpResponse(buildJson(), buildFiles());
+    public String checkoutSessionUrl() {
+      return Json.required(json, "checkout_session_url", Conv.STRING);
     }
 
     @Override
-    protected Builder self() {
-      return this;
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Ok}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Ok from) {
+        super(from);
+      }
+
+      /**
+       * Hosted checkout session identifier (e.g. <code>cs_test_a1B2c3...</code>). Useful for server-side reconciliation.
+       *
+       * @param checkoutSessionId the value
+       * @return this builder
+       */
+      public Builder checkoutSessionId(String checkoutSessionId) {
+        return set("checkout_session_id", Conv.STRING, checkoutSessionId);
+      }
+
+      /**
+       * Single-use hosted payment page URL. Redirect the customer here to complete payment.
+       *
+       * @param checkoutSessionUrl the value
+       * @return this builder
+       */
+      public Builder checkoutSessionUrl(String checkoutSessionUrl) {
+        return set("checkout_session_url", Conv.STRING, checkoutSessionUrl);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Ok}
+       * @throws IllegalStateException when a required field is missing
+       */
+      public Ok build() {
+        require("checkout_session_id", false);
+        require("checkout_session_url", false);
+        return new Ok(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
     }
   }
 }
