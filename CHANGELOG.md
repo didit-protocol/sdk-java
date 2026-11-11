@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.1](https://github.com/didit-protocol/sdk-java/compare/v1.8.0...v1.8.1) (2026-11-11)
+
+
+### Bug Fixes
+
+* **authentication:** redact every string of the consent assertion from errors ([771cbb7](https://github.com/didit-protocol/sdk-java/commit/771cbb7bb54603ff76084c8d3637091f4181907a))
+
 ## [1.8.0](https://github.com/didit-protocol/sdk-java/compare/v1.7.0...v1.8.0) (2026-11-11)
 
 
