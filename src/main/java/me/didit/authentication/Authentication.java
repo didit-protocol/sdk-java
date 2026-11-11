@@ -971,8 +971,15 @@ public final class Authentication {
     // Written exactly once: these bytes are sent, and the secrets are read from them, so a POJO
     // nested in
     // the assertion is never serialized a second time.
-    byte[] sent = jsonBody(body);
-    collectStrings(Json.parse(sent).path("assertion"), secrets);
+    byte[] sent;
+    try {
+      sent = jsonBody(body);
+      collectStrings(Json.parse(sent).path("assertion"), secrets);
+    } catch (RuntimeException | StackOverflowError e) {
+      // A serializer's message may hold a credential: fixed message, no cause.
+      return CompletableFuture.failedFuture(
+          new ConfigurationException("Could not encode the agent consent request"));
+    }
     return send("POST", runtime("agents/consent/"), jsonHeaders(accessToken), sent, secrets)
         .thenApply(
             response ->

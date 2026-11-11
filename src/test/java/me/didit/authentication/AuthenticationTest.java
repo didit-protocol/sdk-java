@@ -1267,6 +1267,36 @@ final class AuthenticationTest {
     assertEquals(challenge, options.webAuthnChallenge().orElseThrow());
   }
 
+  /** A bean whose getter throws with a credential in its message. */
+  public static final class ThrowingBean {
+    public String getCredential() {
+      if (System.nanoTime() != 0) {
+        throw new IllegalStateException(
+            "credential-string-0123456789 pending-agent-request-secret");
+      }
+      return "never";
+    }
+  }
+
+  @Test
+  void consentEncodingFailureHasAFixedMessage() {
+    ObjectNode assertion = assertionOf("x", "s");
+    assertion.putObject("clientExtensionResults").putPOJO("bad", new ThrowingBean());
+    Exception e =
+        assertThrows(
+            Exception.class,
+            () ->
+                auth()
+                    .submitAgentConsent(
+                        "TOKEN-m4rk",
+                        AgentConsentParams.approve("pending-agent-request-secret")
+                            .assertion(assertion)
+                            .build()));
+    assertTrue(e instanceof me.didit.errors.ConfigurationException);
+    assertEquals("Could not encode the agent consent request", e.getMessage());
+    assertNull(e.getCause());
+  }
+
   @Test
   void consentRedactionReplacesANonJsonBody() {
     me.didit.errors.ApiStatusException e =
