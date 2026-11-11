@@ -964,9 +964,17 @@ public final class Authentication {
    */
   public CompletableFuture<AgentConsent> submitAgentConsentAsync(
       String accessToken, AgentConsentParams params) {
+    ObjectNode body = params.toJson();
+    List<String> secrets = new java.util.ArrayList<>();
+    secrets.add(accessToken);
+    secrets.add(body.path("challenge").asText());
+    collectStrings(body.path("assertion"), secrets);
     return send(
-            "POST", runtime("agents/consent/"), jsonHeaders(accessToken), jsonBody(params.toJson()))
-        .thenApply(response -> new AgentConsent(jsonObject(response, "the agent consent")));
+            "POST", runtime("agents/consent/"), jsonHeaders(accessToken), jsonBody(body), secrets)
+        .thenApply(
+            response ->
+                redactingUnexpected(
+                    secrets, () -> new AgentConsent(jsonObject(response, "the agent consent"))));
   }
 
   /**
@@ -998,10 +1006,18 @@ public final class Authentication {
     }
     ObjectNode body = Json.nodes().objectNode();
     body.put("challenge", challenge);
+    List<String> secrets = List.of(accessToken, challenge);
     return send(
-            "POST", runtime("agents/consent/passkey/"), jsonHeaders(accessToken), jsonBody(body))
+            "POST",
+            runtime("agents/consent/passkey/"),
+            jsonHeaders(accessToken),
+            jsonBody(body),
+            secrets)
         .thenApply(
-            response -> new AgentApprovalOptions(jsonObject(response, "the approval options")));
+            response ->
+                redactingUnexpected(
+                    secrets,
+                    () -> new AgentApprovalOptions(jsonObject(response, "the approval options"))));
   }
 
   private Map<String, String> jsonHeaders(String accessToken) {
@@ -1025,6 +1041,16 @@ public final class Authentication {
 
   private CompletableFuture<TransportResponse> send(
       String method, URI uri, Map<String, String> extraHeaders, byte[] body) {
+    return send(method, uri, extraHeaders, body, List.of());
+  }
+
+  /**
+   * Sends the request. An error answer keeps its status and headers, but every string in {@code
+   * secrets} is removed from the body the exception retains and from its message, even when the
+   * issuer echoes it.
+   */
+  private CompletableFuture<TransportResponse> send(
+      String method, URI uri, Map<String, String> extraHeaders, byte[] body, List<String> secrets) {
     Map<String, List<String>> headers = new LinkedHashMap<>();
     headers.put("Accept", List.of("application/json"));
     headers.put("User-Agent", List.of(userAgent()));
@@ -1043,7 +1069,7 @@ public final class Authentication {
         .handle(
             (response, error) -> {
               if (error != null) {
-                throw new CompletionException(connectionError(where, error));
+                throw new CompletionException(connectionError(where, error, secrets));
               }
               int status = response.statusCode();
               if (status >= 200 && status < 300) {
@@ -1057,16 +1083,108 @@ public final class Authentication {
               }
               JsonNode parsed = null;
               if (bytes.length > 0) {
+                String text = redact(new String(bytes, StandardCharsets.UTF_8), secrets);
                 try {
-                  parsed = Json.parse(bytes);
+                  parsed = Json.parse(text);
                 } catch (UnexpectedResponseException e) {
-                  parsed = Json.nodes().textNode(new String(bytes, StandardCharsets.UTF_8));
+                  parsed = Json.nodes().textNode(text);
                 }
+                parsed = redactNode(parsed, secrets);
               }
               throw new CompletionException(
                   ApiStatusException.create(
-                      status, oauthDetail(parsed), response.headers(), where));
+                      status,
+                      oauthDetail(parsed),
+                      redactHeaders(response.headers(), secrets),
+                      where));
             });
+  }
+
+  private static final String REDACTED = "[redacted]";
+
+  /** Every non-empty string inside {@code node}, at any depth. */
+  private static void collectStrings(JsonNode node, List<String> out) {
+    if (node.isTextual()) {
+      if (!node.asText().isEmpty()) {
+        out.add(node.asText());
+      }
+    } else if (node.isContainerNode()) {
+      node.forEach(child -> collectStrings(child, out));
+    }
+  }
+
+  /** The raw secrets, longest first, plus their JSON-escaped forms, which raw text may carry. */
+  private static List<String> forms(List<String> secrets) {
+    java.util.Set<String> all = new java.util.LinkedHashSet<>();
+    for (String secret : secrets) {
+      if (secret == null || secret.isEmpty()) {
+        continue;
+      }
+      all.add(secret);
+      String escaped = Json.write(Json.nodes().textNode(secret));
+      all.add(escaped.substring(1, escaped.length() - 1));
+    }
+    List<String> ordered = new java.util.ArrayList<>(all);
+    ordered.sort((a, b) -> b.length() - a.length());
+    return ordered;
+  }
+
+  private static String redact(String text, List<String> secrets) {
+    String out = text;
+    for (String form : forms(secrets)) {
+      out = out.replace(form, REDACTED);
+    }
+    return out;
+  }
+
+  private static Headers redactHeaders(Headers headers, List<String> secrets) {
+    if (secrets.isEmpty()) {
+      return headers;
+    }
+    Map<String, List<String>> out = new LinkedHashMap<>();
+    headers
+        .map()
+        .forEach(
+            (name, values) -> {
+              List<String> clean = new java.util.ArrayList<>();
+              for (String value : values) {
+                clean.add(redact(value, secrets));
+              }
+              out.put(name, clean);
+            });
+    return Headers.of(out);
+  }
+
+  private static JsonNode redactNode(JsonNode node, List<String> secrets) {
+    if (node.isTextual()) {
+      return Json.nodes().textNode(redact(node.asText(), secrets));
+    }
+    if (node.isObject()) {
+      ObjectNode out = Json.nodes().objectNode();
+      node.fieldNames()
+          .forEachRemaining(
+              name -> out.set(redact(name, secrets), redactNode(node.get(name), secrets)));
+      return out;
+    }
+    if (node.isArray()) {
+      com.fasterxml.jackson.databind.node.ArrayNode out = Json.nodes().arrayNode();
+      node.forEach(child -> out.add(redactNode(child, secrets)));
+      return out;
+    }
+    return node;
+  }
+
+  /**
+   * Runs {@code parse}; a malformed answer is rethrown with the secrets removed from its message
+   * and without the parser's cause, which quotes the source text.
+   */
+  private static <T> T redactingUnexpected(
+      List<String> secrets, java.util.function.Supplier<T> parse) {
+    try {
+      return parse.get();
+    } catch (UnexpectedResponseException e) {
+      throw new UnexpectedResponseException(redact(String.valueOf(e.getMessage()), secrets));
+    }
   }
 
   /** Puts {@code error: error_description} first so the exception message names the error. */
@@ -1098,10 +1216,26 @@ public final class Authentication {
         : new DiditException("Authentication call failed", cause);
   }
 
-  private static DiditException connectionError(String where, Throwable error) {
+  private static DiditException connectionError(
+      String where, Throwable error, List<String> secrets) {
     Throwable cause = unwrap(error);
-    if (cause instanceof DiditException) {
+    if (cause instanceof DiditException && secrets.isEmpty()) {
       return (DiditException) cause;
+    }
+    if (!secrets.isEmpty()) {
+      // A transport error may quote the request: keep its type and a redacted message only.
+      boolean timedOut =
+          cause instanceof TimeoutException
+              || cause instanceof java.net.http.HttpTimeoutException
+              || cause instanceof ApiTimeoutException;
+      Throwable clean =
+          new IOException(
+              cause.getClass().getName()
+                  + ": "
+                  + redact(String.valueOf(cause.getMessage()), secrets));
+      return timedOut
+          ? new ApiTimeoutException("Request timed out: " + where, clean)
+          : new ApiConnectionException("Connection error on " + where, clean);
     }
     if (cause instanceof TimeoutException || cause instanceof java.net.http.HttpTimeoutException) {
       return new ApiTimeoutException("Request timed out: " + where, cause);
