@@ -28,6 +28,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import me.didit.core.Headers;
+import me.didit.core.Json;
 import me.didit.core.TransportRequest;
 import me.didit.core.TransportResponse;
 import me.didit.errors.ApiConnectionException;
@@ -854,6 +855,110 @@ final class AuthenticationTest {
       assertFalse(r.headers().containsKey("Origin"));
       assertTrue(r.headers().get("User-Agent").get(0).startsWith("didit-java/"));
     }
+  }
+
+  /**
+   * Every secret of a consent call, kept out of the message, the body and the headers of any error.
+   */
+  @Test
+  void agentConsentErrorsNeverCarryTheAssertionOrChallenge() throws Exception {
+    String challenge = "MARK-CHALLENGE-0";
+    String token = "MARK-TOKEN-0";
+    List<String> marks =
+        List.of(
+            "MARK-ID-1",
+            "MARK-RAWID-2",
+            "MARK-TYPE-3",
+            "MARK-CDJ-4/+=",
+            "MARK-AD-5",
+            "MARK-SIG-6",
+            "MARK-HANDLE-7",
+            "MARK-TRANSPORT-8",
+            "MARK-EXT-9",
+            "MARK-DEEP-10",
+            "MARK-\"QUOTED\"\\-11");
+    ObjectNode assertion = Json.nodes().objectNode();
+    assertion.put("id", marks.get(0));
+    assertion.put("rawId", marks.get(1));
+    assertion.put("type", marks.get(2));
+    ObjectNode response = assertion.putObject("response");
+    response.put("clientDataJSON", marks.get(3));
+    response.put("authenticatorData", marks.get(4));
+    response.put("signature", marks.get(5));
+    response.put("userHandle", marks.get(6));
+    response.putArray("transports").add(marks.get(7));
+    ObjectNode extensions = assertion.putObject("clientExtensionResults");
+    extensions.put("ext", marks.get(8));
+    extensions
+        .putObject("nested")
+        .putArray("deep")
+        .add(marks.get(9))
+        .addObject()
+        .put("q", marks.get(10));
+    List<String> secrets = new ArrayList<>(marks);
+    secrets.add(challenge);
+    secrets.add(token);
+    String echoed = assertion.toString();
+    String json =
+        "{\"detail\":\"passkey_required\",\"echo\":"
+            + echoed
+            + ",\"challenge\":\""
+            + challenge
+            + "\"}";
+
+    Map<String, String> routes =
+        Map.of(
+            "400 JSON", "400|application/json|" + json,
+            "400 text", "400|text/plain|failed " + echoed + " " + challenge + " " + token,
+            "200 not JSON", "200|text/html|<p>" + echoed + " " + challenge + "</p>",
+            "200 array", "200|application/json|[" + echoed + ",\"" + challenge + "\"]");
+    for (Map.Entry<String, String> route : routes.entrySet()) {
+      String[] parts = route.getValue().split("\\|", 3);
+      issuer.routes.put(
+          "POST /agents/consent/",
+          r ->
+              new TransportResponse(
+                  Integer.parseInt(parts[0]),
+                  Headers.of(
+                      Map.of(
+                          "Content-Type", List.of(parts[1]),
+                          "X-Echo", List.of(challenge))),
+                  parts[2].getBytes(StandardCharsets.UTF_8)));
+      Exception error =
+          assertThrows(
+              Exception.class,
+              () ->
+                  auth()
+                      .submitAgentConsent(
+                          token,
+                          AgentConsentParams.approve(challenge).assertion(assertion).build()),
+              route.getKey());
+      StringBuilder seen = new StringBuilder();
+      for (Throwable t = error; t != null; t = t.getCause()) {
+        seen.append(t).append('\n').append(t.getMessage()).append('\n');
+        if (t instanceof me.didit.errors.ApiStatusException) {
+          me.didit.errors.ApiStatusException status = (me.didit.errors.ApiStatusException) t;
+          seen.append(status.body().map(Object::toString).orElse("")).append('\n');
+          seen.append(status.headers()).append('\n').append(status.headers().map()).append('\n');
+        }
+      }
+      for (String secret : secrets) {
+        assertFalse(seen.toString().contains(secret), route.getKey() + " leaked " + secret);
+        String escaped = Json.write(Json.nodes().textNode(secret));
+        assertFalse(
+            seen.toString().contains(escaped.substring(1, escaped.length() - 1)),
+            route.getKey() + " leaked escaped " + secret);
+      }
+    }
+    issuer.routes.put("POST /agents/consent/", r -> StubIssuer.json(400, json));
+    me.didit.errors.ApiStatusException kept =
+        assertThrows(
+            me.didit.errors.ApiStatusException.class,
+            () ->
+                auth()
+                    .submitAgentConsent(
+                        token, AgentConsentParams.approve(challenge).assertion(assertion).build()));
+    assertTrue(kept.body().orElseThrow().toString().contains("passkey_required"));
   }
 
   @Test
