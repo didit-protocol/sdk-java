@@ -1113,6 +1113,8 @@ public final class Authentication {
    * Strings shorter than this are not secrets: field names such as {@code id} and values such as
    * {@code public-key} would otherwise erase error codes like {@code invalid_grant}.
    */
+  // Sensitive values are 16+ chars: user handles are 16-byte ids (22 base64url), credential ids 16+
+  // bytes.
   private static final int MIN_SECRET_LENGTH = 16;
 
   /**
