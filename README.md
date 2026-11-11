@@ -253,7 +253,7 @@ String userId = claims.subject();
 - `refresh(refreshToken)` rotates the tokens. Serialise the refreshes of one session: reusing a consumed refresh token revokes the session.
 - `getSession(accessToken)` is a live revocation check (rate-limited: do not call it on every request); `revokeSession(accessToken)` signs the user out.
 - `createStepUp(accessToken, StepUpParams.builder("payout").amount("250.00").currency("EUR").returnTo(url).build())` asks for a verification before a sensitive action; act only once `retrieveStepUp(accessToken, id).isApproved()`.
-- `submitAgentConsent(accessToken, AgentConsentParams.approve(challenge).assertion(assertionJson).build())` approves or denies a pending agent request (`AgentConsentParams.deny(challenge).build()` denies) and returns the approval (`code()`, `redirectUri()`, `state()`) or the denial (`isDenied()`); `createAgentApprovalOptions(accessToken, challenge)` returns the WebAuthn request options for the approving person. The challenge is the pending agent request secret: never log it or the assertion.
+- `submitAgentConsent(accessToken, AgentConsentParams.approve(challenge).assertion(assertionJson).build())` approves or denies a pending agent request (optional builder methods `scopes`, `organizationIds` and `lifetime`; `AgentConsentParams.deny(challenge).build()` denies) and returns the approval (`code()`, `redirectUri()`, `state()`) or the denial (`isDenied()`); `createAgentApprovalOptions(accessToken, challenge)` returns the WebAuthn request options for the approving person. The challenge is the pending agent request secret: never log it or the assertion.
 
 ## Account management
 
