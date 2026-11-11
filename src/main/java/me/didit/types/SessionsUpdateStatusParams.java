@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 
 /** Parameters for {&#64;code sessions.update_status}. */
 public final class SessionsUpdateStatusParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("new_status", "comment", "nodes_to_resubmit", "send_email", "email_address", "email_language", "email_preview_token");
+  private static final Set<String> KNOWN_FIELDS = Set.of("new_status", "comment", "nodes_to_resubmit", "send_email", "email_address", "email_language", "email_preview_token", "link_to_session_id", "link_reason");
 
   private SessionsUpdateStatusParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -120,6 +120,26 @@ public final class SessionsUpdateStatusParams extends JsonModel {
     return Json.optional(json, "email_preview_token", Conv.STRING);
   }
 
+  /**
+   * Optional UUID of another live KYC verification in the same application. Requires new_status=Approved and link_reason. Both participants must be KYC; self-links, deleted, missing and foreign-application targets return 400. The target need not be approved or have a person profile. Existing groups are joined.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> linkToSessionId() {
+    return Json.optional(json, "link_to_session_id", Conv.STRING);
+  }
+
+  /**
+   * Reviewer reason for the same-person link, required with link_to_session_id and rejected without it. Leading and trailing whitespace is trimmed; the result must be nonblank and at most 2000 characters. Recorded in the separate link audit. comment does not substitute for this field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> linkReason() {
+    return Json.optional(json, "link_reason", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -201,6 +221,26 @@ public final class SessionsUpdateStatusParams extends JsonModel {
      */
     public Builder emailPreviewToken(String emailPreviewToken) {
       return set("email_preview_token", Conv.STRING, emailPreviewToken);
+    }
+
+    /**
+     * Optional UUID of another live KYC verification in the same application. Requires new_status=Approved and link_reason. Both participants must be KYC; self-links, deleted, missing and foreign-application targets return 400. The target need not be approved or have a person profile. Existing groups are joined.
+     *
+     * @param linkToSessionId the value
+     * @return this builder
+     */
+    public Builder linkToSessionId(String linkToSessionId) {
+      return set("link_to_session_id", Conv.STRING, linkToSessionId);
+    }
+
+    /**
+     * Reviewer reason for the same-person link, required with link_to_session_id and rejected without it. Leading and trailing whitespace is trimmed; the result must be nonblank and at most 2000 characters. Recorded in the separate link audit. comment does not substitute for this field.
+     *
+     * @param linkReason the value
+     * @return this builder
+     */
+    public Builder linkReason(String linkReason) {
+      return set("link_reason", Conv.STRING, linkReason);
     }
 
     /**

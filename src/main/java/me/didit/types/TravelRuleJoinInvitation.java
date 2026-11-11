@@ -16,7 +16,7 @@ import org.jspecify.annotations.Nullable;
 
 /** What the join page shows before anything is typed. */
 public final class TravelRuleJoinInvitation extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("email", "vasp_name", "source", "expires_at", "prefill");
+  private static final Set<String> KNOWN_FIELDS = Set.of("email", "vasp_name", "source", "expires_at", "prefill", "request_id", "amount", "currency", "sent_at", "sender_name", "portal_url", "outbound_price");
 
   private TravelRuleJoinInvitation(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -101,6 +101,76 @@ public final class TravelRuleJoinInvitation extends JsonModel {
     return Json.optional(json, "prefill", Conv.model(TravelRuleJoinInvitation.Prefill::fromJson));
   }
 
+  /**
+   * Linked outbound transfer UUID; null without an eligible pickup transfer.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> requestId() {
+    return Json.optional(json, "request_id", Conv.STRING);
+  }
+
+  /**
+   * Linked transaction amount as a decimal string, in currency; null without an eligible pickup transfer.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> amount() {
+    return Json.optional(json, "amount", Conv.STRING);
+  }
+
+  /**
+   * Linked transaction currency; null without an eligible pickup transfer.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> currency() {
+    return Json.optional(json, "currency", Conv.STRING);
+  }
+
+  /**
+   * Invitation send time; null if unsent or without an eligible pickup transfer.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> sentAt() {
+    return Json.optional(json, "sent_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * Sender display name, using the same invitation name as vasp_name.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> senderName() {
+    return Json.optional(json, "sender_name", Conv.STRING);
+  }
+
+  /**
+   * Original pickup URL, only while it is valid and the invited address was a recipient of that request. Otherwise null. Reading does not renew the link.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> portalUrl() {
+    return Json.optional(json, "portal_url", Conv.STRING);
+  }
+
+  /**
+   * Public outbound quote, or null when no Travel Rule line is available.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRulePublicOutboundPrice> outboundPrice() {
+    return Json.optional(json, "outbound_price", Conv.model(TravelRulePublicOutboundPrice::fromJson));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -162,6 +232,76 @@ public final class TravelRuleJoinInvitation extends JsonModel {
      */
     public Builder prefill(TravelRuleJoinInvitation.Prefill prefill) {
       return set("prefill", Conv.model(TravelRuleJoinInvitation.Prefill::fromJson), prefill);
+    }
+
+    /**
+     * Linked outbound transfer UUID; null without an eligible pickup transfer.
+     *
+     * @param requestId the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder requestId(@Nullable String requestId) {
+      return setNullable("request_id", Conv.STRING, requestId);
+    }
+
+    /**
+     * Linked transaction amount as a decimal string, in currency; null without an eligible pickup transfer.
+     *
+     * @param amount the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder amount(@Nullable String amount) {
+      return setNullable("amount", Conv.STRING, amount);
+    }
+
+    /**
+     * Linked transaction currency; null without an eligible pickup transfer.
+     *
+     * @param currency the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder currency(@Nullable String currency) {
+      return setNullable("currency", Conv.STRING, currency);
+    }
+
+    /**
+     * Invitation send time; null if unsent or without an eligible pickup transfer.
+     *
+     * @param sentAt the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder sentAt(@Nullable OffsetDateTime sentAt) {
+      return setNullable("sent_at", Conv.DATE_TIME, sentAt);
+    }
+
+    /**
+     * Sender display name, using the same invitation name as vasp_name.
+     *
+     * @param senderName the value
+     * @return this builder
+     */
+    public Builder senderName(String senderName) {
+      return set("sender_name", Conv.STRING, senderName);
+    }
+
+    /**
+     * Original pickup URL, only while it is valid and the invited address was a recipient of that request. Otherwise null. Reading does not renew the link.
+     *
+     * @param portalUrl the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder portalUrl(@Nullable String portalUrl) {
+      return setNullable("portal_url", Conv.STRING, portalUrl);
+    }
+
+    /**
+     * Public outbound quote, or null when no Travel Rule line is available.
+     *
+     * @param outboundPrice the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder outboundPrice(@Nullable TravelRulePublicOutboundPrice outboundPrice) {
+      return setNullable("outbound_price", Conv.model(TravelRulePublicOutboundPrice::fromJson), outboundPrice);
     }
 
     /**

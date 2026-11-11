@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 
 /** All fields optional; PUT applies a partial update. */
 public final class TravelRuleSettingsUpdate extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("is_enabled", "legal_name", "lei", "jurisdiction", "vasp_jurisdiction", "name_matching_strictness", "confirmation_timeout_hours", "timeout_outcome", "compliance_email", "is_discoverable", "threshold_amount", "ownership_validation_mode", "simplified_validation_threshold", "data_sharing_fields", "matching_rules", "inbound_auto_accept", "allow_self_declaration", "allow_screenshot_proof", "auto_wallet_verification", "vasp_attribution_enabled", "counterparty_screening_enabled", "sunrise_policy", "non_responsive_policy", "disabled_networks");
+  private static final Set<String> KNOWN_FIELDS = Set.of("is_enabled", "legal_name", "lei", "jurisdiction", "vasp_jurisdiction", "name_matching_strictness", "confirmation_timeout_hours", "timeout_outcome", "compliance_email", "is_discoverable", "threshold_amount", "ownership_validation_mode", "simplified_validation_threshold", "data_sharing_fields", "matching_rules", "inbound_auto_accept", "allow_self_declaration", "allow_screenshot_proof", "auto_wallet_verification", "vasp_attribution_enabled", "counterparty_screening_enabled", "sunrise_policy", "non_responsive_policy", "disabled_networks", "licence");
 
   private TravelRuleSettingsUpdate(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -290,6 +290,16 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     return Json.optional(json, "disabled_networks", Conv.list(Conv.enumeration(TravelRuleSettingsUpdate.DisabledNetworks::of)));
   }
 
+  /**
+   * VASP licence or registration reference. Empty when not supplied.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> licence() {
+    return Json.optional(json, "licence", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -541,6 +551,16 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
      */
     public Builder disabledNetworks(List<TravelRuleSettingsUpdate.DisabledNetworks> disabledNetworks) {
       return set("disabled_networks", Conv.list(Conv.enumeration(TravelRuleSettingsUpdate.DisabledNetworks::of)), disabledNetworks);
+    }
+
+    /**
+     * VASP licence or registration reference. Empty when not supplied.
+     *
+     * @param licence the value
+     * @return this builder
+     */
+    public Builder licence(String licence) {
+      return set("licence", Conv.STRING, licence);
     }
 
     /**

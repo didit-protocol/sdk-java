@@ -126,7 +126,7 @@ final class SessionsResourceTest {
 
   @Test
   void updateStatus() {
-    SessionsUpdateStatusParams params = SessionsUpdateStatusParams.builder().newStatus(SessionsUpdateStatusParams.NewStatus.APPROVED).comment("value-comment").nodesToResubmit(List.of(SessionsUpdateStatusParams.NodesToResubmit.builder().nodeId("value-node-id").feature(SessionsUpdateStatusParams.NodesToResubmit.Feature.OCR).build())).sendEmail(true).emailAddress("user@example.com").emailLanguage("value-email-language").emailPreviewToken("value-email-preview-token").build();
+    SessionsUpdateStatusParams params = SessionsUpdateStatusParams.builder().newStatus(SessionsUpdateStatusParams.NewStatus.APPROVED).comment("value-comment").nodesToResubmit(List.of(SessionsUpdateStatusParams.NodesToResubmit.builder().nodeId("value-node-id").feature(SessionsUpdateStatusParams.NodesToResubmit.Feature.OCR).build())).sendEmail(true).emailAddress("user@example.com").emailLanguage("value-email-language").emailPreviewToken("value-email-preview-token").linkToSessionId("00000000-0000-4000-8000-0000000046e4").linkReason("value-link-reason").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/update-status/", "200");
     transport.respondJson(200, example);
     var result = client.sessions().updateStatus("00000000-0000-4000-8000-00000000cd09", params);
@@ -136,7 +136,7 @@ final class SessionsResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"new_status\":\"Approved\",\"comment\":\"value-comment\",\"nodes_to_resubmit\":[{\"node_id\":\"value-node-id\",\"feature\":\"OCR\"}],\"send_email\":true,\"email_address\":\"user@example.com\",\"email_language\":\"value-email-language\",\"email_preview_token\":\"value-email-preview-token\"}", request.body());
+    TestJson.assertJsonEquals("{\"new_status\":\"Approved\",\"comment\":\"value-comment\",\"nodes_to_resubmit\":[{\"node_id\":\"value-node-id\",\"feature\":\"OCR\"}],\"send_email\":true,\"email_address\":\"user@example.com\",\"email_language\":\"value-email-language\",\"email_preview_token\":\"value-email-preview-token\",\"link_to_session_id\":\"00000000-0000-4000-8000-0000000046e4\",\"link_reason\":\"value-link-reason\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

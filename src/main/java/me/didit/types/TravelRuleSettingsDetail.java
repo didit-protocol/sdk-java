@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 
 public final class TravelRuleSettingsDetail extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("is_enabled", "jurisdiction", "vasp_jurisdiction", "name_matching_strictness", "confirmation_timeout_hours", "timeout_outcome", "threshold_amount", "ownership_validation_mode", "simplified_validation_threshold", "data_sharing_fields", "matching_rules", "legal_name", "lei", "compliance_email", "is_discoverable", "inbound_auto_accept", "allow_self_declaration", "allow_screenshot_proof", "auto_wallet_verification", "vasp_attribution_enabled", "counterparty_screening_enabled", "sunrise_policy", "sunrise_jurisdictions", "non_responsive_policy", "travel_address", "disabled_networks", "networks", "didit_network");
+  private static final Set<String> KNOWN_FIELDS = Set.of("is_enabled", "jurisdiction", "vasp_jurisdiction", "name_matching_strictness", "confirmation_timeout_hours", "timeout_outcome", "threshold_amount", "ownership_validation_mode", "simplified_validation_threshold", "data_sharing_fields", "matching_rules", "legal_name", "lei", "compliance_email", "is_discoverable", "inbound_auto_accept", "allow_self_declaration", "allow_screenshot_proof", "auto_wallet_verification", "vasp_attribution_enabled", "counterparty_screening_enabled", "sunrise_policy", "sunrise_jurisdictions", "non_responsive_policy", "travel_address", "disabled_networks", "networks", "didit_network", "licence");
 
   private TravelRuleSettingsDetail(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -329,6 +329,16 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     return Json.optional(json, "didit_network", Conv.model(TravelRuleSettingsDetail.DiditNetwork::fromJson));
   }
 
+  /**
+   * VASP licence or registration reference. Empty when not supplied.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> licence() {
+    return Json.optional(json, "licence", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -620,6 +630,16 @@ public final class TravelRuleSettingsDetail extends JsonModel {
      */
     public Builder diditNetwork(TravelRuleSettingsDetail.DiditNetwork diditNetwork) {
       return set("didit_network", Conv.model(TravelRuleSettingsDetail.DiditNetwork::fromJson), diditNetwork);
+    }
+
+    /**
+     * VASP licence or registration reference. Empty when not supplied.
+     *
+     * @param licence the value
+     * @return this builder
+     */
+    public Builder licence(String licence) {
+      return set("licence", Conv.STRING, licence);
     }
 
     /**

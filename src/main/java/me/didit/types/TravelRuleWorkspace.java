@@ -17,7 +17,7 @@ import org.jspecify.annotations.Nullable;
 
 /** The free Travel Rule workspace of an application that joined free. */
 public final class TravelRuleWorkspace extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("joined_free", "work_email", "joined_at", "claim", "prefill", "domain", "billing_enabled", "billing_enabled_at", "didit_network", "settings");
+  private static final Set<String> KNOWN_FIELDS = Set.of("joined_free", "work_email", "joined_at", "claim", "prefill", "domain", "billing_enabled", "billing_enabled_at", "didit_network", "settings", "outbound_price", "licence");
 
   private TravelRuleWorkspace(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -152,6 +152,26 @@ public final class TravelRuleWorkspace extends JsonModel {
     return Json.optional(json, "settings", Conv.model(TravelRuleSettingsDetail::fromJson));
   }
 
+  /**
+   * Own-account outbound quote, or null when a flat Travel Rule quote is unavailable. Does not enable billing.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleWorkspaceOutboundPrice> outboundPrice() {
+    return Json.optional(json, "outbound_price", Conv.model(TravelRuleWorkspaceOutboundPrice::fromJson));
+  }
+
+  /**
+   * Current profile licence for a granted claim, otherwise the submitted claim licence. Empty when not supplied.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> licence() {
+    return Json.optional(json, "licence", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -266,6 +286,26 @@ public final class TravelRuleWorkspace extends JsonModel {
     }
 
     /**
+     * Own-account outbound quote, or null when a flat Travel Rule quote is unavailable. Does not enable billing.
+     *
+     * @param outboundPrice the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder outboundPrice(@Nullable TravelRuleWorkspaceOutboundPrice outboundPrice) {
+      return setNullable("outbound_price", Conv.model(TravelRuleWorkspaceOutboundPrice::fromJson), outboundPrice);
+    }
+
+    /**
+     * Current profile licence for a granted claim, otherwise the submitted claim licence. Empty when not supplied.
+     *
+     * @param licence the value
+     * @return this builder
+     */
+    public Builder licence(String licence) {
+      return set("licence", Conv.STRING, licence);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code TravelRuleWorkspace}
@@ -281,7 +321,7 @@ public final class TravelRuleWorkspace extends JsonModel {
   }
 
   public static final class Claim extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("status", "proved_by_domain", "claimed_at", "reviewed_at", "review_note", "vasp_id", "vasp_name");
+    private static final Set<String> KNOWN_FIELDS = Set.of("status", "proved_by_domain", "claimed_at", "reviewed_at", "review_note", "vasp_id", "vasp_name", "licence", "rejection_reason");
 
     private Claim(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -386,6 +426,26 @@ public final class TravelRuleWorkspace extends JsonModel {
       return Json.optional(json, "vasp_name", Conv.STRING);
     }
 
+    /**
+     * Licence submitted with the claim. Empty when not supplied.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> licence() {
+      return Json.optional(json, "licence", Conv.STRING);
+    }
+
+    /**
+     * Structured rejection reason. Empty when none was recorded; a new claim or approval clears it. Read review_note for the explanation.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<TravelRuleWorkspace.Claim.RejectionReason> rejectionReason() {
+      return Json.optional(json, "rejection_reason", Conv.enumeration(TravelRuleWorkspace.Claim.RejectionReason::of));
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -470,6 +530,26 @@ public final class TravelRuleWorkspace extends JsonModel {
       }
 
       /**
+       * Licence submitted with the claim. Empty when not supplied.
+       *
+       * @param licence the value
+       * @return this builder
+       */
+      public Builder licence(String licence) {
+        return set("licence", Conv.STRING, licence);
+      }
+
+      /**
+       * Structured rejection reason. Empty when none was recorded; a new claim or approval clears it. Read review_note for the explanation.
+       *
+       * @param rejectionReason the value
+       * @return this builder
+       */
+      public Builder rejectionReason(TravelRuleWorkspace.Claim.RejectionReason rejectionReason) {
+        return set("rejection_reason", Conv.enumeration(TravelRuleWorkspace.Claim.RejectionReason::of), rejectionReason);
+      }
+
+      /**
        * Builds the value.
        *
        * @return a new immutable {@code Claim}
@@ -523,6 +603,52 @@ public final class TravelRuleWorkspace extends JsonModel {
        * @return the known values
        */
       public static List<Status> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     * Structured rejection reason. Empty when none was recorded; a new claim or approval clears it. Read review_note for the explanation.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class RejectionReason extends StringEnum {
+      /** The value {@code ""}. */
+      public static final RejectionReason EMPTY = new RejectionReason("");
+
+      /** The value {@code "domain_mismatch"}. */
+      public static final RejectionReason DOMAIN_MISMATCH = new RejectionReason("domain_mismatch");
+
+      /** The value {@code "other"}. */
+      public static final RejectionReason OTHER = new RejectionReason("other");
+
+      private static final List<RejectionReason> KNOWN_VALUES = List.of(EMPTY, DOMAIN_MISMATCH, OTHER);
+
+      private RejectionReason(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static RejectionReason of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, RejectionReason::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<RejectionReason> knownValues() {
         return KNOWN_VALUES;
       }
 
