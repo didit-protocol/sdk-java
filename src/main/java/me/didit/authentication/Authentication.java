@@ -1076,15 +1076,13 @@ public final class Authentication {
                 throw new CompletionException(connectionError(where, error, secrets));
               }
               int status = response.statusCode();
-              TransportResponse answer = response;
-              if (!secrets.isEmpty()) {
-                // Sanitized once, on receipt: every error of this call is built from this response
-                // only.
-                answer = sanitized(response, secrets);
-              }
               if (status >= 200 && status < 300) {
-                return answer;
+                // A successful response reaches the caller unchanged.
+                return response;
               }
+              // Every error of a consent call is built from a sanitized copy only.
+              TransportResponse answer =
+                  secrets.isEmpty() ? response : sanitized(response, secrets);
               byte[] bytes;
               try (TransportResponse r = answer) {
                 bytes = r.body().readAllBytes();
@@ -1106,10 +1104,25 @@ public final class Authentication {
   }
 
   /**
-   * The whole response of a call whose answer may echo secrets, sanitized once: the status kept,
-   * each header whose name contains a secret dropped, the other values redacted, and the body
-   * redacted structurally ({@code [redacted]} when it is not JSON, has trailing content or is
-   * empty).
+   * Header names are case-insensitive: compare the case-folded name with each case-folded secret.
+   */
+  private static boolean nameHasSecret(String name, List<String> secrets) {
+    String folded = name.toLowerCase(java.util.Locale.ROOT);
+    for (String secret : secrets) {
+      if (secret != null
+          && !secret.isEmpty()
+          && folded.contains(secret.toLowerCase(java.util.Locale.ROOT))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * The whole response of a call whose answer may echo secrets, sanitized to build an error: the
+   * status kept, each header whose name contains a secret dropped, the other values redacted, and
+   * the body redacted structurally ({@code [redacted]} when it is not JSON, has trailing content or
+   * is empty).
    */
   private static TransportResponse sanitized(TransportResponse response, List<String> secrets) {
     byte[] bytes;
@@ -1124,7 +1137,8 @@ public final class Authentication {
         body =
             Json.write(
                 redactNode(Json.parseStrict(new String(bytes, StandardCharsets.UTF_8)), secrets));
-      } catch (UnexpectedResponseException e) {
+      } catch (UnexpectedResponseException | StackOverflowError e) {
+        // Not JSON, or nested past the parser's depth limit or the walk's stack: not JSON.
         body = REDACTED;
       }
     }
@@ -1134,7 +1148,7 @@ public final class Authentication {
         .map()
         .forEach(
             (name, values) -> {
-              if (redact(name, secrets).equals(name)) {
+              if (!nameHasSecret(name, secrets)) {
                 List<String> clean = new java.util.ArrayList<>();
                 values.forEach(value -> clean.add(redact(value, secrets)));
                 headers.put(name, clean);

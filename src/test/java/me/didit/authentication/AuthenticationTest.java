@@ -1209,6 +1209,65 @@ final class AuthenticationTest {
   }
 
   @Test
+  void consentRedactionTreatsAVeryDeeplyNestedBodyAsNotJson() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("x", "s"), 400, "application/json", "[".repeat(10000) + "]".repeat(10000));
+    assertEquals("\"[redacted]\"", e.body().orElseThrow().toString());
+  }
+
+  @Test
+  void consentRedactionDropsAHeaderNamedAfterAMixedCaseSecret() {
+    String credential = "CredentialString-AbCdEf0123456789";
+    issuer.routes.put(
+        "POST /agents/consent/",
+        r ->
+            new TransportResponse(
+                400,
+                Headers.of(
+                    Map.of(
+                        "Content-Type",
+                        List.of("application/json"),
+                        "x-echo-" + credential.toLowerCase(java.util.Locale.ROOT),
+                        List.of("v"),
+                        "X-Keep",
+                        List.of("fine"))),
+                "{\"error\":\"invalid_grant\"}".getBytes(StandardCharsets.UTF_8)));
+    me.didit.errors.ApiStatusException e =
+        assertThrows(
+            me.didit.errors.ApiStatusException.class,
+            () ->
+                auth()
+                    .submitAgentConsent(
+                        "TOKEN-m4rk",
+                        AgentConsentParams.approve("pending-agent-request-secret")
+                            .assertion(assertionOf(credential, "s"))
+                            .build()));
+    assertFalse(
+        e.headers()
+            .map()
+            .toString()
+            .toLowerCase(java.util.Locale.ROOT)
+            .contains("credentialstring"));
+    assertTrue(e.headers().map().toString().contains("fine"));
+  }
+
+  @Test
+  void aSuccessfulApprovalOptionsResponseReachesTheCallerUnchanged() {
+    String challenge = "pending-agent-request-secret";
+    issuer.routes.put(
+        "POST /agents/consent/passkey/",
+        r ->
+            StubIssuer.json(
+                200,
+                "{\"options\":{\"challenge\":\""
+                    + challenge
+                    + "\",\"rpId\":\"acme.auth.didit.me\",\"timeout\":60000}}"));
+    var options = auth().createAgentApprovalOptions("TOKEN-m4rk", challenge);
+    assertEquals(challenge, options.webAuthnChallenge().orElseThrow());
+  }
+
+  @Test
   void consentRedactionReplacesANonJsonBody() {
     me.didit.errors.ApiStatusException e =
         consentFailure(
