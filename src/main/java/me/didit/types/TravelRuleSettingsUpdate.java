@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 
 /** All fields optional; PUT applies a partial update. */
 public final class TravelRuleSettingsUpdate extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("is_enabled", "legal_name", "lei", "jurisdiction", "name_matching_strictness", "confirmation_timeout_hours", "timeout_outcome", "compliance_email", "is_discoverable", "threshold_amount", "ownership_validation_mode", "simplified_validation_threshold", "data_sharing_fields", "matching_rules", "inbound_auto_accept", "allow_self_declaration", "allow_screenshot_proof", "auto_wallet_verification", "vasp_attribution_enabled", "counterparty_screening_enabled", "sunrise_policy", "non_responsive_policy", "disabled_networks");
+  private static final Set<String> KNOWN_FIELDS = Set.of("is_enabled", "legal_name", "lei", "jurisdiction", "vasp_jurisdiction", "name_matching_strictness", "confirmation_timeout_hours", "timeout_outcome", "compliance_email", "is_discoverable", "threshold_amount", "ownership_validation_mode", "simplified_validation_threshold", "data_sharing_fields", "matching_rules", "inbound_auto_accept", "allow_self_declaration", "allow_screenshot_proof", "auto_wallet_verification", "vasp_attribution_enabled", "counterparty_screening_enabled", "sunrise_policy", "non_responsive_policy", "disabled_networks");
 
   private TravelRuleSettingsUpdate(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -88,6 +88,16 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
    */
   public Optional<String> jurisdiction() {
     return Json.optional(json, "jurisdiction", Conv.STRING);
+  }
+
+  /**
+   * Your VASP profile's own jurisdiction, up to 3 characters (for example <code>GB</code> or <code>USA</code>), shown to other Didit customers in the VASP directory. Independent of <code>jurisdiction</code>, which sets the regulatory regime Didit stamps on your transfers. Send an empty string to clear it; the directory then shows <code>jurisdiction</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> vaspJurisdiction() {
+    return Json.optional(json, "vasp_jurisdiction", Conv.STRING);
   }
 
   /**
@@ -331,6 +341,16 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
      */
     public Builder jurisdiction(String jurisdiction) {
       return set("jurisdiction", Conv.STRING, jurisdiction);
+    }
+
+    /**
+     * Your VASP profile's own jurisdiction, up to 3 characters (for example <code>GB</code> or <code>USA</code>), shown to other Didit customers in the VASP directory. Independent of <code>jurisdiction</code>, which sets the regulatory regime Didit stamps on your transfers. Send an empty string to clear it; the directory then shows <code>jurisdiction</code>.
+     *
+     * @param vaspJurisdiction the value
+     * @return this builder
+     */
+    public Builder vaspJurisdiction(String vaspJurisdiction) {
+      return set("vasp_jurisdiction", Conv.STRING, vaspJurisdiction);
     }
 
     /**

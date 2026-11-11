@@ -12,13 +12,14 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /**
  * Full application record. <code>uuid</code>, <code>client_id</code>, and <code>api_key</code> never change after creation. <code>data_location</code> doesn't either, except once on the live application created with your organization, before it is used (see the update request).
  */
 public final class Application extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "client_id", "api_key", "website_url", "redirect_uris", "terms_url", "privacy_url", "description", "created_at", "data_location", "products");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "name", "client_id", "api_key", "website_url", "redirect_uris", "terms_url", "privacy_url", "description", "created_at", "data_location", "products", "mode", "initiate_login_uri");
 
   private Application(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -154,7 +155,7 @@ public final class Application extends JsonModel {
   }
 
   /**
-   * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney) and <code>mx</code> (Mexico) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
+   * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney), <code>mx</code> (Mexico) and <code>ae</code> (United Arab Emirates) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -171,6 +172,26 @@ public final class Application extends JsonModel {
    */
   public Optional<List<ApplicationProduct>> products() {
     return Json.optional(json, "products", Conv.list(Conv.model(ApplicationProduct::fromJson)));
+  }
+
+  /**
+   * The application's environment. A <code>live</code> application bills every verification session and check created with its key. A <code>sandbox</code> application mocks every check and is never billed, so it is where you test (each sandbox application can create 500 test sessions every 24 hours). Read this field to pick the application: never infer the environment from the name.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Application.Mode> mode() {
+    return Json.optional(json, "mode", Conv.enumeration(Application.Mode::of));
+  }
+
+  /**
+   * Application sign-in URL for an admin-sent sign-in link. Optional; an empty string disables sending. A nonempty value must use HTTPS and the exact hostname of website_url (subdomains must match), with no userinfo, query, fragment or whitespace and no port other than 443. The server also revalidates the saved URI when website_url changes; update or clear initiate_login_uri in the same PATCH if needed. The hosted handoff adds iss and login_hint, but creates no session or tokens. See /authentication/sign-in-methods#admin-sent-sign-in-link.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> initiateLoginUri() {
+    return Json.optional(json, "initiate_login_uri", Conv.STRING);
   }
 
   @Override
@@ -287,7 +308,7 @@ public final class Application extends JsonModel {
     }
 
     /**
-     * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney) and <code>mx</code> (Mexico) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
+     * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney), <code>mx</code> (Mexico) and <code>ae</code> (United Arab Emirates) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
      *
      * @param dataLocation the value
      * @return this builder
@@ -307,6 +328,26 @@ public final class Application extends JsonModel {
     }
 
     /**
+     * The application's environment. A <code>live</code> application bills every verification session and check created with its key. A <code>sandbox</code> application mocks every check and is never billed, so it is where you test (each sandbox application can create 500 test sessions every 24 hours). Read this field to pick the application: never infer the environment from the name.
+     *
+     * @param mode the value
+     * @return this builder
+     */
+    public Builder mode(Application.Mode mode) {
+      return set("mode", Conv.enumeration(Application.Mode::of), mode);
+    }
+
+    /**
+     * Application sign-in URL for an admin-sent sign-in link. Optional; an empty string disables sending. A nonempty value must use HTTPS and the exact hostname of website_url (subdomains must match), with no userinfo, query, fragment or whitespace and no port other than 443. The server also revalidates the saved URI when website_url changes; update or clear initiate_login_uri in the same PATCH if needed. The hosted handoff adds iss and login_hint, but creates no session or tokens. See /authentication/sign-in-methods#admin-sent-sign-in-link.
+     *
+     * @param initiateLoginUri the value
+     * @return this builder
+     */
+    public Builder initiateLoginUri(String initiateLoginUri) {
+      return set("initiate_login_uri", Conv.STRING, initiateLoginUri);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code Application}
@@ -318,6 +359,49 @@ public final class Application extends JsonModel {
     @Override
     protected Builder self() {
       return this;
+    }
+  }
+
+  /**
+   * The application's environment. A <code>live</code> application bills every verification session and check created with its key. A <code>sandbox</code> application mocks every check and is never billed, so it is where you test (each sandbox application can create 500 test sessions every 24 hours). Read this field to pick the application: never infer the environment from the name.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Mode extends StringEnum {
+    /** The value {@code "live"}. */
+    public static final Mode LIVE = new Mode("live");
+
+    /** The value {@code "sandbox"}. */
+    public static final Mode SANDBOX = new Mode("sandbox");
+
+    private static final List<Mode> KNOWN_VALUES = List.of(LIVE, SANDBOX);
+
+    private Mode(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Mode of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Mode::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Mode> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 }

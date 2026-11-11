@@ -1121,7 +1121,7 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
       }
 
       /**
-       * Event-specific payload. Send events: <code>{status, reason, channel, actual_channel}</code> (<code>actual_channel</code> is filled once delivery is confirmed). Delivery events: <code>{channel, status}</code>. Code-entry events: <code>{code_tried, status}</code>. Final-status events: <code>null</code>, or <code>{reason}</code> when declined or in review.
+       * Event-specific payload. Send events: <code>{status, reason, channel, actual_channel, attempt, delivery_status}</code> — <code>actual_channel</code> is filled once delivery is confirmed, <code>attempt</code> is the 0-based index of the send (the order of the send events), and <code>delivery_status</code> is <code>delivered</code>, <code>undeliverable</code> or <code>unknown</code> (no report arrived before the verification ended); it is absent while a report can still arrive. Delivery events: <code>{channel, status, attempt, reason}</code> — <code>attempt</code> is the send it belongs to, and <code>reason</code> (on <code>PHONE_DELIVERY_UNDELIVERABLE</code> only) is <code>expired</code>, <code>rejected</code>, <code>unreachable</code>, <code>blocked</code> or <code>unknown</code> for a message, and <code>unreachable_number</code>, <code>no_answer</code>, <code>busy</code> or <code>undeliverable</code> for a call. Code-entry events: <code>{code_tried, status}</code>. Final-status events: <code>null</code>, or <code>{reason}</code> when declined or in review.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1174,7 +1174,7 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
         }
 
         /**
-         * Event-specific payload. Send events: <code>{status, reason, channel, actual_channel}</code> (<code>actual_channel</code> is filled once delivery is confirmed). Delivery events: <code>{channel, status}</code>. Code-entry events: <code>{code_tried, status}</code>. Final-status events: <code>null</code>, or <code>{reason}</code> when declined or in review.
+         * Event-specific payload. Send events: <code>{status, reason, channel, actual_channel, attempt, delivery_status}</code> — <code>actual_channel</code> is filled once delivery is confirmed, <code>attempt</code> is the 0-based index of the send (the order of the send events), and <code>delivery_status</code> is <code>delivered</code>, <code>undeliverable</code> or <code>unknown</code> (no report arrived before the verification ended); it is absent while a report can still arrive. Delivery events: <code>{channel, status, attempt, reason}</code> — <code>attempt</code> is the send it belongs to, and <code>reason</code> (on <code>PHONE_DELIVERY_UNDELIVERABLE</code> only) is <code>expired</code>, <code>rejected</code>, <code>unreachable</code>, <code>blocked</code> or <code>unknown</code> for a message, and <code>unreachable_number</code>, <code>no_answer</code>, <code>busy</code> or <code>undeliverable</code> for a call. Code-entry events: <code>{code_tried, status}</code>. Final-status events: <code>null</code>, or <code>{reason}</code> when declined or in review.
          *
          * @param details the value, or {@code null} to send JSON null
          * @return this builder

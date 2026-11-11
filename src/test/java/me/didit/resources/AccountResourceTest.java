@@ -29,8 +29,8 @@ final class AccountResourceTest {
   @Test
   void register() {
     RegisterRequest params = RegisterRequest.builder().email("user@example.com").password("value-password").build();
-    JsonNode example = SpecExamples.response("account.json", "POST", "/programmatic/register/", "201");
-    transport.respondJson(201, example);
+    JsonNode example = SpecExamples.response("account.json", "POST", "/programmatic/register/", "200");
+    transport.respondJson(200, example);
     var result = client.account().register(params);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());

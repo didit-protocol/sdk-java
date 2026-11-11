@@ -5,7 +5,7 @@ import java.util.List;
 import me.didit.core.StringEnum;
 
 /**
- * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney) and <code>mx</code> (Mexico) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
+ * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney), <code>mx</code> (Mexico) and <code>ae</code> (United Arab Emirates) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
  *
  * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
  */
@@ -19,7 +19,10 @@ public final class ApplicationDataLocation extends StringEnum {
   /** The value {@code "mx"}. */
   public static final ApplicationDataLocation MX = new ApplicationDataLocation("mx");
 
-  private static final List<ApplicationDataLocation> KNOWN_VALUES = List.of(EU, AU, MX);
+  /** The value {@code "ae"}. */
+  public static final ApplicationDataLocation AE = new ApplicationDataLocation("ae");
+
+  private static final List<ApplicationDataLocation> KNOWN_VALUES = List.of(EU, AU, MX, AE);
 
   private ApplicationDataLocation(String value) {
     super(value);

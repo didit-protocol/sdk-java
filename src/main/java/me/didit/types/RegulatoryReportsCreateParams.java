@@ -93,7 +93,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
   }
 
   /**
-   * Transactions to attach; defaults to the case's linked transactions.
+   * Transactions to attach; defaults to the case's linked transactions. For FFR and PNMR reports it defaults to none and none are required.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -306,7 +306,7 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     }
 
     /**
-     * Transactions to attach; defaults to the case's linked transactions.
+     * Transactions to attach; defaults to the case's linked transactions. For FFR and PNMR reports it defaults to none and none are required.
      *
      * @param transactions the value, or {@code null} to send JSON null
      * @return this builder
@@ -513,7 +513,13 @@ public final class RegulatoryReportsCreateParams extends JsonModel {
     /** The value {@code "TFR"}. */
     public static final ReportType TFR = new ReportType("TFR");
 
-    private static final List<ReportType> KNOWN_VALUES = List.of(SAR, STR, CTR, TTR, UTR, IFT, CBR, TFR);
+    /** The value {@code "FFR"}. */
+    public static final ReportType FFR = new ReportType("FFR");
+
+    /** The value {@code "PNMR"}. */
+    public static final ReportType PNMR = new ReportType("PNMR");
+
+    private static final List<ReportType> KNOWN_VALUES = List.of(SAR, STR, CTR, TTR, UTR, IFT, CBR, TFR, FFR, PNMR);
 
     private ReportType(String value) {
       super(value);

@@ -132,6 +132,8 @@ public final class AccountApplicationsResource {
    *
    * <p>Create an application inside an organization, in the data location you choose (<code>data_location</code>, the European Union by default; it can't be changed afterwards). The response includes <code>api_key</code>; persist it now (recoverable via GET). Requires owner/admin JWT.
    *
+   * <p>Set initiate_login_uri to your HTTPS sign-in page on the exact website_url hostname, or an empty string to disable admin-sent sign-in links. Changing website_url also revalidates the saved sign-in URI. Invalid values return 400 with an initiate_login_uri field error; hostname and URI policy failures use https_url_on_registered_website_required.
+   *
    * <p>{@code POST /organizations/me/{org_id}/applications/}
    *
    * @param orgId UUID of the organization. Look it up with `GET /organizations/me/`.
@@ -273,6 +275,8 @@ public final class AccountApplicationsResource {
    * Update Application
    *
    * <p>Update application metadata (name, URLs, redirect URIs). <code>api_key</code> and <code>client_id</code> are never rotated. <code>products</code> is read-only: a <code>products</code> key in the body is ignored. <code>data_location</code> can't be changed after the application is created, except once on the live application created with your organization, while it is unused (see the request body). Requires owner/admin JWT.
+   *
+   * <p>Set initiate_login_uri to your HTTPS sign-in page on the exact website_url hostname, or an empty string to disable admin-sent sign-in links. Changing website_url also revalidates the saved sign-in URI. Invalid values return 400 with an initiate_login_uri field error; hostname and URI policy failures use https_url_on_registered_website_required.
    *
    * <p>{@code PATCH /organizations/me/{org_id}/applications/{app_id}/}
    *

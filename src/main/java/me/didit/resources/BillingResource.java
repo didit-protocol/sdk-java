@@ -77,9 +77,23 @@ public final class BillingResource {
   /**
    * Top up credits
    *
-   * <p>Add credits via a hosted Stripe Checkout session (<b>\$50 to \$20,000</b> per top-up). Top-ups are available on the Free, Growth and Scale plans, added at face value with no discount or bonus, and last 12 months; Enterprise annual contracts cannot top up. Redirect the customer to the returned <code>checkout_session_url</code>.
+   * <p>Add credits to the organization's balance (<b>\$50 to \$20,000</b> per top-up). Top-ups are available on the Free, Growth and Scale plans, added at face value with no discount or bonus, and last 12 months; Enterprise annual contracts cannot top up.
+   *
+   * <p>Two payment methods, chosen with <code>payment_method</code>:
+   *
+   * <p>- <code>checkout</code> (default): creates a hosted Stripe Checkout session. Redirect the customer to the returned <code>checkout_session_url</code> (<code>200</code>).
+   * - <code>saved_card</code>: charges the organization's saved primary card off-session, now, at the normal self-serve amounts. Send an <code>Idempotency-Key</code> header (required for this method). It answers <code>201</code> when the card was charged, and <code>202</code> when a request with the same key is still being processed.
+   *
+   * <p>**Agent top-ups (<code>saved_card</code>).** One switch controls them: "Connected AI agents can top up with your saved card". It is off by default and only a person signed in to the console can turn it on (Billing &gt; Payment methods), never an API key or an agent. While it is on, agents and API keys can top up with the primary saved card. When it is off, the request returns <code>403</code> <code>agent_top_up_not_enabled</code> with a link a person can use to top up in the console.
+   *
+   * <p>The balance is credited once the payment is confirmed, usually within seconds, and tax is added to the amount charged when it applies, so <code>total</code> can be higher than <code>credit_amount</code>. Read <code>GET /v3/billing/balance/</code> to confirm.
+   *
+   * <p><b>Idempotency.</b> Retrying with the same <code>Idempotency-Key</code> and the same amount returns the same top-up and never charges twice. The same key with another amount returns <code>409</code> <code>idempotency_key_conflict</code>.
+   *
+   * <p>Every error of a <code>saved_card</code> request carries a <code>code</code> and a <code>detail</code>, and most also a <code>next_step</code> (read it only when it is present). When the step needs a person (for example <code>authentication_required</code>, where the card's bank asks the cardholder to approve and nothing is charged), <code>next_step.url</code> is a signed link to the console that opens the Top up dialog with the amount filled in and says which agent asked; nothing is charged until the person pays. Each top-up is marked with the agent's name in billing history and in the ordinary receipt email.
    *
    * <p>{@code POST /v3/billing/top-up/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -127,7 +141,7 @@ public final class BillingResource {
         .build();
   }
 
-  private static final ResponseHandler<BillingTopUpResponse> TOP_UP_RESPONSE = Responses.json(Conv.model(BillingTopUpResponse::fromJson));
+  private static final ResponseHandler<BillingTopUpResponse> TOP_UP_RESPONSE = Responses.byStatus(BillingTopUpResponse::fromResponse);
 
   private static ApiRequest topUpRequest(BillingTopUpParams params) {
     return ApiRequest.builder("POST", "/v3/billing/top-up/")

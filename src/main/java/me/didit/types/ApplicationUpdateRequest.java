@@ -16,7 +16,7 @@ import me.didit.core.JsonModel;
  * PATCH body for application metadata. Send only the fields you want to change; omitted fields are preserved. <code>uuid</code>, <code>client_id</code>, and <code>api_key</code> cannot be updated. <code>products</code> is read-only: a <code>products</code> key in the body is ignored. <code>data_location</code> can't be changed after the application is created: naming the location it already has is accepted, and any other location answers 400. The one exception is the live application created with your organization: the first update that names a <code>data_location</code> chooses it, once, while no API key of the application has been used and it has no verification session.
  */
 public final class ApplicationUpdateRequest extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("name", "website_url", "redirect_uris", "terms_url", "privacy_url", "description", "data_location");
+  private static final Set<String> KNOWN_FIELDS = Set.of("name", "website_url", "redirect_uris", "terms_url", "privacy_url", "description", "data_location", "initiate_login_uri");
 
   private ApplicationUpdateRequest(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -112,13 +112,23 @@ public final class ApplicationUpdateRequest extends JsonModel {
   }
 
   /**
-   * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney) and <code>mx</code> (Mexico) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
+   * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney), <code>mx</code> (Mexico) and <code>ae</code> (United Arab Emirates) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<ApplicationDataLocation> dataLocation() {
     return Json.optional(json, "data_location", Conv.enumeration(ApplicationDataLocation::of));
+  }
+
+  /**
+   * Application sign-in URL for an admin-sent sign-in link. Optional; an empty string disables sending. A nonempty value must use HTTPS and the exact hostname of website_url (subdomains must match), with no userinfo, query, fragment or whitespace and no port other than 443. The server also revalidates the saved URI when website_url changes; update or clear initiate_login_uri in the same PATCH if needed. The hosted handoff adds iss and login_hint, but creates no session or tokens. See /authentication/sign-in-methods#admin-sent-sign-in-link.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> initiateLoginUri() {
+    return Json.optional(json, "initiate_login_uri", Conv.STRING);
   }
 
   @Override
@@ -195,13 +205,23 @@ public final class ApplicationUpdateRequest extends JsonModel {
     }
 
     /**
-     * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney) and <code>mx</code> (Mexico) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
+     * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney), <code>mx</code> (Mexico) and <code>ae</code> (United Arab Emirates) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
      *
      * @param dataLocation the value
      * @return this builder
      */
     public Builder dataLocation(ApplicationDataLocation dataLocation) {
       return set("data_location", Conv.enumeration(ApplicationDataLocation::of), dataLocation);
+    }
+
+    /**
+     * Application sign-in URL for an admin-sent sign-in link. Optional; an empty string disables sending. A nonempty value must use HTTPS and the exact hostname of website_url (subdomains must match), with no userinfo, query, fragment or whitespace and no port other than 443. The server also revalidates the saved URI when website_url changes; update or clear initiate_login_uri in the same PATCH if needed. The hosted handoff adds iss and login_hint, but creates no session or tokens. See /authentication/sign-in-methods#admin-sent-sign-in-link.
+     *
+     * @param initiateLoginUri the value
+     * @return this builder
+     */
+    public Builder initiateLoginUri(String initiateLoginUri) {
+      return set("initiate_login_uri", Conv.STRING, initiateLoginUri);
     }
 
     /**
