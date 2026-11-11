@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.8.0](https://github.com/didit-protocol/sdk-java/compare/v1.7.0...v1.8.0) (2026-11-11)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-11 ([2136356](https://github.com/didit-protocol/sdk-java/commit/21363562e575314d6f19d1b622e75bb1a872e03e))
+
+
+### API changes that can break typed code
+
+* **spec:** `POST /v3/organization/{organization_id}/application/{application_id}/cases/` request body `links[].entity_type`: added (required) ([2136356](https://github.com/didit-protocol/sdk-java/commit/21363562e575314d6f19d1b622e75bb1a872e03e))
+* **spec:** `POST /v3/organization/{organization_id}/application/{application_id}/cases/` request body `links[].entity_uuid`: added (required) ([2136356](https://github.com/didit-protocol/sdk-java/commit/21363562e575314d6f19d1b622e75bb1a872e03e))
+* **spec:** `POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/publish/` response `content_config`: type changed from any to object ([2136356](https://github.com/didit-protocol/sdk-java/commit/21363562e575314d6f19d1b622e75bb1a872e03e))
+
 ## [1.7.0](https://github.com/didit-protocol/sdk-java/compare/v1.6.0...v1.7.0) (2026-11-11)
 
 
