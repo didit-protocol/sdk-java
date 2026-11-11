@@ -1150,6 +1150,65 @@ final class AuthenticationTest {
   }
 
   @Test
+  void consentRedactionDropsAHeaderNamedAfterASecret() {
+    String credential = "credential-string-0123456789";
+    issuer.routes.put(
+        "POST /agents/consent/",
+        r ->
+            new TransportResponse(
+                400,
+                Headers.of(
+                    Map.of(
+                        "Content-Type",
+                        List.of("application/json"),
+                        "X-" + credential,
+                        List.of(credential),
+                        "X-Keep",
+                        List.of("fine"))),
+                "{\"error\":\"invalid_grant\"}".getBytes(StandardCharsets.UTF_8)));
+    me.didit.errors.ApiStatusException e =
+        assertThrows(
+            me.didit.errors.ApiStatusException.class,
+            () ->
+                auth()
+                    .submitAgentConsent(
+                        "TOKEN-m4rk",
+                        AgentConsentParams.approve("pending-agent-request-secret")
+                            .assertion(assertionOf(credential, "s"))
+                            .build()));
+    assertFalse(e.headers().map().toString().contains(credential));
+    assertTrue(e.headers().map().toString().contains("fine"));
+  }
+
+  @Test
+  void consentMalformed2xxKeepsNothingOfTheSecret() {
+    String credential = "credential-string-0123456789";
+    issuer.routes.put(
+        "POST /agents/consent/",
+        r ->
+            new TransportResponse(
+                200,
+                Headers.of(
+                    Map.of(
+                        "Content-Type", List.of("text/html"),
+                        "X-Request-Id", List.of("req-" + credential))),
+                ("not json " + credential).getBytes(StandardCharsets.UTF_8)));
+    Exception e =
+        assertThrows(
+            Exception.class,
+            () ->
+                auth()
+                    .submitAgentConsent(
+                        "TOKEN-m4rk",
+                        AgentConsentParams.approve("pending-agent-request-secret")
+                            .assertion(assertionOf(credential, "s"))
+                            .build()));
+    for (Throwable t = e; t != null; t = t.getCause()) {
+      assertFalse((t + "\n" + t.getMessage()).contains(credential));
+    }
+  }
+
+  @Test
   void consentRedactionReplacesANonJsonBody() {
     me.didit.errors.ApiStatusException e =
         consentFailure(

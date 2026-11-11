@@ -1076,38 +1076,72 @@ public final class Authentication {
                 throw new CompletionException(connectionError(where, error, secrets));
               }
               int status = response.statusCode();
+              TransportResponse answer = response;
+              if (!secrets.isEmpty()) {
+                // Sanitized once, on receipt: every error of this call is built from this response
+                // only.
+                answer = sanitized(response, secrets);
+              }
               if (status >= 200 && status < 300) {
-                return response;
+                return answer;
               }
               byte[] bytes;
-              try (TransportResponse r = response) {
+              try (TransportResponse r = answer) {
                 bytes = r.body().readAllBytes();
               } catch (IOException e) {
                 bytes = new byte[0];
               }
               JsonNode parsed = null;
-              if (bytes.length == 0 && !secrets.isEmpty()) {
-                // An empty body is not JSON.
-                parsed = Json.nodes().textNode(REDACTED);
-              } else if (bytes.length > 0) {
+              if (bytes.length > 0) {
                 String text = new String(bytes, StandardCharsets.UTF_8);
                 try {
-                  parsed = secrets.isEmpty() ? Json.parse(text) : Json.parseStrict(text);
-                  if (!secrets.isEmpty()) {
-                    parsed = redactNode(parsed, secrets);
-                  }
+                  parsed = Json.parse(text);
                 } catch (UnexpectedResponseException e) {
-                  // Not JSON: with secrets in play the raw text is never kept, not even redacted.
-                  parsed = Json.nodes().textNode(secrets.isEmpty() ? text : REDACTED);
+                  parsed = Json.nodes().textNode(text);
                 }
               }
               throw new CompletionException(
-                  ApiStatusException.create(
-                      status,
-                      oauthDetail(parsed),
-                      redactHeaders(response.headers(), secrets),
-                      where));
+                  ApiStatusException.create(status, oauthDetail(parsed), answer.headers(), where));
             });
+  }
+
+  /**
+   * The whole response of a call whose answer may echo secrets, sanitized once: the status kept,
+   * each header whose name contains a secret dropped, the other values redacted, and the body
+   * redacted structurally ({@code [redacted]} when it is not JSON, has trailing content or is
+   * empty).
+   */
+  private static TransportResponse sanitized(TransportResponse response, List<String> secrets) {
+    byte[] bytes;
+    try (TransportResponse r = response) {
+      bytes = r.body().readAllBytes();
+    } catch (IOException e) {
+      bytes = new byte[0];
+    }
+    String body = REDACTED;
+    if (bytes.length > 0) {
+      try {
+        body =
+            Json.write(
+                redactNode(Json.parseStrict(new String(bytes, StandardCharsets.UTF_8)), secrets));
+      } catch (UnexpectedResponseException e) {
+        body = REDACTED;
+      }
+    }
+    Map<String, List<String>> headers = new LinkedHashMap<>();
+    response
+        .headers()
+        .map()
+        .forEach(
+            (name, values) -> {
+              if (redact(name, secrets).equals(name)) {
+                List<String> clean = new java.util.ArrayList<>();
+                values.forEach(value -> clean.add(redact(value, secrets)));
+                headers.put(name, clean);
+              }
+            });
+    return new TransportResponse(
+        response.statusCode(), Headers.of(headers), body.getBytes(StandardCharsets.UTF_8));
   }
 
   private static final String REDACTED = "[redacted]";
@@ -1149,24 +1183,6 @@ public final class Authentication {
       }
     }
     return text;
-  }
-
-  private static Headers redactHeaders(Headers headers, List<String> secrets) {
-    if (secrets.isEmpty()) {
-      return headers;
-    }
-    Map<String, List<String>> out = new LinkedHashMap<>();
-    headers
-        .map()
-        .forEach(
-            (name, values) -> {
-              List<String> clean = new java.util.ArrayList<>();
-              for (String value : values) {
-                clean.add(redact(value, secrets));
-              }
-              out.put(name, clean);
-            });
-    return Headers.of(out);
   }
 
   private static JsonNode redactNode(JsonNode node, List<String> secrets) {
