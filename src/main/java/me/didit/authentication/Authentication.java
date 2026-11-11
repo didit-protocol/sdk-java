@@ -1045,9 +1045,10 @@ public final class Authentication {
   }
 
   /**
-   * Sends the request. An error answer keeps its status and headers, but every string in {@code
-   * secrets} is removed from the body the exception retains and from its message, even when the
-   * issuer echoes it.
+   * Sends the request. An error answer keeps its status and headers, but when {@code secrets} is
+   * not empty the exception is built from the redacted response, never from its raw text: the
+   * parsed body has every string (object key or value) that contains a secret replaced by {@code
+   * [redacted]} as a whole, and a body that is not JSON is replaced by {@code [redacted]}.
    */
   private CompletableFuture<TransportResponse> send(
       String method, URI uri, Map<String, String> extraHeaders, byte[] body, List<String> secrets) {
@@ -1083,13 +1084,16 @@ public final class Authentication {
               }
               JsonNode parsed = null;
               if (bytes.length > 0) {
-                String text = redact(new String(bytes, StandardCharsets.UTF_8), secrets);
+                String text = new String(bytes, StandardCharsets.UTF_8);
                 try {
                   parsed = Json.parse(text);
+                  if (!secrets.isEmpty()) {
+                    parsed = redactNode(parsed, secrets);
+                  }
                 } catch (UnexpectedResponseException e) {
-                  parsed = Json.nodes().textNode(text);
+                  // Not JSON: with secrets in play the raw text is never kept, not even redacted.
+                  parsed = Json.nodes().textNode(secrets.isEmpty() ? text : REDACTED);
                 }
-                parsed = redactNode(parsed, secrets);
               }
               throw new CompletionException(
                   ApiStatusException.create(
@@ -1102,39 +1106,34 @@ public final class Authentication {
 
   private static final String REDACTED = "[redacted]";
 
-  /** Every non-empty string inside {@code node}, at any depth. */
+  /** Every non-empty string inside {@code node}, object keys and values, at any depth. */
   private static void collectStrings(JsonNode node, List<String> out) {
     if (node.isTextual()) {
       if (!node.asText().isEmpty()) {
         out.add(node.asText());
       }
+    } else if (node.isObject()) {
+      node.properties()
+          .forEach(
+              field -> {
+                if (!field.getKey().isEmpty()) {
+                  out.add(field.getKey());
+                }
+                collectStrings(field.getValue(), out);
+              });
     } else if (node.isContainerNode()) {
       node.forEach(child -> collectStrings(child, out));
     }
   }
 
-  /** The raw secrets, longest first, plus their JSON-escaped forms, which raw text may carry. */
-  private static List<String> forms(List<String> secrets) {
-    java.util.Set<String> all = new java.util.LinkedHashSet<>();
-    for (String secret : secrets) {
-      if (secret == null || secret.isEmpty()) {
-        continue;
-      }
-      all.add(secret);
-      String escaped = Json.write(Json.nodes().textNode(secret));
-      all.add(escaped.substring(1, escaped.length() - 1));
-    }
-    List<String> ordered = new java.util.ArrayList<>(all);
-    ordered.sort((a, b) -> b.length() - a.length());
-    return ordered;
-  }
-
+  /** {@code text}, or {@code [redacted]} as a whole when it contains a secret anywhere. */
   private static String redact(String text, List<String> secrets) {
-    String out = text;
-    for (String form : forms(secrets)) {
-      out = out.replace(form, REDACTED);
+    for (String secret : secrets) {
+      if (secret != null && !secret.isEmpty() && text.contains(secret)) {
+        return REDACTED;
+      }
     }
-    return out;
+    return text;
   }
 
   private static Headers redactHeaders(Headers headers, List<String> secrets) {
@@ -1163,7 +1162,13 @@ public final class Authentication {
       ObjectNode out = Json.nodes().objectNode();
       node.fieldNames()
           .forEachRemaining(
-              name -> out.set(redact(name, secrets), redactNode(node.get(name), secrets)));
+              name -> {
+                String shown = redact(name, secrets);
+                for (int number = 2; out.has(shown); number++) {
+                  shown = REDACTED + number;
+                }
+                out.set(shown, redactNode(node.get(name), secrets));
+              });
       return out;
     }
     if (node.isArray()) {
@@ -1175,8 +1180,8 @@ public final class Authentication {
   }
 
   /**
-   * Runs {@code parse}; a malformed answer is rethrown with the secrets removed from its message
-   * and without the parser's cause, which quotes the source text.
+   * Runs {@code parse}; a malformed answer is rethrown with {@code [redacted]} as its message when
+   * that message contains a secret, and without the parser's cause, which quotes the source text.
    */
   private static <T> T redactingUnexpected(
       List<String> secrets, java.util.function.Supplier<T> parse) {

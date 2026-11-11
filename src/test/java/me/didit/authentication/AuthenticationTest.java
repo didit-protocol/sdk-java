@@ -958,7 +958,117 @@ final class AuthenticationTest {
                 auth()
                     .submitAgentConsent(
                         token, AgentConsentParams.approve(challenge).assertion(assertion).build()));
-    assertTrue(kept.body().orElseThrow().toString().contains("passkey_required"));
+    // The assertion keys ("q", ...) are secrets too, so "passkey_required" is redacted whole.
+    assertTrue(kept.body().orElseThrow().toString().contains("echo"));
+  }
+
+  private me.didit.errors.ApiStatusException consentFailure(
+      ObjectNode assertion, int status, String contentType, String body) {
+    issuer.routes.put(
+        "POST /agents/consent/",
+        r ->
+            new TransportResponse(
+                status,
+                Headers.of(Map.of("Content-Type", List.of(contentType))),
+                body.getBytes(StandardCharsets.UTF_8)));
+    return assertThrows(
+        me.didit.errors.ApiStatusException.class,
+        () ->
+            auth()
+                .submitAgentConsent(
+                    "TOKEN-m4rk",
+                    AgentConsentParams.approve("pending-agent-request-secret")
+                        .assertion(assertion)
+                        .build()));
+  }
+
+  private static String shown(me.didit.errors.ApiStatusException e) {
+    return e.getMessage() + "\n" + e.body().map(Object::toString).orElse("");
+  }
+
+  private static ObjectNode assertionOf(String id, String signature) {
+    ObjectNode assertion = Json.nodes().objectNode();
+    assertion.put("id", id);
+    assertion.putObject("response").put("signature", signature);
+    return assertion;
+  }
+
+  @Test
+  void consentRedactionLeavesNoFragmentOfAPrefixedSecret() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("abc", "abcdef"),
+            400,
+            "application/json",
+            "{\"detail\":\"bad abcdef and abc\",\"other\":\"abcdef\"}");
+    assertEquals(
+        "{\"detail\":\"[redacted]\",\"other\":\"[redacted]\"}", e.body().orElseThrow().toString());
+    assertFalse(shown(e).contains("abc"));
+    assertFalse(shown(e).contains("def"));
+  }
+
+  @Test
+  void consentRedactionReplacesTheWholeStringThatContainsASecret() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("SECRET", "s"),
+            400,
+            "application/json",
+            "{\"detail\":\"bad assertion xyzSECRETxyz\",\"keep\":\"fine\"}");
+    assertEquals(
+        "{\"detail\":\"[redacted]\",\"keep\":\"fine\"}", e.body().orElseThrow().toString());
+    assertTrue(e.getMessage().contains("[redacted]"));
+  }
+
+  @Test
+  void consentRedactionHandlesASecretUsedAsAnObjectKey() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("SECRET", "s"),
+            400,
+            "application/json",
+            "{\"detail\":\"no\",\"echo-SECRET-1\":\"a\",\"echo-SECRET-2\":\"b\"}");
+    assertEquals(
+        "{\"detail\":\"no\",\"[redacted]\":\"a\",\"[redacted]2\":\"b\"}",
+        e.body().orElseThrow().toString());
+    assertFalse(shown(e).contains("SECRET"));
+  }
+
+  @Test
+  void consentRedactionIgnoresTheSpellingOfJsonEscapes() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("a/b+\u00e9", "s"),
+            400,
+            "application/json",
+            "{\"detail\":\"x\",\"echo\":\"a\\/b+\\u00E9\"}");
+    assertEquals("{\"detail\":\"x\",\"echo\":\"[redacted]\"}", e.body().orElseThrow().toString());
+    assertFalse(shown(e).contains("a/b"));
+    assertFalse(shown(e).contains("00E9"));
+  }
+
+  @Test
+  void consentRedactionReplacesANonJsonBody() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("x", "s"),
+            502,
+            "text/html",
+            "<html>Bad gateway pending-agent-request-secret</html>");
+    assertEquals("\"[redacted]\"", e.body().orElseThrow().toString());
+    assertFalse(shown(e).contains("pending-agent-request-secret"));
+  }
+
+  @Test
+  void consentRedactionCoversASecretPastTheMessageCap() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("x", "s"),
+            400,
+            "text/plain",
+            "x".repeat(600) + "pending-agent-request-secret");
+    assertEquals("\"[redacted]\"", e.body().orElseThrow().toString());
+    assertFalse(shown(e).contains("pending-agent-request-secret"));
   }
 
   @Test
