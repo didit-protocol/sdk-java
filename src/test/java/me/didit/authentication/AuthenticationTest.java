@@ -996,6 +996,41 @@ final class AuthenticationTest {
   }
 
   @Test
+  void agentConsentDiditExceptionTransportFailuresNeverCarryTheRequestSecrets() {
+    String challenge = "MARK-CHALLENGE-D";
+    ObjectNode assertion = Json.nodes().objectNode();
+    assertion.put("id", "MARK-ID-D");
+    assertion.putObject("response").put("signature", "MARK-SIG-D");
+    Authentication transportAuth =
+        Authentication.builder()
+            .issuer(StubIssuer.ISSUER)
+            .transport(
+                request ->
+                    CompletableFuture.failedFuture(
+                        new me.didit.errors.DiditException(
+                            "custom transport: "
+                                + new String(request.body(), StandardCharsets.UTF_8)
+                                + " Bearer MARK-TOKEN-D",
+                            new IOException("cause " + challenge + " MARK-TOKEN-D"))))
+            .clock(clock)
+            .build();
+    Exception error =
+        assertThrows(
+            Exception.class,
+            () ->
+                transportAuth.submitAgentConsent(
+                    "MARK-TOKEN-D",
+                    AgentConsentParams.approve(challenge).assertion(assertion).build()));
+    StringBuilder seen = new StringBuilder();
+    for (Throwable t = error; t != null; t = t.getCause()) {
+      seen.append(t).append('\n').append(t.getMessage()).append('\n');
+    }
+    for (String secret : List.of(challenge, "MARK-ID-D", "MARK-SIG-D", "MARK-TOKEN-D")) {
+      assertFalse(seen.toString().contains(secret), "leaked " + secret);
+    }
+  }
+
+  @Test
   void agentConsentAndApprovalOptions() {
     String secret = "pending-agent-request-secret";
     issuer.routes.put(

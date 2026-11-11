@@ -1219,13 +1219,15 @@ public final class Authentication {
   private static DiditException connectionError(
       String where, Throwable error, List<String> secrets) {
     Throwable cause = unwrap(error);
-    if (cause instanceof DiditException) {
+    if (cause instanceof DiditException && secrets.isEmpty()) {
       return (DiditException) cause;
     }
     if (!secrets.isEmpty()) {
       // A transport error may quote the request: keep its type and a redacted message only.
       boolean timedOut =
-          cause instanceof TimeoutException || cause instanceof java.net.http.HttpTimeoutException;
+          cause instanceof TimeoutException
+              || cause instanceof java.net.http.HttpTimeoutException
+              || cause instanceof ApiTimeoutException;
       Throwable clean =
           new IOException(
               cause.getClass().getName()
