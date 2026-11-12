@@ -1017,12 +1017,15 @@ public final class Authentication {
     ObjectNode body = Json.nodes().objectNode();
     body.put("challenge", challenge);
     List<String> secrets = List.of(accessToken, challenge);
-    return send(
-            "POST",
-            runtime("agents/consent/passkey/"),
-            jsonHeaders(accessToken),
-            jsonBody(body),
-            secrets)
+    byte[] sent;
+    try {
+      sent = jsonBody(body);
+    } catch (RuntimeException e) {
+      // A serializer's message may hold the challenge: fixed message, no cause.
+      return CompletableFuture.failedFuture(
+          new ConfigurationException("Could not encode the agent consent request"));
+    }
+    return send("POST", runtime("agents/consent/passkey/"), jsonHeaders(accessToken), sent, secrets)
         .thenApply(
             response ->
                 redactingUnexpected(
