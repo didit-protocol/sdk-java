@@ -46,7 +46,7 @@ final class WorkflowsResourceTest {
 
   @Test
   void create() {
-    SimpleWorkflowRequest params = SimpleWorkflowRequest.builder().workflowLabel("value-workflow-label").isDefault(true).status(SimpleWorkflowRequest.Status.DRAFT).features(List.of(SimpleWorkflowFeature.builder().feature(SimpleWorkflowFeature.Feature.OCR).config(Map.of("key", "value")).label("value-label").build())).isWhiteLabelEnabled(true).isDesktopAllowed(true).maxRetryAttempts(1L).retryWindowDays(1L).faceLivenessMaxAttempts(1L).faceMatchMaxAttempts(1L).sessionExpirationTime(1L).build();
+    SimpleWorkflowRequest params = SimpleWorkflowRequest.builder().workflowLabel("value-workflow-label").isDefault(true).status(SimpleWorkflowRequest.Status.DRAFT).features(List.of(SimpleWorkflowFeature.builder().feature(SimpleWorkflowFeature.Feature.OCR).config(Map.of("key", "value")).label("value-label").build())).isWhiteLabelEnabled(true).isDesktopAllowed(true).isSessionReferenceEnabled(true).maxRetryAttempts(1L).retryWindowDays(1L).faceLivenessMaxAttempts(1L).faceMatchMaxAttempts(1L).sessionExpirationTime(1L).build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/workflows/", "201");
     transport.respondJson(201, example);
     var result = client.workflows().create(params);
@@ -56,7 +56,7 @@ final class WorkflowsResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"workflow_label\":\"value-workflow-label\",\"is_default\":true,\"status\":\"draft\",\"features\":[{\"feature\":\"OCR\",\"config\":{\"key\":\"value\"},\"label\":\"value-label\"}],\"is_white_label_enabled\":true,\"is_desktop_allowed\":true,\"max_retry_attempts\":1,\"retry_window_days\":1,\"face_liveness_max_attempts\":1,\"face_match_max_attempts\":1,\"session_expiration_time\":1}", request.body());
+    TestJson.assertJsonEquals("{\"workflow_label\":\"value-workflow-label\",\"is_default\":true,\"status\":\"draft\",\"features\":[{\"feature\":\"OCR\",\"config\":{\"key\":\"value\"},\"label\":\"value-label\"}],\"is_white_label_enabled\":true,\"is_desktop_allowed\":true,\"is_session_reference_enabled\":true,\"max_retry_attempts\":1,\"retry_window_days\":1,\"face_liveness_max_attempts\":1,\"face_match_max_attempts\":1,\"session_expiration_time\":1}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
@@ -79,7 +79,7 @@ final class WorkflowsResourceTest {
 
   @Test
   void update() {
-    SimpleWorkflowUpdateRequest params = SimpleWorkflowUpdateRequest.builder().workflowLabel("value-workflow-label").isDefault(true).status(SimpleWorkflowUpdateRequest.Status.DRAFT).features(List.of(SimpleWorkflowFeature.builder().feature(SimpleWorkflowFeature.Feature.OCR).config(Map.of("key", "value")).label("value-label").build())).isWhiteLabelEnabled(true).isDesktopAllowed(true).maxRetryAttempts(1L).retryWindowDays(1L).faceLivenessMaxAttempts(1L).faceMatchMaxAttempts(1L).sessionExpirationTime(1L).build();
+    SimpleWorkflowUpdateRequest params = SimpleWorkflowUpdateRequest.builder().workflowLabel("value-workflow-label").isDefault(true).status(SimpleWorkflowUpdateRequest.Status.DRAFT).features(List.of(SimpleWorkflowFeature.builder().feature(SimpleWorkflowFeature.Feature.OCR).config(Map.of("key", "value")).label("value-label").build())).isWhiteLabelEnabled(true).isDesktopAllowed(true).isSessionReferenceEnabled(true).maxRetryAttempts(1L).retryWindowDays(1L).faceLivenessMaxAttempts(1L).faceMatchMaxAttempts(1L).sessionExpirationTime(1L).build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
     var result = client.workflows().update("00000000-0000-4000-8000-00000000b60d", params);
@@ -89,7 +89,7 @@ final class WorkflowsResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"workflow_label\":\"value-workflow-label\",\"is_default\":true,\"status\":\"draft\",\"features\":[{\"feature\":\"OCR\",\"config\":{\"key\":\"value\"},\"label\":\"value-label\"}],\"is_white_label_enabled\":true,\"is_desktop_allowed\":true,\"max_retry_attempts\":1,\"retry_window_days\":1,\"face_liveness_max_attempts\":1,\"face_match_max_attempts\":1,\"session_expiration_time\":1}", request.body());
+    TestJson.assertJsonEquals("{\"workflow_label\":\"value-workflow-label\",\"is_default\":true,\"status\":\"draft\",\"features\":[{\"feature\":\"OCR\",\"config\":{\"key\":\"value\"},\"label\":\"value-label\"}],\"is_white_label_enabled\":true,\"is_desktop_allowed\":true,\"is_session_reference_enabled\":true,\"max_retry_attempts\":1,\"retry_window_days\":1,\"face_liveness_max_attempts\":1,\"face_match_max_attempts\":1,\"session_expiration_time\":1}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

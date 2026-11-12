@@ -18,7 +18,7 @@ import org.jspecify.annotations.Nullable;
  * Update workflow metadata or replace the full linear feature list. STRICT field whitelist: any key not listed here is rejected with a 400.
  */
 public final class SimpleWorkflowUpdateRequest extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("workflow_label", "is_default", "status", "features", "is_white_label_enabled", "is_desktop_allowed", "max_retry_attempts", "retry_window_days", "face_liveness_max_attempts", "face_match_max_attempts", "session_expiration_time");
+  private static final Set<String> KNOWN_FIELDS = Set.of("workflow_label", "is_default", "status", "features", "is_white_label_enabled", "is_desktop_allowed", "is_session_reference_enabled", "max_retry_attempts", "retry_window_days", "face_liveness_max_attempts", "face_match_max_attempts", "session_expiration_time");
 
   private SimpleWorkflowUpdateRequest(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -111,6 +111,16 @@ public final class SimpleWorkflowUpdateRequest extends JsonModel {
    */
   public Optional<Boolean> isDesktopAllowed() {
     return Json.optional(json, "is_desktop_allowed", Conv.BOOLEAN);
+  }
+
+  /**
+   * On Declined and In review results, the person being verified sees a short reference to the session, such as <code>S-20481</code>, shown on one line. This is the session number as the console shows it, so your support team can find the session in the console by typing it. When <code>false</code>, the result screens show no reference. Applies to the hosted flow and the SDKs.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> isSessionReferenceEnabled() {
+    return Json.optional(json, "is_session_reference_enabled", Conv.BOOLEAN);
   }
 
   /**
@@ -234,6 +244,16 @@ public final class SimpleWorkflowUpdateRequest extends JsonModel {
      */
     public Builder isDesktopAllowed(boolean isDesktopAllowed) {
       return set("is_desktop_allowed", Conv.BOOLEAN, isDesktopAllowed);
+    }
+
+    /**
+     * On Declined and In review results, the person being verified sees a short reference to the session, such as <code>S-20481</code>, shown on one line. This is the session number as the console shows it, so your support team can find the session in the console by typing it. When <code>false</code>, the result screens show no reference. Applies to the hosted flow and the SDKs.
+     *
+     * @param isSessionReferenceEnabled the value
+     * @return this builder
+     */
+    public Builder isSessionReferenceEnabled(boolean isSessionReferenceEnabled) {
+      return set("is_session_reference_enabled", Conv.BOOLEAN, isSessionReferenceEnabled);
     }
 
     /**
