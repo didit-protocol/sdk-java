@@ -984,7 +984,8 @@ public final class Authentication {
         .thenApply(
             response ->
                 redactingUnexpected(
-                    secrets, () -> new AgentConsent(jsonObject(response, "the agent consent"))));
+                    secrets,
+                    () -> new AgentConsent(jsonObject(response, "the agent consent", true))));
   }
 
   /**
@@ -1030,7 +1031,9 @@ public final class Authentication {
             response ->
                 redactingUnexpected(
                     secrets,
-                    () -> new AgentApprovalOptions(jsonObject(response, "the approval options"))));
+                    () ->
+                        new AgentApprovalOptions(
+                            jsonObject(response, "the approval options", true))));
   }
 
   private Map<String, String> jsonHeaders(String accessToken) {
@@ -1324,13 +1327,17 @@ public final class Authentication {
   }
 
   private static ObjectNode jsonObject(TransportResponse response, String what) {
+    return jsonObject(response, what, false);
+  }
+
+  private static ObjectNode jsonObject(TransportResponse response, String what, boolean strict) {
     byte[] bytes;
     try (TransportResponse r = response) {
       bytes = r.body().readAllBytes();
     } catch (IOException e) {
       throw new ApiConnectionException("Failed to read " + what, e);
     }
-    JsonNode node = Json.parse(bytes);
+    JsonNode node = strict ? Json.parseStrict(bytes) : Json.parse(bytes);
     if (!node.isObject()) {
       throw new UnexpectedResponseException(
           "The issuer returned " + what + " that is not a JSON object");

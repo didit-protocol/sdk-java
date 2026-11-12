@@ -1353,6 +1353,25 @@ final class AuthenticationTest {
   }
 
   @Test
+  void aConsent2xxWithTrailingContentIsAMalformedResponse() {
+    for (String body : new String[] {"{\"code\":\"x\"}]", "{\"code\":\"x\"} {\"code\":\"y\"}"}) {
+      issuer.routes.put("POST /agents/consent/", r -> StubIssuer.json(200, body));
+      Exception e =
+          assertThrows(
+              Exception.class,
+              () ->
+                  auth()
+                      .submitAgentConsent(
+                          "TOKEN-m4rk",
+                          AgentConsentParams.approve("pending-agent-request-secret")
+                              .assertion(assertionOf("x", "s"))
+                              .build()));
+      assertTrue(e instanceof me.didit.errors.UnexpectedResponseException, e.toString());
+      assertNull(e.getCause());
+    }
+  }
+
+  @Test
   void consentRedactionReplacesANonJsonBody() {
     me.didit.errors.ApiStatusException e =
         consentFailure(

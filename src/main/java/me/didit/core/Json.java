@@ -83,6 +83,24 @@ public final class Json {
   }
 
   /**
+   * Parses UTF-8 JSON bytes that must hold exactly one value: anything after it is an error.
+   *
+   * @param bytes JSON bytes
+   * @return the parsed value
+   * @throws UnexpectedResponseException when the bytes are not valid JSON or have trailing content
+   */
+  public static JsonNode parseStrict(byte[] bytes) {
+    try {
+      return MAPPER
+          .readerFor(JsonNode.class)
+          .with(DeserializationFeature.FAIL_ON_TRAILING_TOKENS)
+          .readTree(bytes);
+    } catch (IOException e) {
+      throw new UnexpectedResponseException("Invalid JSON: " + e.getMessage(), e);
+    }
+  }
+
+  /**
    * Parses UTF-8 JSON bytes.
    *
    * @param bytes JSON bytes
