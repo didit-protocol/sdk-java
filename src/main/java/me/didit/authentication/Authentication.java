@@ -984,7 +984,6 @@ public final class Authentication {
         .thenApply(
             response ->
                 redactingUnexpected(
-                    secrets,
                     () -> new AgentConsent(jsonObject(response, "the agent consent", true))));
   }
 
@@ -1030,7 +1029,6 @@ public final class Authentication {
         .thenApply(
             response ->
                 redactingUnexpected(
-                    secrets,
                     () ->
                         new AgentApprovalOptions(
                             jsonObject(response, "the approval options", true))));
@@ -1253,15 +1251,15 @@ public final class Authentication {
   }
 
   /**
-   * Runs {@code parse}; a malformed answer is rethrown with {@code [redacted]} as its message when
-   * that message contains a secret, and without the parser's cause, which quotes the source text.
+   * Runs {@code parse}; a malformed answer is rethrown with a fixed message and without the
+   * parser's cause, which quotes the source text.
    */
-  private static <T> T redactingUnexpected(
-      List<String> secrets, java.util.function.Supplier<T> parse) {
+  private static <T> T redactingUnexpected(java.util.function.Supplier<T> parse) {
     try {
       return parse.get();
     } catch (UnexpectedResponseException e) {
-      throw new UnexpectedResponseException(redact(String.valueOf(e.getMessage()), secrets));
+      // Never parser text: Jackson can quote a fragment of an unquoted secret token.
+      throw new UnexpectedResponseException("Malformed response from the agent consent endpoint");
     } catch (ApiConnectionException e) {
       // The body failed mid-read: the underlying message and cause are never kept.
       throw consentReadFailure();

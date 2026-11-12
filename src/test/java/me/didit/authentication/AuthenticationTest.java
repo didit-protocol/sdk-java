@@ -1372,6 +1372,28 @@ final class AuthenticationTest {
   }
 
   @Test
+  void aMalformedConsent2xxHasAFixedMessageNeverParserText() {
+    for (String body :
+        new String[] {
+          "{\"code\": credential-string-0123456789", "credential-string-0123456789 {"
+        }) {
+      issuer.routes.put("POST /agents/consent/", r -> StubIssuer.json(200, body));
+      Exception e =
+          assertThrows(
+              Exception.class,
+              () ->
+                  auth()
+                      .submitAgentConsent(
+                          "TOKEN-m4rk",
+                          AgentConsentParams.approve("pending-agent-request-secret")
+                              .assertion(assertionOf("credential-string-0123456789", "s"))
+                              .build()));
+      assertEquals("Malformed response from the agent consent endpoint", e.getMessage());
+      assertNull(e.getCause());
+    }
+  }
+
+  @Test
   void consentRedactionReplacesANonJsonBody() {
     me.didit.errors.ApiStatusException e =
         consentFailure(
