@@ -26,14 +26,14 @@ final class TravelRuleTransfersResourceTest {
 
   @Test
   void list() {
-    TravelRuleTransfersListParams params = TravelRuleTransfersListParams.builder().direction("value-direction").status("value-status").rail("value-rail").kind("value-kind").currency("value-currency").startDate(LocalDate.parse("2026-11-01")).endDate(LocalDate.parse("2026-11-01")).counterparty("00000000-0000-4000-8000-00000000221d").limit(1L).offset(1L).build();
+    TravelRuleTransfersListParams params = TravelRuleTransfersListParams.builder().search("value-search").direction("value-direction").status("value-status").rail("value-rail").kind("value-kind").currency("value-currency").startDate(LocalDate.parse("2026-11-01")).endDate(LocalDate.parse("2026-11-01")).counterparty("00000000-0000-4000-8000-00000000221d").limit(1L).offset(1L).build();
     JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/travel-rule/transfers/", "200");
     transport.respondJson(200, example);
     var result = client.travelRule().transfers().list(params);
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/v3/travel-rule/transfers/", request.path());
-    assertEquals(Map.ofEntries(Map.entry("direction", List.of("value-direction")), Map.entry("status", List.of("value-status")), Map.entry("rail", List.of("value-rail")), Map.entry("kind", List.of("value-kind")), Map.entry("currency", List.of("value-currency")), Map.entry("start_date", List.of("2026-11-01")), Map.entry("end_date", List.of("2026-11-01")), Map.entry("counterparty", List.of("00000000-0000-4000-8000-00000000221d")), Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1"))), request.query());
+    assertEquals(Map.ofEntries(Map.entry("search", List.of("value-search")), Map.entry("direction", List.of("value-direction")), Map.entry("status", List.of("value-status")), Map.entry("rail", List.of("value-rail")), Map.entry("kind", List.of("value-kind")), Map.entry("currency", List.of("value-currency")), Map.entry("start_date", List.of("2026-11-01")), Map.entry("end_date", List.of("2026-11-01")), Map.entry("counterparty", List.of("00000000-0000-4000-8000-00000000221d")), Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);

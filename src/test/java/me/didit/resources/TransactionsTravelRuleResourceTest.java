@@ -19,6 +19,7 @@ import me.didit.types.TravelRuleMessageCreateRequest;
 import me.didit.types.TravelRuleOwnershipConfirmRequest;
 import me.didit.types.TravelRuleTestVaspInboundRequest;
 import me.didit.types.TravelRuleTransferPatchRequest;
+import me.didit.types.TravelRuleUserLinkRequest;
 import org.junit.jupiter.api.Test;
 
 /** One test per operation of {@code transactions.travel_rule}, against a stubbed HTTP layer. */
@@ -29,7 +30,7 @@ final class TransactionsTravelRuleResourceTest {
 
   @Test
   void updateTransfer() {
-    TravelRuleTransferPatchRequest params = TravelRuleTransferPatchRequest.builder().paymentTxnId("value-payment-txn-id").action(TravelRuleTransferPatchRequest.Action.CANCEL).complianceEmail("user@example.com").walletAddress("value-wallet-address").memo("value-memo").beneficiaryVasp("00000000-0000-4000-8000-000000003908").build();
+    TravelRuleTransferPatchRequest params = TravelRuleTransferPatchRequest.builder().paymentTxnId("value-payment-txn-id").action(TravelRuleTransferPatchRequest.Action.CANCEL).complianceEmail("user@example.com").walletAddress("value-wallet-address").memo("value-memo").beneficiaryVasp("00000000-0000-4000-8000-000000003908").reason(TravelRuleTransferPatchRequest.Reason.EMPTY).notifyOnAnswer(true).name("value-name").lei("value-lei").country("value-country").vaspName("value-vasp-name").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
     var result = client.transactions().travelRule().updateTransfer("00000000-0000-4000-8000-00000002630a", params);
@@ -39,7 +40,7 @@ final class TransactionsTravelRuleResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"payment_txn_id\":\"value-payment-txn-id\",\"action\":\"cancel\",\"compliance_email\":\"user@example.com\",\"wallet_address\":\"value-wallet-address\",\"memo\":\"value-memo\",\"beneficiary_vasp\":\"00000000-0000-4000-8000-000000003908\"}", request.body());
+    TestJson.assertJsonEquals("{\"payment_txn_id\":\"value-payment-txn-id\",\"action\":\"cancel\",\"compliance_email\":\"user@example.com\",\"wallet_address\":\"value-wallet-address\",\"memo\":\"value-memo\",\"beneficiary_vasp\":\"00000000-0000-4000-8000-000000003908\",\"reason\":\"\",\"notify_on_answer\":true,\"name\":\"value-name\",\"lei\":\"value-lei\",\"country\":\"value-country\",\"vasp_name\":\"value-vasp-name\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
@@ -127,5 +128,22 @@ final class TransactionsTravelRuleResourceTest {
     TestJson.assertJsonEquals(example, result._json());
     assertEquals(example.path("results").size(), result.results().size());
     TestModels.readAll(result.results());
+  }
+
+  @Test
+  void createUserLink() {
+    TravelRuleUserLinkRequest params = TravelRuleUserLinkRequest.builder().channel(TravelRuleUserLinkRequest.Channel.LINK).build();
+    JsonNode example = TestJson.parse("{\"email_available\":true,\"emailed_to\":\"value\",\"end_user_link\":\"value\",\"expires_at\":\"2026-11-01T10:15:30Z\"}");
+    transport.respondJson(200, example);
+    var result = client.transactions().travelRule().createUserLink("00000000-0000-4000-8000-0000000277d8", params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/transactions/00000000-0000-4000-8000-0000000277d8/travel-rule/user-link/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"channel\":\"link\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 }

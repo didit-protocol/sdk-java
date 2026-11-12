@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * A VASP of the directory or a member of the Didit network, with the routes your application has to it. A customer is a member of the Didit network only while its application is live, its Travel Rule is on, its profile is discoverable, has a legal name and a confirmed compliance email, and Didit has not marked the application as a test, demo or internal one. Each row also carries the shared due-diligence assessment (dd_score, risk_level, responsiveness, essential_checks) and your application's own decision, entity screening and questionnaires, which no other customer sees.
  */
 public final class VaspDirectoryEntry extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("id", "kind", "name", "lei", "jurisdiction", "domains", "reachable", "aliases", "networks", "routes", "umbrella", "entities", "contacts", "dd_status", "dd_score", "reachable_rails", "is_didit_customer", "dd_score_breakdown", "dd_assessed_at", "dd_score_semantic", "risk_level", "responsiveness", "essential_checks", "decision", "entity_screening", "questionnaires");
+  private static final Set<String> KNOWN_FIELDS = Set.of("id", "kind", "name", "lei", "jurisdiction", "domains", "reachable", "aliases", "networks", "routes", "umbrella", "entities", "contacts", "dd_status", "dd_score", "reachable_rails", "is_didit_customer", "dd_score_breakdown", "dd_assessed_at", "dd_score_semantic", "risk_level", "responsiveness", "essential_checks", "decision", "entity_screening", "questionnaires", "source");
 
   private VaspDirectoryEntry(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -65,7 +65,7 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * directory for an entry of the shared directory; didit for a member of the Didit network.
+   * directory for a shared or application-private directory entry; didit for a Didit network member.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -314,6 +314,16 @@ public final class VaspDirectoryEntry extends JsonModel {
     return Json.optional(json, "questionnaires", Conv.list(Conv.model(TravelRuleCounterpartyQuestionnaire::fromJson)));
   }
 
+  /**
+   * directory for a shared directory entry, added_by_you for your application-private entry, or didit_network for a directory entry linked to a Didit customer. Separate kind=didit member results may omit this field; use kind to identify them.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<VaspDirectoryEntry.Source> source() {
+    return Json.optional(json, "source", Conv.enumeration(VaspDirectoryEntry.Source::of));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -338,7 +348,7 @@ public final class VaspDirectoryEntry extends JsonModel {
     }
 
     /**
-     * directory for an entry of the shared directory; didit for a member of the Didit network.
+     * directory for a shared or application-private directory entry; didit for a Didit network member.
      *
      * @param kind the value
      * @return this builder
@@ -588,6 +598,16 @@ public final class VaspDirectoryEntry extends JsonModel {
     }
 
     /**
+     * directory for a shared directory entry, added_by_you for your application-private entry, or didit_network for a directory entry linked to a Didit customer. Separate kind=didit member results may omit this field; use kind to identify them.
+     *
+     * @param source the value
+     * @return this builder
+     */
+    public Builder source(VaspDirectoryEntry.Source source) {
+      return set("source", Conv.enumeration(VaspDirectoryEntry.Source::of), source);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code VaspDirectoryEntry}
@@ -603,7 +623,7 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * directory for an entry of the shared directory; didit for a member of the Didit network.
+   * directory for a shared or application-private directory entry; didit for a Didit network member.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -3022,6 +3042,52 @@ public final class VaspDirectoryEntry extends JsonModel {
           return KNOWN_VALUES.contains(this);
         }
       }
+    }
+  }
+
+  /**
+   * directory for a shared directory entry, added_by_you for your application-private entry, or didit_network for a directory entry linked to a Didit customer. Separate kind=didit member results may omit this field; use kind to identify them.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Source extends StringEnum {
+    /** The value {@code "didit_network"}. */
+    public static final Source DIDIT_NETWORK = new Source("didit_network");
+
+    /** The value {@code "directory"}. */
+    public static final Source DIRECTORY = new Source("directory");
+
+    /** The value {@code "added_by_you"}. */
+    public static final Source ADDED_BY_YOU = new Source("added_by_you");
+
+    private static final List<Source> KNOWN_VALUES = List.of(DIDIT_NETWORK, DIRECTORY, ADDED_BY_YOU);
+
+    private Source(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Source of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Source::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Source> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 }

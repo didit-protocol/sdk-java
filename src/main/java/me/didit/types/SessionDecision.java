@@ -29373,7 +29373,7 @@ public final class SessionDecision extends JsonModel {
    * Aggregate check over the company's officers + UBOs. Uses the <code>registry</code> / <code>submitted</code> shape. Present only when session_kind = business.
    */
   public static final class KeyPeopleChecks extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("status", "node_id", "registry", "submitted", "ubo_kyc_summary", "warnings");
+    private static final Set<String> KNOWN_FIELDS = Set.of("status", "node_id", "registry", "submitted", "ubo_kyc_summary", "listed_company_declaration", "warnings");
 
     private KeyPeopleChecks(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -29459,6 +29459,16 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
+     * The company's own declaration that it is listed on a stock exchange, or owned by a listed company, made on the Key People screen instead of naming a beneficial owner. Present in every <code>key_people_checks</code> entry unless the workflow's Returned data settings leave it out, and <code>null</code> unless the company made the declaration, which it can only do where the workflow allows it (<code>kyb_key_people_allow_listed_company_declaration</code>). Didit does not check the declaration against a stock exchange: the workflow's <code>kyb_key_people_listed_company_action</code> decides the Key People outcome (Review by default) and the <code>KYB_LISTED_COMPANY_DECLARED</code> warning is added. The company must still name at least one person who manages or represents it (director, non-executive director, chairman, representative, authorized signatory or company officer).
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<SessionDecision.KeyPeopleChecks.ListedCompanyDeclaration> listedCompanyDeclaration() {
+      return Json.optional(json, "listed_company_declaration", Conv.model(SessionDecision.KeyPeopleChecks.ListedCompanyDeclaration::fromJson));
+    }
+
+    /**
      * The <code>warnings</code> field.
      *
      * @return the value, or empty when the field is absent or null
@@ -29529,6 +29539,16 @@ public final class SessionDecision extends JsonModel {
        */
       public Builder uboKycSummary(SessionDecision.KeyPeopleChecks.@Nullable UboKycSummary uboKycSummary) {
         return setNullable("ubo_kyc_summary", Conv.model(SessionDecision.KeyPeopleChecks.UboKycSummary::fromJson), uboKycSummary);
+      }
+
+      /**
+       * The company's own declaration that it is listed on a stock exchange, or owned by a listed company, made on the Key People screen instead of naming a beneficial owner. Present in every <code>key_people_checks</code> entry unless the workflow's Returned data settings leave it out, and <code>null</code> unless the company made the declaration, which it can only do where the workflow allows it (<code>kyb_key_people_allow_listed_company_declaration</code>). Didit does not check the declaration against a stock exchange: the workflow's <code>kyb_key_people_listed_company_action</code> decides the Key People outcome (Review by default) and the <code>KYB_LISTED_COMPANY_DECLARED</code> warning is added. The company must still name at least one person who manages or represents it (director, non-executive director, chairman, representative, authorized signatory or company officer).
+       *
+       * @param listedCompanyDeclaration the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder listedCompanyDeclaration(SessionDecision.KeyPeopleChecks.@Nullable ListedCompanyDeclaration listedCompanyDeclaration) {
+        return setNullable("listed_company_declaration", Conv.model(SessionDecision.KeyPeopleChecks.ListedCompanyDeclaration::fromJson), listedCompanyDeclaration);
       }
 
       /**
@@ -33867,6 +33887,202 @@ public final class SessionDecision extends JsonModel {
         @Override
         protected Builder self() {
           return this;
+        }
+      }
+    }
+
+    /**
+     * The company's own declaration that it is listed on a stock exchange, or owned by a listed company, made on the Key People screen instead of naming a beneficial owner. Present in every <code>key_people_checks</code> entry unless the workflow's Returned data settings leave it out, and <code>null</code> unless the company made the declaration, which it can only do where the workflow allows it (<code>kyb_key_people_allow_listed_company_declaration</code>). Didit does not check the declaration against a stock exchange: the workflow's <code>kyb_key_people_listed_company_action</code> decides the Key People outcome (Review by default) and the <code>KYB_LISTED_COMPANY_DECLARED</code> warning is added. The company must still name at least one person who manages or represents it (director, non-executive director, chairman, representative, authorized signatory or company officer).
+     */
+    public static final class ListedCompanyDeclaration extends JsonModel {
+      private static final Set<String> KNOWN_FIELDS = Set.of("type", "stock_exchange", "isin", "listed_parent_company_name");
+
+      private ListedCompanyDeclaration(ObjectNode json, Map<String, List<FileUpload>> files) {
+        super(json, files);
+      }
+
+      /**
+       * Reads a {@code ListedCompanyDeclaration} from JSON. Unknown fields are kept and readable
+       * through {@link #_additionalProperties()}.
+       *
+       * @param json a JSON object
+       * @return the parsed value
+       */
+      public static ListedCompanyDeclaration fromJson(JsonNode json) {
+        return new ListedCompanyDeclaration(Json.copyObject(json), Map.of());
+      }
+
+      /**
+       * Returns an empty builder.
+       *
+       * @return a new builder
+       */
+      public static Builder builder() {
+        return new Builder();
+      }
+
+      /**
+       * Returns a builder holding a copy of every field of this value.
+       *
+       * @return a new builder
+       */
+      public Builder toBuilder() {
+        return new Builder(this);
+      }
+
+      /**
+       * <code>listed_company</code>: the company itself is listed on a stock exchange. <code>subsidiary_of_listed_company</code>: the company is owned by a listed company.
+       *
+       * @return the value
+       * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+       */
+      public SessionDecision.KeyPeopleChecks.ListedCompanyDeclaration.Type type() {
+        return Json.required(json, "type", Conv.enumeration(SessionDecision.KeyPeopleChecks.ListedCompanyDeclaration.Type::of));
+      }
+
+      /**
+       * Name of the stock exchange, as typed by the company (for example <code>London Stock Exchange</code>). <code>null</code> when left empty.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> stockExchange() {
+        return Json.optional(json, "stock_exchange", Conv.STRING);
+      }
+
+      /**
+       * ISIN of the listed security: 12 characters, upper-case, no spaces, with a valid check digit (for example <code>GBEXAMPLE002</code>). <code>null</code> when left empty.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> isin() {
+        return Json.optional(json, "isin", Conv.STRING);
+      }
+
+      /**
+       * Name of the listed parent company. Only set when <code>type</code> is <code>subsidiary_of_listed_company</code>; <code>null</code> otherwise.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> listedParentCompanyName() {
+        return Json.optional(json, "listed_parent_company_name", Conv.STRING);
+      }
+
+      @Override
+      protected Set<String> knownFields() {
+        return KNOWN_FIELDS;
+      }
+
+      /** Builds a {@link ListedCompanyDeclaration}. */
+      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+        private Builder() {}
+
+        private Builder(ListedCompanyDeclaration from) {
+          super(from);
+        }
+
+        /**
+         * <code>listed_company</code>: the company itself is listed on a stock exchange. <code>subsidiary_of_listed_company</code>: the company is owned by a listed company.
+         *
+         * @param type the value
+         * @return this builder
+         */
+        public Builder type(SessionDecision.KeyPeopleChecks.ListedCompanyDeclaration.Type type) {
+          return set("type", Conv.enumeration(SessionDecision.KeyPeopleChecks.ListedCompanyDeclaration.Type::of), type);
+        }
+
+        /**
+         * Name of the stock exchange, as typed by the company (for example <code>London Stock Exchange</code>). <code>null</code> when left empty.
+         *
+         * @param stockExchange the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder stockExchange(@Nullable String stockExchange) {
+          return setNullable("stock_exchange", Conv.STRING, stockExchange);
+        }
+
+        /**
+         * ISIN of the listed security: 12 characters, upper-case, no spaces, with a valid check digit (for example <code>GBEXAMPLE002</code>). <code>null</code> when left empty.
+         *
+         * @param isin the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder isin(@Nullable String isin) {
+          return setNullable("isin", Conv.STRING, isin);
+        }
+
+        /**
+         * Name of the listed parent company. Only set when <code>type</code> is <code>subsidiary_of_listed_company</code>; <code>null</code> otherwise.
+         *
+         * @param listedParentCompanyName the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder listedParentCompanyName(@Nullable String listedParentCompanyName) {
+          return setNullable("listed_parent_company_name", Conv.STRING, listedParentCompanyName);
+        }
+
+        /**
+         * Builds the value.
+         *
+         * @return a new immutable {@code ListedCompanyDeclaration}
+         * @throws IllegalStateException when a required field is missing
+         */
+        public ListedCompanyDeclaration build() {
+          require("type", false);
+          require("stock_exchange", true);
+          require("isin", true);
+          require("listed_parent_company_name", true);
+          return new ListedCompanyDeclaration(buildJson(), buildFiles());
+        }
+
+        @Override
+        protected Builder self() {
+          return this;
+        }
+      }
+
+      /**
+       * <code>listed_company</code>: the company itself is listed on a stock exchange. <code>subsidiary_of_listed_company</code>: the company is owned by a listed company.
+       *
+       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+       */
+      public static final class Type extends StringEnum {
+        /** The value {@code "listed_company"}. */
+        public static final Type LISTED_COMPANY = new Type("listed_company");
+
+        /** The value {@code "subsidiary_of_listed_company"}. */
+        public static final Type SUBSIDIARY_OF_LISTED_COMPANY = new Type("subsidiary_of_listed_company");
+
+        private static final List<Type> KNOWN_VALUES = List.of(LISTED_COMPANY, SUBSIDIARY_OF_LISTED_COMPANY);
+
+        private Type(String value) {
+          super(value);
+        }
+
+        /**
+         * Returns the constant for a known value, or a new instance for any other value.
+         *
+         * @param value the string value
+         * @return the enum value
+         */
+        public static Type of(String value) {
+          return StringEnum.lookup(KNOWN_VALUES, value, Type::new);
+        }
+
+        /**
+         * Returns the values known to this SDK version.
+         *
+         * @return the known values
+         */
+        public static List<Type> knownValues() {
+          return KNOWN_VALUES;
+        }
+
+        @Override
+        public boolean isKnown() {
+          return KNOWN_VALUES.contains(this);
         }
       }
     }

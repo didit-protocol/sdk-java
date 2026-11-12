@@ -24,6 +24,7 @@ import me.didit.types.TravelRuleListVaspsParams;
 import me.didit.types.TravelRuleSendComplianceEmailConfirmationResponse;
 import me.didit.types.TravelRuleSettingsDetail;
 import me.didit.types.TravelRuleSettingsUpdate;
+import me.didit.types.TravelRuleVaspCreateRequest;
 import me.didit.types.TravelRuleWidgetSessionCreate;
 import me.didit.types.TravelRuleWidgetSessionResponse;
 import me.didit.types.VaspDirectoryEntry;
@@ -257,7 +258,7 @@ public final class TravelRuleResource {
   /**
    * Search the VASP directory
    *
-   * <p>Paginated, name-sorted search of the VASP directory: the shared directory entries, which Didit builds from the ESMA interim MiCA register, the public TRISA directory, the global LEI register and its own curation, plus the members of the Didit network. Each row carries the routes your application has to it today. Your own application's profile is never listed. Rows also carry the shared due-diligence assessment and your application's own decision, entity screening and questionnaires.
+   * <p>Paginated, name-sorted search of the VASP directory: the shared directory entries, which Didit builds from the ESMA interim MiCA register, the public TRISA directory, the global LEI register and its own curation, plus the members of the Didit network. Each row carries the routes your application has to it today. Your own application's profile is never listed. Rows also carry the shared due-diligence assessment and your application's own decision, entity screening and questionnaires. Includes entries your application added privately. The optional source field distinguishes their provenance; kind=didit member results may omit source.
    *
    * <p>{@code GET /v3/travel-rule/vasps/}
    * <p>Returns one page; iterate it to fetch every following page automatically.
@@ -337,6 +338,52 @@ public final class TravelRuleResource {
    */
   public CompletableFuture<Page<VaspDirectoryEntry>> listVaspsAsync() {
     return client.executeAsync(listVaspsRequest(TravelRuleListVaspsParams.builder().build()), RequestOptions.none(), LIST_VASPS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Create a private VASP directory entry
+   *
+   * <p>Add a VASP privately to your application and optionally invite it. Requires write access to transactions. The response uses source=added_by_you. A matching visible name or LEI returns 409 with the existing vasp_id. See [Search the directory](/management-api/travel-rule/search-vasps).
+   *
+   * <p>{@code POST /v3/travel-rule/vasps/}
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public VaspDirectoryEntry createVasp(TravelRuleVaspCreateRequest params, RequestOptions options) {
+    return client.execute(createVaspRequest(params), options, CREATE_VASP_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #createVasp(TravelRuleVaspCreateRequest, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<VaspDirectoryEntry> createVaspAsync(TravelRuleVaspCreateRequest params, RequestOptions options) {
+    return client.executeAsync(createVaspRequest(params), options, CREATE_VASP_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #createVasp(TravelRuleVaspCreateRequest, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return the result
+   */
+  public VaspDirectoryEntry createVasp(TravelRuleVaspCreateRequest params) {
+    return client.execute(createVaspRequest(params), RequestOptions.none(), CREATE_VASP_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #createVasp(TravelRuleVaspCreateRequest, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<VaspDirectoryEntry> createVaspAsync(TravelRuleVaspCreateRequest params) {
+    return client.executeAsync(createVaspRequest(params), RequestOptions.none(), CREATE_VASP_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
@@ -927,6 +974,15 @@ public final class TravelRuleResource {
         .build();
   }
 
+  private static final ResponseHandler<VaspDirectoryEntry> CREATE_VASP_RESPONSE = Responses.json(Conv.model(VaspDirectoryEntry::fromJson));
+
+  private static ApiRequest createVaspRequest(TravelRuleVaspCreateRequest params) {
+    return ApiRequest.builder("POST", "/v3/travel-rule/vasps/")
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
   private static final ResponseHandler<VaspDirectoryEntry> RETRIEVE_VASP_RESPONSE = Responses.json(Conv.model(VaspDirectoryEntry::fromJson));
 
   private static ApiRequest retrieveVaspRequest(String vaspId) {
@@ -1219,6 +1275,48 @@ public final class TravelRuleResource {
      */
     public CompletableFuture<RawResponse<Page<VaspDirectoryEntry>>> listVaspsAsync() {
       return client.executeAsync(listVaspsRequest(TravelRuleListVaspsParams.builder().build()), RequestOptions.none(), LIST_VASPS_RESPONSE);
+    }
+
+    /**
+     * {@link #createVasp(TravelRuleVaspCreateRequest, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<VaspDirectoryEntry> createVasp(TravelRuleVaspCreateRequest params, RequestOptions options) {
+      return client.execute(createVaspRequest(params), options, CREATE_VASP_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #createVasp(TravelRuleVaspCreateRequest, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<VaspDirectoryEntry>> createVaspAsync(TravelRuleVaspCreateRequest params, RequestOptions options) {
+      return client.executeAsync(createVaspRequest(params), options, CREATE_VASP_RESPONSE);
+    }
+
+    /**
+     * {@link #createVasp(TravelRuleVaspCreateRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<VaspDirectoryEntry> createVasp(TravelRuleVaspCreateRequest params) {
+      return client.execute(createVaspRequest(params), RequestOptions.none(), CREATE_VASP_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #createVasp(TravelRuleVaspCreateRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<VaspDirectoryEntry>> createVaspAsync(TravelRuleVaspCreateRequest params) {
+      return client.executeAsync(createVaspRequest(params), RequestOptions.none(), CREATE_VASP_RESPONSE);
     }
 
     /**

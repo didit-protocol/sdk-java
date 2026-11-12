@@ -2814,7 +2814,7 @@ public final class TransactionsCreateParams extends JsonModel {
    * Travel Rule data. When Travel Rule is enabled and transaction_category is travel_rule, Didit runs the exchange itself: it ignores status, protocol, required and obligations_count, and uses originator_data, beneficiary_data and metadata. Otherwise Didit stores these values as a passive Travel Rule record. While Travel Rule is on, an outbound transfer at or above your threshold must carry what its regime requires (EU TFR or FATF Recommendation 16), checked on the sides you send: a missing field answers 400 under <code>travel_rule_details.originator_data</code> or <code>travel_rule_details.beneficiary_data</code>, for example "EU TFR requires the originator name."
    */
   public static final class TravelRuleDetails extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("status", "protocol", "required", "obligations_count", "originator_data", "beneficiary_data", "metadata", "utxo", "originator", "beneficiary", "ivms101");
+    private static final Set<String> KNOWN_FIELDS = Set.of("status", "protocol", "required", "obligations_count", "originator_data", "beneficiary_data", "metadata", "utxo", "originator", "beneficiary", "ivms101", "counterparty_choice");
 
     private TravelRuleDetails(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -2959,6 +2959,16 @@ public final class TransactionsCreateParams extends JsonModel {
       return Json.optional(json, "ivms101", Conv.OBJECT);
     }
 
+    /**
+     * discovery uses automatic counterparty discovery. user asks the end user to choose, issues a link and attempts email when their Didit record has an address. Cannot be combined with beneficiary_data.counterparty_vasp_name or counterparty_vasp_lei. Read user_choice in the response; link or email failure does not fail creation.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<TransactionsCreateParams.TravelRuleDetails.CounterpartyChoice> counterpartyChoice() {
+      return Json.optional(json, "counterparty_choice", Conv.enumeration(TransactionsCreateParams.TravelRuleDetails.CounterpartyChoice::of));
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -3083,6 +3093,16 @@ public final class TransactionsCreateParams extends JsonModel {
       }
 
       /**
+       * discovery uses automatic counterparty discovery. user asks the end user to choose, issues a link and attempts email when their Didit record has an address. Cannot be combined with beneficiary_data.counterparty_vasp_name or counterparty_vasp_lei. Read user_choice in the response; link or email failure does not fail creation.
+       *
+       * @param counterpartyChoice the value
+       * @return this builder
+       */
+      public Builder counterpartyChoice(TransactionsCreateParams.TravelRuleDetails.CounterpartyChoice counterpartyChoice) {
+        return set("counterparty_choice", Conv.enumeration(TransactionsCreateParams.TravelRuleDetails.CounterpartyChoice::of), counterpartyChoice);
+      }
+
+      /**
        * Builds the value.
        *
        * @return a new immutable {@code TravelRuleDetails}
@@ -3096,6 +3116,49 @@ public final class TransactionsCreateParams extends JsonModel {
       @Override
       protected Builder self() {
         return this;
+      }
+    }
+
+    /**
+     * discovery uses automatic counterparty discovery. user asks the end user to choose, issues a link and attempts email when their Didit record has an address. Cannot be combined with beneficiary_data.counterparty_vasp_name or counterparty_vasp_lei. Read user_choice in the response; link or email failure does not fail creation.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class CounterpartyChoice extends StringEnum {
+      /** The value {@code "discovery"}. */
+      public static final CounterpartyChoice DISCOVERY = new CounterpartyChoice("discovery");
+
+      /** The value {@code "user"}. */
+      public static final CounterpartyChoice USER = new CounterpartyChoice("user");
+
+      private static final List<CounterpartyChoice> KNOWN_VALUES = List.of(DISCOVERY, USER);
+
+      private CounterpartyChoice(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static CounterpartyChoice of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, CounterpartyChoice::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<CounterpartyChoice> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
       }
     }
   }
