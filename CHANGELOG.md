@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.8.2](https://github.com/didit-protocol/sdk-java/compare/v1.8.1...v1.8.2) (2026-11-12)
+
+
+### Bug Fixes
+
+* **authentication:** a consent 2xx body with trailing content is a malformed response ([f568392](https://github.com/didit-protocol/sdk-java/commit/f56839256277c1fb79e6f3fff67f9f90c2a3b325))
+* **authentication:** a consent body that fails mid-read is a fixed-message connection error ([d597c16](https://github.com/didit-protocol/sdk-java/commit/d597c161d7cb2f8ceedfe9163322f96986e1eb56))
+* **authentication:** a failure to encode a consent request has a fixed message ([2c95a49](https://github.com/didit-protocol/sdk-java/commit/2c95a49dde169c32f00c86d3cba8026d967001c0))
+* **authentication:** a malformed 2xx consent error keeps no parser exception as its cause ([4c63b35](https://github.com/didit-protocol/sdk-java/commit/4c63b35cf7fe6b384fe4de4f6c746414800e02cd))
+* **authentication:** a malformed consent response has a fixed message, never parser text ([da9b0d7](https://github.com/didit-protocol/sdk-java/commit/da9b0d7fbfaffc586487ebc840985b80399de44c))
+* **authentication:** collect consent secrets from the JSON the request carries ([d48cf64](https://github.com/didit-protocol/sdk-java/commit/d48cf640ec80f85012741bbc8e7163136ceacce6))
+* **authentication:** read consent secrets from the bytes that were sent ([0131ae9](https://github.com/didit-protocol/sdk-java/commit/0131ae94d49dd9a76f48ca13c5503c87e11ada36))
+* **authentication:** redact the parsed agent-consent response structurally ([ff629ae](https://github.com/didit-protocol/sdk-java/commit/ff629ae2dda932e872080c41fc9a4c72a2de8c81))
+* **authentication:** redact the parsed agent-consent response, not its raw text ([2243c3f](https://github.com/didit-protocol/sdk-java/commit/2243c3f96eaf73d793d3f7ddd5bbad0659051252))
+* **authentication:** sanitize the whole consent response once on receipt ([890f943](https://github.com/didit-protocol/sdk-java/commit/890f9439b75ab16bd69d4d3f55f5baadba7ce6c4))
+* **authentication:** successful consent responses reach the caller unchanged; fold header-name case; deep bodies are not JSON ([16293e7](https://github.com/didit-protocol/sdk-java/commit/16293e7b4bf6c4d635c9bcbbff551f4dbf0cfcce))
+* **authentication:** the approval-options call encodes through the same fixed-message wrapper ([53d4e71](https://github.com/didit-protocol/sdk-java/commit/53d4e715ea6db678abf0141084add73745917210))
+* **authentication:** treat only assertion strings of 16+ characters as secrets ([f2e78fd](https://github.com/didit-protocol/sdk-java/commit/f2e78fdd4e20095ce2d66d34a041a3389f7c90ea))
+* **authentication:** withhold transport text, redact empty bodies, reject trailing content, keep safe key names ([0070ccb](https://github.com/didit-protocol/sdk-java/commit/0070ccb08e971633ef445f7d86aa5f41ed7b71e3))
+
 ## [1.8.1](https://github.com/didit-protocol/sdk-java/compare/v1.8.0...v1.8.1) (2026-11-11)
 
 
