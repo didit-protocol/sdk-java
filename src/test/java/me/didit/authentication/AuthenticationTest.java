@@ -866,17 +866,17 @@ final class AuthenticationTest {
     String token = "MARK-TOKEN-0";
     List<String> marks =
         List.of(
-            "MARK-ID-1",
-            "MARK-RAWID-2",
-            "MARK-TYPE-3",
-            "MARK-CDJ-4/+=",
-            "MARK-AD-5",
-            "MARK-SIG-6",
-            "MARK-HANDLE-7",
-            "MARK-TRANSPORT-8",
-            "MARK-EXT-9",
-            "MARK-DEEP-10",
-            "MARK-\"QUOTED\"\\-11");
+            "MARK-ID-1-padpad0123456",
+            "MARK-RAWID-2-padpad0123456",
+            "MARK-TYPE-3-padpad0123456",
+            "MARK-CDJ-4/+=-padpad0123456",
+            "MARK-AD-5-padpad0123456",
+            "MARK-SIG-6-padpad0123456",
+            "MARK-HANDLE-7-padpad0123456",
+            "MARK-TRANSPORT-8-padpad0123456",
+            "MARK-EXT-9-padpad0123456",
+            "MARK-DEEP-10-padpad0123456",
+            "MARK-\"QUOTED\"\\-11-padpad0123456");
     ObjectNode assertion = Json.nodes().objectNode();
     assertion.put("id", marks.get(0));
     assertion.put("rawId", marks.get(1));
@@ -961,12 +961,516 @@ final class AuthenticationTest {
     assertTrue(kept.body().orElseThrow().toString().contains("passkey_required"));
   }
 
+  private me.didit.errors.ApiStatusException consentFailure(
+      ObjectNode assertion, int status, String contentType, String body) {
+    issuer.routes.put(
+        "POST /agents/consent/",
+        r ->
+            new TransportResponse(
+                status,
+                Headers.of(Map.of("Content-Type", List.of(contentType))),
+                body.getBytes(StandardCharsets.UTF_8)));
+    return assertThrows(
+        me.didit.errors.ApiStatusException.class,
+        () ->
+            auth()
+                .submitAgentConsent(
+                    "TOKEN-m4rk",
+                    AgentConsentParams.approve("pending-agent-request-secret")
+                        .assertion(assertion)
+                        .build()));
+  }
+
+  private static String shown(me.didit.errors.ApiStatusException e) {
+    return e.getMessage() + "\n" + e.body().map(Object::toString).orElse("");
+  }
+
+  private static ObjectNode assertionOf(String id, String signature) {
+    ObjectNode assertion = Json.nodes().objectNode();
+    assertion.put("id", id);
+    assertion.putObject("response").put("signature", signature);
+    return assertion;
+  }
+
+  @Test
+  void consentRedactionLeavesNoFragmentOfAPrefixedSecret() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("abcCREDENTIALID0123", "abcCREDENTIALID0123456"),
+            400,
+            "application/json",
+            "{\"detail\":\"bad abcCREDENTIALID0123456 and abcCREDENTIALID0123\",\"other\":\"abcCREDENTIALID0123456\"}");
+    assertEquals(
+        "{\"detail\":\"[redacted]\",\"other\":\"[redacted]\"}", e.body().orElseThrow().toString());
+    assertFalse(shown(e).contains("abcCRED"));
+    assertFalse(shown(e).contains("456"));
+  }
+
+  @Test
+  void consentRedactionReplacesTheWholeStringThatContainsASecret() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("SECRET-0123456789abcdef", "s"),
+            400,
+            "application/json",
+            "{\"detail\":\"bad assertion xyzSECRET-0123456789abcdefxyz\",\"keep\":\"fine\"}");
+    assertEquals(
+        "{\"detail\":\"[redacted]\",\"keep\":\"fine\"}", e.body().orElseThrow().toString());
+    assertTrue(e.getMessage().contains("[redacted]"));
+  }
+
+  @Test
+  void consentRedactionHandlesASecretUsedAsAnObjectKey() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("SECRET-0123456789abcdef", "s"),
+            400,
+            "application/json",
+            "{\"detail\":\"no\",\"echo-SECRET-0123456789abcdef-1\":\"a\",\"echo-SECRET-0123456789abcdef-2\":\"b\"}");
+    assertEquals(
+        "{\"detail\":\"no\",\"[redacted]\":\"a\",\"[redacted]2\":\"b\"}",
+        e.body().orElseThrow().toString());
+    assertFalse(shown(e).contains("SECRET-0123456789abcdef"));
+  }
+
+  @Test
+  void consentRedactionIgnoresTheSpellingOfJsonEscapes() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("a/b+\u00e9-padding0123456", "s"),
+            400,
+            "application/json",
+            "{\"detail\":\"x\",\"echo\":\"a\\/b+\\u00E9-padding0123456\"}");
+    assertEquals("{\"detail\":\"x\",\"echo\":\"[redacted]\"}", e.body().orElseThrow().toString());
+    assertFalse(shown(e).contains("a/b"));
+    assertFalse(shown(e).contains("00E9"));
+    assertFalse(shown(e).contains("padding0123456"));
+  }
+
+  @Test
+  void consentRedactionKeepsErrorCodesAndShortAssertionStringsReadable() {
+    String credential = "Y3JlZGVudGlhbC1pZC0xMjM0NTY3ODkw";
+    ObjectNode assertion = assertionOf(credential, "s");
+    assertion.put("type", "public-key");
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertion,
+            400,
+            "application/json",
+            "{\"error\":\"invalid_grant\",\"detail\":\"id public-key " + credential + "\"}");
+    assertEquals(
+        "{\"error\":\"invalid_grant\",\"detail\":\"[redacted]\"}",
+        e.body().orElseThrow().toString());
+    assertTrue(shown(e).contains("invalid_grant"));
+    assertFalse(shown(e).contains(credential));
+  }
+
+  @Test
+  void consentRedactionCoversAPojoNestedInTheAssertion() {
+    String nested = "nested-credential-string-0123456789";
+    ObjectNode assertion = assertionOf("short", "s");
+    assertion.putObject("clientExtensionResults").putPOJO("credProps", Map.of("value", nested));
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertion,
+            400,
+            "application/json",
+            "{\"error\":\"invalid_grant\",\"echo\":\"" + nested + "\"}");
+    assertEquals(
+        "{\"error\":\"invalid_grant\",\"echo\":\"[redacted]\",\"detail\":\"invalid_grant\"}",
+        e.body().orElseThrow().toString());
+    assertFalse(shown(e).contains(nested));
+  }
+
+  /**
+   * A bean whose credential differs on every read after the first, and which throws from the third.
+   */
+  public static final class FlippingBean {
+    private int reads;
+
+    public String getCredential() {
+      reads++;
+      if (reads > 2) {
+        throw new IllegalStateException("serialized twice");
+      }
+      return reads == 1
+          ? "credential-string-actually-sent-0123"
+          : "a-different-credential-string-0123";
+    }
+  }
+
+  @Test
+  void consentSecretsComeFromTheBytesSentNotASecondSerialization() {
+    ObjectNode assertion = assertionOf("short", "s");
+    assertion.putObject("clientExtensionResults").putPOJO("credProps", new FlippingBean());
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertion,
+            400,
+            "application/json",
+            "{\"error\":\"invalid_grant\",\"echo\":\"credential-string-actually-sent-0123\"}");
+    assertFalse(shown(e).contains("credential-string-actually-sent-0123"));
+    assertTrue(shown(e).contains("invalid_grant"));
+  }
+
+  @Test
+  void consentRedactionTreatsTrailingContentAsNotJson() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(assertionOf("x", "s"), 400, "application/json", "{\"detail\":\"safe\"}]");
+    assertEquals("\"[redacted]\"", e.body().orElseThrow().toString());
+  }
+
+  @Test
+  void consentRedactionCoversTheRequestIdAndHeaders() {
+    String credential = "credential-string-0123456789";
+    issuer.routes.put(
+        "POST /agents/consent/",
+        r ->
+            new TransportResponse(
+                400,
+                Headers.of(
+                    Map.of(
+                        "Content-Type", List.of("application/json"),
+                        "X-Request-ID", List.of("req-" + credential),
+                        "X-Echo", List.of(credential))),
+                "{\"error\":\"invalid_grant\"}".getBytes(StandardCharsets.UTF_8)));
+    me.didit.errors.ApiStatusException e =
+        assertThrows(
+            me.didit.errors.ApiStatusException.class,
+            () ->
+                auth()
+                    .submitAgentConsent(
+                        "TOKEN-m4rk",
+                        AgentConsentParams.approve("pending-agent-request-secret")
+                            .assertion(assertionOf(credential, "s"))
+                            .build()));
+    assertFalse(e.getMessage().contains(credential));
+    assertEquals("[redacted]", e.requestId().orElse(""));
+    assertFalse(e.headers().map().toString().contains(credential));
+  }
+
+  @Test
+  void consentRedactionDropsAHeaderNamedAfterASecret() {
+    String credential = "credential-string-0123456789";
+    issuer.routes.put(
+        "POST /agents/consent/",
+        r ->
+            new TransportResponse(
+                400,
+                Headers.of(
+                    Map.of(
+                        "Content-Type",
+                        List.of("application/json"),
+                        "X-" + credential,
+                        List.of(credential),
+                        "X-Keep",
+                        List.of("fine"))),
+                "{\"error\":\"invalid_grant\"}".getBytes(StandardCharsets.UTF_8)));
+    me.didit.errors.ApiStatusException e =
+        assertThrows(
+            me.didit.errors.ApiStatusException.class,
+            () ->
+                auth()
+                    .submitAgentConsent(
+                        "TOKEN-m4rk",
+                        AgentConsentParams.approve("pending-agent-request-secret")
+                            .assertion(assertionOf(credential, "s"))
+                            .build()));
+    assertFalse(e.headers().map().toString().contains(credential));
+    assertTrue(e.headers().map().toString().contains("fine"));
+  }
+
+  @Test
+  void consentMalformed2xxKeepsNothingOfTheSecret() {
+    String credential = "credential-string-0123456789";
+    issuer.routes.put(
+        "POST /agents/consent/",
+        r ->
+            new TransportResponse(
+                200,
+                Headers.of(
+                    Map.of(
+                        "Content-Type", List.of("text/html"),
+                        "X-Request-Id", List.of("req-" + credential))),
+                ("not json " + credential).getBytes(StandardCharsets.UTF_8)));
+    Exception e =
+        assertThrows(
+            Exception.class,
+            () ->
+                auth()
+                    .submitAgentConsent(
+                        "TOKEN-m4rk",
+                        AgentConsentParams.approve("pending-agent-request-secret")
+                            .assertion(assertionOf(credential, "s"))
+                            .build()));
+    for (Throwable t = e; t != null; t = t.getCause()) {
+      assertFalse((t + "\n" + t.getMessage()).contains(credential));
+    }
+  }
+
+  @Test
+  void consentRedactionTreatsAVeryDeeplyNestedBodyAsNotJson() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("x", "s"), 400, "application/json", "[".repeat(10000) + "]".repeat(10000));
+    assertEquals("\"[redacted]\"", e.body().orElseThrow().toString());
+  }
+
+  @Test
+  void consentRedactionDropsAHeaderNamedAfterAMixedCaseSecret() {
+    String credential = "CredentialString-AbCdEf0123456789";
+    issuer.routes.put(
+        "POST /agents/consent/",
+        r ->
+            new TransportResponse(
+                400,
+                Headers.of(
+                    Map.of(
+                        "Content-Type",
+                        List.of("application/json"),
+                        "x-echo-" + credential.toLowerCase(java.util.Locale.ROOT),
+                        List.of("v"),
+                        "X-Keep",
+                        List.of("fine"))),
+                "{\"error\":\"invalid_grant\"}".getBytes(StandardCharsets.UTF_8)));
+    me.didit.errors.ApiStatusException e =
+        assertThrows(
+            me.didit.errors.ApiStatusException.class,
+            () ->
+                auth()
+                    .submitAgentConsent(
+                        "TOKEN-m4rk",
+                        AgentConsentParams.approve("pending-agent-request-secret")
+                            .assertion(assertionOf(credential, "s"))
+                            .build()));
+    assertFalse(
+        e.headers()
+            .map()
+            .toString()
+            .toLowerCase(java.util.Locale.ROOT)
+            .contains("credentialstring"));
+    assertTrue(e.headers().map().toString().contains("fine"));
+  }
+
+  @Test
+  void aSuccessfulApprovalOptionsResponseReachesTheCallerUnchanged() {
+    String challenge = "pending-agent-request-secret";
+    issuer.routes.put(
+        "POST /agents/consent/passkey/",
+        r ->
+            StubIssuer.json(
+                200,
+                "{\"options\":{\"challenge\":\""
+                    + challenge
+                    + "\",\"rpId\":\"acme.auth.didit.me\",\"timeout\":60000}}"));
+    var options = auth().createAgentApprovalOptions("TOKEN-m4rk", challenge);
+    assertEquals(challenge, options.webAuthnChallenge().orElseThrow());
+  }
+
+  /** A bean whose getter throws with a credential in its message. */
+  public static final class ThrowingBean {
+    public String getCredential() {
+      if (System.nanoTime() != 0) {
+        throw new IllegalStateException(
+            "credential-string-0123456789 pending-agent-request-secret");
+      }
+      return "never";
+    }
+  }
+
+  @Test
+  void consentEncodingFailureHasAFixedMessage() {
+    ObjectNode assertion = assertionOf("x", "s");
+    assertion.putObject("clientExtensionResults").putPOJO("bad", new ThrowingBean());
+    Exception e =
+        assertThrows(
+            Exception.class,
+            () ->
+                auth()
+                    .submitAgentConsent(
+                        "TOKEN-m4rk",
+                        AgentConsentParams.approve("pending-agent-request-secret")
+                            .assertion(assertion)
+                            .build()));
+    assertTrue(e instanceof me.didit.errors.ConfigurationException);
+    assertEquals("Could not encode the agent consent request", e.getMessage());
+    assertNull(e.getCause());
+  }
+
+  @Test
+  void consentBodyReadFailureIsAFixedMessageConnectionError() {
+    for (int status : new int[] {200, 400}) {
+      issuer.routes.put(
+          "POST /agents/consent/",
+          r ->
+              new TransportResponse(
+                  status,
+                  Headers.of(Map.of("Content-Type", List.of("application/json"))),
+                  new java.io.InputStream() {
+                    @Override
+                    public int read() throws IOException {
+                      throw new IOException("credential-string-0123456789 broken stream");
+                    }
+                  }));
+      Exception e =
+          assertThrows(
+              Exception.class,
+              () ->
+                  auth()
+                      .submitAgentConsent(
+                          "TOKEN-m4rk",
+                          AgentConsentParams.approve("pending-agent-request-secret")
+                              .assertion(assertionOf("x", "s"))
+                              .build()));
+      assertTrue(e instanceof me.didit.errors.ApiConnectionException);
+      assertEquals("Connection error while reading the agent consent response", e.getMessage());
+      assertNull(e.getCause());
+    }
+  }
+
+  @Test
+  void consentMalformed2xxKeepsNoParserCause() {
+    String credential = "credential-string-0123456789";
+    issuer.routes.put(
+        "POST /agents/consent/",
+        r ->
+            new TransportResponse(
+                200,
+                Headers.of(Map.of("Content-Type", List.of("application/json"))),
+                ("{not json " + credential).getBytes(StandardCharsets.UTF_8)));
+    Exception e =
+        assertThrows(
+            Exception.class,
+            () ->
+                auth()
+                    .submitAgentConsent(
+                        "TOKEN-m4rk",
+                        AgentConsentParams.approve("pending-agent-request-secret")
+                            .assertion(assertionOf(credential, "s"))
+                            .build()));
+    assertNull(e.getCause());
+    assertFalse((e + "\n" + e.getMessage()).contains(credential));
+  }
+
+  @Test
+  void aConsent2xxWithTrailingContentIsAMalformedResponse() {
+    for (String body : new String[] {"{\"code\":\"x\"}]", "{\"code\":\"x\"} {\"code\":\"y\"}"}) {
+      issuer.routes.put("POST /agents/consent/", r -> StubIssuer.json(200, body));
+      Exception e =
+          assertThrows(
+              Exception.class,
+              () ->
+                  auth()
+                      .submitAgentConsent(
+                          "TOKEN-m4rk",
+                          AgentConsentParams.approve("pending-agent-request-secret")
+                              .assertion(assertionOf("x", "s"))
+                              .build()));
+      assertTrue(e instanceof me.didit.errors.UnexpectedResponseException, e.toString());
+      assertNull(e.getCause());
+    }
+  }
+
+  @Test
+  void aMalformedConsent2xxHasAFixedMessageNeverParserText() {
+    for (String body :
+        new String[] {
+          "{\"code\": credential-string-0123456789", "credential-string-0123456789 {"
+        }) {
+      issuer.routes.put("POST /agents/consent/", r -> StubIssuer.json(200, body));
+      Exception e =
+          assertThrows(
+              Exception.class,
+              () ->
+                  auth()
+                      .submitAgentConsent(
+                          "TOKEN-m4rk",
+                          AgentConsentParams.approve("pending-agent-request-secret")
+                              .assertion(assertionOf("credential-string-0123456789", "s"))
+                              .build()));
+      assertEquals("Malformed response from the agent consent endpoint", e.getMessage());
+      assertNull(e.getCause());
+    }
+  }
+
+  @Test
+  void consentRedactionReplacesANonJsonBody() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("x", "s"),
+            502,
+            "text/html",
+            "<html>Bad gateway pending-agent-request-secret</html>");
+    assertEquals("\"[redacted]\"", e.body().orElseThrow().toString());
+    assertFalse(shown(e).contains("pending-agent-request-secret"));
+  }
+
+  @Test
+  void consentRedactionCoversASecretPastTheMessageCap() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("x", "s"),
+            400,
+            "text/plain",
+            "x".repeat(600) + "pending-agent-request-secret");
+    assertEquals("\"[redacted]\"", e.body().orElseThrow().toString());
+    assertFalse(shown(e).contains("pending-agent-request-secret"));
+  }
+
+  @Test
+  void consentTransportFailureCarriesNoTransportTextEvenForEscapedCredentials() {
+    ObjectNode assertion = Json.nodes().objectNode();
+    assertion.put("id", "cred\"ential\\string-0123456789");
+    Authentication transportAuth =
+        Authentication.builder()
+            .issuer(StubIssuer.ISSUER)
+            .transport(
+                request ->
+                    CompletableFuture.failedFuture(
+                        new IOException(
+                            "write failed: " + new String(request.body(), StandardCharsets.UTF_8))))
+            .clock(clock)
+            .build();
+    Exception error =
+        assertThrows(
+            Exception.class,
+            () ->
+                transportAuth.submitAgentConsent(
+                    "TOKEN-abcdefghijklmnop",
+                    AgentConsentParams.approve("MARK-CHALLENGE-X").assertion(assertion).build()));
+    assertTrue(error instanceof me.didit.errors.ApiConnectionException);
+    for (Throwable t = error; t != null; t = t.getCause()) {
+      String text = t + "\n" + t.getMessage();
+      assertFalse(text.contains("ential"), text);
+      assertFalse(text.contains("write failed"), text);
+    }
+  }
+
+  @Test
+  void consentRedactionTurnsAnEmptyBodyIntoRedacted() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(assertionOf("x", "s"), 502, "text/plain", "");
+    assertEquals("\"[redacted]\"", e.body().orElseThrow().toString());
+  }
+
+  @Test
+  void consentRedactionKeepsASafeKeyNamedRedactedAfterASecretKey() {
+    me.didit.errors.ApiStatusException e =
+        consentFailure(
+            assertionOf("SECRET-0123456789abcdef", "s"),
+            400,
+            "application/json",
+            "{\"a-SECRET-0123456789abcdef\":\"x\",\"[redacted]\":\"safe\"}");
+    assertEquals(
+        "{\"[redacted]2\":\"x\",\"[redacted]\":\"safe\"}", e.body().orElseThrow().toString());
+  }
+
   @Test
   void agentConsentTransportFailuresNeverCarryTheRequestSecrets() {
     String challenge = "MARK-CHALLENGE-T";
     ObjectNode assertion = Json.nodes().objectNode();
-    assertion.put("id", "MARK-ID-T");
-    assertion.putObject("response").put("signature", "MARK-SIG-T");
+    assertion.put("id", "MARK-ID-T-padpad0123456");
+    assertion.putObject("response").put("signature", "MARK-SIG-T-padpad0123456");
     Authentication transportAuth =
         Authentication.builder()
             .issuer(StubIssuer.ISSUER)
@@ -990,7 +1494,8 @@ final class AuthenticationTest {
     for (Throwable t = error; t != null; t = t.getCause()) {
       seen.append(t).append('\n').append(t.getMessage()).append('\n');
     }
-    for (String secret : List.of(challenge, "MARK-ID-T", "MARK-SIG-T", "MARK-TOKEN-T")) {
+    for (String secret :
+        List.of(challenge, "MARK-ID-T-padpad0123456", "MARK-SIG-T-padpad0123456", "MARK-TOKEN-T")) {
       assertFalse(seen.toString().contains(secret), "leaked " + secret);
     }
   }
@@ -999,8 +1504,8 @@ final class AuthenticationTest {
   void agentConsentDiditExceptionTransportFailuresNeverCarryTheRequestSecrets() {
     String challenge = "MARK-CHALLENGE-D";
     ObjectNode assertion = Json.nodes().objectNode();
-    assertion.put("id", "MARK-ID-D");
-    assertion.putObject("response").put("signature", "MARK-SIG-D");
+    assertion.put("id", "MARK-ID-D-padpad0123456");
+    assertion.putObject("response").put("signature", "MARK-SIG-D-padpad0123456");
     Authentication transportAuth =
         Authentication.builder()
             .issuer(StubIssuer.ISSUER)
@@ -1025,7 +1530,8 @@ final class AuthenticationTest {
     for (Throwable t = error; t != null; t = t.getCause()) {
       seen.append(t).append('\n').append(t.getMessage()).append('\n');
     }
-    for (String secret : List.of(challenge, "MARK-ID-D", "MARK-SIG-D", "MARK-TOKEN-D")) {
+    for (String secret :
+        List.of(challenge, "MARK-ID-D-padpad0123456", "MARK-SIG-D-padpad0123456", "MARK-TOKEN-D")) {
       assertFalse(seen.toString().contains(secret), "leaked " + secret);
     }
   }

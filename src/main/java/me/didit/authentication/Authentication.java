@@ -968,13 +968,23 @@ public final class Authentication {
     List<String> secrets = new java.util.ArrayList<>();
     secrets.add(accessToken);
     secrets.add(body.path("challenge").asText());
-    collectStrings(body.path("assertion"), secrets);
-    return send(
-            "POST", runtime("agents/consent/"), jsonHeaders(accessToken), jsonBody(body), secrets)
+    // Written exactly once: these bytes are sent, and the secrets are read from them, so a POJO
+    // nested in
+    // the assertion is never serialized a second time.
+    byte[] sent;
+    try {
+      sent = jsonBody(body);
+      collectStrings(Json.parse(sent).path("assertion"), secrets);
+    } catch (RuntimeException | StackOverflowError e) {
+      // A serializer's message may hold a credential: fixed message, no cause.
+      return CompletableFuture.failedFuture(
+          new ConfigurationException("Could not encode the agent consent request"));
+    }
+    return send("POST", runtime("agents/consent/"), jsonHeaders(accessToken), sent, secrets)
         .thenApply(
             response ->
                 redactingUnexpected(
-                    secrets, () -> new AgentConsent(jsonObject(response, "the agent consent"))));
+                    () -> new AgentConsent(jsonObject(response, "the agent consent", true))));
   }
 
   /**
@@ -1007,17 +1017,21 @@ public final class Authentication {
     ObjectNode body = Json.nodes().objectNode();
     body.put("challenge", challenge);
     List<String> secrets = List.of(accessToken, challenge);
-    return send(
-            "POST",
-            runtime("agents/consent/passkey/"),
-            jsonHeaders(accessToken),
-            jsonBody(body),
-            secrets)
+    byte[] sent;
+    try {
+      sent = jsonBody(body);
+    } catch (RuntimeException e) {
+      // A serializer's message may hold the challenge: fixed message, no cause.
+      return CompletableFuture.failedFuture(
+          new ConfigurationException("Could not encode the agent consent request"));
+    }
+    return send("POST", runtime("agents/consent/passkey/"), jsonHeaders(accessToken), sent, secrets)
         .thenApply(
             response ->
                 redactingUnexpected(
-                    secrets,
-                    () -> new AgentApprovalOptions(jsonObject(response, "the approval options"))));
+                    () ->
+                        new AgentApprovalOptions(
+                            jsonObject(response, "the approval options", true))));
   }
 
   private Map<String, String> jsonHeaders(String accessToken) {
@@ -1045,9 +1059,10 @@ public final class Authentication {
   }
 
   /**
-   * Sends the request. An error answer keeps its status and headers, but every string in {@code
-   * secrets} is removed from the body the exception retains and from its message, even when the
-   * issuer echoes it.
+   * Sends the request. An error answer keeps its status and headers, but when {@code secrets} is
+   * not empty the exception is built from the redacted response, never from its raw text: the
+   * parsed body has every string (object key or value) that contains a secret replaced by {@code
+   * [redacted]} as a whole, and a body that is not JSON is replaced by {@code [redacted]}.
    */
   private CompletableFuture<TransportResponse> send(
       String method, URI uri, Map<String, String> extraHeaders, byte[] body, List<String> secrets) {
@@ -1073,86 +1088,127 @@ public final class Authentication {
               }
               int status = response.statusCode();
               if (status >= 200 && status < 300) {
+                // A successful response reaches the caller unchanged.
                 return response;
               }
+              // Every error of a consent call is built from a sanitized copy only.
+              TransportResponse answer =
+                  secrets.isEmpty() ? response : sanitized(response, secrets);
               byte[] bytes;
-              try (TransportResponse r = response) {
+              try (TransportResponse r = answer) {
                 bytes = r.body().readAllBytes();
               } catch (IOException e) {
                 bytes = new byte[0];
               }
               JsonNode parsed = null;
               if (bytes.length > 0) {
-                String text = redact(new String(bytes, StandardCharsets.UTF_8), secrets);
+                String text = new String(bytes, StandardCharsets.UTF_8);
                 try {
                   parsed = Json.parse(text);
                 } catch (UnexpectedResponseException e) {
                   parsed = Json.nodes().textNode(text);
                 }
-                parsed = redactNode(parsed, secrets);
               }
               throw new CompletionException(
-                  ApiStatusException.create(
-                      status,
-                      oauthDetail(parsed),
-                      redactHeaders(response.headers(), secrets),
-                      where));
+                  ApiStatusException.create(status, oauthDetail(parsed), answer.headers(), where));
             });
+  }
+
+  /**
+   * Header names are case-insensitive: compare the case-folded name with each case-folded secret.
+   */
+  private static boolean nameHasSecret(String name, List<String> secrets) {
+    String folded = name.toLowerCase(java.util.Locale.ROOT);
+    for (String secret : secrets) {
+      if (secret != null
+          && !secret.isEmpty()
+          && folded.contains(secret.toLowerCase(java.util.Locale.ROOT))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * The whole response of a call whose answer may echo secrets, sanitized to build an error: the
+   * status kept, each header whose name contains a secret dropped, the other values redacted, and
+   * the body redacted structurally ({@code [redacted]} when it is not JSON, has trailing content or
+   * is empty).
+   */
+  private static TransportResponse sanitized(TransportResponse response, List<String> secrets) {
+    byte[] bytes;
+    try (TransportResponse r = response) {
+      bytes = r.body().readAllBytes();
+    } catch (IOException e) {
+      // A body that fails mid-read is a connection error with a fixed message and no cause.
+      throw new CompletionException(consentReadFailure());
+    }
+    String body = REDACTED;
+    if (bytes.length > 0) {
+      try {
+        body =
+            Json.write(
+                redactNode(Json.parseStrict(new String(bytes, StandardCharsets.UTF_8)), secrets));
+      } catch (UnexpectedResponseException | StackOverflowError e) {
+        // Not JSON, or nested past the parser's depth limit or the walk's stack: not JSON.
+        body = REDACTED;
+      }
+    }
+    Map<String, List<String>> headers = new LinkedHashMap<>();
+    response
+        .headers()
+        .map()
+        .forEach(
+            (name, values) -> {
+              if (!nameHasSecret(name, secrets)) {
+                List<String> clean = new java.util.ArrayList<>();
+                values.forEach(value -> clean.add(redact(value, secrets)));
+                headers.put(name, clean);
+              }
+            });
+    return new TransportResponse(
+        response.statusCode(), Headers.of(headers), body.getBytes(StandardCharsets.UTF_8));
   }
 
   private static final String REDACTED = "[redacted]";
 
-  /** Every non-empty string inside {@code node}, at any depth. */
+  /**
+   * Strings shorter than this are not secrets: field names such as {@code id} and values such as
+   * {@code public-key} would otherwise erase error codes like {@code invalid_grant}.
+   */
+  // Sensitive values are 16+ chars: user handles are 16-byte ids (22 base64url), credential ids 16+
+  // bytes.
+  private static final int MIN_SECRET_LENGTH = 16;
+
+  /**
+   * Every string of at least 16 characters inside {@code node}, object keys and values, at any
+   * depth.
+   */
   private static void collectStrings(JsonNode node, List<String> out) {
     if (node.isTextual()) {
-      if (!node.asText().isEmpty()) {
+      if (node.asText().length() >= MIN_SECRET_LENGTH) {
         out.add(node.asText());
       }
+    } else if (node.isObject()) {
+      node.properties()
+          .forEach(
+              field -> {
+                collectStrings(Json.nodes().textNode(field.getKey()), out);
+                collectStrings(field.getValue(), out);
+              });
     } else if (node.isContainerNode()) {
       node.forEach(child -> collectStrings(child, out));
     }
   }
 
-  /** The raw secrets, longest first, plus their JSON-escaped forms, which raw text may carry. */
-  private static List<String> forms(List<String> secrets) {
-    java.util.Set<String> all = new java.util.LinkedHashSet<>();
-    for (String secret : secrets) {
-      if (secret == null || secret.isEmpty()) {
-        continue;
-      }
-      all.add(secret);
-      String escaped = Json.write(Json.nodes().textNode(secret));
-      all.add(escaped.substring(1, escaped.length() - 1));
-    }
-    List<String> ordered = new java.util.ArrayList<>(all);
-    ordered.sort((a, b) -> b.length() - a.length());
-    return ordered;
-  }
-
+  /** {@code text}, or {@code [redacted]} as a whole when it contains a secret anywhere. */
   private static String redact(String text, List<String> secrets) {
-    String out = text;
-    for (String form : forms(secrets)) {
-      out = out.replace(form, REDACTED);
+    for (String secret : secrets) {
+      if (secret != null && !secret.isEmpty() && text.contains(secret)) {
+        return REDACTED;
+      }
     }
-    return out;
-  }
-
-  private static Headers redactHeaders(Headers headers, List<String> secrets) {
-    if (secrets.isEmpty()) {
-      return headers;
-    }
-    Map<String, List<String>> out = new LinkedHashMap<>();
-    headers
-        .map()
-        .forEach(
-            (name, values) -> {
-              List<String> clean = new java.util.ArrayList<>();
-              for (String value : values) {
-                clean.add(redact(value, secrets));
-              }
-              out.put(name, clean);
-            });
-    return Headers.of(out);
+    return text;
   }
 
   private static JsonNode redactNode(JsonNode node, List<String> secrets) {
@@ -1161,9 +1217,29 @@ public final class Authentication {
     }
     if (node.isObject()) {
       ObjectNode out = Json.nodes().objectNode();
+      // Reserve every safe key name first, so a placeholder never takes one.
+      java.util.Set<String> taken = new java.util.HashSet<>();
       node.fieldNames()
           .forEachRemaining(
-              name -> out.set(redact(name, secrets), redactNode(node.get(name), secrets)));
+              name -> {
+                if (redact(name, secrets).equals(name)) {
+                  taken.add(name);
+                }
+              });
+      int[] next = {1};
+      node.fieldNames()
+          .forEachRemaining(
+              name -> {
+                String shown = name;
+                if (!redact(name, secrets).equals(name)) {
+                  do {
+                    shown = next[0] == 1 ? REDACTED : REDACTED + next[0];
+                    next[0]++;
+                  } while (taken.contains(shown));
+                  taken.add(shown);
+                }
+                out.set(shown, redactNode(node.get(name), secrets));
+              });
       return out;
     }
     if (node.isArray()) {
@@ -1175,16 +1251,24 @@ public final class Authentication {
   }
 
   /**
-   * Runs {@code parse}; a malformed answer is rethrown with the secrets removed from its message
-   * and without the parser's cause, which quotes the source text.
+   * Runs {@code parse}; a malformed answer is rethrown with a fixed message and without the
+   * parser's cause, which quotes the source text.
    */
-  private static <T> T redactingUnexpected(
-      List<String> secrets, java.util.function.Supplier<T> parse) {
+  private static <T> T redactingUnexpected(java.util.function.Supplier<T> parse) {
     try {
       return parse.get();
     } catch (UnexpectedResponseException e) {
-      throw new UnexpectedResponseException(redact(String.valueOf(e.getMessage()), secrets));
+      // Never parser text: Jackson can quote a fragment of an unquoted secret token.
+      throw new UnexpectedResponseException("Malformed response from the agent consent endpoint");
+    } catch (ApiConnectionException e) {
+      // The body failed mid-read: the underlying message and cause are never kept.
+      throw consentReadFailure();
     }
+  }
+
+  private static ApiConnectionException consentReadFailure() {
+    return new ApiConnectionException(
+        "Connection error while reading the agent consent response", null);
   }
 
   /** Puts {@code error: error_description} first so the exception message names the error. */
@@ -1223,16 +1307,13 @@ public final class Authentication {
       return (DiditException) cause;
     }
     if (!secrets.isEmpty()) {
-      // A transport error may quote the request: keep its type and a redacted message only.
+      // A transport error may quote the serialized request in a spelling no match finds: keep the
+      // error type and a fixed cause, none of the underlying text.
       boolean timedOut =
           cause instanceof TimeoutException
               || cause instanceof java.net.http.HttpTimeoutException
               || cause instanceof ApiTimeoutException;
-      Throwable clean =
-          new IOException(
-              cause.getClass().getName()
-                  + ": "
-                  + redact(String.valueOf(cause.getMessage()), secrets));
+      Throwable clean = new IOException("transport failure (details withheld)");
       return timedOut
           ? new ApiTimeoutException("Request timed out: " + where, clean)
           : new ApiConnectionException("Connection error on " + where, clean);
@@ -1244,13 +1325,17 @@ public final class Authentication {
   }
 
   private static ObjectNode jsonObject(TransportResponse response, String what) {
+    return jsonObject(response, what, false);
+  }
+
+  private static ObjectNode jsonObject(TransportResponse response, String what, boolean strict) {
     byte[] bytes;
     try (TransportResponse r = response) {
       bytes = r.body().readAllBytes();
     } catch (IOException e) {
       throw new ApiConnectionException("Failed to read " + what, e);
     }
-    JsonNode node = Json.parse(bytes);
+    JsonNode node = strict ? Json.parseStrict(bytes) : Json.parse(bytes);
     if (!node.isObject()) {
       throw new UnexpectedResponseException(
           "The issuer returned " + what + " that is not a JSON object");

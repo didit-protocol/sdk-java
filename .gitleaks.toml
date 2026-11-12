@@ -10,7 +10,7 @@ title = "Didit Java SDK"
 [extend]
 useDefault = true
 
-[allowlist]
+[[allowlists]]
 description = "Upstream API documents, their pinned copies and synthetic test webhook secrets"
 paths = [
   '''^openapi/verification\.json$''',
@@ -21,4 +21,16 @@ paths = [
 ]
 regexes = [
   '''whsec_test_[A-Za-z0-9_]+''',
+]
+
+# Synthetic consent-redaction test value: this one value, in this one test file, for this one rule.
+[[allowlists]]
+description = "Synthetic agent consent redaction test value"
+condition = "AND"
+targetRules = ["generic-api-key"]
+paths = [
+  '''^src/test/java/me/didit/authentication/AuthenticationTest\.java$''',
+]
+regexes = [
+  '''^Y3JlZGVudGlhbC1pZC0xMjM0NTY3ODkw$''',
 ]
