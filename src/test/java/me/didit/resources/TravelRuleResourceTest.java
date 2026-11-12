@@ -24,6 +24,7 @@ import me.didit.types.TravelRuleMatchingRules;
 import me.didit.types.TravelRuleSettingsUpdate;
 import me.didit.types.TravelRuleUtxo;
 import me.didit.types.TravelRuleUtxoEntry;
+import me.didit.types.TravelRuleVaspCreateRequest;
 import me.didit.types.TravelRuleWidgetSessionCreate;
 import org.junit.jupiter.api.Test;
 
@@ -98,6 +99,23 @@ final class TravelRuleResourceTest {
     TestJson.assertJsonEquals(example, result._json());
     assertEquals(example.path("results").size(), result.results().size());
     TestModels.readAll(result.results());
+  }
+
+  @Test
+  void createVasp() {
+    TravelRuleVaspCreateRequest params = TravelRuleVaspCreateRequest.builder().name("value-name").email("user@example.com").lei("value-lei").jurisdiction("value-jurisdiction").invite(true).build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/travel-rule/vasps/", "201");
+    transport.respondJson(201, example);
+    var result = client.travelRule().createVasp(params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/travel-rule/vasps/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"name\":\"value-name\",\"email\":\"user@example.com\",\"lei\":\"value-lei\",\"jurisdiction\":\"value-jurisdiction\",\"invite\":true}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 
   @Test

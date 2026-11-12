@@ -15,7 +15,7 @@ import me.didit.core.JsonModel;
 
 /** Parameters for {&#64;code travel_rule.transfers.list}. */
 public final class TravelRuleTransfersListParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("direction", "status", "rail", "kind", "currency", "start_date", "end_date", "counterparty", "limit", "offset");
+  private static final Set<String> KNOWN_FIELDS = Set.of("search", "direction", "status", "rail", "kind", "currency", "start_date", "end_date", "counterparty", "limit", "offset");
 
   private TravelRuleTransfersListParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -48,6 +48,16 @@ public final class TravelRuleTransfersListParams extends JsonModel {
    */
   public Builder toBuilder() {
     return new Builder(this);
+  }
+
+  /**
+   * Exact transfer or transaction UUID, or a case-insensitive fragment of txn_id, either side's declared or resolved wallet address, or VASP name. Whitespace is trimmed; only the first 255 characters are searched. Combines with the other filters.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> search() {
+    return Json.optional(json, "search", Conv.STRING);
   }
 
   /**
@@ -161,6 +171,16 @@ public final class TravelRuleTransfersListParams extends JsonModel {
 
     private Builder(TravelRuleTransfersListParams from) {
       super(from);
+    }
+
+    /**
+     * Exact transfer or transaction UUID, or a case-insensitive fragment of txn_id, either side's declared or resolved wallet address, or VASP name. Whitespace is trimmed; only the first 255 characters are searched. Combines with the other filters.
+     *
+     * @param search the value
+     * @return this builder
+     */
+    public Builder search(String search) {
+      return set("search", Conv.STRING, search);
     }
 
     /**

@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * Travel Rule summary on a transaction list item. Includes latest delivery but omits deliveries and deliveries_truncated.
  */
 public final class TransactionListTravelRule extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "protocol", "required", "obligations_count", "originator_data", "beneficiary_data", "name_match", "data_match", "mismatched_fields", "data_unmasked", "data_masked", "metadata", "direction", "rail", "counterparty_vasp", "delivery", "discovery", "reason", "next_actions", "chain_details", "not_required_reason", "proof_state");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "protocol", "required", "obligations_count", "originator_data", "beneficiary_data", "name_match", "data_match", "mismatched_fields", "data_unmasked", "data_masked", "metadata", "direction", "rail", "counterparty_vasp", "delivery", "discovery", "reason", "next_actions", "chain_details", "not_required_reason", "proof_state", "user_choice");
 
   private TransactionListTravelRule(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -284,6 +284,16 @@ public final class TransactionListTravelRule extends JsonModel {
     return Json.optional(json, "proof_state", Conv.enumeration(TransactionListTravelRule.ProofState::of));
   }
 
+  /**
+   * Explicit user-choice state, or null when counterparty_choice=user was not requested.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleUserChoice> userChoice() {
+    return Json.optional(json, "user_choice", Conv.model(TravelRuleUserChoice::fromJson));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -525,6 +535,16 @@ public final class TransactionListTravelRule extends JsonModel {
      */
     public Builder proofState(TransactionListTravelRule.ProofState proofState) {
       return set("proof_state", Conv.enumeration(TransactionListTravelRule.ProofState::of), proofState);
+    }
+
+    /**
+     * Explicit user-choice state, or null when counterparty_choice=user was not requested.
+     *
+     * @param userChoice the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder userChoice(@Nullable TravelRuleUserChoice userChoice) {
+      return setNullable("user_choice", Conv.model(TravelRuleUserChoice::fromJson), userChoice);
     }
 
     /**

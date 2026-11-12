@@ -14,10 +14,10 @@ import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 
 /**
- * Provide exactly one of: payment_txn_id (finish), action=cancel, action=resend, action=update_compliance_email with compliance_email, action=update_originator_wallet with wallet_address, or action=beneficiary_vasp with beneficiary_vasp.
+ * Provide exactly one of: payment_txn_id (finish), action=cancel, action=resend, action=update_compliance_email with compliance_email, action=update_originator_wallet with wallet_address, or action=beneficiary_vasp with beneficiary_vasp. Alternatively, provide action=add_vasp_hint with name and optional lei and country.
  */
 public final class TravelRuleTransferPatchRequest extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("payment_txn_id", "action", "compliance_email", "wallet_address", "memo", "beneficiary_vasp");
+  private static final Set<String> KNOWN_FIELDS = Set.of("payment_txn_id", "action", "compliance_email", "wallet_address", "memo", "beneficiary_vasp", "reason", "notify_on_answer", "name", "lei", "country", "vasp_name");
 
   private TravelRuleTransferPatchRequest(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -63,7 +63,7 @@ public final class TravelRuleTransferPatchRequest extends JsonModel {
   }
 
   /**
-   * "cancel" cancels a non-terminal transfer. "resend" re-runs routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA. "update_compliance_email" replaces the compliance email the request goes to, on an outbound transfer in one of those three statuses; send "resend" afterwards. "update_originator_wallet" records the wallet the funds actually left from (<code>wallet_address</code>, <code>memo</code>). "beneficiary_vasp" names the counterparty VASP yourself (requires <code>beneficiary_vasp</code>) for an outbound transfer in one of those statuses: it is routed to that VASP and sent again.
+   * "cancel" cancels a non-terminal transfer. "resend" re-runs routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA. "update_compliance_email" replaces the compliance email the request goes to, on an outbound transfer in one of those three statuses; send "resend" afterwards. "update_originator_wallet" records the wallet the funds actually left from (<code>wallet_address</code>, <code>memo</code>). "beneficiary_vasp" names the counterparty VASP yourself (requires <code>beneficiary_vasp</code>) for an outbound transfer in one of those statuses: it is routed to that VASP and sent again. "add_vasp_hint" saves a counterparty name and optional LEI and country, then re-runs discovery on an outbound transfer in a resendable status.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -73,7 +73,7 @@ public final class TravelRuleTransferPatchRequest extends JsonModel {
   }
 
   /**
-   * Required with <code>action: update_compliance_email</code>. Kept as this transfer's <code>beneficiary_data.counterparty_vasp_email</code>: it belongs to this transfer only and joins no directory entry and no contact list.
+   * Required with action=update_compliance_email. Saved in beneficiary_data.counterparty_vasp_email. If the transfer has a known directory VASP, also saved as your application-private contact for that VASP.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -112,6 +112,66 @@ public final class TravelRuleTransferPatchRequest extends JsonModel {
     return Json.optional(json, "beneficiary_vasp", Conv.STRING);
   }
 
+  /**
+   * With action=cancel: your cancellation reason. Omitted or empty means unspecified.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleTransferPatchRequest.Reason> reason() {
+    return Json.optional(json, "reason", Conv.enumeration(TravelRuleTransferPatchRequest.Reason::of));
+  }
+
+  /**
+   * With action=resend: whether your team should be notified when the counterparty answers. Initially false; omission preserves the saved preference.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> notifyOnAnswer() {
+    return Json.optional(json, "notify_on_answer", Conv.BOOLEAN);
+  }
+
+  /**
+   * Required with action=add_vasp_hint. Counterparty VASP name.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> name() {
+    return Json.optional(json, "name", Conv.STRING);
+  }
+
+  /**
+   * With action=add_vasp_hint: optional LEI, normalized to uppercase. Empty clears the previous LEI hint.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> lei() {
+    return Json.optional(json, "lei", Conv.STRING);
+  }
+
+  /**
+   * With action=add_vasp_hint: optional country hint, normalized to uppercase. Empty clears the previous country hint.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> country() {
+    return Json.optional(json, "country", Conv.STRING);
+  }
+
+  /**
+   * With action=update_compliance_email: optional counterparty name saved with the address when nonempty.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> vaspName() {
+    return Json.optional(json, "vasp_name", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -136,7 +196,7 @@ public final class TravelRuleTransferPatchRequest extends JsonModel {
     }
 
     /**
-     * "cancel" cancels a non-terminal transfer. "resend" re-runs routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA. "update_compliance_email" replaces the compliance email the request goes to, on an outbound transfer in one of those three statuses; send "resend" afterwards. "update_originator_wallet" records the wallet the funds actually left from (<code>wallet_address</code>, <code>memo</code>). "beneficiary_vasp" names the counterparty VASP yourself (requires <code>beneficiary_vasp</code>) for an outbound transfer in one of those statuses: it is routed to that VASP and sent again.
+     * "cancel" cancels a non-terminal transfer. "resend" re-runs routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA. "update_compliance_email" replaces the compliance email the request goes to, on an outbound transfer in one of those three statuses; send "resend" afterwards. "update_originator_wallet" records the wallet the funds actually left from (<code>wallet_address</code>, <code>memo</code>). "beneficiary_vasp" names the counterparty VASP yourself (requires <code>beneficiary_vasp</code>) for an outbound transfer in one of those statuses: it is routed to that VASP and sent again. "add_vasp_hint" saves a counterparty name and optional LEI and country, then re-runs discovery on an outbound transfer in a resendable status.
      *
      * @param action the value
      * @return this builder
@@ -146,7 +206,7 @@ public final class TravelRuleTransferPatchRequest extends JsonModel {
     }
 
     /**
-     * Required with <code>action: update_compliance_email</code>. Kept as this transfer's <code>beneficiary_data.counterparty_vasp_email</code>: it belongs to this transfer only and joins no directory entry and no contact list.
+     * Required with action=update_compliance_email. Saved in beneficiary_data.counterparty_vasp_email. If the transfer has a known directory VASP, also saved as your application-private contact for that VASP.
      *
      * @param complianceEmail the value
      * @return this builder
@@ -186,6 +246,66 @@ public final class TravelRuleTransferPatchRequest extends JsonModel {
     }
 
     /**
+     * With action=cancel: your cancellation reason. Omitted or empty means unspecified.
+     *
+     * @param reason the value
+     * @return this builder
+     */
+    public Builder reason(TravelRuleTransferPatchRequest.Reason reason) {
+      return set("reason", Conv.enumeration(TravelRuleTransferPatchRequest.Reason::of), reason);
+    }
+
+    /**
+     * With action=resend: whether your team should be notified when the counterparty answers. Initially false; omission preserves the saved preference.
+     *
+     * @param notifyOnAnswer the value
+     * @return this builder
+     */
+    public Builder notifyOnAnswer(boolean notifyOnAnswer) {
+      return set("notify_on_answer", Conv.BOOLEAN, notifyOnAnswer);
+    }
+
+    /**
+     * Required with action=add_vasp_hint. Counterparty VASP name.
+     *
+     * @param name the value
+     * @return this builder
+     */
+    public Builder name(String name) {
+      return set("name", Conv.STRING, name);
+    }
+
+    /**
+     * With action=add_vasp_hint: optional LEI, normalized to uppercase. Empty clears the previous LEI hint.
+     *
+     * @param lei the value
+     * @return this builder
+     */
+    public Builder lei(String lei) {
+      return set("lei", Conv.STRING, lei);
+    }
+
+    /**
+     * With action=add_vasp_hint: optional country hint, normalized to uppercase. Empty clears the previous country hint.
+     *
+     * @param country the value
+     * @return this builder
+     */
+    public Builder country(String country) {
+      return set("country", Conv.STRING, country);
+    }
+
+    /**
+     * With action=update_compliance_email: optional counterparty name saved with the address when nonempty.
+     *
+     * @param vaspName the value
+     * @return this builder
+     */
+    public Builder vaspName(String vaspName) {
+      return set("vasp_name", Conv.STRING, vaspName);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code TravelRuleTransferPatchRequest}
@@ -201,7 +321,7 @@ public final class TravelRuleTransferPatchRequest extends JsonModel {
   }
 
   /**
-   * "cancel" cancels a non-terminal transfer. "resend" re-runs routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA. "update_compliance_email" replaces the compliance email the request goes to, on an outbound transfer in one of those three statuses; send "resend" afterwards. "update_originator_wallet" records the wallet the funds actually left from (<code>wallet_address</code>, <code>memo</code>). "beneficiary_vasp" names the counterparty VASP yourself (requires <code>beneficiary_vasp</code>) for an outbound transfer in one of those statuses: it is routed to that VASP and sent again.
+   * "cancel" cancels a non-terminal transfer. "resend" re-runs routing for an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA. "update_compliance_email" replaces the compliance email the request goes to, on an outbound transfer in one of those three statuses; send "resend" afterwards. "update_originator_wallet" records the wallet the funds actually left from (<code>wallet_address</code>, <code>memo</code>). "beneficiary_vasp" names the counterparty VASP yourself (requires <code>beneficiary_vasp</code>) for an outbound transfer in one of those statuses: it is routed to that VASP and sent again. "add_vasp_hint" saves a counterparty name and optional LEI and country, then re-runs discovery on an outbound transfer in a resendable status.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -221,7 +341,10 @@ public final class TravelRuleTransferPatchRequest extends JsonModel {
     /** The value {@code "beneficiary_vasp"}. */
     public static final Action BENEFICIARY_VASP = new Action("beneficiary_vasp");
 
-    private static final List<Action> KNOWN_VALUES = List.of(CANCEL, RESEND, UPDATE_COMPLIANCE_EMAIL, UPDATE_ORIGINATOR_WALLET, BENEFICIARY_VASP);
+    /** The value {@code "add_vasp_hint"}. */
+    public static final Action ADD_VASP_HINT = new Action("add_vasp_hint");
+
+    private static final List<Action> KNOWN_VALUES = List.of(CANCEL, RESEND, UPDATE_COMPLIANCE_EMAIL, UPDATE_ORIGINATOR_WALLET, BENEFICIARY_VASP, ADD_VASP_HINT);
 
     private Action(String value) {
       super(value);
@@ -243,6 +366,58 @@ public final class TravelRuleTransferPatchRequest extends JsonModel {
      * @return the known values
      */
     public static List<Action> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * With action=cancel: your cancellation reason. Omitted or empty means unspecified.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Reason extends StringEnum {
+    /** The value {@code ""}. */
+    public static final Reason EMPTY = new Reason("");
+
+    /** The value {@code "user_cancelled"}. */
+    public static final Reason USER_CANCELLED = new Reason("user_cancelled");
+
+    /** The value {@code "wrong_wallet"}. */
+    public static final Reason WRONG_WALLET = new Reason("wrong_wallet");
+
+    /** The value {@code "compliance_decision"}. */
+    public static final Reason COMPLIANCE_DECISION = new Reason("compliance_decision");
+
+    /** The value {@code "other"}. */
+    public static final Reason OTHER = new Reason("other");
+
+    private static final List<Reason> KNOWN_VALUES = List.of(EMPTY, USER_CANCELLED, WRONG_WALLET, COMPLIANCE_DECISION, OTHER);
+
+    private Reason(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Reason of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Reason::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Reason> knownValues() {
       return KNOWN_VALUES;
     }
 

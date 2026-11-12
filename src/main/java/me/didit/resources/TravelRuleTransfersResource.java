@@ -122,7 +122,7 @@ public final class TravelRuleTransfersResource {
   private static ApiRequest listRequest(TravelRuleTransfersListParams params) {
     return ApiRequest.builder("GET", "/v3/travel-rule/transfers/")
         .params(params)
-        .queryFields("direction", "status", "rail", "kind", "currency", "start_date", "end_date", "counterparty", "limit", "offset")
+        .queryFields("search", "direction", "status", "rail", "kind", "currency", "start_date", "end_date", "counterparty", "limit", "offset")
         .build();
   }
 

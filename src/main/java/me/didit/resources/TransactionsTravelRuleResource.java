@@ -20,6 +20,8 @@ import me.didit.types.TravelRuleTestVaspInboundRequest;
 import me.didit.types.TravelRuleTestVaspInboundResponse;
 import me.didit.types.TravelRuleTransferDetail;
 import me.didit.types.TravelRuleTransferPatchRequest;
+import me.didit.types.TravelRuleUserLinkRequest;
+import me.didit.types.TravelRuleUserLinkResponse;
 
 /** The {@code transactions.travel_rule} resource: {@code client.transactions().travelRule()}. */
 public final class TransactionsTravelRuleResource {
@@ -41,9 +43,9 @@ public final class TransactionsTravelRuleResource {
   }
 
   /**
-   * Finish, cancel, resend, or update the originator wallet of a Travel Rule transfer
+   * Update a Travel Rule transfer
    *
-   * <p>Provide <code>payment_txn_id</code> to report the on-chain hash and move an outbound COMPLETED transfer to FINISHED (its INTERNAL-rail counterpart also moves to FINISHED), <code>{"action": "cancel"}</code> to cancel a non-terminal transfer, or <code>{"action": "resend"}</code> to route an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA again (improve the counterparty data first, e.g. add a travel_address to the destination wallet entry). resend applies to outbound transfers only. <code>{"action": "update_compliance_email", "compliance_email": "desk&#64;example.com"}</code> replaces the compliance email of an outbound transfer in one of those three statuses, the fix for <code>reason: email_undeliverable</code>: the status does not change, and the next <code>resend</code> sends the request to that address. A resend is queued, not run inside the request: the response shows the transfer back in AWAITING_COUNTERPARTY with a <code>resend queued</code> timeline entry and a queued <code>delivery</code>, and where it went arrives as a <code>travel_rule.status.updated</code> webhook. When the transfer went over GTR, VerifyVASP or Sygna Bridge, the network learns the on-chain hash or the cancellation after the response, with retries; <code>delivery</code> shows how that message stands. <code>{"action": "update_originator_wallet", "wallet_address": "..."}</code> records the wallet the funds actually left from on an outbound transfer, for example the address a UTXO withdrawal was broadcast from rather than the main wallet you declared. It changes the record only: nothing is sent to the counterparty again and the status stays. The originator becomes <code>chain_details.originator</code> with <code>source: updated</code>, the change is added to the <code>timeline</code> with the previous and the new wallet, and the INTERNAL-rail counterpart of the transfer is updated the same way. <code>{"action": "beneficiary_vasp", "beneficiary_vasp": "&lt;directory VASP id&gt;"}</code> names the counterparty yourself when discovery could not, on an outbound transfer in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE or NOT_ENOUGH_COUNTERPARTY_DATA: the transfer is routed to that VASP and sent again.
+   * <p>Provide <code>payment_txn_id</code> to report the on-chain hash and move an outbound COMPLETED transfer to FINISHED (its INTERNAL-rail counterpart also moves to FINISHED), <code>{"action": "cancel"}</code> to cancel a non-terminal transfer, or <code>{"action": "resend"}</code> to route an outbound transfer stuck in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, or NOT_ENOUGH_COUNTERPARTY_DATA again (improve the counterparty data first, e.g. add a travel_address to the destination wallet entry). resend applies to outbound transfers only. <code>{"action": "update_compliance_email", "compliance_email": "desk&#64;example.com"}</code> replaces the compliance email of an outbound transfer in one of those three statuses, the fix for <code>reason: email_undeliverable</code>: the status does not change, and the next <code>resend</code> sends the request to that address. A resend is queued, not run inside the request: the response shows the transfer back in AWAITING_COUNTERPARTY with a <code>resend queued</code> timeline entry and a queued <code>delivery</code>, and where it went arrives as a <code>travel_rule.status.updated</code> webhook. When the transfer went over GTR, VerifyVASP or Sygna Bridge, the network learns the on-chain hash or the cancellation after the response, with retries; <code>delivery</code> shows how that message stands. <code>{"action": "update_originator_wallet", "wallet_address": "..."}</code> records the wallet the funds actually left from on an outbound transfer, for example the address a UTXO withdrawal was broadcast from rather than the main wallet you declared. It changes the record only: nothing is sent to the counterparty again and the status stays. The originator becomes <code>chain_details.originator</code> with <code>source: updated</code>, the change is added to the <code>timeline</code> with the previous and the new wallet, and the INTERNAL-rail counterpart of the transfer is updated the same way. <code>{"action": "beneficiary_vasp", "beneficiary_vasp": "&lt;directory VASP id&gt;"}</code> names the counterparty yourself when discovery could not, on an outbound transfer in COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE or NOT_ENOUGH_COUNTERPARTY_DATA: the transfer is routed to that VASP and sent again. Cancellation accepts an optional reason and returns cancel_reason and cancelled_by. Resend accepts notify_on_answer; omission preserves the saved preference, initially false. Resend invalidates the previous counterparty pickup link. action=add_vasp_hint requires name, accepts lei and country, saves the hint and re-runs discovery under the same outbound/status restrictions as resend. update_compliance_email also accepts vasp_name and saves the address as an application-private contact when the transfer has a known directory VASP.
    *
    * <p>{@code PATCH /v3/transactions/{transaction_id}/travel-rule/}
    *
@@ -375,6 +377,56 @@ public final class TransactionsTravelRuleResource {
     return client.executeAsync(listDeliveriesRequest(transactionId, TransactionsTravelRuleListDeliveriesParams.builder().build()), RequestOptions.none(), LIST_DELIVERIES_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Create or email a Travel Rule end-user link
+   *
+   * <p>Issue a new link and revoke previous open links for this transfer. Requires write access to transactions and an outbound transfer in AWAITING_COUNTERPARTY, COUNTERPARTY_VASP_NOT_FOUND, COUNTERPARTY_VASP_NOT_REACHABLE, UNCONFIRMED_OWNERSHIP or ON_HOLD. channel=email uses the end user's Didit-record email and verification-session language when available. A send failure returns the link with emailed_to empty; email_available reports address availability, not delivery. See [User links](/management-api/travel-rule/create-user-link).
+   *
+   * <p>{@code POST /v3/transactions/{transaction_id}/travel-rule/user-link/}
+   *
+   * @param transactionId Didit-stable transaction UUID that owns the transfer.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public TravelRuleUserLinkResponse createUserLink(String transactionId, TravelRuleUserLinkRequest params, RequestOptions options) {
+    return client.execute(createUserLinkRequest(transactionId, params), options, CREATE_USER_LINK_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #createUserLink(String, TravelRuleUserLinkRequest, RequestOptions)}.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleUserLinkResponse> createUserLinkAsync(String transactionId, TravelRuleUserLinkRequest params, RequestOptions options) {
+    return client.executeAsync(createUserLinkRequest(transactionId, params), options, CREATE_USER_LINK_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #createUserLink(String, TravelRuleUserLinkRequest, RequestOptions)}, with the client's options.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @param params the request parameters
+   * @return the result
+   */
+  public TravelRuleUserLinkResponse createUserLink(String transactionId, TravelRuleUserLinkRequest params) {
+    return client.execute(createUserLinkRequest(transactionId, params), RequestOptions.none(), CREATE_USER_LINK_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #createUserLink(String, TravelRuleUserLinkRequest, RequestOptions)}, with the client's options.
+   *
+   * @param transactionId the {@code transaction_id}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleUserLinkResponse> createUserLinkAsync(String transactionId, TravelRuleUserLinkRequest params) {
+    return client.executeAsync(createUserLinkRequest(transactionId, params), RequestOptions.none(), CREATE_USER_LINK_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<TravelRuleTransferDetail> UPDATE_TRANSFER_RESPONSE = Responses.json(Conv.model(TravelRuleTransferDetail::fromJson));
 
   private static ApiRequest updateTransferRequest(String transactionId, TravelRuleTransferPatchRequest params) {
@@ -429,6 +481,16 @@ public final class TransactionsTravelRuleResource {
         .pathParam("transaction_id", transactionId)
         .params(params)
         .queryFields("limit", "offset")
+        .build();
+  }
+
+  private static final ResponseHandler<TravelRuleUserLinkResponse> CREATE_USER_LINK_RESPONSE = Responses.json(Conv.model(TravelRuleUserLinkResponse::fromJson));
+
+  private static ApiRequest createUserLinkRequest(String transactionId, TravelRuleUserLinkRequest params) {
+    return ApiRequest.builder("POST", "/v3/transactions/{transaction_id}/travel-rule/user-link/")
+        .pathParam("transaction_id", transactionId)
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
         .build();
   }
 
@@ -748,6 +810,52 @@ public final class TransactionsTravelRuleResource {
      */
     public CompletableFuture<RawResponse<Page<TravelRuleDeliveryLogEntry>>> listDeliveriesAsync(String transactionId) {
       return client.executeAsync(listDeliveriesRequest(transactionId, TransactionsTravelRuleListDeliveriesParams.builder().build()), RequestOptions.none(), LIST_DELIVERIES_RESPONSE);
+    }
+
+    /**
+     * {@link #createUserLink(String, TravelRuleUserLinkRequest, RequestOptions)} with the raw response.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<TravelRuleUserLinkResponse> createUserLink(String transactionId, TravelRuleUserLinkRequest params, RequestOptions options) {
+      return client.execute(createUserLinkRequest(transactionId, params), options, CREATE_USER_LINK_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #createUserLink(String, TravelRuleUserLinkRequest, RequestOptions)} with the raw response.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleUserLinkResponse>> createUserLinkAsync(String transactionId, TravelRuleUserLinkRequest params, RequestOptions options) {
+      return client.executeAsync(createUserLinkRequest(transactionId, params), options, CREATE_USER_LINK_RESPONSE);
+    }
+
+    /**
+     * {@link #createUserLink(String, TravelRuleUserLinkRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<TravelRuleUserLinkResponse> createUserLink(String transactionId, TravelRuleUserLinkRequest params) {
+      return client.execute(createUserLinkRequest(transactionId, params), RequestOptions.none(), CREATE_USER_LINK_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #createUserLink(String, TravelRuleUserLinkRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param transactionId the {@code transaction_id}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleUserLinkResponse>> createUserLinkAsync(String transactionId, TravelRuleUserLinkRequest params) {
+      return client.executeAsync(createUserLinkRequest(transactionId, params), RequestOptions.none(), CREATE_USER_LINK_RESPONSE);
     }
   }
 }

@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * Full transfer object returned by the ownership-confirmation and finish/cancel endpoints. While an inbound transfer's wallet ownership is unconfirmed, the counterparty's <code>originator_data</code> and <code>beneficiary_data</code> come back masked (the first letter of each word is kept; the wallet, chain and VASP routing stay readable) and <code>data_masked</code> is true.
  */
 public final class TravelRuleTransferDetail extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "direction", "rail", "protocol", "ivms_version", "required", "ownership_confirmed", "deadline_at", "timeline", "counterparty_vasp", "originator_data", "beneficiary_data", "name_match", "data_match", "mismatched_fields", "data_unmasked", "data_masked", "created_at", "delivery", "discovery", "reason", "next_actions", "chain_details", "deliveries", "deliveries_truncated", "not_required_reason", "proof_state");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "direction", "rail", "protocol", "ivms_version", "required", "ownership_confirmed", "deadline_at", "timeline", "counterparty_vasp", "originator_data", "beneficiary_data", "name_match", "data_match", "mismatched_fields", "data_unmasked", "data_masked", "created_at", "delivery", "discovery", "reason", "next_actions", "chain_details", "deliveries", "deliveries_truncated", "not_required_reason", "proof_state", "cancel_reason", "cancelled_by", "notify_on_answer", "user_choice");
 
   private TravelRuleTransferDetail(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -334,6 +334,46 @@ public final class TravelRuleTransferDetail extends JsonModel {
     return Json.optional(json, "proof_state", Conv.enumeration(TravelRuleTransferDetail.ProofState::of));
   }
 
+  /**
+   * Recorded cancellation reason, empty when unspecified.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleTransferDetail.CancelReason> cancelReason() {
+    return Json.optional(json, "cancel_reason", Conv.enumeration(TravelRuleTransferDetail.CancelReason::of));
+  }
+
+  /**
+   * Recorded cancellation actor, or an empty string when none is recorded.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> cancelledBy() {
+    return Json.optional(json, "cancelled_by", Conv.STRING);
+  }
+
+  /**
+   * Saved team notification preference. Initially false.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> notifyOnAnswer() {
+    return Json.optional(json, "notify_on_answer", Conv.BOOLEAN);
+  }
+
+  /**
+   * Explicit user-choice state, or null when counterparty_choice=user was not requested.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleUserChoice> userChoice() {
+    return Json.optional(json, "user_choice", Conv.model(TravelRuleUserChoice::fromJson));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -625,6 +665,46 @@ public final class TravelRuleTransferDetail extends JsonModel {
      */
     public Builder proofState(TravelRuleTransferDetail.ProofState proofState) {
       return set("proof_state", Conv.enumeration(TravelRuleTransferDetail.ProofState::of), proofState);
+    }
+
+    /**
+     * Recorded cancellation reason, empty when unspecified.
+     *
+     * @param cancelReason the value
+     * @return this builder
+     */
+    public Builder cancelReason(TravelRuleTransferDetail.CancelReason cancelReason) {
+      return set("cancel_reason", Conv.enumeration(TravelRuleTransferDetail.CancelReason::of), cancelReason);
+    }
+
+    /**
+     * Recorded cancellation actor, or an empty string when none is recorded.
+     *
+     * @param cancelledBy the value
+     * @return this builder
+     */
+    public Builder cancelledBy(String cancelledBy) {
+      return set("cancelled_by", Conv.STRING, cancelledBy);
+    }
+
+    /**
+     * Saved team notification preference. Initially false.
+     *
+     * @param notifyOnAnswer the value
+     * @return this builder
+     */
+    public Builder notifyOnAnswer(boolean notifyOnAnswer) {
+      return set("notify_on_answer", Conv.BOOLEAN, notifyOnAnswer);
+    }
+
+    /**
+     * Explicit user-choice state, or null when counterparty_choice=user was not requested.
+     *
+     * @param userChoice the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder userChoice(@Nullable TravelRuleUserChoice userChoice) {
+      return setNullable("user_choice", Conv.model(TravelRuleUserChoice::fromJson), userChoice);
     }
 
     /**
@@ -1338,6 +1418,58 @@ public final class TravelRuleTransferDetail extends JsonModel {
      * @return the known values
      */
     public static List<ProofState> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Recorded cancellation reason, empty when unspecified.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class CancelReason extends StringEnum {
+    /** The value {@code ""}. */
+    public static final CancelReason EMPTY = new CancelReason("");
+
+    /** The value {@code "user_cancelled"}. */
+    public static final CancelReason USER_CANCELLED = new CancelReason("user_cancelled");
+
+    /** The value {@code "wrong_wallet"}. */
+    public static final CancelReason WRONG_WALLET = new CancelReason("wrong_wallet");
+
+    /** The value {@code "compliance_decision"}. */
+    public static final CancelReason COMPLIANCE_DECISION = new CancelReason("compliance_decision");
+
+    /** The value {@code "other"}. */
+    public static final CancelReason OTHER = new CancelReason("other");
+
+    private static final List<CancelReason> KNOWN_VALUES = List.of(EMPTY, USER_CANCELLED, WRONG_WALLET, COMPLIANCE_DECISION, OTHER);
+
+    private CancelReason(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static CancelReason of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, CancelReason::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<CancelReason> knownValues() {
       return KNOWN_VALUES;
     }
 
