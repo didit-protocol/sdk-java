@@ -1329,6 +1329,30 @@ final class AuthenticationTest {
   }
 
   @Test
+  void consentMalformed2xxKeepsNoParserCause() {
+    String credential = "credential-string-0123456789";
+    issuer.routes.put(
+        "POST /agents/consent/",
+        r ->
+            new TransportResponse(
+                200,
+                Headers.of(Map.of("Content-Type", List.of("application/json"))),
+                ("{not json " + credential).getBytes(StandardCharsets.UTF_8)));
+    Exception e =
+        assertThrows(
+            Exception.class,
+            () ->
+                auth()
+                    .submitAgentConsent(
+                        "TOKEN-m4rk",
+                        AgentConsentParams.approve("pending-agent-request-secret")
+                            .assertion(assertionOf(credential, "s"))
+                            .build()));
+    assertNull(e.getCause());
+    assertFalse((e + "\n" + e.getMessage()).contains(credential));
+  }
+
+  @Test
   void consentRedactionReplacesANonJsonBody() {
     me.didit.errors.ApiStatusException e =
         consentFailure(
