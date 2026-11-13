@@ -756,4 +756,279 @@ final class ApiClientTest {
             ApiClient.Paths.sameOrigin(base, URI.create("https://verification.didit.me:8443/v3/")));
     assertEquals("", ApiClient.Paths.queryString(List.of()));
   }
+
+  private static ApiRequest write(String method) {
+    return ApiRequest.builder(method, "/v3/x/").build();
+  }
+
+  private static RequestOptions keyed() {
+    return RequestOptions.builder().idempotencyKey("key-1").build();
+  }
+
+  @Test
+  void sendsTheIdempotencyKeyOnWritesAndNotOnReads() {
+    for (String method : List.of("POST", "PUT", "PATCH", "DELETE")) {
+      transport.respond(200, "{}");
+      client().execute(write(method), keyed(), JSON);
+      assertEquals(
+          "key-1",
+          transport.requests().get(transport.requests().size() - 1).header("Idempotency-Key"),
+          method);
+    }
+    for (String method : List.of("GET", "HEAD")) {
+      transport.respond(200, "{}");
+      client().execute(write(method), keyed(), JSON);
+      assertNull(
+          transport.requests().get(transport.requests().size() - 1).header("Idempotency-Key"),
+          method);
+    }
+  }
+
+  @Test
+  void theIdempotencyKeyIsNotAClientOption() {
+    for (java.lang.reflect.Method method : ClientOptions.Builder.class.getMethods()) {
+      assertFalse(method.getName().equals("idempotencyKey"), method.getName());
+    }
+    for (java.lang.reflect.Method method : me.didit.Didit.Builder.class.getMethods()) {
+      assertFalse(method.getName().equals("idempotencyKey"), method.getName());
+    }
+  }
+
+  @Test
+  void rejectsInvalidIdempotencyKeysBeforeSending() {
+    assertThrows(ConfigurationException.class, () -> RequestOptions.builder().idempotencyKey(""));
+    assertThrows(
+        ConfigurationException.class,
+        () -> RequestOptions.builder().idempotencyKey("k".repeat(256)));
+    assertThrows(ConfigurationException.class, () -> RequestOptions.builder().idempotencyKey(null));
+    assertEquals(
+        "k".repeat(255),
+        RequestOptions.builder().idempotencyKey("k".repeat(255)).build().idempotencyKey().get());
+    assertTrue(transport.requests().isEmpty());
+  }
+
+  @Test
+  void retriesPostAndPatchWithAKeyUsingTheSameKey() {
+    for (String method : List.of("POST", "PATCH")) {
+      int before = transport.requests().size();
+      transport
+          .respond(503, "{}")
+          .fail(new HttpTimeoutException("slow"))
+          .fail(new IOException("reset"))
+          .respond(200, "{}");
+      ApiClient client = new ApiClient(options().maxRetries(3).build());
+      assertEquals(200, client.execute(write(method), keyed(), JSON).statusCode());
+      List<RecordedRequest> sent =
+          transport.requests().subList(before, transport.requests().size());
+      assertEquals(4, sent.size(), method);
+      for (RecordedRequest r : sent) {
+        assertEquals("key-1", r.header("Idempotency-Key"));
+      }
+    }
+  }
+
+  @Test
+  void aKeyedPostStopsAfterMaxRetries() {
+    for (int i = 0; i < 3; i++) {
+      transport.respond(500, "{}");
+    }
+    assertThrows(
+        InternalServerException.class, () -> client().execute(write("POST"), keyed(), JSON));
+    assertEquals(3, transport.requests().size());
+  }
+
+  @Test
+  void retriesAKeyInProgressConflictHonouringRetryAfter() {
+    transport
+        .respond(
+            409,
+            Map.of("Retry-After", "1"),
+            "{\"detail\":\"busy\",\"code\":\"idempotency_key_in_progress\"}")
+        .respond(201, "{\"ok\":1}");
+    RawResponse<JsonNode> r = client().execute(write("POST"), keyed(), JSON);
+    assertEquals(201, r.statusCode());
+    assertEquals(2, transport.requests().size());
+    assertEquals(Duration.ofSeconds(1), delays.get(0));
+    assertEquals("key-1", transport.requests().get(1).header("Idempotency-Key"));
+  }
+
+  @Test
+  void aReusedKeyConflictIsRaisedAtOnce() {
+    transport.respond(409, "{\"detail\":\"other body\",\"code\":\"idempotency_key_reused\"}");
+    ConflictException e =
+        assertThrows(ConflictException.class, () -> client().execute(write("POST"), keyed(), JSON));
+    assertEquals(1, transport.requests().size());
+    assertTrue(e.body().orElseThrow().get("code").asText().equals("idempotency_key_reused"));
+    transport.respond(409, "{\"code\":\"idempotency_key_in_progress\"}");
+    assertThrows(
+        ConflictException.class,
+        () -> client().execute(write("POST"), RequestOptions.none(), JSON));
+    assertEquals(2, transport.requests().size());
+  }
+
+  @Test
+  void theIdempotencyKeyOptionWinsOverAGeneratedParameter() {
+    transport.respond(200, "{}");
+    client()
+        .execute(
+            ApiRequest.builder("POST", "/v3/pets/")
+                .params(Pet.builder().name("generated-key").build())
+                .headerField("Idempotency-Key", "name")
+                .body(ApiRequest.BodyEncoding.JSON)
+                .build(),
+            keyed(),
+            JSON);
+    RecordedRequest r = transport.only();
+    assertEquals(List.of("key-1"), r.raw().headers().get("Idempotency-Key"));
+  }
+
+  @Test
+  void aGeneratedKeyParameterAloneMakesPostRetryable() {
+    transport.respond(503, "{}").respond(200, "{}");
+    client()
+        .execute(
+            ApiRequest.builder("POST", "/v3/pets/")
+                .params(Pet.builder().name("generated-key").build())
+                .headerField("Idempotency-Key", "name")
+                .body(ApiRequest.BodyEncoding.JSON)
+                .build(),
+            RequestOptions.none(),
+            JSON);
+    assertEquals(2, transport.requests().size());
+    assertEquals("generated-key", transport.requests().get(1).header("Idempotency-Key"));
+  }
+
+  @Test
+  void theIdempotencyKeyNeverAppearsInDebugLogs() {
+    java.util.logging.Logger logger = java.util.logging.Logger.getLogger("me.didit");
+    List<String> lines = new ArrayList<>();
+    java.util.logging.Handler handler =
+        new java.util.logging.Handler() {
+          @Override
+          public void publish(java.util.logging.LogRecord record) {
+            lines.add(
+                record.getMessage() + " " + java.util.Arrays.toString(record.getParameters()));
+          }
+
+          @Override
+          public void flush() {}
+
+          @Override
+          public void close() {}
+        };
+    logger.addHandler(handler);
+    try {
+      transport.respond(503, "{}").respond(200, "{}");
+      new ApiClient(options().debugLogging(true).build())
+          .execute(
+              write("POST"),
+              RequestOptions.builder().idempotencyKey("secret-key-value").build(),
+              JSON);
+    } finally {
+      logger.removeHandler(handler);
+    }
+    for (String line : lines) {
+      assertFalse(line.contains("secret-key-value"), line);
+    }
+  }
+
+  private static ApiRequest generatedKeyRequest(String value) {
+    return ApiRequest.builder("POST", "/v3/pets/")
+        .params(Pet.builder().name(value).build())
+        .headerField("Idempotency-Key", "name")
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  @Test
+  void aNonAllowListedMethodNeverCarriesTheKey() {
+    transport.respond(200, "{}").respond(200, "{}");
+    client().execute(write("OPTIONS"), keyed(), JSON);
+    assertNull(transport.requests().get(0).header("Idempotency-Key"));
+    client()
+        .execute(
+            write("OPTIONS"),
+            RequestOptions.builder().header("Idempotency-Key", "raw").build(),
+            JSON);
+    assertNull(transport.requests().get(1).header("Idempotency-Key"));
+  }
+
+  @Test
+  void aClientDefaultIdempotencyKeyHeaderIsIgnored() {
+    ApiClient client = new ApiClient(options().defaultHeader("idempotency-key", "default").build());
+    transport.respond(503, "{}");
+    assertThrows(
+        InternalServerException.class,
+        () -> client.execute(write("POST"), RequestOptions.none(), JSON));
+    assertEquals(1, transport.requests().size());
+    assertNull(transport.requests().get(0).header("Idempotency-Key"));
+    transport.respond(503, "{}").respond(200, "{}");
+    client.execute(write("POST"), keyed(), JSON);
+    assertEquals(3, transport.requests().size());
+    assertEquals("key-1", transport.requests().get(2).header("Idempotency-Key"));
+  }
+
+  @Test
+  void aRawHeaderKeyIsOneHeaderAndMakesPostRetryable() {
+    transport.respond(503, "{}").respond(200, "{}");
+    client()
+        .execute(
+            write("POST"),
+            RequestOptions.builder().header("idempotency-key", "raw-1").build(),
+            JSON);
+    assertEquals(2, transport.requests().size());
+    for (RecordedRequest r : transport.requests()) {
+      assertEquals(List.of("raw-1"), r.raw().headers().get("Idempotency-Key"));
+      long count =
+          r.raw().headers().keySet().stream()
+              .filter(k -> k.equalsIgnoreCase("Idempotency-Key"))
+              .count();
+      assertEquals(1, count);
+    }
+  }
+
+  @Test
+  void rawHeaderAndGeneratedParameterKeysAreValidated() {
+    for (String bad : List.of("", "k".repeat(256))) {
+      assertThrows(
+          ConfigurationException.class,
+          () ->
+              client()
+                  .execute(
+                      write("POST"),
+                      RequestOptions.builder().header("Idempotency-Key", bad).build(),
+                      JSON));
+      assertThrows(
+          ConfigurationException.class,
+          () -> client().execute(generatedKeyRequest(bad), RequestOptions.none(), JSON));
+    }
+    assertTrue(transport.requests().isEmpty());
+  }
+
+  @Test
+  void optionRawHeaderAndGeneratedParameterTogetherSendOneHeader() {
+    transport.respond(200, "{}");
+    client()
+        .execute(
+            generatedKeyRequest("from-param"),
+            RequestOptions.builder()
+                .header("idempotency-key", "from-raw")
+                .idempotencyKey("from-option")
+                .build(),
+            JSON);
+    RecordedRequest r = transport.only();
+    assertEquals(List.of("from-option"), r.raw().headers().get("Idempotency-Key"));
+    assertEquals(
+        1,
+        r.raw().headers().keySet().stream()
+            .filter(k -> k.equalsIgnoreCase("Idempotency-Key"))
+            .count());
+  }
+
+  @Test
+  void aKeyedConflictWithANonJsonBodyIsRaisedAtOnce() {
+    transport.respond(409, Map.of("Retry-After", "1"), "busy, try later");
+    assertThrows(ConflictException.class, () -> client().execute(write("POST"), keyed(), JSON));
+    assertEquals(1, transport.requests().size());
+  }
 }
