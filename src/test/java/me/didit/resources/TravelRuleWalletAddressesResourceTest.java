@@ -17,6 +17,8 @@ import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
 import me.didit.types.TravelRuleWalletAddressesBulkImportParams;
 import me.didit.types.TravelRuleWalletAddressesListParams;
+import me.didit.types.TravelRuleWalletAddressesListTransfersParams;
+import me.didit.types.TravelRuleWalletAddressesLookupParams;
 import me.didit.types.WalletAddressEntryCreate;
 import me.didit.types.WalletAddressEntryUpdate;
 import org.junit.jupiter.api.Test;
@@ -108,5 +110,40 @@ final class TravelRuleWalletAddressesResourceTest {
     assertEquals(Map.ofEntries(Map.entry("file", List.of("file.pdf"))), request.multipartFiles());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
+  }
+
+  @Test
+  void lookup() {
+    TravelRuleWalletAddressesLookupParams params = TravelRuleWalletAddressesLookupParams.builder().address("value-address").chain("value-chain").memo("value-memo").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/travel-rule/wallet-addresses/lookup/", "200");
+    transport.respondJson(200, example);
+    var result = client.travelRule().walletAddresses().lookup(params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/travel-rule/wallet-addresses/lookup/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("address", List.of("value-address")), Map.entry("chain", List.of("value-chain")), Map.entry("memo", List.of("value-memo"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listTransfers() {
+    TravelRuleWalletAddressesListTransfersParams params = TravelRuleWalletAddressesListTransfersParams.builder().limit(1L).offset(1L).build();
+    JsonNode example = TestJson.parse("{\"count\":0,\"next\":null,\"previous\":null,\"results\":[]}");
+    transport.respondJson(200, example);
+    var result = client.travelRule().walletAddresses().listTransfers("00000000-0000-4000-8000-000000025455", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/travel-rule/wallet-addresses/00000000-0000-4000-8000-000000025455/transfers/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, result._json());
+    assertEquals(example.path("results").size(), result.results().size());
+    TestModels.readAll(result.results());
   }
 }

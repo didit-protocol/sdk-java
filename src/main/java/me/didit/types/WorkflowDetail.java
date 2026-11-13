@@ -846,7 +846,7 @@ public final class WorkflowDetail extends JsonModel {
     }
 
     /**
-     * Whether Qualified (QES) can sign now. It is <code>false</code> until a qualified provider is connected.
+     * Whether Qualified (QES) can be chosen now. While it is <code>false</code>, saving a new <code>qes</code> step returns <code>400</code> <code>qes_not_available</code> or <code>qes_provider_not_configured</code>.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -889,7 +889,7 @@ public final class WorkflowDetail extends JsonModel {
       }
 
       /**
-       * Whether Qualified (QES) can sign now. It is <code>false</code> until a qualified provider is connected.
+       * Whether Qualified (QES) can be chosen now. While it is <code>false</code>, saving a new <code>qes</code> step returns <code>400</code> <code>qes_not_available</code> or <code>qes_provider_not_configured</code>.
        *
        * @param qes the value
        * @return this builder

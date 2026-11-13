@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * Where the latest message the transfer owes the other side stands. Didit contacts the counterparty after the request that created or changed the transfer has returned, so this object says whether that message got through: queued, being sent, waiting to be retried after an error, delivered, or failed. A failure the network may still recover from (no answer in time, a failed connection, HTTP <code>408</code>, <code>429</code> or <code>5xx</code>) is tried again after 30 seconds, 2 minutes, 10 minutes, 30 minutes and 1 hour. When a first message (<code>kind: SEND</code>) fails for good, because the network refused it or the sixth attempt failed too, the transfer moves to <code>COUNTERPARTY_VASP_NOT_REACHABLE</code> with <code>last_error</code> in its <code>timeline</code>; any other message that fails for good is noted in the <code>timeline</code>. The transfer's <code>status</code> stays the source of truth for the exchange itself.
  */
 public final class TravelRuleDelivery extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("kind", "status", "rail", "attempts", "last_error", "next_attempt_at", "delivered_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("kind", "status", "rail", "attempts", "last_error", "next_attempt_at", "delivered_at", "updated_at", "failure", "route");
 
   private TravelRuleDelivery(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -95,8 +95,7 @@ public final class TravelRuleDelivery extends JsonModel {
   }
 
   /**
-   * The kind of failure the last attempt hit, <code>""</code> when none did: for example <code>email undeliverable</code>, <code>trp identity endpoint unreachable</code> or <code>trp transfer inquiry delivery failed</code>. It never carries the counterparty's own answer, which stays on the transfer's <code>timeline</code>.
-   * When GTR answers with an error, its own status code and message are included. Response bodies are never included.
+   * A short customer-safe reason for the last failure, <code>""</code> when there is none: <code>email undeliverable</code>, <code>trp identity endpoint unreachable</code>, <code>trp transfer inquiry delivery failed</code> or <code>The message could not be delivered.</code> It never carries the counterparty's own answer, which stays on the transfer's <code>timeline</code>, and never a response body.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -123,6 +122,36 @@ public final class TravelRuleDelivery extends JsonModel {
    */
   public Optional<OffsetDateTime> deliveredAt() {
     return Json.optional(json, "delivered_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * When the delivery last changed.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public OffsetDateTime updatedAt() {
+    return Json.required(json, "updated_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * Why the last attempt failed, or null while the message has not failed. The message is a fixed customer-safe sentence: it never carries the counterparty's own text or a transport error.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleDelivery.Failure> failure() {
+    return Json.optional(json, "failure", Conv.model(TravelRuleDelivery.Failure::fromJson));
+  }
+
+  /**
+   * Readable name of the route that carried the message: <code>Email</code>, <code>TRP</code>, <code>Didit</code>, <code>Didit Test VASP</code>, the name of a network listed in the Marketplace, or <code>Network</code> for any other network. Null until a route is chosen.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> route() {
+    return Json.optional(json, "route", Conv.STRING);
   }
 
   @Override
@@ -179,8 +208,7 @@ public final class TravelRuleDelivery extends JsonModel {
     }
 
     /**
-     * The kind of failure the last attempt hit, <code>""</code> when none did: for example <code>email undeliverable</code>, <code>trp identity endpoint unreachable</code> or <code>trp transfer inquiry delivery failed</code>. It never carries the counterparty's own answer, which stays on the transfer's <code>timeline</code>.
-     * When GTR answers with an error, its own status code and message are included. Response bodies are never included.
+     * A short customer-safe reason for the last failure, <code>""</code> when there is none: <code>email undeliverable</code>, <code>trp identity endpoint unreachable</code>, <code>trp transfer inquiry delivery failed</code> or <code>The message could not be delivered.</code> It never carries the counterparty's own answer, which stays on the transfer's <code>timeline</code>, and never a response body.
      *
      * @param lastError the value
      * @return this builder
@@ -210,6 +238,36 @@ public final class TravelRuleDelivery extends JsonModel {
     }
 
     /**
+     * When the delivery last changed.
+     *
+     * @param updatedAt the value
+     * @return this builder
+     */
+    public Builder updatedAt(OffsetDateTime updatedAt) {
+      return set("updated_at", Conv.DATE_TIME, updatedAt);
+    }
+
+    /**
+     * Why the last attempt failed, or null while the message has not failed. The message is a fixed customer-safe sentence: it never carries the counterparty's own text or a transport error.
+     *
+     * @param failure the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder failure(TravelRuleDelivery.@Nullable Failure failure) {
+      return setNullable("failure", Conv.model(TravelRuleDelivery.Failure::fromJson), failure);
+    }
+
+    /**
+     * Readable name of the route that carried the message: <code>Email</code>, <code>TRP</code>, <code>Didit</code>, <code>Didit Test VASP</code>, the name of a network listed in the Marketplace, or <code>Network</code> for any other network. Null until a route is chosen.
+     *
+     * @param route the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder route(@Nullable String route) {
+      return setNullable("route", Conv.STRING, route);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code TravelRuleDelivery}
@@ -223,6 +281,9 @@ public final class TravelRuleDelivery extends JsonModel {
       require("last_error", false);
       require("next_attempt_at", true);
       require("delivered_at", true);
+      require("updated_at", false);
+      require("failure", true);
+      require("route", true);
       return new TravelRuleDelivery(buildJson(), buildFiles());
     }
 
@@ -363,10 +424,13 @@ public final class TravelRuleDelivery extends JsonModel {
     /** The value {@code "EMAIL"}. */
     public static final Rail EMAIL = new Rail("EMAIL");
 
+    /** The value {@code "TEST_VASP"}. */
+    public static final Rail TEST_VASP = new Rail("TEST_VASP");
+
     /** The value {@code ""}. */
     public static final Rail EMPTY = new Rail("");
 
-    private static final List<Rail> KNOWN_VALUES = List.of(INTERNAL, TRP, GTR, TRUST, VERIFYVASP, SYGNA, EMAIL, EMPTY);
+    private static final List<Rail> KNOWN_VALUES = List.of(INTERNAL, TRP, GTR, TRUST, VERIFYVASP, SYGNA, EMAIL, TEST_VASP, EMPTY);
 
     private Rail(String value) {
       super(value);
@@ -394,6 +458,160 @@ public final class TravelRuleDelivery extends JsonModel {
     @Override
     public boolean isKnown() {
       return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Why the last attempt failed, or null while the message has not failed. The message is a fixed customer-safe sentence: it never carries the counterparty's own text or a transport error.
+   */
+  public static final class Failure extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("code", "message");
+
+    private Failure(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Failure} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Failure fromJson(JsonNode json) {
+      return new Failure(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * <code>email_undeliverable</code>: the email bounced or the address does not accept mail. <code>delivery_failed</code>: any other failure.
+     *
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+     */
+    public TravelRuleDelivery.Failure.Code code() {
+      return Json.required(json, "code", Conv.enumeration(TravelRuleDelivery.Failure.Code::of));
+    }
+
+    /**
+     * Customer-safe description of the failure.
+     *
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+     */
+    public String message() {
+      return Json.required(json, "message", Conv.STRING);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Failure}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Failure from) {
+        super(from);
+      }
+
+      /**
+       * <code>email_undeliverable</code>: the email bounced or the address does not accept mail. <code>delivery_failed</code>: any other failure.
+       *
+       * @param code the value
+       * @return this builder
+       */
+      public Builder code(TravelRuleDelivery.Failure.Code code) {
+        return set("code", Conv.enumeration(TravelRuleDelivery.Failure.Code::of), code);
+      }
+
+      /**
+       * Customer-safe description of the failure.
+       *
+       * @param message the value
+       * @return this builder
+       */
+      public Builder message(String message) {
+        return set("message", Conv.STRING, message);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Failure}
+       * @throws IllegalStateException when a required field is missing
+       */
+      public Failure build() {
+        require("code", false);
+        require("message", false);
+        return new Failure(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     * <code>email_undeliverable</code>: the email bounced or the address does not accept mail. <code>delivery_failed</code>: any other failure.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Code extends StringEnum {
+      /** The value {@code "email_undeliverable"}. */
+      public static final Code EMAIL_UNDELIVERABLE = new Code("email_undeliverable");
+
+      /** The value {@code "delivery_failed"}. */
+      public static final Code DELIVERY_FAILED = new Code("delivery_failed");
+
+      private static final List<Code> KNOWN_VALUES = List.of(EMAIL_UNDELIVERABLE, DELIVERY_FAILED);
+
+      private Code(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Code of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Code::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Code> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
     }
   }
 }

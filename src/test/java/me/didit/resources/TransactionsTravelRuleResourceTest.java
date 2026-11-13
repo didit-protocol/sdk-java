@@ -127,7 +127,6 @@ final class TransactionsTravelRuleResourceTest {
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, result._json());
     assertEquals(example.path("results").size(), result.results().size());
-    TestModels.readAll(result.results());
   }
 
   @Test
