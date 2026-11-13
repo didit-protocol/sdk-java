@@ -42,7 +42,7 @@ public final class AddressValidationResource {
    *
    * <p><b>Billing.</b> A live call costs $0.10 per validated address. An <code>unavailable</code> result is not charged. Nothing is stored apart from the usage record: no session is created and the result is returned only in this response.
    *
-   * <p><b>Sandbox.</b> Sandbox keys validate the request and always return a deterministic <code>verified</code> result that echoes the address sent, without consuming credits.
+   * <p><b>Sandbox.</b> Sandbox keys validate the request and always return a deterministic <code>verified</code> result that echoes the address sent, with <code>address_type</code> and <code>is_residential</code> always <code>null</code> (the keys are present), without consuming credits.
    *
    * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>. Missing or invalid credentials return <code>403</code> - this API never returns <code>401</code>.
    *

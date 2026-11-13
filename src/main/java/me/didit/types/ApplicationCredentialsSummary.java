@@ -93,7 +93,7 @@ public final class ApplicationCredentialsSummary extends JsonModel {
   }
 
   /**
-   * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney), <code>mx</code> (Mexico) and <code>ae</code> (United Arab Emirates) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
+   * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney), <code>mx</code> (Mexico), <code>ae</code> (United Arab Emirates) and <code>us</code> (United States, N. Virginia) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -166,7 +166,7 @@ public final class ApplicationCredentialsSummary extends JsonModel {
     }
 
     /**
-     * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney), <code>mx</code> (Mexico) and <code>ae</code> (United Arab Emirates) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
+     * Where the application's verification data is stored and processed, chosen when the application is created. <code>eu</code> is the European Union (Ireland), the default. <code>au</code> (Australia, Sydney), <code>mx</code> (Mexico), <code>ae</code> (United Arab Emirates) and <code>us</code> (United States, N. Virginia) are coming soon: a request that names them answers 400 <code>This data location is not available yet.</code> An organization's Sandbox application is always in the European Union.
      *
      * @param dataLocation the value
      * @return this builder

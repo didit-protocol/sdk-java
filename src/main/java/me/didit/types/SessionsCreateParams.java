@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code sessions.create}. */
 public final class SessionsCreateParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("workflow_id", "vendor_data", "multi_account_segment", "callback", "callback_method", "metadata", "tags", "language", "contact_details", "expected_details", "portrait_image", "sandbox_scenario", "sign", "user_state", "biometric_consent");
+  private static final Set<String> KNOWN_FIELDS = Set.of("workflow_id", "vendor_data", "multi_account_segment", "callback", "callback_method", "metadata", "tags", "session_expiration_time", "language", "contact_details", "expected_details", "portrait_image", "sandbox_scenario", "sign", "user_state", "biometric_consent");
 
   private SessionsCreateParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -122,6 +122,16 @@ public final class SessionsCreateParams extends JsonModel {
    */
   public Optional<List<String>> tags() {
     return Json.optional(json, "tags", Conv.list(Conv.STRING));
+  }
+
+  /**
+   * Seconds this session's link stays valid, overriding the workflow's <code>session_expiration_time</code> for this session only. Whole number between 3600 (1 hour) and 2419200 (4 weeks), the same bounds as the workflow setting. Omit it to use the workflow's setting. A value outside the range, or one that is not a whole number, returns <code>400</code> on <code>session_expiration_time</code>. A session created by this call takes this lifetime from creation. When the call returns an existing unfinished session instead of creating one, sending this field resets that session's expiry to now plus this value, and omitting it leaves that session's expiry as it is. The response returns the resulting <code>expires_at</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> sessionExpirationTime() {
+    return Json.optional(json, "session_expiration_time", Conv.LONG);
   }
 
   /**
@@ -285,6 +295,16 @@ public final class SessionsCreateParams extends JsonModel {
      */
     public Builder tags(List<String> tags) {
       return set("tags", Conv.list(Conv.STRING), tags);
+    }
+
+    /**
+     * Seconds this session's link stays valid, overriding the workflow's <code>session_expiration_time</code> for this session only. Whole number between 3600 (1 hour) and 2419200 (4 weeks), the same bounds as the workflow setting. Omit it to use the workflow's setting. A value outside the range, or one that is not a whole number, returns <code>400</code> on <code>session_expiration_time</code>. A session created by this call takes this lifetime from creation. When the call returns an existing unfinished session instead of creating one, sending this field resets that session's expiry to now plus this value, and omitting it leaves that session's expiry as it is. The response returns the resulting <code>expires_at</code>.
+     *
+     * @param sessionExpirationTime the value
+     * @return this builder
+     */
+    public Builder sessionExpirationTime(long sessionExpirationTime) {
+      return set("session_expiration_time", Conv.LONG, sessionExpirationTime);
     }
 
     /**

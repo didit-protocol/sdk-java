@@ -18,7 +18,7 @@ import org.jspecify.annotations.Nullable;
  * The result of one Address Validation: whether the address exists, and its normalised form. It confirms the address only; it never links the address to a person.
  */
 public final class AddressValidationResult extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("status", "verification_level", "address", "formatted_address", "latitude", "longitude");
+  private static final Set<String> KNOWN_FIELDS = Set.of("status", "verification_level", "address", "formatted_address", "latitude", "longitude", "address_type", "is_residential");
 
   private AddressValidationResult(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -113,6 +113,26 @@ public final class AddressValidationResult extends JsonModel {
     return Json.optional(json, "longitude", Conv.DOUBLE);
   }
 
+  /**
+   * The kind of delivery point the address is, for United States and Canadian addresses: <code>street</code>, <code>po_box</code> (a PO box or lock box), <code>high_rise</code> (a high-rise or business complex), <code>rural_route</code>, <code>general_delivery</code>, <code>firm</code> (a firm or company address) or <code>building</code>. <code>null</code> for addresses in other countries, when the address has no type on record, and when <code>status</code> is <code>unavailable</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<AddressValidationResult.AddressType> addressType() {
+    return Json.optional(json, "address_type", Conv.enumeration(AddressValidationResult.AddressType::of));
+  }
+
+  /**
+   * <code>true</code> when the address is a residence, <code>false</code> when it is a business. <code>null</code> when this is unknown, when it is not available for the address's country, and when <code>status</code> is <code>unavailable</code>. Available for addresses in the United States, Great Britain, the Netherlands and Ireland.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> isResidential() {
+    return Json.optional(json, "is_residential", Conv.BOOLEAN);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -187,6 +207,26 @@ public final class AddressValidationResult extends JsonModel {
     }
 
     /**
+     * The kind of delivery point the address is, for United States and Canadian addresses: <code>street</code>, <code>po_box</code> (a PO box or lock box), <code>high_rise</code> (a high-rise or business complex), <code>rural_route</code>, <code>general_delivery</code>, <code>firm</code> (a firm or company address) or <code>building</code>. <code>null</code> for addresses in other countries, when the address has no type on record, and when <code>status</code> is <code>unavailable</code>.
+     *
+     * @param addressType the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder addressType(AddressValidationResult.@Nullable AddressType addressType) {
+      return setNullable("address_type", Conv.enumeration(AddressValidationResult.AddressType::of), addressType);
+    }
+
+    /**
+     * <code>true</code> when the address is a residence, <code>false</code> when it is a business. <code>null</code> when this is unknown, when it is not available for the address's country, and when <code>status</code> is <code>unavailable</code>. Available for addresses in the United States, Great Britain, the Netherlands and Ireland.
+     *
+     * @param isResidential the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder isResidential(@Nullable Boolean isResidential) {
+      return setNullable("is_residential", Conv.BOOLEAN, isResidential);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code AddressValidationResult}
@@ -199,6 +239,8 @@ public final class AddressValidationResult extends JsonModel {
       require("formatted_address", true);
       require("latitude", true);
       require("longitude", true);
+      require("address_type", true);
+      require("is_residential", true);
       return new AddressValidationResult(buildJson(), buildFiles());
     }
 
@@ -494,6 +536,64 @@ public final class AddressValidationResult extends JsonModel {
       protected Builder self() {
         return this;
       }
+    }
+  }
+
+  /**
+   * The kind of delivery point the address is, for United States and Canadian addresses: <code>street</code>, <code>po_box</code> (a PO box or lock box), <code>high_rise</code> (a high-rise or business complex), <code>rural_route</code>, <code>general_delivery</code>, <code>firm</code> (a firm or company address) or <code>building</code>. <code>null</code> for addresses in other countries, when the address has no type on record, and when <code>status</code> is <code>unavailable</code>.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class AddressType extends StringEnum {
+    /** The value {@code "street"}. */
+    public static final AddressType STREET = new AddressType("street");
+
+    /** The value {@code "po_box"}. */
+    public static final AddressType PO_BOX = new AddressType("po_box");
+
+    /** The value {@code "high_rise"}. */
+    public static final AddressType HIGH_RISE = new AddressType("high_rise");
+
+    /** The value {@code "rural_route"}. */
+    public static final AddressType RURAL_ROUTE = new AddressType("rural_route");
+
+    /** The value {@code "general_delivery"}. */
+    public static final AddressType GENERAL_DELIVERY = new AddressType("general_delivery");
+
+    /** The value {@code "firm"}. */
+    public static final AddressType FIRM = new AddressType("firm");
+
+    /** The value {@code "building"}. */
+    public static final AddressType BUILDING = new AddressType("building");
+
+    private static final List<AddressType> KNOWN_VALUES = List.of(STREET, PO_BOX, HIGH_RISE, RURAL_ROUTE, GENERAL_DELIVERY, FIRM, BUILDING);
+
+    private AddressType(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static AddressType of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, AddressType::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<AddressType> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 }
