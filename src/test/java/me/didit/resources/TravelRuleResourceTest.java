@@ -268,9 +268,9 @@ final class TravelRuleResourceTest {
 
   @Test
   void createWidgetSession() {
-    TravelRuleWidgetSessionCreate params = TravelRuleWidgetSessionCreate.builder().walletAddress("value-wallet-address").chain("value-chain").holderName("value-holder-name").vendorData("value-vendor-data").transactionId("00000000-0000-4000-8000-000000002b0f").satoshiDepositAddress("value-satoshi-deposit-address").callbackUrl("value-callback-url").expiresInMinutes(1L).build();
+    TravelRuleWidgetSessionCreate params = TravelRuleWidgetSessionCreate.builder().walletAddress("value-wallet-address").chain("value-chain").holderName("value-holder-name").vendorData("value-vendor-data").transactionId("00000000-0000-4000-8000-000000002b0f").satoshiDepositAddress("value-satoshi-deposit-address").callbackUrl("value-callback-url").expiresInMinutes(1L).walletEntryId("00000000-0000-4000-8000-000000003204").requestAction(TravelRuleWidgetSessionCreate.RequestAction.ENSURE).requestKey("00000000-0000-4000-8000-000000001c1a").build();
     JsonNode example = TestJson.parse("{}");
-    transport.respondJson(201, example);
+    transport.respondJson(200, example);
     var result = client.travelRule().createWidgetSession(params);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
@@ -278,7 +278,7 @@ final class TravelRuleResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"wallet_address\":\"value-wallet-address\",\"chain\":\"value-chain\",\"holder_name\":\"value-holder-name\",\"vendor_data\":\"value-vendor-data\",\"transaction_id\":\"00000000-0000-4000-8000-000000002b0f\",\"satoshi_deposit_address\":\"value-satoshi-deposit-address\",\"callback_url\":\"value-callback-url\",\"expires_in_minutes\":1}", request.body());
+    TestJson.assertJsonEquals("{\"wallet_address\":\"value-wallet-address\",\"chain\":\"value-chain\",\"holder_name\":\"value-holder-name\",\"vendor_data\":\"value-vendor-data\",\"transaction_id\":\"00000000-0000-4000-8000-000000002b0f\",\"satoshi_deposit_address\":\"value-satoshi-deposit-address\",\"callback_url\":\"value-callback-url\",\"expires_in_minutes\":1,\"wallet_entry_id\":\"00000000-0000-4000-8000-000000003204\",\"request_action\":\"ensure\",\"request_key\":\"00000000-0000-4000-8000-000000001c1a\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

@@ -48,7 +48,7 @@ public final class TravelRuleManualMatchResponse extends JsonModel {
   }
 
   /**
-   * One Travel Rule transfer as the transfers list shows it: VASP names, wallets and memos only, never the originator or beneficiary person data.
+   * One Travel Rule transfer as the transfers list shows it: VASP names, wallets, memos, the transaction's review decision, your own end user's name (masked exactly as the transaction detail masks it), the counterparty VASP's jurisdiction, the chain and the fiat amount. It never carries the counterparty's person data.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -58,7 +58,7 @@ public final class TravelRuleManualMatchResponse extends JsonModel {
   }
 
   /**
-   * One Travel Rule transfer as the transfers list shows it: VASP names, wallets and memos only, never the originator or beneficiary person data.
+   * One Travel Rule transfer as the transfers list shows it: VASP names, wallets, memos, the transaction's review decision, your own end user's name (masked exactly as the transaction detail masks it), the counterparty VASP's jurisdiction, the chain and the fiat amount. It never carries the counterparty's person data.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -81,7 +81,7 @@ public final class TravelRuleManualMatchResponse extends JsonModel {
     }
 
     /**
-     * One Travel Rule transfer as the transfers list shows it: VASP names, wallets and memos only, never the originator or beneficiary person data.
+     * One Travel Rule transfer as the transfers list shows it: VASP names, wallets, memos, the transaction's review decision, your own end user's name (masked exactly as the transaction detail masks it), the counterparty VASP's jurisdiction, the chain and the fiat amount. It never carries the counterparty's person data.
      *
      * @param deposit the value
      * @return this builder
@@ -91,7 +91,7 @@ public final class TravelRuleManualMatchResponse extends JsonModel {
     }
 
     /**
-     * One Travel Rule transfer as the transfers list shows it: VASP names, wallets and memos only, never the originator or beneficiary person data.
+     * One Travel Rule transfer as the transfers list shows it: VASP names, wallets, memos, the transaction's review decision, your own end user's name (masked exactly as the transaction detail masks it), the counterparty VASP's jurisdiction, the chain and the fiat amount. It never carries the counterparty's person data.
      *
      * @param message the value
      * @return this builder

@@ -35,7 +35,7 @@ public final class TravelRuleTransfersResource {
   /**
    * List Travel Rule transfers
    *
-   * <p>Your application's Travel Rule transfers, newest first, paginated with <code>limit</code> (default 50) and <code>offset</code>. Rows carry VASP names, wallets and memos only, never person data. Comma-separated values select several. An unknown value answers 400 naming the parameter, for example <code>{"direction": ["Unknown value(s): inbound."]}</code>.
+   * <p>Your application's Travel Rule transfers, newest first, paginated with <code>limit</code> (default 50) and <code>offset</code>. Rows carry VASP names, wallets, memos, the transaction's review decision, your own end user's name (masked exactly as the transaction detail masks it), the counterparty VASP's jurisdiction, the chain and the fiat amount; they never carry the counterparty's person data. Comma-separated values select several. An unknown value answers 400 naming the parameter, for example <code>{"direction": ["Unknown value(s): inbound."]}</code>.
    *
    * <p>{@code GET /v3/travel-rule/transfers/}
    * <p>Returns one page; iterate it to fetch every following page automatically.

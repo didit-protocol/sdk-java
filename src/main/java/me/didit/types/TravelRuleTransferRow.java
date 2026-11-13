@@ -16,10 +16,10 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /**
- * One Travel Rule transfer as the transfers list shows it: VASP names, wallets and memos only, never the originator or beneficiary person data.
+ * One Travel Rule transfer as the transfers list shows it: VASP names, wallets, memos, the transaction's review decision, your own end user's name (masked exactly as the transaction detail masks it), the counterparty VASP's jurisdiction, the chain and the fiat amount. It never carries the counterparty's person data.
  */
 public final class TravelRuleTransferRow extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("id", "transaction_id", "txn_id", "txn_date", "kind", "direction", "status", "reason", "rail", "asset", "amount", "originator_vasp", "beneficiary_vasp", "originator_wallet", "beneficiary_wallet", "originator_memo", "beneficiary_memo", "originator_wallet_type", "beneficiary_wallet_type", "matched_transaction_id", "scenario", "webhooks_count", "deadline_at", "created_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("id", "transaction_id", "txn_id", "txn_date", "review_status", "person_name", "kind", "direction", "status", "reason", "rail", "asset", "chain", "amount", "fiat_amount", "fiat_currency", "originator_vasp", "beneficiary_vasp", "counterparty_jurisdiction", "originator_wallet", "beneficiary_wallet", "originator_memo", "beneficiary_memo", "originator_wallet_type", "beneficiary_wallet_type", "matched_transaction_id", "scenario", "webhooks_count", "deadline_at", "created_at");
 
   private TravelRuleTransferRow(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -95,6 +95,26 @@ public final class TravelRuleTransferRow extends JsonModel {
   }
 
   /**
+   * The transaction's own review decision, which can differ from the transfer's <code>status</code>: a transfer may wait on its counterparty while its transaction is approved, or be stuck while its transaction is in review.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleTransferRow.ReviewStatus> reviewStatus() {
+    return Json.optional(json, "review_status", Conv.enumeration(TravelRuleTransferRow.ReviewStatus::of));
+  }
+
+  /**
+   * Your own end user (the transaction's applicant), exactly as the transaction detail stores it: masked with the first letter of each name part while the transfer's data is masked, and never the counterparty's person data. Empty when the transaction has no applicant party.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> personName() {
+    return Json.optional(json, "person_name", Conv.STRING);
+  }
+
+  /**
    * withdrawal: outbound. message: an inbound transfer a rail created from a counterparty's message (a TRP inquiry, the INTERNAL inbound leg, or a GTR, VerifyVASP or Sygna Bridge message). deposit: any other inbound transfer.
    *
    * @return the value, or empty when the field is absent or null
@@ -155,6 +175,16 @@ public final class TravelRuleTransferRow extends JsonModel {
   }
 
   /**
+   * The chain the transfer moved on, as a canonical code for example <code>ETH</code>, <code>BTC</code> or <code>SOL</code>; empty when the transfer names no chain.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> chain() {
+    return Json.optional(json, "chain", Conv.STRING);
+  }
+
+  /**
    * The amount as a plain decimal, for example "1.25".
    *
    * @return the value, or empty when the field is absent or null
@@ -162,6 +192,26 @@ public final class TravelRuleTransferRow extends JsonModel {
    */
   public Optional<String> amount() {
     return Json.optional(json, "amount", Conv.STRING);
+  }
+
+  /**
+   * The transfer's fiat value as a plain decimal, in <code>fiat_currency</code>: Didit's calculated conversion when it has one, otherwise the amount you supplied in your own default currency. Null when neither is known, for example on a sandbox transfer with no supplied conversion.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> fiatAmount() {
+    return Json.optional(json, "fiat_amount", Conv.STRING);
+  }
+
+  /**
+   * The currency <code>fiat_amount</code> is expressed in, or null.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> fiatCurrency() {
+    return Json.optional(json, "fiat_currency", Conv.STRING);
   }
 
   /**
@@ -182,6 +232,16 @@ public final class TravelRuleTransferRow extends JsonModel {
    */
   public Optional<String> beneficiaryVasp() {
     return Json.optional(json, "beneficiary_vasp", Conv.STRING);
+  }
+
+  /**
+   * The other VASP's jurisdiction, from its directory entry or, for a Didit network member, its profile or Travel Rule settings. Empty when the transfer names no VASP or the VASP has no jurisdiction on record.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> counterpartyJurisdiction() {
+    return Json.optional(json, "counterparty_jurisdiction", Conv.STRING);
   }
 
   /**
@@ -348,6 +408,26 @@ public final class TravelRuleTransferRow extends JsonModel {
     }
 
     /**
+     * The transaction's own review decision, which can differ from the transfer's <code>status</code>: a transfer may wait on its counterparty while its transaction is approved, or be stuck while its transaction is in review.
+     *
+     * @param reviewStatus the value
+     * @return this builder
+     */
+    public Builder reviewStatus(TravelRuleTransferRow.ReviewStatus reviewStatus) {
+      return set("review_status", Conv.enumeration(TravelRuleTransferRow.ReviewStatus::of), reviewStatus);
+    }
+
+    /**
+     * Your own end user (the transaction's applicant), exactly as the transaction detail stores it: masked with the first letter of each name part while the transfer's data is masked, and never the counterparty's person data. Empty when the transaction has no applicant party.
+     *
+     * @param personName the value
+     * @return this builder
+     */
+    public Builder personName(String personName) {
+      return set("person_name", Conv.STRING, personName);
+    }
+
+    /**
      * withdrawal: outbound. message: an inbound transfer a rail created from a counterparty's message (a TRP inquiry, the INTERNAL inbound leg, or a GTR, VerifyVASP or Sygna Bridge message). deposit: any other inbound transfer.
      *
      * @param kind the value
@@ -408,6 +488,16 @@ public final class TravelRuleTransferRow extends JsonModel {
     }
 
     /**
+     * The chain the transfer moved on, as a canonical code for example <code>ETH</code>, <code>BTC</code> or <code>SOL</code>; empty when the transfer names no chain.
+     *
+     * @param chain the value
+     * @return this builder
+     */
+    public Builder chain(String chain) {
+      return set("chain", Conv.STRING, chain);
+    }
+
+    /**
      * The amount as a plain decimal, for example "1.25".
      *
      * @param amount the value
@@ -415,6 +505,26 @@ public final class TravelRuleTransferRow extends JsonModel {
      */
     public Builder amount(String amount) {
       return set("amount", Conv.STRING, amount);
+    }
+
+    /**
+     * The transfer's fiat value as a plain decimal, in <code>fiat_currency</code>: Didit's calculated conversion when it has one, otherwise the amount you supplied in your own default currency. Null when neither is known, for example on a sandbox transfer with no supplied conversion.
+     *
+     * @param fiatAmount the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder fiatAmount(@Nullable String fiatAmount) {
+      return setNullable("fiat_amount", Conv.STRING, fiatAmount);
+    }
+
+    /**
+     * The currency <code>fiat_amount</code> is expressed in, or null.
+     *
+     * @param fiatCurrency the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder fiatCurrency(@Nullable String fiatCurrency) {
+      return setNullable("fiat_currency", Conv.STRING, fiatCurrency);
     }
 
     /**
@@ -435,6 +545,16 @@ public final class TravelRuleTransferRow extends JsonModel {
      */
     public Builder beneficiaryVasp(String beneficiaryVasp) {
       return set("beneficiary_vasp", Conv.STRING, beneficiaryVasp);
+    }
+
+    /**
+     * The other VASP's jurisdiction, from its directory entry or, for a Didit network member, its profile or Travel Rule settings. Empty when the transfer names no VASP or the VASP has no jurisdiction on record.
+     *
+     * @param counterpartyJurisdiction the value
+     * @return this builder
+     */
+    public Builder counterpartyJurisdiction(String counterpartyJurisdiction) {
+      return set("counterparty_jurisdiction", Conv.STRING, counterpartyJurisdiction);
     }
 
     /**
@@ -559,6 +679,55 @@ public final class TravelRuleTransferRow extends JsonModel {
     @Override
     protected Builder self() {
       return this;
+    }
+  }
+
+  /**
+   * The transaction's own review decision, which can differ from the transfer's <code>status</code>: a transfer may wait on its counterparty while its transaction is approved, or be stuck while its transaction is in review.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class ReviewStatus extends StringEnum {
+    /** The value {@code "APPROVED"}. */
+    public static final ReviewStatus APPROVED = new ReviewStatus("APPROVED");
+
+    /** The value {@code "IN_REVIEW"}. */
+    public static final ReviewStatus IN_REVIEW = new ReviewStatus("IN_REVIEW");
+
+    /** The value {@code "DECLINED"}. */
+    public static final ReviewStatus DECLINED = new ReviewStatus("DECLINED");
+
+    /** The value {@code "AWAITING_USER"}. */
+    public static final ReviewStatus AWAITING_USER = new ReviewStatus("AWAITING_USER");
+
+    private static final List<ReviewStatus> KNOWN_VALUES = List.of(APPROVED, IN_REVIEW, DECLINED, AWAITING_USER);
+
+    private ReviewStatus(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static ReviewStatus of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, ReviewStatus::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<ReviewStatus> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 

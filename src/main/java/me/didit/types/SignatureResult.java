@@ -95,7 +95,7 @@ public final class SignatureResult extends JsonModel {
   }
 
   /**
-   * <code>simple</code> (default) or <code>aes</code>. <code>qes</code> (Qualified Electronic Signature, QES) is an add-on that is not available yet.
+   * <code>simple</code> (default), <code>aes</code> or <code>qes</code> (Qualified electronic signature, QES, an add-on: a qualified trust service provider issues the signer a qualified certificate and signs after the signer enters the code it texts them).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -105,7 +105,7 @@ public final class SignatureResult extends JsonModel {
   }
 
   /**
-   * <code>pdf</code> for a Simple signature, <code>pades</code> for Advanced (AES).
+   * <code>pdf</code> for a Simple signature, <code>pades</code> for Advanced (AES) and Qualified (QES).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -115,7 +115,7 @@ public final class SignatureResult extends JsonModel {
   }
 
   /**
-   * <code>PAdES-B-LT</code> once an Advanced (AES) signature is signed, otherwise null.
+   * The PAdES profile of the signed documents: <code>PAdES-B-LT</code> once an Advanced (AES) or Qualified (QES) signature is signed, otherwise null.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -378,7 +378,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * <code>simple</code> (default) or <code>aes</code>. <code>qes</code> (Qualified Electronic Signature, QES) is an add-on that is not available yet.
+     * <code>simple</code> (default), <code>aes</code> or <code>qes</code> (Qualified electronic signature, QES, an add-on: a qualified trust service provider issues the signer a qualified certificate and signs after the signer enters the code it texts them).
      *
      * @param level the value
      * @return this builder
@@ -388,7 +388,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * <code>pdf</code> for a Simple signature, <code>pades</code> for Advanced (AES).
+     * <code>pdf</code> for a Simple signature, <code>pades</code> for Advanced (AES) and Qualified (QES).
      *
      * @param format the value
      * @return this builder
@@ -398,7 +398,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * <code>PAdES-B-LT</code> once an Advanced (AES) signature is signed, otherwise null.
+     * The PAdES profile of the signed documents: <code>PAdES-B-LT</code> once an Advanced (AES) or Qualified (QES) signature is signed, otherwise null.
      *
      * @param profile the value, or {@code null} to send JSON null
      * @return this builder
@@ -727,7 +727,7 @@ public final class SignatureResult extends JsonModel {
   }
 
   /**
-   * <code>simple</code> (default) or <code>aes</code>. <code>qes</code> (Qualified Electronic Signature, QES) is an add-on that is not available yet.
+   * <code>simple</code> (default), <code>aes</code> or <code>qes</code> (Qualified electronic signature, QES, an add-on: a qualified trust service provider issues the signer a qualified certificate and signs after the signer enters the code it texts them).
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -773,7 +773,7 @@ public final class SignatureResult extends JsonModel {
   }
 
   /**
-   * <code>pdf</code> for a Simple signature, <code>pades</code> for Advanced (AES).
+   * <code>pdf</code> for a Simple signature, <code>pades</code> for Advanced (AES) and Qualified (QES).
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -1359,7 +1359,7 @@ public final class SignatureResult extends JsonModel {
   }
 
   public static final class Confirmation extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("channel", "destination", "confirmed_at", "attempts");
+    private static final Set<String> KNOWN_FIELDS = Set.of("sent_by", "channel", "destination", "confirmed_at", "attempts");
 
     private Confirmation(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -1395,7 +1395,17 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * <code>null</code> for a Simple signature, which has no code.
+     * Who sent the code: <code>didit</code>, or <code>qualified_provider</code> for a Qualified (QES) signature, whose code comes by SMS from the qualified trust service provider and authorizes the signer's qualified certificate. <code>null</code> for a Simple signature.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<SignatureResult.Confirmation.SentBy> sentBy() {
+      return Json.optional(json, "sent_by", Conv.enumeration(SignatureResult.Confirmation.SentBy::of));
+    }
+
+    /**
+     * <code>null</code> for a Simple signature, which has no code. Always <code>sms</code> for a Qualified (QES) signature.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1448,7 +1458,17 @@ public final class SignatureResult extends JsonModel {
       }
 
       /**
-       * <code>null</code> for a Simple signature, which has no code.
+       * Who sent the code: <code>didit</code>, or <code>qualified_provider</code> for a Qualified (QES) signature, whose code comes by SMS from the qualified trust service provider and authorizes the signer's qualified certificate. <code>null</code> for a Simple signature.
+       *
+       * @param sentBy the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder sentBy(SignatureResult.Confirmation.@Nullable SentBy sentBy) {
+        return setNullable("sent_by", Conv.enumeration(SignatureResult.Confirmation.SentBy::of), sentBy);
+      }
+
+      /**
+       * <code>null</code> for a Simple signature, which has no code. Always <code>sms</code> for a Qualified (QES) signature.
        *
        * @param channel the value, or {@code null} to send JSON null
        * @return this builder
@@ -1503,7 +1523,50 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * <code>null</code> for a Simple signature, which has no code.
+     * Who sent the code: <code>didit</code>, or <code>qualified_provider</code> for a Qualified (QES) signature, whose code comes by SMS from the qualified trust service provider and authorizes the signer's qualified certificate. <code>null</code> for a Simple signature.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class SentBy extends StringEnum {
+      /** The value {@code "didit"}. */
+      public static final SentBy DIDIT = new SentBy("didit");
+
+      /** The value {@code "qualified_provider"}. */
+      public static final SentBy QUALIFIED_PROVIDER = new SentBy("qualified_provider");
+
+      private static final List<SentBy> KNOWN_VALUES = List.of(DIDIT, QUALIFIED_PROVIDER);
+
+      private SentBy(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static SentBy of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, SentBy::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<SentBy> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     * <code>null</code> for a Simple signature, which has no code. Always <code>sms</code> for a Qualified (QES) signature.
      *
      * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
      */
@@ -2853,7 +2916,7 @@ public final class SignatureResult extends JsonModel {
    * The last cryptographic check of the signed documents. <code>null</code> until the documents are signed. If Didit can't confirm the outcome of signing, it's <code>{"valid": null, "reason": "signature_provider_outcome_unknown", "checked_at": ...}</code> and <code>status</code> stays <code>signing</code>: treat it as not signed.
    */
   public static final class Validation extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("valid", "reason", "checked_at", "documents");
+    private static final Set<String> KNOWN_FIELDS = Set.of("valid", "reason", "checked_at", "documents", "profile");
 
     private Validation(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -2899,7 +2962,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * Set when <code>valid</code> is <code>null</code>: <code>signature_provider_outcome_unknown</code>.
+     * <code>signature_provider_outcome_unknown</code> while <code>valid</code> is <code>null</code> (the signing outcome is not known yet); <code>signature_provider_failed</code> when the qualified trust service provider ended a Qualified (QES) signing without a signature: the attempt is back at review and the signer can ask for a new code.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2928,6 +2991,16 @@ public final class SignatureResult extends JsonModel {
       return Json.optional(json, "documents", Conv.list(Conv.model(SignatureResult.Validation.Documents::fromJson)));
     }
 
+    /**
+     * The PAdES profile every signed document reached.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> profile() {
+      return Json.optional(json, "profile", Conv.STRING);
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -2952,7 +3025,7 @@ public final class SignatureResult extends JsonModel {
       }
 
       /**
-       * Set when <code>valid</code> is <code>null</code>: <code>signature_provider_outcome_unknown</code>.
+       * <code>signature_provider_outcome_unknown</code> while <code>valid</code> is <code>null</code> (the signing outcome is not known yet); <code>signature_provider_failed</code> when the qualified trust service provider ended a Qualified (QES) signing without a signature: the attempt is back at review and the signer can ask for a new code.
        *
        * @param reason the value
        * @return this builder
@@ -2982,6 +3055,16 @@ public final class SignatureResult extends JsonModel {
       }
 
       /**
+       * The PAdES profile every signed document reached.
+       *
+       * @param profile the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder profile(@Nullable String profile) {
+        return setNullable("profile", Conv.STRING, profile);
+      }
+
+      /**
        * Builds the value.
        *
        * @return a new immutable {@code Validation}
@@ -2997,7 +3080,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     public static final class Documents extends JsonModel {
-      private static final Set<String> KNOWN_FIELDS = Set.of("id", "checked_at", "valid", "integrity", "trusted", "revoked", "trusted_list", "certificate", "timestamp");
+      private static final Set<String> KNOWN_FIELDS = Set.of("id", "checked_at", "valid", "integrity", "trusted", "revoked", "trusted_list", "certificate", "timestamp", "qualified", "profile", "failed_checks");
 
       private Documents(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
@@ -3093,7 +3176,7 @@ public final class SignatureResult extends JsonModel {
       }
 
       /**
-       * EU Trusted List check. For AES: <code>{"status": "not_applicable", "reason": "aes_not_qualified"}</code>.
+       * EU Trusted List check. AES: <code>{"status": "not_applicable", "reason": "aes_not_qualified"}</code>. QES: <code>{"status": "granted"}</code> when the certificate is a qualified certificate for electronic signatures issued under the qualified trust service provider's Trusted List entry, else <code>{"status": "not_granted", ...}</code>. A sandbox session's qualified level is sealed by Didit: <code>{"status": "not_applicable", "reason": "sandbox"}</code>.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3113,13 +3196,43 @@ public final class SignatureResult extends JsonModel {
       }
 
       /**
-       * The RFC 3161 timestamp in the signature, issued by Didit. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
+       * The RFC 3161 timestamp in the signature: issued by Didit for AES, by the qualified trust service provider for QES. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
        */
       public Optional<SignatureResult.Validation.Documents.Timestamp> timestamp() {
         return Json.optional(json, "timestamp", Conv.model(SignatureResult.Validation.Documents.Timestamp::fromJson));
+      }
+
+      /**
+       * QES: <code>true</code> only when every qualified check passed. <code>false</code> in the sandbox.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<Boolean> qualified() {
+        return Json.optional(json, "qualified", Conv.BOOLEAN);
+      }
+
+      /**
+       * QES: the PAdES profile of this document's signature.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> profile() {
+        return Json.optional(json, "profile", Conv.STRING);
+      }
+
+      /**
+       * QES: the checks that did not pass (empty when <code>valid</code> is <code>true</code>): the PDF signature's integrity, its chain to the qualified trust anchors, revocation, coverage of the document, the qualified time stamp, the certificate's qualified statements, the verified signer named in it, and the signed file extending exactly what was sent for signature.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<List<SignatureResult.Validation.Documents.FailedChecks>> failedChecks() {
+        return Json.optional(json, "failed_checks", Conv.list(Conv.enumeration(SignatureResult.Validation.Documents.FailedChecks::of)));
       }
 
       @Override
@@ -3196,7 +3309,7 @@ public final class SignatureResult extends JsonModel {
         }
 
         /**
-         * EU Trusted List check. For AES: <code>{"status": "not_applicable", "reason": "aes_not_qualified"}</code>.
+         * EU Trusted List check. AES: <code>{"status": "not_applicable", "reason": "aes_not_qualified"}</code>. QES: <code>{"status": "granted"}</code> when the certificate is a qualified certificate for electronic signatures issued under the qualified trust service provider's Trusted List entry, else <code>{"status": "not_granted", ...}</code>. A sandbox session's qualified level is sealed by Didit: <code>{"status": "not_applicable", "reason": "sandbox"}</code>.
          *
          * @param trustedList the value
          * @return this builder
@@ -3216,13 +3329,43 @@ public final class SignatureResult extends JsonModel {
         }
 
         /**
-         * The RFC 3161 timestamp in the signature, issued by Didit. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
+         * The RFC 3161 timestamp in the signature: issued by Didit for AES, by the qualified trust service provider for QES. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
          *
          * @param timestamp the value, or {@code null} to send JSON null
          * @return this builder
          */
         public Builder timestamp(SignatureResult.Validation.Documents.@Nullable Timestamp timestamp) {
           return setNullable("timestamp", Conv.model(SignatureResult.Validation.Documents.Timestamp::fromJson), timestamp);
+        }
+
+        /**
+         * QES: <code>true</code> only when every qualified check passed. <code>false</code> in the sandbox.
+         *
+         * @param qualified the value
+         * @return this builder
+         */
+        public Builder qualified(boolean qualified) {
+          return set("qualified", Conv.BOOLEAN, qualified);
+        }
+
+        /**
+         * QES: the PAdES profile of this document's signature.
+         *
+         * @param profile the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder profile(@Nullable String profile) {
+          return setNullable("profile", Conv.STRING, profile);
+        }
+
+        /**
+         * QES: the checks that did not pass (empty when <code>valid</code> is <code>true</code>): the PDF signature's integrity, its chain to the qualified trust anchors, revocation, coverage of the document, the qualified time stamp, the certificate's qualified statements, the verified signer named in it, and the signed file extending exactly what was sent for signature.
+         *
+         * @param failedChecks the value
+         * @return this builder
+         */
+        public Builder failedChecks(List<SignatureResult.Validation.Documents.FailedChecks> failedChecks) {
+          return set("failed_checks", Conv.list(Conv.enumeration(SignatureResult.Validation.Documents.FailedChecks::of)), failedChecks);
         }
 
         /**
@@ -3241,7 +3384,7 @@ public final class SignatureResult extends JsonModel {
       }
 
       /**
-       * EU Trusted List check. For AES: <code>{"status": "not_applicable", "reason": "aes_not_qualified"}</code>.
+       * EU Trusted List check. AES: <code>{"status": "not_applicable", "reason": "aes_not_qualified"}</code>. QES: <code>{"status": "granted"}</code> when the certificate is a qualified certificate for electronic signatures issued under the qualified trust service provider's Trusted List entry, else <code>{"status": "not_granted", ...}</code>. A sandbox session's qualified level is sealed by Didit: <code>{"status": "not_applicable", "reason": "sandbox"}</code>.
        */
       public static final class TrustedList extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("status", "reason");
@@ -3352,7 +3495,7 @@ public final class SignatureResult extends JsonModel {
        * The certificate the documents were signed with. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
        */
       public static final class Certificate extends JsonModel {
-        private static final Set<String> KNOWN_FIELDS = Set.of("issuer", "issued_to", "serial", "valid_from", "valid_until");
+        private static final Set<String> KNOWN_FIELDS = Set.of("issuer", "issued_to", "serial", "valid_from", "valid_until", "qualified_statements");
 
         private Certificate(ObjectNode json, Map<String, List<FileUpload>> files) {
           super(json, files);
@@ -3437,6 +3580,16 @@ public final class SignatureResult extends JsonModel {
           return Json.optional(json, "valid_until", Conv.DATE_TIME);
         }
 
+        /**
+         * QES: which ETSI EN 319 412-5 statements the certificate carries.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<SignatureResult.Validation.Documents.Certificate.QualifiedStatements> qualifiedStatements() {
+          return Json.optional(json, "qualified_statements", Conv.model(SignatureResult.Validation.Documents.Certificate.QualifiedStatements::fromJson));
+        }
+
         @Override
         protected Set<String> knownFields() {
           return KNOWN_FIELDS;
@@ -3501,6 +3654,16 @@ public final class SignatureResult extends JsonModel {
           }
 
           /**
+           * QES: which ETSI EN 319 412-5 statements the certificate carries.
+           *
+           * @param qualifiedStatements the value
+           * @return this builder
+           */
+          public Builder qualifiedStatements(SignatureResult.Validation.Documents.Certificate.QualifiedStatements qualifiedStatements) {
+            return set("qualified_statements", Conv.model(SignatureResult.Validation.Documents.Certificate.QualifiedStatements::fromJson), qualifiedStatements);
+          }
+
+          /**
            * Builds the value.
            *
            * @return a new immutable {@code Certificate}
@@ -3514,10 +3677,136 @@ public final class SignatureResult extends JsonModel {
             return this;
           }
         }
+
+        /** QES: which ETSI EN 319 412-5 statements the certificate carries. */
+        public static final class QualifiedStatements extends JsonModel {
+          private static final Set<String> KNOWN_FIELDS = Set.of("qc_compliance", "qc_sscd", "qc_type_esign");
+
+          private QualifiedStatements(ObjectNode json, Map<String, List<FileUpload>> files) {
+            super(json, files);
+          }
+
+          /**
+           * Reads a {@code QualifiedStatements} from JSON. Unknown fields are kept and readable
+           * through {@link #_additionalProperties()}.
+           *
+           * @param json a JSON object
+           * @return the parsed value
+           */
+          public static QualifiedStatements fromJson(JsonNode json) {
+            return new QualifiedStatements(Json.copyObject(json), Map.of());
+          }
+
+          /**
+           * Returns an empty builder.
+           *
+           * @return a new builder
+           */
+          public static Builder builder() {
+            return new Builder();
+          }
+
+          /**
+           * Returns a builder holding a copy of every field of this value.
+           *
+           * @return a new builder
+           */
+          public Builder toBuilder() {
+            return new Builder(this);
+          }
+
+          /**
+           * An EU qualified certificate.
+           *
+           * @return the value, or empty when the field is absent or null
+           * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+           */
+          public Optional<Boolean> qcCompliance() {
+            return Json.optional(json, "qc_compliance", Conv.BOOLEAN);
+          }
+
+          /**
+           * The key is in a qualified signature creation device.
+           *
+           * @return the value, or empty when the field is absent or null
+           * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+           */
+          public Optional<Boolean> qcSscd() {
+            return Json.optional(json, "qc_sscd", Conv.BOOLEAN);
+          }
+
+          /**
+           * A certificate for electronic signatures.
+           *
+           * @return the value, or empty when the field is absent or null
+           * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+           */
+          public Optional<Boolean> qcTypeEsign() {
+            return Json.optional(json, "qc_type_esign", Conv.BOOLEAN);
+          }
+
+          @Override
+          protected Set<String> knownFields() {
+            return KNOWN_FIELDS;
+          }
+
+          /** Builds a {@link QualifiedStatements}. */
+          public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+            private Builder() {}
+
+            private Builder(QualifiedStatements from) {
+              super(from);
+            }
+
+            /**
+             * An EU qualified certificate.
+             *
+             * @param qcCompliance the value
+             * @return this builder
+             */
+            public Builder qcCompliance(boolean qcCompliance) {
+              return set("qc_compliance", Conv.BOOLEAN, qcCompliance);
+            }
+
+            /**
+             * The key is in a qualified signature creation device.
+             *
+             * @param qcSscd the value
+             * @return this builder
+             */
+            public Builder qcSscd(boolean qcSscd) {
+              return set("qc_sscd", Conv.BOOLEAN, qcSscd);
+            }
+
+            /**
+             * A certificate for electronic signatures.
+             *
+             * @param qcTypeEsign the value
+             * @return this builder
+             */
+            public Builder qcTypeEsign(boolean qcTypeEsign) {
+              return set("qc_type_esign", Conv.BOOLEAN, qcTypeEsign);
+            }
+
+            /**
+             * Builds the value.
+             *
+             * @return a new immutable {@code QualifiedStatements}
+             */
+            public QualifiedStatements build() {
+              return new QualifiedStatements(buildJson(), buildFiles());
+            }
+
+            @Override
+            protected Builder self() {
+              return this;
+            }
+          }
+        }
       }
 
       /**
-       * The RFC 3161 timestamp in the signature, issued by Didit. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
+       * The RFC 3161 timestamp in the signature: issued by Didit for AES, by the qualified trust service provider for QES. <code>null</code> until signed, and always <code>null</code> for a Simple signature.
        */
       public static final class Timestamp extends JsonModel {
         private static final Set<String> KNOWN_FIELDS = Set.of("time", "qualified", "valid");
@@ -3566,7 +3855,7 @@ public final class SignatureResult extends JsonModel {
         }
 
         /**
-         * Always <code>false</code> for AES.
+         * <code>false</code> for AES; <code>true</code> for a valid QES time stamp.
          *
          * @return the value, or empty when the field is absent or null
          * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -3609,7 +3898,7 @@ public final class SignatureResult extends JsonModel {
           }
 
           /**
-           * Always <code>false</code> for AES.
+           * <code>false</code> for AES; <code>true</code> for a valid QES time stamp.
            *
            * @param qualified the value
            * @return this builder
@@ -3641,6 +3930,66 @@ public final class SignatureResult extends JsonModel {
           protected Builder self() {
             return this;
           }
+        }
+      }
+
+      /**
+       *
+       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+       */
+      public static final class FailedChecks extends StringEnum {
+        /** The value {@code "integrity"}. */
+        public static final FailedChecks INTEGRITY = new FailedChecks("integrity");
+
+        /** The value {@code "trusted"}. */
+        public static final FailedChecks TRUSTED = new FailedChecks("trusted");
+
+        /** The value {@code "not_revoked"}. */
+        public static final FailedChecks NOT_REVOKED = new FailedChecks("not_revoked");
+
+        /** The value {@code "coverage"}. */
+        public static final FailedChecks COVERAGE = new FailedChecks("coverage");
+
+        /** The value {@code "timestamp"}. */
+        public static final FailedChecks TIMESTAMP = new FailedChecks("timestamp");
+
+        /** The value {@code "qualified_certificate"}. */
+        public static final FailedChecks QUALIFIED_CERTIFICATE = new FailedChecks("qualified_certificate");
+
+        /** The value {@code "signer_named"}. */
+        public static final FailedChecks SIGNER_NAMED = new FailedChecks("signer_named");
+
+        /** The value {@code "original_kept"}. */
+        public static final FailedChecks ORIGINAL_KEPT = new FailedChecks("original_kept");
+
+        private static final List<FailedChecks> KNOWN_VALUES = List.of(INTEGRITY, TRUSTED, NOT_REVOKED, COVERAGE, TIMESTAMP, QUALIFIED_CERTIFICATE, SIGNER_NAMED, ORIGINAL_KEPT);
+
+        private FailedChecks(String value) {
+          super(value);
+        }
+
+        /**
+         * Returns the constant for a known value, or a new instance for any other value.
+         *
+         * @param value the string value
+         * @return the enum value
+         */
+        public static FailedChecks of(String value) {
+          return StringEnum.lookup(KNOWN_VALUES, value, FailedChecks::new);
+        }
+
+        /**
+         * Returns the values known to this SDK version.
+         *
+         * @return the known values
+         */
+        public static List<FailedChecks> knownValues() {
+          return KNOWN_VALUES;
+        }
+
+        @Override
+        public boolean isKnown() {
+          return KNOWN_VALUES.contains(this);
         }
       }
     }

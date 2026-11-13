@@ -11,10 +11,11 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class TravelRuleWidgetSessionCreate extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("wallet_address", "chain", "holder_name", "vendor_data", "transaction_id", "satoshi_deposit_address", "callback_url", "expires_in_minutes");
+  private static final Set<String> KNOWN_FIELDS = Set.of("wallet_address", "chain", "holder_name", "vendor_data", "transaction_id", "satoshi_deposit_address", "callback_url", "expires_in_minutes", "wallet_entry_id", "request_action", "request_key");
 
   private TravelRuleWidgetSessionCreate(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -129,6 +130,36 @@ public final class TravelRuleWidgetSessionCreate extends JsonModel {
     return Json.optional(json, "expires_in_minutes", Conv.LONG);
   }
 
+  /**
+   * Optional. Request the ownership proof of this address book entry instead of passing <code>wallet_address</code> and <code>chain</code>. The entry must be a customer wallet with a holder (<code>holder_vendor_data</code>), an address and a chain; the saved wallet and holder are always used and a conflicting <code>wallet_address</code>, <code>chain</code>, <code>holder_name</code> or <code>vendor_data</code> is rejected. Cannot be combined with <code>transaction_id</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> walletEntryId() {
+    return Json.optional(json, "wallet_entry_id", Conv.STRING);
+  }
+
+  /**
+   * Only with <code>wallet_entry_id</code>. <code>ensure</code> and <code>resend</code> return the entry's active link when it has one (<code>200</code>) and create one otherwise (<code>201</code>). <code>new</code> revokes the active link and creates another; it needs <code>request_key</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleWidgetSessionCreate.RequestAction> requestAction() {
+    return Json.optional(json, "request_action", Conv.enumeration(TravelRuleWidgetSessionCreate.RequestAction::of));
+  }
+
+  /**
+   * Only with <code>request_action: new</code>. An idempotency key: repeating the call with the same key returns the same link while it is active, and <code>410</code> once it has been revoked or has expired.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> requestKey() {
+    return Json.optional(json, "request_key", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -223,6 +254,36 @@ public final class TravelRuleWidgetSessionCreate extends JsonModel {
     }
 
     /**
+     * Optional. Request the ownership proof of this address book entry instead of passing <code>wallet_address</code> and <code>chain</code>. The entry must be a customer wallet with a holder (<code>holder_vendor_data</code>), an address and a chain; the saved wallet and holder are always used and a conflicting <code>wallet_address</code>, <code>chain</code>, <code>holder_name</code> or <code>vendor_data</code> is rejected. Cannot be combined with <code>transaction_id</code>.
+     *
+     * @param walletEntryId the value
+     * @return this builder
+     */
+    public Builder walletEntryId(String walletEntryId) {
+      return set("wallet_entry_id", Conv.STRING, walletEntryId);
+    }
+
+    /**
+     * Only with <code>wallet_entry_id</code>. <code>ensure</code> and <code>resend</code> return the entry's active link when it has one (<code>200</code>) and create one otherwise (<code>201</code>). <code>new</code> revokes the active link and creates another; it needs <code>request_key</code>.
+     *
+     * @param requestAction the value
+     * @return this builder
+     */
+    public Builder requestAction(TravelRuleWidgetSessionCreate.RequestAction requestAction) {
+      return set("request_action", Conv.enumeration(TravelRuleWidgetSessionCreate.RequestAction::of), requestAction);
+    }
+
+    /**
+     * Only with <code>request_action: new</code>. An idempotency key: repeating the call with the same key returns the same link while it is active, and <code>410</code> once it has been revoked or has expired.
+     *
+     * @param requestKey the value
+     * @return this builder
+     */
+    public Builder requestKey(String requestKey) {
+      return set("request_key", Conv.STRING, requestKey);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code TravelRuleWidgetSessionCreate}
@@ -234,6 +295,52 @@ public final class TravelRuleWidgetSessionCreate extends JsonModel {
     @Override
     protected Builder self() {
       return this;
+    }
+  }
+
+  /**
+   * Only with <code>wallet_entry_id</code>. <code>ensure</code> and <code>resend</code> return the entry's active link when it has one (<code>200</code>) and create one otherwise (<code>201</code>). <code>new</code> revokes the active link and creates another; it needs <code>request_key</code>.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class RequestAction extends StringEnum {
+    /** The value {@code "ensure"}. */
+    public static final RequestAction ENSURE = new RequestAction("ensure");
+
+    /** The value {@code "resend"}. */
+    public static final RequestAction RESEND = new RequestAction("resend");
+
+    /** The value {@code "new"}. */
+    public static final RequestAction NEW = new RequestAction("new");
+
+    private static final List<RequestAction> KNOWN_VALUES = List.of(ENSURE, RESEND, NEW);
+
+    private RequestAction(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static RequestAction of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, RequestAction::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<RequestAction> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 }

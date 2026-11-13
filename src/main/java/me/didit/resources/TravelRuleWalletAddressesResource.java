@@ -12,6 +12,10 @@ import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
 import me.didit.types.TravelRuleWalletAddressesBulkImportParams;
 import me.didit.types.TravelRuleWalletAddressesListParams;
+import me.didit.types.TravelRuleWalletAddressesListTransfersParams;
+import me.didit.types.TravelRuleWalletAddressesLookupParams;
+import me.didit.types.TravelRuleWalletLookup;
+import me.didit.types.TravelRuleWalletTransfer;
 import me.didit.types.WalletAddressEntry;
 import me.didit.types.WalletAddressEntryCreate;
 import me.didit.types.WalletAddressEntryUpdate;
@@ -308,6 +312,145 @@ public final class TravelRuleWalletAddressesResource {
     return client.executeAsync(bulkImportRequest(params), RequestOptions.none(), BULK_IMPORT_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Look up a wallet address
+   *
+   * <p>Checks one exact address, chain and memo against your own wallet address book and then against wallets proven by other Didit Travel Rule participants. It never screens the wallet, never sends a message and never returns holder data from another application. <code>directory_checked</code> is always <code>false</code>: the lookup does not search a public directory, so <code>none</code> means the wallet is neither in your book nor proven on Didit, not that it is unknown elsewhere.
+   *
+   * <p>{@code GET /v3/travel-rule/wallet-addresses/lookup/}
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public TravelRuleWalletLookup lookup(TravelRuleWalletAddressesLookupParams params, RequestOptions options) {
+    return client.execute(lookupRequest(params), options, LOOKUP_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #lookup(TravelRuleWalletAddressesLookupParams, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleWalletLookup> lookupAsync(TravelRuleWalletAddressesLookupParams params, RequestOptions options) {
+    return client.executeAsync(lookupRequest(params), options, LOOKUP_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #lookup(TravelRuleWalletAddressesLookupParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return the result
+   */
+  public TravelRuleWalletLookup lookup(TravelRuleWalletAddressesLookupParams params) {
+    return client.execute(lookupRequest(params), RequestOptions.none(), LOOKUP_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #lookup(TravelRuleWalletAddressesLookupParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleWalletLookup> lookupAsync(TravelRuleWalletAddressesLookupParams params) {
+    return client.executeAsync(lookupRequest(params), RequestOptions.none(), LOOKUP_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * List the transfers that used a wallet address
+   *
+   * <p>Paginated list of your Travel Rule transfers whose originator or beneficiary wallet is this address book entry, newest first. The endpoint answers 404 once the entry is deleted.
+   *
+   * <p>{@code GET /v3/travel-rule/wallet-addresses/{entry_uuid}/transfers/}
+   * <p>Returns one page; iterate it to fetch every following page automatically.
+   *
+   * @param entryUuid the {@code entry_uuid}
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public Page<TravelRuleWalletTransfer> listTransfers(String entryUuid, TravelRuleWalletAddressesListTransfersParams params, RequestOptions options) {
+    return client.execute(listTransfersRequest(entryUuid, params), options, LIST_TRANSFERS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)}.
+   *
+   * @param entryUuid the {@code entry_uuid}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TravelRuleWalletTransfer>> listTransfersAsync(String entryUuid, TravelRuleWalletAddressesListTransfersParams params, RequestOptions options) {
+    return client.executeAsync(listTransfersRequest(entryUuid, params), options, LIST_TRANSFERS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)}, with the client's options.
+   *
+   * @param entryUuid the {@code entry_uuid}
+   * @param params the request parameters
+   * @return the result
+   */
+  public Page<TravelRuleWalletTransfer> listTransfers(String entryUuid, TravelRuleWalletAddressesListTransfersParams params) {
+    return client.execute(listTransfersRequest(entryUuid, params), RequestOptions.none(), LIST_TRANSFERS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)}, with the client's options.
+   *
+   * @param entryUuid the {@code entry_uuid}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TravelRuleWalletTransfer>> listTransfersAsync(String entryUuid, TravelRuleWalletAddressesListTransfersParams params) {
+    return client.executeAsync(listTransfersRequest(entryUuid, params), RequestOptions.none(), LIST_TRANSFERS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)}, without parameters.
+   *
+   * @param entryUuid the {@code entry_uuid}
+   * @param options per-request options
+   * @return the result
+   */
+  public Page<TravelRuleWalletTransfer> listTransfers(String entryUuid, RequestOptions options) {
+    return client.execute(listTransfersRequest(entryUuid, TravelRuleWalletAddressesListTransfersParams.builder().build()), options, LIST_TRANSFERS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)}, without parameters.
+   *
+   * @param entryUuid the {@code entry_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TravelRuleWalletTransfer>> listTransfersAsync(String entryUuid, RequestOptions options) {
+    return client.executeAsync(listTransfersRequest(entryUuid, TravelRuleWalletAddressesListTransfersParams.builder().build()), options, LIST_TRANSFERS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param entryUuid the {@code entry_uuid}
+   * @return the result
+   */
+  public Page<TravelRuleWalletTransfer> listTransfers(String entryUuid) {
+    return client.execute(listTransfersRequest(entryUuid, TravelRuleWalletAddressesListTransfersParams.builder().build()), RequestOptions.none(), LIST_TRANSFERS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param entryUuid the {@code entry_uuid}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TravelRuleWalletTransfer>> listTransfersAsync(String entryUuid) {
+    return client.executeAsync(listTransfersRequest(entryUuid, TravelRuleWalletAddressesListTransfersParams.builder().build()), RequestOptions.none(), LIST_TRANSFERS_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<Page<WalletAddressEntry>> LIST_RESPONSE = Responses.page(Conv.model(WalletAddressEntry::fromJson));
 
   private static ApiRequest listRequest(TravelRuleWalletAddressesListParams params) {
@@ -350,6 +493,25 @@ public final class TravelRuleWalletAddressesResource {
     return ApiRequest.builder("POST", "/v3/travel-rule/wallet-addresses/import/")
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON_OR_MULTIPART)
+        .build();
+  }
+
+  private static final ResponseHandler<TravelRuleWalletLookup> LOOKUP_RESPONSE = Responses.json(Conv.model(TravelRuleWalletLookup::fromJson));
+
+  private static ApiRequest lookupRequest(TravelRuleWalletAddressesLookupParams params) {
+    return ApiRequest.builder("GET", "/v3/travel-rule/wallet-addresses/lookup/")
+        .params(params)
+        .queryFields("address", "chain", "memo")
+        .build();
+  }
+
+  private static final ResponseHandler<Page<TravelRuleWalletTransfer>> LIST_TRANSFERS_RESPONSE = Responses.page(Conv.model(TravelRuleWalletTransfer::fromJson));
+
+  private static ApiRequest listTransfersRequest(String entryUuid, TravelRuleWalletAddressesListTransfersParams params) {
+    return ApiRequest.builder("GET", "/v3/travel-rule/wallet-addresses/{entry_uuid}/transfers/")
+        .pathParam("entry_uuid", entryUuid)
+        .params(params)
+        .queryFields("limit", "offset")
         .build();
   }
 
@@ -611,6 +773,136 @@ public final class TravelRuleWalletAddressesResource {
      */
     public CompletableFuture<RawResponse<WalletAddressImportReport>> bulkImportAsync(TravelRuleWalletAddressesBulkImportParams params) {
       return client.executeAsync(bulkImportRequest(params), RequestOptions.none(), BULK_IMPORT_RESPONSE);
+    }
+
+    /**
+     * {@link #lookup(TravelRuleWalletAddressesLookupParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<TravelRuleWalletLookup> lookup(TravelRuleWalletAddressesLookupParams params, RequestOptions options) {
+      return client.execute(lookupRequest(params), options, LOOKUP_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #lookup(TravelRuleWalletAddressesLookupParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleWalletLookup>> lookupAsync(TravelRuleWalletAddressesLookupParams params, RequestOptions options) {
+      return client.executeAsync(lookupRequest(params), options, LOOKUP_RESPONSE);
+    }
+
+    /**
+     * {@link #lookup(TravelRuleWalletAddressesLookupParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<TravelRuleWalletLookup> lookup(TravelRuleWalletAddressesLookupParams params) {
+      return client.execute(lookupRequest(params), RequestOptions.none(), LOOKUP_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #lookup(TravelRuleWalletAddressesLookupParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleWalletLookup>> lookupAsync(TravelRuleWalletAddressesLookupParams params) {
+      return client.executeAsync(lookupRequest(params), RequestOptions.none(), LOOKUP_RESPONSE);
+    }
+
+    /**
+     * {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)} with the raw response.
+     *
+     * @param entryUuid the {@code entry_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<Page<TravelRuleWalletTransfer>> listTransfers(String entryUuid, TravelRuleWalletAddressesListTransfersParams params, RequestOptions options) {
+      return client.execute(listTransfersRequest(entryUuid, params), options, LIST_TRANSFERS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)} with the raw response.
+     *
+     * @param entryUuid the {@code entry_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TravelRuleWalletTransfer>>> listTransfersAsync(String entryUuid, TravelRuleWalletAddressesListTransfersParams params, RequestOptions options) {
+      return client.executeAsync(listTransfersRequest(entryUuid, params), options, LIST_TRANSFERS_RESPONSE);
+    }
+
+    /**
+     * {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param entryUuid the {@code entry_uuid}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<Page<TravelRuleWalletTransfer>> listTransfers(String entryUuid, TravelRuleWalletAddressesListTransfersParams params) {
+      return client.execute(listTransfersRequest(entryUuid, params), RequestOptions.none(), LIST_TRANSFERS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param entryUuid the {@code entry_uuid}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TravelRuleWalletTransfer>>> listTransfersAsync(String entryUuid, TravelRuleWalletAddressesListTransfersParams params) {
+      return client.executeAsync(listTransfersRequest(entryUuid, params), RequestOptions.none(), LIST_TRANSFERS_RESPONSE);
+    }
+
+    /**
+     * {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param entryUuid the {@code entry_uuid}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<Page<TravelRuleWalletTransfer>> listTransfers(String entryUuid, RequestOptions options) {
+      return client.execute(listTransfersRequest(entryUuid, TravelRuleWalletAddressesListTransfersParams.builder().build()), options, LIST_TRANSFERS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param entryUuid the {@code entry_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TravelRuleWalletTransfer>>> listTransfersAsync(String entryUuid, RequestOptions options) {
+      return client.executeAsync(listTransfersRequest(entryUuid, TravelRuleWalletAddressesListTransfersParams.builder().build()), options, LIST_TRANSFERS_RESPONSE);
+    }
+
+    /**
+     * {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param entryUuid the {@code entry_uuid}
+     * @return the result
+     */
+    public RawResponse<Page<TravelRuleWalletTransfer>> listTransfers(String entryUuid) {
+      return client.execute(listTransfersRequest(entryUuid, TravelRuleWalletAddressesListTransfersParams.builder().build()), RequestOptions.none(), LIST_TRANSFERS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listTransfers(String, TravelRuleWalletAddressesListTransfersParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param entryUuid the {@code entry_uuid}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TravelRuleWalletTransfer>>> listTransfersAsync(String entryUuid) {
+      return client.executeAsync(listTransfersRequest(entryUuid, TravelRuleWalletAddressesListTransfersParams.builder().build()), RequestOptions.none(), LIST_TRANSFERS_RESPONSE);
     }
   }
 }
