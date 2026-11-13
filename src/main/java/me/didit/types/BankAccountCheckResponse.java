@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class BankAccountCheckResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("request_id", "result", "holder_name", "account", "vendor_data", "created_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("request_id", "result", "holder_name", "name_match_score", "account", "vendor_data", "created_at");
 
   private BankAccountCheckResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -79,6 +79,16 @@ public final class BankAccountCheckResponse extends JsonModel {
    */
   public Optional<String> holderName() {
     return Json.optional(json, "holder_name", Conv.STRING);
+  }
+
+  /**
+   * The 0 to 100 similarity between the holder name you sent and the name on the account: the score <code>result</code> was decided on, so you can apply your own threshold. <code>result</code> stays authoritative and is decided with the default thresholds, a <code>match</code> from 85 and a <code>close_match</code> from 70 up to 84; they are the workflow settings <code>bank_name_match_threshold</code> and <code>bank_partial_match_floor</code> in a verification session. A name with nothing in common scores <code>0</code>. <code>null</code> when no name was compared: <code>cannot_verify</code>, a <code>no_match</code> for an account that does not exist, or a bank that answered with its own verdict and no holder name or score.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> nameMatchScore() {
+    return Json.optional(json, "name_match_score", Conv.LONG);
   }
 
   /**
@@ -155,6 +165,16 @@ public final class BankAccountCheckResponse extends JsonModel {
     }
 
     /**
+     * The 0 to 100 similarity between the holder name you sent and the name on the account: the score <code>result</code> was decided on, so you can apply your own threshold. <code>result</code> stays authoritative and is decided with the default thresholds, a <code>match</code> from 85 and a <code>close_match</code> from 70 up to 84; they are the workflow settings <code>bank_name_match_threshold</code> and <code>bank_partial_match_floor</code> in a verification session. A name with nothing in common scores <code>0</code>. <code>null</code> when no name was compared: <code>cannot_verify</code>, a <code>no_match</code> for an account that does not exist, or a bank that answered with its own verdict and no holder name or score.
+     *
+     * @param nameMatchScore the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder nameMatchScore(@Nullable Long nameMatchScore) {
+      return setNullable("name_match_score", Conv.LONG, nameMatchScore);
+    }
+
+    /**
      * The account, masked to its last 4 characters.
      *
      * @param account the value
@@ -194,6 +214,7 @@ public final class BankAccountCheckResponse extends JsonModel {
       require("request_id", false);
       require("result", false);
       require("holder_name", true);
+      require("name_match_score", true);
       require("account", false);
       require("vendor_data", true);
       require("created_at", false);

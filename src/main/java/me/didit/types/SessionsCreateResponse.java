@@ -3,6 +3,7 @@ package me.didit.types;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -15,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class SessionsCreateResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_number", "session_token", "url", "vendor_data", "metadata", "tags", "status", "callback", "workflow_id", "workflow_version");
+  private static final Set<String> KNOWN_FIELDS = Set.of("session_id", "session_number", "session_token", "url", "vendor_data", "metadata", "tags", "expires_at", "status", "callback", "workflow_id", "workflow_version");
 
   private SessionsCreateResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -121,7 +122,17 @@ public final class SessionsCreateResponse extends JsonModel {
   }
 
   /**
-   * Current status of the session. Newly created sessions return <code>Not Started</code>. If a non-finished session already existed for the same <code>vendor_data</code> on the workflow's latest published version, the returned status reflects that existing session.
+   * When the session's link stops being valid: the start of its current validity window (its creation, or the last reset by <code>session_expiration_time</code>) plus the lifetime in force.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> expiresAt() {
+    return Json.optional(json, "expires_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * Current status of the session. Newly created sessions return <code>Not Started</code>. For a User Verification workflow, if a non-finished session already existed for the same <code>vendor_data</code> on the workflow's latest published version, the returned status reflects that existing session.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -244,7 +255,17 @@ public final class SessionsCreateResponse extends JsonModel {
     }
 
     /**
-     * Current status of the session. Newly created sessions return <code>Not Started</code>. If a non-finished session already existed for the same <code>vendor_data</code> on the workflow's latest published version, the returned status reflects that existing session.
+     * When the session's link stops being valid: the start of its current validity window (its creation, or the last reset by <code>session_expiration_time</code>) plus the lifetime in force.
+     *
+     * @param expiresAt the value
+     * @return this builder
+     */
+    public Builder expiresAt(OffsetDateTime expiresAt) {
+      return set("expires_at", Conv.DATE_TIME, expiresAt);
+    }
+
+    /**
+     * Current status of the session. Newly created sessions return <code>Not Started</code>. For a User Verification workflow, if a non-finished session already existed for the same <code>vendor_data</code> on the workflow's latest published version, the returned status reflects that existing session.
      *
      * @param status the value
      * @return this builder
@@ -310,7 +331,7 @@ public final class SessionsCreateResponse extends JsonModel {
   }
 
   /**
-   * Current status of the session. Newly created sessions return <code>Not Started</code>. If a non-finished session already existed for the same <code>vendor_data</code> on the workflow's latest published version, the returned status reflects that existing session.
+   * Current status of the session. Newly created sessions return <code>Not Started</code>. For a User Verification workflow, if a non-finished session already existed for the same <code>vendor_data</code> on the workflow's latest published version, the returned status reflects that existing session.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
