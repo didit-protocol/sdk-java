@@ -11,9 +11,10 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import org.jspecify.annotations.Nullable;
 
 public final class TravelRuleNetworksOverview extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("platform_networks_enabled", "questionnaire", "participants", "networks");
+  private static final Set<String> KNOWN_FIELDS = Set.of("platform_networks_enabled", "questionnaire", "participants", "networks", "notification_email");
 
   private TravelRuleNetworksOverview(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -88,6 +89,16 @@ public final class TravelRuleNetworksOverview extends JsonModel {
     return Json.optional(json, "networks", Conv.model(TravelRuleNetworksOverview.Networks::fromJson));
   }
 
+  /**
+   * The verified account email of the signed-in member; null for API-key calls.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> notificationEmail() {
+    return Json.optional(json, "notification_email", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -139,6 +150,16 @@ public final class TravelRuleNetworksOverview extends JsonModel {
      */
     public Builder networks(TravelRuleNetworksOverview.Networks networks) {
       return set("networks", Conv.model(TravelRuleNetworksOverview.Networks::fromJson), networks);
+    }
+
+    /**
+     * The verified account email of the signed-in member; null for API-key calls.
+     *
+     * @param notificationEmail the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder notificationEmail(@Nullable String notificationEmail) {
+      return setNullable("notification_email", Conv.STRING, notificationEmail);
     }
 
     /**

@@ -17,7 +17,7 @@ import org.jspecify.annotations.Nullable;
 
 /** This application's own participant on one network. */
 public final class TravelRuleNetworkParticipant extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("network", "rail", "mode", "status", "participant_code", "requested_at", "submitted_at", "activated_at", "suspended_at", "last_error", "history");
+  private static final Set<String> KNOWN_FIELDS = Set.of("network", "rail", "mode", "status", "participant_code", "requested_at", "submitted_at", "activated_at", "suspended_at", "last_error", "history", "notify_status_changes", "notification_email");
 
   private TravelRuleNetworkParticipant(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -162,6 +162,26 @@ public final class TravelRuleNetworkParticipant extends JsonModel {
     return Json.optional(json, "history", Conv.list(Conv.model(TravelRuleNetworkParticipant.History::fromJson)));
   }
 
+  /**
+   * Whether the signed-in member asked for an email when this participant's status changes. Always false for API-key calls, which cannot set the preference.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> notifyStatusChanges() {
+    return Json.optional(json, "notify_status_changes", Conv.BOOLEAN);
+  }
+
+  /**
+   * The verified account email the notifications go to; null when there is none.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> notificationEmail() {
+    return Json.optional(json, "notification_email", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -283,6 +303,26 @@ public final class TravelRuleNetworkParticipant extends JsonModel {
      */
     public Builder history(List<TravelRuleNetworkParticipant.History> history) {
       return set("history", Conv.list(Conv.model(TravelRuleNetworkParticipant.History::fromJson)), history);
+    }
+
+    /**
+     * Whether the signed-in member asked for an email when this participant's status changes. Always false for API-key calls, which cannot set the preference.
+     *
+     * @param notifyStatusChanges the value
+     * @return this builder
+     */
+    public Builder notifyStatusChanges(boolean notifyStatusChanges) {
+      return set("notify_status_changes", Conv.BOOLEAN, notifyStatusChanges);
+    }
+
+    /**
+     * The verified account email the notifications go to; null when there is none.
+     *
+     * @param notificationEmail the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder notificationEmail(@Nullable String notificationEmail) {
+      return setNullable("notification_email", Conv.STRING, notificationEmail);
     }
 
     /**

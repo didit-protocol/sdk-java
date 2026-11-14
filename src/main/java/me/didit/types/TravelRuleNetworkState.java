@@ -18,7 +18,7 @@ import org.jspecify.annotations.Nullable;
  * How Travel Rule messages on one network would be sent for this application, and why they cannot be. Configuration status, not a live health or delivery check.
  */
 public final class TravelRuleNetworkState extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("rail", "mode", "state", "reason", "platform_available", "connected", "participant", "vasps_reachable", "routed_30d");
+  private static final Set<String> KNOWN_FIELDS = Set.of("rail", "mode", "state", "reason", "platform_available", "connected", "participant", "vasps_reachable", "routed_30d", "load_status", "load_error");
 
   private TravelRuleNetworkState(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -114,7 +114,7 @@ public final class TravelRuleNetworkState extends JsonModel {
   }
 
   /**
-   * This application's own participant on the network, or null when it has none.
+   * The <code>participant</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -141,6 +141,26 @@ public final class TravelRuleNetworkState extends JsonModel {
    */
   public Optional<Long> routed30D() {
     return Json.optional(json, "routed_30d", Conv.LONG);
+  }
+
+  /**
+   * <code>error</code> when this network's row could not be loaded; the other networks are unaffected.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleNetworkState.LoadStatus> loadStatus() {
+    return Json.optional(json, "load_status", Conv.enumeration(TravelRuleNetworkState.LoadStatus::of));
+  }
+
+  /**
+   * Present only when <code>load_status</code> is <code>error</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleNetworkState.LoadError> loadError() {
+    return Json.optional(json, "load_error", Conv.model(TravelRuleNetworkState.LoadError::fromJson));
   }
 
   @Override
@@ -179,45 +199,45 @@ public final class TravelRuleNetworkState extends JsonModel {
     /**
      * own_membership: your connected membership sends; live_through_didit: your own participant on Didit's membership sends; off: you switched platform routing off; didit_onboarding: Didit's own membership of this network is not live yet, so it cannot carry anyone; questionnaire_needed / questionnaire_in_review: the due-diligence questionnaire must be submitted or is with Didit; request_access: the questionnaire is approved, request the network; request_sent: your participant is being onboarded; unavailable: see reason; error: see reason.
      *
-     * @param state the value
+     * @param state the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder state(TravelRuleNetworkState.State state) {
-      return set("state", Conv.enumeration(TravelRuleNetworkState.State::of), state);
+    public Builder state(TravelRuleNetworkState.@Nullable State state) {
+      return setNullable("state", Conv.enumeration(TravelRuleNetworkState.State::of), state);
     }
 
     /**
      * Machine-readable detail of state. own_membership_only: Didit does not carry applications on this network (TRUST), connect your own membership; sandbox_application: sandbox transfers never reach a network; provisioning_failed: the network refused the registration, the participant's last_error says why and requesting the network again retries.
      *
-     * @param reason the value
+     * @param reason the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder reason(TravelRuleNetworkState.Reason reason) {
-      return set("reason", Conv.enumeration(TravelRuleNetworkState.Reason::of), reason);
+    public Builder reason(TravelRuleNetworkState.@Nullable Reason reason) {
+      return setNullable("reason", Conv.enumeration(TravelRuleNetworkState.Reason::of), reason);
     }
 
     /**
      * Whether Didit's own membership of this network is configured; not a live health check.
      *
-     * @param platformAvailable the value
+     * @param platformAvailable the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder platformAvailable(boolean platformAvailable) {
-      return set("platform_available", Conv.BOOLEAN, platformAvailable);
+    public Builder platformAvailable(@Nullable Boolean platformAvailable) {
+      return setNullable("platform_available", Conv.BOOLEAN, platformAvailable);
     }
 
     /**
      * Whether a connected customer membership exists. Credentials are validated locally; network validation occurs on a live exchange.
      *
-     * @param connected the value
+     * @param connected the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder connected(boolean connected) {
-      return set("connected", Conv.BOOLEAN, connected);
+    public Builder connected(@Nullable Boolean connected) {
+      return setNullable("connected", Conv.BOOLEAN, connected);
     }
 
     /**
-     * This application's own participant on the network, or null when it has none.
+     * The <code>participant</code> field.
      *
      * @param participant the value, or {@code null} to send JSON null
      * @return this builder
@@ -229,21 +249,41 @@ public final class TravelRuleNetworkState extends JsonModel {
     /**
      * Directory VASPs reachable on this network.
      *
-     * @param vaspsReachable the value
+     * @param vaspsReachable the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder vaspsReachable(long vaspsReachable) {
-      return set("vasps_reachable", Conv.LONG, vaspsReachable);
+    public Builder vaspsReachable(@Nullable Long vaspsReachable) {
+      return setNullable("vasps_reachable", Conv.LONG, vaspsReachable);
     }
 
     /**
      * This application's transfers carried on this network in the last 30 days.
      *
-     * @param routed30D the value
+     * @param routed30D the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder routed30D(long routed30D) {
-      return set("routed_30d", Conv.LONG, routed30D);
+    public Builder routed30D(@Nullable Long routed30D) {
+      return setNullable("routed_30d", Conv.LONG, routed30D);
+    }
+
+    /**
+     * <code>error</code> when this network's row could not be loaded; the other networks are unaffected.
+     *
+     * @param loadStatus the value
+     * @return this builder
+     */
+    public Builder loadStatus(TravelRuleNetworkState.LoadStatus loadStatus) {
+      return set("load_status", Conv.enumeration(TravelRuleNetworkState.LoadStatus::of), loadStatus);
+    }
+
+    /**
+     * Present only when <code>load_status</code> is <code>error</code>.
+     *
+     * @param loadError the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder loadError(TravelRuleNetworkState.@Nullable LoadError loadError) {
+      return setNullable("load_error", Conv.model(TravelRuleNetworkState.LoadError::fromJson), loadError);
     }
 
     /**
@@ -513,6 +553,194 @@ public final class TravelRuleNetworkState extends JsonModel {
     @Override
     public boolean isKnown() {
       return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * <code>error</code> when this network's row could not be loaded; the other networks are unaffected.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class LoadStatus extends StringEnum {
+    /** The value {@code "loaded"}. */
+    public static final LoadStatus LOADED = new LoadStatus("loaded");
+
+    /** The value {@code "error"}. */
+    public static final LoadStatus ERROR = new LoadStatus("error");
+
+    private static final List<LoadStatus> KNOWN_VALUES = List.of(LOADED, ERROR);
+
+    private LoadStatus(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static LoadStatus of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, LoadStatus::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<LoadStatus> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /** Present only when <code>load_status</code> is <code>error</code>. */
+  public static final class LoadError extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("code", "retryable");
+
+    private LoadError(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code LoadError} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static LoadError fromJson(JsonNode json) {
+      return new LoadError(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>code</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<TravelRuleNetworkState.LoadError.Code> code() {
+      return Json.optional(json, "code", Conv.enumeration(TravelRuleNetworkState.LoadError.Code::of));
+    }
+
+    /**
+     * The <code>retryable</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Boolean> retryable() {
+      return Json.optional(json, "retryable", Conv.BOOLEAN);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link LoadError}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(LoadError from) {
+        super(from);
+      }
+
+      /**
+       * The <code>code</code> field.
+       *
+       * @param code the value
+       * @return this builder
+       */
+      public Builder code(TravelRuleNetworkState.LoadError.Code code) {
+        return set("code", Conv.enumeration(TravelRuleNetworkState.LoadError.Code::of), code);
+      }
+
+      /**
+       * The <code>retryable</code> field.
+       *
+       * @param retryable the value
+       * @return this builder
+       */
+      public Builder retryable(boolean retryable) {
+        return set("retryable", Conv.BOOLEAN, retryable);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code LoadError}
+       */
+      public LoadError build() {
+        return new LoadError(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Code extends StringEnum {
+      /** The value {@code "network_state_unavailable"}. */
+      public static final Code NETWORK_STATE_UNAVAILABLE = new Code("network_state_unavailable");
+
+      private static final List<Code> KNOWN_VALUES = List.of(NETWORK_STATE_UNAVAILABLE);
+
+      private Code(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Code of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Code::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Code> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
     }
   }
 }
