@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * One due-diligence questionnaire your application sent the counterparty: Didit's standard questionnaire, emailed to a compliance address on record with a single-use answer link. Private to your application.
  */
 public final class TravelRuleCounterpartyQuestionnaire extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("id", "status", "form_version", "sent_to", "sent_at", "expires_at", "answered_at", "valid_until", "current", "answers");
+  private static final Set<String> KNOWN_FIELDS = Set.of("id", "status", "form_version", "sent_to", "sent_at", "expires_at", "answered_at", "valid_until", "current", "answers", "requested_items", "reminder_sent_at", "documents");
 
   private TravelRuleCounterpartyQuestionnaire(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -154,6 +154,36 @@ public final class TravelRuleCounterpartyQuestionnaire extends JsonModel {
     return Json.optional(json, "answers", Conv.map(Conv.STRING));
   }
 
+  /**
+   * What the request asked for.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<TravelRuleDocumentKind>> requestedItems() {
+    return Json.optional(json, "requested_items", Conv.list(Conv.enumeration(TravelRuleDocumentKind::of)));
+  }
+
+  /**
+   * When Didit last reminded the counterparty, or null.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> reminderSentAt() {
+    return Json.optional(json, "reminder_sent_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * The documents the counterparty uploaded.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<TravelRuleCounterpartyQuestionnaire.Documents>> documents() {
+    return Json.optional(json, "documents", Conv.list(Conv.model(TravelRuleCounterpartyQuestionnaire.Documents::fromJson)));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -268,6 +298,36 @@ public final class TravelRuleCounterpartyQuestionnaire extends JsonModel {
     }
 
     /**
+     * What the request asked for.
+     *
+     * @param requestedItems the value
+     * @return this builder
+     */
+    public Builder requestedItems(List<TravelRuleDocumentKind> requestedItems) {
+      return set("requested_items", Conv.list(Conv.enumeration(TravelRuleDocumentKind::of)), requestedItems);
+    }
+
+    /**
+     * When Didit last reminded the counterparty, or null.
+     *
+     * @param reminderSentAt the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder reminderSentAt(@Nullable OffsetDateTime reminderSentAt) {
+      return setNullable("reminder_sent_at", Conv.DATE_TIME, reminderSentAt);
+    }
+
+    /**
+     * The documents the counterparty uploaded.
+     *
+     * @param documents the value
+     * @return this builder
+     */
+    public Builder documents(List<TravelRuleCounterpartyQuestionnaire.Documents> documents) {
+      return set("documents", Conv.list(Conv.model(TravelRuleCounterpartyQuestionnaire.Documents::fromJson)), documents);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code TravelRuleCounterpartyQuestionnaire}
@@ -325,6 +385,151 @@ public final class TravelRuleCounterpartyQuestionnaire extends JsonModel {
     @Override
     public boolean isKnown() {
       return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  public static final class Documents extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("id", "name", "kind", "received_at");
+
+    private Documents(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Documents} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Documents fromJson(JsonNode json) {
+      return new Documents(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>id</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> id() {
+      return Json.optional(json, "id", Conv.STRING);
+    }
+
+    /**
+     * The <code>name</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> name() {
+      return Json.optional(json, "name", Conv.STRING);
+    }
+
+    /**
+     * <code>questionnaire</code>: the due-diligence questionnaire answers. <code>incorporation</code>: certificate of incorporation. <code>licence</code>: licence or registration. <code>aml_policy</code>: AML and CFT policy. <code>ownership</code>: ownership structure.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<TravelRuleDocumentKind> kind() {
+      return Json.optional(json, "kind", Conv.enumeration(TravelRuleDocumentKind::of));
+    }
+
+    /**
+     * The <code>received_at</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<OffsetDateTime> receivedAt() {
+      return Json.optional(json, "received_at", Conv.DATE_TIME);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Documents}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Documents from) {
+        super(from);
+      }
+
+      /**
+       * The <code>id</code> field.
+       *
+       * @param id the value
+       * @return this builder
+       */
+      public Builder id(String id) {
+        return set("id", Conv.STRING, id);
+      }
+
+      /**
+       * The <code>name</code> field.
+       *
+       * @param name the value
+       * @return this builder
+       */
+      public Builder name(String name) {
+        return set("name", Conv.STRING, name);
+      }
+
+      /**
+       * <code>questionnaire</code>: the due-diligence questionnaire answers. <code>incorporation</code>: certificate of incorporation. <code>licence</code>: licence or registration. <code>aml_policy</code>: AML and CFT policy. <code>ownership</code>: ownership structure.
+       *
+       * @param kind the value
+       * @return this builder
+       */
+      public Builder kind(TravelRuleDocumentKind kind) {
+        return set("kind", Conv.enumeration(TravelRuleDocumentKind::of), kind);
+      }
+
+      /**
+       * The <code>received_at</code> field.
+       *
+       * @param receivedAt the value
+       * @return this builder
+       */
+      public Builder receivedAt(OffsetDateTime receivedAt) {
+        return set("received_at", Conv.DATE_TIME, receivedAt);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Documents}
+       */
+      public Documents build() {
+        return new Documents(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
     }
   }
 }

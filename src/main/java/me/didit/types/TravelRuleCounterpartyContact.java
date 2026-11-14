@@ -17,7 +17,7 @@ import org.jspecify.annotations.Nullable;
 
 /** A compliance address the EMAIL rail writes to for one directory entry. */
 public final class TravelRuleCounterpartyContact extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "counterparty", "counterparty_name", "email", "name", "source", "scope", "created_by", "verified_at", "is_invalid", "invalid_reason", "invalid_detail", "invalid_at", "created_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "counterparty", "counterparty_name", "email", "name", "source", "scope", "created_by", "verified_at", "is_invalid", "invalid_reason", "invalid_detail", "invalid_at", "created_at", "role", "phone", "receives_requests");
 
   private TravelRuleCounterpartyContact(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -192,6 +192,36 @@ public final class TravelRuleCounterpartyContact extends JsonModel {
     return Json.optional(json, "created_at", Conv.DATE_TIME);
   }
 
+  /**
+   * Optional. The contact's role.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> role() {
+    return Json.optional(json, "role", Conv.STRING);
+  }
+
+  /**
+   * Optional. The contact's phone number.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> phone() {
+    return Json.optional(json, "phone", Conv.STRING);
+  }
+
+  /**
+   * Whether due-diligence requests and reminders go to this contact.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> receivesRequests() {
+    return Json.optional(json, "receives_requests", Conv.BOOLEAN);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -343,6 +373,36 @@ public final class TravelRuleCounterpartyContact extends JsonModel {
      */
     public Builder createdAt(OffsetDateTime createdAt) {
       return set("created_at", Conv.DATE_TIME, createdAt);
+    }
+
+    /**
+     * Optional. The contact's role.
+     *
+     * @param role the value
+     * @return this builder
+     */
+    public Builder role(String role) {
+      return set("role", Conv.STRING, role);
+    }
+
+    /**
+     * Optional. The contact's phone number.
+     *
+     * @param phone the value
+     * @return this builder
+     */
+    public Builder phone(String phone) {
+      return set("phone", Conv.STRING, phone);
+    }
+
+    /**
+     * Whether due-diligence requests and reminders go to this contact.
+     *
+     * @param receivesRequests the value
+     * @return this builder
+     */
+    public Builder receivesRequests(boolean receivesRequests) {
+      return set("receives_requests", Conv.BOOLEAN, receivesRequests);
     }
 
     /**
