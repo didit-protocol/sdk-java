@@ -17,6 +17,7 @@ import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
 import me.didit.types.WebhookEvent;
 import me.didit.types.WebhooksDestinationsCreateParams;
+import me.didit.types.WebhooksDestinationsListActivityParams;
 import me.didit.types.WebhooksDestinationsListDeliveriesParams;
 import me.didit.types.WebhooksDestinationsRetrieveAnalyticsParams;
 import me.didit.types.WebhooksDestinationsUpdateParams;
@@ -172,5 +173,23 @@ final class WebhooksDestinationsResourceTest {
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
+  }
+
+  @Test
+  void listActivity() {
+    WebhooksDestinationsListActivityParams params = WebhooksDestinationsListActivityParams.builder().limit(1L).offset(1L).build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/organization/{organization_id}/application/{application_id}/webhook/destinations/{destination_uuid}/activity/", "200");
+    transport.respondJson(200, example);
+    var result = client.webhooks().destinations().listActivity("00000000-0000-4000-8000-000000022950", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/webhook/destinations/00000000-0000-4000-8000-000000022950/activity/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, result._json());
+    assertEquals(example.path("results").size(), result.results().size());
+    TestModels.readAll(result.results());
   }
 }
