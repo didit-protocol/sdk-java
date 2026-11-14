@@ -300,8 +300,9 @@ public final class ApiClient {
       return false;
     }
     headers.keySet().removeIf(k -> k.equalsIgnoreCase(IDEMPOTENCY_KEY));
-    if (key.isEmpty() || key.length() > 255) {
-      throw new ConfigurationException("Idempotency-Key must be a string of 1 to 255 characters");
+    if (!RequestOptions.isValidIdempotencyKey(key)) {
+      throw new ConfigurationException(
+          "Idempotency-Key must be a string of 1 to 255 printable ASCII characters");
     }
     boolean allowed =
         method.equals("POST")

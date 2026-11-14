@@ -162,7 +162,7 @@ Pass an idempotency key as a request option and repeating the same operation wit
 
 ```java
 client.sessions().create(params, RequestOptions.builder()
-    .idempotencyKey("order-123")  // 1 to 255 characters, chosen by you, one per operation
+    .idempotencyKey("order-123")  // 1 to 255 printable ASCII characters, chosen by you, one per operation
     .build());
 ```
 
