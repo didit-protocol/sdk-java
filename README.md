@@ -117,7 +117,7 @@ Didit client = Didit.builder()
 
   ```java
   client.aml().screen(params, RequestOptions.builder()
-      .idempotencyKey("screen-user-42")  // for the endpoints that accept Idempotency-Key
+      .idempotencyKey("screen-user-42")  // sent as Idempotency-Key on writes
       .timeout(Duration.ofSeconds(10))
       .build());
   ```
@@ -155,6 +155,18 @@ try {
 Failed requests are retried up to `maxRetries` times (default 2) with exponential backoff (0.5 s, full jitter, at most 8 s), honouring `Retry-After` up to 60 s.
 `GET`, `PUT` and `DELETE` are retried on connection errors, timeouts, 408, 429 and 5xx.
 `POST` and `PATCH` are retried only when the connection failed before the request was sent, or on 429, so a request is never sent twice after it may have reached Didit.
+
+### Idempotency
+
+Pass an idempotency key as a request option and repeating the same operation with the same key returns the first result instead of running it again.
+
+```java
+client.sessions().create(params, RequestOptions.builder()
+    .idempotencyKey("order-123")  // 1 to 255 characters, chosen by you, one per operation
+    .build());
+```
+
+With a key, POST and PATCH are retried like GET.
 
 ## Pagination
 

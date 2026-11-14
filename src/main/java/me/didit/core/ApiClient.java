@@ -151,6 +151,7 @@ public final class ApiClient {
     final int maxRetries;
     final boolean streaming;
     final String logPath;
+    final boolean hasIdempotencyKey;
 
     Prepared(
         String method,
@@ -160,7 +161,8 @@ public final class ApiClient {
         Duration timeout,
         int maxRetries,
         boolean streaming,
-        String logPath) {
+        String logPath,
+        boolean hasIdempotencyKey) {
       this.method = method;
       this.uri = uri;
       this.headers = headers;
@@ -169,6 +171,7 @@ public final class ApiClient {
       this.maxRetries = maxRetries;
       this.streaming = streaming;
       this.logPath = logPath;
+      this.hasIdempotencyKey = hasIdempotencyKey;
     }
   }
 
@@ -256,12 +259,15 @@ public final class ApiClient {
     }
 
     for (Map.Entry<String, String> header : options.defaultHeaders().entrySet()) {
-      replace(headers, header.getKey(), header.getValue());
+      if (!header.getKey().equalsIgnoreCase(IDEMPOTENCY_KEY)) {
+        replace(headers, header.getKey(), header.getValue());
+      }
     }
-    ro.idempotencyKey().ifPresent(key -> replace(headers, "Idempotency-Key", key));
     for (Map.Entry<String, String> header : ro.headers().entrySet()) {
       replace(headers, header.getKey(), header.getValue());
     }
+    ro.idempotencyKey().ifPresent(key -> replace(headers, IDEMPOTENCY_KEY, key));
+    boolean keyed = settleIdempotencyKey(headers, request.method);
     return new Prepared(
         request.method,
         uri,
@@ -270,7 +276,42 @@ public final class ApiClient {
         ro.timeout().orElse(options.timeout()),
         ro.maxRetries().orElse(options.maxRetries()),
         streaming,
-        request.method + " " + uri.getRawPath());
+        request.method + " " + uri.getRawPath(),
+        keyed);
+  }
+
+  private static final String IDEMPOTENCY_KEY = "Idempotency-Key";
+
+  /**
+   * Settles the effective {@code Idempotency-Key} on the merged headers (DESIGN 6 and 7): one
+   * header with the highest-precedence value, validated whatever its source, and dropped on any
+   * method other than POST, PUT, PATCH and DELETE.
+   *
+   * @return true when the request carries a key
+   */
+  private static boolean settleIdempotencyKey(Map<String, List<String>> headers, String method) {
+    String key = null;
+    for (Map.Entry<String, List<String>> header : headers.entrySet()) {
+      if (header.getKey().equalsIgnoreCase(IDEMPOTENCY_KEY) && !header.getValue().isEmpty()) {
+        key = header.getValue().get(header.getValue().size() - 1);
+      }
+    }
+    if (key == null) {
+      return false;
+    }
+    headers.keySet().removeIf(k -> k.equalsIgnoreCase(IDEMPOTENCY_KEY));
+    if (key.isEmpty() || key.length() > 255) {
+      throw new ConfigurationException("Idempotency-Key must be a string of 1 to 255 characters");
+    }
+    boolean allowed =
+        method.equals("POST")
+            || method.equals("PUT")
+            || method.equals("PATCH")
+            || method.equals("DELETE");
+    if (allowed) {
+      put(headers, IDEMPOTENCY_KEY, key);
+    }
+    return allowed;
   }
 
   private static void addQuery(List<String[]> query, String field, JsonNode value) {
@@ -358,7 +399,7 @@ public final class ApiClient {
     Throwable cause = unwrap(error);
     boolean timeout = cause instanceof TimeoutException || cause instanceof HttpTimeoutException;
     boolean beforeSending = RetryPolicy.failedBeforeSending(cause);
-    boolean retryable = beforeSending || request.idempotent();
+    boolean retryable = beforeSending || request.idempotent() || prepared.hasIdempotencyKey;
     if (!(cause instanceof IOException) && !(cause instanceof TimeoutException)) {
       retryable = false; // a bug or a misconfigured transport, not a network failure
     }
@@ -413,7 +454,24 @@ public final class ApiClient {
       }
       return;
     }
-    if (RetryPolicy.retryableStatus(status, request.idempotent()) && retry < prepared.maxRetries) {
+    boolean safeToRepeat = request.idempotent() || prepared.hasIdempotencyKey;
+    byte[] bytes = null;
+    if (status == 409 && prepared.hasIdempotencyKey && retry < prepared.maxRetries) {
+      bytes = readBodyQuietly(response);
+      if (isKeyInProgress(bytes)) {
+        scheduleRetry(
+            prepared,
+            request,
+            ro,
+            handler,
+            retry,
+            started,
+            result,
+            headers.firstValue("Retry-After"));
+        return;
+      }
+    }
+    if (RetryPolicy.retryableStatus(status, safeToRepeat) && retry < prepared.maxRetries) {
       response.close();
       scheduleRetry(
           prepared,
@@ -426,11 +484,8 @@ public final class ApiClient {
           headers.firstValue("Retry-After"));
       return;
     }
-    byte[] bytes;
-    try {
-      bytes = response.readBody();
-    } catch (IOException e) {
-      bytes = new byte[0];
+    if (bytes == null) {
+      bytes = readBodyQuietly(response);
     }
     JsonNode body = null;
     if (bytes.length > 0) {
@@ -443,6 +498,29 @@ public final class ApiClient {
     log(prepared, retry, started, Integer.toString(status), headers.requestId());
     result.completeExceptionally(
         ApiStatusException.create(status, body, headers, prepared.logPath));
+  }
+
+  private static byte[] readBodyQuietly(TransportResponse response) {
+    try {
+      return response.readBody();
+    } catch (IOException e) {
+      return new byte[0];
+    }
+  }
+
+  /** True for a 409 whose JSON {@code code} is {@code idempotency_key_in_progress}. */
+  private static boolean isKeyInProgress(byte[] bytes) {
+    if (bytes.length == 0) {
+      return false;
+    }
+    try {
+      JsonNode code = Json.parse(bytes).get("code");
+      return code != null
+          && code.isTextual()
+          && code.asText().equals("idempotency_key_in_progress");
+    } catch (RuntimeException e) {
+      return false;
+    }
   }
 
   private <T extends @Nullable Object> void scheduleRetry(
@@ -524,7 +602,10 @@ public final class ApiClient {
       return false;
     }
 
-    /** 408, 429 and 5xx for idempotent methods; only 429 for POST and PATCH. */
+    /**
+     * 408, 429 and 5xx when the request is safe to repeat (idempotent method, or a POST or PATCH
+     * with an {@code Idempotency-Key}); only 429 otherwise.
+     */
     static boolean retryableStatus(int status, boolean idempotent) {
       if (status == 429) {
         return true;
