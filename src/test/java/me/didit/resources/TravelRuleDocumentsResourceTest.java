@@ -10,6 +10,7 @@ import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -47,15 +48,17 @@ final class TravelRuleDocumentsResourceTest {
   @Test
   void create() {
     TravelRuleDocumentsCreateParams params = TravelRuleDocumentsCreateParams.builder().kind(TravelRuleDocumentKind.QUESTIONNAIRE).file(FileUpload.of(new byte[] {37, 80, 68, 70}, "file.pdf", "application/pdf")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{\"content_type\":\"application/pdf\",\"id\":\"value\",\"kind\":\"questionnaire\",\"name\":\"value\"}");
     transport.respondJson(201, example);
-    var result = client.travelRule().documents().create(params);
+    var result = client.travelRule().documents().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/travel-rule/documents/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(Map.ofEntries(Map.entry("kind", List.of("questionnaire"))), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("file", List.of("file.pdf"))), request.multipartFiles());
     TestJson.assertJsonEquals(example, Json.toNode(result));
@@ -79,14 +82,16 @@ final class TravelRuleDocumentsResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.travelRule().documents().delete("00000000-0000-4000-8000-000000013be3");
+    client.travelRule().documents().delete("00000000-0000-4000-8000-000000013be3", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/travel-rule/documents/00000000-0000-4000-8000-000000013be3/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 }

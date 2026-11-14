@@ -127,6 +127,7 @@ public final class QuestionnairesResource {
    * <p>Create a simple linear questionnaire. Send <code>form_elements</code> in display order; branching and repeatable groups require the Console. Defaults to <code>published</code> v1.
    *
    * <p>{@code POST /v3/questionnaires/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -219,6 +220,7 @@ public final class QuestionnairesResource {
    * <p>Update a questionnaire. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>questionnaire_id</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>questionnaire_group_id</code> (new <code>questionnaire_id</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>).
    *
    * <p>{@code PATCH /v3/questionnaires/{questionnaire_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param questionnaireUuid Per-version UUID of the questionnaire to update.
    * @param params the request parameters
@@ -269,6 +271,7 @@ public final class QuestionnairesResource {
    * <p>Permanently delete one questionnaire version (no undo). Stored questionnaire responses linked to this version are deleted with it, and sessions referencing it lose the link; other versions in the same group are not deleted. Workflows that referenced it keep running but the questionnaire step can no longer load it.
    *
    * <p>{@code DELETE /v3/questionnaires/{questionnaire_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param questionnaireUuid Per-version UUID of the questionnaire to delete.
    * @param options per-request options that override the client options

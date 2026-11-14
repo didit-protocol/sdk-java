@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -79,15 +80,17 @@ final class BiometricTemplatesResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "DELETE", "/v3/biometric-templates/{template_uuid}/", "200");
     transport.respondJson(200, example);
-    var result = client.biometricTemplates().delete("00000000-0000-4000-8000-000000014054");
+    var result = client.biometricTemplates().delete("00000000-0000-4000-8000-000000014054", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/biometric-templates/00000000-0000-4000-8000-000000014054/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -96,15 +99,17 @@ final class BiometricTemplatesResourceTest {
   @Test
   void batchDelete() {
     BiometricTemplatesBatchDeleteParams params = BiometricTemplatesBatchDeleteParams.builder().templateUuids(List.of("00000000-0000-4000-8000-000000002c35")).deleteAll(true).vendorData("value-vendor-data").vendorUserUuid("00000000-0000-4000-8000-000000003947").status(BiometricTemplatesBatchDeleteParams.Status.PENDING).sourceType(BiometricTemplatesBatchDeleteParams.SourceType.SESSION_DELETE).retainedFrom(OffsetDateTime.parse("2026-11-01T10:15:30Z")).retainedTo(OffsetDateTime.parse("2026-11-01T10:15:30Z")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/biometric-templates/delete/", "200");
     transport.respondJson(200, example);
-    var result = client.biometricTemplates().batchDelete(params);
+    var result = client.biometricTemplates().batchDelete(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/biometric-templates/delete/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"template_uuids\":[\"00000000-0000-4000-8000-000000002c35\"],\"delete_all\":true,\"vendor_data\":\"value-vendor-data\",\"vendor_user_uuid\":\"00000000-0000-4000-8000-000000003947\",\"status\":\"pending\",\"source_type\":\"session_delete\",\"retained_from\":\"2026-11-01T10:15:30Z\",\"retained_to\":\"2026-11-01T10:15:30Z\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

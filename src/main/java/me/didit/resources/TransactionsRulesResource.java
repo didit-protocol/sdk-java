@@ -132,6 +132,7 @@ public final class TransactionsRulesResource {
    * <p>Create a CUSTOM transaction-monitoring rule. Titles are unique per application (duplicate -&gt; 400). A <code>change_status</code> action targeting <code>AWAITING_USER</code> must carry <code>workflow_id</code>. Rules created in ACTIVE mode apply to new transactions immediately - the recommended workflow is create in TEST mode, backtest, then switch mode to ACTIVE. To change a library rule, create it as a copy: send the library rule's definition with <code>metadata.based_on</code> (its library key) and <code>metadata.based_on_rule_uuid</code>.
    *
    * <p>{@code POST /v3/transactions/rules/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -224,6 +225,7 @@ public final class TransactionsRulesResource {
    * <p>Partially update a rule. Custom rules accept every configuration field. Library (PRESET) rules accept only <code>mode</code> - use it to activate, disable, or switch a preset to TEST; any other field returns 400, because Didit maintains library rules and applies their updates automatically. To change a library rule's conditions, create a custom copy with <code>POST /v3/transactions/rules/</code> using the library rule's definition and <code>metadata.based_on</code> (the library key) and <code>metadata.based_on_rule_uuid</code>, then switch the library rule off with <code>mode: DISABLED</code> so a transaction does not alert twice. An installed copy of a withheld library rule is switched off: setting its <code>mode</code> to anything but <code>DISABLED</code> answers 400 ("This library rule cannot run yet: its conditions read data the rules engine cannot evaluate.").
    *
    * <p>{@code PATCH /v3/transactions/rules/{rule_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param ruleUuid The rule's uuid from list or create.
    * @param params the request parameters
@@ -274,6 +276,7 @@ public final class TransactionsRulesResource {
    * <p>Delete a CUSTOM rule. Deletion is immediate and permanent: the rule stops evaluating for new transactions and disappears from listings, while past rule runs on already-evaluated transactions keep their recorded results. Library rules cannot be deleted - uninstall them via the install endpoint instead (they can always be reinstalled from the library).
    *
    * <p>{@code DELETE /v3/transactions/rules/{rule_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param ruleUuid The rule's uuid from list or create.
    * @param options per-request options that override the client options
@@ -318,6 +321,7 @@ public final class TransactionsRulesResource {
    * <p>Evaluate a hypothetical rule configuration against your recent transactions (most recent first, up to the backtest cap) without creating a rule or touching any transaction. Use it before activating a rule to see how often it would have matched and how many subjects it would have affected.
    *
    * <p>{@code POST /v3/transactions/rules/backtest/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -449,6 +453,7 @@ public final class TransactionsRulesResource {
    * <p>Install one or more presets onto the application, by <code>library_keys</code> or a whole <code>bundle</code>. An installed preset is active at once while transaction monitoring is on, and disabled otherwise; already-installed keys are skipped. A library rule whose conditions read data the rules engine cannot evaluate yet is withheld until it can run. A request that names one in <code>library_keys</code> answers 400 and installs nothing ("These library rules cannot run yet: their conditions read data the rules engine cannot evaluate." followed by the keys), and a <code>bundle</code> install skips it. A withheld rule comes back on its own once its conditions can be evaluated. A <code>library_keys</code> entry that is not in the library is skipped, not refused.
    *
    * <p>{@code POST /v3/transactions/rules/install/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -495,6 +500,7 @@ public final class TransactionsRulesResource {
    * <p>Remove installed presets from the application, by <code>library_keys</code> or a whole <code>bundle</code>. Uninstalled presets stop evaluating immediately and can be reinstalled from the library at any time.
    *
    * <p>{@code DELETE /v3/transactions/rules/install/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

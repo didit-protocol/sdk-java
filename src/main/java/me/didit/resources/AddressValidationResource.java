@@ -49,6 +49,7 @@ public final class AddressValidationResource {
    * <p><b>Rate limit.</b> Shared write budget of 300 requests per minute per API key across POST/PATCH/DELETE endpoints (transaction creates and event ingestion have a separate budget of 600).
    *
    * <p>{@code POST /v3/address-validation/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

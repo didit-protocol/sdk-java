@@ -10,6 +10,7 @@ import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -27,15 +28,17 @@ final class ProofOfAddressResourceTest {
   @Test
   void verify() {
     ProofOfAddressVerifyParams params = ProofOfAddressVerifyParams.builder().document(FileUpload.of(new byte[] {37, 80, 68, 70}, "document.pdf", "application/pdf")).documentPassword("value-document-password").expectedAddress("value-expected-address").expectedCountry("value-expected-country").expectedFirstName("value-expected-first-name").expectedLastName("value-expected-last-name").poaLanguagesAllowed("value-poa-languages-allowed").poaDocumentAgeMonths("value-poa-document-age-months").poaNameMismatchAction(ProofOfAddressVerifyParams.PoaNameMismatchAction.DECLINE).poaDocumentIssuesAction(ProofOfAddressVerifyParams.PoaDocumentIssuesAction.DECLINE).poaDocumentAuthenticityAction(ProofOfAddressVerifyParams.PoaDocumentAuthenticityAction.DECLINE).poaUnsupportedLanguageAction(ProofOfAddressVerifyParams.PoaUnsupportedLanguageAction.DECLINE).poaAddressMismatchAction(ProofOfAddressVerifyParams.PoaAddressMismatchAction.DECLINE).poaIssuerNotIdentifiedAction(ProofOfAddressVerifyParams.PoaIssuerNotIdentifiedAction.DECLINE).saveApiRequest(true).vendorData("value-vendor-data").metadata(Map.of("key", "value")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/poa/", "200");
     transport.respondJson(200, example);
-    var result = client.proofOfAddress().verify(params);
+    var result = client.proofOfAddress().verify(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/poa/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(Map.ofEntries(Map.entry("document_password", List.of("value-document-password")), Map.entry("expected_address", List.of("value-expected-address")), Map.entry("expected_country", List.of("value-expected-country")), Map.entry("expected_first_name", List.of("value-expected-first-name")), Map.entry("expected_last_name", List.of("value-expected-last-name")), Map.entry("poa_languages_allowed", List.of("value-poa-languages-allowed")), Map.entry("poa_document_age_months", List.of("value-poa-document-age-months")), Map.entry("poa_name_mismatch_action", List.of("DECLINE")), Map.entry("poa_document_issues_action", List.of("DECLINE")), Map.entry("poa_document_authenticity_action", List.of("DECLINE")), Map.entry("poa_unsupported_language_action", List.of("DECLINE")), Map.entry("poa_address_mismatch_action", List.of("DECLINE")), Map.entry("poa_issuer_not_identified_action", List.of("DECLINE")), Map.entry("save_api_request", List.of("true")), Map.entry("vendor_data", List.of("value-vendor-data")), Map.entry("metadata", List.of("{\"key\":\"value\"}"))), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("document", List.of("document.pdf"))), request.multipartFiles());
     TestJson.assertJsonEquals(example, Json.toNode(result));

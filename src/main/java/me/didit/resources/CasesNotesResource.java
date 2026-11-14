@@ -134,6 +134,7 @@ public final class CasesNotesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
@@ -183,6 +184,7 @@ public final class CasesNotesResource {
    *
    * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid the {@code case_uuid}
    * @param noteUuid the {@code note_uuid}
@@ -280,6 +282,7 @@ public final class CasesNotesResource {
   /**
    * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/{note_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid the {@code case_uuid}
    * @param noteUuid the {@code note_uuid}
@@ -380,6 +383,7 @@ public final class CasesNotesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/notes/presign/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid Case UUID.
    * @param params the request parameters

@@ -132,6 +132,7 @@ public final class RegulatoryReportsResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -226,6 +227,7 @@ public final class RegulatoryReportsResource {
    *
    * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param reportUuid Report UUID.
    * @param params the request parameters
@@ -321,6 +323,7 @@ public final class RegulatoryReportsResource {
    *
    * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param reportUuid Report UUID.
    * @param params the request parameters
@@ -410,6 +413,7 @@ public final class RegulatoryReportsResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/validate/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param reportUuid Report UUID.
    * @param options per-request options that override the client options
@@ -457,6 +461,7 @@ public final class RegulatoryReportsResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/finalize/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param reportUuid Report UUID.
    * @param options per-request options that override the client options

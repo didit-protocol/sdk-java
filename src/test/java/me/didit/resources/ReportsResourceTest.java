@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -62,15 +63,17 @@ final class ReportsResourceTest {
   @Test
   void retry() {
     AsyncReportRetryRequest params = AsyncReportRetryRequest.builder().itemIds(List.of("00000000-0000-4000-8000-000000000ed9")).dateFrom(LocalDate.parse("2026-11-01")).dateTo(LocalDate.parse("2026-11-01")).notifyOnReady(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/organization/{organization_id}/application/{application_id}/reports/{report_uuid}/retry/", "200");
     transport.respondJson(200, example);
-    var result = client.reports().retry("00000000-0000-4000-8000-000000007f44", params);
+    var result = client.reports().retry("00000000-0000-4000-8000-000000007f44", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/reports/00000000-0000-4000-8000-000000007f44/retry/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"item_ids\":[\"00000000-0000-4000-8000-000000000ed9\"],\"date_from\":\"2026-11-01\",\"date_to\":\"2026-11-01\",\"notify_on_ready\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

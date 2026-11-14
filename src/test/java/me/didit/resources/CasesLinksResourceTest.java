@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -42,15 +43,17 @@ final class CasesLinksResourceTest {
   @Test
   void create() {
     CasesLinksCreateParams params = CasesLinksCreateParams.builder().entityType(CasesLinksCreateParams.EntityType.SESSION).entityUuid("00000000-0000-4000-8000-000000001c1f").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(201, example);
-    var result = client.cases().links().create("00000000-0000-4000-8000-000000009800", params);
+    var result = client.cases().links().create("00000000-0000-4000-8000-000000009800", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/00000000-0000-4000-8000-000000009800/links/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"entity_type\":\"session\",\"entity_uuid\":\"00000000-0000-4000-8000-000000001c1f\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -58,14 +61,16 @@ final class CasesLinksResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.cases().links().delete("00000000-0000-4000-8000-000000009800", "00000000-0000-4000-8000-000000009966");
+    client.cases().links().delete("00000000-0000-4000-8000-000000009800", "00000000-0000-4000-8000-000000009966", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/00000000-0000-4000-8000-000000009800/links/00000000-0000-4000-8000-000000009966/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 }

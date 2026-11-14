@@ -256,6 +256,7 @@ public final class SessionsSignaturesResource {
    * <p>Needs <code>write:sessions</code>; your API key works. In the console it's the <b>Validate again</b> button.
    *
    * <p>{@code POST /v3/session/{sessionId}/signatures/{nodeId}/validate/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId The User Verification (KYC) or Business Verification (KYB) session.
    * @param nodeId The E-signature step: `node_id` of the item in `signatures[]`.

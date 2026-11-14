@@ -87,6 +87,7 @@ public final class CasesLinksResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid Case UUID.
    * @param params the request parameters
@@ -138,6 +139,7 @@ public final class CasesLinksResource {
    *
    * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/links/{link_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid Case UUID.
    * @param linkUuid Link UUID.

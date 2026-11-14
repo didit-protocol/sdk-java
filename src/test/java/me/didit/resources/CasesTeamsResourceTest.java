@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -47,15 +48,17 @@ final class CasesTeamsResourceTest {
   @Test
   void create() {
     CaseReviewTeamCreate params = CaseReviewTeamCreate.builder().name("value-name").description("value-description").members(List.of(CaseReviewTeamMember.builder().userId("00000000-0000-4000-8000-000000000b5f").availability(CaseReviewTeamMember.Availability.AVAILABLE).capacity(1L).build())).isActive(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(201, example);
-    var result = client.cases().teams().create(params);
+    var result = client.cases().teams().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/teams/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"name\":\"value-name\",\"description\":\"value-description\",\"members\":[{\"user_id\":\"00000000-0000-4000-8000-000000000b5f\",\"availability\":\"available\",\"capacity\":1}],\"is_active\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -80,15 +83,17 @@ final class CasesTeamsResourceTest {
   @Test
   void update() {
     CaseReviewTeamUpdate params = CaseReviewTeamUpdate.builder().name("value-name").description("value-description").members(List.of(CaseReviewTeamMember.builder().userId("00000000-0000-4000-8000-000000000b5f").availability(CaseReviewTeamMember.Availability.AVAILABLE).capacity(1L).build())).isActive(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.cases().teams().update("00000000-0000-4000-8000-00000000b139", params);
+    var result = client.cases().teams().update("00000000-0000-4000-8000-00000000b139", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/teams/00000000-0000-4000-8000-00000000b139/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"name\":\"value-name\",\"description\":\"value-description\",\"members\":[{\"user_id\":\"00000000-0000-4000-8000-000000000b5f\",\"availability\":\"available\",\"capacity\":1}],\"is_active\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

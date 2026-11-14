@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -42,15 +43,17 @@ final class CasesChecklistResourceTest {
   @Test
   void toggleItem() {
     CasesChecklistToggleItemParams params = CasesChecklistToggleItemParams.builder().isCompleted(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.cases().checklist().toggleItem("00000000-0000-4000-8000-000000010e5c", "00000000-0000-4000-8000-00000001107f", params);
+    var result = client.cases().checklist().toggleItem("00000000-0000-4000-8000-000000010e5c", "00000000-0000-4000-8000-00000001107f", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/00000000-0000-4000-8000-000000010e5c/checklist/00000000-0000-4000-8000-00000001107f/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"is_completed\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

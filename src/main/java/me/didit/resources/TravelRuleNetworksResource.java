@@ -123,6 +123,7 @@ public final class TravelRuleNetworksResource {
    * <p>Save answers to the questionnaire while it is draft or changes_requested. Saves are partial: answers you do not send are kept.
    *
    * <p>{@code PUT /v3/travel-rule/networks/questionnaire/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -169,6 +170,7 @@ public final class TravelRuleNetworksResource {
    * <p>Send the saved questionnaire to Didit's review. The saved answers must be complete: every field except lei and data_protection_contact_email, with the three attestations true. Didit approves it, asks for changes (edit and submit again) or rejects it. Networks you requested while it was pending are handed to their onboarding when it is approved.
    *
    * <p>{@code POST /v3/travel-rule/networks/questionnaire/submit/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param options per-request options that override the client options
    * @return the response body
@@ -211,6 +213,7 @@ public final class TravelRuleNetworksResource {
    * <p>Ask for this application's own participant on a network Didit's membership carries (GTR or Sygna). Without an approved questionnaire the participant waits for it (questionnaire_pending); with one it goes to the network's onboarding (submitted_to_network) and becomes active once the network gives it a code. Idempotent: a pending, onboarding or live participant is returned unchanged. If the network refused the registration (last_error is set), requesting again retries. TRUST and VerifyVASP are reachable only through your own membership: TRUST admits members per VASP, and a VerifyVASP Enclave serves one VASP id.
    *
    * <p>{@code POST /v3/travel-rule/networks/{network}/request/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param network The network to join through Didit's membership.
    * @param options per-request options that override the client options

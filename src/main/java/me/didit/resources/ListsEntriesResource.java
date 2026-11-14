@@ -134,6 +134,7 @@ public final class ListsEntriesResource {
    * <p>Adds one entry to a list, in one of three ways: by <code>value</code>; from a verification session with <code>reference_session_id</code>, where Didit reads the value from the session's most recent record of the list's entry type and links the entry to it; or by <code>value</code> with a <code>reference_object_uuid</code> and <code>metadata.reference_type</code> pointing back to a transaction, user or business. On the system face, document, phone and email blocklists, the record read from the session is also flagged as blocklisted, so new matching sessions are declined; on the system user and business blocklists, matching users or businesses are set to <code>BLOCKED</code>. Sessions and transactions that already finished are not changed. A scoped API key needs <code>workflows: write</code>. See <a href="https://docs.didit.me/management-api/lists/create-entry">Create a list entry</a> for each mode.
    *
    * <p>{@code POST /v3/lists/{list_uuid}/entries/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param listUuid UUID of the list to add to. For a face you only have as an image, use Upload a face to a list instead.
    * @param params the request parameters
@@ -226,6 +227,7 @@ public final class ListsEntriesResource {
    * <p>Deletes one entry from a list, system lists included. The entry stops matching at once, and deletion is irreversible: to list the value again, create a new entry. On a system face, document, phone or email blocklist, the record the entry stands for is no longer flagged as blocklisted; on the system user or business blocklist, users or businesses of the application whose <code>vendor_data</code> equals the entry's value (or whose <code>didit_internal_id</code> equals its <code>reference_object_uuid</code>) and that are <code>BLOCKED</code> return to <code>ACTIVE</code>. Sessions and transactions that already finished keep their status. A scoped API key needs <code>workflows: write</code>.
    *
    * <p>{@code DELETE /v3/lists/{list_uuid}/entries/{entry_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param listUuid UUID of the list that holds the entry.
    * @param entryUuid UUID of the entry, as returned by List list entries or Create a list entry.
@@ -274,6 +276,7 @@ public final class ListsEntriesResource {
    * <p>Adds a face to a face blocklist or face allowlist from a base64-encoded JPEG or PNG image, for when you have no verification session to reference. Didit detects the faces in the image, uses the largest one, and creates an entry whose <code>value</code> and <code>reference_object_uuid</code> are the UUID of the new face. A blocklisted face declines new sessions whose face matches; an allowlisted face skips the duplicated-face action and never overrides a blocklist match. In a sandbox application the image is not analyzed and the entry matches nothing. A scoped API key needs <code>workflows: write</code>. To list a face from an existing session, use <a href="https://docs.didit.me/management-api/lists/create-entry">Create a list entry</a> with <code>reference_session_id</code> instead.
    *
    * <p>{@code POST /v3/lists/{list_uuid}/entries/face-upload/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param listUuid UUID of a list with `entry_type: face` and `list_type: blocklist` or `allowlist`.
    * @param params the request parameters

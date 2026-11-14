@@ -49,6 +49,7 @@ public final class DocumentAiResource {
    * <p><b>Persistence.</b> With <code>save_api_request=true</code> (default) the call is stored as an API-type session: the document, the extracted values, the field definitions and the name-match snapshot are kept, the session shows up in the Business Console, and <code>request_id</code> works with <code>GET /v3/session/{sessionId}/decision/</code>.
    *
    * <p>{@code POST /v3/document-ai/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

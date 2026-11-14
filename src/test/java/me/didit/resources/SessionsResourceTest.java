@@ -12,6 +12,7 @@ import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -61,15 +62,17 @@ final class SessionsResourceTest {
   @Test
   void create() {
     SessionsCreateParams params = SessionsCreateParams.builder().workflowId("00000000-0000-4000-8000-000000001b5b").vendorData("value-vendor-data").multiAccountSegment("value-multi-account-segment").callback("value-callback").callbackMethod(SessionsCreateParams.CallbackMethod.INITIATOR).metadata("value").tags(List.of("value-tags")).sessionExpirationTime(1L).language(SessionsCreateParams.Language.EN).contactDetails(SessionsCreateParams.ContactDetails.builder().email("user@example.com").sendNotificationEmails(true).build()).expectedDetails(SessionsCreateParams.ExpectedDetails.builder().firstName("value-first-name").lastName("value-last-name").build()).portraitImage("value-portrait-image").sandboxScenario("value-sandbox-scenario").sign(SessionsCreateParams.Sign.builder().documents(List.of(SessionSignDocument.builder().title("value-title").fileName("value-file-name").contentBase64("value-content-base64").fields(List.of(SignatureField.builder().key("value-key").type(SignatureField.Type.SIGNATURE).role(SignatureField.Role.VERIFIED_PERSON).page(1L).build())).build())).fieldValues(Map.of("key", SessionsCreateParams.Sign.FieldValuesValue.ofString("value-field-values"))).build()).userState("value-user-state").biometricConsent(SessionsCreateParams.BiometricConsent.builder().givenAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).textVersion("value-text-version").build()).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/", "201");
     transport.respondJson(201, example);
-    var result = client.sessions().create(params);
+    var result = client.sessions().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/session/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"workflow_id\":\"00000000-0000-4000-8000-000000001b5b\",\"vendor_data\":\"value-vendor-data\",\"multi_account_segment\":\"value-multi-account-segment\",\"callback\":\"value-callback\",\"callback_method\":\"initiator\",\"metadata\":\"value\",\"tags\":[\"value-tags\"],\"session_expiration_time\":1,\"language\":\"en\",\"contact_details\":{\"email\":\"user@example.com\",\"send_notification_emails\":true},\"expected_details\":{\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\"},\"portrait_image\":\"value-portrait-image\",\"sandbox_scenario\":\"value-sandbox-scenario\",\"sign\":{\"documents\":[{\"title\":\"value-title\",\"file_name\":\"value-file-name\",\"content_base64\":\"value-content-base64\",\"fields\":[{\"key\":\"value-key\",\"type\":\"signature\",\"role\":\"verified_person\",\"page\":1}]}],\"field_values\":{\"key\":\"value-field-values\"}},\"user_state\":\"value-user-state\",\"biometric_consent\":{\"given_at\":\"2026-11-01T10:15:30Z\",\"text_version\":\"value-text-version\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -95,15 +98,17 @@ final class SessionsResourceTest {
   @Test
   void delete() {
     SessionsDeleteParams params = SessionsDeleteParams.builder().retainFaceEmbeddings(true).faceRetentionDays(1L).faceRetentionDeadline(OffsetDateTime.parse("2026-11-01T10:15:30Z")).deletionInstruction(SessionsDeleteParams.DeletionInstruction.OPERATIONAL_SESSION_DELETE).instructionId("value-instruction-id").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "DELETE", "/v3/session/{sessionId}/delete/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().delete("00000000-0000-4000-8000-00000000792a", params);
+    var result = client.sessions().delete("00000000-0000-4000-8000-00000000792a", params, options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-00000000792a/delete/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"retain_face_embeddings\":true,\"face_retention_days\":1,\"face_retention_deadline\":\"2026-11-01T10:15:30Z\",\"deletion_instruction\":\"operational_session_delete\",\"instruction_id\":\"value-instruction-id\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -127,15 +132,17 @@ final class SessionsResourceTest {
   @Test
   void updateStatus() {
     SessionsUpdateStatusParams params = SessionsUpdateStatusParams.builder().newStatus(SessionsUpdateStatusParams.NewStatus.APPROVED).comment("value-comment").nodesToResubmit(List.of(SessionsUpdateStatusParams.NodesToResubmit.builder().nodeId("value-node-id").feature(SessionsUpdateStatusParams.NodesToResubmit.Feature.OCR).build())).sendEmail(true).emailAddress("user@example.com").emailLanguage("value-email-language").emailPreviewToken("value-email-preview-token").linkToSessionId("00000000-0000-4000-8000-0000000046e4").linkReason("value-link-reason").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/update-status/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().updateStatus("00000000-0000-4000-8000-00000000cd09", params);
+    var result = client.sessions().updateStatus("00000000-0000-4000-8000-00000000cd09", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-00000000cd09/update-status/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"new_status\":\"Approved\",\"comment\":\"value-comment\",\"nodes_to_resubmit\":[{\"node_id\":\"value-node-id\",\"feature\":\"OCR\"}],\"send_email\":true,\"email_address\":\"user@example.com\",\"email_language\":\"value-email-language\",\"email_preview_token\":\"value-email-preview-token\",\"link_to_session_id\":\"00000000-0000-4000-8000-0000000046e4\",\"link_reason\":\"value-link-reason\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -162,15 +169,17 @@ final class SessionsResourceTest {
   @Test
   void share() {
     SessionsShareParams params = SessionsShareParams.builder().forApplicationId("00000000-0000-4000-8000-0000000045ff").ttlInSeconds(1L).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/share/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().share("00000000-0000-4000-8000-000000006f98", params);
+    var result = client.sessions().share("00000000-0000-4000-8000-000000006f98", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-000000006f98/share/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"for_application_id\":\"00000000-0000-4000-8000-0000000045ff\",\"ttl_in_seconds\":1}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -179,15 +188,17 @@ final class SessionsResourceTest {
   @Test
   void importShared() {
     SessionsImportSharedParams params = SessionsImportSharedParams.builder().shareToken("value-share-token").trustReview(true).workflowId("00000000-0000-4000-8000-000000001b5b").vendorData("value-vendor-data").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/import-shared/", "201");
     transport.respondJson(201, example);
-    var result = client.sessions().importShared(params);
+    var result = client.sessions().importShared(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/session/import-shared/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"share_token\":\"value-share-token\",\"trust_review\":true,\"workflow_id\":\"00000000-0000-4000-8000-000000001b5b\",\"vendor_data\":\"value-vendor-data\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -196,15 +207,17 @@ final class SessionsResourceTest {
   @Test
   void batchDelete() {
     SessionsBatchDeleteParams params = SessionsBatchDeleteParams.builder().sessionNumbers(List.of("value-session-numbers")).deleteAll(true).retainFaceEmbeddings(true).faceRetentionDays(1L).faceRetentionDeadline(OffsetDateTime.parse("2026-11-01T10:15:30Z")).deletionInstruction(SessionsBatchDeleteParams.DeletionInstruction.OPERATIONAL_SESSION_DELETE).instructionId("value-instruction-id").filterStatus(SessionsBatchDeleteParams.FilterStatus.ofString("value-filter-status")).filterVendorData("value-filter-vendor-data").filterSearch("value-filter-search").filterWorkflowId(SessionsBatchDeleteParams.FilterWorkflowId.ofString("value-filter-workflow-id")).filterDateFrom(LocalDate.parse("2026-11-01")).filterDateTo(LocalDate.parse("2026-11-01")).filterCountry(SessionsBatchDeleteParams.FilterCountry.ofString("value-filter-country")).filterDocumentType(SessionsBatchDeleteParams.FilterDocumentType.ofString("value-filter-document-type")).filterDocumentName(SessionsBatchDeleteParams.FilterDocumentName.ofString("value-filter-document-name")).filterRegion(SessionsBatchDeleteParams.FilterRegion.ofString("value-filter-region")).filterDiditInternalId("00000000-0000-4000-8000-000000007ac5").filterSessionType(SessionsBatchDeleteParams.FilterSessionType.ofString("value-filter-session-type")).filterApiService("value-filter-api-service").filterScreenedFullName("value-filter-screened-full-name").filterWarning(SessionsBatchDeleteParams.FilterWarning.ofString("value-filter-warning")).filterStatusInitializedAsInReview(true).filterIsKycToBeReviewed(true).filterEuuid("00000000-0000-4000-8000-000000002094").filterOrganizationName(SessionsBatchDeleteParams.FilterOrganizationName.ofString("value-filter-organization-name")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/sessions/delete/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().batchDelete(params);
+    var result = client.sessions().batchDelete(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/sessions/delete/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"session_numbers\":[\"value-session-numbers\"],\"delete_all\":true,\"retain_face_embeddings\":true,\"face_retention_days\":1,\"face_retention_deadline\":\"2026-11-01T10:15:30Z\",\"deletion_instruction\":\"operational_session_delete\",\"instruction_id\":\"value-instruction-id\",\"filter_status\":\"value-filter-status\",\"filter_vendor_data\":\"value-filter-vendor-data\",\"filter_search\":\"value-filter-search\",\"filter_workflow_id\":\"value-filter-workflow-id\",\"filter_date_from\":\"2026-11-01\",\"filter_date_to\":\"2026-11-01\",\"filter_country\":\"value-filter-country\",\"filter_document_type\":\"value-filter-document-type\",\"filter_document_name\":\"value-filter-document-name\",\"filter_region\":\"value-filter-region\",\"filter_didit_internal_id\":\"00000000-0000-4000-8000-000000007ac5\",\"filter_session_type\":\"value-filter-session-type\",\"filter_api_service\":\"value-filter-api-service\",\"filter_screened_full_name\":\"value-filter-screened-full-name\",\"filter_warning\":\"value-filter-warning\",\"filter_status_initialized_as_in_review\":true,\"filter_is_kyc_to_be_reviewed\":true,\"filter_euuid\":\"00000000-0000-4000-8000-000000002094\",\"filter_organization_name\":\"value-filter-organization-name\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     assertEquals(200, result.statusCode());
@@ -230,15 +243,17 @@ final class SessionsResourceTest {
   @Test
   void updateData() {
     SessionsUpdateDataParams params = SessionsUpdateDataParams.builder().nodeId("value-node-id").documentType(SessionsUpdateDataParams.DocumentType.P).documentSubtype("value-document-subtype").documentNumber("value-document-number").personalNumber("value-personal-number").dateOfBirth(LocalDate.parse("2026-11-01")).dateOfIssue(LocalDate.parse("2026-11-01")).expirationDate(LocalDate.parse("2026-11-01")).issuingState("value-issuing-state").firstName("value-first-name").lastName("value-last-name").gender(SessionsUpdateDataParams.Gender.M).address("value-address").placeOfBirth("value-place-of-birth").nationality("value-nationality").maritalStatus(SessionsUpdateDataParams.MaritalStatus.SINGLE).extraFields(Map.of("key", "value")).parsedAddress(SessionsUpdateDataParams.ParsedAddress.builder().addressType("value-address-type").city("value-city").build()).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/update-data/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().updateData("00000000-0000-4000-8000-00000000afc4", params);
+    var result = client.sessions().updateData("00000000-0000-4000-8000-00000000afc4", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-00000000afc4/update-data/", request.path());
     assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"document_type\":\"P\",\"document_subtype\":\"value-document-subtype\",\"document_number\":\"value-document-number\",\"personal_number\":\"value-personal-number\",\"date_of_birth\":\"2026-11-01\",\"date_of_issue\":\"2026-11-01\",\"expiration_date\":\"2026-11-01\",\"issuing_state\":\"value-issuing-state\",\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\",\"gender\":\"M\",\"address\":\"value-address\",\"place_of_birth\":\"value-place-of-birth\",\"nationality\":\"value-nationality\",\"marital_status\":\"SINGLE\",\"extra_fields\":{\"key\":\"value\"},\"parsed_address\":{\"address_type\":\"value-address-type\",\"city\":\"value-city\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -247,15 +262,17 @@ final class SessionsResourceTest {
   @Test
   void updateFeatureStatus() {
     SessionsUpdateFeatureStatusParams params = SessionsUpdateFeatureStatusParams.builder().newStatus(SessionsUpdateFeatureStatusParams.NewStatus.APPROVED).comment("value-comment").featureType(SessionsUpdateFeatureStatusParams.FeatureType.ID_VERIFICATION).deferUntilFlowFinishes(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/features/{nodeId}/update-status/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().updateFeatureStatus("00000000-0000-4000-8000-000000014334", "00000000-0000-4000-8000-00000001102a", params);
+    var result = client.sessions().updateFeatureStatus("00000000-0000-4000-8000-000000014334", "00000000-0000-4000-8000-00000001102a", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-000000014334/features/00000000-0000-4000-8000-00000001102a/update-status/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"new_status\":\"Approved\",\"comment\":\"value-comment\",\"feature_type\":\"ID_VERIFICATION\",\"defer_until_flow_finishes\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -264,15 +281,17 @@ final class SessionsResourceTest {
   @Test
   void updateAmlHitStatus() {
     SessionsUpdateAmlHitStatusParams params = SessionsUpdateAmlHitStatusParams.builder().nodeIdQuery("value-node-id-query").hitId("value-hit-id").reviewStatus(SessionsUpdateAmlHitStatusParams.ReviewStatus.UNREVIEWED).nodeId("value-node-id").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/update-aml-hit-status/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().updateAmlHitStatus("00000000-0000-4000-8000-00000001421e", params);
+    var result = client.sessions().updateAmlHitStatus("00000000-0000-4000-8000-00000001421e", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-00000001421e/update-aml-hit-status/", request.path());
     assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id-query"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"hit_id\":\"value-hit-id\",\"review_status\":\"Unreviewed\",\"node_id\":\"value-node-id\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -281,15 +300,17 @@ final class SessionsResourceTest {
   @Test
   void bulkUpdateAmlHitStatus() {
     SessionsBulkUpdateAmlHitStatusParams params = SessionsBulkUpdateAmlHitStatusParams.builder().nodeIdQuery("value-node-id-query").hitUpdates(List.of(SessionsBulkUpdateAmlHitStatusParams.HitUpdates.builder().hitId("value-hit-id").reviewStatus(SessionsBulkUpdateAmlHitStatusParams.HitUpdates.ReviewStatus.UNREVIEWED).build())).nodeId("value-node-id").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/bulk-update-aml-hit-status/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().bulkUpdateAmlHitStatus("00000000-0000-4000-8000-0000000198ee", params);
+    var result = client.sessions().bulkUpdateAmlHitStatus("00000000-0000-4000-8000-0000000198ee", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-0000000198ee/bulk-update-aml-hit-status/", request.path());
     assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id-query"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"hit_updates\":[{\"hit_id\":\"value-hit-id\",\"review_status\":\"Unreviewed\"}],\"node_id\":\"value-node-id\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -298,15 +319,17 @@ final class SessionsResourceTest {
   @Test
   void updatePoaData() {
     SessionsUpdatePoaDataParams params = SessionsUpdatePoaDataParams.builder().nodeId("value-node-id").issuingState("value-issuing-state").documentType(SessionsUpdatePoaDataParams.DocumentType.UTILITY_BILL).documentLanguage("value-document-language").issuer("value-issuer").issueDate(LocalDate.parse("2026-11-01")).poaAddress("value-poa-address").nameOnDocument("value-name-on-document").extraFields(Map.of("key", "value")).poaParsedAddress(SessionsUpdatePoaDataParams.PoaParsedAddress.builder().addressType("value-address-type").city("value-city").build()).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/update-poa-data/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().updatePoaData("00000000-0000-4000-8000-00000000e2cd", params);
+    var result = client.sessions().updatePoaData("00000000-0000-4000-8000-00000000e2cd", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-00000000e2cd/update-poa-data/", request.path());
     assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"issuing_state\":\"value-issuing-state\",\"document_type\":\"UTILITY_BILL\",\"document_language\":\"value-document-language\",\"issuer\":\"value-issuer\",\"issue_date\":\"2026-11-01\",\"poa_address\":\"value-poa-address\",\"name_on_document\":\"value-name-on-document\",\"extra_fields\":{\"key\":\"value\"},\"poa_parsed_address\":{\"address_type\":\"value-address-type\",\"city\":\"value-city\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -315,15 +338,17 @@ final class SessionsResourceTest {
   @Test
   void updateKybCompanyData() {
     SessionsUpdateKybCompanyDataParams params = SessionsUpdateKybCompanyDataParams.builder().companyName("value-company-name").registrationNumber("value-registration-number").countryCode("value-country-code").region("value-region").incorporationDate(LocalDate.parse("2026-11-01")).registrationDate(LocalDate.parse("2026-11-01")).dissolutionDate(LocalDate.parse("2026-11-01")).taxNumber("value-tax-number").legalAddress("value-legal-address").companyType("value-company-type").registryStatus(SessionsUpdateKybCompanyDataParams.RegistryStatus.ACTIVE).verificationStatus(SessionsUpdateKybCompanyDataParams.VerificationStatus.VERIFIED).alternativeNames("value-alternative-names").natureOfBusiness("value-nature-of-business").registeredCapital("value-registered-capital").registeredCapitalAmount(1.5).registeredCapitalCurrency("value-registered-capital-currency").website("value-website").email("user@example.com").phone("value-phone").legalEntityIdentifier("value-legal-entity-identifier").locationOfRegistration("value-location-of-registration").vatNumber("value-vat-number").controlScheme("value-control-scheme").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/kyb/{companyUuid}/update-data/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().updateKybCompanyData("00000000-0000-4000-8000-000000015f57", "00000000-0000-4000-8000-00000001845b", params);
+    var result = client.sessions().updateKybCompanyData("00000000-0000-4000-8000-000000015f57", "00000000-0000-4000-8000-00000001845b", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-000000015f57/kyb/00000000-0000-4000-8000-00000001845b/update-data/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"company_name\":\"value-company-name\",\"registration_number\":\"value-registration-number\",\"country_code\":\"value-country-code\",\"region\":\"value-region\",\"incorporation_date\":\"2026-11-01\",\"registration_date\":\"2026-11-01\",\"dissolution_date\":\"2026-11-01\",\"tax_number\":\"value-tax-number\",\"legal_address\":\"value-legal-address\",\"company_type\":\"value-company-type\",\"registry_status\":\"active\",\"verification_status\":\"verified\",\"alternative_names\":\"value-alternative-names\",\"nature_of_business\":\"value-nature-of-business\",\"registered_capital\":\"value-registered-capital\",\"registered_capital_amount\":1.5,\"registered_capital_currency\":\"value-registered-capital-currency\",\"website\":\"value-website\",\"email\":\"user@example.com\",\"phone\":\"value-phone\",\"legal_entity_identifier\":\"value-legal-entity-identifier\",\"location_of_registration\":\"value-location-of-registration\",\"vat_number\":\"value-vat-number\",\"control_scheme\":\"value-control-scheme\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -332,15 +357,17 @@ final class SessionsResourceTest {
   @Test
   void updateKybParty() {
     SessionsUpdateKybPartyParams params = SessionsUpdateKybPartyParams.builder().isSkipped(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.sessions().updateKybParty("00000000-0000-4000-8000-00000000f557", "00000000-0000-4000-8000-00000000f858", params);
+    var result = client.sessions().updateKybParty("00000000-0000-4000-8000-00000000f557", "00000000-0000-4000-8000-00000000f858", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-00000000f557/kyb/parties/00000000-0000-4000-8000-00000000f858/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"is_skipped\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -365,15 +392,17 @@ final class SessionsResourceTest {
   @Test
   void previewResubmission() {
     SessionsPreviewResubmissionParams params = SessionsPreviewResubmissionParams.builder().nodesToResubmit(List.of(SessionsPreviewResubmissionParams.NodesToResubmit.builder().nodeId("value-node-id").feature(SessionsPreviewResubmissionParams.NodesToResubmit.Feature.OCR).build())).emailAddress("user@example.com").emailLanguage("value-email-language").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/resubmission-preview/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().previewResubmission("00000000-0000-4000-8000-00000001344a", params);
+    var result = client.sessions().previewResubmission("00000000-0000-4000-8000-00000001344a", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-00000001344a/resubmission-preview/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"nodes_to_resubmit\":[{\"node_id\":\"value-node-id\",\"feature\":\"OCR\"}],\"email_address\":\"user@example.com\",\"email_language\":\"value-email-language\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
   }
@@ -381,15 +410,17 @@ final class SessionsResourceTest {
   @Test
   void updateDocumentAiData() {
     SessionsUpdateDocumentAiDataParams params = SessionsUpdateDocumentAiDataParams.builder().extractedData(Map.of("key", "value")).status(SessionsUpdateDocumentAiDataParams.Status.APPROVED).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/document-ai/{sessionId}/documents/{documentUuid}/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().updateDocumentAiData("00000000-0000-4000-8000-000000015d30", "00000000-0000-4000-8000-00000001941b", params);
+    var result = client.sessions().updateDocumentAiData("00000000-0000-4000-8000-000000015d30", "00000000-0000-4000-8000-00000001941b", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/document-ai/00000000-0000-4000-8000-000000015d30/documents/00000000-0000-4000-8000-00000001941b/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"extracted_data\":{\"key\":\"value\"},\"status\":\"Approved\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -397,15 +428,17 @@ final class SessionsResourceTest {
 
   @Test
   void regenerateKybParty() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/kyb/parties/{partyUuid}/regenerate/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().regenerateKybParty("00000000-0000-4000-8000-000000013190", "00000000-0000-4000-8000-0000000134e9");
+    var result = client.sessions().regenerateKybParty("00000000-0000-4000-8000-000000013190", "00000000-0000-4000-8000-0000000134e9", options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-000000013190/kyb/parties/00000000-0000-4000-8000-0000000134e9/regenerate/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -466,15 +499,17 @@ final class SessionsResourceTest {
   @Test
   void addImages() {
     SessionsAddImagesParams params = SessionsAddImagesParams.builder().file(FileUpload.of(new byte[] {37, 80, 68, 70}, "file.pdf", "application/pdf")).modelType(SessionsAddImagesParams.ModelType.KYC).filePassword("value-file-password").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/add-images/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().addImages("00000000-0000-4000-8000-00000000a37f", params);
+    var result = client.sessions().addImages("00000000-0000-4000-8000-00000000a37f", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-00000000a37f/add-images/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(Map.ofEntries(Map.entry("model_type", List.of("kyc")), Map.entry("file_password", List.of("value-file-password"))), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("file", List.of("file.pdf"))), request.multipartFiles());
     TestJson.assertJsonEquals(example, Json.toNode(result));
@@ -484,15 +519,17 @@ final class SessionsResourceTest {
   @Test
   void updateAmlStatus() {
     SessionsUpdateAmlStatusParams params = SessionsUpdateAmlStatusParams.builder().nodeIdQuery("value-node-id-query").status(SessionsUpdateAmlStatusParams.Status.NOT_FINISHED).nodeId("value-node-id").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/update-aml-status/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().updateAmlStatus("00000000-0000-4000-8000-0000000103e8", params);
+    var result = client.sessions().updateAmlStatus("00000000-0000-4000-8000-0000000103e8", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-0000000103e8/update-aml-status/", request.path());
     assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id-query"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"status\":\"Not Finished\",\"node_id\":\"value-node-id\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -501,15 +538,17 @@ final class SessionsResourceTest {
   @Test
   void simulate() {
     SandboxSimulateRequest params = SandboxSimulateRequest.builder().newStatus(SandboxSimulateRequest.NewStatus.APPROVED).comment("value-comment").scenario("value-scenario").risk("value-risk").nodeId("value-node-id").sendWebhooks(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/simulate/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().simulate("00000000-0000-4000-8000-000000008f73", params);
+    var result = client.sessions().simulate("00000000-0000-4000-8000-000000008f73", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-000000008f73/simulate/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"new_status\":\"Approved\",\"comment\":\"value-comment\",\"scenario\":\"value-scenario\",\"risk\":\"value-risk\",\"node_id\":\"value-node-id\",\"send_webhooks\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -533,15 +572,17 @@ final class SessionsResourceTest {
 
   @Test
   void cancelFeatureOverride() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/features/overrides/{overrideId}/cancel/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().cancelFeatureOverride("00000000-0000-4000-8000-0000000160a3", "00000000-0000-4000-8000-000000016fab");
+    var result = client.sessions().cancelFeatureOverride("00000000-0000-4000-8000-0000000160a3", "00000000-0000-4000-8000-000000016fab", options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-0000000160a3/features/overrides/00000000-0000-4000-8000-000000016fab/cancel/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -550,15 +591,17 @@ final class SessionsResourceTest {
   @Test
   void previewDecisionEmail() {
     SessionsPreviewDecisionEmailParams params = SessionsPreviewDecisionEmailParams.builder().newStatus(SessionsPreviewDecisionEmailParams.NewStatus.APPROVED).emailLanguage("value-email-language").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/decision-email-preview/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().previewDecisionEmail("00000000-0000-4000-8000-000000014ede", params);
+    var result = client.sessions().previewDecisionEmail("00000000-0000-4000-8000-000000014ede", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-000000014ede/decision-email-preview/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"new_status\":\"Approved\",\"email_language\":\"value-email-language\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
   }
@@ -566,15 +609,17 @@ final class SessionsResourceTest {
   @Test
   void uploadKybDocuments() {
     SessionsUploadKybDocumentsParams params = SessionsUploadKybDocumentsParams.builder().nodeId("value-node-id").documents(List.of(FileUpload.of(new byte[] {37, 80, 68, 70}, "documents.pdf", "application/pdf"))).documentPasswords(List.of("value-document-passwords")).documentGroup(SessionsUploadKybDocumentsParams.DocumentGroup.LEGAL_PRESENCE).locale("value-locale").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/kyb/documents/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().uploadKybDocuments("00000000-0000-4000-8000-000000013176", params);
+    var result = client.sessions().uploadKybDocuments("00000000-0000-4000-8000-000000013176", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-000000013176/kyb/documents/", request.path());
     assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(Map.ofEntries(Map.entry("document_passwords", List.of("value-document-passwords")), Map.entry("document_group", List.of("LEGAL_PRESENCE")), Map.entry("locale", List.of("value-locale"))), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("documents", List.of("documents.pdf"))), request.multipartFiles());
     TestJson.assertJsonEquals(example, Json.toNode(result));
@@ -618,15 +663,17 @@ final class SessionsResourceTest {
   @Test
   void createKybPartyDraft() {
     SessionsCreateKybPartyDraftParams params = SessionsCreateKybPartyDraftParams.builder().nodeId("value-node-id").entityType(SessionsCreateKybPartyDraftParams.EntityType.PERSON).fullName("value-full-name").firstName("value-first-name").lastName("value-last-name").role(SessionsCreateKybPartyDraftParams.Role.DIRECTOR).roles(List.of(SessionsCreateKybPartyDraftParams.Roles.DIRECTOR)).position("value-position").dateOfBirth(LocalDate.parse("2026-11-01")).companyName("value-company-name").registrationNumber("value-registration-number").email("user@example.com").ownershipPercent(1.5).nationality("value-nationality").phoneNumber("value-phone-number").customFields(Map.of("key", "value")).skipVerification(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/kyb/parties/drafts/", "201");
     transport.respondJson(201, example);
-    var result = client.sessions().createKybPartyDraft("00000000-0000-4000-8000-000000015092", params);
+    var result = client.sessions().createKybPartyDraft("00000000-0000-4000-8000-000000015092", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-000000015092/kyb/parties/drafts/", request.path());
     assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"entity_type\":\"person\",\"full_name\":\"value-full-name\",\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\",\"role\":\"director\",\"roles\":[\"director\"],\"position\":\"value-position\",\"date_of_birth\":\"2026-11-01\",\"company_name\":\"value-company-name\",\"registration_number\":\"value-registration-number\",\"email\":\"user@example.com\",\"ownership_percent\":1.5,\"nationality\":\"value-nationality\",\"phone_number\":\"value-phone-number\",\"custom_fields\":{\"key\":\"value\"},\"skip_verification\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -635,15 +682,17 @@ final class SessionsResourceTest {
   @Test
   void updateKybPartyDraft() {
     SessionsUpdateKybPartyDraftParams params = SessionsUpdateKybPartyDraftParams.builder().nodeId("value-node-id").entityType(SessionsUpdateKybPartyDraftParams.EntityType.PERSON).fullName("value-full-name").firstName("value-first-name").lastName("value-last-name").role(SessionsUpdateKybPartyDraftParams.Role.DIRECTOR).roles(List.of(SessionsUpdateKybPartyDraftParams.Roles.DIRECTOR)).position("value-position").dateOfBirth(LocalDate.parse("2026-11-01")).companyName("value-company-name").registrationNumber("value-registration-number").email("user@example.com").ownershipPercent(1.5).nationality("value-nationality").phoneNumber("value-phone-number").customFields(Map.of("key", "value")).skipVerification(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/session/{sessionId}/kyb/parties/drafts/{draftId}/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().updateKybPartyDraft("00000000-0000-4000-8000-000000015124", "00000000-0000-4000-8000-000000012c99", params);
+    var result = client.sessions().updateKybPartyDraft("00000000-0000-4000-8000-000000015124", "00000000-0000-4000-8000-000000012c99", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-000000015124/kyb/parties/drafts/00000000-0000-4000-8000-000000012c99/", request.path());
     assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"entity_type\":\"person\",\"full_name\":\"value-full-name\",\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\",\"role\":\"director\",\"roles\":[\"director\"],\"position\":\"value-position\",\"date_of_birth\":\"2026-11-01\",\"company_name\":\"value-company-name\",\"registration_number\":\"value-registration-number\",\"email\":\"user@example.com\",\"ownership_percent\":1.5,\"nationality\":\"value-nationality\",\"phone_number\":\"value-phone-number\",\"custom_fields\":{\"key\":\"value\"},\"skip_verification\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -652,29 +701,33 @@ final class SessionsResourceTest {
   @Test
   void deleteKybPartyDraft() {
     SessionsDeleteKybPartyDraftParams params = SessionsDeleteKybPartyDraftParams.builder().nodeId("value-node-id").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.sessions().deleteKybPartyDraft("00000000-0000-4000-8000-000000015095", "00000000-0000-4000-8000-000000012c0a", params);
+    client.sessions().deleteKybPartyDraft("00000000-0000-4000-8000-000000015095", "00000000-0000-4000-8000-000000012c0a", params, options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-000000015095/kyb/parties/drafts/00000000-0000-4000-8000-000000012c0a/", request.path());
     assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 
   @Test
   void submitKybParties() {
     SessionsSubmitKybPartiesParams params = SessionsSubmitKybPartiesParams.builder().nodeId("value-node-id").locale("value-locale").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/kyb/parties/submit/", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().submitKybParties("00000000-0000-4000-8000-00000001127a", params);
+    var result = client.sessions().submitKybParties("00000000-0000-4000-8000-00000001127a", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-00000001127a/kyb/parties/submit/", request.path());
     assertEquals(Map.ofEntries(Map.entry("node_id", List.of("value-node-id"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"locale\":\"value-locale\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -682,15 +735,17 @@ final class SessionsResourceTest {
 
   @Test
   void exportFiles() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/files-export/", "202");
     transport.respondJson(202, example);
-    var result = client.sessions().exportFiles("00000000-0000-4000-8000-00000000bf11");
+    var result = client.sessions().exportFiles("00000000-0000-4000-8000-00000000bf11", options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-00000000bf11/files-export/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

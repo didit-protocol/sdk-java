@@ -271,6 +271,7 @@ public final class BiometricTemplatesResource {
    * <p>Templates are also purged by <code>POST /v3/users/delete/</code> for the owning User, by any deletion of that User's sessions with <code>deletion_instruction: privacy_erasure</code>, and automatically at <code>expires_at</code>.
    *
    * <p>{@code DELETE /v3/biometric-templates/{template_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param templateUuid Template id, as returned in `biometric_template_uuid` by the session deletion endpoints, `biometric_template_id` on a Face Search match, or the list endpoint.
    * @param options per-request options that override the client options
@@ -321,6 +322,7 @@ public final class BiometricTemplatesResource {
    * <p>**<code>delete_all: true</code> without filters purges every biometric template in the application and cannot be undone.** Run the count endpoint with the same filters first.
    *
    * <p>{@code POST /v3/biometric-templates/delete/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

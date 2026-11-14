@@ -141,6 +141,7 @@ public final class SessionsReviewsResource {
    * <p>Note on attribution: entries created here carry no actor information. In the feed they show <code>actor_display: "Unknown"</code>, <code>actor_type: "CONSOLE_USER"</code>, and <code>activity_type: "STATUS_UPDATED"</code> (storage defaults), and the <code>201</code> body's <code>user</code> field is <code>"Unknown"</code>.
    *
    * <p>{@code POST /v3/sessions/{session_id}/reviews/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the User Verification (KYC) session. Must belong to the same application as the API key — cross-application UUIDs, deleted sessions, and Business Verification (KYB) session IDs all return `404`.
    * @param params the request parameters

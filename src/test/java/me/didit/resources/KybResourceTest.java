@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -27,15 +28,17 @@ final class KybResourceTest {
   @Test
   void search() {
     KybSearchParams params = KybSearchParams.builder().countryCode("value-country-code").name("value-name").registrationNumber("value-registration-number").tier(KybSearchParams.Tier.BASIC).searchType(KybSearchParams.SearchType.CONTAINS).vendorData("value-vendor-data").metadata(Map.of("key", "value")).webhookUrl("https://example.com/callback").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/kyb/search/", "200");
     transport.respondJson(200, example);
-    var result = client.kyb().search(params);
+    var result = client.kyb().search(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/kyb/search/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"country_code\":\"value-country-code\",\"name\":\"value-name\",\"registration_number\":\"value-registration-number\",\"tier\":\"basic\",\"search_type\":\"contains\",\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"webhook_url\":\"https://example.com/callback\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -44,15 +47,17 @@ final class KybResourceTest {
   @Test
   void select() {
     KYBRegistryCandidateRequest params = KYBRegistryCandidateRequest.builder().kybResponseId("value-kyb-response-id").vendorData("value-vendor-data").metadata(Map.of("key", "value")).saveApiRequest(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/kyb/select/", "200");
     transport.respondJson(200, example);
-    var result = client.kyb().select(params);
+    var result = client.kyb().select(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/kyb/select/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"kyb_response_id\":\"value-kyb-response-id\",\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"save_api_request\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -61,15 +66,17 @@ final class KybResourceTest {
   @Test
   void listShareholders() {
     KYBRegistryCandidateRequest params = KYBRegistryCandidateRequest.builder().kybResponseId("value-kyb-response-id").vendorData("value-vendor-data").metadata(Map.of("key", "value")).saveApiRequest(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/kyb/shareholders/", "200");
     transport.respondJson(200, example);
-    var result = client.kyb().listShareholders(params);
+    var result = client.kyb().listShareholders(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/kyb/shareholders/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"kyb_response_id\":\"value-kyb-response-id\",\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"save_api_request\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -78,15 +85,17 @@ final class KybResourceTest {
   @Test
   void listUbos() {
     KYBRegistryCandidateRequest params = KYBRegistryCandidateRequest.builder().kybResponseId("value-kyb-response-id").vendorData("value-vendor-data").metadata(Map.of("key", "value")).saveApiRequest(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/kyb/ubo/", "200");
     transport.respondJson(200, example);
-    var result = client.kyb().listUbos(params);
+    var result = client.kyb().listUbos(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/kyb/ubo/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"kyb_response_id\":\"value-kyb-response-id\",\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"save_api_request\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

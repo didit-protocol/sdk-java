@@ -38,6 +38,7 @@ public final class WalletScreeningResource {
    * <p>Run on-demand AML screening for a single crypto wallet/address without creating a transaction. Resolves your application's configured blockchain analytics provider, screens the address synchronously, and returns the normalised risk result. LIGHTNING is available only with an Elliptic or Chainalysis BYOK connection added through Marketplace. Nothing is written to the transactions table. One AML monitoring usage is billed per successful screening (sandbox applications are not billed).
    *
    * <p>{@code POST /v3/wallet-screening/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

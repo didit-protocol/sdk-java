@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -69,15 +70,17 @@ final class BusinessesResourceTest {
   @Test
   void update() {
     BusinessesUpdateParams params = BusinessesUpdateParams.builder().displayName("value-display-name").legalName("value-legal-name").registrationNumber("value-registration-number").countryCode("value-country-code").status(BusinessesUpdateParams.Status.ACTIVE).metadata(Map.of("key", "value")).reason("value-reason").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/businesses/{vendor_data}/", "200");
     transport.respondJson(200, example);
-    var result = client.businesses().update("00000000-0000-4000-8000-00000000a594", params);
+    var result = client.businesses().update("00000000-0000-4000-8000-00000000a594", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/businesses/00000000-0000-4000-8000-00000000a594/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"display_name\":\"value-display-name\",\"legal_name\":\"value-legal-name\",\"registration_number\":\"value-registration-number\",\"country_code\":\"value-country-code\",\"status\":\"ACTIVE\",\"metadata\":{\"key\":\"value\"},\"reason\":\"value-reason\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -86,15 +89,17 @@ final class BusinessesResourceTest {
   @Test
   void updateStatus() {
     BusinessesUpdateStatusParams params = BusinessesUpdateStatusParams.builder().status(EntityStatusUpdateRequest.Status.ACTIVE).reason("value-reason").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/businesses/{vendor_data}/update-status/", "200");
     transport.respondJson(200, example);
-    var result = client.businesses().updateStatus("00000000-0000-4000-8000-0000000104c4", params);
+    var result = client.businesses().updateStatus("00000000-0000-4000-8000-0000000104c4", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/businesses/00000000-0000-4000-8000-0000000104c4/update-status/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"status\":\"ACTIVE\",\"reason\":\"value-reason\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -103,15 +108,17 @@ final class BusinessesResourceTest {
   @Test
   void batchDelete() {
     BusinessesBatchDeleteParams params = BusinessesBatchDeleteParams.builder().vendorDataList(List.of("value-vendor-data-list")).diditInternalIdList(List.of("00000000-0000-4000-8000-0000000068ce")).deleteAll(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/businesses/delete/", "200");
     transport.respondJson(200, example);
-    var result = client.businesses().batchDelete(params);
+    var result = client.businesses().batchDelete(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/businesses/delete/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data_list\":[\"value-vendor-data-list\"],\"didit_internal_id_list\":[\"00000000-0000-4000-8000-0000000068ce\"],\"delete_all\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -120,15 +127,17 @@ final class BusinessesResourceTest {
   @Test
   void setAmlMonitoring() {
     BusinessesSetAmlMonitoringParams params = BusinessesSetAmlMonitoringParams.builder().isEnabled(true).estimateOnly(true).vendorDataList(List.of("value-vendor-data-list")).diditInternalIdList(List.of("00000000-0000-4000-8000-0000000068ce")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{\"already_enabled\":1,\"balance_sufficient\":true,\"estimated_annual_monitoring_cost_usd\":1.5,\"estimated_screening_cost_usd\":1.5,\"needing_screening\":1,\"skipped_blocked\":1,\"skipped_no_identity_data\":1,\"unmatched\":[],\"users_total\":1,\"with_existing_aml\":1}");
     transport.respondJson(200, example);
-    var result = client.businesses().setAmlMonitoring(params);
+    var result = client.businesses().setAmlMonitoring(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/businesses/aml-monitoring/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"is_enabled\":true,\"estimate_only\":true,\"vendor_data_list\":[\"value-vendor-data-list\"],\"didit_internal_id_list\":[\"00000000-0000-4000-8000-0000000068ce\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     assertEquals(200, result.statusCode());
@@ -138,15 +147,17 @@ final class BusinessesResourceTest {
   @Test
   void create() {
     BusinessesCreateParams params = BusinessesCreateParams.builder().vendorData("value-vendor-data").displayName("value-display-name").legalName("value-legal-name").registrationNumber("value-registration-number").countryCode("value-country-code").status(BusinessesCreateParams.Status.ACTIVE).metadata(Map.of("key", "value")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/businesses/create/", "201");
     transport.respondJson(201, example);
-    var result = client.businesses().create(params);
+    var result = client.businesses().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/businesses/create/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"display_name\":\"value-display-name\",\"legal_name\":\"value-legal-name\",\"registration_number\":\"value-registration-number\",\"country_code\":\"value-country-code\",\"status\":\"ACTIVE\",\"metadata\":{\"key\":\"value\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -155,15 +166,17 @@ final class BusinessesResourceTest {
   @Test
   void setOngoingMonitoring() {
     OngoingMonitoringToggleRequest params = OngoingMonitoringToggleRequest.builder().isEnabled(true).estimateOnly(true).updateAll(true).filterSearch("value-filter-search").filterStatus(List.of("value-filter-status")).filterCountry("value-filter-country").filterDateFrom(LocalDate.parse("2026-11-01")).filterDateTo(LocalDate.parse("2026-11-01")).diditInternalIdList(List.of("00000000-0000-4000-8000-0000000068ce")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.businesses().setOngoingMonitoring(params);
+    var result = client.businesses().setOngoingMonitoring(params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/vendor-businesses/toggle-ongoing-monitoring/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"is_enabled\":true,\"estimate_only\":true,\"update_all\":true,\"filter_search\":\"value-filter-search\",\"filter_status\":[\"value-filter-status\"],\"filter_country\":\"value-filter-country\",\"filter_date_from\":\"2026-11-01\",\"filter_date_to\":\"2026-11-01\",\"didit_internal_id_list\":[\"00000000-0000-4000-8000-0000000068ce\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     assertEquals(200, result.statusCode());
@@ -189,15 +202,17 @@ final class BusinessesResourceTest {
   @Test
   void setSessionOngoingMonitoring() {
     BusinessesSetSessionOngoingMonitoringParams params = BusinessesSetSessionOngoingMonitoringParams.builder().isEnabled(true).estimateOnly(true).updateAll(true).filterSearch("value-filter-search").filterStatus(List.of("value-filter-status")).filterCountry("value-filter-country").filterDateFrom(LocalDate.parse("2026-11-01")).filterDateTo(LocalDate.parse("2026-11-01")).sessionNumbers(List.of("value-session-numbers")).toggleAll(true).filterWorkflowId("value-filter-workflow-id").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.businesses().setSessionOngoingMonitoring(params);
+    var result = client.businesses().setSessionOngoingMonitoring(params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/businesses/toggle-ongoing-monitoring/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"is_enabled\":true,\"estimate_only\":true,\"update_all\":true,\"filter_search\":\"value-filter-search\",\"filter_status\":[\"value-filter-status\"],\"filter_country\":\"value-filter-country\",\"filter_date_from\":\"2026-11-01\",\"filter_date_to\":\"2026-11-01\",\"session_numbers\":[\"value-session-numbers\"],\"toggle_all\":true,\"filter_workflow_id\":\"value-filter-workflow-id\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     assertEquals(200, result.statusCode());

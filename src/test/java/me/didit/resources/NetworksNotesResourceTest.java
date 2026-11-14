@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -26,14 +27,16 @@ final class NetworksNotesResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.networks().notes().delete("00000000-0000-4000-8000-00000000e81b", "00000000-0000-4000-8000-00000000bdfd");
+    client.networks().notes().delete("00000000-0000-4000-8000-00000000e81b", "00000000-0000-4000-8000-00000000bdfd", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/networks/00000000-0000-4000-8000-00000000e81b/notes/00000000-0000-4000-8000-00000000bdfd/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 
@@ -58,15 +61,17 @@ final class NetworksNotesResourceTest {
   @Test
   void create() {
     NetworksNotesCreateParams params = NetworksNotesCreateParams.builder().comment("value-comment").clientReference("00000000-0000-4000-8000-00000000378b").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{\"actor_email\":\"value\",\"client_reference\":\"value\",\"comment\":\"value\",\"created_at\":\"2026-11-01T10:15:30Z\",\"uuid\":\"value\"}");
     transport.respondJson(200, example);
-    var result = client.networks().notes().create("00000000-0000-4000-8000-00000000e81e", params);
+    var result = client.networks().notes().create("00000000-0000-4000-8000-00000000e81e", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/networks/00000000-0000-4000-8000-00000000e81e/notes/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"comment\":\"value-comment\",\"client_reference\":\"00000000-0000-4000-8000-00000000378b\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

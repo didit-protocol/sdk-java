@@ -55,6 +55,7 @@ public final class ProofOfAddressResource {
    * <p>Note: <code>FUTURE_ISSUE_DATE</code> and <code>POOR_DOCUMENT_QUALITY</code> exist in workflow sessions but are never produced by this standalone endpoint — a future-dated document is not auto-declined here.
    *
    * <p>{@code POST /v3/poa/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

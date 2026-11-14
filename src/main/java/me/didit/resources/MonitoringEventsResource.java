@@ -134,6 +134,7 @@ public final class MonitoringEventsResource {
    * <p>Send one non-monetary event (login, session, gameplay, bonus, affiliate, payment, dispute, security, responsible gambling or custom) from your backend. The event is validated against its category contract, stored, IP-enriched once per unique public address, and evaluated by your real-time event rules before the response returns; cross-subject and long-window rules run asynchronously (<code>correlation_pending: true</code>), and in a sandbox application no rules run. <code>event_id</code> is the idempotency key: the same <code>event_id</code> with the same <code>event_category</code>, <code>action_type</code>, <code>occurred_at</code>, <code>subject.vendor_data</code> and <code>payload</code> returns <code>200</code> with <code>idempotent_replay: true</code> and the stored outcome (other envelope fields are not compared), while different values return <code>409</code>. Event ingestion is opt-in per application: until it is switched on this endpoint returns <code>403</code> with <code>code: event_monitoring_disabled</code> and stores nothing. A scoped API key needs <code>transactions: write</code>. See <a href="https://docs.didit.me/transaction-monitoring/events">Event ingestion</a> and <a href="https://docs.didit.me/transaction-monitoring/event-rules">Rules on events</a>; to send events from a browser or app, use <a href="https://docs.didit.me/transaction-monitoring/sdk-event-submission">SDK event submission</a>.
    *
    * <p>{@code POST /v3/events/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -180,6 +181,7 @@ public final class MonitoringEventsResource {
    * <p>Submit 1 to 500 events in one request, each in the same envelope as <code>POST /v3/events/</code>. Every item is validated, stored and evaluated on its own and gets its own outcome (<code>accepted</code>, <code>replayed</code> or <code>rejected</code>), so one malformed event never rolls back the others: the response is <code>201</code> when no item was rejected and <code>207</code> when at least one was, and both mean the request was processed. Send <code>{"events": [...]}</code>; a bare JSON array of events is also accepted. Event ingestion must be switched on for the application, otherwise the whole request returns <code>403</code> with <code>code: event_monitoring_disabled</code> and nothing is stored. A scoped API key needs <code>transactions: write</code>. See <a href="https://docs.didit.me/transaction-monitoring/events#batches">Batches</a>.
    *
    * <p>{@code POST /v3/events/batch/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -226,6 +228,7 @@ public final class MonitoringEventsResource {
    * <p>Mint a short-lived device credential bound to one subject, so your web or mobile app can send that user's events straight to Didit without an API key. The app sends the returned <code>monitoring_token</code> in the <code>X-Monitoring-Token</code> header to the device lane (<code>POST /v1/events/</code> and <code>POST /v1/events/batch/</code>), where the subject is always overwritten with this <code>vendor_data</code>, events outside <code>allowed_event_categories</code> are rejected, each submitted event spends one use, and a request whose <code>Origin</code> does not equal <code>bind_to_origin</code> is refused. Call it from your backend only; minting creates the credential and nothing else (no user is created). Event ingestion must be switched on for the application, otherwise this endpoint returns <code>403</code> with <code>code: event_monitoring_disabled</code> instead of minting a credential that could never write. A scoped API key needs <code>transactions: write</code>. See <a href="https://docs.didit.me/transaction-monitoring/sdk-event-submission">SDK event submission</a>.
    *
    * <p>{@code POST /v3/events/sdk-token/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -495,6 +498,7 @@ public final class MonitoringEventsResource {
    * <p>Permanently delete one monitoring event together with its rule runs, notes and tag links, for example an event sent by mistake. After the <code>204</code> the event is gone from every read (retrieve returns <code>404</code>, and it no longer appears in the list or the subject timeline), the deletion is irreversible, and its <code>event_id</code> is free to be used for a new event. Not affected: the user or company the event resolved to, cases a rule opened, list entries a rule added, and the scores and statuses already applied to other events. To erase everything about a person or a company, delete the user or the company instead, which also deletes their events. A scoped API key needs <code>transactions: write</code>.
    *
    * <p>{@code DELETE /v3/events/{event_uuid}/delete/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param eventUuid Didit identifier of the event (`event_uuid` from the create, batch, list or timeline response), not your own `event_id`.
    * @param options per-request options that override the client options

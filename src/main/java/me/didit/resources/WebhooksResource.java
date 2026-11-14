@@ -91,6 +91,7 @@ public final class WebhooksResource extends WebhookMethods {
    * <p>Partially update application-level settings: the legacy webhook URL, version and secret, the data and biometric-template retention policy, and the Digital ID wallet return hosts. Send only the fields to change; the response is the full configuration, the same shape as <code>GET /v3/webhook/</code>. Destinations are not managed here: create, update and delete them with the <code>/v3/webhook/destinations/</code> endpoints, and do not send an <code>endpoints</code> field to this endpoint. A <code>data_retention_months</code> change also applies to existing sessions, and sessions it deletes cannot be restored; read <a href="https://docs.didit.me/console/data-retention">Data retention</a> first. A scoped API key needs <code>webhooks: write</code>.
    *
    * <p>{@code PATCH /v3/webhook/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

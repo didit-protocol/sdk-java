@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -54,15 +55,17 @@ final class TransactionsRulesResourceTest {
   @Test
   void create() {
     TransactionRuleCreateRequest params = TransactionRuleCreateRequest.builder().title("value-title").description("value-description").category("value-category").mode(TransactionRuleCreateRequest.Mode.ACTIVE).evaluationMode(TransactionRuleCreateRequest.EvaluationMode.ALL).scope(TransactionRuleScope.builder().transactionTypes(List.of("value-transaction-types")).directions(List.of(TransactionRuleScope.Directions.INBOUND)).build()).conditions(List.of(TransactionRuleCondition.builder().field("value-field").operator(TransactionRuleCondition.Operator.EQ).value("value").valueType(TransactionRuleCondition.ValueType.LIST).build())).aggregation(List.of(TransactionRuleAggregation.builder().metric(TransactionRuleAggregation.Metric.COUNT).field("value-field").value(1.5).build())).actions(List.of(TransactionRuleAction.ofAddScore(TransactionRuleActionAddScore.builder().type(TransactionRuleActionAddScore.Type.ADD_SCORE).value(1L).build()))).metadata(Map.of("key", "value")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(201, example);
-    var result = client.transactions().rules().create(params);
+    var result = client.transactions().rules().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/transactions/rules/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"title\":\"value-title\",\"description\":\"value-description\",\"category\":\"value-category\",\"mode\":\"ACTIVE\",\"evaluation_mode\":\"ALL\",\"scope\":{\"transaction_types\":[\"value-transaction-types\"],\"directions\":[\"INBOUND\"]},\"conditions\":[{\"field\":\"value-field\",\"operator\":\"eq\",\"value\":\"value\",\"value_type\":\"list\"}],\"aggregation\":[{\"metric\":\"count\",\"field\":\"value-field\",\"value\":1.5}],\"actions\":[{\"type\":\"add_score\",\"value\":1}],\"metadata\":{\"key\":\"value\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -87,15 +90,17 @@ final class TransactionsRulesResourceTest {
   @Test
   void update() {
     TransactionRuleUpdateRequest params = TransactionRuleUpdateRequest.builder().title("value-title").description("value-description").category("value-category").mode(TransactionRuleUpdateRequest.Mode.ACTIVE).evaluationMode(TransactionRuleUpdateRequest.EvaluationMode.ALL).scope(TransactionRuleScope.builder().transactionTypes(List.of("value-transaction-types")).directions(List.of(TransactionRuleScope.Directions.INBOUND)).build()).conditions(List.of(TransactionRuleCondition.builder().field("value-field").operator(TransactionRuleCondition.Operator.EQ).value("value").valueType(TransactionRuleCondition.ValueType.LIST).build())).aggregation(List.of(TransactionRuleAggregation.builder().metric(TransactionRuleAggregation.Metric.COUNT).field("value-field").value(1.5).build())).actions(List.of(TransactionRuleAction.ofAddScore(TransactionRuleActionAddScore.builder().type(TransactionRuleActionAddScore.Type.ADD_SCORE).value(1L).build()))).metadata(Map.of("key", "value")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.transactions().rules().update("00000000-0000-4000-8000-00000000f3de", params);
+    var result = client.transactions().rules().update("00000000-0000-4000-8000-00000000f3de", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/transactions/rules/00000000-0000-4000-8000-00000000f3de/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"title\":\"value-title\",\"description\":\"value-description\",\"category\":\"value-category\",\"mode\":\"ACTIVE\",\"evaluation_mode\":\"ALL\",\"scope\":{\"transaction_types\":[\"value-transaction-types\"],\"directions\":[\"INBOUND\"]},\"conditions\":[{\"field\":\"value-field\",\"operator\":\"eq\",\"value\":\"value\",\"value_type\":\"list\"}],\"aggregation\":[{\"metric\":\"count\",\"field\":\"value-field\",\"value\":1.5}],\"actions\":[{\"type\":\"add_score\",\"value\":1}],\"metadata\":{\"key\":\"value\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -103,29 +108,33 @@ final class TransactionsRulesResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.transactions().rules().delete("00000000-0000-4000-8000-00000000f2af");
+    client.transactions().rules().delete("00000000-0000-4000-8000-00000000f2af", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/transactions/rules/00000000-0000-4000-8000-00000000f2af/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 
   @Test
   void backtest() {
     TransactionRuleBacktestRequest params = TransactionRuleBacktestRequest.builder().conditions(List.of(TransactionRuleCondition.builder().field("value-field").operator(TransactionRuleCondition.Operator.EQ).value("value").valueType(TransactionRuleCondition.ValueType.LIST).build())).aggregation(List.of(TransactionRuleAggregation.builder().metric(TransactionRuleAggregation.Metric.COUNT).field("value-field").value(1.5).build())).evaluationMode(TransactionRuleBacktestRequest.EvaluationMode.ALL).scope(TransactionRuleScope.builder().transactionTypes(List.of("value-transaction-types")).directions(List.of(TransactionRuleScope.Directions.INBOUND)).build()).periodDays(1L).ruleId("00000000-0000-4000-8000-000000000b41").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/transactions/rules/backtest/", "200");
     transport.respondJson(200, example);
-    var result = client.transactions().rules().backtest(params);
+    var result = client.transactions().rules().backtest(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/transactions/rules/backtest/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"conditions\":[{\"field\":\"value-field\",\"operator\":\"eq\",\"value\":\"value\",\"value_type\":\"list\"}],\"aggregation\":[{\"metric\":\"count\",\"field\":\"value-field\",\"value\":1.5}],\"evaluation_mode\":\"ALL\",\"scope\":{\"transaction_types\":[\"value-transaction-types\"],\"directions\":[\"INBOUND\"]},\"period_days\":1,\"rule_id\":\"00000000-0000-4000-8000-000000000b41\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -152,15 +161,17 @@ final class TransactionsRulesResourceTest {
   @Test
   void installLibrary() {
     TransactionRuleInstallRequest params = TransactionRuleInstallRequest.builder().libraryKeys(List.of("value-library-keys")).bundle("value-bundle").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/transactions/rules/install/", "200");
     transport.respondJson(200, example);
-    var result = client.transactions().rules().installLibrary(params);
+    var result = client.transactions().rules().installLibrary(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/transactions/rules/install/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"library_keys\":[\"value-library-keys\"],\"bundle\":\"value-bundle\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -169,15 +180,17 @@ final class TransactionsRulesResourceTest {
   @Test
   void uninstallLibrary() {
     TransactionRuleInstallRequest params = TransactionRuleInstallRequest.builder().libraryKeys(List.of("value-library-keys")).bundle("value-bundle").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "DELETE", "/v3/transactions/rules/install/", "200");
     transport.respondJson(200, example);
-    var result = client.transactions().rules().uninstallLibrary(params);
+    var result = client.transactions().rules().uninstallLibrary(params, options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/transactions/rules/install/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"library_keys\":[\"value-library-keys\"],\"bundle\":\"value-bundle\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

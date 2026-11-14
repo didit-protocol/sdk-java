@@ -86,6 +86,7 @@ public final class FraudChecksResource {
    * <p>These profiles support identifier checks. Selfie-based identity binding (<code>biometric_identity</code>) requires profile version <code>2026-09-14.2</code> and a Brazilian CPF; it runs only with the user's consent and when your organization is entitled to it. Earlier versions report it as <code>not_available_in_profile_version</code>. Modules that cannot run are reported as skipped with a deterministic reason; a source that could not answer is never reported as an identity mismatch.
    *
    * <p>{@code POST /v3/fraud/checks/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -132,6 +133,7 @@ public final class FraudChecksResource {
    * <p>Validate selected checks and estimate their price without executing, creating a session or billing.
    *
    * <p>{@code POST /v3/fraud/checks/plan/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -161,15 +162,17 @@ final class NetworksResourceTest {
   @Test
   void addTag() {
     NetworkTagRequest params = NetworkTagRequest.builder().tagUuid("00000000-0000-4000-8000-000000000eed").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/tags/add/", "200");
     transport.respondJson(200, example);
-    var result = client.networks().addTag("00000000-0000-4000-8000-00000000a888", params);
+    var result = client.networks().addTag("00000000-0000-4000-8000-00000000a888", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/networks/00000000-0000-4000-8000-00000000a888/tags/add/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"tag_uuid\":\"00000000-0000-4000-8000-000000000eed\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -178,15 +181,17 @@ final class NetworksResourceTest {
   @Test
   void removeTag() {
     NetworkTagRequest params = NetworkTagRequest.builder().tagUuid("00000000-0000-4000-8000-000000000eed").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/tags/remove/", "200");
     transport.respondJson(200, example);
-    var result = client.networks().removeTag("00000000-0000-4000-8000-00000000cfdc", params);
+    var result = client.networks().removeTag("00000000-0000-4000-8000-00000000cfdc", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/networks/00000000-0000-4000-8000-00000000cfdc/tags/remove/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"tag_uuid\":\"00000000-0000-4000-8000-000000000eed\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

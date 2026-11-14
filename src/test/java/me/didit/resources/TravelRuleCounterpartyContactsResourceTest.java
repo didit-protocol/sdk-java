@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -46,15 +47,17 @@ final class TravelRuleCounterpartyContactsResourceTest {
   @Test
   void create() {
     TravelRuleCounterpartyContactCreate params = TravelRuleCounterpartyContactCreate.builder().counterparty("00000000-0000-4000-8000-00000000221d").email("user@example.com").name("value-name").role("value-role").phone("value-phone").receivesRequests(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/travel-rule/counterparty-contacts/", "201");
     transport.respondJson(201, example);
-    var result = client.travelRule().counterpartyContacts().create(params);
+    var result = client.travelRule().counterpartyContacts().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/travel-rule/counterparty-contacts/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"counterparty\":\"00000000-0000-4000-8000-00000000221d\",\"email\":\"user@example.com\",\"name\":\"value-name\",\"role\":\"value-role\",\"phone\":\"value-phone\",\"receives_requests\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -63,15 +66,17 @@ final class TravelRuleCounterpartyContactsResourceTest {
   @Test
   void update() {
     TravelRuleCounterpartyContactsUpdateParams params = TravelRuleCounterpartyContactsUpdateParams.builder().name("value-name").email("user@example.com").role("value-role").phone("value-phone").receivesRequests(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.travelRule().counterpartyContacts().update("00000000-0000-4000-8000-000000023823", params);
+    var result = client.travelRule().counterpartyContacts().update("00000000-0000-4000-8000-000000023823", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/travel-rule/counterparty-contacts/00000000-0000-4000-8000-000000023823/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"name\":\"value-name\",\"email\":\"user@example.com\",\"role\":\"value-role\",\"phone\":\"value-phone\",\"receives_requests\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -79,14 +84,16 @@ final class TravelRuleCounterpartyContactsResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.travelRule().counterpartyContacts().delete("00000000-0000-4000-8000-000000023604");
+    client.travelRule().counterpartyContacts().delete("00000000-0000-4000-8000-000000023604", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/travel-rule/counterparty-contacts/00000000-0000-4000-8000-000000023604/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 }

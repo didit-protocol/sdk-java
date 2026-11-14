@@ -10,6 +10,7 @@ import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -27,15 +28,17 @@ final class FaceSearchResourceTest {
   @Test
   void search() {
     FaceSearchSearchParams params = FaceSearchSearchParams.builder().userImage(FileUpload.of(new byte[] {37, 80, 68, 70}, "user_image.pdf", "application/pdf")).searchType(FaceSearchSearchParams.SearchType.MOST_SIMILAR).rotateImage(true).saveApiRequest(true).vendorData("value-vendor-data").metadata(Map.of("key", "value")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/face-search/", "200");
     transport.respondJson(200, example);
-    var result = client.faceSearch().search(params);
+    var result = client.faceSearch().search(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/face-search/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(Map.ofEntries(Map.entry("search_type", List.of("most_similar")), Map.entry("rotate_image", List.of("true")), Map.entry("save_api_request", List.of("true")), Map.entry("vendor_data", List.of("value-vendor-data")), Map.entry("metadata", List.of("{\"key\":\"value\"}"))), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("user_image", List.of("user_image.pdf"))), request.multipartFiles());
     TestJson.assertJsonEquals(example, Json.toNode(result));

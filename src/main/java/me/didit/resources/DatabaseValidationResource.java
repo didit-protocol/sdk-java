@@ -53,6 +53,7 @@ public final class DatabaseValidationResource {
    * <p>Send the request as <code>application/json</code>, or as <code>multipart/form-data</code> when uploading a <code>selfie</code>.
    *
    * <p>{@code POST /v3/database-validation/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

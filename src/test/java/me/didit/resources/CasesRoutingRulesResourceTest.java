@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -67,15 +68,17 @@ final class CasesRoutingRulesResourceTest {
   @Test
   void update() {
     CaseRoutingRuleUpdate params = CaseRoutingRuleUpdate.builder().name("value-name").description("value-description").priority(1L).conditions(List.of(CaseRoutingCondition.builder().field(CaseRoutingCondition.Field.SOURCE).operator(CaseRoutingCondition.Operator.EQUALS).value(CaseRoutingCondition.Value.ofString("value-value")).build())).requiredSkills(List.of("value-required-skills")).blueprint("00000000-0000-4000-8000-00000000136c").team("00000000-0000-4000-8000-000000000415").isActive(true).expectedVersion(1L).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.cases().routingRules().update("00000000-0000-4000-8000-000000012099", params);
+    var result = client.cases().routingRules().update("00000000-0000-4000-8000-000000012099", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/routing-rules/00000000-0000-4000-8000-000000012099/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"name\":\"value-name\",\"description\":\"value-description\",\"priority\":1,\"conditions\":[{\"field\":\"source\",\"operator\":\"equals\",\"value\":\"value-value\"}],\"required_skills\":[\"value-required-skills\"],\"blueprint\":\"00000000-0000-4000-8000-00000000136c\",\"team\":\"00000000-0000-4000-8000-000000000415\",\"is_active\":true,\"expected_version\":1}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -102,15 +105,17 @@ final class CasesRoutingRulesResourceTest {
   @Test
   void create() {
     CaseRoutingRuleCreate params = CaseRoutingRuleCreate.builder().name("value-name").description("value-description").priority(1L).conditions(List.of(CaseRoutingCondition.builder().field(CaseRoutingCondition.Field.SOURCE).operator(CaseRoutingCondition.Operator.EQUALS).value(CaseRoutingCondition.Value.ofString("value-value")).build())).requiredSkills(List.of("value-required-skills")).blueprint("00000000-0000-4000-8000-00000000136c").team("00000000-0000-4000-8000-000000000415").isActive(true).publish(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(201, example);
-    var result = client.cases().routingRules().create(params);
+    var result = client.cases().routingRules().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/routing-rules/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"name\":\"value-name\",\"description\":\"value-description\",\"priority\":1,\"conditions\":[{\"field\":\"source\",\"operator\":\"equals\",\"value\":\"value-value\"}],\"required_skills\":[\"value-required-skills\"],\"blueprint\":\"00000000-0000-4000-8000-00000000136c\",\"team\":\"00000000-0000-4000-8000-000000000415\",\"is_active\":true,\"publish\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -119,15 +124,17 @@ final class CasesRoutingRulesResourceTest {
   @Test
   void publish() {
     RoutingPublicationPolicyDraftPreconditionRequest params = RoutingPublicationPolicyDraftPreconditionRequest.builder().expectedVersion(1L).expectedRevision("00000000-0000-4000-8000-000000004071").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{\"blueprint\":\"value\",\"blueprint_name\":\"value\",\"conditions\":[],\"created_at\":\"2026-11-01T10:15:30Z\",\"name\":\"value\",\"team_name\":\"value\",\"updated_at\":\"2026-11-01T10:15:30Z\",\"uuid\":\"value\",\"version\":1}");
     transport.respondJson(200, example);
-    var result = client.cases().routingRules().publish("00000000-0000-4000-8000-00000001315e", params);
+    var result = client.cases().routingRules().publish("00000000-0000-4000-8000-00000001315e", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/routing-rules/00000000-0000-4000-8000-00000001315e/publish/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"expected_version\":1,\"expected_revision\":\"00000000-0000-4000-8000-000000004071\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -152,15 +159,17 @@ final class CasesRoutingRulesResourceTest {
   @Test
   void saveDraft() {
     RoutingPublicationPolicyDraftWriteRequest params = RoutingPublicationPolicyDraftWriteRequest.builder().expectedVersion(1L).expectedRevision("00000000-0000-4000-8000-000000004071").changes(Map.of("key", "value")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{\"base_version\":1,\"updated_at\":\"2026-11-01T10:15:30Z\"}");
     transport.respondJson(200, example);
-    var result = client.cases().routingRules().saveDraft("00000000-0000-4000-8000-000000016118", params);
+    var result = client.cases().routingRules().saveDraft("00000000-0000-4000-8000-000000016118", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PUT", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/routing-rules/00000000-0000-4000-8000-000000016118/draft/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"expected_version\":1,\"expected_revision\":\"00000000-0000-4000-8000-000000004071\",\"changes\":{\"key\":\"value\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -169,29 +178,33 @@ final class CasesRoutingRulesResourceTest {
   @Test
   void discardDraft() {
     RoutingPublicationPolicyDraftPreconditionRequest params = RoutingPublicationPolicyDraftPreconditionRequest.builder().expectedVersion(1L).expectedRevision("00000000-0000-4000-8000-000000004071").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.cases().routingRules().discardDraft("00000000-0000-4000-8000-0000000194c0", params);
+    client.cases().routingRules().discardDraft("00000000-0000-4000-8000-0000000194c0", params, options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/routing-rules/00000000-0000-4000-8000-0000000194c0/draft/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"expected_version\":1,\"expected_revision\":\"00000000-0000-4000-8000-000000004071\"}", request.body());
   }
 
   @Test
   void preview() {
     CaseRoutingPreviewRequest params = CaseRoutingPreviewRequest.builder().source(CaseRoutingPreviewRequest.Source.MANUAL).priority(CaseRoutingPreviewRequest.Priority.LOW).tags(List.of("value-tags")).ruleUuid("00000000-0000-4000-8000-0000000012cc").draft(CaseRoutingRuleCreate.builder().name("value-name").description("value-description").priority(1L).conditions(List.of(CaseRoutingCondition.builder().field(CaseRoutingCondition.Field.SOURCE).operator(CaseRoutingCondition.Operator.EQUALS).value(CaseRoutingCondition.Value.ofString("value-value")).build())).blueprint("00000000-0000-4000-8000-00000000136c").build()).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.cases().routingRules().preview(params);
+    var result = client.cases().routingRules().preview(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/routing-rules/preview/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"source\":\"MANUAL\",\"priority\":\"LOW\",\"tags\":[\"value-tags\"],\"rule_uuid\":\"00000000-0000-4000-8000-0000000012cc\",\"draft\":{\"name\":\"value-name\",\"description\":\"value-description\",\"priority\":1,\"conditions\":[{\"field\":\"source\",\"operator\":\"equals\",\"value\":\"value-value\"}],\"blueprint\":\"00000000-0000-4000-8000-00000000136c\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

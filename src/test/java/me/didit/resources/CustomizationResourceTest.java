@@ -10,6 +10,7 @@ import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -43,15 +44,17 @@ final class CustomizationResourceTest {
   @Test
   void update() {
     CustomizationUpdateParams params = CustomizationUpdateParams.builder().imageSquare(FileUpload.of(new byte[] {37, 80, 68, 70}, "image_square.pdf", "application/pdf")).imageRectangular(FileUpload.of(new byte[] {37, 80, 68, 70}, "image_rectangular.pdf", "application/pdf")).imageRectangularDark(FileUpload.of(new byte[] {37, 80, 68, 70}, "image_rectangular_dark.pdf", "application/pdf")).imageFavicon(FileUpload.of(new byte[] {37, 80, 68, 70}, "image_favicon.pdf", "application/pdf")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/customization/", "200");
     transport.respondJson(200, example);
-    var result = client.customization().update(params);
+    var result = client.customization().update(params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/customization/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(Map.of(), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("image_square", List.of("image_square.pdf")), Map.entry("image_rectangular", List.of("image_rectangular.pdf")), Map.entry("image_rectangular_dark", List.of("image_rectangular_dark.pdf")), Map.entry("image_favicon", List.of("image_favicon.pdf"))), request.multipartFiles());
     TestJson.assertJsonEquals(example, Json.toNode(result));

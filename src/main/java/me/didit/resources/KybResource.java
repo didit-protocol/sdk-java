@@ -57,6 +57,7 @@ public final class KybResource {
    * <p><b>Sandbox.</b> Keys from sandbox applications return one static candidate without contacting any registry.
    *
    * <p>{@code POST /v3/kyb/search/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -109,6 +110,7 @@ public final class KybResource {
    * <p><b>Persistence is mandatory.</b> Every select creates a business session (its id is the <code>request_id</code>) so billing and retrieval can be tracked; it appears in the console. <code>save_api_request</code> is accepted for symmetry but must be <code>true</code> (the default) — sending <code>false</code> returns <code>400</code>.
    *
    * <p>{@code POST /v3/kyb/select/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -163,6 +165,7 @@ public final class KybResource {
    * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
    *
    * <p>{@code POST /v3/kyb/shareholders/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -217,6 +220,7 @@ public final class KybResource {
    * <p><b>Pending reports.</b> When a report is still being prepared, or the ownership section has not been retrieved from the registry yet, the endpoint returns 202 Accepted, kyb_registry.fetch_status=pending, kyb_registry.registry_ownership_status=pending, and registry_tier_delivered=null. Keep request_id and retrieve GET /v3/session/{request_id}/decision/ until registry_checks[0].company.fetch_status is resolved. Didit completes the report automatically and charges the delivered tier once it is ready. Do not repeat the purchase while it is pending; every new POST creates a separate request.
    *
    * <p>{@code POST /v3/kyb/ubo/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

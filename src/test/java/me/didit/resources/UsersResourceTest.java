@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -69,15 +70,17 @@ final class UsersResourceTest {
   @Test
   void update() {
     UsersUpdateParams params = UsersUpdateParams.builder().fullName("value-full-name").displayName("value-display-name").dateOfBirth(LocalDate.parse("2026-11-01")).status(UsersUpdateParams.Status.ACTIVE).metadata(Map.of("key", "value")).approvedEmails(List.of("value-approved-emails")).approvedPhones(List.of("value-approved-phones")).issuingStates(List.of("value-issuing-states")).reason("value-reason").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/users/{vendor_data}/", "200");
     transport.respondJson(200, example);
-    var result = client.users().update("00000000-0000-4000-8000-000000007078", params);
+    var result = client.users().update("00000000-0000-4000-8000-000000007078", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/users/00000000-0000-4000-8000-000000007078/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"full_name\":\"value-full-name\",\"display_name\":\"value-display-name\",\"date_of_birth\":\"2026-11-01\",\"status\":\"ACTIVE\",\"metadata\":{\"key\":\"value\"},\"approved_emails\":[\"value-approved-emails\"],\"approved_phones\":[\"value-approved-phones\"],\"issuing_states\":[\"value-issuing-states\"],\"reason\":\"value-reason\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -101,15 +104,17 @@ final class UsersResourceTest {
   @Test
   void batchDelete() {
     UsersBatchDeleteParams params = UsersBatchDeleteParams.builder().vendorDataList(List.of("value-vendor-data-list")).diditInternalIdList(List.of("00000000-0000-4000-8000-0000000068ce")).deleteAll(true).retainFaceEmbeddings(true).faceRetentionDays(1L).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/users/delete/", "200");
     transport.respondJson(200, example);
-    var result = client.users().batchDelete(params);
+    var result = client.users().batchDelete(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/users/delete/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data_list\":[\"value-vendor-data-list\"],\"didit_internal_id_list\":[\"00000000-0000-4000-8000-0000000068ce\"],\"delete_all\":true,\"retain_face_embeddings\":true,\"face_retention_days\":1}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -118,15 +123,17 @@ final class UsersResourceTest {
   @Test
   void setAmlMonitoring() {
     UsersSetAmlMonitoringParams params = UsersSetAmlMonitoringParams.builder().isEnabled(true).estimateOnly(true).vendorDataList(List.of("value-vendor-data-list")).diditInternalIdList(List.of("00000000-0000-4000-8000-0000000068ce")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{\"already_enabled\":1,\"balance_sufficient\":true,\"estimated_annual_monitoring_cost_usd\":1.5,\"estimated_screening_cost_usd\":1.5,\"needing_screening\":1,\"skipped_blocked\":1,\"skipped_no_identity_data\":1,\"unmatched\":[],\"users_total\":1,\"with_existing_aml\":1}");
     transport.respondJson(200, example);
-    var result = client.users().setAmlMonitoring(params);
+    var result = client.users().setAmlMonitoring(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/users/aml-monitoring/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"is_enabled\":true,\"estimate_only\":true,\"vendor_data_list\":[\"value-vendor-data-list\"],\"didit_internal_id_list\":[\"00000000-0000-4000-8000-0000000068ce\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     assertEquals(200, result.statusCode());
@@ -136,15 +143,17 @@ final class UsersResourceTest {
   @Test
   void updateStatus() {
     UsersUpdateStatusParams params = UsersUpdateStatusParams.builder().status(EntityStatusUpdateRequest.Status.ACTIVE).reason("value-reason").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/users/{vendor_data}/update-status/", "200");
     transport.respondJson(200, example);
-    var result = client.users().updateStatus("00000000-0000-4000-8000-00000000c099", params);
+    var result = client.users().updateStatus("00000000-0000-4000-8000-00000000c099", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/users/00000000-0000-4000-8000-00000000c099/update-status/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"status\":\"ACTIVE\",\"reason\":\"value-reason\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -153,15 +162,17 @@ final class UsersResourceTest {
   @Test
   void create() {
     UsersCreateParams params = UsersCreateParams.builder().vendorData("value-vendor-data").fullName("value-full-name").displayName("value-display-name").dateOfBirth(LocalDate.parse("2026-11-01")).status(UsersCreateParams.Status.ACTIVE).metadata(Map.of("key", "value")).approvedEmails(List.of("value-approved-emails")).approvedPhones(List.of("value-approved-phones")).issuingStates(List.of("value-issuing-states")).firstName("value-first-name").lastName("value-last-name").email("user@example.com").phoneNumber("value-phone-number").country("value-country").sendVerificationLink(true).workflowId("00000000-0000-4000-8000-000000001b5b").language("value-language").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/users/create/", "201");
     transport.respondJson(201, example);
-    var result = client.users().create(params);
+    var result = client.users().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/users/create/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"full_name\":\"value-full-name\",\"display_name\":\"value-display-name\",\"date_of_birth\":\"2026-11-01\",\"status\":\"ACTIVE\",\"metadata\":{\"key\":\"value\"},\"approved_emails\":[\"value-approved-emails\"],\"approved_phones\":[\"value-approved-phones\"],\"issuing_states\":[\"value-issuing-states\"],\"first_name\":\"value-first-name\",\"last_name\":\"value-last-name\",\"email\":\"user@example.com\",\"phone_number\":\"value-phone-number\",\"country\":\"value-country\",\"send_verification_link\":true,\"workflow_id\":\"00000000-0000-4000-8000-000000001b5b\",\"language\":\"value-language\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -170,15 +181,17 @@ final class UsersResourceTest {
   @Test
   void uploadFace() {
     UsersUploadFaceParams params = UsersUploadFaceParams.builder().image("value-image").comment("value-comment").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/organization/{organization_id}/application/{application_id}/vendor-users/by-id/{didit_internal_id}/faces/upload/", "201");
     transport.respondJson(201, example);
-    var result = client.users().uploadFace("00000000-0000-4000-8000-00000000f127", params);
+    var result = client.users().uploadFace("00000000-0000-4000-8000-00000000f127", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/vendor-users/by-id/00000000-0000-4000-8000-00000000f127/faces/upload/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"image\":\"value-image\",\"comment\":\"value-comment\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -187,15 +200,17 @@ final class UsersResourceTest {
   @Test
   void setOngoingMonitoring() {
     OngoingMonitoringToggleRequest params = OngoingMonitoringToggleRequest.builder().isEnabled(true).estimateOnly(true).updateAll(true).filterSearch("value-filter-search").filterStatus(List.of("value-filter-status")).filterCountry("value-filter-country").filterDateFrom(LocalDate.parse("2026-11-01")).filterDateTo(LocalDate.parse("2026-11-01")).diditInternalIdList(List.of("00000000-0000-4000-8000-0000000068ce")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.users().setOngoingMonitoring(params);
+    var result = client.users().setOngoingMonitoring(params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/vendor-users/toggle-ongoing-monitoring/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"is_enabled\":true,\"estimate_only\":true,\"update_all\":true,\"filter_search\":\"value-filter-search\",\"filter_status\":[\"value-filter-status\"],\"filter_country\":\"value-filter-country\",\"filter_date_from\":\"2026-11-01\",\"filter_date_to\":\"2026-11-01\",\"didit_internal_id_list\":[\"00000000-0000-4000-8000-0000000068ce\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     assertEquals(200, result.statusCode());

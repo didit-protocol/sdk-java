@@ -10,6 +10,7 @@ import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -49,15 +50,17 @@ final class CasesNotesResourceTest {
   @Test
   void create() {
     CaseCollaborationCaseNoteCreateRequest params = CaseCollaborationCaseNoteCreateRequest.builder().comment("value-comment").replyTo("00000000-0000-4000-8000-000000000f77").clientReference("00000000-0000-4000-8000-00000000378b").mentionedEmails(List.of("user@example.com")).isInternal(true).attachments(List.of(Map.of("key", "value"))).tags(List.of("value-tags")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{\"comment\":\"value\",\"created_at\":\"2026-11-01T10:15:30Z\",\"reply_to\":{\"actor_email\":\"value\",\"actor_name\":\"value\",\"comment\":\"value\",\"uuid\":\"value\"},\"uuid\":\"value\"}");
     transport.respondJson(200, example);
-    var result = client.cases().notes().create("00000000-0000-4000-8000-000000009838", params);
+    var result = client.cases().notes().create("00000000-0000-4000-8000-000000009838", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/00000000-0000-4000-8000-000000009838/notes/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"comment\":\"value-comment\",\"reply_to\":\"00000000-0000-4000-8000-000000000f77\",\"client_reference\":\"00000000-0000-4000-8000-00000000378b\",\"mentioned_emails\":[\"user@example.com\"],\"is_internal\":true,\"attachments\":[{\"key\":\"value\"}],\"tags\":[\"value-tags\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -66,15 +69,17 @@ final class CasesNotesResourceTest {
   @Test
   void update() {
     CaseCollaborationPatchedCaseNoteUpdateRequest params = CaseCollaborationPatchedCaseNoteUpdateRequest.builder().isPinned(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{\"comment\":\"value\",\"created_at\":\"2026-11-01T10:15:30Z\",\"reply_to\":{\"actor_email\":\"value\",\"actor_name\":\"value\",\"comment\":\"value\",\"uuid\":\"value\"},\"uuid\":\"value\"}");
     transport.respondJson(200, example);
-    var result = client.cases().notes().update("00000000-0000-4000-8000-0000000098f7", "00000000-0000-4000-8000-000000009af5", params);
+    var result = client.cases().notes().update("00000000-0000-4000-8000-0000000098f7", "00000000-0000-4000-8000-000000009af5", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/00000000-0000-4000-8000-0000000098f7/notes/00000000-0000-4000-8000-000000009af5/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"is_pinned\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -82,14 +87,16 @@ final class CasesNotesResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.cases().notes().delete("00000000-0000-4000-8000-000000009838", "00000000-0000-4000-8000-000000009a36");
+    client.cases().notes().delete("00000000-0000-4000-8000-000000009838", "00000000-0000-4000-8000-000000009a36", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/00000000-0000-4000-8000-000000009838/notes/00000000-0000-4000-8000-000000009a36/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 
@@ -113,15 +120,17 @@ final class CasesNotesResourceTest {
   @Test
   void createAttachmentUpload() {
     CasesNotesCreateAttachmentUploadParams params = CasesNotesCreateAttachmentUploadParams.builder().file(FileUpload.of(new byte[] {37, 80, 68, 70}, "file.pdf", "application/pdf")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(201, example);
-    var result = client.cases().notes().createAttachmentUpload("00000000-0000-4000-8000-00000001a72f", params);
+    var result = client.cases().notes().createAttachmentUpload("00000000-0000-4000-8000-00000001a72f", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/00000000-0000-4000-8000-00000001a72f/notes/presign/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(Map.of(), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("file", List.of("file.pdf"))), request.multipartFiles());
     TestJson.assertJsonEquals(example, Json.toNode(result));

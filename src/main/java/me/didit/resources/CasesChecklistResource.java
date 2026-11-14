@@ -86,6 +86,7 @@ public final class CasesChecklistResource {
    *
    * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/checklist/{item_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid Case UUID.
    * @param itemUuid Checklist item UUID.

@@ -173,6 +173,7 @@ public final class ReportsResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/reports/{report_uuid}/retry/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param reportUuid Report uuid.
    * @param params the request parameters

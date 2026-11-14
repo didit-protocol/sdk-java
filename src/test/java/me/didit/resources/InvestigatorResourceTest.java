@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -87,15 +88,17 @@ final class InvestigatorResourceTest {
   @Test
   void acceptRun() {
     InvestigatorAcceptRequest params = InvestigatorAcceptRequest.builder().narrative("value-narrative").sendEmail(true).emailAddress("user@example.com").emailLanguage("value-email-language").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.investigator().acceptRun("00000000-0000-4000-8000-00000000b2fd", params);
+    var result = client.investigator().acceptRun("00000000-0000-4000-8000-00000000b2fd", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/investigator/runs/00000000-0000-4000-8000-00000000b2fd/accept/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"narrative\":\"value-narrative\",\"send_email\":true,\"email_address\":\"user@example.com\",\"email_language\":\"value-email-language\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -104,15 +107,17 @@ final class InvestigatorResourceTest {
   @Test
   void overrideRun() {
     InvestigatorOverrideRequest params = InvestigatorOverrideRequest.builder().action(InvestigatorOverrideRequest.Action.APPROVE).category(InvestigatorOverrideRequest.Category.MISSING_CONTEXT).reason("value-reason").sendEmail(true).emailAddress("user@example.com").emailLanguage("value-email-language").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.investigator().overrideRun("00000000-0000-4000-8000-00000000cdb1", params);
+    var result = client.investigator().overrideRun("00000000-0000-4000-8000-00000000cdb1", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/investigator/runs/00000000-0000-4000-8000-00000000cdb1/override/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"action\":\"approve\",\"category\":\"missing_context\",\"reason\":\"value-reason\",\"send_email\":true,\"email_address\":\"user@example.com\",\"email_language\":\"value-email-language\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -121,15 +126,17 @@ final class InvestigatorResourceTest {
   @Test
   void batchAcceptRuns() {
     InvestigatorBatchAcceptRequest params = InvestigatorBatchAcceptRequest.builder().runIds(List.of("00000000-0000-4000-8000-000000000bac")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.investigator().batchAcceptRuns(params);
+    var result = client.investigator().batchAcceptRuns(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/investigator/runs/batch-accept/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"run_ids\":[\"00000000-0000-4000-8000-000000000bac\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -254,15 +261,17 @@ final class InvestigatorResourceTest {
   @Test
   void updateSettings() {
     InvestigatorSettings params = InvestigatorSettings.builder().stage(InvestigatorSettings.Stage.NONE).stageChangedAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).stageChangedBy("value-stage-changed-by").monthlySpendLimit("value-monthly-spend-limit").spendLimit(InvestigatorSettings.SpendLimit.builder().enabled(true).limit("value-limit").build()).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.investigator().updateSettings(params);
+    var result = client.investigator().updateSettings(params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/investigator/settings/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"stage\":\"none\",\"stage_changed_at\":\"2026-11-01T10:15:30Z\",\"stage_changed_by\":\"value-stage-changed-by\",\"monthly_spend_limit\":\"value-monthly-spend-limit\",\"spend_limit\":{\"enabled\":true,\"limit\":\"value-limit\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

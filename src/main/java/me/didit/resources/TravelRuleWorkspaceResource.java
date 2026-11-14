@@ -82,6 +82,7 @@ public final class TravelRuleWorkspaceResource {
    * <p>Claims the directory entry this workspace is. When the work email is at a domain the entry lists, the claim is proved and applies at once: the VASP profile and Travel Rule settings are filled from the entry and Travel Rule is turned on, so the next transfer to it routes over the Didit network. Otherwise the claim waits for review (<code>pending_review</code>).
    *
    * <p>{@code POST /v3/travel-rule/workspace/claim/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -128,6 +129,7 @@ public final class TravelRuleWorkspaceResource {
    * <p>Emails a single-use code to the workspace's work address to prove it controls the email domain. Throttled, and a limited number of wrong attempts is accepted per code. Also returns the TXT record for the DNS alternative.
    *
    * <p>{@code POST /v3/travel-rule/workspace/domain/code/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param options per-request options that override the client options
    * @return the response body
@@ -170,6 +172,7 @@ public final class TravelRuleWorkspaceResource {
    * <p>Spends the emailed code and marks the email domain verified.
    *
    * <p>{@code POST /v3/travel-rule/workspace/domain/confirm/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -216,6 +219,7 @@ public final class TravelRuleWorkspaceResource {
    * <p>Checks for the <code>didit-tr-verify.&lt;domain&gt;</code> TXT record returned by the code endpoint and marks the domain verified when it matches. One of the two proofs, the emailed code or the TXT record, is enough.
    *
    * <p>{@code POST /v3/travel-rule/workspace/domain/dns/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param options per-request options that override the client options
    * @return the response body
@@ -258,6 +262,7 @@ public final class TravelRuleWorkspaceResource {
    * <p>Turns outbound Travel Rule billing on for the workspace. Receiving stays free. This cannot be turned back off through the API: contact Didit support.
    *
    * <p>{@code POST /v3/travel-rule/workspace/billing/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

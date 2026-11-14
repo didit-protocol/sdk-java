@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -29,15 +30,17 @@ final class EmailResourceTest {
   @Test
   void assessRisk() {
     EmailRiskRequest params = EmailRiskRequest.builder().email("user@example.com").countryCode("value-country-code").signals(RiskSignals.builder().ip("192.0.2.10").deviceId("value-device-id").build()).vendorData("value-vendor-data").metadata(Map.of("key", "value")).enableSocial(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/email/risk/", "200");
     transport.respondJson(200, example);
-    var result = client.email().assessRisk(params);
+    var result = client.email().assessRisk(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/email/risk/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"email\":\"user@example.com\",\"country_code\":\"value-country-code\",\"signals\":{\"ip\":\"192.0.2.10\",\"device_id\":\"value-device-id\"},\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"enable_social\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -46,15 +49,17 @@ final class EmailResourceTest {
   @Test
   void sendCode() {
     EmailSendCodeParams params = EmailSendCodeParams.builder().email("user@example.com").options(EmailSendCodeParams.Options.builder().codeSize(1L).alphanumericCode(true).build()).signals(EmailSendCodeParams.Signals.builder().ip("value-ip").deviceId("value-device-id").build()).vendorData("value-vendor-data").metadata(Map.of("key", "value")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/email/send/", "200");
     transport.respondJson(200, example);
-    var result = client.email().sendCode(params);
+    var result = client.email().sendCode(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/email/send/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"email\":\"user@example.com\",\"options\":{\"code_size\":1,\"alphanumeric_code\":true},\"signals\":{\"ip\":\"value-ip\",\"device_id\":\"value-device-id\"},\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -63,15 +68,17 @@ final class EmailResourceTest {
   @Test
   void checkCode() {
     EmailCheckCodeParams params = EmailCheckCodeParams.builder().email("user@example.com").code("value-code").duplicatedEmailAction(EmailCheckCodeParams.DuplicatedEmailAction.NO_ACTION).breachedEmailAction(EmailCheckCodeParams.BreachedEmailAction.NO_ACTION).disposableEmailAction(EmailCheckCodeParams.DisposableEmailAction.NO_ACTION).enableEnrichment(true).emailIntelligenceScoreAction(EmailCheckCodeParams.EmailIntelligenceScoreAction.NO_ACTION).recentEmailBreachAction(EmailCheckCodeParams.RecentEmailBreachAction.NO_ACTION).frequentEmailBreachAction(EmailCheckCodeParams.FrequentEmailBreachAction.NO_ACTION).enableSocial(true).emailNoSocialPresenceAction(EmailCheckCodeParams.EmailNoSocialPresenceAction.NO_ACTION).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/email/check/", "200");
     transport.respondJson(200, example);
-    var result = client.email().checkCode(params);
+    var result = client.email().checkCode(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/email/check/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"email\":\"user@example.com\",\"code\":\"value-code\",\"duplicated_email_action\":\"NO_ACTION\",\"breached_email_action\":\"NO_ACTION\",\"disposable_email_action\":\"NO_ACTION\",\"enable_enrichment\":true,\"email_intelligence_score_action\":\"NO_ACTION\",\"recent_email_breach_action\":\"NO_ACTION\",\"frequent_email_breach_action\":\"NO_ACTION\",\"enable_social\":true,\"email_no_social_presence_action\":\"NO_ACTION\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -49,15 +50,17 @@ final class CasesRequestsResourceTest {
   @Test
   void create() {
     CustomerMessagingCaseRequestConfirmRequest params = CustomerMessagingCaseRequestConfirmRequest.builder().contactId("00000000-0000-4000-8000-00000000164f").purpose(CustomerMessagingPurposeEnum.IDENTITY_DOCUMENT).language(CustomerMessagingLanguageEnum.EN).requestId("00000000-0000-4000-8000-0000000016cb").expiresAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).previewToken("value-preview-token").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{\"actor_email\":\"value\",\"cancelled_at\":\"2026-11-01T10:15:30Z\",\"created_at\":\"2026-11-01T10:15:30Z\",\"delivered_at\":\"2026-11-01T10:15:30Z\",\"delivery_status\":\"value\",\"expires_at\":\"2026-11-01T10:15:30Z\",\"has_attachment\":true,\"language\":\"value\",\"purpose\":\"value\",\"recipient\":\"value\",\"responded_at\":\"2026-11-01T10:15:30Z\",\"response\":{},\"uuid\":\"value\"}");
     transport.respondJson(201, example);
-    var result = client.cases().requests().create("00000000-0000-4000-8000-00000000bc7d", params);
+    var result = client.cases().requests().create("00000000-0000-4000-8000-00000000bc7d", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/00000000-0000-4000-8000-00000000bc7d/requests/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"contact_id\":\"00000000-0000-4000-8000-00000000164f\",\"purpose\":\"identity_document\",\"language\":\"en\",\"request_id\":\"00000000-0000-4000-8000-0000000016cb\",\"expires_at\":\"2026-11-01T10:15:30Z\",\"preview_token\":\"value-preview-token\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -65,15 +68,17 @@ final class CasesRequestsResourceTest {
 
   @Test
   void cancel() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{\"actor_email\":\"value\",\"cancelled_at\":\"2026-11-01T10:15:30Z\",\"created_at\":\"2026-11-01T10:15:30Z\",\"delivered_at\":\"2026-11-01T10:15:30Z\",\"delivery_status\":\"value\",\"expires_at\":\"2026-11-01T10:15:30Z\",\"has_attachment\":true,\"language\":\"value\",\"purpose\":\"value\",\"recipient\":\"value\",\"responded_at\":\"2026-11-01T10:15:30Z\",\"response\":{},\"uuid\":\"value\"}");
     transport.respondJson(200, example);
-    var result = client.cases().requests().cancel("00000000-0000-4000-8000-00000000bb8b", "00000000-0000-4000-8000-00000000e7e6");
+    var result = client.cases().requests().cancel("00000000-0000-4000-8000-00000000bb8b", "00000000-0000-4000-8000-00000000e7e6", options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/00000000-0000-4000-8000-00000000bb8b/requests/00000000-0000-4000-8000-00000000e7e6/cancel/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -113,15 +118,17 @@ final class CasesRequestsResourceTest {
   @Test
   void preview() {
     CustomerMessagingCaseRequestPreviewRequest params = CustomerMessagingCaseRequestPreviewRequest.builder().contactId("00000000-0000-4000-8000-00000000164f").purpose(CustomerMessagingPurposeEnum.IDENTITY_DOCUMENT).language(CustomerMessagingLanguageEnum.EN).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{\"expires_at\":\"2026-11-01T10:15:30Z\",\"html\":\"value\",\"preview_token\":\"value\",\"recipient\":\"value\",\"request_id\":\"value\",\"requires_user_action\":true,\"sender\":\"value\",\"subject\":\"value\"}");
     transport.respondJson(200, example);
-    var result = client.cases().requests().preview("00000000-0000-4000-8000-00000000cbec", params);
+    var result = client.cases().requests().preview("00000000-0000-4000-8000-00000000cbec", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/00000000-0000-4000-8000-00000000cbec/requests/preview/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"contact_id\":\"00000000-0000-4000-8000-00000000164f\",\"purpose\":\"identity_document\",\"language\":\"en\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -129,15 +136,17 @@ final class CasesRequestsResourceTest {
 
   @Test
   void remind() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/requests/{request_uuid}/remind/", "200");
     transport.respondJson(200, example);
-    var result = client.cases().requests().remind("00000000-0000-4000-8000-00000000bd2b", "00000000-0000-4000-8000-00000000e986");
+    var result = client.cases().requests().remind("00000000-0000-4000-8000-00000000bd2b", "00000000-0000-4000-8000-00000000e986", options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/00000000-0000-4000-8000-00000000bd2b/requests/00000000-0000-4000-8000-00000000e986/remind/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

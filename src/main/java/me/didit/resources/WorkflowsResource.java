@@ -124,9 +124,10 @@ public final class WorkflowsResource {
   /**
    * Create workflow
    *
-   * <p>Create a simple workflow. Send <code>features</code> in execution order (ordering rules apply); defaults to <code>published</code> v1. The body accepts ONLY the fields listed in <code>SimpleWorkflowRequest</code> — any other key (including <code>workflow_type</code>) is rejected with a 400. Not idempotent — each call creates a new workflow. Maximum 50 workflows per application.
+   * <p>Create a simple workflow. Send <code>features</code> in execution order (ordering rules apply); defaults to <code>published</code> v1. The body accepts ONLY the fields listed in <code>SimpleWorkflowRequest</code> — any other key (including <code>workflow_type</code>) is rejected with a 400. Without an <code>Idempotency-Key</code> each call creates a new workflow. Maximum 50 workflows per application.
    *
    * <p>{@code POST /v3/workflows/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -219,6 +220,7 @@ public final class WorkflowsResource {
    * <p>Update a workflow. Versioning depends on the <code>status</code> field you send and the current state of the version: (1) no <code>status</code> on a <b>published</b> version → the published version is updated in place (same <code>uuid</code>, same <code>version</code>); (2) no <code>status</code> on a <b>draft</b> → the draft is updated and immediately published; (3) <code>status: "published"</code> on a <b>published</b> version → a NEW published version is created under the same <code>workflow_id</code> (new <code>uuid</code>, <code>version</code> + 1) and returned, and any existing draft in the group is deleted; (4) <code>status: "draft"</code> keeps a draft as a draft (autosave) but is rejected with 400 on a published version (<code>"Cannot revert a published version to draft."</code>). The body accepts the same strict field whitelist as create — unknown keys are rejected with 400.
    *
    * <p>{@code PATCH /v3/workflows/{settings_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param settingsUuid Per-version UUID of the workflow to update.
    * @param params the request parameters
@@ -269,6 +271,7 @@ public final class WorkflowsResource {
    * <p>Permanently delete one workflow version (no undo). Existing sessions keep their verification results but their workflow reference is cleared; other versions in the same <code>workflow_id</code> group are not deleted.
    *
    * <p>{@code DELETE /v3/workflows/{settings_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param settingsUuid Per-version UUID of the workflow to delete.
    * @param options per-request options that override the client options

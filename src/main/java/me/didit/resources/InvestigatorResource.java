@@ -273,6 +273,7 @@ public final class InvestigatorResource {
    * <p>Applies the recommended action through the item's normal path, so your usual webhooks fire. A <code>narrative</code> makes it edited and accepted. Restricted keys need the <code>decisions</code> scope (write); transaction alerts also need <code>transactions</code> (write). Escalating a verification or transaction opens a case.
    *
    * <p>{@code POST /v3/investigator/runs/{run_id}/accept/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param runId the {@code run_id}
    * @param params the request parameters
@@ -323,6 +324,7 @@ public final class InvestigatorResource {
    * <p>Takes another action with a category and a reason. Also overrides a decision the Investigator took on its own while it still stands. Restricted keys need the <code>decisions</code> scope (write); transaction alerts also need <code>transactions</code> (write). Escalating a verification or transaction opens a case. Automated transaction decisions can be overridden only while the original decision still stands. The original decision remains unchanged, the override is recorded separately, and an immediate policy question is raised for its recorded situations with the original policy action. The override does not charge for another automated decision.
    *
    * <p>{@code POST /v3/investigator/runs/{run_id}/override/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param runId the {@code run_id}
    * @param params the request parameters
@@ -373,6 +375,7 @@ public final class InvestigatorResource {
    * <p>Accepts up to 50 reports marked Ready to accept. Each is its own decision: one that cannot be accepted is skipped with its reason. Restricted keys need the <code>decisions</code> scope (write); transaction alerts also need <code>transactions</code> (write). Escalating a verification or transaction opens a case.
    *
    * <p>{@code POST /v3/investigator/runs/batch-accept/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -887,6 +890,7 @@ public final class InvestigatorResource {
    * <p>Change the stage, the monthly spend limit, or both. Moving past <code>none</code> needs a plan that includes the Investigator (Growth or higher); <code>live</code> also needs a contract that prices it, if you have one. Restricted keys need the <code>applications</code> scope (write).
    *
    * <p>{@code PATCH /v3/investigator/settings/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

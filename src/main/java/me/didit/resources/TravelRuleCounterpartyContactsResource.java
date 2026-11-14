@@ -126,6 +126,7 @@ public final class TravelRuleCounterpartyContactsResource {
    * <p>Adds a private compliance address for one directory entry. Only your application sees and uses it, and the EMAIL rail writes to it before any platform contact. Adding an address the entry already has among your own contacts returns that contact.
    *
    * <p>{@code POST /v3/travel-rule/counterparty-contacts/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -172,6 +173,7 @@ public final class TravelRuleCounterpartyContactsResource {
    * <p>Edits one of your application's own contacts. Changing the email address clears its verification and invalid state. Platform contacts cannot be edited.
    *
    * <p>{@code PATCH /v3/travel-rule/counterparty-contacts/{contact_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param contactUuid the {@code contact_uuid}
    * @param params the request parameters
@@ -264,6 +266,7 @@ public final class TravelRuleCounterpartyContactsResource {
    * <p>Deletes one of your application's own contacts. The EMAIL rail stops writing to it at once. Platform contacts cannot be deleted.
    *
    * <p>{@code DELETE /v3/travel-rule/counterparty-contacts/{contact_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param contactUuid the {@code contact_uuid}
    * @param options per-request options that override the client options

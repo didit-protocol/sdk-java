@@ -195,6 +195,7 @@ public final class TravelRuleResource {
    * <p>Upsert the application's Travel Rule settings and VASP profile. Partial update — only send the fields you want to change. Setting <code>is_enabled: true</code> requires a non-blank <code>legal_name</code> (already stored or included in the same request), otherwise returns 400.
    *
    * <p>{@code PUT /v3/travel-rule/settings/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -241,6 +242,7 @@ public final class TravelRuleResource {
    * <p>Emails a single-use confirmation link to your VASP profile's compliance_email. Opening the link and pressing its confirm button confirms the address, which the Didit network needs before it lists your profile. A new request replaces the previous link; the link stops working when the compliance email changes. One email per minute per address.
    *
    * <p>{@code POST /v3/travel-rule/settings/compliance-email/confirmation/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param options per-request options that override the client options
    * @return the response body
@@ -368,6 +370,7 @@ public final class TravelRuleResource {
    * <p>Add a VASP privately to your application and optionally invite it. Requires write access to transactions. The response uses source=added_by_you. A matching visible name or LEI returns 409 with the existing vasp_id. See [Search the directory](/management-api/travel-rule/search-vasps).
    *
    * <p>{@code POST /v3/travel-rule/vasps/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -506,6 +509,7 @@ public final class TravelRuleResource {
    * <p>Make or change your application's decision on a counterparty: APPROVED, RESTRICTED or BLOCKED, with an optional reason. It never changes the shared directory entry and acts only through your transaction rules (counterparty_dd_status). A decision on a brand also covers each of its entities that has no decision of its own.
    *
    * <p>{@code PUT /v3/travel-rule/vasps/{vasp_id}/decision/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
    * @param params the request parameters
@@ -556,6 +560,7 @@ public final class TravelRuleResource {
    * <p>Clear your application's own decision on a counterparty. The response shows the decision that applies afterwards: null, or for an entity of a brand the brand's decision, which the entity follows again.
    *
    * <p>{@code DELETE /v3/travel-rule/vasps/{vasp_id}/decision/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
    * @param options per-request options that override the client options
@@ -648,6 +653,7 @@ public final class TravelRuleResource {
    * <p>Screen the counterparty entity against sanctions and adverse media for your application. Opt-in: counterparty_screening_enabled must be on in your Travel Rule settings. Each new screening is billed at your organization's Company AML Screening price; a screening younger than 30 days is returned instead (200, not billed) unless you send refresh: true. One screening of a counterparty runs at a time per application. The result is private to your application. Sandbox applications are never screened.
    *
    * <p>{@code POST /v3/travel-rule/vasps/{vasp_id}/screening/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
    * @param params the request parameters
@@ -740,6 +746,7 @@ public final class TravelRuleResource {
    * <p>Records your review of one possible match of a screening. The screening score and status are recomputed from the reviewed hits, but the counterparty's decision is never changed for you: decide it with <code>PUT /v3/travel-rule/vasps/{vasp_id}/decision/</code>. Repeating the same review changes nothing (<code>changed: false</code>). Needs the transactions write privilege.
    *
    * <p>{@code PATCH /v3/travel-rule/vasps/{vasp_id}/screening/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
    * @param params the request parameters
@@ -836,6 +843,7 @@ public final class TravelRuleResource {
    * <p>Email Didit's standard due-diligence questionnaire to a compliance address on record for the counterparty, with a single-use answer link. The counterparty has 30 days to answer every question; the answers stay current for 365 days. A new send replaces your earlier unanswered questionnaire to the same counterparty, whose link stops working. One email per minute per address.
    *
    * <p>{@code POST /v3/travel-rule/vasps/{vasp_id}/questionnaires/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
    * @param params the request parameters
@@ -928,6 +936,7 @@ public final class TravelRuleResource {
    * <p>Register Travel Rule data for a crypto deposit that already settled on-chain before any exchange took place. Creates an inbound travelRule transaction (or reuses an unclaimed deposit) and resolves the transfer against your wallet address book. For a newly created transaction, Didit sends transaction.created first and the travel_rule.status.updated webhooks after it.
    *
    * <p>{@code POST /v3/travel-rule/inbound/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -974,6 +983,7 @@ public final class TravelRuleResource {
    * <p>Mint a hosted wallet-ownership widget URL/token. Send the customer to the returned url to prove control of a wallet (message signing, Satoshi test, screenshot, or self-declaration). The widget is web-only in this release - open the url in the system browser or a custom tab, never inside a mobile SDK webview.
    *
    * <p>{@code POST /v3/travel-rule/widget-session/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -1066,6 +1076,7 @@ public final class TravelRuleResource {
    * <p>Emails the counterparty a private link to the selected documents. Sharing again replaces the earlier share: the earlier link stops working for good. Sharing exactly what is already shared with the same address changes nothing and answers <code>200</code> with <code>url: null</code>. Needs the transactions write privilege.
    *
    * <p>{@code POST /v3/travel-rule/vasps/{vasp_id}/shared-documents/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
    * @param params the request parameters
@@ -1116,6 +1127,7 @@ public final class TravelRuleResource {
    * <p>Revokes every active link to your documents for this counterparty. Withdrawal is permanent: the links never work again, and sharing again creates a new link.
    *
    * <p>{@code DELETE /v3/travel-rule/vasps/{vasp_id}/shared-documents/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
    * @param options per-request options that override the client options
@@ -1160,6 +1172,7 @@ public final class TravelRuleResource {
    * <p>Withdraws the request and erases the documents and answers collected with it. Its answer link stops working. Deletion is irreversible. Needs the transactions write privilege.
    *
    * <p>{@code DELETE /v3/travel-rule/vasps/{vasp_id}/questionnaires/{questionnaire_id}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
    * @param questionnaireId the {@code questionnaire_id}
@@ -1343,6 +1356,7 @@ public final class TravelRuleResource {
    * <p>Assigns the counterparty to one application member, or unassigns it with <code>assignee_email: null</code>. Repeating the same assignment changes nothing (<code>changed: false</code>). The assignment is private to your application. Needs the transactions write privilege.
    *
    * <p>{@code POST /v3/travel-rule/vasps/{vasp_id}/assign/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
    * @param params the request parameters
