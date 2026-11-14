@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.0](https://github.com/didit-protocol/sdk-java/compare/v1.16.0...v1.17.0) (2026-11-14)
+
+
+### Features
+
+* per-request idempotency key ([#59](https://github.com/didit-protocol/sdk-java/issues/59)) ([0a143f7](https://github.com/didit-protocol/sdk-java/commit/0a143f7ad4d05cc70e75a3c0e9c3a3cbe21e985b))
+
 ## [1.16.0](https://github.com/didit-protocol/sdk-java/compare/v1.15.0...v1.16.0) (2026-11-14)
 
 
