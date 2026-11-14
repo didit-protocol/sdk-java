@@ -801,7 +801,8 @@ final class ApiClientTest {
         ConfigurationException.class,
         () -> RequestOptions.builder().idempotencyKey("k".repeat(256)));
     assertThrows(ConfigurationException.class, () -> RequestOptions.builder().idempotencyKey(null));
-    for (String bad : List.of("\u6ce8\u6587-1", "caf\u00e9", "a\nb")) {
+    for (String bad :
+        List.of("\u6ce8\u6587-1", "caf\u00e9", "a\nb", " order-1", "order-1 ", "   ")) {
       assertThrows(
           ConfigurationException.class, () -> RequestOptions.builder().idempotencyKey(bad));
     }
@@ -993,7 +994,8 @@ final class ApiClientTest {
 
   @Test
   void rawHeaderAndGeneratedParameterKeysAreValidated() {
-    for (String bad : List.of("", "k".repeat(256), "\u6ce8\u6587-1", "a\nb")) {
+    for (String bad :
+        List.of("", "k".repeat(256), "\u6ce8\u6587-1", "a\nb", " order-1", "order-1 ", "   ")) {
       assertThrows(
           ConfigurationException.class,
           () ->

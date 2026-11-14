@@ -302,7 +302,8 @@ public final class ApiClient {
     headers.keySet().removeIf(k -> k.equalsIgnoreCase(IDEMPOTENCY_KEY));
     if (!RequestOptions.isValidIdempotencyKey(key)) {
       throw new ConfigurationException(
-          "Idempotency-Key must be a string of 1 to 255 printable ASCII characters");
+          "Idempotency-Key must be a string of 1 to 255 printable ASCII characters that neither"
+              + " start nor end with a space");
     }
     boolean allowed =
         method.equals("POST")
