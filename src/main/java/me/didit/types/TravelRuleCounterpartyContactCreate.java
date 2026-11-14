@@ -13,7 +13,7 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 
 public final class TravelRuleCounterpartyContactCreate extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("counterparty", "email", "name");
+  private static final Set<String> KNOWN_FIELDS = Set.of("counterparty", "email", "name", "role", "phone", "receives_requests");
 
   private TravelRuleCounterpartyContactCreate(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -78,6 +78,36 @@ public final class TravelRuleCounterpartyContactCreate extends JsonModel {
     return Json.optional(json, "name", Conv.STRING);
   }
 
+  /**
+   * Optional. The contact's role.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> role() {
+    return Json.optional(json, "role", Conv.STRING);
+  }
+
+  /**
+   * Optional. The contact's phone number.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> phone() {
+    return Json.optional(json, "phone", Conv.STRING);
+  }
+
+  /**
+   * Whether due-diligence requests and reminders go to this contact.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> receivesRequests() {
+    return Json.optional(json, "receives_requests", Conv.BOOLEAN);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -119,6 +149,36 @@ public final class TravelRuleCounterpartyContactCreate extends JsonModel {
      */
     public Builder name(String name) {
       return set("name", Conv.STRING, name);
+    }
+
+    /**
+     * Optional. The contact's role.
+     *
+     * @param role the value
+     * @return this builder
+     */
+    public Builder role(String role) {
+      return set("role", Conv.STRING, role);
+    }
+
+    /**
+     * Optional. The contact's phone number.
+     *
+     * @param phone the value
+     * @return this builder
+     */
+    public Builder phone(String phone) {
+      return set("phone", Conv.STRING, phone);
+    }
+
+    /**
+     * Whether due-diligence requests and reminders go to this contact.
+     *
+     * @param receivesRequests the value
+     * @return this builder
+     */
+    public Builder receivesRequests(boolean receivesRequests) {
+      return set("receives_requests", Conv.BOOLEAN, receivesRequests);
     }
 
     /**

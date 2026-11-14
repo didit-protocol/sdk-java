@@ -20,25 +20,32 @@ import me.didit.types.TravelRuleCounterpartyQuestionnaireRequest;
 import me.didit.types.TravelRuleCounterpartyScreeningRequest;
 import me.didit.types.TravelRuleCounterpartyScreeningResult;
 import me.didit.types.TravelRuleCounterpartyScreeningStatus;
+import me.didit.types.TravelRuleDecisionEvent;
+import me.didit.types.TravelRuleDocumentShare;
 import me.didit.types.TravelRuleInboundRequest;
 import me.didit.types.TravelRuleInboundResponse;
+import me.didit.types.TravelRuleListVaspDecisionHistoryParams;
 import me.didit.types.TravelRuleListVaspReviewersResponse;
+import me.didit.types.TravelRuleListVaspSharedDocumentsResponse;
 import me.didit.types.TravelRuleListVaspsParams;
 import me.didit.types.TravelRuleReviewVaspScreeningHitParams;
 import me.didit.types.TravelRuleReviewVaspScreeningHitResponse;
 import me.didit.types.TravelRuleSendComplianceEmailConfirmationResponse;
 import me.didit.types.TravelRuleSettingsDetail;
 import me.didit.types.TravelRuleSettingsUpdate;
+import me.didit.types.TravelRuleShareVaspDocumentsParams;
 import me.didit.types.TravelRuleVaspCreateRequest;
 import me.didit.types.TravelRuleWidgetSessionCreate;
 import me.didit.types.TravelRuleWidgetSessionResponse;
 import me.didit.types.VaspDirectoryEntry;
+import org.jspecify.annotations.Nullable;
 
 /** The {@code travel_rule} resource: {@code client.travelRule()}. */
 public final class TravelRuleResource {
   private final ApiClient client;
   private final WithRawResponse withRawResponse;
   private final TravelRuleCounterpartyContactsResource counterpartyContacts;
+  private final TravelRuleDocumentsResource documents;
   private final TravelRuleNetworksResource networks;
   private final TravelRuleTransfersResource transfers;
   private final TravelRuleUnmatchedDepositsResource unmatchedDeposits;
@@ -50,6 +57,7 @@ public final class TravelRuleResource {
     this.client = client;
     this.withRawResponse = new WithRawResponse(client);
     this.counterpartyContacts = new TravelRuleCounterpartyContactsResource(client);
+    this.documents = new TravelRuleDocumentsResource(client);
     this.networks = new TravelRuleNetworksResource(client);
     this.transfers = new TravelRuleTransfersResource(client);
     this.unmatchedDeposits = new TravelRuleUnmatchedDepositsResource(client);
@@ -65,6 +73,15 @@ public final class TravelRuleResource {
    */
   public TravelRuleCounterpartyContactsResource counterpartyContacts() {
     return counterpartyContacts;
+  }
+
+  /**
+   * The {@code travel_rule.documents} resource.
+   *
+   * @return the resource
+   */
+  public TravelRuleDocumentsResource documents() {
+    return documents;
   }
 
   /**
@@ -998,6 +1015,287 @@ public final class TravelRuleResource {
   }
 
   /**
+   * List the documents shared with a VASP
+   *
+   * <p>The documents currently shared with the counterparty.
+   *
+   * <p>{@code GET /v3/travel-rule/vasps/{vasp_id}/shared-documents/}
+   *
+   * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public TravelRuleListVaspSharedDocumentsResponse listVaspSharedDocuments(String vaspId, RequestOptions options) {
+    return client.execute(listVaspSharedDocumentsRequest(vaspId), options, LIST_VASP_SHARED_DOCUMENTS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listVaspSharedDocuments(String, RequestOptions)}.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleListVaspSharedDocumentsResponse> listVaspSharedDocumentsAsync(String vaspId, RequestOptions options) {
+    return client.executeAsync(listVaspSharedDocumentsRequest(vaspId), options, LIST_VASP_SHARED_DOCUMENTS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listVaspSharedDocuments(String, RequestOptions)}, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @return the result
+   */
+  public TravelRuleListVaspSharedDocumentsResponse listVaspSharedDocuments(String vaspId) {
+    return client.execute(listVaspSharedDocumentsRequest(vaspId), RequestOptions.none(), LIST_VASP_SHARED_DOCUMENTS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listVaspSharedDocuments(String, RequestOptions)}, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleListVaspSharedDocumentsResponse> listVaspSharedDocumentsAsync(String vaspId) {
+    return client.executeAsync(listVaspSharedDocumentsRequest(vaspId), RequestOptions.none(), LIST_VASP_SHARED_DOCUMENTS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Share documents with a VASP
+   *
+   * <p>Emails the counterparty a private link to the selected documents. Sharing again replaces the earlier share: the earlier link stops working for good. Sharing exactly what is already shared with the same address changes nothing and answers <code>200</code> with <code>url: null</code>. Needs the transactions write privilege.
+   *
+   * <p>{@code POST /v3/travel-rule/vasps/{vasp_id}/shared-documents/}
+   *
+   * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public TravelRuleDocumentShare shareVaspDocuments(String vaspId, TravelRuleShareVaspDocumentsParams params, RequestOptions options) {
+    return client.execute(shareVaspDocumentsRequest(vaspId, params), options, SHARE_VASP_DOCUMENTS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #shareVaspDocuments(String, TravelRuleShareVaspDocumentsParams, RequestOptions)}.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleDocumentShare> shareVaspDocumentsAsync(String vaspId, TravelRuleShareVaspDocumentsParams params, RequestOptions options) {
+    return client.executeAsync(shareVaspDocumentsRequest(vaspId, params), options, SHARE_VASP_DOCUMENTS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #shareVaspDocuments(String, TravelRuleShareVaspDocumentsParams, RequestOptions)}, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param params the request parameters
+   * @return the result
+   */
+  public TravelRuleDocumentShare shareVaspDocuments(String vaspId, TravelRuleShareVaspDocumentsParams params) {
+    return client.execute(shareVaspDocumentsRequest(vaspId, params), RequestOptions.none(), SHARE_VASP_DOCUMENTS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #shareVaspDocuments(String, TravelRuleShareVaspDocumentsParams, RequestOptions)}, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleDocumentShare> shareVaspDocumentsAsync(String vaspId, TravelRuleShareVaspDocumentsParams params) {
+    return client.executeAsync(shareVaspDocumentsRequest(vaspId, params), RequestOptions.none(), SHARE_VASP_DOCUMENTS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Withdraw the documents shared with a VASP
+   *
+   * <p>Revokes every active link to your documents for this counterparty. Withdrawal is permanent: the links never work again, and sharing again creates a new link.
+   *
+   * <p>{@code DELETE /v3/travel-rule/vasps/{vasp_id}/shared-documents/}
+   *
+   * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
+   * @param options per-request options that override the client options
+   */
+  public void withdrawVaspDocuments(String vaspId, RequestOptions options) {
+    client.execute(withdrawVaspDocumentsRequest(vaspId), options, WITHDRAW_VASP_DOCUMENTS_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #withdrawVaspDocuments(String, RequestOptions)}.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> withdrawVaspDocumentsAsync(String vaspId, RequestOptions options) {
+    return client.executeAsync(withdrawVaspDocumentsRequest(vaspId), options, WITHDRAW_VASP_DOCUMENTS_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * Same as {@link #withdrawVaspDocuments(String, RequestOptions)}, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   */
+  public void withdrawVaspDocuments(String vaspId) {
+    client.execute(withdrawVaspDocumentsRequest(vaspId), RequestOptions.none(), WITHDRAW_VASP_DOCUMENTS_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #withdrawVaspDocuments(String, RequestOptions)}, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> withdrawVaspDocumentsAsync(String vaspId) {
+    return client.executeAsync(withdrawVaspDocumentsRequest(vaspId), RequestOptions.none(), WITHDRAW_VASP_DOCUMENTS_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * Withdraw a due-diligence request
+   *
+   * <p>Withdraws the request and erases the documents and answers collected with it. Its answer link stops working. Deletion is irreversible. Needs the transactions write privilege.
+   *
+   * <p>{@code DELETE /v3/travel-rule/vasps/{vasp_id}/questionnaires/{questionnaire_id}/}
+   *
+   * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
+   * @param questionnaireId the {@code questionnaire_id}
+   * @param options per-request options that override the client options
+   */
+  public void withdrawVaspQuestionnaire(String vaspId, String questionnaireId, RequestOptions options) {
+    client.execute(withdrawVaspQuestionnaireRequest(vaspId, questionnaireId), options, WITHDRAW_VASP_QUESTIONNAIRE_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #withdrawVaspQuestionnaire(String, String, RequestOptions)}.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param questionnaireId the {@code questionnaire_id}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> withdrawVaspQuestionnaireAsync(String vaspId, String questionnaireId, RequestOptions options) {
+    return client.executeAsync(withdrawVaspQuestionnaireRequest(vaspId, questionnaireId), options, WITHDRAW_VASP_QUESTIONNAIRE_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * Same as {@link #withdrawVaspQuestionnaire(String, String, RequestOptions)}, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param questionnaireId the {@code questionnaire_id}
+   */
+  public void withdrawVaspQuestionnaire(String vaspId, String questionnaireId) {
+    client.execute(withdrawVaspQuestionnaireRequest(vaspId, questionnaireId), RequestOptions.none(), WITHDRAW_VASP_QUESTIONNAIRE_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #withdrawVaspQuestionnaire(String, String, RequestOptions)}, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param questionnaireId the {@code questionnaire_id}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> withdrawVaspQuestionnaireAsync(String vaspId, String questionnaireId) {
+    return client.executeAsync(withdrawVaspQuestionnaireRequest(vaspId, questionnaireId), RequestOptions.none(), WITHDRAW_VASP_QUESTIONNAIRE_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * List a VASP's decision history
+   *
+   * <p>Your application's own decision changes for the counterparty, newest first. Only changes made after this history existed are listed. Needs the transactions read privilege.
+   *
+   * <p>{@code GET /v3/travel-rule/vasps/{vasp_id}/decision-history/}
+   * <p>Returns one page; iterate it to fetch every following page automatically.
+   *
+   * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public Page<TravelRuleDecisionEvent> listVaspDecisionHistory(String vaspId, TravelRuleListVaspDecisionHistoryParams params, RequestOptions options) {
+    return client.execute(listVaspDecisionHistoryRequest(vaspId, params), options, LIST_VASP_DECISION_HISTORY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)}.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TravelRuleDecisionEvent>> listVaspDecisionHistoryAsync(String vaspId, TravelRuleListVaspDecisionHistoryParams params, RequestOptions options) {
+    return client.executeAsync(listVaspDecisionHistoryRequest(vaspId, params), options, LIST_VASP_DECISION_HISTORY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)}, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param params the request parameters
+   * @return the result
+   */
+  public Page<TravelRuleDecisionEvent> listVaspDecisionHistory(String vaspId, TravelRuleListVaspDecisionHistoryParams params) {
+    return client.execute(listVaspDecisionHistoryRequest(vaspId, params), RequestOptions.none(), LIST_VASP_DECISION_HISTORY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)}, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TravelRuleDecisionEvent>> listVaspDecisionHistoryAsync(String vaspId, TravelRuleListVaspDecisionHistoryParams params) {
+    return client.executeAsync(listVaspDecisionHistoryRequest(vaspId, params), RequestOptions.none(), LIST_VASP_DECISION_HISTORY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)}, without parameters.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param options per-request options
+   * @return the result
+   */
+  public Page<TravelRuleDecisionEvent> listVaspDecisionHistory(String vaspId, RequestOptions options) {
+    return client.execute(listVaspDecisionHistoryRequest(vaspId, TravelRuleListVaspDecisionHistoryParams.builder().build()), options, LIST_VASP_DECISION_HISTORY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)}, without parameters.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TravelRuleDecisionEvent>> listVaspDecisionHistoryAsync(String vaspId, RequestOptions options) {
+    return client.executeAsync(listVaspDecisionHistoryRequest(vaspId, TravelRuleListVaspDecisionHistoryParams.builder().build()), options, LIST_VASP_DECISION_HISTORY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @return the result
+   */
+  public Page<TravelRuleDecisionEvent> listVaspDecisionHistory(String vaspId) {
+    return client.execute(listVaspDecisionHistoryRequest(vaspId, TravelRuleListVaspDecisionHistoryParams.builder().build()), RequestOptions.none(), LIST_VASP_DECISION_HISTORY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<TravelRuleDecisionEvent>> listVaspDecisionHistoryAsync(String vaspId) {
+    return client.executeAsync(listVaspDecisionHistoryRequest(vaspId, TravelRuleListVaspDecisionHistoryParams.builder().build()), RequestOptions.none(), LIST_VASP_DECISION_HISTORY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
    * List the members who can be assigned a VASP
    *
    * <p>The application members who can review Travel Rule counterparties. Use one <code>email</code> as <code>assignee_email</code> of <code>POST /v3/travel-rule/vasps/{vasp_id}/assign/</code>. Needs the transactions read privilege.
@@ -1225,6 +1523,51 @@ public final class TravelRuleResource {
     return ApiRequest.builder("POST", "/v3/travel-rule/widget-session/")
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<TravelRuleListVaspSharedDocumentsResponse> LIST_VASP_SHARED_DOCUMENTS_RESPONSE = Responses.json(Conv.model(TravelRuleListVaspSharedDocumentsResponse::fromJson));
+
+  private static ApiRequest listVaspSharedDocumentsRequest(String vaspId) {
+    return ApiRequest.builder("GET", "/v3/travel-rule/vasps/{vasp_id}/shared-documents/")
+        .pathParam("vasp_id", vaspId)
+        .build();
+  }
+
+  private static final ResponseHandler<TravelRuleDocumentShare> SHARE_VASP_DOCUMENTS_RESPONSE = Responses.json(Conv.model(TravelRuleDocumentShare::fromJson));
+
+  private static ApiRequest shareVaspDocumentsRequest(String vaspId, TravelRuleShareVaspDocumentsParams params) {
+    return ApiRequest.builder("POST", "/v3/travel-rule/vasps/{vasp_id}/shared-documents/")
+        .pathParam("vasp_id", vaspId)
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<@Nullable Void> WITHDRAW_VASP_DOCUMENTS_RESPONSE = Responses.none();
+
+  private static ApiRequest withdrawVaspDocumentsRequest(String vaspId) {
+    return ApiRequest.builder("DELETE", "/v3/travel-rule/vasps/{vasp_id}/shared-documents/")
+        .pathParam("vasp_id", vaspId)
+        .build();
+  }
+
+  private static final ResponseHandler<@Nullable Void> WITHDRAW_VASP_QUESTIONNAIRE_RESPONSE = Responses.none();
+
+  private static ApiRequest withdrawVaspQuestionnaireRequest(String vaspId, String questionnaireId) {
+    return ApiRequest.builder("DELETE", "/v3/travel-rule/vasps/{vasp_id}/questionnaires/{questionnaire_id}/")
+        .pathParam("vasp_id", vaspId)
+        .pathParam("questionnaire_id", questionnaireId)
+        .build();
+  }
+
+  private static final ResponseHandler<Page<TravelRuleDecisionEvent>> LIST_VASP_DECISION_HISTORY_RESPONSE = Responses.page(Conv.model(TravelRuleDecisionEvent::fromJson));
+
+  private static ApiRequest listVaspDecisionHistoryRequest(String vaspId, TravelRuleListVaspDecisionHistoryParams params) {
+    return ApiRequest.builder("GET", "/v3/travel-rule/vasps/{vasp_id}/decision-history/")
+        .pathParam("vasp_id", vaspId)
+        .params(params)
+        .queryFields("limit", "offset")
         .build();
   }
 
@@ -2053,6 +2396,270 @@ public final class TravelRuleResource {
      */
     public CompletableFuture<RawResponse<TravelRuleWidgetSessionResponse>> createWidgetSessionAsync(TravelRuleWidgetSessionCreate params) {
       return client.executeAsync(createWidgetSessionRequest(params), RequestOptions.none(), CREATE_WIDGET_SESSION_RESPONSE);
+    }
+
+    /**
+     * {@link #listVaspSharedDocuments(String, RequestOptions)} with the raw response.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<TravelRuleListVaspSharedDocumentsResponse> listVaspSharedDocuments(String vaspId, RequestOptions options) {
+      return client.execute(listVaspSharedDocumentsRequest(vaspId), options, LIST_VASP_SHARED_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listVaspSharedDocuments(String, RequestOptions)} with the raw response.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleListVaspSharedDocumentsResponse>> listVaspSharedDocumentsAsync(String vaspId, RequestOptions options) {
+      return client.executeAsync(listVaspSharedDocumentsRequest(vaspId), options, LIST_VASP_SHARED_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * {@link #listVaspSharedDocuments(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @return the result
+     */
+    public RawResponse<TravelRuleListVaspSharedDocumentsResponse> listVaspSharedDocuments(String vaspId) {
+      return client.execute(listVaspSharedDocumentsRequest(vaspId), RequestOptions.none(), LIST_VASP_SHARED_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listVaspSharedDocuments(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleListVaspSharedDocumentsResponse>> listVaspSharedDocumentsAsync(String vaspId) {
+      return client.executeAsync(listVaspSharedDocumentsRequest(vaspId), RequestOptions.none(), LIST_VASP_SHARED_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * {@link #shareVaspDocuments(String, TravelRuleShareVaspDocumentsParams, RequestOptions)} with the raw response.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<TravelRuleDocumentShare> shareVaspDocuments(String vaspId, TravelRuleShareVaspDocumentsParams params, RequestOptions options) {
+      return client.execute(shareVaspDocumentsRequest(vaspId, params), options, SHARE_VASP_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #shareVaspDocuments(String, TravelRuleShareVaspDocumentsParams, RequestOptions)} with the raw response.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleDocumentShare>> shareVaspDocumentsAsync(String vaspId, TravelRuleShareVaspDocumentsParams params, RequestOptions options) {
+      return client.executeAsync(shareVaspDocumentsRequest(vaspId, params), options, SHARE_VASP_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * {@link #shareVaspDocuments(String, TravelRuleShareVaspDocumentsParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<TravelRuleDocumentShare> shareVaspDocuments(String vaspId, TravelRuleShareVaspDocumentsParams params) {
+      return client.execute(shareVaspDocumentsRequest(vaspId, params), RequestOptions.none(), SHARE_VASP_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #shareVaspDocuments(String, TravelRuleShareVaspDocumentsParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleDocumentShare>> shareVaspDocumentsAsync(String vaspId, TravelRuleShareVaspDocumentsParams params) {
+      return client.executeAsync(shareVaspDocumentsRequest(vaspId, params), RequestOptions.none(), SHARE_VASP_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * {@link #withdrawVaspDocuments(String, RequestOptions)} with the raw response.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> withdrawVaspDocuments(String vaspId, RequestOptions options) {
+      return client.execute(withdrawVaspDocumentsRequest(vaspId), options, WITHDRAW_VASP_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #withdrawVaspDocuments(String, RequestOptions)} with the raw response.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> withdrawVaspDocumentsAsync(String vaspId, RequestOptions options) {
+      return client.executeAsync(withdrawVaspDocumentsRequest(vaspId), options, WITHDRAW_VASP_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * {@link #withdrawVaspDocuments(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> withdrawVaspDocuments(String vaspId) {
+      return client.execute(withdrawVaspDocumentsRequest(vaspId), RequestOptions.none(), WITHDRAW_VASP_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #withdrawVaspDocuments(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> withdrawVaspDocumentsAsync(String vaspId) {
+      return client.executeAsync(withdrawVaspDocumentsRequest(vaspId), RequestOptions.none(), WITHDRAW_VASP_DOCUMENTS_RESPONSE);
+    }
+
+    /**
+     * {@link #withdrawVaspQuestionnaire(String, String, RequestOptions)} with the raw response.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param questionnaireId the {@code questionnaire_id}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> withdrawVaspQuestionnaire(String vaspId, String questionnaireId, RequestOptions options) {
+      return client.execute(withdrawVaspQuestionnaireRequest(vaspId, questionnaireId), options, WITHDRAW_VASP_QUESTIONNAIRE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #withdrawVaspQuestionnaire(String, String, RequestOptions)} with the raw response.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param questionnaireId the {@code questionnaire_id}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> withdrawVaspQuestionnaireAsync(String vaspId, String questionnaireId, RequestOptions options) {
+      return client.executeAsync(withdrawVaspQuestionnaireRequest(vaspId, questionnaireId), options, WITHDRAW_VASP_QUESTIONNAIRE_RESPONSE);
+    }
+
+    /**
+     * {@link #withdrawVaspQuestionnaire(String, String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param questionnaireId the {@code questionnaire_id}
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> withdrawVaspQuestionnaire(String vaspId, String questionnaireId) {
+      return client.execute(withdrawVaspQuestionnaireRequest(vaspId, questionnaireId), RequestOptions.none(), WITHDRAW_VASP_QUESTIONNAIRE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #withdrawVaspQuestionnaire(String, String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param questionnaireId the {@code questionnaire_id}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> withdrawVaspQuestionnaireAsync(String vaspId, String questionnaireId) {
+      return client.executeAsync(withdrawVaspQuestionnaireRequest(vaspId, questionnaireId), RequestOptions.none(), WITHDRAW_VASP_QUESTIONNAIRE_RESPONSE);
+    }
+
+    /**
+     * {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)} with the raw response.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<Page<TravelRuleDecisionEvent>> listVaspDecisionHistory(String vaspId, TravelRuleListVaspDecisionHistoryParams params, RequestOptions options) {
+      return client.execute(listVaspDecisionHistoryRequest(vaspId, params), options, LIST_VASP_DECISION_HISTORY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)} with the raw response.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TravelRuleDecisionEvent>>> listVaspDecisionHistoryAsync(String vaspId, TravelRuleListVaspDecisionHistoryParams params, RequestOptions options) {
+      return client.executeAsync(listVaspDecisionHistoryRequest(vaspId, params), options, LIST_VASP_DECISION_HISTORY_RESPONSE);
+    }
+
+    /**
+     * {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<Page<TravelRuleDecisionEvent>> listVaspDecisionHistory(String vaspId, TravelRuleListVaspDecisionHistoryParams params) {
+      return client.execute(listVaspDecisionHistoryRequest(vaspId, params), RequestOptions.none(), LIST_VASP_DECISION_HISTORY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TravelRuleDecisionEvent>>> listVaspDecisionHistoryAsync(String vaspId, TravelRuleListVaspDecisionHistoryParams params) {
+      return client.executeAsync(listVaspDecisionHistoryRequest(vaspId, params), RequestOptions.none(), LIST_VASP_DECISION_HISTORY_RESPONSE);
+    }
+
+    /**
+     * {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<Page<TravelRuleDecisionEvent>> listVaspDecisionHistory(String vaspId, RequestOptions options) {
+      return client.execute(listVaspDecisionHistoryRequest(vaspId, TravelRuleListVaspDecisionHistoryParams.builder().build()), options, LIST_VASP_DECISION_HISTORY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TravelRuleDecisionEvent>>> listVaspDecisionHistoryAsync(String vaspId, RequestOptions options) {
+      return client.executeAsync(listVaspDecisionHistoryRequest(vaspId, TravelRuleListVaspDecisionHistoryParams.builder().build()), options, LIST_VASP_DECISION_HISTORY_RESPONSE);
+    }
+
+    /**
+     * {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @return the result
+     */
+    public RawResponse<Page<TravelRuleDecisionEvent>> listVaspDecisionHistory(String vaspId) {
+      return client.execute(listVaspDecisionHistoryRequest(vaspId, TravelRuleListVaspDecisionHistoryParams.builder().build()), RequestOptions.none(), LIST_VASP_DECISION_HISTORY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listVaspDecisionHistory(String, TravelRuleListVaspDecisionHistoryParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<TravelRuleDecisionEvent>>> listVaspDecisionHistoryAsync(String vaspId) {
+      return client.executeAsync(listVaspDecisionHistoryRequest(vaspId, TravelRuleListVaspDecisionHistoryParams.builder().build()), RequestOptions.none(), LIST_VASP_DECISION_HISTORY_RESPONSE);
     }
 
     /**

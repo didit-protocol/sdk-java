@@ -13,6 +13,7 @@ import me.didit.core.Responses;
 import me.didit.types.TravelRuleCounterpartyContact;
 import me.didit.types.TravelRuleCounterpartyContactCreate;
 import me.didit.types.TravelRuleCounterpartyContactsListParams;
+import me.didit.types.TravelRuleCounterpartyContactsUpdateParams;
 import org.jspecify.annotations.Nullable;
 
 /** The {@code travel_rule.counterparty_contacts} resource: {@code client.travelRule().counterpartyContacts()}. */
@@ -166,6 +167,98 @@ public final class TravelRuleCounterpartyContactsResource {
   }
 
   /**
+   * Edit a counterparty contact
+   *
+   * <p>Edits one of your application's own contacts. Changing the email address clears its verification and invalid state. Platform contacts cannot be edited.
+   *
+   * <p>{@code PATCH /v3/travel-rule/counterparty-contacts/{contact_uuid}/}
+   *
+   * @param contactUuid the {@code contact_uuid}
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public TravelRuleCounterpartyContact update(String contactUuid, TravelRuleCounterpartyContactsUpdateParams params, RequestOptions options) {
+    return client.execute(updateRequest(contactUuid, params), options, UPDATE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)}.
+   *
+   * @param contactUuid the {@code contact_uuid}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleCounterpartyContact> updateAsync(String contactUuid, TravelRuleCounterpartyContactsUpdateParams params, RequestOptions options) {
+    return client.executeAsync(updateRequest(contactUuid, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)}, with the client's options.
+   *
+   * @param contactUuid the {@code contact_uuid}
+   * @param params the request parameters
+   * @return the result
+   */
+  public TravelRuleCounterpartyContact update(String contactUuid, TravelRuleCounterpartyContactsUpdateParams params) {
+    return client.execute(updateRequest(contactUuid, params), RequestOptions.none(), UPDATE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)}, with the client's options.
+   *
+   * @param contactUuid the {@code contact_uuid}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleCounterpartyContact> updateAsync(String contactUuid, TravelRuleCounterpartyContactsUpdateParams params) {
+    return client.executeAsync(updateRequest(contactUuid, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)}, without parameters.
+   *
+   * @param contactUuid the {@code contact_uuid}
+   * @param options per-request options
+   * @return the result
+   */
+  public TravelRuleCounterpartyContact update(String contactUuid, RequestOptions options) {
+    return client.execute(updateRequest(contactUuid, TravelRuleCounterpartyContactsUpdateParams.builder().build()), options, UPDATE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)}, without parameters.
+   *
+   * @param contactUuid the {@code contact_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleCounterpartyContact> updateAsync(String contactUuid, RequestOptions options) {
+    return client.executeAsync(updateRequest(contactUuid, TravelRuleCounterpartyContactsUpdateParams.builder().build()), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param contactUuid the {@code contact_uuid}
+   * @return the result
+   */
+  public TravelRuleCounterpartyContact update(String contactUuid) {
+    return client.execute(updateRequest(contactUuid, TravelRuleCounterpartyContactsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param contactUuid the {@code contact_uuid}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleCounterpartyContact> updateAsync(String contactUuid) {
+    return client.executeAsync(updateRequest(contactUuid, TravelRuleCounterpartyContactsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
    * Delete a counterparty contact
    *
    * <p>Deletes one of your application's own contacts. The EMAIL rail stops writing to it at once. Platform contacts cannot be deleted.
@@ -222,6 +315,16 @@ public final class TravelRuleCounterpartyContactsResource {
 
   private static ApiRequest createRequest(TravelRuleCounterpartyContactCreate params) {
     return ApiRequest.builder("POST", "/v3/travel-rule/counterparty-contacts/")
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<TravelRuleCounterpartyContact> UPDATE_RESPONSE = Responses.json(Conv.model(TravelRuleCounterpartyContact::fromJson));
+
+  private static ApiRequest updateRequest(String contactUuid, TravelRuleCounterpartyContactsUpdateParams params) {
+    return ApiRequest.builder("PATCH", "/v3/travel-rule/counterparty-contacts/{contact_uuid}/")
+        .pathParam("contact_uuid", contactUuid)
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
         .build();
@@ -363,6 +466,94 @@ public final class TravelRuleCounterpartyContactsResource {
      */
     public CompletableFuture<RawResponse<TravelRuleCounterpartyContact>> createAsync(TravelRuleCounterpartyContactCreate params) {
       return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
+    }
+
+    /**
+     * {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)} with the raw response.
+     *
+     * @param contactUuid the {@code contact_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<TravelRuleCounterpartyContact> update(String contactUuid, TravelRuleCounterpartyContactsUpdateParams params, RequestOptions options) {
+      return client.execute(updateRequest(contactUuid, params), options, UPDATE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)} with the raw response.
+     *
+     * @param contactUuid the {@code contact_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleCounterpartyContact>> updateAsync(String contactUuid, TravelRuleCounterpartyContactsUpdateParams params, RequestOptions options) {
+      return client.executeAsync(updateRequest(contactUuid, params), options, UPDATE_RESPONSE);
+    }
+
+    /**
+     * {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param contactUuid the {@code contact_uuid}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<TravelRuleCounterpartyContact> update(String contactUuid, TravelRuleCounterpartyContactsUpdateParams params) {
+      return client.execute(updateRequest(contactUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param contactUuid the {@code contact_uuid}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleCounterpartyContact>> updateAsync(String contactUuid, TravelRuleCounterpartyContactsUpdateParams params) {
+      return client.executeAsync(updateRequest(contactUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
+    }
+
+    /**
+     * {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param contactUuid the {@code contact_uuid}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<TravelRuleCounterpartyContact> update(String contactUuid, RequestOptions options) {
+      return client.execute(updateRequest(contactUuid, TravelRuleCounterpartyContactsUpdateParams.builder().build()), options, UPDATE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param contactUuid the {@code contact_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleCounterpartyContact>> updateAsync(String contactUuid, RequestOptions options) {
+      return client.executeAsync(updateRequest(contactUuid, TravelRuleCounterpartyContactsUpdateParams.builder().build()), options, UPDATE_RESPONSE);
+    }
+
+    /**
+     * {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param contactUuid the {@code contact_uuid}
+     * @return the result
+     */
+    public RawResponse<TravelRuleCounterpartyContact> update(String contactUuid) {
+      return client.execute(updateRequest(contactUuid, TravelRuleCounterpartyContactsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #update(String, TravelRuleCounterpartyContactsUpdateParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param contactUuid the {@code contact_uuid}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleCounterpartyContact>> updateAsync(String contactUuid) {
+      return client.executeAsync(updateRequest(contactUuid, TravelRuleCounterpartyContactsUpdateParams.builder().build()), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
     /**

@@ -13,7 +13,7 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 
 public final class TravelRuleCounterpartyQuestionnaireRequest extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("sent_to");
+  private static final Set<String> KNOWN_FIELDS = Set.of("sent_to", "answer_by_days", "requested_items");
 
   private TravelRuleCounterpartyQuestionnaireRequest(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -58,6 +58,26 @@ public final class TravelRuleCounterpartyQuestionnaireRequest extends JsonModel 
     return Json.optional(json, "sent_to", Conv.STRING);
   }
 
+  /**
+   * Optional. Days the counterparty has to answer. Default: the standard answer window.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> answerByDays() {
+    return Json.optional(json, "answer_by_days", Conv.LONG);
+  }
+
+  /**
+   * Optional. What the counterparty must provide: the questionnaire answers and/or PDF documents.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<TravelRuleDocumentKind>> requestedItems() {
+    return Json.optional(json, "requested_items", Conv.list(Conv.enumeration(TravelRuleDocumentKind::of)));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -79,6 +99,26 @@ public final class TravelRuleCounterpartyQuestionnaireRequest extends JsonModel 
      */
     public Builder sentTo(String sentTo) {
       return set("sent_to", Conv.STRING, sentTo);
+    }
+
+    /**
+     * Optional. Days the counterparty has to answer. Default: the standard answer window.
+     *
+     * @param answerByDays the value
+     * @return this builder
+     */
+    public Builder answerByDays(long answerByDays) {
+      return set("answer_by_days", Conv.LONG, answerByDays);
+    }
+
+    /**
+     * Optional. What the counterparty must provide: the questionnaire answers and/or PDF documents.
+     *
+     * @param requestedItems the value
+     * @return this builder
+     */
+    public Builder requestedItems(List<TravelRuleDocumentKind> requestedItems) {
+      return set("requested_items", Conv.list(Conv.enumeration(TravelRuleDocumentKind::of)), requestedItems);
     }
 
     /**

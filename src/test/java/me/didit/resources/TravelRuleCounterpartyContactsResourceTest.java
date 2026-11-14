@@ -16,6 +16,7 @@ import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
 import me.didit.types.TravelRuleCounterpartyContactCreate;
 import me.didit.types.TravelRuleCounterpartyContactsListParams;
+import me.didit.types.TravelRuleCounterpartyContactsUpdateParams;
 import org.junit.jupiter.api.Test;
 
 /** One test per operation of {@code travel_rule.counterparty_contacts}, against a stubbed HTTP layer. */
@@ -44,7 +45,7 @@ final class TravelRuleCounterpartyContactsResourceTest {
 
   @Test
   void create() {
-    TravelRuleCounterpartyContactCreate params = TravelRuleCounterpartyContactCreate.builder().counterparty("00000000-0000-4000-8000-00000000221d").email("user@example.com").name("value-name").build();
+    TravelRuleCounterpartyContactCreate params = TravelRuleCounterpartyContactCreate.builder().counterparty("00000000-0000-4000-8000-00000000221d").email("user@example.com").name("value-name").role("value-role").phone("value-phone").receivesRequests(true).build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/travel-rule/counterparty-contacts/", "201");
     transport.respondJson(201, example);
     var result = client.travelRule().counterpartyContacts().create(params);
@@ -54,7 +55,24 @@ final class TravelRuleCounterpartyContactsResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"counterparty\":\"00000000-0000-4000-8000-00000000221d\",\"email\":\"user@example.com\",\"name\":\"value-name\"}", request.body());
+    TestJson.assertJsonEquals("{\"counterparty\":\"00000000-0000-4000-8000-00000000221d\",\"email\":\"user@example.com\",\"name\":\"value-name\",\"role\":\"value-role\",\"phone\":\"value-phone\",\"receives_requests\":true}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void update() {
+    TravelRuleCounterpartyContactsUpdateParams params = TravelRuleCounterpartyContactsUpdateParams.builder().name("value-name").email("user@example.com").role("value-role").phone("value-phone").receivesRequests(true).build();
+    JsonNode example = TestJson.parse("{}");
+    transport.respondJson(200, example);
+    var result = client.travelRule().counterpartyContacts().update("00000000-0000-4000-8000-000000023823", params);
+    RecordedRequest request = transport.only();
+    assertEquals("PATCH", request.method());
+    assertEquals("/v3/travel-rule/counterparty-contacts/00000000-0000-4000-8000-000000023823/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"name\":\"value-name\",\"email\":\"user@example.com\",\"role\":\"value-role\",\"phone\":\"value-phone\",\"receives_requests\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
