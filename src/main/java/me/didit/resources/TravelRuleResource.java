@@ -10,6 +10,8 @@ import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
+import me.didit.types.TravelRuleAssignVaspParams;
+import me.didit.types.TravelRuleAssignVaspResponse;
 import me.didit.types.TravelRuleCounterpartyDecisionRequest;
 import me.didit.types.TravelRuleCounterpartyDecisionResponse;
 import me.didit.types.TravelRuleCounterpartyQuestionnaire;
@@ -20,7 +22,10 @@ import me.didit.types.TravelRuleCounterpartyScreeningResult;
 import me.didit.types.TravelRuleCounterpartyScreeningStatus;
 import me.didit.types.TravelRuleInboundRequest;
 import me.didit.types.TravelRuleInboundResponse;
+import me.didit.types.TravelRuleListVaspReviewersResponse;
 import me.didit.types.TravelRuleListVaspsParams;
+import me.didit.types.TravelRuleReviewVaspScreeningHitParams;
+import me.didit.types.TravelRuleReviewVaspScreeningHitResponse;
 import me.didit.types.TravelRuleSendComplianceEmailConfirmationResponse;
 import me.didit.types.TravelRuleSettingsDetail;
 import me.didit.types.TravelRuleSettingsUpdate;
@@ -713,6 +718,56 @@ public final class TravelRuleResource {
   }
 
   /**
+   * Review a screening hit
+   *
+   * <p>Records your review of one possible match of a screening. The screening score and status are recomputed from the reviewed hits, but the counterparty's decision is never changed for you: decide it with <code>PUT /v3/travel-rule/vasps/{vasp_id}/decision/</code>. Repeating the same review changes nothing (<code>changed: false</code>). Needs the transactions write privilege.
+   *
+   * <p>{@code PATCH /v3/travel-rule/vasps/{vasp_id}/screening/}
+   *
+   * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public TravelRuleReviewVaspScreeningHitResponse reviewVaspScreeningHit(String vaspId, TravelRuleReviewVaspScreeningHitParams params, RequestOptions options) {
+    return client.execute(reviewVaspScreeningHitRequest(vaspId, params), options, REVIEW_VASP_SCREENING_HIT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #reviewVaspScreeningHit(String, TravelRuleReviewVaspScreeningHitParams, RequestOptions)}.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleReviewVaspScreeningHitResponse> reviewVaspScreeningHitAsync(String vaspId, TravelRuleReviewVaspScreeningHitParams params, RequestOptions options) {
+    return client.executeAsync(reviewVaspScreeningHitRequest(vaspId, params), options, REVIEW_VASP_SCREENING_HIT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #reviewVaspScreeningHit(String, TravelRuleReviewVaspScreeningHitParams, RequestOptions)}, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param params the request parameters
+   * @return the result
+   */
+  public TravelRuleReviewVaspScreeningHitResponse reviewVaspScreeningHit(String vaspId, TravelRuleReviewVaspScreeningHitParams params) {
+    return client.execute(reviewVaspScreeningHitRequest(vaspId, params), RequestOptions.none(), REVIEW_VASP_SCREENING_HIT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #reviewVaspScreeningHit(String, TravelRuleReviewVaspScreeningHitParams, RequestOptions)}, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleReviewVaspScreeningHitResponse> reviewVaspScreeningHitAsync(String vaspId, TravelRuleReviewVaspScreeningHitParams params) {
+    return client.executeAsync(reviewVaspScreeningHitRequest(vaspId, params), RequestOptions.none(), REVIEW_VASP_SCREENING_HIT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
    * List due-diligence questionnaires with a VASP
    *
    * <p>Every due-diligence questionnaire your application sent the counterparty, newest first, with its status and, once answered, the answers. Private to your application.
@@ -942,6 +997,98 @@ public final class TravelRuleResource {
     return client.executeAsync(createWidgetSessionRequest(params), RequestOptions.none(), CREATE_WIDGET_SESSION_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * List the members who can be assigned a VASP
+   *
+   * <p>The application members who can review Travel Rule counterparties. Use one <code>email</code> as <code>assignee_email</code> of <code>POST /v3/travel-rule/vasps/{vasp_id}/assign/</code>. Needs the transactions read privilege.
+   *
+   * <p>{@code GET /v3/travel-rule/vasps/reviewers/}
+   *
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public TravelRuleListVaspReviewersResponse listVaspReviewers(RequestOptions options) {
+    return client.execute(listVaspReviewersRequest(), options, LIST_VASP_REVIEWERS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listVaspReviewers(RequestOptions)}.
+   *
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleListVaspReviewersResponse> listVaspReviewersAsync(RequestOptions options) {
+    return client.executeAsync(listVaspReviewersRequest(), options, LIST_VASP_REVIEWERS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listVaspReviewers(RequestOptions)}, with the client's options.
+   *
+   * @return the result
+   */
+  public TravelRuleListVaspReviewersResponse listVaspReviewers() {
+    return client.execute(listVaspReviewersRequest(), RequestOptions.none(), LIST_VASP_REVIEWERS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listVaspReviewers(RequestOptions)}, with the client's options.
+   *
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleListVaspReviewersResponse> listVaspReviewersAsync() {
+    return client.executeAsync(listVaspReviewersRequest(), RequestOptions.none(), LIST_VASP_REVIEWERS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Assign a VASP to a member
+   *
+   * <p>Assigns the counterparty to one application member, or unassigns it with <code>assignee_email: null</code>. Repeating the same assignment changes nothing (<code>changed: false</code>). The assignment is private to your application. Needs the transactions write privilege.
+   *
+   * <p>{@code POST /v3/travel-rule/vasps/{vasp_id}/assign/}
+   *
+   * @param vaspId The id of a row of GET /v3/travel-rule/vasps/: a directory entry or a Didit network member.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public TravelRuleAssignVaspResponse assignVasp(String vaspId, TravelRuleAssignVaspParams params, RequestOptions options) {
+    return client.execute(assignVaspRequest(vaspId, params), options, ASSIGN_VASP_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #assignVasp(String, TravelRuleAssignVaspParams, RequestOptions)}.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleAssignVaspResponse> assignVaspAsync(String vaspId, TravelRuleAssignVaspParams params, RequestOptions options) {
+    return client.executeAsync(assignVaspRequest(vaspId, params), options, ASSIGN_VASP_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #assignVasp(String, TravelRuleAssignVaspParams, RequestOptions)}, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param params the request parameters
+   * @return the result
+   */
+  public TravelRuleAssignVaspResponse assignVasp(String vaspId, TravelRuleAssignVaspParams params) {
+    return client.execute(assignVaspRequest(vaspId, params), RequestOptions.none(), ASSIGN_VASP_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #assignVasp(String, TravelRuleAssignVaspParams, RequestOptions)}, with the client's options.
+   *
+   * @param vaspId the {@code vasp_id}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<TravelRuleAssignVaspResponse> assignVaspAsync(String vaspId, TravelRuleAssignVaspParams params) {
+    return client.executeAsync(assignVaspRequest(vaspId, params), RequestOptions.none(), ASSIGN_VASP_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<TravelRuleSettingsDetail> RETRIEVE_SETTINGS_RESPONSE = Responses.json(Conv.model(TravelRuleSettingsDetail::fromJson));
 
   private static ApiRequest retrieveSettingsRequest() {
@@ -1035,6 +1182,16 @@ public final class TravelRuleResource {
         .build();
   }
 
+  private static final ResponseHandler<TravelRuleReviewVaspScreeningHitResponse> REVIEW_VASP_SCREENING_HIT_RESPONSE = Responses.json(Conv.model(TravelRuleReviewVaspScreeningHitResponse::fromJson));
+
+  private static ApiRequest reviewVaspScreeningHitRequest(String vaspId, TravelRuleReviewVaspScreeningHitParams params) {
+    return ApiRequest.builder("PATCH", "/v3/travel-rule/vasps/{vasp_id}/screening/")
+        .pathParam("vasp_id", vaspId)
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
   private static final ResponseHandler<TravelRuleCounterpartyQuestionnaireList> LIST_VASP_QUESTIONNAIRES_RESPONSE = Responses.json(Conv.model(TravelRuleCounterpartyQuestionnaireList::fromJson));
 
   private static ApiRequest listVaspQuestionnairesRequest(String vaspId) {
@@ -1066,6 +1223,23 @@ public final class TravelRuleResource {
 
   private static ApiRequest createWidgetSessionRequest(TravelRuleWidgetSessionCreate params) {
     return ApiRequest.builder("POST", "/v3/travel-rule/widget-session/")
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<TravelRuleListVaspReviewersResponse> LIST_VASP_REVIEWERS_RESPONSE = Responses.json(Conv.model(TravelRuleListVaspReviewersResponse::fromJson));
+
+  private static ApiRequest listVaspReviewersRequest() {
+    return ApiRequest.builder("GET", "/v3/travel-rule/vasps/reviewers/")
+        .build();
+  }
+
+  private static final ResponseHandler<TravelRuleAssignVaspResponse> ASSIGN_VASP_RESPONSE = Responses.json(Conv.model(TravelRuleAssignVaspResponse::fromJson));
+
+  private static ApiRequest assignVaspRequest(String vaspId, TravelRuleAssignVaspParams params) {
+    return ApiRequest.builder("POST", "/v3/travel-rule/vasps/{vasp_id}/assign/")
+        .pathParam("vasp_id", vaspId)
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
         .build();
@@ -1622,6 +1796,52 @@ public final class TravelRuleResource {
     }
 
     /**
+     * {@link #reviewVaspScreeningHit(String, TravelRuleReviewVaspScreeningHitParams, RequestOptions)} with the raw response.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<TravelRuleReviewVaspScreeningHitResponse> reviewVaspScreeningHit(String vaspId, TravelRuleReviewVaspScreeningHitParams params, RequestOptions options) {
+      return client.execute(reviewVaspScreeningHitRequest(vaspId, params), options, REVIEW_VASP_SCREENING_HIT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #reviewVaspScreeningHit(String, TravelRuleReviewVaspScreeningHitParams, RequestOptions)} with the raw response.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleReviewVaspScreeningHitResponse>> reviewVaspScreeningHitAsync(String vaspId, TravelRuleReviewVaspScreeningHitParams params, RequestOptions options) {
+      return client.executeAsync(reviewVaspScreeningHitRequest(vaspId, params), options, REVIEW_VASP_SCREENING_HIT_RESPONSE);
+    }
+
+    /**
+     * {@link #reviewVaspScreeningHit(String, TravelRuleReviewVaspScreeningHitParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<TravelRuleReviewVaspScreeningHitResponse> reviewVaspScreeningHit(String vaspId, TravelRuleReviewVaspScreeningHitParams params) {
+      return client.execute(reviewVaspScreeningHitRequest(vaspId, params), RequestOptions.none(), REVIEW_VASP_SCREENING_HIT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #reviewVaspScreeningHit(String, TravelRuleReviewVaspScreeningHitParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleReviewVaspScreeningHitResponse>> reviewVaspScreeningHitAsync(String vaspId, TravelRuleReviewVaspScreeningHitParams params) {
+      return client.executeAsync(reviewVaspScreeningHitRequest(vaspId, params), RequestOptions.none(), REVIEW_VASP_SCREENING_HIT_RESPONSE);
+    }
+
+    /**
      * {@link #listVaspQuestionnaires(String, RequestOptions)} with the raw response.
      *
      * @param vaspId the {@code vasp_id}
@@ -1833,6 +2053,90 @@ public final class TravelRuleResource {
      */
     public CompletableFuture<RawResponse<TravelRuleWidgetSessionResponse>> createWidgetSessionAsync(TravelRuleWidgetSessionCreate params) {
       return client.executeAsync(createWidgetSessionRequest(params), RequestOptions.none(), CREATE_WIDGET_SESSION_RESPONSE);
+    }
+
+    /**
+     * {@link #listVaspReviewers(RequestOptions)} with the raw response.
+     *
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<TravelRuleListVaspReviewersResponse> listVaspReviewers(RequestOptions options) {
+      return client.execute(listVaspReviewersRequest(), options, LIST_VASP_REVIEWERS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listVaspReviewers(RequestOptions)} with the raw response.
+     *
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleListVaspReviewersResponse>> listVaspReviewersAsync(RequestOptions options) {
+      return client.executeAsync(listVaspReviewersRequest(), options, LIST_VASP_REVIEWERS_RESPONSE);
+    }
+
+    /**
+     * {@link #listVaspReviewers(RequestOptions)} with the raw response, with the client's options.
+     *
+     * @return the result
+     */
+    public RawResponse<TravelRuleListVaspReviewersResponse> listVaspReviewers() {
+      return client.execute(listVaspReviewersRequest(), RequestOptions.none(), LIST_VASP_REVIEWERS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listVaspReviewers(RequestOptions)} with the raw response, with the client's options.
+     *
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleListVaspReviewersResponse>> listVaspReviewersAsync() {
+      return client.executeAsync(listVaspReviewersRequest(), RequestOptions.none(), LIST_VASP_REVIEWERS_RESPONSE);
+    }
+
+    /**
+     * {@link #assignVasp(String, TravelRuleAssignVaspParams, RequestOptions)} with the raw response.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<TravelRuleAssignVaspResponse> assignVasp(String vaspId, TravelRuleAssignVaspParams params, RequestOptions options) {
+      return client.execute(assignVaspRequest(vaspId, params), options, ASSIGN_VASP_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #assignVasp(String, TravelRuleAssignVaspParams, RequestOptions)} with the raw response.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleAssignVaspResponse>> assignVaspAsync(String vaspId, TravelRuleAssignVaspParams params, RequestOptions options) {
+      return client.executeAsync(assignVaspRequest(vaspId, params), options, ASSIGN_VASP_RESPONSE);
+    }
+
+    /**
+     * {@link #assignVasp(String, TravelRuleAssignVaspParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<TravelRuleAssignVaspResponse> assignVasp(String vaspId, TravelRuleAssignVaspParams params) {
+      return client.execute(assignVaspRequest(vaspId, params), RequestOptions.none(), ASSIGN_VASP_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #assignVasp(String, TravelRuleAssignVaspParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param vaspId the {@code vasp_id}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<TravelRuleAssignVaspResponse>> assignVaspAsync(String vaspId, TravelRuleAssignVaspParams params) {
+      return client.executeAsync(assignVaspRequest(vaspId, params), RequestOptions.none(), ASSIGN_VASP_RESPONSE);
     }
   }
 }

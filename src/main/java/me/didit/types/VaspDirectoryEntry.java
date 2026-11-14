@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * A VASP of the directory or a member of the Didit network, with the routes your application has to it. A customer is a member of the Didit network only while its application is live, its Travel Rule is on, its profile is discoverable, has a legal name and a confirmed compliance email, and Didit has not marked the application as a test, demo or internal one. Each row also carries the shared due-diligence assessment (dd_score, risk_level, responsiveness, essential_checks) and your application's own decision, entity screening and questionnaires, which no other customer sees.
  */
 public final class VaspDirectoryEntry extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("id", "kind", "name", "lei", "jurisdiction", "domains", "reachable", "aliases", "networks", "routes", "umbrella", "entities", "contacts", "dd_status", "dd_score", "reachable_rails", "is_didit_customer", "dd_score_breakdown", "dd_assessed_at", "dd_score_semantic", "risk_level", "responsiveness", "essential_checks", "decision", "entity_screening", "questionnaires", "source");
+  private static final Set<String> KNOWN_FIELDS = Set.of("id", "kind", "name", "lei", "jurisdiction", "domains", "reachable", "aliases", "networks", "routes", "umbrella", "entities", "contacts", "dd_status", "dd_score", "reachable_rails", "is_didit_customer", "dd_score_breakdown", "dd_assessed_at", "dd_score_semantic", "risk_level", "responsiveness", "essential_checks", "decision", "entity_screening", "questionnaires", "source", "assignee");
 
   private VaspDirectoryEntry(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -324,6 +324,16 @@ public final class VaspDirectoryEntry extends JsonModel {
     return Json.optional(json, "source", Conv.enumeration(VaspDirectoryEntry.Source::of));
   }
 
+  /**
+   * The member the VASP is assigned to, or null. The assignment is private to your application.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleVaspAssignee> assignee() {
+    return Json.optional(json, "assignee", Conv.model(TravelRuleVaspAssignee::fromJson));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -605,6 +615,16 @@ public final class VaspDirectoryEntry extends JsonModel {
      */
     public Builder source(VaspDirectoryEntry.Source source) {
       return set("source", Conv.enumeration(VaspDirectoryEntry.Source::of), source);
+    }
+
+    /**
+     * The member the VASP is assigned to, or null. The assignment is private to your application.
+     *
+     * @param assignee the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder assignee(@Nullable TravelRuleVaspAssignee assignee) {
+      return setNullable("assignee", Conv.model(TravelRuleVaspAssignee::fromJson), assignee);
     }
 
     /**

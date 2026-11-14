@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * One sanctions and adverse-media screening of the counterparty entity, run for and billed to your application. Private to your application: another customer never sees it.
  */
 public final class TravelRuleCounterpartyScreening extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("id", "status", "total_hits", "score", "screened_at", "fresh", "flagged");
+  private static final Set<String> KNOWN_FIELDS = Set.of("id", "status", "total_hits", "score", "screened_at", "fresh", "flagged", "scope", "people_screening", "hits");
 
   private TravelRuleCounterpartyScreening(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -124,6 +124,36 @@ public final class TravelRuleCounterpartyScreening extends JsonModel {
     return Json.optional(json, "flagged", Conv.BOOLEAN);
   }
 
+  /**
+   * What was screened: the company name only. People are never inferred from the due-diligence questionnaire.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleCounterpartyScreening.Scope> scope() {
+    return Json.optional(json, "scope", Conv.enumeration(TravelRuleCounterpartyScreening.Scope::of));
+  }
+
+  /**
+   * People screening is not run for counterparties.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleCounterpartyScreening.PeopleScreening> peopleScreening() {
+    return Json.optional(json, "people_screening", Conv.model(TravelRuleCounterpartyScreening.PeopleScreening::fromJson));
+  }
+
+  /**
+   * The possible matches. Returned by <code>GET</code> and <code>POST</code> on <code>/v3/travel-rule/vasps/{vasp_id}/screening/</code> and by the hit review, not in the screening summary of a VASP row. Source and list details are public; no screening supplier is named.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<TravelRuleCounterpartyScreening.Hits>> hits() {
+    return Json.optional(json, "hits", Conv.list(Conv.model(TravelRuleCounterpartyScreening.Hits::fromJson)));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -208,6 +238,36 @@ public final class TravelRuleCounterpartyScreening extends JsonModel {
     }
 
     /**
+     * What was screened: the company name only. People are never inferred from the due-diligence questionnaire.
+     *
+     * @param scope the value
+     * @return this builder
+     */
+    public Builder scope(TravelRuleCounterpartyScreening.Scope scope) {
+      return set("scope", Conv.enumeration(TravelRuleCounterpartyScreening.Scope::of), scope);
+    }
+
+    /**
+     * People screening is not run for counterparties.
+     *
+     * @param peopleScreening the value
+     * @return this builder
+     */
+    public Builder peopleScreening(TravelRuleCounterpartyScreening.PeopleScreening peopleScreening) {
+      return set("people_screening", Conv.model(TravelRuleCounterpartyScreening.PeopleScreening::fromJson), peopleScreening);
+    }
+
+    /**
+     * The possible matches. Returned by <code>GET</code> and <code>POST</code> on <code>/v3/travel-rule/vasps/{vasp_id}/screening/</code> and by the hit review, not in the screening summary of a VASP row. Source and list details are public; no screening supplier is named.
+     *
+     * @param hits the value
+     * @return this builder
+     */
+    public Builder hits(List<TravelRuleCounterpartyScreening.Hits> hits) {
+      return set("hits", Conv.list(Conv.model(TravelRuleCounterpartyScreening.Hits::fromJson)), hits);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code TravelRuleCounterpartyScreening}
@@ -265,6 +325,549 @@ public final class TravelRuleCounterpartyScreening extends JsonModel {
     @Override
     public boolean isKnown() {
       return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * What was screened: the company name only. People are never inferred from the due-diligence questionnaire.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Scope extends StringEnum {
+    /** The value {@code "company"}. */
+    public static final Scope COMPANY = new Scope("company");
+
+    private static final List<Scope> KNOWN_VALUES = List.of(COMPANY);
+
+    private Scope(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Scope of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Scope::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Scope> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /** People screening is not run for counterparties. */
+  public static final class PeopleScreening extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("status", "reason");
+
+    private PeopleScreening(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code PeopleScreening} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static PeopleScreening fromJson(JsonNode json) {
+      return new PeopleScreening(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>status</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<TravelRuleCounterpartyScreening.PeopleScreening.Status> status() {
+      return Json.optional(json, "status", Conv.enumeration(TravelRuleCounterpartyScreening.PeopleScreening.Status::of));
+    }
+
+    /**
+     * The <code>reason</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<TravelRuleCounterpartyScreening.PeopleScreening.Reason> reason() {
+      return Json.optional(json, "reason", Conv.enumeration(TravelRuleCounterpartyScreening.PeopleScreening.Reason::of));
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link PeopleScreening}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(PeopleScreening from) {
+        super(from);
+      }
+
+      /**
+       * The <code>status</code> field.
+       *
+       * @param status the value
+       * @return this builder
+       */
+      public Builder status(TravelRuleCounterpartyScreening.PeopleScreening.Status status) {
+        return set("status", Conv.enumeration(TravelRuleCounterpartyScreening.PeopleScreening.Status::of), status);
+      }
+
+      /**
+       * The <code>reason</code> field.
+       *
+       * @param reason the value
+       * @return this builder
+       */
+      public Builder reason(TravelRuleCounterpartyScreening.PeopleScreening.Reason reason) {
+        return set("reason", Conv.enumeration(TravelRuleCounterpartyScreening.PeopleScreening.Reason::of), reason);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code PeopleScreening}
+       */
+      public PeopleScreening build() {
+        return new PeopleScreening(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Status extends StringEnum {
+      /** The value {@code "not_run"}. */
+      public static final Status NOT_RUN = new Status("not_run");
+
+      private static final List<Status> KNOWN_VALUES = List.of(NOT_RUN);
+
+      private Status(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Status of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Status::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Status> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Reason extends StringEnum {
+      /** The value {@code "people_not_provided"}. */
+      public static final Reason PEOPLE_NOT_PROVIDED = new Reason("people_not_provided");
+
+      private static final List<Reason> KNOWN_VALUES = List.of(PEOPLE_NOT_PROVIDED);
+
+      private Reason(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Reason of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Reason::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Reason> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+  }
+
+  public static final class Hits extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("id", "review", "dismissed");
+
+    private Hits(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Hits} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Hits fromJson(JsonNode json) {
+      return new Hits(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The hit id, <code>hit_...</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> id() {
+      return Json.optional(json, "id", Conv.STRING);
+    }
+
+    /**
+     * The review recorded for the hit, or null while nobody reviewed it.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<TravelRuleCounterpartyScreening.Hits.Review> review() {
+      return Json.optional(json, "review", Conv.model(TravelRuleCounterpartyScreening.Hits.Review::fromJson));
+    }
+
+    /**
+     * true only when a person reviewed the hit as <code>False Positive</code>. A low match score can mark a hit <code>False Positive</code> automatically; that is not a dismissal.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Boolean> dismissed() {
+      return Json.optional(json, "dismissed", Conv.BOOLEAN);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Hits}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Hits from) {
+        super(from);
+      }
+
+      /**
+       * The hit id, <code>hit_...</code>.
+       *
+       * @param id the value
+       * @return this builder
+       */
+      public Builder id(String id) {
+        return set("id", Conv.STRING, id);
+      }
+
+      /**
+       * The review recorded for the hit, or null while nobody reviewed it.
+       *
+       * @param review the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder review(TravelRuleCounterpartyScreening.Hits.@Nullable Review review) {
+        return setNullable("review", Conv.model(TravelRuleCounterpartyScreening.Hits.Review::fromJson), review);
+      }
+
+      /**
+       * true only when a person reviewed the hit as <code>False Positive</code>. A low match score can mark a hit <code>False Positive</code> automatically; that is not a dismissal.
+       *
+       * @param dismissed the value
+       * @return this builder
+       */
+      public Builder dismissed(boolean dismissed) {
+        return set("dismissed", Conv.BOOLEAN, dismissed);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Hits}
+       */
+      public Hits build() {
+        return new Hits(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /** The review recorded for the hit, or null while nobody reviewed it. */
+    public static final class Review extends JsonModel {
+      private static final Set<String> KNOWN_FIELDS = Set.of("status", "reason", "reviewed_by", "reviewed_at");
+
+      private Review(ObjectNode json, Map<String, List<FileUpload>> files) {
+        super(json, files);
+      }
+
+      /**
+       * Reads a {@code Review} from JSON. Unknown fields are kept and readable
+       * through {@link #_additionalProperties()}.
+       *
+       * @param json a JSON object
+       * @return the parsed value
+       */
+      public static Review fromJson(JsonNode json) {
+        return new Review(Json.copyObject(json), Map.of());
+      }
+
+      /**
+       * Returns an empty builder.
+       *
+       * @return a new builder
+       */
+      public static Builder builder() {
+        return new Builder();
+      }
+
+      /**
+       * Returns a builder holding a copy of every field of this value.
+       *
+       * @return a new builder
+       */
+      public Builder toBuilder() {
+        return new Builder(this);
+      }
+
+      /**
+       * The <code>status</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<TravelRuleCounterpartyScreening.Hits.Review.Status> status() {
+        return Json.optional(json, "status", Conv.enumeration(TravelRuleCounterpartyScreening.Hits.Review.Status::of));
+      }
+
+      /**
+       * The <code>reason</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> reason() {
+        return Json.optional(json, "reason", Conv.STRING);
+      }
+
+      /**
+       * The <code>reviewed_by</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> reviewedBy() {
+        return Json.optional(json, "reviewed_by", Conv.STRING);
+      }
+
+      /**
+       * The <code>reviewed_at</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<OffsetDateTime> reviewedAt() {
+        return Json.optional(json, "reviewed_at", Conv.DATE_TIME);
+      }
+
+      @Override
+      protected Set<String> knownFields() {
+        return KNOWN_FIELDS;
+      }
+
+      /** Builds a {@link Review}. */
+      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+        private Builder() {}
+
+        private Builder(Review from) {
+          super(from);
+        }
+
+        /**
+         * The <code>status</code> field.
+         *
+         * @param status the value
+         * @return this builder
+         */
+        public Builder status(TravelRuleCounterpartyScreening.Hits.Review.Status status) {
+          return set("status", Conv.enumeration(TravelRuleCounterpartyScreening.Hits.Review.Status::of), status);
+        }
+
+        /**
+         * The <code>reason</code> field.
+         *
+         * @param reason the value
+         * @return this builder
+         */
+        public Builder reason(String reason) {
+          return set("reason", Conv.STRING, reason);
+        }
+
+        /**
+         * The <code>reviewed_by</code> field.
+         *
+         * @param reviewedBy the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder reviewedBy(@Nullable String reviewedBy) {
+          return setNullable("reviewed_by", Conv.STRING, reviewedBy);
+        }
+
+        /**
+         * The <code>reviewed_at</code> field.
+         *
+         * @param reviewedAt the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder reviewedAt(@Nullable OffsetDateTime reviewedAt) {
+          return setNullable("reviewed_at", Conv.DATE_TIME, reviewedAt);
+        }
+
+        /**
+         * Builds the value.
+         *
+         * @return a new immutable {@code Review}
+         */
+        public Review build() {
+          return new Review(buildJson(), buildFiles());
+        }
+
+        @Override
+        protected Builder self() {
+          return this;
+        }
+      }
+
+      /**
+       *
+       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+       */
+      public static final class Status extends StringEnum {
+        /** The value {@code "Unreviewed"}. */
+        public static final Status UNREVIEWED = new Status("Unreviewed");
+
+        /** The value {@code "Confirmed Match"}. */
+        public static final Status CONFIRMED_MATCH = new Status("Confirmed Match");
+
+        /** The value {@code "False Positive"}. */
+        public static final Status FALSE_POSITIVE = new Status("False Positive");
+
+        /** The value {@code "Inconclusive"}. */
+        public static final Status INCONCLUSIVE = new Status("Inconclusive");
+
+        private static final List<Status> KNOWN_VALUES = List.of(UNREVIEWED, CONFIRMED_MATCH, FALSE_POSITIVE, INCONCLUSIVE);
+
+        private Status(String value) {
+          super(value);
+        }
+
+        /**
+         * Returns the constant for a known value, or a new instance for any other value.
+         *
+         * @param value the string value
+         * @return the enum value
+         */
+        public static Status of(String value) {
+          return StringEnum.lookup(KNOWN_VALUES, value, Status::new);
+        }
+
+        /**
+         * Returns the values known to this SDK version.
+         *
+         * @return the known values
+         */
+        public static List<Status> knownValues() {
+          return KNOWN_VALUES;
+        }
+
+        @Override
+        public boolean isKnown() {
+          return KNOWN_VALUES.contains(this);
+        }
+      }
     }
   }
 }
