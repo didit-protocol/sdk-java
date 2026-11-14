@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.18.0](https://github.com/didit-protocol/sdk-java/compare/v1.17.0...v1.18.0) (2026-11-14)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-14 ([519e4d5](https://github.com/didit-protocol/sdk-java/commit/519e4d58126421e86f89fa22ec82d2761f6a1e8e))
+
+
+### Bug Fixes
+
+* refuse an idempotency key that is not printable ASCII before any request ([#76](https://github.com/didit-protocol/sdk-java/issues/76)) ([894b718](https://github.com/didit-protocol/sdk-java/commit/894b7185f1b65547ab5132ac9ca10ab50c1e6a9d))
+
 ## [1.17.0](https://github.com/didit-protocol/sdk-java/compare/v1.16.0...v1.17.0) (2026-11-14)
 
 
