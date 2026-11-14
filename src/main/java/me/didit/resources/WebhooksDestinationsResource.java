@@ -11,10 +11,12 @@ import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
+import me.didit.types.WebhookDestinationActivity;
 import me.didit.types.WebhookDestinationDelivery;
 import me.didit.types.WebhookDestinationDeliveryDetail;
 import me.didit.types.WebhooksDestinationsCreateParams;
 import me.didit.types.WebhooksDestinationsCreateResponse;
+import me.didit.types.WebhooksDestinationsListActivityParams;
 import me.didit.types.WebhooksDestinationsListDeliveriesParams;
 import me.didit.types.WebhooksDestinationsListResponse;
 import me.didit.types.WebhooksDestinationsRetrieveAnalyticsParams;
@@ -598,6 +600,100 @@ public final class WebhooksDestinationsResource {
     return client.executeAsync(resendDeliveryRequest(destinationUuid, deliveryUuid), RequestOptions.none(), RESEND_DELIVERY_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * List webhook destination activity
+   *
+   * <p>Lists recorded failure alerts for one destination, newest first. Requires read:webhooks. Application/API-key credentials must belong to the application in the path; member Bearer tokens must have access to that application. These are failure alert events, not individual delivery attempts or outbound webhook event types. See <a href="https://docs.didit.me/integration/webhooks#retry-policy">Webhooks</a>.
+   *
+   * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/webhook/destinations/{destination_uuid}/activity/}
+   * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Returns one page; iterate it to fetch every following page automatically.
+   *
+   * @param destinationUuid Destination uuid.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public Page<WebhookDestinationActivity> listActivity(String destinationUuid, WebhooksDestinationsListActivityParams params, RequestOptions options) {
+    return client.execute(listActivityRequest(destinationUuid, params), options, LIST_ACTIVITY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)}.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<WebhookDestinationActivity>> listActivityAsync(String destinationUuid, WebhooksDestinationsListActivityParams params, RequestOptions options) {
+    return client.executeAsync(listActivityRequest(destinationUuid, params), options, LIST_ACTIVITY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)}, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param params the request parameters
+   * @return the result
+   */
+  public Page<WebhookDestinationActivity> listActivity(String destinationUuid, WebhooksDestinationsListActivityParams params) {
+    return client.execute(listActivityRequest(destinationUuid, params), RequestOptions.none(), LIST_ACTIVITY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)}, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<WebhookDestinationActivity>> listActivityAsync(String destinationUuid, WebhooksDestinationsListActivityParams params) {
+    return client.executeAsync(listActivityRequest(destinationUuid, params), RequestOptions.none(), LIST_ACTIVITY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)}, without parameters.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param options per-request options
+   * @return the result
+   */
+  public Page<WebhookDestinationActivity> listActivity(String destinationUuid, RequestOptions options) {
+    return client.execute(listActivityRequest(destinationUuid, WebhooksDestinationsListActivityParams.builder().build()), options, LIST_ACTIVITY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)}, without parameters.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<WebhookDestinationActivity>> listActivityAsync(String destinationUuid, RequestOptions options) {
+    return client.executeAsync(listActivityRequest(destinationUuid, WebhooksDestinationsListActivityParams.builder().build()), options, LIST_ACTIVITY_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @return the result
+   */
+  public Page<WebhookDestinationActivity> listActivity(String destinationUuid) {
+    return client.execute(listActivityRequest(destinationUuid, WebhooksDestinationsListActivityParams.builder().build()), RequestOptions.none(), LIST_ACTIVITY_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param destinationUuid the {@code destination_uuid}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Page<WebhookDestinationActivity>> listActivityAsync(String destinationUuid) {
+    return client.executeAsync(listActivityRequest(destinationUuid, WebhooksDestinationsListActivityParams.builder().build()), RequestOptions.none(), LIST_ACTIVITY_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<List<WebhooksDestinationsListResponse>> LIST_RESPONSE = Responses.json(Conv.list(Conv.model(WebhooksDestinationsListResponse::fromJson)));
 
   private static ApiRequest listRequest() {
@@ -675,6 +771,17 @@ public final class WebhooksDestinationsResource {
     return ApiRequest.builder("POST", "/v3/webhook/destinations/{destination_uuid}/deliveries/{delivery_uuid}/resend/")
         .pathParam("destination_uuid", destinationUuid)
         .pathParam("delivery_uuid", deliveryUuid)
+        .build();
+  }
+
+  private static final ResponseHandler<Page<WebhookDestinationActivity>> LIST_ACTIVITY_RESPONSE = Responses.page(Conv.model(WebhookDestinationActivity::fromJson));
+
+  private static ApiRequest listActivityRequest(String destinationUuid, WebhooksDestinationsListActivityParams params) {
+    return ApiRequest.builder("GET", "/v3/organization/{organization_id}/application/{application_id}/webhook/destinations/{destination_uuid}/activity/")
+        .applicationScoped()
+        .pathParam("destination_uuid", destinationUuid)
+        .params(params)
+        .queryFields("limit", "offset")
         .build();
   }
 
@@ -1204,6 +1311,94 @@ public final class WebhooksDestinationsResource {
      */
     public CompletableFuture<RawResponse<WebhookDestinationDeliveryDetail>> resendDeliveryAsync(String destinationUuid, String deliveryUuid) {
       return client.executeAsync(resendDeliveryRequest(destinationUuid, deliveryUuid), RequestOptions.none(), RESEND_DELIVERY_RESPONSE);
+    }
+
+    /**
+     * {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)} with the raw response.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<Page<WebhookDestinationActivity>> listActivity(String destinationUuid, WebhooksDestinationsListActivityParams params, RequestOptions options) {
+      return client.execute(listActivityRequest(destinationUuid, params), options, LIST_ACTIVITY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)} with the raw response.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<WebhookDestinationActivity>>> listActivityAsync(String destinationUuid, WebhooksDestinationsListActivityParams params, RequestOptions options) {
+      return client.executeAsync(listActivityRequest(destinationUuid, params), options, LIST_ACTIVITY_RESPONSE);
+    }
+
+    /**
+     * {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<Page<WebhookDestinationActivity>> listActivity(String destinationUuid, WebhooksDestinationsListActivityParams params) {
+      return client.execute(listActivityRequest(destinationUuid, params), RequestOptions.none(), LIST_ACTIVITY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<WebhookDestinationActivity>>> listActivityAsync(String destinationUuid, WebhooksDestinationsListActivityParams params) {
+      return client.executeAsync(listActivityRequest(destinationUuid, params), RequestOptions.none(), LIST_ACTIVITY_RESPONSE);
+    }
+
+    /**
+     * {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<Page<WebhookDestinationActivity>> listActivity(String destinationUuid, RequestOptions options) {
+      return client.execute(listActivityRequest(destinationUuid, WebhooksDestinationsListActivityParams.builder().build()), options, LIST_ACTIVITY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<WebhookDestinationActivity>>> listActivityAsync(String destinationUuid, RequestOptions options) {
+      return client.executeAsync(listActivityRequest(destinationUuid, WebhooksDestinationsListActivityParams.builder().build()), options, LIST_ACTIVITY_RESPONSE);
+    }
+
+    /**
+     * {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @return the result
+     */
+    public RawResponse<Page<WebhookDestinationActivity>> listActivity(String destinationUuid) {
+      return client.execute(listActivityRequest(destinationUuid, WebhooksDestinationsListActivityParams.builder().build()), RequestOptions.none(), LIST_ACTIVITY_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #listActivity(String, WebhooksDestinationsListActivityParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param destinationUuid the {@code destination_uuid}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<Page<WebhookDestinationActivity>>> listActivityAsync(String destinationUuid) {
+      return client.executeAsync(listActivityRequest(destinationUuid, WebhooksDestinationsListActivityParams.builder().build()), RequestOptions.none(), LIST_ACTIVITY_RESPONSE);
     }
   }
 }

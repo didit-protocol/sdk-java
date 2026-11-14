@@ -43,6 +43,7 @@ public abstract class DiditResources {
   private final QuestionnairesResource questionnaires;
   private final RegulatoryReportsResource regulatoryReports;
   private final ReportTemplatesResource reportTemplates;
+  private final ReportsResource reports;
   private final SandboxResource sandbox;
   private final SessionsResource sessions;
   private final TransactionsResource transactions;
@@ -93,6 +94,7 @@ public abstract class DiditResources {
     this.questionnaires = new QuestionnairesResource(client);
     this.regulatoryReports = new RegulatoryReportsResource(client);
     this.reportTemplates = new ReportTemplatesResource(client);
+    this.reports = new ReportsResource(client);
     this.sandbox = new SandboxResource(client);
     this.sessions = new SessionsResource(client);
     this.transactions = new TransactionsResource(client);
@@ -416,6 +418,15 @@ public abstract class DiditResources {
    */
   public final ReportTemplatesResource reportTemplates() {
     return reportTemplates;
+  }
+
+  /**
+   * The {@code reports} resource.
+   *
+   * @return the resource
+   */
+  public final ReportsResource reports() {
+    return reports;
   }
 
   /**
