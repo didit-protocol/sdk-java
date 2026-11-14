@@ -166,6 +166,7 @@ public final class TransactionsResource {
    * <p>Submit a transaction for synchronous AML/risk monitoring. The transaction is created <code>APPROVED</code>, then your rules (and crypto screening, when applicable) run inline and may flip the returned <code>status</code> to <code>IN_REVIEW</code> or <code>DECLINED</code>. **<code>transaction_id</code> is your idempotency key** (max 128 chars, unique per app); reusing it returns 400. A <code>transaction.created</code> webhook is dispatched on success for live applications. Sandbox applications are not billed and do not emit <code>transaction.created</code> or <code>transaction.status.updated</code> webhooks. Sandbox Travel Rule exchanges do emit <code>travel_rule.status.updated</code> webhooks with <code>environment: sandbox</code>. A Travel Rule transfer is stored and returned before any counterparty is contacted: <code>travel_rule.status</code> comes back <code>AWAITING_COUNTERPARTY</code> (or <code>NOT_APPLICABLE</code> below your threshold, <code>UNCONFIRMED_OWNERSHIP</code> for a declared self-hosted wallet, <code>COMPLETED</code> when the other wallet is your own verified wallet) and <code>travel_rule.protocol</code> is null. Didit then chooses the rail and sends the exchange, and every later status change of the transfer, including <code>COUNTERPARTY_VASP_NOT_FOUND</code> when no rail reaches the counterparty, arrives as a <code>travel_rule.status.updated</code> webhook. Your rules run again when the rail or the status changes.
    *
    * <p>{@code POST /v3/transactions/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -258,6 +259,7 @@ public final class TransactionsResource {
    * <p>Mint a short-lived scoped token your app passes to the Didit SDKs so they can submit transactions directly from the end-user's device via <code>POST /v1/transactions/</code>. The token is bound to one <code>vendor_data</code> (your user id): every transaction submitted with it has its subject identity enforced server-side from that binding, so a tampered client cannot submit on behalf of another user. Mint tokens from your backend - never ship the API key itself in an app. camelCase aliases (<code>vendorData</code>, <code>ttlSeconds</code>, <code>maxUses</code>) are also accepted.
    *
    * <p>{@code POST /v3/transactions/sdk-token/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -556,6 +558,7 @@ public final class TransactionsResource {
    *
    * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/transactions/delete/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

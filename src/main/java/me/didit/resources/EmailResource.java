@@ -55,6 +55,7 @@ public final class EmailResource {
    * <p><b>Social footprint.</b> Set <code>enable_social</code> to <code>true</code> to add a <code>email_social</code> block: the online platforms this address is registered on, with per-category counts and any profile details available. <code>profiles_registered: 0</code> means the platforms were checked and the address was found on none of them - a valid, billable answer. The block is absent when the add-on was not requested or the check could not be completed, and it is not billed in that case. Billing adds one <code>email_social</code> unit per request on top of this endpoint's own price.
    *
    * <p>{@code POST /v3/email/risk/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -117,6 +118,7 @@ public final class EmailResource {
    * <p><b>Rate limit.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints; exceeding it returns <code>429</code>.
    *
    * <p>{@code POST /v3/email/send/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -183,6 +185,7 @@ public final class EmailResource {
    * <p><b>Social footprint.</b> Set <code>enable_social</code> to <code>true</code> to add a <code>email_social</code> block: the online platforms this address is registered on, with per-category counts and any profile details available. <code>profiles_registered: 0</code> means the platforms were checked and the address was found on none of them - a valid, billable answer. The block is absent when the add-on was not requested or the check could not be completed, and it is not billed in that case. Billing adds one <code>email_social</code> unit per request on top of this endpoint's own price.
    *
    * <p>{@code POST /v3/email/check/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

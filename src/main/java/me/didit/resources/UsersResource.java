@@ -185,6 +185,7 @@ public final class UsersResource {
    * <p>Partial update of a user: <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code>, <code>status</code>, <code>metadata</code>, <code>approved_emails</code>/<code>approved_phones</code>/<code>issuing_states</code>. <code>metadata</code> fully replaces. Changing <code>status</code> here works like [Update User Status](#patch-/v3/users/-vendor_data-/update-status/): it records a <code>STATUS_CHANGED</code> activity with the optional <code>reason</code>, and <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist (moving away from <code>BLOCKED</code> removes that entry). Changes to <code>display_name</code>, <code>full_name</code>, <code>date_of_birth</code> or <code>metadata</code> are recorded as a <code>PROFILE_UPDATED</code> activity.
    *
    * <p>{@code PATCH /v3/users/{vendor_data}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param vendorData Your unique identifier for the user (free-form string, NOT a UUID).
    * @param params the request parameters
@@ -344,6 +345,7 @@ public final class UsersResource {
    * <p><b>Filed regulatory reports:</b> if the selected data is in a finalized regulatory report, the whole request is refused with <code>409</code> and nothing is deleted. The body uses <code>code: in_filed_report</code> and names each report with <code>uuid</code>, <code>report_number</code>, <code>report_type</code> and <code>case_uuid</code>. Delete the reports, then repeat the request.
    *
    * <p>{@code POST /v3/users/delete/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -430,6 +432,7 @@ public final class UsersResource {
    * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
    *
    * <p>{@code POST /v3/users/aml-monitoring/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -476,6 +479,7 @@ public final class UsersResource {
    * <p>Flip only the lifecycle <code>status</code> of a user: <code>ACTIVE</code>, <code>FLAGGED</code> or <code>BLOCKED</code> (not session statuses). <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry. Each change is recorded as a <code>STATUS_CHANGED</code> activity on the user, with the optional <code>reason</code> as its <code>comment</code>. Sending the current status changes nothing and records no <code>reason</code>. The <code>user.status.updated</code> webhook does not carry <code>reason</code>.
    *
    * <p>{@code PATCH /v3/users/{vendor_data}/update-status/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param vendorData Your unique identifier for the user.
    * @param params the request parameters
@@ -523,7 +527,7 @@ public final class UsersResource {
   /**
    * Create user
    *
-   * <p>Create a [user](/entities/users) by <code>vendor_data</code>, before or without a verification session. <code>vendor_data</code> must be unique among the application's users (a duplicate returns <code>400</code>). Not idempotent.
+   * <p>Create a [user](/entities/users) by <code>vendor_data</code>, before or without a verification session. <code>vendor_data</code> must be unique among the application's users (a duplicate returns <code>400</code>). Not idempotent without an <code>Idempotency-Key</code>.
    *
    * <p><b>Contact details:</b> <code>email</code> and <code>phone_number</code> are stored in <code>metadata.contact</code>, and <code>country</code> in <code>metadata.address</code>. When you send <code>first_name</code> or <code>last_name</code> without <code>full_name</code>, Didit joins them into <code>full_name</code>.
    *
@@ -532,6 +536,7 @@ public final class UsersResource {
    * <p><b>API key access:</b> a scoped API key needs <code>users</code> write. With <code>send_verification_link: true</code> it also needs <code>sessions</code> write, or the call answers <code>403</code> before anything is written. Full-access keys are unaffected. See [API keys](/console/api-keys).
    *
    * <p>{@code POST /v3/users/create/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -579,6 +584,7 @@ public final class UsersResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/vendor-users/by-id/{didit_internal_id}/faces/upload/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param diditInternalId Didit's internal User UUID, returned as `didit_internal_id` by `GET /v3/users/{vendor_data}/` and `POST /v3/users/create/`.
    * @param params the request parameters
@@ -630,6 +636,7 @@ public final class UsersResource {
    *
    * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-users/toggle-ongoing-monitoring/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

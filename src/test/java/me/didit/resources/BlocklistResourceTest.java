@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -46,15 +47,17 @@ final class BlocklistResourceTest {
   @Test
   void add() {
     BlocklistAddParams params = BlocklistAddParams.builder().sessionId("00000000-0000-4000-8000-00000000169c").blocklistFace(true).blocklistDocument(true).blocklistPhone(true).blocklistEmail(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/blocklist/add/", "200");
     transport.respondJson(200, example);
-    var result = client.blocklist().add(params);
+    var result = client.blocklist().add(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/blocklist/add/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"session_id\":\"00000000-0000-4000-8000-00000000169c\",\"blocklist_face\":true,\"blocklist_document\":true,\"blocklist_phone\":true,\"blocklist_email\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -63,15 +66,17 @@ final class BlocklistResourceTest {
   @Test
   void remove() {
     BlocklistRemoveParams params = BlocklistRemoveParams.builder().sessionId("00000000-0000-4000-8000-00000000169c").unblockFace(true).unblockDocument(true).unblockPhone(true).unblockEmail(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/blocklist/remove/", "200");
     transport.respondJson(200, example);
-    var result = client.blocklist().remove(params);
+    var result = client.blocklist().remove(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/blocklist/remove/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"session_id\":\"00000000-0000-4000-8000-00000000169c\",\"unblock_face\":true,\"unblock_document\":true,\"unblock_phone\":true,\"unblock_email\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

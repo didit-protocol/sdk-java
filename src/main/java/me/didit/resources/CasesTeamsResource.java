@@ -127,6 +127,7 @@ public final class CasesTeamsResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/teams/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -221,6 +222,7 @@ public final class CasesTeamsResource {
    *
    * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/teams/{record_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param recordUuid the {@code record_uuid}
    * @param params the request parameters

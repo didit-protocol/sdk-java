@@ -41,6 +41,7 @@ public final class NetworksNotesResource {
    *
    * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/{note_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param networkUuid Network UUID.
    * @param noteUuid the {@code note_uuid}
@@ -184,6 +185,7 @@ public final class NetworksNotesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/notes/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param networkUuid Network UUID.
    * @param params the request parameters

@@ -93,6 +93,7 @@ public final class WebhooksDestinationsResource {
    * <p>Create a webhook destination. The response includes the auto-generated <code>secret_shared_key</code> HMAC signing secret (also readable later via <code>GET /v3/webhook/destinations/{destination_uuid}/</code>). Always send <code>subscribed_events</code> with at least one event (no wildcards): an explicit empty list is rejected with 400, and omitting the field creates a destination subscribed to nothing, which never receives a webhook. The <code>(application, url)</code> pair must be unique among the application's destinations.
    *
    * <p>{@code POST /v3/webhook/destinations/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -185,6 +186,7 @@ public final class WebhooksDestinationsResource {
    * <p>Update a webhook destination. **<code>subscribed_events</code> is REPLACED wholesale, not merged**: fetch first, append, resend. Secret is not rotated. A <code>uuid</code> in the body is ignored: the path names the destination.
    *
    * <p>{@code PATCH /v3/webhook/destinations/{destination_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param destinationUuid UUID of the destination to update.
    * @param params the request parameters
@@ -277,6 +279,7 @@ public final class WebhooksDestinationsResource {
    * <p>Permanently delete a webhook destination, its signing secret and its entire delivery log. This cannot be undone. No new webhook is sent to the destination's URL; other destinations subscribed to the same events keep receiving them. Afterwards the destination no longer appears in <code>GET /v3/webhook/destinations/</code>, and every route under <code>/v3/webhook/destinations/{destination_uuid}/</code>, including its deliveries, a delivery's detail and its resend, answers 404. The application's legacy <code>webhook_url</code> is set to the URL of the oldest remaining enabled destination, or cleared when no enabled destination is left. Calling DELETE again returns 404.
    *
    * <p>{@code DELETE /v3/webhook/destinations/{destination_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param destinationUuid UUID of the destination to delete.
    * @param options per-request options that override the client options
@@ -556,6 +559,7 @@ public final class WebhooksDestinationsResource {
    * <p>Send a past delivery again, for example after your endpoint was down. Didit takes the stored payload, sets a fresh <code>timestamp</code>, signs it again with the destination's current <code>secret_shared_key</code> (<code>X-Signature</code>, <code>X-Signature-V2</code>, <code>X-Signature-Simple</code> and <code>X-Timestamp</code>) and posts it to the delivery's <code>request_url</code>, even if the destination's URL has changed since or the destination is disabled. <code>event_id</code> and the rest of the payload are unchanged, so deduplicate on <code>event_id</code>. The call waits up to 5 seconds for your endpoint and returns the new delivery with <code>200</code> whatever your endpoint answered: read <code>response_status</code>. A resend is not retried automatically, every call sends again and creates a new delivery, and the request has no body. A scoped API key needs <code>webhooks: write</code> and <code>decisions: read</code>; a key limited to some workflows or to approved sessions cannot use this endpoint.
    *
    * <p>{@code POST /v3/webhook/destinations/{destination_uuid}/deliveries/{delivery_uuid}/resend/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param destinationUuid UUID of the destination the delivery was sent to.
    * @param deliveryUuid UUID of the delivery to resend: the `uuid` of an entry returned by `GET /v3/webhook/destinations/{destination_uuid}/deliveries/`.

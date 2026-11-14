@@ -133,6 +133,7 @@ public final class SessionsWebhooksResource {
    * <p>Send a recorded session webhook again to the URL it first went to, with the same payload and <code>event_id</code> and a fresh <code>timestamp</code>, <code>X-Timestamp</code> header and signatures. Didit signs it with the current secret of the destination the delivery belongs to (or the application-level secret for a delivery to the legacy webhook URL), waits up to 5 seconds for your endpoint, records the attempt as a new delivery and returns it with <code>200</code> whatever your endpoint answered: read <code>response_status</code>. A resend is not retried automatically, and every call sends again, so make your endpoint idempotent on <code>event_id</code>. The path has no trailing slash and the request has no body. A scoped API key needs <code>webhooks: write</code> and <code>decisions: read</code>.
    *
    * <p>{@code POST /v3/session/{sessionId}/webhook/{webhook_uuid}/resend}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the verification session, user (KYC) or business (KYB): the `session_id` returned by `POST /v3/session/`. The server resolves it against both session types.
    * @param webhookUuid UUID of the delivery to resend: the `uuid` of an entry returned by `GET /v3/session/{sessionId}/webhooks/`. It must belong to the session in the path.

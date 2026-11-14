@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -46,15 +47,17 @@ final class CasesRegulatoryReportsResourceTest {
   @Test
   void create() {
     CasesRegulatoryReportsCreateParams params = CasesRegulatoryReportsCreateParams.builder().reportType(CasesRegulatoryReportsCreateParams.ReportType.SAR).jurisdiction("value-jurisdiction").template("00000000-0000-4000-8000-000000000efb").transactions(List.of("00000000-0000-4000-8000-000000002132")).rentityId("value-rentity-id").rentityBranch("value-rentity-branch").submissionCode(CasesRegulatoryReportsCreateParams.SubmissionCode.E).entityReference("value-entity-reference").fiuRefNumber("value-fiu-ref-number").currencyCodeLocal("value-currency-code-local").submissionDate(OffsetDateTime.parse("2026-11-01T10:15:30Z")).reportingPerson(Map.of("key", "value")).location(Map.of("key", "value")).reason("value-reason").action("value-action").activity("value-activity").narrative(CasesRegulatoryReportsCreateParams.Narrative.builder().who("value-who").what("value-what").build()).reportIndicators(List.of("value-report-indicators")).includedFields(List.of("value-included-fields")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(201, example);
-    var result = client.cases().regulatoryReports().create("00000000-0000-4000-8000-000000014f93", params);
+    var result = client.cases().regulatoryReports().create("00000000-0000-4000-8000-000000014f93", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/cases/00000000-0000-4000-8000-000000014f93/regulatory-reports/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"report_type\":\"SAR\",\"jurisdiction\":\"value-jurisdiction\",\"template\":\"00000000-0000-4000-8000-000000000efb\",\"transactions\":[\"00000000-0000-4000-8000-000000002132\"],\"rentity_id\":\"value-rentity-id\",\"rentity_branch\":\"value-rentity-branch\",\"submission_code\":\"E\",\"entity_reference\":\"value-entity-reference\",\"fiu_ref_number\":\"value-fiu-ref-number\",\"currency_code_local\":\"value-currency-code-local\",\"submission_date\":\"2026-11-01T10:15:30Z\",\"reporting_person\":{\"key\":\"value\"},\"location\":{\"key\":\"value\"},\"reason\":\"value-reason\",\"action\":\"value-action\",\"activity\":\"value-activity\",\"narrative\":{\"who\":\"value-who\",\"what\":\"value-what\"},\"report_indicators\":[\"value-report-indicators\"],\"included_fields\":[\"value-included-fields\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

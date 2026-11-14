@@ -124,6 +124,7 @@ public final class TravelRuleWalletProofsResource {
    * <p>Decide a screenshot proof from your review queue. approve verifies the proof and the address book entry and applies the ownership to the transfer the widget session was minted for, exactly as a verified signature does. A screenshot never confirms a transfer that another Didit customer sent over the INTERNAL rail: that takes a signed message or a test deposit. reject closes the proof as REJECTED with failure_reason REVIEW_REJECTED; the end user can start a new proof from the widget. The note is kept with the proof.
    *
    * <p>{@code POST /v3/travel-rule/wallet-proofs/{proof_uuid}/decision/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param proofUuid proof_id from the review queue.
    * @param params the request parameters

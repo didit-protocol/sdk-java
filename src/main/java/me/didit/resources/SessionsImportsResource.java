@@ -50,6 +50,7 @@ public final class SessionsImportsResource {
    * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Set <code>source=provider</code> to migrate from another provider: Didit reads Sumsub, Onfido, Persona and ComplyCube with your read-only key, reads Veriff, iDenfy and MetaMap records by the IDs you upload in <code>file</code>, and imports an export file in Didit's format for the other providers. Record IDs are namespaced by provider (<code>sumsub:&lt;id&gt;</code>) so a re-run skips everything already in Didit, and a record imported through a file with the provider's bare ID is recognised too, in both directions, so moving between a file import and a provider migration never imports a record twice. An application can run up to 4 import jobs at once; a job interrupted by a deploy or a worker restart continues from its last imported row by itself. Imports are disabled by default and must be enabled per organization by Didit.
    *
    * <p>{@code POST /v3/session/imports/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -400,6 +401,7 @@ public final class SessionsImportsResource {
    * <p>Read the provider with your key before creating a migration. Nothing is stored.
    *
    * <p>{@code POST /v3/session/imports/providers/check/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -446,6 +448,7 @@ public final class SessionsImportsResource {
    * <p>Start a migration whose dry run finished (<code>READY</code>): the same job imports for real, with the status mapping and face templates choice as sent now.
    *
    * <p>{@code POST /v3/session/imports/{importId}/start/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param importId the {@code importId}
    * @param params the request parameters
@@ -538,6 +541,7 @@ public final class SessionsImportsResource {
    * <p>Pause a queued or running import.
    *
    * <p>{@code POST /v3/session/imports/{importId}/pause/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param importId the {@code importId}
    * @param options per-request options that override the client options
@@ -584,6 +588,7 @@ public final class SessionsImportsResource {
    * <p>Resume an import you paused. A job paused by the provider's rate limit resumes by itself.
    *
    * <p>{@code POST /v3/session/imports/{importId}/resume/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param importId the {@code importId}
    * @param options per-request options that override the client options
@@ -630,6 +635,7 @@ public final class SessionsImportsResource {
    * <p>Cancel an import. What was imported stays; the uploaded file and the key are erased.
    *
    * <p>{@code POST /v3/session/imports/{importId}/cancel/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param importId the {@code importId}
    * @param options per-request options that override the client options
@@ -676,6 +682,7 @@ public final class SessionsImportsResource {
    * <p>Run a migration that ended again as a new job, with a new key (the old one was erased). It keeps the provider, workflow, region, status mapping and face templates choice; everything already in Didit is skipped.
    *
    * <p>{@code POST /v3/session/imports/{importId}/retry/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param importId the {@code importId}
    * @param params the request parameters

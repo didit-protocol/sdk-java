@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -46,15 +47,17 @@ final class ListsEntriesResourceTest {
   @Test
   void create() {
     ListsEntriesCreateParams params = ListsEntriesCreateParams.builder().value("value-value").referenceSessionId("00000000-0000-4000-8000-000000005673").referenceObjectUuid("00000000-0000-4000-8000-000000005ee9").faceImageSource(ListsEntriesCreateParams.FaceImageSource.LIVENESS).referenceNodeId("value-reference-node-id").displayLabel("value-display-label").comment("value-comment").metadata(ListsEntriesCreateParams.Metadata.builder().referenceType(ListsEntriesCreateParams.Metadata.ReferenceType.TRANSACTION).referenceId("value-reference-id").build()).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/lists/{list_uuid}/entries/", "201");
     transport.respondJson(201, example);
-    var result = client.lists().entries().create("00000000-0000-4000-8000-00000000b26a", params);
+    var result = client.lists().entries().create("00000000-0000-4000-8000-00000000b26a", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/lists/00000000-0000-4000-8000-00000000b26a/entries/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"value\":\"value-value\",\"reference_session_id\":\"00000000-0000-4000-8000-000000005673\",\"reference_object_uuid\":\"00000000-0000-4000-8000-000000005ee9\",\"face_image_source\":\"liveness\",\"reference_node_id\":\"value-reference-node-id\",\"display_label\":\"value-display-label\",\"comment\":\"value-comment\",\"metadata\":{\"reference_type\":\"transaction\",\"reference_id\":\"value-reference-id\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -62,29 +65,33 @@ final class ListsEntriesResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.lists().entries().delete("00000000-0000-4000-8000-00000000b268", "00000000-0000-4000-8000-00000000c011");
+    client.lists().entries().delete("00000000-0000-4000-8000-00000000b268", "00000000-0000-4000-8000-00000000c011", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/lists/00000000-0000-4000-8000-00000000b268/entries/00000000-0000-4000-8000-00000000c011/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 
   @Test
   void uploadFace() {
     ListsEntriesUploadFaceParams params = ListsEntriesUploadFaceParams.builder().image("value-image").comment("value-comment").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/lists/{list_uuid}/entries/face-upload/", "201");
     transport.respondJson(201, example);
-    var result = client.lists().entries().uploadFace("00000000-0000-4000-8000-00000000f2d3", params);
+    var result = client.lists().entries().uploadFace("00000000-0000-4000-8000-00000000f2d3", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/lists/00000000-0000-4000-8000-00000000f2d3/entries/face-upload/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"image\":\"value-image\",\"comment\":\"value-comment\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -48,15 +49,17 @@ final class WebhooksDestinationsResourceTest {
   @Test
   void create() {
     WebhooksDestinationsCreateParams params = WebhooksDestinationsCreateParams.builder().label("value-label").url("https://example.com/callback").enabled(true).webhookVersion(WebhooksDestinationsCreateParams.WebhookVersion.V_1).subscribedEvents(List.of(WebhookEvent.STATUS_UPDATED)).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/webhook/destinations/", "201");
     transport.respondJson(201, example);
-    var result = client.webhooks().destinations().create(params);
+    var result = client.webhooks().destinations().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/webhook/destinations/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"label\":\"value-label\",\"url\":\"https://example.com/callback\",\"enabled\":true,\"webhook_version\":\"v1\",\"subscribed_events\":[\"status.updated\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -81,15 +84,17 @@ final class WebhooksDestinationsResourceTest {
   @Test
   void update() {
     WebhooksDestinationsUpdateParams params = WebhooksDestinationsUpdateParams.builder().label("value-label").url("https://example.com/callback").enabled(true).webhookVersion(WebhooksDestinationsUpdateParams.WebhookVersion.V_1).subscribedEvents(List.of(WebhookEvent.STATUS_UPDATED)).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/webhook/destinations/{destination_uuid}/", "200");
     transport.respondJson(200, example);
-    var result = client.webhooks().destinations().update("00000000-0000-4000-8000-00000001993f", params);
+    var result = client.webhooks().destinations().update("00000000-0000-4000-8000-00000001993f", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/webhook/destinations/00000000-0000-4000-8000-00000001993f/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"label\":\"value-label\",\"url\":\"https://example.com/callback\",\"enabled\":true,\"webhook_version\":\"v1\",\"subscribed_events\":[\"status.updated\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -97,14 +102,16 @@ final class WebhooksDestinationsResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.webhooks().destinations().delete("00000000-0000-4000-8000-0000000197e0");
+    client.webhooks().destinations().delete("00000000-0000-4000-8000-0000000197e0", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/webhook/destinations/00000000-0000-4000-8000-0000000197e0/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 
@@ -161,15 +168,17 @@ final class WebhooksDestinationsResourceTest {
 
   @Test
   void resendDelivery() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/webhook/destinations/{destination_uuid}/deliveries/{delivery_uuid}/resend/", "200");
     transport.respondJson(200, example);
-    var result = client.webhooks().destinations().resendDelivery("00000000-0000-4000-8000-00000002524a", "00000000-0000-4000-8000-0000000211ba");
+    var result = client.webhooks().destinations().resendDelivery("00000000-0000-4000-8000-00000002524a", "00000000-0000-4000-8000-0000000211ba", options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/webhook/destinations/00000000-0000-4000-8000-00000002524a/deliveries/00000000-0000-4000-8000-0000000211ba/resend/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

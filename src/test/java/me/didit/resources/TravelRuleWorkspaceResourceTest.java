@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -44,15 +45,17 @@ final class TravelRuleWorkspaceResourceTest {
   @Test
   void claim() {
     TravelRuleWorkspaceClaimRequest params = TravelRuleWorkspaceClaimRequest.builder().vaspId("00000000-0000-4000-8000-000000000b5e").licence("value-licence").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.travelRule().workspace().claim(params);
+    var result = client.travelRule().workspace().claim(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/travel-rule/workspace/claim/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vasp_id\":\"00000000-0000-4000-8000-000000000b5e\",\"licence\":\"value-licence\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -60,15 +63,17 @@ final class TravelRuleWorkspaceResourceTest {
 
   @Test
   void sendDomainCode() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.travelRule().workspace().sendDomainCode();
+    var result = client.travelRule().workspace().sendDomainCode(options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/travel-rule/workspace/domain/code/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -77,15 +82,17 @@ final class TravelRuleWorkspaceResourceTest {
   @Test
   void confirmDomain() {
     TravelRuleWorkspaceDomainConfirmRequest params = TravelRuleWorkspaceDomainConfirmRequest.builder().code("value-code").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.travelRule().workspace().confirmDomain(params);
+    var result = client.travelRule().workspace().confirmDomain(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/travel-rule/workspace/domain/confirm/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"code\":\"value-code\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -93,15 +100,17 @@ final class TravelRuleWorkspaceResourceTest {
 
   @Test
   void verifyDomainDns() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.travelRule().workspace().verifyDomainDns();
+    var result = client.travelRule().workspace().verifyDomainDns(options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/travel-rule/workspace/domain/dns/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -110,15 +119,17 @@ final class TravelRuleWorkspaceResourceTest {
   @Test
   void enableBilling() {
     TravelRuleWorkspaceBillingRequest params = TravelRuleWorkspaceBillingRequest.builder().enabled(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.travelRule().workspace().enableBilling(params);
+    var result = client.travelRule().workspace().enableBilling(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/travel-rule/workspace/billing/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"enabled\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

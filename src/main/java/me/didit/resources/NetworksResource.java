@@ -568,6 +568,7 @@ public final class NetworksResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/tags/add/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param networkUuid Network UUID.
    * @param params the request parameters
@@ -619,6 +620,7 @@ public final class NetworksResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/networks/{network_uuid}/tags/remove/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param networkUuid Network UUID.
    * @param params the request parameters

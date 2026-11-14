@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -47,15 +48,17 @@ final class WorkflowsResourceTest {
   @Test
   void create() {
     SimpleWorkflowRequest params = SimpleWorkflowRequest.builder().workflowLabel("value-workflow-label").isDefault(true).status(SimpleWorkflowRequest.Status.DRAFT).features(List.of(SimpleWorkflowFeature.builder().feature(SimpleWorkflowFeature.Feature.OCR).config(Map.of("key", "value")).label("value-label").build())).isWhiteLabelEnabled(true).isDesktopAllowed(true).isSessionReferenceEnabled(true).maxRetryAttempts(1L).retryWindowDays(1L).faceLivenessMaxAttempts(1L).faceMatchMaxAttempts(1L).sessionExpirationTime(1L).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/workflows/", "201");
     transport.respondJson(201, example);
-    var result = client.workflows().create(params);
+    var result = client.workflows().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/workflows/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"workflow_label\":\"value-workflow-label\",\"is_default\":true,\"status\":\"draft\",\"features\":[{\"feature\":\"OCR\",\"config\":{\"key\":\"value\"},\"label\":\"value-label\"}],\"is_white_label_enabled\":true,\"is_desktop_allowed\":true,\"is_session_reference_enabled\":true,\"max_retry_attempts\":1,\"retry_window_days\":1,\"face_liveness_max_attempts\":1,\"face_match_max_attempts\":1,\"session_expiration_time\":1}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -80,15 +83,17 @@ final class WorkflowsResourceTest {
   @Test
   void update() {
     SimpleWorkflowUpdateRequest params = SimpleWorkflowUpdateRequest.builder().workflowLabel("value-workflow-label").isDefault(true).status(SimpleWorkflowUpdateRequest.Status.DRAFT).features(List.of(SimpleWorkflowFeature.builder().feature(SimpleWorkflowFeature.Feature.OCR).config(Map.of("key", "value")).label("value-label").build())).isWhiteLabelEnabled(true).isDesktopAllowed(true).isSessionReferenceEnabled(true).maxRetryAttempts(1L).retryWindowDays(1L).faceLivenessMaxAttempts(1L).faceMatchMaxAttempts(1L).sessionExpirationTime(1L).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.workflows().update("00000000-0000-4000-8000-00000000b60d", params);
+    var result = client.workflows().update("00000000-0000-4000-8000-00000000b60d", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/workflows/00000000-0000-4000-8000-00000000b60d/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"workflow_label\":\"value-workflow-label\",\"is_default\":true,\"status\":\"draft\",\"features\":[{\"feature\":\"OCR\",\"config\":{\"key\":\"value\"},\"label\":\"value-label\"}],\"is_white_label_enabled\":true,\"is_desktop_allowed\":true,\"is_session_reference_enabled\":true,\"max_retry_attempts\":1,\"retry_window_days\":1,\"face_liveness_max_attempts\":1,\"face_match_max_attempts\":1,\"session_expiration_time\":1}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -96,14 +101,16 @@ final class WorkflowsResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.workflows().delete("00000000-0000-4000-8000-00000000b56e");
+    client.workflows().delete("00000000-0000-4000-8000-00000000b56e", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/workflows/00000000-0000-4000-8000-00000000b56e/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 }

@@ -106,15 +106,17 @@ final class IdWalletsResourceTest {
 
   @Test
   void pollVerification() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/id-verification/wallets/verifications/{request_id}/poll/", "200");
     transport.respondJson(200, example);
-    var result = client.idWallets().pollVerification("00000000-0000-4000-8000-00000001339b");
+    var result = client.idWallets().pollVerification("00000000-0000-4000-8000-00000001339b", options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/id-verification/wallets/verifications/00000000-0000-4000-8000-00000001339b/poll/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -122,15 +124,17 @@ final class IdWalletsResourceTest {
 
   @Test
   void cancelVerification() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/id-verification/wallets/verifications/{request_id}/cancel/", "200");
     transport.respondJson(200, example);
-    var result = client.idWallets().cancelVerification("00000000-0000-4000-8000-000000015288");
+    var result = client.idWallets().cancelVerification("00000000-0000-4000-8000-000000015288", options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/id-verification/wallets/verifications/00000000-0000-4000-8000-000000015288/cancel/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -614,15 +618,17 @@ final class IdWalletsResourceTest {
   @Test
   void submitVerificationResponse() {
     DigitalIdWalletApiWalletDigitalCredentialResponseRequest params = DigitalIdWalletApiWalletDigitalCredentialResponseRequest.builder().response(Map.of("key", "value")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/id-verification/wallets/verifications/{request_id}/response/", "200");
     transport.respondJson(200, example);
-    var result = client.idWallets().submitVerificationResponse("00000000-0000-4000-8000-000000020032", params);
+    var result = client.idWallets().submitVerificationResponse("00000000-0000-4000-8000-000000020032", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/id-verification/wallets/verifications/00000000-0000-4000-8000-000000020032/response/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"response\":{\"key\":\"value\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

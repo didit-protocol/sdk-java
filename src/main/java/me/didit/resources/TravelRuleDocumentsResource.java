@@ -126,6 +126,7 @@ public final class TravelRuleDocumentsResource {
    * <p>Stores a PDF in your inventory so you can share it with counterparties. The file must be a PDF of at most 5 MiB. Uploading identical content of the same kind again returns the existing document. Needs the transactions write privilege.
    *
    * <p>{@code POST /v3/travel-rule/documents/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -219,6 +220,7 @@ public final class TravelRuleDocumentsResource {
    * <p>Deletes the document and every link that shared it. Deletion is irreversible and takes effect at once: shared links stop working.
    *
    * <p>{@code DELETE /v3/travel-rule/documents/{document_id}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param documentId the {@code document_id}
    * @param options per-request options that override the client options

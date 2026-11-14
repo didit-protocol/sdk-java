@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -46,15 +47,17 @@ final class ListsResourceTest {
   @Test
   void create() {
     ListsCreateParams params = ListsCreateParams.builder().name("value-name").description("value-description").listType(ListsCreateParams.ListType.ALLOWLIST).entryType(ListsCreateParams.EntryType.FACE).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/lists/", "201");
     transport.respondJson(201, example);
-    var result = client.lists().create(params);
+    var result = client.lists().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/lists/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"name\":\"value-name\",\"description\":\"value-description\",\"list_type\":\"allowlist\",\"entry_type\":\"face\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -79,15 +82,17 @@ final class ListsResourceTest {
   @Test
   void update() {
     ListsUpdateParams params = ListsUpdateParams.builder().name("value-name").description("value-description").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/lists/{list_uuid}/", "200");
     transport.respondJson(200, example);
-    var result = client.lists().update("00000000-0000-4000-8000-00000000604a", params);
+    var result = client.lists().update("00000000-0000-4000-8000-00000000604a", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/lists/00000000-0000-4000-8000-00000000604a/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"name\":\"value-name\",\"description\":\"value-description\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -95,14 +100,16 @@ final class ListsResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.lists().delete("00000000-0000-4000-8000-000000005feb");
+    client.lists().delete("00000000-0000-4000-8000-000000005feb", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/lists/00000000-0000-4000-8000-000000005feb/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 }

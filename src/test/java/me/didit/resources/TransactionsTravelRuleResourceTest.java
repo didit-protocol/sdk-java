@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -31,15 +32,17 @@ final class TransactionsTravelRuleResourceTest {
   @Test
   void updateTransfer() {
     TravelRuleTransferPatchRequest params = TravelRuleTransferPatchRequest.builder().paymentTxnId("value-payment-txn-id").action(TravelRuleTransferPatchRequest.Action.CANCEL).complianceEmail("user@example.com").walletAddress("value-wallet-address").memo("value-memo").beneficiaryVasp("00000000-0000-4000-8000-000000003908").reason(TravelRuleTransferPatchRequest.Reason.EMPTY).notifyOnAnswer(true).name("value-name").lei("value-lei").country("value-country").vaspName("value-vasp-name").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.transactions().travelRule().updateTransfer("00000000-0000-4000-8000-00000002630a", params);
+    var result = client.transactions().travelRule().updateTransfer("00000000-0000-4000-8000-00000002630a", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/transactions/00000000-0000-4000-8000-00000002630a/travel-rule/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"payment_txn_id\":\"value-payment-txn-id\",\"action\":\"cancel\",\"compliance_email\":\"user@example.com\",\"wallet_address\":\"value-wallet-address\",\"memo\":\"value-memo\",\"beneficiary_vasp\":\"00000000-0000-4000-8000-000000003908\",\"reason\":\"\",\"notify_on_answer\":true,\"name\":\"value-name\",\"lei\":\"value-lei\",\"country\":\"value-country\",\"vasp_name\":\"value-vasp-name\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -48,15 +51,17 @@ final class TransactionsTravelRuleResourceTest {
   @Test
   void confirmOwnership() {
     TravelRuleOwnershipConfirmRequest params = TravelRuleOwnershipConfirmRequest.builder().confirmed(true).walletAddress("value-wallet-address").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.transactions().travelRule().confirmOwnership("00000000-0000-4000-8000-0000000293dd", params);
+    var result = client.transactions().travelRule().confirmOwnership("00000000-0000-4000-8000-0000000293dd", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/transactions/00000000-0000-4000-8000-0000000293dd/travel-rule/ownership/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"confirmed\":true,\"wallet_address\":\"value-wallet-address\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -81,15 +86,17 @@ final class TransactionsTravelRuleResourceTest {
   @Test
   void createMessage() {
     TravelRuleMessageCreateRequest params = TravelRuleMessageCreateRequest.builder().kind(TravelRuleMessageCreateRequest.Kind.MESSAGE).body("value-body").requestedDocuments(List.of("value-requested-documents")).replyTo("00000000-0000-4000-8000-000000000f77").files(List.of("value-files")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(201, example);
-    var result = client.transactions().travelRule().createMessage("00000000-0000-4000-8000-0000000247fb", params);
+    var result = client.transactions().travelRule().createMessage("00000000-0000-4000-8000-0000000247fb", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/transactions/00000000-0000-4000-8000-0000000247fb/travel-rule/messages/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"kind\":\"MESSAGE\",\"body\":\"value-body\",\"requested_documents\":[\"value-requested-documents\"],\"reply_to\":\"00000000-0000-4000-8000-000000000f77\",\"files\":[\"value-files\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -98,15 +105,17 @@ final class TransactionsTravelRuleResourceTest {
   @Test
   void triggerTestVaspInbound() {
     TravelRuleTestVaspInboundRequest params = TravelRuleTestVaspInboundRequest.builder().beneficiaryWalletAddress("value-beneficiary-wallet-address").scenario(TravelRuleTestVaspInboundRequest.Scenario.ACCEPT).chain("value-chain").amount("value-amount").currency("value-currency").reference("value-reference").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(201, example);
-    var result = client.transactions().travelRule().triggerTestVaspInbound(params);
+    var result = client.transactions().travelRule().triggerTestVaspInbound(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/travel-rule/test-vasp/inbound/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"beneficiary_wallet_address\":\"value-beneficiary-wallet-address\",\"scenario\":\"accept\",\"chain\":\"value-chain\",\"amount\":\"value-amount\",\"currency\":\"value-currency\",\"reference\":\"value-reference\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -132,15 +141,17 @@ final class TransactionsTravelRuleResourceTest {
   @Test
   void createUserLink() {
     TravelRuleUserLinkRequest params = TravelRuleUserLinkRequest.builder().channel(TravelRuleUserLinkRequest.Channel.LINK).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{\"email_available\":true,\"emailed_to\":\"value\",\"end_user_link\":\"value\",\"expires_at\":\"2026-11-01T10:15:30Z\"}");
     transport.respondJson(200, example);
-    var result = client.transactions().travelRule().createUserLink("00000000-0000-4000-8000-0000000277d8", params);
+    var result = client.transactions().travelRule().createUserLink("00000000-0000-4000-8000-0000000277d8", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/transactions/00000000-0000-4000-8000-0000000277d8/travel-rule/user-link/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"channel\":\"link\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

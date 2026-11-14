@@ -125,6 +125,7 @@ public final class TravelRuleUnmatchedDepositsResource {
    * <p>Pair an inbound deposit that is still waiting for originator data with the Travel Rule message the originating VASP sent for it. The deposit takes the message's originator data, counterparty VASP and rail, and both transfers record the match on their timelines. <code>transaction_uuid</code> is the deposit's <code>transaction_id</code> from <code>GET /v3/travel-rule/unmatched/</code>. <code>transaction_id</code> in the body is the received message's <code>transaction_id</code>, from a row of <code>GET /v3/travel-rule/transfers/?kind=message</code>; the transfer's own <code>id</code> is not found. The message must be for the same asset as the deposit. A deposit or message deleted from the Console answers <code>404</code>; one that has already moved on (matched, or no longer waiting) answers <code>409</code>.
    *
    * <p>{@code POST /v3/travel-rule/unmatched/{transaction_uuid}/match/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param transactionUuid The `transaction_id` of the unmatched deposit.
    * @param params the request parameters

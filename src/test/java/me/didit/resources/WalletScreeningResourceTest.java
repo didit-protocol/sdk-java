@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -27,15 +28,17 @@ final class WalletScreeningResourceTest {
   @Test
   void screen() {
     WalletScreeningScreenParams params = WalletScreeningScreenParams.builder().walletAddress("value-wallet-address").blockchain(WalletScreeningScreenParams.Blockchain.BTC).direction(WalletScreeningScreenParams.Direction.INBOUND).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/wallet-screening/", "200");
     transport.respondJson(200, example);
-    var result = client.walletScreening().screen(params);
+    var result = client.walletScreening().screen(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/wallet-screening/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"wallet_address\":\"value-wallet-address\",\"blockchain\":\"BTC\",\"direction\":\"inbound\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

@@ -10,6 +10,7 @@ import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -50,15 +51,17 @@ final class TravelRuleWalletAddressesResourceTest {
   @Test
   void create() {
     WalletAddressEntryCreate params = WalletAddressEntryCreate.builder().address("value-address").chain("value-chain").holderVendorData("value-holder-vendor-data").holderName("value-holder-name").entityType("value-entity-type").selfDeclared(true).travelAddress("value-travel-address").memo("value-memo").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(201, example);
-    var result = client.travelRule().walletAddresses().create(params);
+    var result = client.travelRule().walletAddresses().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/travel-rule/wallet-addresses/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"address\":\"value-address\",\"chain\":\"value-chain\",\"holder_vendor_data\":\"value-holder-vendor-data\",\"holder_name\":\"value-holder-name\",\"entity_type\":\"value-entity-type\",\"self_declared\":true,\"travel_address\":\"value-travel-address\",\"memo\":\"value-memo\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -67,15 +70,17 @@ final class TravelRuleWalletAddressesResourceTest {
   @Test
   void update() {
     WalletAddressEntryUpdate params = WalletAddressEntryUpdate.builder().holderName("value-holder-name").holderVendorData("value-holder-vendor-data").entityType("value-entity-type").travelAddress("value-travel-address").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.travelRule().walletAddresses().update("00000000-0000-4000-8000-00000001aa5e", params);
+    var result = client.travelRule().walletAddresses().update("00000000-0000-4000-8000-00000001aa5e", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/travel-rule/wallet-addresses/00000000-0000-4000-8000-00000001aa5e/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"holder_name\":\"value-holder-name\",\"holder_vendor_data\":\"value-holder-vendor-data\",\"entity_type\":\"value-entity-type\",\"travel_address\":\"value-travel-address\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -83,29 +88,33 @@ final class TravelRuleWalletAddressesResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.travelRule().walletAddresses().delete("00000000-0000-4000-8000-00000001a88f");
+    client.travelRule().walletAddresses().delete("00000000-0000-4000-8000-00000001a88f", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/travel-rule/wallet-addresses/00000000-0000-4000-8000-00000001a88f/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 
   @Test
   void bulkImport() {
     TravelRuleWalletAddressesBulkImportParams params = TravelRuleWalletAddressesBulkImportParams.builder().file(FileUpload.of(new byte[] {37, 80, 68, 70}, "file.pdf", "application/pdf")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/travel-rule/wallet-addresses/import/", "200");
     transport.respondJson(200, example);
-    var result = client.travelRule().walletAddresses().bulkImport(params);
+    var result = client.travelRule().walletAddresses().bulkImport(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/travel-rule/wallet-addresses/import/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(Map.of(), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("file", List.of("file.pdf"))), request.multipartFiles());
     TestJson.assertJsonEquals(example, Json.toNode(result));

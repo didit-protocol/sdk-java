@@ -10,6 +10,7 @@ import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -27,15 +28,17 @@ final class DocumentAiResourceTest {
   @Test
   void analyze() {
     DocumentAiAnalyzeParams params = DocumentAiAnalyzeParams.builder().document(FileUpload.of(new byte[] {37, 80, 68, 70}, "document.pdf", "application/pdf")).fields("value-fields").expectedFirstName("value-expected-first-name").expectedLastName("value-expected-last-name").expectedCompanyName("value-expected-company-name").expectedCompanyCountry("value-expected-company-country").documentAiNameMatchScoreThreshold(1L).documentAiUnreadableDocumentAction(DocumentAiAnalyzeParams.DocumentAiUnreadableDocumentAction.DECLINE).documentAiMissingRequiredFieldsAction(DocumentAiAnalyzeParams.DocumentAiMissingRequiredFieldsAction.DECLINE).documentAiDocumentTamperingAction(DocumentAiAnalyzeParams.DocumentAiDocumentTamperingAction.DECLINE).documentAiNameMismatchAction(DocumentAiAnalyzeParams.DocumentAiNameMismatchAction.DECLINE).documentAiUnsupportedFileAction(DocumentAiAnalyzeParams.DocumentAiUnsupportedFileAction.DECLINE).saveApiRequest(true).vendorData("value-vendor-data").metadata(Map.of("key", "value")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/document-ai/", "200");
     transport.respondJson(200, example);
-    var result = client.documentAi().analyze(params);
+    var result = client.documentAi().analyze(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/document-ai/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(Map.ofEntries(Map.entry("fields", List.of("value-fields")), Map.entry("expected_first_name", List.of("value-expected-first-name")), Map.entry("expected_last_name", List.of("value-expected-last-name")), Map.entry("expected_company_name", List.of("value-expected-company-name")), Map.entry("expected_company_country", List.of("value-expected-company-country")), Map.entry("document_ai_name_match_score_threshold", List.of("1")), Map.entry("document_ai_unreadable_document_action", List.of("DECLINE")), Map.entry("document_ai_missing_required_fields_action", List.of("DECLINE")), Map.entry("document_ai_document_tampering_action", List.of("DECLINE")), Map.entry("document_ai_name_mismatch_action", List.of("DECLINE")), Map.entry("document_ai_unsupported_file_action", List.of("DECLINE")), Map.entry("save_api_request", List.of("true")), Map.entry("vendor_data", List.of("value-vendor-data")), Map.entry("metadata", List.of("{\"key\":\"value\"}"))), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("document", List.of("document.pdf"))), request.multipartFiles());
     TestJson.assertJsonEquals(example, Json.toNode(result));

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -45,15 +46,17 @@ final class SessionsReviewsResourceTest {
   @Test
   void create() {
     SessionsReviewsCreateParams params = SessionsReviewsCreateParams.builder().newStatus(SessionsReviewsCreateParams.NewStatus.NOT_STARTED).comment("value-comment").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/sessions/{session_id}/reviews/", "201");
     transport.respondJson(201, example);
-    var result = client.sessions().reviews().create("00000000-0000-4000-8000-00000000e4e2", params);
+    var result = client.sessions().reviews().create("00000000-0000-4000-8000-00000000e4e2", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/sessions/00000000-0000-4000-8000-00000000e4e2/reviews/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"new_status\":\"Not Started\",\"comment\":\"value-comment\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

@@ -153,6 +153,7 @@ public final class SessionsResource {
    * <p><b>Side effects:</b> the hosted verification URL is generated and stored; if <code>contact_details.send_notification_emails</code> is <code>true</code> and an email is provided, a verification invite email is sent. The session expires after <code>session_expiration_time</code> seconds when the request sets it, otherwise after the workflow's configured session expiration time. For KYB workflows, <code>contact_details.phone</code> and <code>expected_details</code> are ignored.
    *
    * <p>{@code POST /v3/session/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -319,7 +320,7 @@ public final class SessionsResource {
    *
    * <p><b>Response:</b> <code>200 OK</code> once the deletion has completed, with a JSON body reporting the <code>face_retention_outcome</code>, the retained template's expiry and, for a KYB session, <code>deleted_child_verifications</code>. Earlier versions of this endpoint returned <code>204 No Content</code>; update clients that assert on <code>204</code>. Keep your <code>instruction_id</code> in your own erasure log.
    *
-   * <p><b>Idempotency:</b> not idempotent at the HTTP level: the first call returns <code>200</code>; repeating it returns <code>404</code> because the session no longer resolves. After a <code>503</code> the session is still in place; repeat the same request to finish deleting it.
+   * <p><b>Idempotency:</b> without an <code>Idempotency-Key</code>, repeating a delete returns <code>404</code> because the session no longer resolves; with the same key, a repeat of a successful delete returns the first <code>200</code> response. After a <code>503</code> the session is still in place; repeat the same request to finish deleting it.
    *
    * <p><b>Authentication:</b> send your application's API key in the <code>x-api-key</code> header; the session must belong to that application. Console user access tokens (<code>Authorization: Bearer ...</code>) may also call this endpoint when they carry the <code>delete:sessions</code> permission. Authentication and permission failures both return <code>403</code>; this API never returns <code>401</code>.
    *
@@ -330,6 +331,7 @@ public final class SessionsResource {
    * <p><b>Filed regulatory reports:</b> if the selected data is in a finalized regulatory report, the whole request is refused with <code>409</code> and nothing is deleted. The body uses <code>code: in_filed_report</code> and names each report with <code>uuid</code>, <code>report_number</code>, <code>report_type</code> and <code>case_uuid</code>. Delete the reports, then repeat the request.
    *
    * <p>{@code DELETE /v3/session/{sessionId}/delete/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID (`session_id`) of the User Verification (KYC) or Business Verification (KYB) session to delete, as returned when the session was created. Must be a canonical hyphenated UUID — a non-UUID value does not match the route and returns `404`.
    * @param params the request parameters
@@ -503,6 +505,7 @@ public final class SessionsResource {
    * <p>Grouping does not merge person profiles, profile fields or biometric data. Each verification keeps its original profile association and deletion ownership. Deleting a verification removes it from the group. Link actions have a separate audit recording the actor, time and <code>link_reason</code>; they are not status-review entries. Group navigation and unlinking are console-only, with no public read or unlink endpoint.
    *
    * <p>{@code PATCH /v3/session/{sessionId}/update-status/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the verification session to update. Accepts both user (KYC) and business (KYB) session IDs — the service resolves the ID across both session types.
    * @param params the request parameters
@@ -657,6 +660,7 @@ public final class SessionsResource {
    * <p>Mint a short-lived JWT that lets a specific Didit application import this finished session. Pair with <code>POST /v3/session/import-shared/</code>.
    *
    * <p>{@code POST /v3/session/{sessionId}/share/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the source verification session to mint a token for.
    * @param params the request parameters
@@ -704,9 +708,10 @@ public final class SessionsResource {
   /**
    * Redeem a share token to clone a verification session into your application
    *
-   * <p>Redeem a share token to clone a KYC or KYB session into the calling application with a fresh <code>session_id</code>. Not idempotent — a token redeems once per receiver.
+   * <p>Redeem a share token to clone a KYC or KYB session into the calling application with a fresh <code>session_id</code>. Without an <code>Idempotency-Key</code> a token redeems once per receiver; repeat it with the same key to get the first response back.
    *
    * <p>{@code POST /v3/session/import-shared/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -785,6 +790,7 @@ public final class SessionsResource {
    * <p><b>Filed regulatory reports:</b> if the selected data is in a finalized regulatory report, the whole request is refused with <code>409</code> and nothing is deleted. The body uses <code>code: in_filed_report</code> and names each report with <code>uuid</code>, <code>report_number</code>, <code>report_type</code> and <code>case_uuid</code>. Delete the reports, then repeat the request.
    *
    * <p>{@code POST /v3/sessions/delete/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -927,6 +933,7 @@ public final class SessionsResource {
    * <p>Accepts an API key or a console user token; either way the credential needs the <code>write:sessions</code> permission. Authentication and permission failures both return <code>403</code> — this API never responds <code>401</code>. Note that the session lookup runs before credential checks, so an unknown <code>sessionId</code> returns <code>404</code> even with missing credentials. This endpoint has a dedicated rate limit of 10 requests per minute per API key (invalid requests count too); the shared write budget of 300 requests per minute also applies.
    *
    * <p>{@code PATCH /v3/session/{sessionId}/update-data/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the User Verification (KYC) session whose extracted document data you are correcting. Business (KYB) session IDs are not valid here — for company data use [Update KYB Company Data](#patch-/v3/session/-sessionId-/kyb/-companyUuid-/update-data/).
    * @param params the request parameters
@@ -1031,6 +1038,7 @@ public final class SessionsResource {
    * <p>Authenticate with your API key (<code>x-api-key</code>) or a user authorization header carrying the <code>write:sessions</code> privilege; a scoped API key needs write access to decisions.
    *
    * <p>{@code PATCH /v3/session/{sessionId}/features/{nodeId}/update-status/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the verification session. Accepts both user (KYC) and business (KYB) session IDs — the service resolves the ID across both session types.
    * @param nodeId Workflow graph node ID of the feature to update (for example `feature_ocr_1`). Use the literal value `default` for non-graph (single-step) workflows where the feature has no node ID.
@@ -1091,6 +1099,7 @@ public final class SessionsResource {
    * <p>Authenticate with your API key (<code>x-api-key</code>) or a user authorization header — either must carry the <code>write:sessions</code> privilege.
    *
    * <p>{@code PATCH /v3/session/{sessionId}/update-aml-hit-status/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the verification session. Accepts both user (KYC) and business (KYB) session IDs — the service resolves the ID across both session types.
    * @param params the request parameters
@@ -1145,6 +1154,7 @@ public final class SessionsResource {
    * <p>Authenticate with your API key (<code>x-api-key</code>) or a user authorization header — either must carry the <code>write:sessions</code> privilege.
    *
    * <p>{@code PATCH /v3/session/{sessionId}/bulk-update-aml-hit-status/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the verification session. Accepts both user (KYC) and business (KYB) session IDs — the service resolves the ID across both session types.
    * @param params the request parameters
@@ -1205,6 +1215,7 @@ public final class SessionsResource {
    * <p>An empty JSON body <code>{}</code> is a no-op: it returns <code>200</code> echoing the current POA record without firing the webhook (<code>has_changes</code> stays false).
    *
    * <p>{@code PATCH /v3/session/{sessionId}/update-poa-data/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the User Verification (KYC) session whose attached POA record you are correcting.
    * @param params the request parameters
@@ -1305,6 +1316,7 @@ public final class SessionsResource {
    * <p>For User Verification sessions, the KYC counterpart is <code>PATCH /v3/session/{sessionId}/update-data/</code>; to change the session decision itself use <code>PATCH /v3/session/{sessionId}/update-status/</code>.
    *
    * <p>{@code PATCH /v3/session/{sessionId}/kyb/{companyUuid}/update-data/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the parent Business Verification (KYB) session.
    * @param companyUuid UUID of the company record to update (`registry_checks[].company.uuid` on the business session decision). Must belong to the session referenced by `sessionId`.
@@ -1413,6 +1425,7 @@ public final class SessionsResource {
    * <p>Accepts an API key or a console user token; either way the credential needs the <code>write:businesses</code> permission.
    *
    * <p>{@code PATCH /v3/session/{sessionId}/kyb/parties/{partyUuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the parent Business Verification (KYB) session.
    * @param partyUuid UUID of the Key People party to update (`key_people_checks[].submitted.parties[].uuid` on the business session decision). Must belong to the session referenced by `sessionId`.
@@ -1520,6 +1533,7 @@ public final class SessionsResource {
    * <p>This preview does not reserve session state or authorize delivery. After reviewing it, call [Update Session Status](/sessions-api/update-status) with <code>new_status: Resubmitted</code>, the same <code>nodes_to_resubmit</code> and <code>email_language</code> you previewed, <code>send_email: true</code>, <code>email_address</code> set to <code>recipient</code> and <code>email_preview_token</code> set to <code>preview_token</code>. The receipt expires after 15 minutes. When a receipt is supplied, changed inputs, message content, sender or session state return <code>409</code> before any mutation or send. Existing integrations may omit the receipt. Regenerate the preview after a conflict. Treat the response as sensitive verification content; responses use <code>Cache-Control: no-store</code>. Render HTML in a sandboxed frame, never directly in your application DOM.
    *
    * <p>{@code POST /v3/session/{sessionId}/resubmission-preview/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the verification session to update. Accepts both user (KYC) and business (KYB) session IDs — the service resolves the ID across both session types.
    * @param params the request parameters
@@ -1612,6 +1626,7 @@ public final class SessionsResource {
    * <p>Correct the fields Document AI extracted from one uploaded document, set its review status, or both, on a KYC or KYB session. <code>extracted_data</code> must be a JSON object and is merged key by key: a key you send replaces the stored value (a key sent as <code>null</code> is stored as <code>null</code>) and keys you leave out keep their values. The document status feeds the Document AI result of its workflow node in the session decision; the session status itself is not recomputed. Every successful call, including one that changes nothing, sends a <code>data.updated</code> <a href="https://docs.didit.me/integration/webhooks">webhook</a> with trigger <code>manual_review</code>. A scoped API key needs <code>decisions: write</code>; see <a href="https://docs.didit.me/core-technology/document-ai/overview">Document AI</a>.
    *
    * <p>{@code PATCH /v3/document-ai/{sessionId}/documents/{documentUuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the verification session (the `session_id` returned by `POST /v3/session/`). Accepts both User Verification (KYC) and Business Verification (KYB) session IDs: the server resolves the ID across both session types. Must be a well-formed UUID; a malformed value does not match the route and returns an HTML `404`.
    * @param documentUuid UUID of the Document AI document (`document_ai_documents[].items[].uuid` in `GET /v3/session/{sessionId}/decision/`). It must belong to the session in the path.
@@ -1712,6 +1727,7 @@ public final class SessionsResource {
    * <p>Give a Key People party of a Business Verification (KYB) session a new individual KYC session after its previous one was deleted or expired before the person started it, so the Key People check can finish again; send no request body. It works when the party's KYC session was deleted (<code>kyc_session_deleted: true</code>) or expired before the person started it (<code>Expired</code>, never started). A session still in progress or one that ended in any other status (<code>Approved</code>, <code>Declined</code>, <code>In Review</code>, <code>Abandoned</code>, ...) returns <code>409</code> unless it was deleted. A party that never had one or a company party always returns <code>409</code>. Didit creates a new hosted KYC session with the workflow the party was verified with (its latest published version) or, when that is no longer known, the workflow your Key People settings assign to the party's role, so its link lasts that KYC workflow's session expiration time; it emails the link to the party when an email is on file, clears <code>is_skipped</code>, and recomputes the Key People check and the business session status. It then sends a <code>data.updated</code> <a href="https://docs.didit.me/integration/webhooks">webhook</a> for the business session with trigger <code>console_key_people_regenerate</code>; to exempt the party instead, use <code>PATCH /v3/session/{sessionId}/kyb/parties/{partyUuid}/</code>. A scoped API key needs <code>decisions: write</code>, and without <code>sessions: write</code> it receives <code>kyc_session_url</code> as <code>null</code>. Deleted sessions qualify even if the person had already started or finished verification. Imported sessions do not qualify through expiry; they must have been deleted.
    *
    * <p>{@code POST /v3/session/{sessionId}/kyb/parties/{partyUuid}/regenerate/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the parent Business Verification (KYB) session.
    * @param partyUuid UUID of the Key People party (`key_people_checks[].submitted.parties[].uuid` on the business session decision). Must belong to the session referenced by `sessionId`.
@@ -2041,6 +2057,7 @@ public final class SessionsResource {
    * <p>Attach one extra image or PDF to the ID verification (<code>model_type=kyc</code>) or Proof of Address (<code>model_type=poa</code>) result of a finished User Verification (KYC) session, for example evidence collected outside the flow. The session must be <code>Approved</code>, <code>Declined</code>, <code>In Review</code> or <code>Kyc Expired</code> and carry the result named by <code>model_type</code>; Business Verification (KYB) sessions are not supported. Each call appends one file (to the most recent result when the step ran more than once), keeps the existing files and records a <code>FILE_ADDED</code> entry in the session activity log; the upload sends no webhook and does not change the session status. The file is compressed on upload and is returned in <code>extra_files</code> of the session decision. This endpoint is limited to 10 requests per minute per API key. A scoped API key needs <code>sessions: write</code>, and without <code>media: read</code> it receives the <code>extra_files</code> links as <code>null</code>.
    *
    * <p>{@code PATCH /v3/session/{sessionId}/add-images/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the User Verification (KYC) session to add the file to (the `session_id` returned by `POST /v3/session/`). A Business Verification (KYB) session ID returns `404`.
    * @param params the request parameters
@@ -2091,6 +2108,7 @@ public final class SessionsResource {
    * <p>Set the status of a session's AML screening check as a whole (the <code>status</code> of an <code>aml_screenings[]</code> entry in the session decision), for example <code>Approved</code> after your team cleared every hit. Works for KYC and KYB session IDs; pass <code>node_id</code> (query parameter or body field) when the session ran more than one AML step, otherwise the most recent AML check is updated. When the status actually changes, an <code>AML_STATUS_UPDATED</code> activity entry is recorded and a <code>data.updated</code> <a href="https://docs.didit.me/integration/webhooks">webhook</a> is sent; sending the current status returns <code>200</code> and changes nothing. The session status is not recomputed: use <code>PATCH /v3/session/{sessionId}/update-status/</code> for the session decision and <code>PATCH /v3/session/{sessionId}/update-aml-hit-status/</code> for single hits. A scoped API key needs <code>decisions: write</code>.
    *
    * <p>{@code PATCH /v3/session/{sessionId}/update-aml-status/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the verification session (the `session_id` returned by `POST /v3/session/`). Accepts both User Verification (KYC) and Business Verification (KYB) session IDs: the server resolves the ID across both session types. Must be a well-formed UUID; a malformed value does not match the route and returns an HTML `404`.
    * @param params the request parameters
@@ -2147,6 +2165,7 @@ public final class SessionsResource {
    * <p>Requires the <code>write:sessions</code> privilege; a scoped API key needs write access to sessions. An unknown <code>session_id</code> returns <code>404</code> and another application's session returns <code>403</code>, both before the body is read; a live session returns <code>404</code> only after the body is validated. To simulate from the hosted flow with the session's own token, use <code>POST /v3/session/{sessionId}/sandbox/simulate/</code>. See [Sandbox &amp; Test Data](/integration/sandbox-testing) for the scenario catalog.
    *
    * <p>{@code POST /v3/session/{sessionId}/simulate/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the sandbox verification session. Accepts both user (KYC) and business (KYB) session IDs.
    * @param params the request parameters
@@ -2251,6 +2270,7 @@ public final class SessionsResource {
    * <p>Requires the <code>write:sessions</code> privilege; a scoped API key needs write access to decisions.
    *
    * <p>{@code POST /v3/session/{sessionId}/features/overrides/{overrideId}/cancel/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the verification session. Accepts both user (KYC) and business (KYB) session IDs.
    * @param overrideId The `id` of the override to cancel.
@@ -2307,6 +2327,7 @@ public final class SessionsResource {
    * <p>Works for User Verification (KYC) and Business Verification (KYB) sessions in <code>Approved</code>, <code>Declined</code>, <code>In Review</code>, <code>Kyc Expired</code>, <code>Abandoned</code> or <code>Resubmitted</code> status. The status check runs before body validation. Requires the <code>write:sessions</code> privilege; a scoped API key needs write access to decisions. Responses use <code>Cache-Control: no-store</code>: treat them as sensitive verification content.
    *
    * <p>{@code POST /v3/session/{sessionId}/decision-email-preview/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the verification session. Accepts both user (KYC) and business (KYB) session IDs.
    * @param params the request parameters
@@ -2357,6 +2378,7 @@ public final class SessionsResource {
    * <p>Upload one or more corporate documents (articles of incorporation, shareholder register, certificate of incorporation, ...) to the KYB Documents step of a Business Verification session, from your own server instead of the hosted page. Didit runs the hosted pipeline: compression, OCR, tampering and cross-document checks, document grouping, and advances the session when the required document groups are satisfied. The step costs one flat fee however many files you send. The session must be open and on the KYB Documents step, and the company chosen at the registry step must exist. Read the people the documents name with <code>GET /v3/session/{sessionId}/kyb/extracted-parties/</code>. Requires <code>write:businesses</code>.
    *
    * <p>{@code POST /v3/session/{sessionId}/kyb/documents/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the Business Verification (KYB) session. It must belong to the application of the API key.
    * @param params the request parameters
@@ -2591,6 +2613,7 @@ public final class SessionsResource {
    * <p>Add a party (a person or a company) to the list you are preparing for this KYB session. The same fields and rules as the hosted Key People screen apply: a person needs <code>full_name</code> or <code>first_name</code> and <code>last_name</code>, at least one role and a nationality; a company needs <code>company_name</code> and the country of incorporation in <code>nationality</code>. Nothing is declared or billed until <code>POST /v3/session/{sessionId}/kyb/parties/submit/</code>. Requires <code>write:businesses</code>.
    *
    * <p>{@code POST /v3/session/{sessionId}/kyb/parties/drafts/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the Business Verification (KYB) session. It must belong to the application of the API key.
    * @param params the request parameters
@@ -2641,6 +2664,7 @@ public final class SessionsResource {
    * <p>Change fields of one party draft. The edit is merged into the stored draft and the merged party is validated as a whole, so an edit that would leave the party incomplete is rejected. Changing <code>first_name</code> or <code>last_name</code> replaces the stored full name. Requires <code>write:businesses</code>.
    *
    * <p>{@code PATCH /v3/session/{sessionId}/kyb/parties/drafts/{draftId}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the Business Verification (KYB) session. It must belong to the application of the API key.
    * @param draftId UUID of the party draft (`draft_id` returned when it was created).
@@ -2741,6 +2765,7 @@ public final class SessionsResource {
    * <p>Drop one party draft. Declared parties are not affected. Requires <code>write:businesses</code>.
    *
    * <p>{@code DELETE /v3/session/{sessionId}/kyb/parties/drafts/{draftId}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the Business Verification (KYB) session. It must belong to the application of the API key.
    * @param draftId UUID of the party draft (`draft_id` returned when it was created).
@@ -2837,6 +2862,7 @@ public final class SessionsResource {
    * <p>Declare the stored drafts as the company's key people. This is the hosted Key People step under your API key: Didit decides from the role settings and ownership thresholds of the workflow which parties must be verified, creates one individual KYC session (or a KYB sub-session for a corporate owner) for each of them, sends the emails the workflow asks for, and advances the session. Each child session is billed like in the hosted flow. The drafts are consumed. Repeating the call after a successful submit changes nothing and answers <code>200</code> with <code>already_submitted: true</code> and the parties that already exist. The session must be on the Key People step. Send each person's <code>kyc_session_url</code> to them, or embed it. Requires <code>write:businesses</code>.
    *
    * <p>{@code POST /v3/session/{sessionId}/kyb/parties/submit/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the Business Verification (KYB) session. It must belong to the application of the API key.
    * @param params the request parameters
@@ -2931,6 +2957,7 @@ public final class SessionsResource {
    * <p>The ZIP is deleted 24 hours after it is ready, and at once when the session is deleted. A deleted session cannot be exported. Every export and every download link handed out is written to the session's audit log. A scoped API key needs <code>media: read</code> and <code>decisions: read</code>; a console user needs the privilege to read sessions.
    *
    * <p>{@code POST /v3/session/{sessionId}/files-export/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param sessionId UUID of the verification session (the `session_id` returned by `POST /v3/session/`). Accepts both User Verification (KYC) and Business Verification (KYB) session IDs. A deleted session returns `404`.
    * @param options per-request options that override the client options

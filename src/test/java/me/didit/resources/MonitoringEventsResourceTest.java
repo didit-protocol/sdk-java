@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -50,15 +51,17 @@ final class MonitoringEventsResourceTest {
   @Test
   void create() {
     MonitoringEventCreateRequest params = MonitoringEventCreateRequest.builder().eventId("value-event-id").eventCategory(MonitoringEventCreateRequest.EventCategory.AUTH).actionType("value-action-type").occurredAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).timeZone("value-time-zone").subject(MonitoringEventCreateRequest.Subject.builder().vendorData("value-vendor-data").entityType("value-entity-type").fullName("value-full-name").build()).business(MonitoringEventCreateRequest.Business.builder().vendorData("value-vendor-data").build()).session(MonitoringEventCreateRequest.Session.builder().sessionId("value-session-id").sequence(1L).build()).deviceContext(MonitoringEventCreateRequest.DeviceContext.builder().fingerprint("value-fingerprint").persistentDeviceId("value-persistent-device-id").build()).transactionContext(MonitoringEventCreateRequest.TransactionContext.builder().amount("value-amount").currency("value-currency").build()).payload(Map.of("key", "value")).customValues(Map.of("key", MonitoringEventCreateRequest.CustomValuesValue.ofString("value-custom-values"))).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/events/", "200");
     transport.respondJson(200, example);
-    var result = client.monitoringEvents().create(params);
+    var result = client.monitoringEvents().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/events/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"event_id\":\"value-event-id\",\"event_category\":\"auth\",\"action_type\":\"value-action-type\",\"occurred_at\":\"2026-11-01T10:15:30Z\",\"time_zone\":\"value-time-zone\",\"subject\":{\"vendor_data\":\"value-vendor-data\",\"entity_type\":\"value-entity-type\",\"full_name\":\"value-full-name\"},\"business\":{\"vendor_data\":\"value-vendor-data\"},\"session\":{\"session_id\":\"value-session-id\",\"sequence\":1},\"device_context\":{\"fingerprint\":\"value-fingerprint\",\"persistent_device_id\":\"value-persistent-device-id\"},\"transaction_context\":{\"amount\":\"value-amount\",\"currency\":\"value-currency\"},\"payload\":{\"key\":\"value\"},\"custom_values\":{\"key\":\"value-custom-values\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -67,15 +70,17 @@ final class MonitoringEventsResourceTest {
   @Test
   void createBatch() {
     MonitoringEventsCreateBatchParams params = MonitoringEventsCreateBatchParams.builder().events(List.of(MonitoringEventCreateRequest.builder().eventId("value-event-id").eventCategory(MonitoringEventCreateRequest.EventCategory.AUTH).actionType("value-action-type").occurredAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).timeZone("value-time-zone").subject(MonitoringEventCreateRequest.Subject.builder().vendorData("value-vendor-data").entityType("value-entity-type").fullName("value-full-name").build()).business(MonitoringEventCreateRequest.Business.builder().vendorData("value-vendor-data").build()).build())).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/events/batch/", "201");
     transport.respondJson(201, example);
-    var result = client.monitoringEvents().createBatch(params);
+    var result = client.monitoringEvents().createBatch(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/events/batch/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"events\":[{\"event_id\":\"value-event-id\",\"event_category\":\"auth\",\"action_type\":\"value-action-type\",\"occurred_at\":\"2026-11-01T10:15:30Z\",\"time_zone\":\"value-time-zone\",\"subject\":{\"vendor_data\":\"value-vendor-data\",\"entity_type\":\"value-entity-type\",\"full_name\":\"value-full-name\"},\"business\":{\"vendor_data\":\"value-vendor-data\"}}]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     assertEquals(201, result.statusCode());
@@ -85,15 +90,17 @@ final class MonitoringEventsResourceTest {
   @Test
   void createSdkToken() {
     MonitoringEventsCreateSdkTokenParams params = MonitoringEventsCreateSdkTokenParams.builder().vendorData("value-vendor-data").entityType("value-entity-type").allowedEventCategories(List.of(MonitoringEventsCreateSdkTokenParams.AllowedEventCategories.AUTH)).ttlSeconds(1L).maxUses(1L).bindToOrigin("value-bind-to-origin").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/events/sdk-token/", "201");
     transport.respondJson(201, example);
-    var result = client.monitoringEvents().createSdkToken(params);
+    var result = client.monitoringEvents().createSdkToken(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/events/sdk-token/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"entity_type\":\"value-entity-type\",\"allowed_event_categories\":[\"auth\"],\"ttl_seconds\":1,\"max_uses\":1,\"bind_to_origin\":\"value-bind-to-origin\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -152,14 +159,16 @@ final class MonitoringEventsResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.monitoringEvents().delete("00000000-0000-4000-8000-00000000f56f");
+    client.monitoringEvents().delete("00000000-0000-4000-8000-00000000f56f", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/events/00000000-0000-4000-8000-00000000f56f/delete/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 }

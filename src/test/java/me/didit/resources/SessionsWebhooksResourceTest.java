@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -56,15 +57,17 @@ final class SessionsWebhooksResourceTest {
 
   @Test
   void resend() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/{sessionId}/webhook/{webhook_uuid}/resend", "200");
     transport.respondJson(200, example);
-    var result = client.sessions().webhooks().resend("00000000-0000-4000-8000-00000000e268", "00000000-0000-4000-8000-000000011104");
+    var result = client.sessions().webhooks().resend("00000000-0000-4000-8000-00000000e268", "00000000-0000-4000-8000-000000011104", options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-00000000e268/webhook/00000000-0000-4000-8000-000000011104/resend", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

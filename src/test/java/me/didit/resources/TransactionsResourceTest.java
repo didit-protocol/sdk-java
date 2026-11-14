@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -49,15 +50,17 @@ final class TransactionsResourceTest {
   @Test
   void create() {
     TransactionsCreateParams params = TransactionsCreateParams.builder().transactionId("value-transaction-id").transactionAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).timeZone("value-time-zone").transactionCategory(TransactionsCreateParams.TransactionCategory.FINANCE).transactionDetails(TransactionsCreateParams.TransactionDetails.builder().direction(TransactionsCreateParams.TransactionDetails.Direction.INBOUND).amount(1.5).currency("value-currency").currencyKind("value-currency-kind").amountInDefaultCurrency(1.5).build()).subject(TransactionsCreateParams.Subject.builder().entityType("value-entity-type").vendorData("value-vendor-data").fullName("value-full-name").firstName("value-first-name").build()).counterparty(TransactionsCreateParams.Counterparty.builder().entityType("value-entity-type").vendorData("value-vendor-data").build()).customProperties(Map.of("key", "value")).travelRuleDetails(TransactionsCreateParams.TravelRuleDetails.builder().status("value-status").protocol("value-protocol").required(true).build()).networkSnapshot(TransactionsCreateParams.NetworkSnapshot.builder().nodes(List.of(Map.of("key", "value"))).edges(List.of(Map.of("key", "value"))).build()).includeCryptoScreening(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/transactions/", "201");
     transport.respondJson(201, example);
-    var result = client.transactions().create(params);
+    var result = client.transactions().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/transactions/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"transaction_id\":\"value-transaction-id\",\"transaction_at\":\"2026-11-01T10:15:30Z\",\"time_zone\":\"value-time-zone\",\"transaction_category\":\"finance\",\"transaction_details\":{\"direction\":\"inbound\",\"amount\":1.5,\"currency\":\"value-currency\",\"currency_kind\":\"value-currency-kind\",\"amount_in_default_currency\":1.5},\"subject\":{\"entity_type\":\"value-entity-type\",\"vendor_data\":\"value-vendor-data\",\"full_name\":\"value-full-name\",\"first_name\":\"value-first-name\"},\"counterparty\":{\"entity_type\":\"value-entity-type\",\"vendor_data\":\"value-vendor-data\"},\"custom_properties\":{\"key\":\"value\"},\"travel_rule_details\":{\"status\":\"value-status\",\"protocol\":\"value-protocol\",\"required\":true},\"network_snapshot\":{\"nodes\":[{\"key\":\"value\"}],\"edges\":[{\"key\":\"value\"}]},\"include_crypto_screening\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -82,15 +85,17 @@ final class TransactionsResourceTest {
   @Test
   void createSdkToken() {
     TransactionsCreateSdkTokenParams params = TransactionsCreateSdkTokenParams.builder().vendorData("value-vendor-data").ttlSeconds(1L).maxUses(1L).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/transactions/sdk-token/", "201");
     transport.respondJson(201, example);
-    var result = client.transactions().createSdkToken(params);
+    var result = client.transactions().createSdkToken(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/transactions/sdk-token/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"vendor_data\":\"value-vendor-data\",\"ttl_seconds\":1,\"max_uses\":1}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -164,14 +169,16 @@ final class TransactionsResourceTest {
   @Test
   void batchDelete() {
     TransactionsBatchDeleteParams params = TransactionsBatchDeleteParams.builder().build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.transactions().batchDelete(params);
+    client.transactions().batchDelete(params, options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/transactions/delete/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{}", request.body());
   }
 }

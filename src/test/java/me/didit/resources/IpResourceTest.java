@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -26,15 +27,17 @@ final class IpResourceTest {
   @Test
   void assessRisk() {
     IPRiskRequest params = IPRiskRequest.builder().ipAddress("192.0.2.10").claimedCountry("value-claimed-country").userAgent("value-user-agent").vendorData("value-vendor-data").metadata(Map.of("key", "value")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/ip/risk/", "200");
     transport.respondJson(200, example);
-    var result = client.ip().assessRisk(params);
+    var result = client.ip().assessRisk(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/ip/risk/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"ip_address\":\"192.0.2.10\",\"claimed_country\":\"value-claimed-country\",\"user_agent\":\"value-user-agent\",\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

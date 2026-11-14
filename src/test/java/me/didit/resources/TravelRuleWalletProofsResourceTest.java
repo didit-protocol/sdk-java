@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -45,15 +46,17 @@ final class TravelRuleWalletProofsResourceTest {
   @Test
   void decide() {
     TravelRuleWalletProofDecision params = TravelRuleWalletProofDecision.builder().decision(TravelRuleWalletProofDecision.Decision.APPROVE).note("value-note").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.travelRule().walletProofs().decide("00000000-0000-4000-8000-000000016f9e", params);
+    var result = client.travelRule().walletProofs().decide("00000000-0000-4000-8000-000000016f9e", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/travel-rule/wallet-proofs/00000000-0000-4000-8000-000000016f9e/decision/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"decision\":\"approve\",\"note\":\"value-note\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

@@ -140,6 +140,7 @@ public final class TransactionsNotesResource {
    * <p>Each call creates a new note, so retrying a timed-out request can add it twice: list the notes before retrying. There is no API endpoint to edit or remove a note. A scoped API key needs <code>transactions: write</code>; a key limited to some workflows or to approved sessions cannot call this endpoint.
    *
    * <p>{@code POST /v3/transactions/{transaction_id}/notes/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param transactionId Didit transaction UUID: the `uuid` returned by `POST /v3/transactions/` and `GET /v3/transactions/`. Your own `txn_id` is not accepted.
    * @param params the request parameters

@@ -10,6 +10,7 @@ import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -27,15 +28,17 @@ final class IdVerificationResourceTest {
   @Test
   void verify() {
     IdVerificationVerifyParams params = IdVerificationVerifyParams.builder().frontImage(FileUpload.of(new byte[] {37, 80, 68, 70}, "front_image.pdf", "application/pdf")).frontImagePassword("value-front-image-password").backImage(FileUpload.of(new byte[] {37, 80, 68, 70}, "back_image.pdf", "application/pdf")).backImagePassword("value-back-image-password").performDocumentLiveness(true).minimumAge(1L).expirationDateNotDetectedAction(IdVerificationVerifyParams.ExpirationDateNotDetectedAction.NO_ACTION).invalidMrzAction(IdVerificationVerifyParams.InvalidMrzAction.NO_ACTION).inconsistentDataAction(IdVerificationVerifyParams.InconsistentDataAction.NO_ACTION).criticalFieldOcclusionAction(IdVerificationVerifyParams.CriticalFieldOcclusionAction.NO_ACTION).documentOrPersonalNumberFormatMismatchAction(IdVerificationVerifyParams.DocumentOrPersonalNumberFormatMismatchAction.NO_ACTION).preferredCharacters(IdVerificationVerifyParams.PreferredCharacters.LATIN).saveApiRequest(true).vendorData("value-vendor-data").metadata(Map.of("key", "value")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/id-verification/", "200");
     transport.respondJson(200, example);
-    var result = client.idVerification().verify(params);
+    var result = client.idVerification().verify(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/id-verification/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(Map.ofEntries(Map.entry("front_image_password", List.of("value-front-image-password")), Map.entry("back_image_password", List.of("value-back-image-password")), Map.entry("perform_document_liveness", List.of("true")), Map.entry("minimum_age", List.of("1")), Map.entry("expiration_date_not_detected_action", List.of("NO_ACTION")), Map.entry("invalid_mrz_action", List.of("NO_ACTION")), Map.entry("inconsistent_data_action", List.of("NO_ACTION")), Map.entry("critical_field_occlusion_action", List.of("NO_ACTION")), Map.entry("document_or_personal_number_format_mismatch_action", List.of("NO_ACTION")), Map.entry("preferred_characters", List.of("latin")), Map.entry("save_api_request", List.of("true")), Map.entry("vendor_data", List.of("value-vendor-data")), Map.entry("metadata", List.of("{\"key\":\"value\"}"))), request.multipartFields());
     assertEquals(Map.ofEntries(Map.entry("front_image", List.of("front_image.pdf")), Map.entry("back_image", List.of("back_image.pdf"))), request.multipartFiles());
     TestJson.assertJsonEquals(example, Json.toNode(result));

@@ -184,6 +184,7 @@ public final class BusinessesResource {
    * <p>Partial update of a business: <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code>, <code>status</code>, <code>metadata</code>. <code>metadata</code> fully replaces. Setting <code>status</code> to <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry. Every edit is recorded in the company's activity: a status change with the optional <code>reason</code>, and a change to <code>display_name</code>, <code>legal_name</code>, <code>registration_number</code>, <code>country_code</code> or <code>metadata</code> as a profile update.
    *
    * <p>{@code PATCH /v3/businesses/{vendor_data}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
    * @param params the request parameters
@@ -276,6 +277,7 @@ public final class BusinessesResource {
    * <p>Flip only the lifecycle <code>status</code> of a business: <code>ACTIVE</code>, <code>FLAGGED</code> or <code>BLOCKED</code> (not session statuses). <code>BLOCKED</code> adds the <code>vendor_data</code> to the system blocklist; moving away from <code>BLOCKED</code> removes that entry. Each change is recorded in the company's activity, with the optional <code>reason</code>. Sending the current status changes nothing and records no <code>reason</code>. The <code>business.status.updated</code> webhook does not carry <code>reason</code>.
    *
    * <p>{@code PATCH /v3/businesses/{vendor_data}/update-status/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param vendorData Your unique identifier for the business (free-form string, NOT a UUID).
    * @param params the request parameters
@@ -328,6 +330,7 @@ public final class BusinessesResource {
    * <p><b>Filed regulatory reports:</b> if the selected data is in a finalized regulatory report, the whole request is refused with <code>409</code> and nothing is deleted. The body uses <code>code: in_filed_report</code> and names each report with <code>uuid</code>, <code>report_number</code>, <code>report_type</code> and <code>case_uuid</code>. Delete the reports, then repeat the request.
    *
    * <p>{@code POST /v3/businesses/delete/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -414,6 +417,7 @@ public final class BusinessesResource {
    * <p>Set <code>estimate_only: true</code> to preview counts and costs without writing anything. Selections of 20 profiles or fewer resolve inline and return <code>200</code> with the completed job; larger selections return <code>202</code> and run in the background - poll [Get AML monitoring job](#get-/v3/aml-monitoring/jobs/-job_id-/) with the returned <code>job_id</code>. Enabling is refused with <code>403</code> when the organization balance does not cover the estimate. Identifiers that match nothing are listed in <code>unmatched</code> and never fail the request: a selection that matches nothing completes as an empty job (<code>total</code> 0), the same convention as the batch delete endpoints.
    *
    * <p>{@code POST /v3/businesses/aml-monitoring/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -457,9 +461,10 @@ public final class BusinessesResource {
   /**
    * Create business
    *
-   * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent.
+   * <p>Pre-create a [business](/entities/businesses) *without* a KYB session. All fields are optional, but you should always send <code>vendor_data</code> — without it the record cannot be linked to sessions or transactions. When provided, <code>vendor_data</code> must be unique among non-deleted businesses (exact match; conflicts return 400). Not idempotent without an <code>Idempotency-Key</code>.
    *
    * <p>{@code POST /v3/businesses/create/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -545,6 +550,7 @@ public final class BusinessesResource {
    *
    * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/vendor-businesses/toggle-ongoing-monitoring/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -639,6 +645,7 @@ public final class BusinessesResource {
    *
    * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/businesses/toggle-ongoing-monitoring/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

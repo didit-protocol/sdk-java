@@ -138,6 +138,7 @@ public final class ListsResource {
    * <p>Creates an allowlist or a custom list in the application the API key belongs to. Blocklists cannot be created: Didit provisions one system blocklist per entry type, and you add to it with <a href="https://docs.didit.me/management-api/lists/create-entry">Create a list entry</a>. <code>entry_type</code> cannot change after creation and decides how entry values are validated and matched. Allowlist entries mark matching items as trusted (for example, a face allowlist skips the duplicated-face action) and never override a blocklist match; reference any list from a workflow or transaction rule condition with <code>value_type: "list"</code>. A scoped API key needs <code>workflows: write</code>.
    *
    * <p>{@code POST /v3/lists/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -230,6 +231,7 @@ public final class ListsResource {
    * <p>Renames a list or changes its description. Only <code>name</code> and <code>description</code> are read; any other field is ignored, so <code>list_type</code> and <code>entry_type</code> keep the values they were created with. System lists cannot be modified and return <code>400</code>. The response contains only <code>name</code> and <code>description</code>: call <a href="https://docs.didit.me/management-api/lists/get">Get a list</a> for the full list. A scoped API key needs <code>workflows: write</code>.
    *
    * <p>{@code PATCH /v3/lists/{list_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param listUuid UUID of the list, as returned by List lists or Create a list.
    * @param params the request parameters
@@ -322,6 +324,7 @@ public final class ListsResource {
    * <p>Deletes an allowlist or custom list together with its entries. Deletion is irreversible: the list and its entries no longer appear in any read, and workflow and transaction rule conditions that reference the list evaluate it as an empty list from then on. Sessions and transactions already evaluated keep their results, and the name can be reused for a new list. System lists cannot be deleted and return <code>400</code>; to empty one, <a href="https://docs.didit.me/management-api/lists/delete-entry">delete its entries</a>. A scoped API key needs <code>workflows: write</code>.
    *
    * <p>{@code DELETE /v3/lists/{list_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param listUuid UUID of the list, as returned by List lists or Create a list.
    * @param options per-request options that override the client options

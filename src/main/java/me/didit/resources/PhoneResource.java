@@ -55,6 +55,7 @@ public final class PhoneResource {
    * <p><b>Social footprint.</b> Set <code>enable_social</code> to <code>true</code> to add a <code>phone_social</code> block: the online platforms this number is registered on, with per-category counts and any profile details available. <code>profiles_registered: 0</code> means the platforms were checked and the number was found on none of them - a valid, billable answer. The block is absent when the add-on was not requested or the check could not be completed, and it is not billed in that case. Billing adds one <code>phone_social</code> unit per request on top of this endpoint's own price.
    *
    * <p>{@code POST /v3/phone/risk/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -119,6 +120,7 @@ public final class PhoneResource {
    * <p><b>Rate limits.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints, plus an anti-abuse cap of 4 send attempts per phone number per hour; exceeding either returns <code>429</code>.
    *
    * <p>{@code POST /v3/phone/send/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -185,6 +187,7 @@ public final class PhoneResource {
    * <p><b>Social footprint.</b> Set <code>enable_social</code> to <code>true</code> to add a <code>phone_social</code> block: the online platforms this number is registered on, with per-category counts and any profile details available. <code>profiles_registered: 0</code> means the platforms were checked and the number was found on none of them - a valid, billable answer. The block is absent when the add-on was not requested or the check could not be completed, and it is not billed in that case. Billing adds one <code>phone_social</code> unit per request on top of this endpoint's own price.
    *
    * <p>{@code POST /v3/phone/check/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

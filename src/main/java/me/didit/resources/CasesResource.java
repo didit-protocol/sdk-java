@@ -239,6 +239,7 @@ public final class CasesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -333,6 +334,7 @@ public final class CasesResource {
    *
    * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid Case UUID.
    * @param params the request parameters
@@ -428,6 +430,7 @@ public final class CasesResource {
    *
    * <p>{@code DELETE /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid Case UUID.
    * @param options per-request options that override the client options
@@ -473,6 +476,7 @@ public final class CasesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/assign/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid Case UUID.
    * @param params the request parameters
@@ -524,6 +528,7 @@ public final class CasesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/resolve/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid Case UUID.
    * @param params the request parameters
@@ -575,6 +580,7 @@ public final class CasesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reopen/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid Case UUID.
    * @param options per-request options that override the client options
@@ -622,6 +628,7 @@ public final class CasesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/request-info/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid Case UUID.
    * @param options per-request options that override the client options
@@ -669,6 +676,7 @@ public final class CasesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/escalate/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid Case UUID.
    * @param options per-request options that override the client options
@@ -716,6 +724,7 @@ public final class CasesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/transfer/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid Case UUID.
    * @param params the request parameters
@@ -767,6 +776,7 @@ public final class CasesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/approve/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid Case UUID.
    * @param options per-request options that override the client options
@@ -814,6 +824,7 @@ public final class CasesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/reject-approval/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid Case UUID.
    * @param params the request parameters
@@ -905,6 +916,7 @@ public final class CasesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/entity-actions/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid the {@code case_uuid}
    * @param params the request parameters
@@ -1229,6 +1241,7 @@ public final class CasesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/status/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -1276,6 +1289,7 @@ public final class CasesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/bulk/assign/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -1412,6 +1426,7 @@ public final class CasesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/{case_uuid}/action-receipts/{receipt_uuid}/retry/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param caseUuid the {@code case_uuid}
    * @param receiptUuid the {@code receipt_uuid}
@@ -1461,6 +1476,7 @@ public final class CasesResource {
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/cases/duplicates/}
    * <p>Application scoped: the organization and application ids come from the client options.
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

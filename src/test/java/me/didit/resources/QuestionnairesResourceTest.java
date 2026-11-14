@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -47,15 +48,17 @@ final class QuestionnairesResourceTest {
   @Test
   void create() {
     SimpleQuestionnaireRequest params = SimpleQuestionnaireRequest.builder().title("value-title").description("value-description").languages(List.of("value-languages")).defaultLanguage("value-default-language").isActive(true).status(SimpleQuestionnaireRequest.Status.DRAFT).formElements(List.of(SimpleQuestionnaireElement.builder().id("value-id").elementType(SimpleQuestionnaireElement.ElementType.SHORT_TEXT).label(Map.of("key", "value-label")).description(Map.of("key", "value-description")).build())).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/questionnaires/", "201");
     transport.respondJson(201, example);
-    var result = client.questionnaires().create(params);
+    var result = client.questionnaires().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/questionnaires/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"title\":\"value-title\",\"description\":\"value-description\",\"languages\":[\"value-languages\"],\"default_language\":\"value-default-language\",\"is_active\":true,\"status\":\"draft\",\"form_elements\":[{\"id\":\"value-id\",\"element_type\":\"short_text\",\"label\":{\"key\":\"value-label\"},\"description\":{\"key\":\"value-description\"}}]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -80,15 +83,17 @@ final class QuestionnairesResourceTest {
   @Test
   void update() {
     SimpleQuestionnaireUpdateRequest params = SimpleQuestionnaireUpdateRequest.builder().title("value-title").description("value-description").languages(List.of("value-languages")).defaultLanguage("value-default-language").isActive(true).status(SimpleQuestionnaireUpdateRequest.Status.DRAFT).formElements(List.of(SimpleQuestionnaireElement.builder().id("value-id").elementType(SimpleQuestionnaireElement.ElementType.SHORT_TEXT).label(Map.of("key", "value-label")).description(Map.of("key", "value-description")).build())).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = TestJson.parse("{}");
     transport.respondJson(200, example);
-    var result = client.questionnaires().update("00000000-0000-4000-8000-0000000144e9", params);
+    var result = client.questionnaires().update("00000000-0000-4000-8000-0000000144e9", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/questionnaires/00000000-0000-4000-8000-0000000144e9/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"title\":\"value-title\",\"description\":\"value-description\",\"languages\":[\"value-languages\"],\"default_language\":\"value-default-language\",\"is_active\":true,\"status\":\"draft\",\"form_elements\":[{\"id\":\"value-id\",\"element_type\":\"short_text\",\"label\":{\"key\":\"value-label\"},\"description\":{\"key\":\"value-description\"}}]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -96,14 +101,16 @@ final class QuestionnairesResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.questionnaires().delete("00000000-0000-4000-8000-0000000143fa");
+    client.questionnaires().delete("00000000-0000-4000-8000-0000000143fa", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/questionnaires/00000000-0000-4000-8000-0000000143fa/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 }

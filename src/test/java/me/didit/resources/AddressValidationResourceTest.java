@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -26,15 +27,17 @@ final class AddressValidationResourceTest {
   @Test
   void validate() {
     AddressValidationRequest params = AddressValidationRequest.builder().address("value-address").addressLine1("value-address-line-1").addressLine2("value-address-line-2").city("value-city").region("value-region").postalCode("value-postal-code").country("value-country").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/address-validation/", "200");
     transport.respondJson(200, example);
-    var result = client.addressValidation().validate(params);
+    var result = client.addressValidation().validate(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/address-validation/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"address\":\"value-address\",\"address_line_1\":\"value-address-line-1\",\"address_line_2\":\"value-address-line-2\",\"city\":\"value-city\",\"region\":\"value-region\",\"postal_code\":\"value-postal-code\",\"country\":\"value-country\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

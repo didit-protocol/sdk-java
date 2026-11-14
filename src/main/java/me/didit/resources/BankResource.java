@@ -42,13 +42,14 @@ public final class BankResource {
    *
    * <p><b>Billing.</b> Each check the bank answers is billed once at the Account check price of the account's country, whatever the result: a <code>no_match</code>, an account that does not exist and a <code>cannot_verify</code> are billed too. A request answered with an error is never billed.
    *
-   * <p><b>Every request is a new check.</b> There is no idempotency key and no endpoint to read a check back, so a retried request runs, and is billed, again. Store the response.
+   * <p><b>Retries.</b> Send an <code>Idempotency-Key</code> header: the same key and body return the first response, with the same <code>request_id</code>, and the check runs and is billed once. Without a key, every request is a new check and no endpoint to read a check back, so a retried request runs, and is billed, again. Store the response.
    *
    * <p><b>Sandbox.</b> Use a sandbox API key with the sample account details. A sandbox key calls no bank and is charged nothing. The last 4 characters of the IBAN, else of the account number, choose the answer: <code>0001</code> a <code>close_match</code> with a <code>holder_name</code>, <code>0002</code> a <code>close_match</code> without one (<code>name_match_score</code> 78), <code>0003</code> a <code>no_match</code> (<code>name_match_score</code> 0), <code>0006</code> a <code>no_match</code> for an account that does not exist (<code>name_match_score</code> null), <code>0004</code> <code>cannot_verify</code>, <code>0005</code> a <code>503</code> and <code>0009</code> a <code>400</code>. Any other ending is a <code>match</code> (<code>name_match_score</code> 100).
    *
    * <p><b>API keys.</b> A scoped API key needs write access to sessions.
    *
    * <p>{@code POST /v3/bank/account-check/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

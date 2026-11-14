@@ -133,6 +133,7 @@ public final class TravelRuleWalletAddressesResource {
    * <p>Add an entry to your Travel Rule wallet address book so inbound INTERNAL-rail transfers can resolve against it.
    *
    * <p>{@code POST /v3/travel-rule/wallet-addresses/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -179,6 +180,7 @@ public final class TravelRuleWalletAddressesResource {
    * <p>Partial update of holder_name, holder_vendor_data, entity_type, and travel_address. Setting travel_address attaches a TRP routing address to the entry; invalid values are rejected with 400. The response returns the updated entry: its label, owner type, receiving travel address and ownership proof summary, with the writable fields.
    *
    * <p>{@code PATCH /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param entryUuid the {@code entry_uuid}
    * @param params the request parameters
@@ -229,6 +231,7 @@ public final class TravelRuleWalletAddressesResource {
    * <p>Deletes the entry together with its ownership proofs and the screenshots they stored. It stops matching new transfers immediately and the address is freed up for re-registration. Transfers that already used the wallet keep their own record of it and read the same. Deletion is irreversible.
    *
    * <p>{@code DELETE /v3/travel-rule/wallet-addresses/{entry_uuid}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param entryUuid the {@code entry_uuid}
    * @param options per-request options that override the client options
@@ -273,6 +276,7 @@ public final class TravelRuleWalletAddressesResource {
    * <p>Add up to 10,000 wallets to your Travel Rule address book in one call, as JSON or as a CSV file. A wallet can be sent by its address, by the SHA-256 of its lowercased address (<code>address_hash</code>) to keep the address private, or both. The import is idempotent: a wallet already in the book is reported as <code>existing</code> and left untouched, so the same file can be sent again. Each row is validated on its own, so one bad row never fails the others. A wallet imported by its hash only matches transfers to that address and can be proven with the wallet-ownership widget like any other entry.
    *
    * <p>{@code POST /v3/travel-rule/wallet-addresses/import/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

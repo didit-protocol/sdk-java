@@ -127,6 +127,7 @@ public final class BlocklistResource {
    * <p>Blocklists the face, identity document, phone number or email address of one person verification session of the application. For each selected type, Didit takes the session's most recent record, flags it as blocklisted and adds an entry linked to the session to the matching system blocklist (<code>added_by: "api"</code>), so new sessions with a matching face, document number, phone number or email address are declined. Every selected item is checked first, so if one is missing nothing is blocklisted; repeating the call for an item already listed keeps its single entry and refreshes <code>blocklisted_at</code>. The session itself and sessions that already finished are not changed. A scoped API key needs <code>workflows: write</code>.
    *
    * <p>{@code POST /v3/blocklist/add/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -173,6 +174,7 @@ public final class BlocklistResource {
    * <p>Lifts the block on the face, identity document, phone number or email address of one person verification session of the application. For each selected type, Didit takes the session's most recent record, clears its blocklisted flag and deletes the system blocklist entries created from that record, so it no longer declines new sessions. Entries added to a list by value are not touched: find them with <a href="https://docs.didit.me/management-api/lists/list-entries">List list entries</a> and delete them with <a href="https://docs.didit.me/management-api/lists/delete-entry">Delete a list entry</a>. Unblocking a record that is not blocklisted succeeds and changes nothing, and sessions that already finished are not changed. A scoped API key needs <code>workflows: write</code>.
    *
    * <p>{@code POST /v3/blocklist/remove/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
