@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 import org.jspecify.annotations.Nullable;
 
 public final class TravelRuleWalletAddressesListResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("count", "next", "previous", "results");
+  private static final Set<String> KNOWN_FIELDS = Set.of("count", "next", "previous", "results", "proof_totals");
 
   private TravelRuleWalletAddressesListResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -50,7 +50,7 @@ public final class TravelRuleWalletAddressesListResponse extends JsonModel {
   }
 
   /**
-   * The <code>count</code> field.
+   * Exact total of application-scoped wallets, equal to proof_totals.wallets, independent of limit and offset.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -89,6 +89,16 @@ public final class TravelRuleWalletAddressesListResponse extends JsonModel {
     return Json.optional(json, "results", Conv.list(Conv.model(WalletAddressEntry::fromJson)));
   }
 
+  /**
+   * Exact totals over the entire application-scoped wallet set before limit/offset pagination. Method counts overlap and must not be summed to obtain distinct verified wallets.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleWalletProofTotals> proofTotals() {
+    return Json.optional(json, "proof_totals", Conv.model(TravelRuleWalletProofTotals::fromJson));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -103,7 +113,7 @@ public final class TravelRuleWalletAddressesListResponse extends JsonModel {
     }
 
     /**
-     * The <code>count</code> field.
+     * Exact total of application-scoped wallets, equal to proof_totals.wallets, independent of limit and offset.
      *
      * @param count the value
      * @return this builder
@@ -140,6 +150,16 @@ public final class TravelRuleWalletAddressesListResponse extends JsonModel {
      */
     public Builder results(List<WalletAddressEntry> results) {
       return set("results", Conv.list(Conv.model(WalletAddressEntry::fromJson)), results);
+    }
+
+    /**
+     * Exact totals over the entire application-scoped wallet set before limit/offset pagination. Method counts overlap and must not be summed to obtain distinct verified wallets.
+     *
+     * @param proofTotals the value
+     * @return this builder
+     */
+    public Builder proofTotals(TravelRuleWalletProofTotals proofTotals) {
+      return set("proof_totals", Conv.model(TravelRuleWalletProofTotals::fromJson), proofTotals);
     }
 
     /**

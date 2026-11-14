@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * Full transfer object returned by the ownership-confirmation and finish/cancel endpoints. While an inbound transfer's wallet ownership is unconfirmed, the counterparty's <code>originator_data</code> and <code>beneficiary_data</code> come back masked (the first letter of each word is kept; the wallet, chain and VASP routing stay readable) and <code>data_masked</code> is true.
  */
 public final class TravelRuleTransferDetail extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "direction", "rail", "protocol", "ivms_version", "required", "ownership_confirmed", "deadline_at", "timeline", "counterparty_vasp", "originator_data", "beneficiary_data", "name_match", "data_match", "mismatched_fields", "data_unmasked", "data_masked", "created_at", "delivery", "discovery", "reason", "next_actions", "chain_details", "deliveries", "deliveries_truncated", "not_required_reason", "proof_state", "cancel_reason", "cancelled_by", "notify_on_answer", "user_choice");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "direction", "rail", "protocol", "ivms_version", "required", "ownership_confirmed", "deadline_at", "timeline", "counterparty_vasp", "originator_data", "beneficiary_data", "name_match", "data_match", "mismatched_fields", "data_unmasked", "data_masked", "created_at", "delivery", "discovery", "reason", "next_actions", "chain_details", "deliveries", "deliveries_truncated", "not_required_reason", "proof_state", "cancel_reason", "cancelled_by", "notify_on_answer", "user_choice", "proof_request");
 
   private TravelRuleTransferDetail(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -374,6 +374,16 @@ public final class TravelRuleTransferDetail extends JsonModel {
     return Json.optional(json, "user_choice", Conv.model(TravelRuleUserChoice::fromJson));
   }
 
+  /**
+   * Latest application- and subject-scoped request if it matches this transfer counterparty wallet and chain; otherwise null. A standalone request is not attached to a transfer. Request status and proof verdict are separate from the saved transfer decision.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleTransferProofRequest> proofRequest() {
+    return Json.optional(json, "proof_request", Conv.model(TravelRuleTransferProofRequest::fromJson));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -705,6 +715,16 @@ public final class TravelRuleTransferDetail extends JsonModel {
      */
     public Builder userChoice(@Nullable TravelRuleUserChoice userChoice) {
       return setNullable("user_choice", Conv.model(TravelRuleUserChoice::fromJson), userChoice);
+    }
+
+    /**
+     * Latest application- and subject-scoped request if it matches this transfer counterparty wallet and chain; otherwise null. A standalone request is not attached to a transfer. Request status and proof verdict are separate from the saved transfer decision.
+     *
+     * @param proofRequest the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder proofRequest(@Nullable TravelRuleTransferProofRequest proofRequest) {
+      return setNullable("proof_request", Conv.model(TravelRuleTransferProofRequest::fromJson), proofRequest);
     }
 
     /**

@@ -19,6 +19,7 @@ import me.didit.types.TravelRuleWalletTransfer;
 import me.didit.types.WalletAddressEntry;
 import me.didit.types.WalletAddressEntryCreate;
 import me.didit.types.WalletAddressEntryUpdate;
+import me.didit.types.WalletAddressEntryUpdateResponse;
 import me.didit.types.WalletAddressImportReport;
 import org.jspecify.annotations.Nullable;
 
@@ -175,7 +176,7 @@ public final class TravelRuleWalletAddressesResource {
   /**
    * Update wallet address holder metadata
    *
-   * <p>Partial update of holder_name, holder_vendor_data, entity_type, and travel_address. Setting travel_address attaches a TRP routing address to the entry; invalid values are rejected with 400. The response echoes only these four fields.
+   * <p>Partial update of holder_name, holder_vendor_data, entity_type, and travel_address. Setting travel_address attaches a TRP routing address to the entry; invalid values are rejected with 400. The response returns the updated entry: its label, owner type, receiving travel address and ownership proof summary, with the writable fields.
    *
    * <p>{@code PATCH /v3/travel-rule/wallet-addresses/{entry_uuid}/}
    *
@@ -184,7 +185,7 @@ public final class TravelRuleWalletAddressesResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public WalletAddressEntryUpdate update(String entryUuid, WalletAddressEntryUpdate params, RequestOptions options) {
+  public WalletAddressEntryUpdateResponse update(String entryUuid, WalletAddressEntryUpdate params, RequestOptions options) {
     return client.execute(updateRequest(entryUuid, params), options, UPDATE_RESPONSE).data();
   }
 
@@ -196,7 +197,7 @@ public final class TravelRuleWalletAddressesResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<WalletAddressEntryUpdate> updateAsync(String entryUuid, WalletAddressEntryUpdate params, RequestOptions options) {
+  public CompletableFuture<WalletAddressEntryUpdateResponse> updateAsync(String entryUuid, WalletAddressEntryUpdate params, RequestOptions options) {
     return client.executeAsync(updateRequest(entryUuid, params), options, UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -207,7 +208,7 @@ public final class TravelRuleWalletAddressesResource {
    * @param params the request parameters
    * @return the result
    */
-  public WalletAddressEntryUpdate update(String entryUuid, WalletAddressEntryUpdate params) {
+  public WalletAddressEntryUpdateResponse update(String entryUuid, WalletAddressEntryUpdate params) {
     return client.execute(updateRequest(entryUuid, params), RequestOptions.none(), UPDATE_RESPONSE).data();
   }
 
@@ -218,7 +219,7 @@ public final class TravelRuleWalletAddressesResource {
    * @param params the request parameters
    * @return a future completed with the result
    */
-  public CompletableFuture<WalletAddressEntryUpdate> updateAsync(String entryUuid, WalletAddressEntryUpdate params) {
+  public CompletableFuture<WalletAddressEntryUpdateResponse> updateAsync(String entryUuid, WalletAddressEntryUpdate params) {
     return client.executeAsync(updateRequest(entryUuid, params), RequestOptions.none(), UPDATE_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -469,7 +470,7 @@ public final class TravelRuleWalletAddressesResource {
         .build();
   }
 
-  private static final ResponseHandler<WalletAddressEntryUpdate> UPDATE_RESPONSE = Responses.json(Conv.model(WalletAddressEntryUpdate::fromJson));
+  private static final ResponseHandler<WalletAddressEntryUpdateResponse> UPDATE_RESPONSE = Responses.json(Conv.model(WalletAddressEntryUpdateResponse::fromJson));
 
   private static ApiRequest updateRequest(String entryUuid, WalletAddressEntryUpdate params) {
     return ApiRequest.builder("PATCH", "/v3/travel-rule/wallet-addresses/{entry_uuid}/")
@@ -653,7 +654,7 @@ public final class TravelRuleWalletAddressesResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<WalletAddressEntryUpdate> update(String entryUuid, WalletAddressEntryUpdate params, RequestOptions options) {
+    public RawResponse<WalletAddressEntryUpdateResponse> update(String entryUuid, WalletAddressEntryUpdate params, RequestOptions options) {
       return client.execute(updateRequest(entryUuid, params), options, UPDATE_RESPONSE);
     }
 
@@ -665,7 +666,7 @@ public final class TravelRuleWalletAddressesResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<WalletAddressEntryUpdate>> updateAsync(String entryUuid, WalletAddressEntryUpdate params, RequestOptions options) {
+    public CompletableFuture<RawResponse<WalletAddressEntryUpdateResponse>> updateAsync(String entryUuid, WalletAddressEntryUpdate params, RequestOptions options) {
       return client.executeAsync(updateRequest(entryUuid, params), options, UPDATE_RESPONSE);
     }
 
@@ -676,7 +677,7 @@ public final class TravelRuleWalletAddressesResource {
      * @param params the request parameters
      * @return the result
      */
-    public RawResponse<WalletAddressEntryUpdate> update(String entryUuid, WalletAddressEntryUpdate params) {
+    public RawResponse<WalletAddressEntryUpdateResponse> update(String entryUuid, WalletAddressEntryUpdate params) {
       return client.execute(updateRequest(entryUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
@@ -687,7 +688,7 @@ public final class TravelRuleWalletAddressesResource {
      * @param params the request parameters
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<WalletAddressEntryUpdate>> updateAsync(String entryUuid, WalletAddressEntryUpdate params) {
+    public CompletableFuture<RawResponse<WalletAddressEntryUpdateResponse>> updateAsync(String entryUuid, WalletAddressEntryUpdate params) {
       return client.executeAsync(updateRequest(entryUuid, params), RequestOptions.none(), UPDATE_RESPONSE);
     }
 
