@@ -55,6 +55,26 @@ public final class RequestOptions {
   }
 
   /**
+   * Whether a key is 1 to 255 printable ASCII characters (space to {@code ~}) that neither start
+   * nor end with a space: it travels as an HTTP header value that the server trims.
+   */
+  static boolean isValidIdempotencyKey(String key) {
+    if (key.isEmpty()
+        || key.length() > MAX_IDEMPOTENCY_KEY_LENGTH
+        || key.charAt(0) == ' '
+        || key.charAt(key.length() - 1) == ' ') {
+      return false;
+    }
+    for (int i = 0; i < key.length(); i++) {
+      char c = key.charAt(i);
+      if (c < ' ' || c > '~') {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
    * Returns an empty builder.
    *
    * @return a new builder
@@ -215,18 +235,18 @@ public final class RequestOptions {
      * {@code PATCH} are retried like {@code GET}, sending the same key on every attempt. The SDK
      * never invents a key: choose one per operation and pass the same key when you repeat it.
      *
-     * @param idempotencyKey a key of 1 to 255 characters, unique for this logical request
+     * @param idempotencyKey a key of 1 to 255 printable ASCII characters, unique for this logical
+     *     request
      * @return this builder
-     * @throws ConfigurationException when the key is null, empty or longer than 255 characters
+     * @throws ConfigurationException when the key is null, empty, longer than 255 characters or not
+     *     printable ASCII
      */
     public Builder idempotencyKey(String idempotencyKey) {
-      if (idempotencyKey == null
-          || idempotencyKey.isEmpty()
-          || idempotencyKey.length() > MAX_IDEMPOTENCY_KEY_LENGTH) {
+      if (idempotencyKey == null || !isValidIdempotencyKey(idempotencyKey)) {
         throw new ConfigurationException(
             "idempotencyKey must be a string of 1 to "
                 + MAX_IDEMPOTENCY_KEY_LENGTH
-                + " characters");
+                + " printable ASCII characters that neither start nor end with a space");
       }
       this.idempotencyKey = idempotencyKey;
       return this;
