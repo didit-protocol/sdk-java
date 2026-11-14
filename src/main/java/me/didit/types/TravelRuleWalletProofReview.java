@@ -15,8 +15,11 @@ import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
+/**
+ * Uploaded screenshot proof returned by the review queue and decision endpoint. Submitter attribution is independent of the current wallet holder.
+ */
 public final class TravelRuleWalletProofReview extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("proof_id", "method", "status", "wallet_address", "chain", "holder_name", "is_ownership_verified", "transaction_id", "file_name", "content_type", "screenshot_url", "attempts", "failure_reason", "method_chosen_at", "decided_at", "decided_by", "review_note", "created_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("proof_id", "method", "status", "wallet_address", "chain", "holder_name", "is_ownership_verified", "transaction_id", "file_name", "content_type", "screenshot_url", "attempts", "failure_reason", "method_chosen_at", "decided_at", "decided_by", "review_note", "created_at", "application_id", "user_id", "holder_vendor_data", "wallet_label");
 
   private TravelRuleWalletProofReview(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -102,7 +105,7 @@ public final class TravelRuleWalletProofReview extends JsonModel {
   }
 
   /**
-   * The <code>holder_name</code> field.
+   * Holder name from the submitting widget, never a reassigned holder. Empty when the submitting widget was deleted.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -152,7 +155,7 @@ public final class TravelRuleWalletProofReview extends JsonModel {
   }
 
   /**
-   * Time-limited link to the uploaded screenshot. List the queue again for a fresh link.
+   * Authorized /v3/media/preview/ URL with an expiring signed source for this proof screenshot. Returns a recompressed preview, not the original upload or an arbitrary public URL. Null when no eligible screenshot exists. Read the proof again for a fresh link.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -172,7 +175,7 @@ public final class TravelRuleWalletProofReview extends JsonModel {
   }
 
   /**
-   * REVIEW_REJECTED after a rejection, OWNERSHIP_CHANGED when the wallet changed holder or was deleted before a decision. Empty otherwise.
+   * Fixed failure code for this proof or its last attempt; empty when no documented failure applies. REVIEW_REJECTED identifies a rejected screenshot. History can also carry expiry, ownership-change or abandonment codes.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -229,6 +232,46 @@ public final class TravelRuleWalletProofReview extends JsonModel {
    */
   public Optional<OffsetDateTime> createdAt() {
     return Json.optional(json, "created_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * Application that owns the wallet and proof.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> applicationId() {
+    return Json.optional(json, "application_id", Conv.STRING);
+  }
+
+  /**
+   * User in this application matching the submitting widget vendor_data. Null when no matching current user exists, or the submitting widget was deleted. Never the reassigned wallet holder.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> userId() {
+    return Json.optional(json, "user_id", Conv.STRING);
+  }
+
+  /**
+   * Holder identifier from the submitting widget, not the current wallet holder. Empty when the submitting widget was deleted.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> holderVendorData() {
+    return Json.optional(json, "holder_vendor_data", Conv.STRING);
+  }
+
+  /**
+   * Exact current wallet label, including an empty string when no label is set. Not a name inferred from the holder or address.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> walletLabel() {
+    return Json.optional(json, "wallet_label", Conv.STRING);
   }
 
   @Override
@@ -295,7 +338,7 @@ public final class TravelRuleWalletProofReview extends JsonModel {
     }
 
     /**
-     * The <code>holder_name</code> field.
+     * Holder name from the submitting widget, never a reassigned holder. Empty when the submitting widget was deleted.
      *
      * @param holderName the value
      * @return this builder
@@ -345,7 +388,7 @@ public final class TravelRuleWalletProofReview extends JsonModel {
     }
 
     /**
-     * Time-limited link to the uploaded screenshot. List the queue again for a fresh link.
+     * Authorized /v3/media/preview/ URL with an expiring signed source for this proof screenshot. Returns a recompressed preview, not the original upload or an arbitrary public URL. Null when no eligible screenshot exists. Read the proof again for a fresh link.
      *
      * @param screenshotUrl the value, or {@code null} to send JSON null
      * @return this builder
@@ -365,7 +408,7 @@ public final class TravelRuleWalletProofReview extends JsonModel {
     }
 
     /**
-     * REVIEW_REJECTED after a rejection, OWNERSHIP_CHANGED when the wallet changed holder or was deleted before a decision. Empty otherwise.
+     * Fixed failure code for this proof or its last attempt; empty when no documented failure applies. REVIEW_REJECTED identifies a rejected screenshot. History can also carry expiry, ownership-change or abandonment codes.
      *
      * @param failureReason the value
      * @return this builder
@@ -422,6 +465,46 @@ public final class TravelRuleWalletProofReview extends JsonModel {
      */
     public Builder createdAt(OffsetDateTime createdAt) {
       return set("created_at", Conv.DATE_TIME, createdAt);
+    }
+
+    /**
+     * Application that owns the wallet and proof.
+     *
+     * @param applicationId the value
+     * @return this builder
+     */
+    public Builder applicationId(String applicationId) {
+      return set("application_id", Conv.STRING, applicationId);
+    }
+
+    /**
+     * User in this application matching the submitting widget vendor_data. Null when no matching current user exists, or the submitting widget was deleted. Never the reassigned wallet holder.
+     *
+     * @param userId the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder userId(@Nullable String userId) {
+      return setNullable("user_id", Conv.STRING, userId);
+    }
+
+    /**
+     * Holder identifier from the submitting widget, not the current wallet holder. Empty when the submitting widget was deleted.
+     *
+     * @param holderVendorData the value
+     * @return this builder
+     */
+    public Builder holderVendorData(String holderVendorData) {
+      return set("holder_vendor_data", Conv.STRING, holderVendorData);
+    }
+
+    /**
+     * Exact current wallet label, including an empty string when no label is set. Not a name inferred from the holder or address.
+     *
+     * @param walletLabel the value
+     * @return this builder
+     */
+    public Builder walletLabel(String walletLabel) {
+      return set("wallet_label", Conv.STRING, walletLabel);
     }
 
     /**

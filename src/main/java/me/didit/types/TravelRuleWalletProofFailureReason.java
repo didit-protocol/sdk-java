@@ -5,7 +5,7 @@ import java.util.List;
 import me.didit.core.StringEnum;
 
 /**
- * Why a wallet-ownership proof, or its last attempt, fell short of VERIFIED. Empty when nothing failed. A PENDING proof can carry one: the last attempt failed and the end user can try again. DEPOSIT_MISMATCH, DEPOSIT_STALE, TXID_REUSED and REVIEW_REJECTED close the proof as REJECTED. SIGNATURE_INVALID: the signature does not match the wallet and challenge. SIGNATURE_UNSUPPORTED_SCHEME: the wallet signed in a format Didit does not verify. DEPOSIT_NOT_FOUND, DEPOSIT_UNCONFIRMED, DEPOSIT_LOOKUP_FAILED: the test deposit is not readable or not confirmed yet; Didit keeps checking it until the test window closes. DEPOSIT_MISMATCH: the transaction does not send the expected amount from the wallet to the deposit address. DEPOSIT_STALE: the transaction predates the challenge. TXID_REUSED: the transaction already proved another wallet. CHAIN_UNSUPPORTED: the method is not available on this chain. WINDOW_EXPIRED: the test window closed. OWNERSHIP_CHANGED: the wallet's holder changed, or the wallet was deleted from your address book, after the widget session was minted. METHOD_SWITCHED: the end user picked another method before finishing this one. REVIEW_REJECTED: your reviewer rejected the screenshot. ABANDONED: the widget session lapsed before the end user finished.
+ * Why a wallet-ownership proof, or its last attempt, fell short of VERIFIED. Empty when nothing failed. A PENDING proof can carry one: the last attempt failed and the end user can try again. DEPOSIT_MISMATCH, DEPOSIT_STALE, TXID_REUSED and REVIEW_REJECTED close the proof as REJECTED. SIGNATURE_INVALID: the signature does not match the wallet and challenge. SIGNATURE_UNSUPPORTED_SCHEME: the wallet signed in a format Didit does not verify. DEPOSIT_NOT_FOUND, DEPOSIT_UNCONFIRMED, DEPOSIT_LOOKUP_FAILED: the test deposit is not readable or not confirmed yet; Didit keeps checking it until the test window closes. DEPOSIT_MISMATCH: the transaction does not send the expected amount from the wallet to the deposit address. DEPOSIT_STALE: the transaction predates the challenge. TXID_REUSED: the transaction already proved another wallet. CHAIN_UNSUPPORTED: the method is not available on this chain. WINDOW_EXPIRED: the test window closed. OWNERSHIP_CHANGED: the wallet's holder changed, or the wallet was deleted from your address book, after the widget session was minted. METHOD_SWITCHED: the end user picked another method before finishing this one. REVIEW_REJECTED: your reviewer rejected the screenshot. ABANDONED: the widget session lapsed before the end user finished. SIGNATURE_LOOKUP_FAILED: the chain could not be checked for a smart-contract wallet signature; retry verification.
  *
  * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
  */
@@ -18,6 +18,9 @@ public final class TravelRuleWalletProofFailureReason extends StringEnum {
 
   /** The value {@code "SIGNATURE_UNSUPPORTED_SCHEME"}. */
   public static final TravelRuleWalletProofFailureReason SIGNATURE_UNSUPPORTED_SCHEME = new TravelRuleWalletProofFailureReason("SIGNATURE_UNSUPPORTED_SCHEME");
+
+  /** The value {@code "SIGNATURE_LOOKUP_FAILED"}. */
+  public static final TravelRuleWalletProofFailureReason SIGNATURE_LOOKUP_FAILED = new TravelRuleWalletProofFailureReason("SIGNATURE_LOOKUP_FAILED");
 
   /** The value {@code "DEPOSIT_NOT_FOUND"}. */
   public static final TravelRuleWalletProofFailureReason DEPOSIT_NOT_FOUND = new TravelRuleWalletProofFailureReason("DEPOSIT_NOT_FOUND");
@@ -55,7 +58,7 @@ public final class TravelRuleWalletProofFailureReason extends StringEnum {
   /** The value {@code "ABANDONED"}. */
   public static final TravelRuleWalletProofFailureReason ABANDONED = new TravelRuleWalletProofFailureReason("ABANDONED");
 
-  private static final List<TravelRuleWalletProofFailureReason> KNOWN_VALUES = List.of(EMPTY, SIGNATURE_INVALID, SIGNATURE_UNSUPPORTED_SCHEME, DEPOSIT_NOT_FOUND, DEPOSIT_UNCONFIRMED, DEPOSIT_LOOKUP_FAILED, DEPOSIT_MISMATCH, DEPOSIT_STALE, TXID_REUSED, CHAIN_UNSUPPORTED, WINDOW_EXPIRED, OWNERSHIP_CHANGED, METHOD_SWITCHED, REVIEW_REJECTED, ABANDONED);
+  private static final List<TravelRuleWalletProofFailureReason> KNOWN_VALUES = List.of(EMPTY, SIGNATURE_INVALID, SIGNATURE_UNSUPPORTED_SCHEME, SIGNATURE_LOOKUP_FAILED, DEPOSIT_NOT_FOUND, DEPOSIT_UNCONFIRMED, DEPOSIT_LOOKUP_FAILED, DEPOSIT_MISMATCH, DEPOSIT_STALE, TXID_REUSED, CHAIN_UNSUPPORTED, WINDOW_EXPIRED, OWNERSHIP_CHANGED, METHOD_SWITCHED, REVIEW_REJECTED, ABANDONED);
 
   private TravelRuleWalletProofFailureReason(String value) {
     super(value);

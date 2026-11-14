@@ -12,9 +12,10 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import me.didit.core.StringEnum;
 
 public final class WalletAddressEntry extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "address", "chain", "holder_vendor_data", "holder_name", "entity_type", "is_ownership_verified", "created_at", "travel_address", "address_hash", "memo", "receiving_travel_address");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "address", "chain", "holder_vendor_data", "holder_name", "entity_type", "is_ownership_verified", "created_at", "travel_address", "address_hash", "memo", "receiving_travel_address", "ownership_proof", "label", "owner_type");
 
   private WalletAddressEntry(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -169,6 +170,36 @@ public final class WalletAddressEntry extends JsonModel {
     return Json.optional(json, "receiving_travel_address", Conv.STRING);
   }
 
+  /**
+   * The <code>ownership_proof</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<TravelRuleWalletOwnershipProof> ownershipProof() {
+    return Json.optional(json, "ownership_proof", Conv.model(TravelRuleWalletOwnershipProof::fromJson));
+  }
+
+  /**
+   * Current wallet label, exactly as saved.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> label() {
+    return Json.optional(json, "label", Conv.STRING);
+  }
+
+  /**
+   * Wallet owner type.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<WalletAddressEntry.OwnerType> ownerType() {
+    return Json.optional(json, "owner_type", Conv.enumeration(WalletAddressEntry.OwnerType::of));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -303,6 +334,36 @@ public final class WalletAddressEntry extends JsonModel {
     }
 
     /**
+     * The <code>ownership_proof</code> field.
+     *
+     * @param ownershipProof the value
+     * @return this builder
+     */
+    public Builder ownershipProof(TravelRuleWalletOwnershipProof ownershipProof) {
+      return set("ownership_proof", Conv.model(TravelRuleWalletOwnershipProof::fromJson), ownershipProof);
+    }
+
+    /**
+     * Current wallet label, exactly as saved.
+     *
+     * @param label the value
+     * @return this builder
+     */
+    public Builder label(String label) {
+      return set("label", Conv.STRING, label);
+    }
+
+    /**
+     * Wallet owner type.
+     *
+     * @param ownerType the value
+     * @return this builder
+     */
+    public Builder ownerType(WalletAddressEntry.OwnerType ownerType) {
+      return set("owner_type", Conv.enumeration(WalletAddressEntry.OwnerType::of), ownerType);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code WalletAddressEntry}
@@ -314,6 +375,52 @@ public final class WalletAddressEntry extends JsonModel {
     @Override
     protected Builder self() {
       return this;
+    }
+  }
+
+  /**
+   * Wallet owner type.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class OwnerType extends StringEnum {
+    /** The value {@code "customer"}. */
+    public static final OwnerType CUSTOMER = new OwnerType("customer");
+
+    /** The value {@code "internal"}. */
+    public static final OwnerType INTERNAL = new OwnerType("internal");
+
+    /** The value {@code "vasp"}. */
+    public static final OwnerType VASP = new OwnerType("vasp");
+
+    private static final List<OwnerType> KNOWN_VALUES = List.of(CUSTOMER, INTERNAL, VASP);
+
+    private OwnerType(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static OwnerType of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, OwnerType::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<OwnerType> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 }
