@@ -28,6 +28,7 @@ import me.didit.types.SessionsCreateParams;
 import me.didit.types.SessionsDeleteKybPartyDraftParams;
 import me.didit.types.SessionsDeleteParams;
 import me.didit.types.SessionsExportAmlScreeningHistoryParams;
+import me.didit.types.SessionsGeneratePdfParams;
 import me.didit.types.SessionsImportSharedParams;
 import me.didit.types.SessionsListAmlScreeningHistoryParams;
 import me.didit.types.SessionsListEventsParams;
@@ -116,12 +117,13 @@ final class SessionsResourceTest {
 
   @Test
   void generatePdf() {
+    SessionsGeneratePdfParams params = SessionsGeneratePdfParams.builder().language(SessionsGeneratePdfParams.Language.EN).build();
     transport.respondBinary(200, "application/pdf", new byte[] {37, 80, 68, 70});
-    var result = client.sessions().generatePdf("00000000-0000-4000-8000-00000000bc4f");
+    var result = client.sessions().generatePdf("00000000-0000-4000-8000-00000000bc4f", params);
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/v3/session/00000000-0000-4000-8000-00000000bc4f/generate-pdf/", request.path());
-    assertEquals(Map.of(), request.query());
+    assertEquals(Map.ofEntries(Map.entry("language", List.of("en"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("application/pdf, application/json", request.header("Accept"));
