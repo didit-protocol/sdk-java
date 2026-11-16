@@ -35,6 +35,7 @@ import me.didit.types.SessionsDeleteKybPartyDraftParams;
 import me.didit.types.SessionsDeleteParams;
 import me.didit.types.SessionsDeleteResponse;
 import me.didit.types.SessionsExportAmlScreeningHistoryParams;
+import me.didit.types.SessionsGeneratePdfParams;
 import me.didit.types.SessionsImportSharedParams;
 import me.didit.types.SessionsListAmlScreeningHistoryParams;
 import me.didit.types.SessionsListEventsParams;
@@ -435,7 +436,7 @@ public final class SessionsResource {
    * <p>- <b>KYC</b> — rolled-up session status, the warnings list, and one section per executed feature: ID Verification (document images plus extracted fields), NFC, Liveness, Face Match, Email Verification, Phone Verification, Proof of Address, Questionnaire answers, Database Validation, AML Screening, and IP Analysis — followed by session tags, console review activity (comments and status changes), and the session event timeline.
    * - <b>KYB</b> — registry checks (company data), AML screenings, business document verifications, key-people checks, questionnaire responses, phone/email verifications, IP analyses, and the session event timeline, followed by tags and review activity.
    *
-   * <p><b>Branding.</b> If your application has white-label customization, the report is rendered with your logo and links to your privacy-policy URL; otherwise it carries Didit branding. Reports are rendered in English — there is no language parameter.
+   * <p><b>Branding.</b> If your application has white-label customization, the report is rendered with your logo and links to your privacy-policy URL; otherwise it carries Didit branding. Reports are rendered in English by default; pass the <code>language</code> query parameter to print every word the report writes itself (section titles, labels, statuses, check names, notes, footers, dates and country names) in one of 16 languages, while values the end user submitted or a source returned print exactly as captured.
    *
    * <p><b>No caching.</b> Every call re-renders the PDF from the current session data, so a report generated after a manual review reflects the reviewer’s decision. Two calls for the same session can produce byte-different files — archive the downloaded file if you need an immutable copy.
    *
@@ -449,42 +450,88 @@ public final class SessionsResource {
    * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
    *
    * @param sessionId UUID of the User Verification (KYC) or Business Verification (KYB) session to render — the `session_id` returned by `POST /v3/session/`. The same path works for both session kinds; use the `Content-Disposition` filename on the response to tell which report type you received.
+   * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public BinaryResponse generatePdf(String sessionId, RequestOptions options) {
-    return client.execute(generatePdfRequest(sessionId), options, GENERATE_PDF_RESPONSE).data();
+  public BinaryResponse generatePdf(String sessionId, SessionsGeneratePdfParams params, RequestOptions options) {
+    return client.execute(generatePdfRequest(sessionId, params), options, GENERATE_PDF_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #generatePdf(String, RequestOptions)}.
+   * Asynchronous {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)}.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BinaryResponse> generatePdfAsync(String sessionId, SessionsGeneratePdfParams params, RequestOptions options) {
+    return client.executeAsync(generatePdfRequest(sessionId, params), options, GENERATE_PDF_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @return the result
+   */
+  public BinaryResponse generatePdf(String sessionId, SessionsGeneratePdfParams params) {
+    return client.execute(generatePdfRequest(sessionId, params), RequestOptions.none(), GENERATE_PDF_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)}, with the client's options.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BinaryResponse> generatePdfAsync(String sessionId, SessionsGeneratePdfParams params) {
+    return client.executeAsync(generatePdfRequest(sessionId, params), RequestOptions.none(), GENERATE_PDF_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)}, without parameters.
+   *
+   * @param sessionId the {@code sessionId}
+   * @param options per-request options
+   * @return the result
+   */
+  public BinaryResponse generatePdf(String sessionId, RequestOptions options) {
+    return client.execute(generatePdfRequest(sessionId, SessionsGeneratePdfParams.builder().build()), options, GENERATE_PDF_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)}, without parameters.
    *
    * @param sessionId the {@code sessionId}
    * @param options per-request options
    * @return a future completed with the result
    */
   public CompletableFuture<BinaryResponse> generatePdfAsync(String sessionId, RequestOptions options) {
-    return client.executeAsync(generatePdfRequest(sessionId), options, GENERATE_PDF_RESPONSE).thenApply(RawResponse::data);
+    return client.executeAsync(generatePdfRequest(sessionId, SessionsGeneratePdfParams.builder().build()), options, GENERATE_PDF_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Same as {@link #generatePdf(String, RequestOptions)}, with the client's options.
+   * Same as {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param sessionId the {@code sessionId}
    * @return the result
    */
   public BinaryResponse generatePdf(String sessionId) {
-    return client.execute(generatePdfRequest(sessionId), RequestOptions.none(), GENERATE_PDF_RESPONSE).data();
+    return client.execute(generatePdfRequest(sessionId, SessionsGeneratePdfParams.builder().build()), RequestOptions.none(), GENERATE_PDF_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #generatePdf(String, RequestOptions)}, with the client's options.
+   * Asynchronous {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param sessionId the {@code sessionId}
    * @return a future completed with the result
    */
   public CompletableFuture<BinaryResponse> generatePdfAsync(String sessionId) {
-    return client.executeAsync(generatePdfRequest(sessionId), RequestOptions.none(), GENERATE_PDF_RESPONSE).thenApply(RawResponse::data);
+    return client.executeAsync(generatePdfRequest(sessionId, SessionsGeneratePdfParams.builder().build()), RequestOptions.none(), GENERATE_PDF_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
@@ -3079,9 +3126,11 @@ public final class SessionsResource {
 
   private static final ResponseHandler<BinaryResponse> GENERATE_PDF_RESPONSE = Responses.binary();
 
-  private static ApiRequest generatePdfRequest(String sessionId) {
+  private static ApiRequest generatePdfRequest(String sessionId, SessionsGeneratePdfParams params) {
     return ApiRequest.builder("GET", "/v3/session/{sessionId}/generate-pdf/")
         .pathParam("sessionId", sessionId)
+        .params(params)
+        .queryFields("language")
         .accept("application/pdf")
         .build();
   }
@@ -3666,45 +3715,91 @@ public final class SessionsResource {
     }
 
     /**
-     * {@link #generatePdf(String, RequestOptions)} with the raw response.
+     * {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<BinaryResponse> generatePdf(String sessionId, SessionsGeneratePdfParams params, RequestOptions options) {
+      return client.execute(generatePdfRequest(sessionId, params), options, GENERATE_PDF_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)} with the raw response.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BinaryResponse>> generatePdfAsync(String sessionId, SessionsGeneratePdfParams params, RequestOptions options) {
+      return client.executeAsync(generatePdfRequest(sessionId, params), options, GENERATE_PDF_RESPONSE);
+    }
+
+    /**
+     * {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<BinaryResponse> generatePdf(String sessionId, SessionsGeneratePdfParams params) {
+      return client.execute(generatePdfRequest(sessionId, params), RequestOptions.none(), GENERATE_PDF_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param sessionId the {@code sessionId}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BinaryResponse>> generatePdfAsync(String sessionId, SessionsGeneratePdfParams params) {
+      return client.executeAsync(generatePdfRequest(sessionId, params), RequestOptions.none(), GENERATE_PDF_RESPONSE);
+    }
+
+    /**
+     * {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param sessionId the {@code sessionId}
      * @param options per-request options
      * @return the result
      */
     public RawResponse<BinaryResponse> generatePdf(String sessionId, RequestOptions options) {
-      return client.execute(generatePdfRequest(sessionId), options, GENERATE_PDF_RESPONSE);
+      return client.execute(generatePdfRequest(sessionId, SessionsGeneratePdfParams.builder().build()), options, GENERATE_PDF_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #generatePdf(String, RequestOptions)} with the raw response.
+     * Asynchronous {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param sessionId the {@code sessionId}
      * @param options per-request options
      * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BinaryResponse>> generatePdfAsync(String sessionId, RequestOptions options) {
-      return client.executeAsync(generatePdfRequest(sessionId), options, GENERATE_PDF_RESPONSE);
+      return client.executeAsync(generatePdfRequest(sessionId, SessionsGeneratePdfParams.builder().build()), options, GENERATE_PDF_RESPONSE);
     }
 
     /**
-     * {@link #generatePdf(String, RequestOptions)} with the raw response, with the client's options.
+     * {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param sessionId the {@code sessionId}
      * @return the result
      */
     public RawResponse<BinaryResponse> generatePdf(String sessionId) {
-      return client.execute(generatePdfRequest(sessionId), RequestOptions.none(), GENERATE_PDF_RESPONSE);
+      return client.execute(generatePdfRequest(sessionId, SessionsGeneratePdfParams.builder().build()), RequestOptions.none(), GENERATE_PDF_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #generatePdf(String, RequestOptions)} with the raw response, with the client's options.
+     * Asynchronous {@link #generatePdf(String, SessionsGeneratePdfParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param sessionId the {@code sessionId}
      * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<BinaryResponse>> generatePdfAsync(String sessionId) {
-      return client.executeAsync(generatePdfRequest(sessionId), RequestOptions.none(), GENERATE_PDF_RESPONSE);
+      return client.executeAsync(generatePdfRequest(sessionId, SessionsGeneratePdfParams.builder().build()), RequestOptions.none(), GENERATE_PDF_RESPONSE);
     }
 
     /**
