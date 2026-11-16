@@ -334,7 +334,7 @@ final class IdWalletsResourceTest {
   void startUaePass() {
     DigitalIdWalletApiUaePassWalletVerificationStartRequest params = DigitalIdWalletApiUaePassWalletVerificationStartRequest.builder().vendorData("value-vendor-data").metadata(Map.of("key", "value")).sandboxScenario("value-sandbox-scenario").country(DigitalIdWalletApiUaePassWalletVerificationStartCountryEnum.ARE).returnUrl("https://example.com/callback").device(DigitalIdWalletApiDeviceEnum.SAME_DEVICE).build();
     RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
-    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/id-verification/wallets/uae-pass/", "201");
+    JsonNode example = TestJson.parse("{\"created_at\":\"2026-11-01T10:15:30Z\",\"metadata\":{},\"request_id\":\"value\",\"vendor_data\":\"value\",\"wallet_verification\":{\"attributes\":{},\"country\":\"value\",\"credential_type\":\"value\",\"error\":\"value\",\"expires_at\":\"2026-11-01T10:15:30Z\",\"identity\":{\"date_of_birth\":\"2026-11-01\",\"first_name\":\"value\",\"full_name\":\"value\",\"issuing_state\":\"value\",\"last_name\":\"value\",\"nationality\":\"value\"},\"interaction\":\"redirect\",\"level_of_assurance\":\"value\",\"next_action\":{\"type\":\"redirect\"},\"outcome\":\"pending\",\"signature_valid\":true,\"simulated\":true,\"status\":\"value\",\"verified_at\":\"2026-11-01T10:15:30Z\",\"wallet\":{\"id\":\"value\",\"issuing_authority\":\"value\",\"name\":\"value\"}}}");
     transport.respondJson(201, example);
     var result = client.idWallets().startUaePass(params, options);
     RecordedRequest request = transport.only();

@@ -155,7 +155,7 @@ public final class SessionsCreateParams extends JsonModel {
   }
 
   /**
-   * Expected user details used to cross-validate against the data extracted from the user's ID document, Proof of Address, and other verification steps. Mismatches are surfaced as warnings on the decision; some fields (e.g. <code>id_country</code>, <code>expected_document_types</code>) also alter the user-facing flow. For Business Verification (KYB) workflows only the business fields (<code>company_name</code>, <code>registry_country</code>, <code>registration_number</code>) are used — they pre-fill the company registry search for the user — and all person-level fields are ignored.
+   * Expected user details used to cross-validate against the data extracted from the user's ID document, Proof of Address, and other verification steps. Mismatches are surfaced as warnings on the decision; some fields (e.g. <code>id_country</code>, <code>expected_document_types</code>) also alter the user-facing flow. For Business Verification (KYB) workflows only the business fields (<code>company_name</code>, <code>registry_country</code>, <code>registration_number</code>) are used — they pre-fill the company registry search for the user — and all person-level fields are ignored. UAE PASS (an ID Verification wallet) only confirms these details and never returns the person's identity: it is offered only when they include <code>identification_number</code> (the Emirates ID number), or a name (<code>first_name</code> and/or <code>last_name</code>) with <code>date_of_birth</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -328,7 +328,7 @@ public final class SessionsCreateParams extends JsonModel {
     }
 
     /**
-     * Expected user details used to cross-validate against the data extracted from the user's ID document, Proof of Address, and other verification steps. Mismatches are surfaced as warnings on the decision; some fields (e.g. <code>id_country</code>, <code>expected_document_types</code>) also alter the user-facing flow. For Business Verification (KYB) workflows only the business fields (<code>company_name</code>, <code>registry_country</code>, <code>registration_number</code>) are used — they pre-fill the company registry search for the user — and all person-level fields are ignored.
+     * Expected user details used to cross-validate against the data extracted from the user's ID document, Proof of Address, and other verification steps. Mismatches are surfaced as warnings on the decision; some fields (e.g. <code>id_country</code>, <code>expected_document_types</code>) also alter the user-facing flow. For Business Verification (KYB) workflows only the business fields (<code>company_name</code>, <code>registry_country</code>, <code>registration_number</code>) are used — they pre-fill the company registry search for the user — and all person-level fields are ignored. UAE PASS (an ID Verification wallet) only confirms these details and never returns the person's identity: it is offered only when they include <code>identification_number</code> (the Emirates ID number), or a name (<code>first_name</code> and/or <code>last_name</code>) with <code>date_of_birth</code>.
      *
      * @param expectedDetails the value
      * @return this builder
@@ -997,7 +997,7 @@ public final class SessionsCreateParams extends JsonModel {
   }
 
   /**
-   * Expected user details used to cross-validate against the data extracted from the user's ID document, Proof of Address, and other verification steps. Mismatches are surfaced as warnings on the decision; some fields (e.g. <code>id_country</code>, <code>expected_document_types</code>) also alter the user-facing flow. For Business Verification (KYB) workflows only the business fields (<code>company_name</code>, <code>registry_country</code>, <code>registration_number</code>) are used — they pre-fill the company registry search for the user — and all person-level fields are ignored.
+   * Expected user details used to cross-validate against the data extracted from the user's ID document, Proof of Address, and other verification steps. Mismatches are surfaced as warnings on the decision; some fields (e.g. <code>id_country</code>, <code>expected_document_types</code>) also alter the user-facing flow. For Business Verification (KYB) workflows only the business fields (<code>company_name</code>, <code>registry_country</code>, <code>registration_number</code>) are used — they pre-fill the company registry search for the user — and all person-level fields are ignored. UAE PASS (an ID Verification wallet) only confirms these details and never returns the person's identity: it is offered only when they include <code>identification_number</code> (the Emirates ID number), or a name (<code>first_name</code> and/or <code>last_name</code>) with <code>date_of_birth</code>.
    */
   public static final class ExpectedDetails extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("first_name", "last_name", "date_of_birth", "gender", "nationality", "country", "id_country", "poa_country", "address", "identification_number", "ip_address", "expected_document_types", "company_name", "registry_country", "registration_number");
