@@ -3523,7 +3523,7 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
-     * Credential evidence. Present only when <code>verification_method</code> is <code>wallet</code>; <code>null</code> otherwise.
+     * Credential evidence. Present only when <code>verification_method</code> is <code>wallet</code>; <code>null</code> otherwise. UAE PASS (<code>provider</code> <code>uae_pass</code>) is outcome only: the identity fields of this ID verification (<code>full_name</code>, <code>first_name</code>, <code>last_name</code>, <code>date_of_birth</code>, <code>nationality</code>, the document numbers) stay <code>null</code>, <code>attributes</code> holds only whether each detail declared in <code>expected_details</code> matched, and nothing UAE PASS shared about the person is returned or kept.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4056,7 +4056,7 @@ public final class SessionDecision extends JsonModel {
       }
 
       /**
-       * Credential evidence. Present only when <code>verification_method</code> is <code>wallet</code>; <code>null</code> otherwise.
+       * Credential evidence. Present only when <code>verification_method</code> is <code>wallet</code>; <code>null</code> otherwise. UAE PASS (<code>provider</code> <code>uae_pass</code>) is outcome only: the identity fields of this ID verification (<code>full_name</code>, <code>first_name</code>, <code>last_name</code>, <code>date_of_birth</code>, <code>nationality</code>, the document numbers) stay <code>null</code>, <code>attributes</code> holds only whether each detail declared in <code>expected_details</code> matched, and nothing UAE PASS shared about the person is returned or kept.
        *
        * @param walletVerification the value, or {@code null} to send JSON null
        * @return this builder
@@ -5389,7 +5389,7 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
-     * Credential evidence. Present only when <code>verification_method</code> is <code>wallet</code>; <code>null</code> otherwise.
+     * Credential evidence. Present only when <code>verification_method</code> is <code>wallet</code>; <code>null</code> otherwise. UAE PASS (<code>provider</code> <code>uae_pass</code>) is outcome only: the identity fields of this ID verification (<code>full_name</code>, <code>first_name</code>, <code>last_name</code>, <code>date_of_birth</code>, <code>nationality</code>, the document numbers) stay <code>null</code>, <code>attributes</code> holds only whether each detail declared in <code>expected_details</code> matched, and nothing UAE PASS shared about the person is returned or kept.
      */
     public static final class WalletVerification extends JsonModel {
       private static final Set<String> KNOWN_FIELDS = Set.of("provider", "provider_name", "issuing_authority", "issuing_country", "credential_type", "level_of_assurance", "verified_at", "signature_valid", "attributes", "portrait", "face_match_score");
@@ -5508,7 +5508,7 @@ public final class SessionDecision extends JsonModel {
       }
 
       /**
-       * The attributes the wallet shared, keyed as the wallet's catalog entry lists them.
+       * The attributes the wallet shared, keyed as the wallet's catalog entry lists them. For UAE PASS only the comparison with <code>expected_details</code>, one key per declared detail, each <code>match</code> or <code>no_match</code>: <code>name_match</code> (<code>first_name</code> / <code>last_name</code>), <code>date_of_birth_match</code> and <code>identification_number_match</code> (the Emirates ID number). A declared detail that does not match also raises the expected-details warning (<code>FULL_NAME_MISMATCH_WITH_PROVIDED</code>, <code>DOB_MISMATCH_WITH_PROVIDED</code> or <code>IDENTIFICATION_NUMBER_MISMATCH_WITH_PROVIDED</code>), handled by the workflow's expected-details mismatch action.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -5631,7 +5631,7 @@ public final class SessionDecision extends JsonModel {
         }
 
         /**
-         * The attributes the wallet shared, keyed as the wallet's catalog entry lists them.
+         * The attributes the wallet shared, keyed as the wallet's catalog entry lists them. For UAE PASS only the comparison with <code>expected_details</code>, one key per declared detail, each <code>match</code> or <code>no_match</code>: <code>name_match</code> (<code>first_name</code> / <code>last_name</code>), <code>date_of_birth_match</code> and <code>identification_number_match</code> (the Emirates ID number). A declared detail that does not match also raises the expected-details warning (<code>FULL_NAME_MISMATCH_WITH_PROVIDED</code>, <code>DOB_MISMATCH_WITH_PROVIDED</code> or <code>IDENTIFICATION_NUMBER_MISMATCH_WITH_PROVIDED</code>), handled by the workflow's expected-details mismatch action.
          *
          * @param attributes the value
          * @return this builder
