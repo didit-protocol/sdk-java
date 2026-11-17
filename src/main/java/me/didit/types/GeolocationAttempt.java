@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * One attempt of a Location verification step: the same keys as <code>geolocation_checks[]</code> except <code>warnings</code>, plus when Didit received it.
  */
 public final class GeolocationAttempt extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "outcome", "permission", "latitude", "longitude", "accuracy_m", "accuracy_confidence", "measured_at", "age_seconds", "source", "platform", "sdk_version", "is_mock", "produced_by_accessory", "integrity", "country_code", "region_code", "city", "geofence", "inside_geofence", "geofence_basis", "inside_areas", "blocked_areas", "position_source", "anonymizers", "ip_distance_km", "ip_distance_uncertainty_km", "ip_consistent", "document_distance_km", "travel_excused", "consecutive_mismatches", "attempts", "consent", "received_at", "created_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("node_id", "status", "outcome", "permission", "latitude", "longitude", "accuracy_m", "accuracy_confidence", "measured_at", "age_seconds", "source", "platform", "sdk_version", "is_mock", "produced_by_accessory", "integrity", "country_code", "region_code", "city", "parsed_address", "geofence", "inside_geofence", "geofence_basis", "inside_areas", "blocked_areas", "position_source", "anonymizers", "ip_distance_km", "ip_distance_uncertainty_km", "ip_consistent", "document_distance_km", "travel_excused", "consecutive_mismatches", "attempts", "consent", "received_at", "created_at");
 
   private GeolocationAttempt(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -242,6 +242,16 @@ public final class GeolocationAttempt extends JsonModel {
    */
   public Optional<String> city() {
     return Json.optional(json, "city", Conv.STRING);
+  }
+
+  /**
+   * Street address at the device fix, reverse geocoded. <code>country_code</code>, <code>region_code</code> and <code>city</code> stay the offline place used by geofences; this is the address for reviewers and for comparison with <code>kyc.parsed_address</code> or <code>poa.parsed_address</code> in workflow rules. See the schema for when it is <code>null</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<GeolocationParsedAddress> parsedAddress() {
+    return Json.optional(json, "parsed_address", Conv.model(GeolocationParsedAddress::fromJson));
   }
 
   /**
@@ -615,6 +625,16 @@ public final class GeolocationAttempt extends JsonModel {
      */
     public Builder city(@Nullable String city) {
       return setNullable("city", Conv.STRING, city);
+    }
+
+    /**
+     * Street address at the device fix, reverse geocoded. <code>country_code</code>, <code>region_code</code> and <code>city</code> stay the offline place used by geofences; this is the address for reviewers and for comparison with <code>kyc.parsed_address</code> or <code>poa.parsed_address</code> in workflow rules. See the schema for when it is <code>null</code>.
+     *
+     * @param parsedAddress the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder parsedAddress(@Nullable GeolocationParsedAddress parsedAddress) {
+      return setNullable("parsed_address", Conv.model(GeolocationParsedAddress::fromJson), parsedAddress);
     }
 
     /**
