@@ -3863,7 +3863,7 @@ public final class SessionDecision extends JsonModel {
     }
 
     /**
-     * Face match score between the portrait extracted from the front document image and the front camera image
+     * Face match score between the portrait extracted from the front document image and the front camera image. <code>null</code> when the comparison did not run; when the client reported no front-camera frame and neither side has a score, the ID verification warnings carry <code>SELFIE_MATCH_NOT_COMPUTED</code>.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -4396,7 +4396,7 @@ public final class SessionDecision extends JsonModel {
       }
 
       /**
-       * Face match score between the portrait extracted from the front document image and the front camera image
+       * Face match score between the portrait extracted from the front document image and the front camera image. <code>null</code> when the comparison did not run; when the client reported no front-camera frame and neither side has a score, the ID verification warnings carry <code>SELFIE_MATCH_NOT_COMPUTED</code>.
        *
        * @param frontImageCameraFrontFaceMatchScore the value, or {@code null} to send JSON null
        * @return this builder
@@ -9119,7 +9119,7 @@ public final class SessionDecision extends JsonModel {
       }
 
       /**
-       * The <code>risk</code> field.
+       * Machine-readable risk code. In ID verification warnings, <code>SELFIE_MATCH_NOT_COMPUTED</code> means document selfie matching is enabled but the front-camera comparison never ran because the client reported no front-camera frame (<code>front_camera_image_unavailable</code>); it resolves to <code>In Review</code> by default or <code>Declined</code> when <code>document_selfie_portrait_match_not_computed_action</code> is <code>DECLINE</code>.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -9202,7 +9202,7 @@ public final class SessionDecision extends JsonModel {
         }
 
         /**
-         * The <code>risk</code> field.
+         * Machine-readable risk code. In ID verification warnings, <code>SELFIE_MATCH_NOT_COMPUTED</code> means document selfie matching is enabled but the front-camera comparison never ran because the client reported no front-camera frame (<code>front_camera_image_unavailable</code>); it resolves to <code>In Review</code> by default or <code>Declined</code> when <code>document_selfie_portrait_match_not_computed_action</code> is <code>DECLINE</code>.
          *
          * @param risk the value
          * @return this builder
