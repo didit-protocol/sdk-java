@@ -138,7 +138,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Middle name, used by some country services (AUS, NZL, …).
+   * Middle name, used by some country services (NZL, …).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -318,7 +318,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Driver licence number for government document-verification services (AUS, NZL, IND).
+   * Driver licence number for government document-verification services (NZL, IND).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -328,7 +328,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Physical driver licence card number, where required separately from the licence number (AUS).
+   * Physical driver licence card number, where required separately from the licence number.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -338,7 +338,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Driver licence state or territory of issue (AUS).
+   * Driver licence state or territory of issue.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -358,7 +358,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Passport number for government passport-verification services (AUS, NZL, IND, CHN).
+   * Passport number for government passport-verification services (NZL, IND, CHN).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -398,7 +398,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Medicare card number (AUS).
+   * Medicare card number.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -408,7 +408,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Australian ImmiCard number.
+   * The <code>immi_card_number</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -418,7 +418,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Australian ImmiCard expiry date.
+   * The <code>immi_card_expiry_date</code> field.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -428,7 +428,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Citizenship certificate number (AUS).
+   * Citizenship certificate number.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -438,7 +438,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Birth-certificate registration number (AUS).
+   * Birth-certificate registration number.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -448,7 +448,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Birth-certificate registration date (AUS).
+   * Birth-certificate registration date.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -458,7 +458,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Birth-certificate registration state (AUS).
+   * Birth-certificate registration state.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -468,7 +468,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Marriage certificate number (AUS).
+   * Marriage certificate number.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -478,7 +478,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Change-of-name certificate number (AUS).
+   * Change-of-name certificate number.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -488,7 +488,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * First name of the partner on a marriage certificate (AUS).
+   * First name of the partner on a marriage certificate.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -498,7 +498,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * Last name of the partner on a marriage certificate (AUS).
+   * Last name of the partner on a marriage certificate.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -983,7 +983,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Middle name, used by some country services (AUS, NZL, …).
+     * Middle name, used by some country services (NZL, …).
      *
      * @param middleName the value
      * @return this builder
@@ -1163,7 +1163,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Driver licence number for government document-verification services (AUS, NZL, IND).
+     * Driver licence number for government document-verification services (NZL, IND).
      *
      * @param driverLicenseNumber the value
      * @return this builder
@@ -1173,7 +1173,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Physical driver licence card number, where required separately from the licence number (AUS).
+     * Physical driver licence card number, where required separately from the licence number.
      *
      * @param driverLicenseCardNumber the value
      * @return this builder
@@ -1183,7 +1183,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Driver licence state or territory of issue (AUS).
+     * Driver licence state or territory of issue.
      *
      * @param driverLicenseState the value
      * @return this builder
@@ -1203,7 +1203,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Passport number for government passport-verification services (AUS, NZL, IND, CHN).
+     * Passport number for government passport-verification services (NZL, IND, CHN).
      *
      * @param passportNumber the value
      * @return this builder
@@ -1243,7 +1243,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Medicare card number (AUS).
+     * Medicare card number.
      *
      * @param medicareCardNumber the value
      * @return this builder
@@ -1253,7 +1253,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Australian ImmiCard number.
+     * The <code>immi_card_number</code> field.
      *
      * @param immiCardNumber the value
      * @return this builder
@@ -1263,7 +1263,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Australian ImmiCard expiry date.
+     * The <code>immi_card_expiry_date</code> field.
      *
      * @param immiCardExpiryDate the value
      * @return this builder
@@ -1273,7 +1273,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Citizenship certificate number (AUS).
+     * Citizenship certificate number.
      *
      * @param citizenshipCertificateNumber the value
      * @return this builder
@@ -1283,7 +1283,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Birth-certificate registration number (AUS).
+     * Birth-certificate registration number.
      *
      * @param birthRegistrationNumber the value
      * @return this builder
@@ -1293,7 +1293,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Birth-certificate registration date (AUS).
+     * Birth-certificate registration date.
      *
      * @param birthRegistrationDate the value
      * @return this builder
@@ -1303,7 +1303,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Birth-certificate registration state (AUS).
+     * Birth-certificate registration state.
      *
      * @param birthRegistrationState the value
      * @return this builder
@@ -1313,7 +1313,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Marriage certificate number (AUS).
+     * Marriage certificate number.
      *
      * @param marriageCertificateNumber the value
      * @return this builder
@@ -1323,7 +1323,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Change-of-name certificate number (AUS).
+     * Change-of-name certificate number.
      *
      * @param changeOfNameCertificateNumber the value
      * @return this builder
@@ -1333,7 +1333,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * First name of the partner on a marriage certificate (AUS).
+     * First name of the partner on a marriage certificate.
      *
      * @param firstPartnerName the value
      * @return this builder
@@ -1343,7 +1343,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * Last name of the partner on a marriage certificate (AUS).
+     * Last name of the partner on a marriage certificate.
      *
      * @param lastPartnerName the value
      * @return this builder
