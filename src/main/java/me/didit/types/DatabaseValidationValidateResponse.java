@@ -217,7 +217,7 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
     }
 
     /**
-     * <code>Declined</code> when the overall <code>match_type</code> triggers a <code>DECLINE</code> action (<code>no_match_action</code> defaults to <code>DECLINE</code>, <code>partial_match_action</code> to <code>NO_ACTION</code>); <code>In Review</code> when no service produced a usable comparison, for example when the only selected service came back <code>REGISTRY_UNAVAILABLE</code> or <code>INCONCLUSIVE</code>; <code>Approved</code> otherwise. A request that selected several services can be <code>Approved</code> on one service's match while another was unavailable, so check <code>errors</code> and the per-service <code>outcome_code</code>s too.
+     * <code>Declined</code> when the overall <code>match_type</code> triggers a <code>DECLINE</code> action (<code>no_match_action</code> defaults to <code>DECLINE</code>, <code>partial_match_action</code> to <code>NO_ACTION</code>); <code>In Review</code> when no service produced a usable comparison, for example when the only selected service came back <code>REGISTRY_UNAVAILABLE</code> or <code>INCONCLUSIVE</code>, and when the registry confirmed the identification number but returned a different name while <code>partial_match_action</code> is <code>NO_ACTION</code>; <code>Approved</code> otherwise. A request that selected several services can be <code>Approved</code> on one service's match while another was unavailable, so check <code>errors</code> and the per-service <code>outcome_code</code>s too.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -330,7 +330,7 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
       }
 
       /**
-       * <code>Declined</code> when the overall <code>match_type</code> triggers a <code>DECLINE</code> action (<code>no_match_action</code> defaults to <code>DECLINE</code>, <code>partial_match_action</code> to <code>NO_ACTION</code>); <code>In Review</code> when no service produced a usable comparison, for example when the only selected service came back <code>REGISTRY_UNAVAILABLE</code> or <code>INCONCLUSIVE</code>; <code>Approved</code> otherwise. A request that selected several services can be <code>Approved</code> on one service's match while another was unavailable, so check <code>errors</code> and the per-service <code>outcome_code</code>s too.
+       * <code>Declined</code> when the overall <code>match_type</code> triggers a <code>DECLINE</code> action (<code>no_match_action</code> defaults to <code>DECLINE</code>, <code>partial_match_action</code> to <code>NO_ACTION</code>); <code>In Review</code> when no service produced a usable comparison, for example when the only selected service came back <code>REGISTRY_UNAVAILABLE</code> or <code>INCONCLUSIVE</code>, and when the registry confirmed the identification number but returned a different name while <code>partial_match_action</code> is <code>NO_ACTION</code>; <code>Approved</code> otherwise. A request that selected several services can be <code>Approved</code> on one service's match while another was unavailable, so check <code>errors</code> and the per-service <code>outcome_code</code>s too.
        *
        * @param status the value
        * @return this builder
@@ -445,7 +445,7 @@ public final class DatabaseValidationValidateResponse extends JsonModel {
     }
 
     /**
-     * <code>Declined</code> when the overall <code>match_type</code> triggers a <code>DECLINE</code> action (<code>no_match_action</code> defaults to <code>DECLINE</code>, <code>partial_match_action</code> to <code>NO_ACTION</code>); <code>In Review</code> when no service produced a usable comparison, for example when the only selected service came back <code>REGISTRY_UNAVAILABLE</code> or <code>INCONCLUSIVE</code>; <code>Approved</code> otherwise. A request that selected several services can be <code>Approved</code> on one service's match while another was unavailable, so check <code>errors</code> and the per-service <code>outcome_code</code>s too.
+     * <code>Declined</code> when the overall <code>match_type</code> triggers a <code>DECLINE</code> action (<code>no_match_action</code> defaults to <code>DECLINE</code>, <code>partial_match_action</code> to <code>NO_ACTION</code>); <code>In Review</code> when no service produced a usable comparison, for example when the only selected service came back <code>REGISTRY_UNAVAILABLE</code> or <code>INCONCLUSIVE</code>, and when the registry confirmed the identification number but returned a different name while <code>partial_match_action</code> is <code>NO_ACTION</code>; <code>Approved</code> otherwise. A request that selected several services can be <code>Approved</code> on one service's match while another was unavailable, so check <code>errors</code> and the per-service <code>outcome_code</code>s too.
      *
      * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
      */
