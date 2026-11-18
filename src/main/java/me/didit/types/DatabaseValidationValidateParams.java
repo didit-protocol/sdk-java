@@ -828,7 +828,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * What a <code>partial_match</code> does to <code>database_validation.status</code>. Defaults to <code>NO_ACTION</code> (status stays <code>Approved</code>, with a warning).
+   * What a <code>partial_match</code> does to <code>database_validation.status</code>. Defaults to <code>NO_ACTION</code> (status stays <code>Approved</code>, with a warning). When the registry confirmed the identification number but returned a different name, <code>NO_ACTION</code> answers <code>In Review</code> instead of <code>Approved</code>; <code>DECLINE</code> still declines.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1673,7 +1673,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
     }
 
     /**
-     * What a <code>partial_match</code> does to <code>database_validation.status</code>. Defaults to <code>NO_ACTION</code> (status stays <code>Approved</code>, with a warning).
+     * What a <code>partial_match</code> does to <code>database_validation.status</code>. Defaults to <code>NO_ACTION</code> (status stays <code>Approved</code>, with a warning). When the registry confirmed the identification number but returned a different name, <code>NO_ACTION</code> answers <code>In Review</code> instead of <code>Approved</code>; <code>DECLINE</code> still declines.
      *
      * @param partialMatchAction the value
      * @return this builder
@@ -2144,7 +2144,7 @@ public final class DatabaseValidationValidateParams extends JsonModel {
   }
 
   /**
-   * What a <code>partial_match</code> does to <code>database_validation.status</code>. Defaults to <code>NO_ACTION</code> (status stays <code>Approved</code>, with a warning).
+   * What a <code>partial_match</code> does to <code>database_validation.status</code>. Defaults to <code>NO_ACTION</code> (status stays <code>Approved</code>, with a warning). When the registry confirmed the identification number but returned a different name, <code>NO_ACTION</code> answers <code>In Review</code> instead of <code>Approved</code>; <code>DECLINE</code> still declines.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
