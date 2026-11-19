@@ -11,6 +11,8 @@ import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
+import me.didit.types.ImportLimitRequestInput;
+import me.didit.types.ImportLimits;
 import me.didit.types.SessionImportError;
 import me.didit.types.SessionImportJob;
 import me.didit.types.SessionsImportsCheckProviderParams;
@@ -47,7 +49,7 @@ public final class SessionsImportsResource {
   /**
    * Create a verification import job
    *
-   * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Set <code>source=provider</code> to migrate from another provider: Didit reads Sumsub, Onfido, Persona and ComplyCube with your read-only key, reads Veriff, iDenfy and MetaMap records by the IDs you upload in <code>file</code>, and imports an export file in Didit's format for the other providers. Record IDs are namespaced by provider (<code>sumsub:&lt;id&gt;</code>) so a re-run skips everything already in Didit, and a record imported through a file with the provider's bare ID is recognised too, in both directions, so moving between a file import and a provider migration never imports a record twice. An application can run up to 4 import jobs at once; a job interrupted by a deploy or a worker restart continues from its last imported row by itself. Imports are disabled by default and must be enabled per organization by Didit.
+   * <p>Create an asynchronous import job for historical User Verification sessions, Business Verification sessions, transaction monitoring records, or workflow custom status rules. Set <code>source=provider</code> to migrate from another provider: <code>GET /v3/session/imports/providers/</code> lists the providers and how each is read: with your read-only key, from the record IDs you upload in <code>file</code>, or from an export file in Didit's format. Record IDs are namespaced by provider (<code>&lt;provider&gt;:&lt;id&gt;</code>) so a re-run skips everything already in Didit, and a record imported through a file with the provider's bare ID is recognised too, in both directions, so moving between a file import and a provider migration never imports a record twice. An application can run up to 4 import jobs at once; a job interrupted by a deploy or a worker restart continues from its last imported row by itself. Any organization can import without asking Didit first, within a monthly limit that follows what it pays (see <code>GET /v3/session/imports/limits/</code>): 2,000 records a month from a provider and 500 from a file or the API until the first paid top-up, then 250,000 and 25,000, and no monthly limit on a contract. A job above the limit writes what fits and then waits (<code>WAITING</code>), and continues by itself when the limit goes up; ask for a higher limit with <code>POST /v3/session/imports/{importId}/request-limit/</code>. Every source accepts <code>dry_run</code>. A job that is not a dry run first checks the whole file or account; for an organization that has never paid, a finding can hold the job (<code>HELD</code>) for review by Didit before anything is written. Imported verifications stay in their application: they cannot be shared with another application and never feed cross-organization fraud signals. <code>POST /v3/session/imports/{importId}/undo/</code> deletes what an import created.
    *
    * <p>{@code POST /v3/session/imports/}
    * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
@@ -445,7 +447,7 @@ public final class SessionsImportsResource {
   /**
    * Start a dry run
    *
-   * <p>Start a migration whose dry run finished (<code>READY</code>): the same job imports for real, with the status mapping and face templates choice as sent now.
+   * <p>Start an import whose dry run finished (<code>READY</code>): the same job imports for real, with the status mapping and face templates choice as sent now. A file or API job runs the checks again over the whole file first.
    *
    * <p>{@code POST /v3/session/imports/{importId}/start/}
    * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
@@ -632,7 +634,7 @@ public final class SessionsImportsResource {
   /**
    * Cancel an import job
    *
-   * <p>Cancel an import. What was imported stays; the uploaded file and the key are erased.
+   * <p>Cancel an import. What was imported stays, unless you undo it with <code>POST /v3/session/imports/{importId}/undo/</code>; the uploaded file and the key are erased.
    *
    * <p>{@code POST /v3/session/imports/{importId}/cancel/}
    * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
@@ -772,7 +774,7 @@ public final class SessionsImportsResource {
   /**
    * List import jobs
    *
-   * <p>Every import of the application in one shape: verification imports and migrations, people and businesses.
+   * <p>Every import of the application in one shape: verification imports and migrations, people and businesses. <code>limit_lane</code>, <code>waiting_reason</code>, <code>checks</code>, <code>review_note</code>, <code>limit_request</code>, <code>granted_records</code> and the Undo fields apply to verification imports; they are <code>null</code>, empty or <code>false</code> for people and company imports.
    *
    * <p>{@code GET /v3/import-jobs/}
    *
@@ -895,6 +897,190 @@ public final class SessionsImportsResource {
     return client.executeAsync(listActiveJobsRequest(), RequestOptions.none(), LIST_ACTIVE_JOBS_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Get import limits
+   *
+   * <p>Read how many verifications your organization can still import this month. Limits follow what the organization pays and are counted per organization, across all its live applications, per calendar month in UTC, in records written by imports that are not dry runs: 2,000 from a provider and 500 from a file or the API until the first paid top-up, then 250,000 and 25,000, and no monthly limit (<code>limit: null</code>) on a contract or when Didit set the organization to always allowed. Records skipped because they were already in Didit, rejected rows and dry runs do not count, and records you undo are given back. <code>can_import: false</code> with <code>reason: turned_off</code> or <code>reason: sandbox</code> means a create call would be refused. Authenticate with your application's API key, or with a console user token that has <code>write:sessions</code>.
+   *
+   * <p>{@code GET /v3/session/imports/limits/}
+   *
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public ImportLimits retrieveLimits(RequestOptions options) {
+    return client.execute(retrieveLimitsRequest(), options, RETRIEVE_LIMITS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveLimits(RequestOptions)}.
+   *
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<ImportLimits> retrieveLimitsAsync(RequestOptions options) {
+    return client.executeAsync(retrieveLimitsRequest(), options, RETRIEVE_LIMITS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retrieveLimits(RequestOptions)}, with the client's options.
+   *
+   * @return the result
+   */
+  public ImportLimits retrieveLimits() {
+    return client.execute(retrieveLimitsRequest(), RequestOptions.none(), RETRIEVE_LIMITS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveLimits(RequestOptions)}, with the client's options.
+   *
+   * @return a future completed with the result
+   */
+  public CompletableFuture<ImportLimits> retrieveLimitsAsync() {
+    return client.executeAsync(retrieveLimitsRequest(), RequestOptions.none(), RETRIEVE_LIMITS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Request a higher import limit
+   *
+   * <p>Ask Didit to let one import go past the monthly limit. Allowed on a job that is <code>READY</code>, <code>PENDING</code>, <code>PROCESSING</code> or <code>WAITING</code> and whose lane has a limit; one request can be pending per job. <code>requested_records</code> is not sent: it is computed from the job's dry run or check pass as what the import still has to write beyond what it may write now (one month of the lane when no pass counted the file). An approval lets that job finish and does not change the organization's monthly limit. A declined request leaves the job waiting for the next month or a top-up, and the answer is in <code>limit_request.staff_note</code>. The job continues by itself when the limit goes up. A turned-off organization or a sandbox application is refused.
+   *
+   * <p>{@code POST /v3/session/imports/{importId}/request-limit/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   *
+   * @param importId the {@code importId}
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionImportJob requestLimit(String importId, ImportLimitRequestInput params, RequestOptions options) {
+    return client.execute(requestLimitRequest(importId, params), options, REQUEST_LIMIT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)}.
+   *
+   * @param importId the {@code importId}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> requestLimitAsync(String importId, ImportLimitRequestInput params, RequestOptions options) {
+    return client.executeAsync(requestLimitRequest(importId, params), options, REQUEST_LIMIT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)}, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @param params the request parameters
+   * @return the result
+   */
+  public SessionImportJob requestLimit(String importId, ImportLimitRequestInput params) {
+    return client.execute(requestLimitRequest(importId, params), RequestOptions.none(), REQUEST_LIMIT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)}, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> requestLimitAsync(String importId, ImportLimitRequestInput params) {
+    return client.executeAsync(requestLimitRequest(importId, params), RequestOptions.none(), REQUEST_LIMIT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)}, without parameters.
+   *
+   * @param importId the {@code importId}
+   * @param options per-request options
+   * @return the result
+   */
+  public SessionImportJob requestLimit(String importId, RequestOptions options) {
+    return client.execute(requestLimitRequest(importId, ImportLimitRequestInput.builder().build()), options, REQUEST_LIMIT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)}, without parameters.
+   *
+   * @param importId the {@code importId}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> requestLimitAsync(String importId, RequestOptions options) {
+    return client.executeAsync(requestLimitRequest(importId, ImportLimitRequestInput.builder().build()), options, REQUEST_LIMIT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @return the result
+   */
+  public SessionImportJob requestLimit(String importId) {
+    return client.execute(requestLimitRequest(importId, ImportLimitRequestInput.builder().build()), RequestOptions.none(), REQUEST_LIMIT_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> requestLimitAsync(String importId) {
+    return client.executeAsync(requestLimitRequest(importId, ImportLimitRequestInput.builder().build()), RequestOptions.none(), REQUEST_LIMIT_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Undo an import
+   *
+   * <p>Delete what an import created. Every verification (User Verification, Business Verification) and transaction the job created is deleted with its images and videos, its face templates, and the blocklist entries the job added, exactly as <code>DELETE /v3/session/{sessionId}/delete/</code> deletes a session. Records that were already in Didit, and the workflow status rules an import changed, are not affected. The records you undo are given back to the month's import limit. Deletion cannot be reversed.
+   *
+   * <p>Allowed when <code>can_undo</code> is <code>true</code> and the job is <code>COMPLETED</code>, <code>FAILED</code>, <code>CANCELLED</code> or <code>WAITING</code> (a waiting job is cancelled first). Imports made before Undo import existed did not record what they created and cannot be undone. The job moves to <code>UNDOING</code> and ends <code>UNDONE</code> with <code>undone_count</code>; poll <code>GET /v3/session/imports/{importId}/</code>. Undo is available for User Verification, Business Verification and transaction imports; status rules are not undone. Needs the sessions write and delete privileges (<code>write:sessions</code> and <code>delete:sessions</code> for a console user; an API key needs sessions write access and <code>delete:sessions</code>). Undoing a Business Verification import also needs <code>delete:businesses</code>, and a transactions import needs <code>write:transactions</code> (an API key needs write access to that resource).
+   *
+   * <p>{@code POST /v3/session/imports/{importId}/undo/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   *
+   * @param importId the {@code importId}
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public SessionImportJob undo(String importId, RequestOptions options) {
+    return client.execute(undoRequest(importId), options, UNDO_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #undo(String, RequestOptions)}.
+   *
+   * @param importId the {@code importId}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> undoAsync(String importId, RequestOptions options) {
+    return client.executeAsync(undoRequest(importId), options, UNDO_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #undo(String, RequestOptions)}, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @return the result
+   */
+  public SessionImportJob undo(String importId) {
+    return client.execute(undoRequest(importId), RequestOptions.none(), UNDO_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #undo(String, RequestOptions)}, with the client's options.
+   *
+   * @param importId the {@code importId}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SessionImportJob> undoAsync(String importId) {
+    return client.executeAsync(undoRequest(importId), RequestOptions.none(), UNDO_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<SessionImportJob> CREATE_RESPONSE = Responses.json(Conv.model(SessionImportJob::fromJson));
 
   private static ApiRequest createRequest(SessionsImportsCreateParams params) {
@@ -1005,6 +1191,31 @@ public final class SessionsImportsResource {
 
   private static ApiRequest listActiveJobsRequest() {
     return ApiRequest.builder("GET", "/v3/import-jobs/active/")
+        .build();
+  }
+
+  private static final ResponseHandler<ImportLimits> RETRIEVE_LIMITS_RESPONSE = Responses.json(Conv.model(ImportLimits::fromJson));
+
+  private static ApiRequest retrieveLimitsRequest() {
+    return ApiRequest.builder("GET", "/v3/session/imports/limits/")
+        .build();
+  }
+
+  private static final ResponseHandler<SessionImportJob> REQUEST_LIMIT_RESPONSE = Responses.json(Conv.model(SessionImportJob::fromJson));
+
+  private static ApiRequest requestLimitRequest(String importId, ImportLimitRequestInput params) {
+    return ApiRequest.builder("POST", "/v3/session/imports/{importId}/request-limit/")
+        .pathParam("importId", importId)
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<SessionImportJob> UNDO_RESPONSE = Responses.json(Conv.model(SessionImportJob::fromJson));
+
+  private static ApiRequest undoRequest(String importId) {
+    return ApiRequest.builder("POST", "/v3/session/imports/{importId}/undo/")
+        .pathParam("importId", importId)
         .build();
   }
 
@@ -1804,6 +2015,174 @@ public final class SessionsImportsResource {
      */
     public CompletableFuture<RawResponse<SessionsImportsListActiveJobsResponse>> listActiveJobsAsync() {
       return client.executeAsync(listActiveJobsRequest(), RequestOptions.none(), LIST_ACTIVE_JOBS_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveLimits(RequestOptions)} with the raw response.
+     *
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<ImportLimits> retrieveLimits(RequestOptions options) {
+      return client.execute(retrieveLimitsRequest(), options, RETRIEVE_LIMITS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveLimits(RequestOptions)} with the raw response.
+     *
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<ImportLimits>> retrieveLimitsAsync(RequestOptions options) {
+      return client.executeAsync(retrieveLimitsRequest(), options, RETRIEVE_LIMITS_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveLimits(RequestOptions)} with the raw response, with the client's options.
+     *
+     * @return the result
+     */
+    public RawResponse<ImportLimits> retrieveLimits() {
+      return client.execute(retrieveLimitsRequest(), RequestOptions.none(), RETRIEVE_LIMITS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveLimits(RequestOptions)} with the raw response, with the client's options.
+     *
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<ImportLimits>> retrieveLimitsAsync() {
+      return client.executeAsync(retrieveLimitsRequest(), RequestOptions.none(), RETRIEVE_LIMITS_RESPONSE);
+    }
+
+    /**
+     * {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)} with the raw response.
+     *
+     * @param importId the {@code importId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> requestLimit(String importId, ImportLimitRequestInput params, RequestOptions options) {
+      return client.execute(requestLimitRequest(importId, params), options, REQUEST_LIMIT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)} with the raw response.
+     *
+     * @param importId the {@code importId}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> requestLimitAsync(String importId, ImportLimitRequestInput params, RequestOptions options) {
+      return client.executeAsync(requestLimitRequest(importId, params), options, REQUEST_LIMIT_RESPONSE);
+    }
+
+    /**
+     * {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> requestLimit(String importId, ImportLimitRequestInput params) {
+      return client.execute(requestLimitRequest(importId, params), RequestOptions.none(), REQUEST_LIMIT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> requestLimitAsync(String importId, ImportLimitRequestInput params) {
+      return client.executeAsync(requestLimitRequest(importId, params), RequestOptions.none(), REQUEST_LIMIT_RESPONSE);
+    }
+
+    /**
+     * {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param importId the {@code importId}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> requestLimit(String importId, RequestOptions options) {
+      return client.execute(requestLimitRequest(importId, ImportLimitRequestInput.builder().build()), options, REQUEST_LIMIT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param importId the {@code importId}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> requestLimitAsync(String importId, RequestOptions options) {
+      return client.executeAsync(requestLimitRequest(importId, ImportLimitRequestInput.builder().build()), options, REQUEST_LIMIT_RESPONSE);
+    }
+
+    /**
+     * {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> requestLimit(String importId) {
+      return client.execute(requestLimitRequest(importId, ImportLimitRequestInput.builder().build()), RequestOptions.none(), REQUEST_LIMIT_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #requestLimit(String, ImportLimitRequestInput, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> requestLimitAsync(String importId) {
+      return client.executeAsync(requestLimitRequest(importId, ImportLimitRequestInput.builder().build()), RequestOptions.none(), REQUEST_LIMIT_RESPONSE);
+    }
+
+    /**
+     * {@link #undo(String, RequestOptions)} with the raw response.
+     *
+     * @param importId the {@code importId}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> undo(String importId, RequestOptions options) {
+      return client.execute(undoRequest(importId), options, UNDO_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #undo(String, RequestOptions)} with the raw response.
+     *
+     * @param importId the {@code importId}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> undoAsync(String importId, RequestOptions options) {
+      return client.executeAsync(undoRequest(importId), options, UNDO_RESPONSE);
+    }
+
+    /**
+     * {@link #undo(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @return the result
+     */
+    public RawResponse<SessionImportJob> undo(String importId) {
+      return client.execute(undoRequest(importId), RequestOptions.none(), UNDO_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #undo(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param importId the {@code importId}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SessionImportJob>> undoAsync(String importId) {
+      return client.executeAsync(undoRequest(importId), RequestOptions.none(), UNDO_RESPONSE);
     }
   }
 }

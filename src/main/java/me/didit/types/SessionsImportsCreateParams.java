@@ -151,7 +151,7 @@ public final class SessionsImportsCreateParams extends JsonModel {
   }
 
   /**
-   * Count what the migration would import (by status, already in Didit, same person, not finished) and write nothing. The job ends <code>READY</code>; start it with <code>POST /v3/session/imports/{importId}/start/</code>.
+   * Check what the import would do and write nothing, for every source (provider, file or URL). A migration counts what it would import (by status, already in Didit, same person, not finished); every dry run also computes the <code>checks</code>. The job ends <code>READY</code>; start it with <code>POST /v3/session/imports/{importId}/start/</code>. A dry run does not count against the monthly limit. Without it, the job first runs the same checks over the whole file.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -304,7 +304,7 @@ public final class SessionsImportsCreateParams extends JsonModel {
     }
 
     /**
-     * Count what the migration would import (by status, already in Didit, same person, not finished) and write nothing. The job ends <code>READY</code>; start it with <code>POST /v3/session/imports/{importId}/start/</code>.
+     * Check what the import would do and write nothing, for every source (provider, file or URL). A migration counts what it would import (by status, already in Didit, same person, not finished); every dry run also computes the <code>checks</code>. The job ends <code>READY</code>; start it with <code>POST /v3/session/imports/{importId}/start/</code>. A dry run does not count against the monthly limit. Without it, the job first runs the same checks over the whole file.
      *
      * @param dryRun the value
      * @return this builder
@@ -602,7 +602,7 @@ public final class SessionsImportsCreateParams extends JsonModel {
     }
 
     /**
-     * The provider region, one of its <code>regions</code> (Onfido: <code>eu</code>, <code>us</code>, <code>ca</code>).
+     * The provider region, one of its <code>regions</code> in <code>GET /v3/session/imports/providers/</code>.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -625,7 +625,7 @@ public final class SessionsImportsCreateParams extends JsonModel {
       }
 
       /**
-       * The provider region, one of its <code>regions</code> (Onfido: <code>eu</code>, <code>us</code>, <code>ca</code>).
+       * The provider region, one of its <code>regions</code> in <code>GET /v3/session/imports/providers/</code>.
        *
        * @param region the value
        * @return this builder
