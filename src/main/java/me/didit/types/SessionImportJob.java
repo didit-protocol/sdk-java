@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class SessionImportJob extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "import_type", "source_format", "source_filename", "total_rows", "processed_rows", "checkpoint_row", "created_count", "updated_count", "skipped_count", "failed_count", "total_media_bytes", "last_error", "created_at", "updated_at", "started_at", "completed_at", "state", "source", "provider", "provider_options", "credential_hint", "credentials_expires_at", "resumes_at", "status_mapping", "is_dry_run", "dry_run_summary", "face_templates_enabled", "lawful_basis_confirmed_at", "not_finished_count", "same_person_count", "face_templates_count", "face_duplicates_count", "face_blocklist_hits_count", "created_by_name", "created_by_email");
+  private static final Set<String> KNOWN_FIELDS = Set.of("uuid", "status", "import_type", "source_format", "source_filename", "total_rows", "processed_rows", "checkpoint_row", "created_count", "updated_count", "skipped_count", "failed_count", "total_media_bytes", "last_error", "created_at", "updated_at", "started_at", "completed_at", "state", "source", "provider", "provider_options", "credential_hint", "credentials_expires_at", "resumes_at", "status_mapping", "is_dry_run", "dry_run_summary", "face_templates_enabled", "lawful_basis_confirmed_at", "not_finished_count", "same_person_count", "face_templates_count", "face_duplicates_count", "face_blocklist_hits_count", "created_by_name", "created_by_email", "limit_lane", "waiting_reason", "checks", "review_note", "limit_request", "granted_records", "can_undo", "undone_count", "undone_at", "undone_by");
 
   private SessionImportJob(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -62,7 +62,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The <code>status</code> field.
+   * <code>WAITING</code>: the month's limit is used up. The import continues by itself when the limit goes up (a top-up, the next month, or Didit approving a limit request). <code>HELD</code>: a check held the file for review by Didit; nothing is written. <code>DECLINED</code>: Didit declined the held file (<code>review_note</code> says why); nothing was written and the source and credentials are erased. <code>UNDOING</code> and <code>UNDONE</code>: an Undo import is running or has finished.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -232,7 +232,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The job's state as the console shows it; <code>errors</code> is a completed job with rejected rows.
+   * The job's state as the console shows it; <code>errors</code> is a completed job with rejected rows. <code>waiting</code>: the month's import limit is used up. <code>held</code>: a check holds the import for review by Didit. <code>declined</code>: Didit declined the held import. <code>undoing</code> and <code>undone</code>: Undo import is running or finished.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -322,7 +322,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * What a dry run found: <code>total</code>, <code>by_status</code>, <code>already_in_didit</code>, <code>same_person</code>, <code>not_finished</code>, <code>failed</code>, <code>unmapped_statuses</code>.
+   * What a dry run found: <code>total</code>, <code>by_status</code>, <code>already_in_didit</code>, <code>same_person</code>, <code>not_finished</code>, <code>failed</code>, <code>unmapped_statuses</code> and <code>checks</code> (only the checks that fired, the same list as the job's <code>checks</code>).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -421,6 +421,106 @@ public final class SessionImportJob extends JsonModel {
     return Json.optional(json, "created_by_email", Conv.STRING);
   }
 
+  /**
+   * The monthly limit this job counts against: <code>provider</code> for a migration read from another provider (<code>source=provider</code>), <code>file</code> for an upload or file URL.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionImportJob.LimitLane> limitLane() {
+    return Json.optional(json, "limit_lane", Conv.enumeration(SessionImportJob.LimitLane::of));
+  }
+
+  /**
+   * Why a <code>WAITING</code> job waits. <code>null</code> otherwise.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<SessionImportJob.WaitingReason> waitingReason() {
+    return Json.optional(json, "waiting_reason", Conv.enumeration(SessionImportJob.WaitingReason::of));
+  }
+
+  /**
+   * Only the checks that fired over the whole file or account, each saying whether it holds the import. Empty when nothing fired.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<List<ImportCheck>> checks() {
+    return Json.optional(json, "checks", Conv.list(Conv.model(ImportCheck::fromJson)));
+  }
+
+  /**
+   * The note from Didit on a <code>DECLINED</code> job.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> reviewNote() {
+    return Json.optional(json, "review_note", Conv.STRING);
+  }
+
+  /**
+   * The request for a higher limit made for this job, or <code>null</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<ImportLimitRequest> limitRequest() {
+    return Json.optional(json, "limit_request", Conv.model(ImportLimitRequest::fromJson));
+  }
+
+  /**
+   * Records Didit approved for this job beyond the monthly limit.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> grantedRecords() {
+    return Json.optional(json, "granted_records", Conv.LONG);
+  }
+
+  /**
+   * <code>true</code> when the job recorded what it created, so <code>POST /v3/session/imports/{importId}/undo/</code> can delete it. Imports made before Undo import existed did not record it.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> canUndo() {
+    return Json.optional(json, "can_undo", Conv.BOOLEAN);
+  }
+
+  /**
+   * Records deleted by Undo import.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> undoneCount() {
+    return Json.optional(json, "undone_count", Conv.LONG);
+  }
+
+  /**
+   * The <code>undone_at</code> field.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> undoneAt() {
+    return Json.optional(json, "undone_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * Who undid the import.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> undoneBy() {
+    return Json.optional(json, "undone_by", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -445,7 +545,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The <code>status</code> field.
+     * <code>WAITING</code>: the month's limit is used up. The import continues by itself when the limit goes up (a top-up, the next month, or Didit approving a limit request). <code>HELD</code>: a check held the file for review by Didit; nothing is written. <code>DECLINED</code>: Didit declined the held file (<code>review_note</code> says why); nothing was written and the source and credentials are erased. <code>UNDOING</code> and <code>UNDONE</code>: an Undo import is running or has finished.
      *
      * @param status the value
      * @return this builder
@@ -615,7 +715,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * The job's state as the console shows it; <code>errors</code> is a completed job with rejected rows.
+     * The job's state as the console shows it; <code>errors</code> is a completed job with rejected rows. <code>waiting</code>: the month's import limit is used up. <code>held</code>: a check holds the import for review by Didit. <code>declined</code>: Didit declined the held import. <code>undoing</code> and <code>undone</code>: Undo import is running or finished.
      *
      * @param state the value
      * @return this builder
@@ -705,7 +805,7 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
-     * What a dry run found: <code>total</code>, <code>by_status</code>, <code>already_in_didit</code>, <code>same_person</code>, <code>not_finished</code>, <code>failed</code>, <code>unmapped_statuses</code>.
+     * What a dry run found: <code>total</code>, <code>by_status</code>, <code>already_in_didit</code>, <code>same_person</code>, <code>not_finished</code>, <code>failed</code>, <code>unmapped_statuses</code> and <code>checks</code> (only the checks that fired, the same list as the job's <code>checks</code>).
      *
      * @param dryRunSummary the value
      * @return this builder
@@ -805,6 +905,106 @@ public final class SessionImportJob extends JsonModel {
     }
 
     /**
+     * The monthly limit this job counts against: <code>provider</code> for a migration read from another provider (<code>source=provider</code>), <code>file</code> for an upload or file URL.
+     *
+     * @param limitLane the value
+     * @return this builder
+     */
+    public Builder limitLane(SessionImportJob.LimitLane limitLane) {
+      return set("limit_lane", Conv.enumeration(SessionImportJob.LimitLane::of), limitLane);
+    }
+
+    /**
+     * Why a <code>WAITING</code> job waits. <code>null</code> otherwise.
+     *
+     * @param waitingReason the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder waitingReason(SessionImportJob.@Nullable WaitingReason waitingReason) {
+      return setNullable("waiting_reason", Conv.enumeration(SessionImportJob.WaitingReason::of), waitingReason);
+    }
+
+    /**
+     * Only the checks that fired over the whole file or account, each saying whether it holds the import. Empty when nothing fired.
+     *
+     * @param checks the value
+     * @return this builder
+     */
+    public Builder checks(List<ImportCheck> checks) {
+      return set("checks", Conv.list(Conv.model(ImportCheck::fromJson)), checks);
+    }
+
+    /**
+     * The note from Didit on a <code>DECLINED</code> job.
+     *
+     * @param reviewNote the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder reviewNote(@Nullable String reviewNote) {
+      return setNullable("review_note", Conv.STRING, reviewNote);
+    }
+
+    /**
+     * The request for a higher limit made for this job, or <code>null</code>.
+     *
+     * @param limitRequest the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder limitRequest(@Nullable ImportLimitRequest limitRequest) {
+      return setNullable("limit_request", Conv.model(ImportLimitRequest::fromJson), limitRequest);
+    }
+
+    /**
+     * Records Didit approved for this job beyond the monthly limit.
+     *
+     * @param grantedRecords the value
+     * @return this builder
+     */
+    public Builder grantedRecords(long grantedRecords) {
+      return set("granted_records", Conv.LONG, grantedRecords);
+    }
+
+    /**
+     * <code>true</code> when the job recorded what it created, so <code>POST /v3/session/imports/{importId}/undo/</code> can delete it. Imports made before Undo import existed did not record it.
+     *
+     * @param canUndo the value
+     * @return this builder
+     */
+    public Builder canUndo(boolean canUndo) {
+      return set("can_undo", Conv.BOOLEAN, canUndo);
+    }
+
+    /**
+     * Records deleted by Undo import.
+     *
+     * @param undoneCount the value
+     * @return this builder
+     */
+    public Builder undoneCount(long undoneCount) {
+      return set("undone_count", Conv.LONG, undoneCount);
+    }
+
+    /**
+     * The <code>undone_at</code> field.
+     *
+     * @param undoneAt the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder undoneAt(@Nullable OffsetDateTime undoneAt) {
+      return setNullable("undone_at", Conv.DATE_TIME, undoneAt);
+    }
+
+    /**
+     * Who undid the import.
+     *
+     * @param undoneBy the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder undoneBy(@Nullable String undoneBy) {
+      return setNullable("undone_by", Conv.STRING, undoneBy);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code SessionImportJob}
@@ -832,6 +1032,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
+   * <code>WAITING</code>: the month's limit is used up. The import continues by itself when the limit goes up (a top-up, the next month, or Didit approving a limit request). <code>HELD</code>: a check held the file for review by Didit; nothing is written. <code>DECLINED</code>: Didit declined the held file (<code>review_note</code> says why); nothing was written and the source and credentials are erased. <code>UNDOING</code> and <code>UNDONE</code>: an Undo import is running or has finished.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -857,7 +1058,22 @@ public final class SessionImportJob extends JsonModel {
     /** The value {@code "READY"}. */
     public static final Status READY = new Status("READY");
 
-    private static final List<Status> KNOWN_VALUES = List.of(PENDING, PROCESSING, COMPLETED, FAILED, PAUSED, CANCELLED, READY);
+    /** The value {@code "WAITING"}. */
+    public static final Status WAITING = new Status("WAITING");
+
+    /** The value {@code "HELD"}. */
+    public static final Status HELD = new Status("HELD");
+
+    /** The value {@code "DECLINED"}. */
+    public static final Status DECLINED = new Status("DECLINED");
+
+    /** The value {@code "UNDOING"}. */
+    public static final Status UNDOING = new Status("UNDOING");
+
+    /** The value {@code "UNDONE"}. */
+    public static final Status UNDONE = new Status("UNDONE");
+
+    private static final List<Status> KNOWN_VALUES = List.of(PENDING, PROCESSING, COMPLETED, FAILED, PAUSED, CANCELLED, READY, WAITING, HELD, DECLINED, UNDOING, UNDONE);
 
     private Status(String value) {
       super(value);
@@ -979,7 +1195,7 @@ public final class SessionImportJob extends JsonModel {
   }
 
   /**
-   * The job's state as the console shows it; <code>errors</code> is a completed job with rejected rows.
+   * The job's state as the console shows it; <code>errors</code> is a completed job with rejected rows. <code>waiting</code>: the month's import limit is used up. <code>held</code>: a check holds the import for review by Didit. <code>declined</code>: Didit declined the held import. <code>undoing</code> and <code>undone</code>: Undo import is running or finished.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -1008,7 +1224,22 @@ public final class SessionImportJob extends JsonModel {
     /** The value {@code "cancelled"}. */
     public static final State CANCELLED = new State("cancelled");
 
-    private static final List<State> KNOWN_VALUES = List.of(READY, QUEUED, RUNNING, PAUSED, COMPLETED, ERRORS, FAILED, CANCELLED);
+    /** The value {@code "waiting"}. */
+    public static final State WAITING = new State("waiting");
+
+    /** The value {@code "held"}. */
+    public static final State HELD = new State("held");
+
+    /** The value {@code "declined"}. */
+    public static final State DECLINED = new State("declined");
+
+    /** The value {@code "undoing"}. */
+    public static final State UNDOING = new State("undoing");
+
+    /** The value {@code "undone"}. */
+    public static final State UNDONE = new State("undone");
+
+    private static final List<State> KNOWN_VALUES = List.of(READY, QUEUED, RUNNING, PAUSED, COMPLETED, ERRORS, FAILED, CANCELLED, WAITING, HELD, DECLINED, UNDOING, UNDONE);
 
     private State(String value) {
       super(value);
@@ -1075,6 +1306,89 @@ public final class SessionImportJob extends JsonModel {
      * @return the known values
      */
     public static List<Source> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * The monthly limit this job counts against: <code>provider</code> for a migration read from another provider (<code>source=provider</code>), <code>file</code> for an upload or file URL.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class LimitLane extends StringEnum {
+    /** The value {@code "provider"}. */
+    public static final LimitLane PROVIDER = new LimitLane("provider");
+
+    /** The value {@code "file"}. */
+    public static final LimitLane FILE = new LimitLane("file");
+
+    private static final List<LimitLane> KNOWN_VALUES = List.of(PROVIDER, FILE);
+
+    private LimitLane(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static LimitLane of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, LimitLane::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<LimitLane> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Why a <code>WAITING</code> job waits. <code>null</code> otherwise.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class WaitingReason extends StringEnum {
+    /** The value {@code "limit"}. */
+    public static final WaitingReason LIMIT = new WaitingReason("limit");
+
+    private static final List<WaitingReason> KNOWN_VALUES = List.of(LIMIT);
+
+    private WaitingReason(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static WaitingReason of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, WaitingReason::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<WaitingReason> knownValues() {
       return KNOWN_VALUES;
     }
 

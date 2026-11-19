@@ -16,6 +16,7 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.ImportLimitRequestInput;
 import me.didit.types.SessionsImportsCheckProviderParams;
 import me.didit.types.SessionsImportsCreateParams;
 import me.didit.types.SessionsImportsListErrorsParams;
@@ -260,5 +261,56 @@ final class SessionsImportsResourceTest {
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
+  }
+
+  @Test
+  void retrieveLimits() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/session/imports/limits/", "200");
+    transport.respondJson(200, example);
+    var result = client.sessions().imports().retrieveLimits();
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/session/imports/limits/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void requestLimit() {
+    ImportLimitRequestInput params = ImportLimitRequestInput.builder().note("value-note").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/imports/{importId}/request-limit/", "201");
+    transport.respondJson(201, example);
+    var result = client.sessions().imports().requestLimit("00000000-0000-4000-8000-000000013191", params, options);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/imports/00000000-0000-4000-8000-000000013191/request-limit/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    TestJson.assertJsonEquals("{\"note\":\"value-note\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+  }
+
+  @Test
+  void undo() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/session/imports/{importId}/undo/", "202");
+    transport.respondJson(202, example);
+    var result = client.sessions().imports().undo("00000000-0000-4000-8000-00000000b0ca", options);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/session/imports/00000000-0000-4000-8000-00000000b0ca/undo/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
   }
 }
