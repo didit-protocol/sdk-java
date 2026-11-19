@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /**
- * A VASP of the directory or a member of the Didit network, with the routes your application has to it. A customer is a member of the Didit network only while its application is live, its Travel Rule is on, its profile is discoverable, has a legal name and a confirmed compliance email, and Didit has not marked the application as a test, demo or internal one. Each row also carries the shared due-diligence assessment (dd_score, risk_level, responsiveness, essential_checks) and your application's own decision, entity screening and questionnaires, which no other customer sees.
+ * A VASP of the directory or a member of the Didit network, with the routes your application has to it. A customer is a member of the Didit network only while its application is live, its Travel Rule is on, its profile is discoverable, has a legal name and a confirmed compliance email, has an LEI that GLEIF lists as issued to an active entity and has been reviewed by Didit as a virtual asset service provider, and Didit has not marked the application as a test, demo, internal or not-a-VASP one. Each row also carries the shared due-diligence assessment (dd_score, risk_level, responsiveness, essential_checks) and your application's own decision, entity screening and questionnaires, which no other customer sees.
  */
 public final class VaspDirectoryEntry extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("id", "kind", "name", "lei", "jurisdiction", "domains", "reachable", "aliases", "networks", "routes", "umbrella", "entities", "contacts", "dd_status", "dd_score", "reachable_rails", "is_didit_customer", "dd_score_breakdown", "dd_assessed_at", "dd_score_semantic", "risk_level", "responsiveness", "essential_checks", "decision", "entity_screening", "questionnaires", "source", "assignee");
@@ -275,7 +275,7 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * The essential-checks report of a directory entry, built only from the platform's verified sources: registration (an official register lists the VASP: the EU's interim MiCA register, the public TRISA directory or the global LEI register), licence (a MiCA authorisation is on record and current), domain (the entry's domain matches its TRP endpoint or the website its register gives) and lei (its LEI record is active, issued and consistent with the entry's names and country). The essentials component of dd_score is the share of decided checks that pass. Empty until the weekly directory refresh first checks the entry, and always empty for a Didit network member.
+   * The essential-checks report of a directory entry, built only from the platform's verified sources: registration (an official register lists the VASP: the EU's interim MiCA register, the public TRISA directory or the global LEI register), licence (a MiCA authorisation is on record and current), domain (the entry's domain matches its TRP endpoint or the website its register gives) and lei (its LEI record is active, issued and consistent with the entry's names and country). The essentials component of dd_score is the share of decided checks that pass. Empty until the weekly directory refresh first checks the entry. A Didit network member (kind didit) carries the report too: registration, licence and domain come from the registered directory entry with the same LEI when there is one (else registration fails with no_register, licence is unknown with no_licence_record and domain is unknown with no_domain), and the lei check is GLEIF's answer against the member's own legal name and country.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -568,7 +568,7 @@ public final class VaspDirectoryEntry extends JsonModel {
     }
 
     /**
-     * The essential-checks report of a directory entry, built only from the platform's verified sources: registration (an official register lists the VASP: the EU's interim MiCA register, the public TRISA directory or the global LEI register), licence (a MiCA authorisation is on record and current), domain (the entry's domain matches its TRP endpoint or the website its register gives) and lei (its LEI record is active, issued and consistent with the entry's names and country). The essentials component of dd_score is the share of decided checks that pass. Empty until the weekly directory refresh first checks the entry, and always empty for a Didit network member.
+     * The essential-checks report of a directory entry, built only from the platform's verified sources: registration (an official register lists the VASP: the EU's interim MiCA register, the public TRISA directory or the global LEI register), licence (a MiCA authorisation is on record and current), domain (the entry's domain matches its TRP endpoint or the website its register gives) and lei (its LEI record is active, issued and consistent with the entry's names and country). The essentials component of dd_score is the share of decided checks that pass. Empty until the weekly directory refresh first checks the entry. A Didit network member (kind didit) carries the report too: registration, licence and domain come from the registered directory entry with the same LEI when there is one (else registration fails with no_register, licence is unknown with no_licence_record and domain is unknown with no_domain), and the lei check is GLEIF's answer against the member's own legal name and country.
      *
      * @param essentialChecks the value
      * @return this builder
@@ -2580,7 +2580,7 @@ public final class VaspDirectoryEntry extends JsonModel {
   }
 
   /**
-   * The essential-checks report of a directory entry, built only from the platform's verified sources: registration (an official register lists the VASP: the EU's interim MiCA register, the public TRISA directory or the global LEI register), licence (a MiCA authorisation is on record and current), domain (the entry's domain matches its TRP endpoint or the website its register gives) and lei (its LEI record is active, issued and consistent with the entry's names and country). The essentials component of dd_score is the share of decided checks that pass. Empty until the weekly directory refresh first checks the entry, and always empty for a Didit network member.
+   * The essential-checks report of a directory entry, built only from the platform's verified sources: registration (an official register lists the VASP: the EU's interim MiCA register, the public TRISA directory or the global LEI register), licence (a MiCA authorisation is on record and current), domain (the entry's domain matches its TRP endpoint or the website its register gives) and lei (its LEI record is active, issued and consistent with the entry's names and country). The essentials component of dd_score is the share of decided checks that pass. Empty until the weekly directory refresh first checks the entry. A Didit network member (kind didit) carries the report too: registration, licence and domain come from the registered directory entry with the same LEI when there is one (else registration fails with no_register, licence is unknown with no_licence_record and domain is unknown with no_domain), and the lei check is GLEIF's answer against the member's own legal name and country.
    */
   public static final class EssentialChecks extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("level", "checked_at", "checks", "passed", "failed", "unknown", "total");
@@ -2882,7 +2882,7 @@ public final class VaspDirectoryEntry extends JsonModel {
       }
 
       /**
-       * Machine-readable code of the verdict.
+       * Machine-readable code of the verdict. lei check: no_lei, no_gleif_record, gleif_lei_unknown (GLEIF has no record of the LEI), gleif_other_lei, gleif_entity_inactive, gleif_lei_not_issued, gleif_name_mismatch, gleif_country_mismatch, gleif_consistent. registration: gleif_issued, gleif_not_issued, no_register and the register reasons. licence: no_licence_record, no_authorisation_date. domain: no_domain.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2935,7 +2935,7 @@ public final class VaspDirectoryEntry extends JsonModel {
         }
 
         /**
-         * Machine-readable code of the verdict.
+         * Machine-readable code of the verdict. lei check: no_lei, no_gleif_record, gleif_lei_unknown (GLEIF has no record of the LEI), gleif_other_lei, gleif_entity_inactive, gleif_lei_not_issued, gleif_name_mismatch, gleif_country_mismatch, gleif_consistent. registration: gleif_issued, gleif_not_issued, no_register and the register reasons. licence: no_licence_record, no_authorisation_date. domain: no_domain.
          *
          * @param reason the value
          * @return this builder

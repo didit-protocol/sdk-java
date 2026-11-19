@@ -133,7 +133,7 @@ public final class TravelRuleWorkspace extends JsonModel {
   }
 
   /**
-   * Whether the Didit network lists this VASP and, when not, each condition it still misses.
+   * Whether the Didit network lists this VASP and, when not, each condition it still misses. Same shape as didit_network in GET /v3/travel-rule/settings/.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -266,7 +266,7 @@ public final class TravelRuleWorkspace extends JsonModel {
     }
 
     /**
-     * Whether the Didit network lists this VASP and, when not, each condition it still misses.
+     * Whether the Didit network lists this VASP and, when not, each condition it still misses. Same shape as didit_network in GET /v3/travel-rule/settings/.
      *
      * @param diditNetwork the value
      * @return this builder
