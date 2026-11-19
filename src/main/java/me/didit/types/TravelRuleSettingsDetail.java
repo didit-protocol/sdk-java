@@ -3,6 +3,7 @@ package me.didit.types;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
+import org.jspecify.annotations.Nullable;
 
 public final class TravelRuleSettingsDetail extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("is_enabled", "jurisdiction", "vasp_jurisdiction", "name_matching_strictness", "confirmation_timeout_hours", "timeout_outcome", "threshold_amount", "ownership_validation_mode", "simplified_validation_threshold", "data_sharing_fields", "matching_rules", "legal_name", "lei", "compliance_email", "is_discoverable", "inbound_auto_accept", "allow_self_declaration", "allow_screenshot_proof", "auto_wallet_verification", "vasp_attribution_enabled", "counterparty_screening_enabled", "sunrise_policy", "sunrise_jurisdictions", "non_responsive_policy", "travel_address", "disabled_networks", "networks", "didit_network", "licence");
@@ -170,7 +172,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * Your Legal Entity Identifier, surfaced in the VASP directory.
+   * Your Legal Entity Identifier (ISO 17442): 20 letters and digits whose last two are check digits (ISO 7064 MOD 97-10). It is stored in upper case. Surfaced in the VASP directory. Didit checks it with GLEIF; didit_network.lei_check shows the answer.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -190,7 +192,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * Whether your VASP profile can be listed in the Didit network: found in GET /v3/travel-rule/vasps/ by other Didit customers and reached on the INTERNAL rail. Listing also needs a live application, Travel Rule on, a legal name and a confirmed compliance email; didit_network says which are missing. Default true.
+   * Whether your VASP profile can be listed in the Didit network: found in GET /v3/travel-rule/vasps/ by other Didit customers and reached on the INTERNAL rail. Listing also needs a live application, Travel Rule on, a legal name, a confirmed compliance email, an LEI that GLEIF lists as issued to an active entity and a review by Didit that you are a virtual asset service provider; didit_network says which are missing. Default true.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -320,7 +322,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * Whether the Didit network lists your VASP profile, so other Didit customers find it in the directory and reach it on the INTERNAL rail, and each condition it still misses.
+   * Whether the Didit network lists your VASP profile, so other Didit customers find it in the directory and reach it on the INTERNAL rail, and each condition it still misses. Listing needs: a live (not sandbox) application with Travel Rule on, Discoverable on, a legal name, a compliance email confirmed through the emailed link, an LEI that GLEIF lists as issued to an active entity, and a review by Didit that the company is a virtual asset service provider (the review is for that LEI: changing the LEI or the legal name needs a new review).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -473,7 +475,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * Your Legal Entity Identifier, surfaced in the VASP directory.
+     * Your Legal Entity Identifier (ISO 17442): 20 letters and digits whose last two are check digits (ISO 7064 MOD 97-10). It is stored in upper case. Surfaced in the VASP directory. Didit checks it with GLEIF; didit_network.lei_check shows the answer.
      *
      * @param lei the value
      * @return this builder
@@ -493,7 +495,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * Whether your VASP profile can be listed in the Didit network: found in GET /v3/travel-rule/vasps/ by other Didit customers and reached on the INTERNAL rail. Listing also needs a live application, Travel Rule on, a legal name and a confirmed compliance email; didit_network says which are missing. Default true.
+     * Whether your VASP profile can be listed in the Didit network: found in GET /v3/travel-rule/vasps/ by other Didit customers and reached on the INTERNAL rail. Listing also needs a live application, Travel Rule on, a legal name, a confirmed compliance email, an LEI that GLEIF lists as issued to an active entity and a review by Didit that you are a virtual asset service provider; didit_network says which are missing. Default true.
      *
      * @param isDiscoverable the value
      * @return this builder
@@ -623,7 +625,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * Whether the Didit network lists your VASP profile, so other Didit customers find it in the directory and reach it on the INTERNAL rail, and each condition it still misses.
+     * Whether the Didit network lists your VASP profile, so other Didit customers find it in the directory and reach it on the INTERNAL rail, and each condition it still misses. Listing needs: a live (not sandbox) application with Travel Rule on, Discoverable on, a legal name, a compliance email confirmed through the emailed link, an LEI that GLEIF lists as issued to an active entity, and a review by Didit that the company is a virtual asset service provider (the review is for that LEI: changing the LEI or the legal name needs a new review).
      *
      * @param diditNetwork the value
      * @return this builder
@@ -1096,10 +1098,10 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * Whether the Didit network lists your VASP profile, so other Didit customers find it in the directory and reach it on the INTERNAL rail, and each condition it still misses.
+   * Whether the Didit network lists your VASP profile, so other Didit customers find it in the directory and reach it on the INTERNAL rail, and each condition it still misses. Listing needs: a live (not sandbox) application with Travel Rule on, Discoverable on, a legal name, a compliance email confirmed through the emailed link, an LEI that GLEIF lists as issued to an active entity, and a review by Didit that the company is a virtual asset service provider (the review is for that LEI: changing the LEI or the legal name needs a new review).
    */
   public static final class DiditNetwork extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("listed", "missing", "compliance_email_confirmed");
+    private static final Set<String> KNOWN_FIELDS = Set.of("listed", "missing", "compliance_email_confirmed", "lei_check");
 
     private DiditNetwork(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -1145,7 +1147,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * Empty when listed. compliance_email_unconfirmed: send the confirmation with POST /v3/travel-rule/settings/compliance-email/confirmation/ and open the emailed link. excluded_by_staff: Didit marked the application as a test, demo or internal one.
+     * Empty when listed, in this order when present. lei_missing: set lei with PUT /v3/travel-rule/settings/. lei_unverified: GLEIF does not list the LEI as issued to an active entity; see lei_check.reason. compliance_email_unconfirmed: send the confirmation with POST /v3/travel-rule/settings/compliance-email/confirmation/ and open the emailed link. excluded_by_staff: Didit marked the application as a test, demo, internal or not-a-VASP one. review_pending: Didit has not yet reviewed that the company is a virtual asset service provider for this LEI. A legal name or country that differs from GLEIF does not block the listing by itself: the reviewer sees it and counterparties read it in the lei check of essential_checks. Invited VASPs that joined free and proved their claim of a registered directory entry are listed through that claim.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1162,6 +1164,16 @@ public final class TravelRuleSettingsDetail extends JsonModel {
      */
     public Optional<Boolean> complianceEmailConfirmed() {
       return Json.optional(json, "compliance_email_confirmed", Conv.BOOLEAN);
+    }
+
+    /**
+     * What GLEIF said about your current LEI. null before the LEI was first checked.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<TravelRuleSettingsDetail.DiditNetwork.LeiCheck> leiCheck() {
+      return Json.optional(json, "lei_check", Conv.model(TravelRuleSettingsDetail.DiditNetwork.LeiCheck::fromJson));
     }
 
     @Override
@@ -1188,7 +1200,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
       }
 
       /**
-       * Empty when listed. compliance_email_unconfirmed: send the confirmation with POST /v3/travel-rule/settings/compliance-email/confirmation/ and open the emailed link. excluded_by_staff: Didit marked the application as a test, demo or internal one.
+       * Empty when listed, in this order when present. lei_missing: set lei with PUT /v3/travel-rule/settings/. lei_unverified: GLEIF does not list the LEI as issued to an active entity; see lei_check.reason. compliance_email_unconfirmed: send the confirmation with POST /v3/travel-rule/settings/compliance-email/confirmation/ and open the emailed link. excluded_by_staff: Didit marked the application as a test, demo, internal or not-a-VASP one. review_pending: Didit has not yet reviewed that the company is a virtual asset service provider for this LEI. A legal name or country that differs from GLEIF does not block the listing by itself: the reviewer sees it and counterparties read it in the lei check of essential_checks. Invited VASPs that joined free and proved their claim of a registered directory entry are listed through that claim.
        *
        * @param missing the value
        * @return this builder
@@ -1205,6 +1217,16 @@ public final class TravelRuleSettingsDetail extends JsonModel {
        */
       public Builder complianceEmailConfirmed(boolean complianceEmailConfirmed) {
         return set("compliance_email_confirmed", Conv.BOOLEAN, complianceEmailConfirmed);
+      }
+
+      /**
+       * What GLEIF said about your current LEI. null before the LEI was first checked.
+       *
+       * @param leiCheck the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder leiCheck(TravelRuleSettingsDetail.DiditNetwork.@Nullable LeiCheck leiCheck) {
+        return setNullable("lei_check", Conv.model(TravelRuleSettingsDetail.DiditNetwork.LeiCheck::fromJson), leiCheck);
       }
 
       /**
@@ -1239,6 +1261,12 @@ public final class TravelRuleSettingsDetail extends JsonModel {
       /** The value {@code "legal_name_missing"}. */
       public static final Missing LEGAL_NAME_MISSING = new Missing("legal_name_missing");
 
+      /** The value {@code "lei_missing"}. */
+      public static final Missing LEI_MISSING = new Missing("lei_missing");
+
+      /** The value {@code "lei_unverified"}. */
+      public static final Missing LEI_UNVERIFIED = new Missing("lei_unverified");
+
       /** The value {@code "compliance_email_missing"}. */
       public static final Missing COMPLIANCE_EMAIL_MISSING = new Missing("compliance_email_missing");
 
@@ -1251,7 +1279,10 @@ public final class TravelRuleSettingsDetail extends JsonModel {
       /** The value {@code "internal_organization"}. */
       public static final Missing INTERNAL_ORGANIZATION = new Missing("internal_organization");
 
-      private static final List<Missing> KNOWN_VALUES = List.of(TRAVEL_RULE_OFF, SANDBOX_APPLICATION, NOT_DISCOVERABLE, LEGAL_NAME_MISSING, COMPLIANCE_EMAIL_MISSING, COMPLIANCE_EMAIL_UNCONFIRMED, EXCLUDED_BY_STAFF, INTERNAL_ORGANIZATION);
+      /** The value {@code "review_pending"}. */
+      public static final Missing REVIEW_PENDING = new Missing("review_pending");
+
+      private static final List<Missing> KNOWN_VALUES = List.of(TRAVEL_RULE_OFF, SANDBOX_APPLICATION, NOT_DISCOVERABLE, LEGAL_NAME_MISSING, LEI_MISSING, LEI_UNVERIFIED, COMPLIANCE_EMAIL_MISSING, COMPLIANCE_EMAIL_UNCONFIRMED, EXCLUDED_BY_STAFF, INTERNAL_ORGANIZATION, REVIEW_PENDING);
 
       private Missing(String value) {
         super(value);
@@ -1279,6 +1310,261 @@ public final class TravelRuleSettingsDetail extends JsonModel {
       @Override
       public boolean isKnown() {
         return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /** What GLEIF said about your current LEI. null before the LEI was first checked. */
+    public static final class LeiCheck extends JsonModel {
+      private static final Set<String> KNOWN_FIELDS = Set.of("status", "reason", "gleif_legal_name", "checked_at");
+
+      private LeiCheck(ObjectNode json, Map<String, List<FileUpload>> files) {
+        super(json, files);
+      }
+
+      /**
+       * Reads a {@code LeiCheck} from JSON. Unknown fields are kept and readable
+       * through {@link #_additionalProperties()}.
+       *
+       * @param json a JSON object
+       * @return the parsed value
+       */
+      public static LeiCheck fromJson(JsonNode json) {
+        return new LeiCheck(Json.copyObject(json), Map.of());
+      }
+
+      /**
+       * Returns an empty builder.
+       *
+       * @return a new builder
+       */
+      public static Builder builder() {
+        return new Builder();
+      }
+
+      /**
+       * Returns a builder holding a copy of every field of this value.
+       *
+       * @return a new builder
+       */
+      public Builder toBuilder() {
+        return new Builder(this);
+      }
+
+      /**
+       * The <code>status</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<TravelRuleSettingsDetail.DiditNetwork.LeiCheck.Status> status() {
+        return Json.optional(json, "status", Conv.enumeration(TravelRuleSettingsDetail.DiditNetwork.LeiCheck.Status::of));
+      }
+
+      /**
+       * no_lei: no LEI is set. no_gleif_record: GLEIF has not been asked yet. gleif_lei_unknown: GLEIF has no record of this LEI. gleif_other_lei: the GLEIF record on file is for a different LEI. gleif_entity_inactive: the GLEIF entity is not active. gleif_lei_not_issued: the LEI is not in issued status (for example it lapsed). gleif_name_mismatch: GLEIF's legal name does not match your legal name. gleif_country_mismatch: GLEIF's country does not match your country. gleif_consistent: active, issued and consistent with your legal name and country.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<TravelRuleSettingsDetail.DiditNetwork.LeiCheck.Reason> reason() {
+        return Json.optional(json, "reason", Conv.enumeration(TravelRuleSettingsDetail.DiditNetwork.LeiCheck.Reason::of));
+      }
+
+      /**
+       * The legal name GLEIF holds for the LEI; empty when GLEIF has no record.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<String> gleifLegalName() {
+        return Json.optional(json, "gleif_legal_name", Conv.STRING);
+      }
+
+      /**
+       * The <code>checked_at</code> field.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<OffsetDateTime> checkedAt() {
+        return Json.optional(json, "checked_at", Conv.DATE_TIME);
+      }
+
+      @Override
+      protected Set<String> knownFields() {
+        return KNOWN_FIELDS;
+      }
+
+      /** Builds a {@link LeiCheck}. */
+      public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+        private Builder() {}
+
+        private Builder(LeiCheck from) {
+          super(from);
+        }
+
+        /**
+         * The <code>status</code> field.
+         *
+         * @param status the value
+         * @return this builder
+         */
+        public Builder status(TravelRuleSettingsDetail.DiditNetwork.LeiCheck.Status status) {
+          return set("status", Conv.enumeration(TravelRuleSettingsDetail.DiditNetwork.LeiCheck.Status::of), status);
+        }
+
+        /**
+         * no_lei: no LEI is set. no_gleif_record: GLEIF has not been asked yet. gleif_lei_unknown: GLEIF has no record of this LEI. gleif_other_lei: the GLEIF record on file is for a different LEI. gleif_entity_inactive: the GLEIF entity is not active. gleif_lei_not_issued: the LEI is not in issued status (for example it lapsed). gleif_name_mismatch: GLEIF's legal name does not match your legal name. gleif_country_mismatch: GLEIF's country does not match your country. gleif_consistent: active, issued and consistent with your legal name and country.
+         *
+         * @param reason the value
+         * @return this builder
+         */
+        public Builder reason(TravelRuleSettingsDetail.DiditNetwork.LeiCheck.Reason reason) {
+          return set("reason", Conv.enumeration(TravelRuleSettingsDetail.DiditNetwork.LeiCheck.Reason::of), reason);
+        }
+
+        /**
+         * The legal name GLEIF holds for the LEI; empty when GLEIF has no record.
+         *
+         * @param gleifLegalName the value
+         * @return this builder
+         */
+        public Builder gleifLegalName(String gleifLegalName) {
+          return set("gleif_legal_name", Conv.STRING, gleifLegalName);
+        }
+
+        /**
+         * The <code>checked_at</code> field.
+         *
+         * @param checkedAt the value, or {@code null} to send JSON null
+         * @return this builder
+         */
+        public Builder checkedAt(@Nullable OffsetDateTime checkedAt) {
+          return setNullable("checked_at", Conv.DATE_TIME, checkedAt);
+        }
+
+        /**
+         * Builds the value.
+         *
+         * @return a new immutable {@code LeiCheck}
+         */
+        public LeiCheck build() {
+          return new LeiCheck(buildJson(), buildFiles());
+        }
+
+        @Override
+        protected Builder self() {
+          return this;
+        }
+      }
+
+      /**
+       *
+       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+       */
+      public static final class Status extends StringEnum {
+        /** The value {@code "pass"}. */
+        public static final Status PASS = new Status("pass");
+
+        /** The value {@code "fail"}. */
+        public static final Status FAIL = new Status("fail");
+
+        /** The value {@code "unknown"}. */
+        public static final Status UNKNOWN = new Status("unknown");
+
+        private static final List<Status> KNOWN_VALUES = List.of(PASS, FAIL, UNKNOWN);
+
+        private Status(String value) {
+          super(value);
+        }
+
+        /**
+         * Returns the constant for a known value, or a new instance for any other value.
+         *
+         * @param value the string value
+         * @return the enum value
+         */
+        public static Status of(String value) {
+          return StringEnum.lookup(KNOWN_VALUES, value, Status::new);
+        }
+
+        /**
+         * Returns the values known to this SDK version.
+         *
+         * @return the known values
+         */
+        public static List<Status> knownValues() {
+          return KNOWN_VALUES;
+        }
+
+        @Override
+        public boolean isKnown() {
+          return KNOWN_VALUES.contains(this);
+        }
+      }
+
+      /**
+       * no_lei: no LEI is set. no_gleif_record: GLEIF has not been asked yet. gleif_lei_unknown: GLEIF has no record of this LEI. gleif_other_lei: the GLEIF record on file is for a different LEI. gleif_entity_inactive: the GLEIF entity is not active. gleif_lei_not_issued: the LEI is not in issued status (for example it lapsed). gleif_name_mismatch: GLEIF's legal name does not match your legal name. gleif_country_mismatch: GLEIF's country does not match your country. gleif_consistent: active, issued and consistent with your legal name and country.
+       *
+       * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+       */
+      public static final class Reason extends StringEnum {
+        /** The value {@code "no_lei"}. */
+        public static final Reason NO_LEI = new Reason("no_lei");
+
+        /** The value {@code "no_gleif_record"}. */
+        public static final Reason NO_GLEIF_RECORD = new Reason("no_gleif_record");
+
+        /** The value {@code "gleif_lei_unknown"}. */
+        public static final Reason GLEIF_LEI_UNKNOWN = new Reason("gleif_lei_unknown");
+
+        /** The value {@code "gleif_other_lei"}. */
+        public static final Reason GLEIF_OTHER_LEI = new Reason("gleif_other_lei");
+
+        /** The value {@code "gleif_entity_inactive"}. */
+        public static final Reason GLEIF_ENTITY_INACTIVE = new Reason("gleif_entity_inactive");
+
+        /** The value {@code "gleif_lei_not_issued"}. */
+        public static final Reason GLEIF_LEI_NOT_ISSUED = new Reason("gleif_lei_not_issued");
+
+        /** The value {@code "gleif_name_mismatch"}. */
+        public static final Reason GLEIF_NAME_MISMATCH = new Reason("gleif_name_mismatch");
+
+        /** The value {@code "gleif_country_mismatch"}. */
+        public static final Reason GLEIF_COUNTRY_MISMATCH = new Reason("gleif_country_mismatch");
+
+        /** The value {@code "gleif_consistent"}. */
+        public static final Reason GLEIF_CONSISTENT = new Reason("gleif_consistent");
+
+        private static final List<Reason> KNOWN_VALUES = List.of(NO_LEI, NO_GLEIF_RECORD, GLEIF_LEI_UNKNOWN, GLEIF_OTHER_LEI, GLEIF_ENTITY_INACTIVE, GLEIF_LEI_NOT_ISSUED, GLEIF_NAME_MISMATCH, GLEIF_COUNTRY_MISMATCH, GLEIF_CONSISTENT);
+
+        private Reason(String value) {
+          super(value);
+        }
+
+        /**
+         * Returns the constant for a known value, or a new instance for any other value.
+         *
+         * @param value the string value
+         * @return the enum value
+         */
+        public static Reason of(String value) {
+          return StringEnum.lookup(KNOWN_VALUES, value, Reason::new);
+        }
+
+        /**
+         * Returns the values known to this SDK version.
+         *
+         * @return the known values
+         */
+        public static List<Reason> knownValues() {
+          return KNOWN_VALUES;
+        }
+
+        @Override
+        public boolean isKnown() {
+          return KNOWN_VALUES.contains(this);
+        }
       }
     }
   }

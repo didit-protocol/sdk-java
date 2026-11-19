@@ -71,7 +71,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * The <code>lei</code> field.
+   * Your Legal Entity Identifier (ISO 17442): 20 letters and digits whose last two are check digits (ISO 7064 MOD 97-10). It is stored in upper case. Anything else answers 400 with 'Enter a valid LEI: 20 letters and digits whose last two are its check digits (ISO 17442).' Send an empty string to clear it. When the LEI, the legal name or the country changes, Didit checks the LEI with GLEIF; didit_network.lei_check shows the answer.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -141,7 +141,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * Whether your VASP profile can be listed in the Didit network: found in GET /v3/travel-rule/vasps/ by other Didit customers and reached on the INTERNAL rail. Listing also needs a live application, Travel Rule on, a legal name and a confirmed compliance email; didit_network says which are missing. Default true.
+   * Whether your VASP profile can be listed in the Didit network: found in GET /v3/travel-rule/vasps/ by other Didit customers and reached on the INTERNAL rail. Listing also needs a live application, Travel Rule on, a legal name, a confirmed compliance email, an LEI that GLEIF lists as issued to an active entity and a review by Didit that you are a virtual asset service provider; didit_network says which are missing. Default true.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -334,7 +334,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * The <code>lei</code> field.
+     * Your Legal Entity Identifier (ISO 17442): 20 letters and digits whose last two are check digits (ISO 7064 MOD 97-10). It is stored in upper case. Anything else answers 400 with 'Enter a valid LEI: 20 letters and digits whose last two are its check digits (ISO 17442).' Send an empty string to clear it. When the LEI, the legal name or the country changes, Didit checks the LEI with GLEIF; didit_network.lei_check shows the answer.
      *
      * @param lei the value
      * @return this builder
@@ -404,7 +404,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * Whether your VASP profile can be listed in the Didit network: found in GET /v3/travel-rule/vasps/ by other Didit customers and reached on the INTERNAL rail. Listing also needs a live application, Travel Rule on, a legal name and a confirmed compliance email; didit_network says which are missing. Default true.
+     * Whether your VASP profile can be listed in the Didit network: found in GET /v3/travel-rule/vasps/ by other Didit customers and reached on the INTERNAL rail. Listing also needs a live application, Travel Rule on, a legal name, a confirmed compliance email, an LEI that GLEIF lists as issued to an active entity and a review by Didit that you are a virtual asset service provider; didit_network says which are missing. Default true.
      *
      * @param isDiscoverable the value
      * @return this builder
