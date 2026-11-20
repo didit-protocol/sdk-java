@@ -93,7 +93,7 @@ public final class AMLScreeningRun extends JsonModel {
   }
 
   /**
-   * <code>NO_CHANGE</code>: completed and the result did not move. <code>CHANGED</code>: completed and the score, status, hit count or hits changed. <code>FAILED</code>: no usable answer for this subject, so the check was left as it was.
+   * <code>NO_CHANGE</code>: completed and the result did not move. <code>CHANGED</code>: completed and the score, the status or a match at or above your Match Score Threshold changed (added, removed or updated). Matches below that threshold start as False Positive and can come and go between runs without making a run <code>CHANGED</code>. <code>FAILED</code>: no usable answer for this subject, so the check was left as it was.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -236,7 +236,7 @@ public final class AMLScreeningRun extends JsonModel {
     }
 
     /**
-     * <code>NO_CHANGE</code>: completed and the result did not move. <code>CHANGED</code>: completed and the score, status, hit count or hits changed. <code>FAILED</code>: no usable answer for this subject, so the check was left as it was.
+     * <code>NO_CHANGE</code>: completed and the result did not move. <code>CHANGED</code>: completed and the score, the status or a match at or above your Match Score Threshold changed (added, removed or updated). Matches below that threshold start as False Positive and can come and go between runs without making a run <code>CHANGED</code>. <code>FAILED</code>: no usable answer for this subject, so the check was left as it was.
      *
      * @param outcome the value
      * @return this builder
@@ -355,7 +355,7 @@ public final class AMLScreeningRun extends JsonModel {
   }
 
   /**
-   * <code>NO_CHANGE</code>: completed and the result did not move. <code>CHANGED</code>: completed and the score, status, hit count or hits changed. <code>FAILED</code>: no usable answer for this subject, so the check was left as it was.
+   * <code>NO_CHANGE</code>: completed and the result did not move. <code>CHANGED</code>: completed and the score, the status or a match at or above your Match Score Threshold changed (added, removed or updated). Matches below that threshold start as False Positive and can come and go between runs without making a run <code>CHANGED</code>. <code>FAILED</code>: no usable answer for this subject, so the check was left as it was.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
