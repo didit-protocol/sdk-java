@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.24.0](https://github.com/didit-protocol/sdk-java/compare/v1.23.0...v1.24.0) (2026-11-20)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-20 ([6db645a](https://github.com/didit-protocol/sdk-java/commit/6db645a23ea7b2a013f0cd46b5bd83ceb45cda44))
+
 ## [1.23.0](https://github.com/didit-protocol/sdk-java/compare/v1.22.0...v1.23.0) (2026-11-19)
 
 
