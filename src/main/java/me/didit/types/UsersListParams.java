@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 
 /** Parameters for {&#64;code users.list}. */
 public final class UsersListParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("limit", "offset");
+  private static final Set<String> KNOWN_FIELDS = Set.of("limit", "offset", "lookup");
 
   private UsersListParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -69,6 +69,16 @@ public final class UsersListParams extends JsonModel {
     return Json.optional(json, "offset", Conv.LONG);
   }
 
+  /**
+   * A <code>lookup_id</code> returned by <code>POST /v3/users/lookup/</code>. The list returns only the users that lookup matched, ordered by the position of their identifier in the list you submitted, paginated with <code>limit</code> and <code>offset</code>. An expired or unknown <code>lookup_id</code> returns <code>404</code> with <code>code: lookup_not_found</code>; submit the list again.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> lookup() {
+    return Json.optional(json, "lookup", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -100,6 +110,16 @@ public final class UsersListParams extends JsonModel {
      */
     public Builder offset(long offset) {
       return set("offset", Conv.LONG, offset);
+    }
+
+    /**
+     * A <code>lookup_id</code> returned by <code>POST /v3/users/lookup/</code>. The list returns only the users that lookup matched, ordered by the position of their identifier in the list you submitted, paginated with <code>limit</code> and <code>offset</code>. An expired or unknown <code>lookup_id</code> returns <code>404</code> with <code>code: lookup_not_found</code>; submit the list again.
+     *
+     * @param lookup the value
+     * @return this builder
+     */
+    public Builder lookup(String lookup) {
+      return set("lookup", Conv.STRING, lookup);
     }
 
     /**

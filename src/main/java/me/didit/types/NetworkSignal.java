@@ -345,7 +345,10 @@ public final class NetworkSignal extends JsonModel {
     /** The value {@code "address"}. */
     public static final SignalType ADDRESS = new SignalType("address");
 
-    private static final List<SignalType> KNOWN_VALUES = List.of(IP_ADDRESS, DEVICE, FACE, DOCUMENT_NUMBER, PHONE, EMAIL, ADDRESS);
+    /** The value {@code "wallet_address"}. */
+    public static final SignalType WALLET_ADDRESS = new SignalType("wallet_address");
+
+    private static final List<SignalType> KNOWN_VALUES = List.of(IP_ADDRESS, DEVICE, FACE, DOCUMENT_NUMBER, PHONE, EMAIL, ADDRESS, WALLET_ADDRESS);
 
     private SignalType(String value) {
       super(value);

@@ -21,6 +21,9 @@ import me.didit.types.UsersBatchDeleteResponse;
 import me.didit.types.UsersCreateParams;
 import me.didit.types.UsersCreateResponse;
 import me.didit.types.UsersListParams;
+import me.didit.types.UsersLookupDetail;
+import me.didit.types.UsersLookupRequest;
+import me.didit.types.UsersLookupResponse;
 import me.didit.types.UsersSetAmlMonitoringParams;
 import me.didit.types.UsersSetAmlMonitoringResponse;
 import me.didit.types.UsersSetOngoingMonitoringResponse;
@@ -51,7 +54,7 @@ public final class UsersResource {
   /**
    * List users
    *
-   * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc. This endpoint does not support filtering or search parameters — fetch pages and filter client-side.
+   * <p>List [users](/entities/users) Didit assembles from KYC sessions sharing the same <code>vendor_data</code> (free-form string, NOT a UUID), plus users created via the API. Paginated, ordered by <code>last_session_at</code> desc, or by the position in your list when <code>lookup</code> is set. Pass <code>lookup</code> to read only the users a list of identifiers resolved to (see [Look up users](#post-/v3/users/lookup/)). No other filter or search parameter is supported: fetch pages and filter client-side.
    *
    * <p>{@code GET /v3/users/}
    * <p>Returns one page; iterate it to fetch every following page automatically.
@@ -131,6 +134,100 @@ public final class UsersResource {
    */
   public CompletableFuture<Page<UserListItem>> listAsync() {
     return client.executeAsync(listRequest(UsersListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Look up users
+   *
+   * <p>Resolve a list of up to 20,000 identifiers to the users of your application, in one call. Each identifier is matched, in this order, against <code>vendor_data</code> (exactly), the Didit user ID (a UUID), then a verified email (case-insensitive). An email can match several users, and all of them count. Blank entries are dropped and duplicates removed, keeping the first; 1 to 20,000 identifiers must remain, and a request sends at most 100,000 entries before that clean-up. The call only reads. It answers with a <code>lookup_id</code>, the counts and the identifiers that matched nobody, each with its 1-based <code>position</code> in the submitted list.
+   *
+   * <p>Pass the <code>lookup_id</code> as <code>lookup</code> to [List users](#get-/v3/users/) to page through exactly the matched users, in the order you submitted them. The result is kept for 24 hours for your application only, then answers <code>404</code> with <code>code: lookup_not_found</code>.
+   *
+   * <p>{@code POST /v3/users/lookup/}
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public UsersLookupResponse lookup(UsersLookupRequest params, RequestOptions options) {
+    return client.execute(lookupRequest(params), options, LOOKUP_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #lookup(UsersLookupRequest, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<UsersLookupResponse> lookupAsync(UsersLookupRequest params, RequestOptions options) {
+    return client.executeAsync(lookupRequest(params), options, LOOKUP_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #lookup(UsersLookupRequest, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return the result
+   */
+  public UsersLookupResponse lookup(UsersLookupRequest params) {
+    return client.execute(lookupRequest(params), RequestOptions.none(), LOOKUP_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #lookup(UsersLookupRequest, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<UsersLookupResponse> lookupAsync(UsersLookupRequest params) {
+    return client.executeAsync(lookupRequest(params), RequestOptions.none(), LOOKUP_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Get a user lookup
+   *
+   * <p>Read back a lookup made with [Look up users](#post-/v3/users/lookup/): the same counts and <code>not_found</code> list, plus the <code>identifiers</code> you submitted after blanks and duplicates were removed, in order. A lookup lives 24 hours and belongs to the application that made it; an expired, unknown or other application's <code>lookup_id</code> returns <code>404</code> with <code>code: lookup_not_found</code>.
+   *
+   * <p>{@code GET /v3/users/lookup/{lookup_id}/}
+   *
+   * @param lookupId The `lookup_id` returned by Look up users.
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public UsersLookupDetail getLookup(String lookupId, RequestOptions options) {
+    return client.execute(getLookupRequest(lookupId), options, GET_LOOKUP_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #getLookup(String, RequestOptions)}.
+   *
+   * @param lookupId the {@code lookup_id}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<UsersLookupDetail> getLookupAsync(String lookupId, RequestOptions options) {
+    return client.executeAsync(getLookupRequest(lookupId), options, GET_LOOKUP_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #getLookup(String, RequestOptions)}, with the client's options.
+   *
+   * @param lookupId the {@code lookup_id}
+   * @return the result
+   */
+  public UsersLookupDetail getLookup(String lookupId) {
+    return client.execute(getLookupRequest(lookupId), RequestOptions.none(), GET_LOOKUP_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #getLookup(String, RequestOptions)}, with the client's options.
+   *
+   * @param lookupId the {@code lookup_id}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<UsersLookupDetail> getLookupAsync(String lookupId) {
+    return client.executeAsync(getLookupRequest(lookupId), RequestOptions.none(), GET_LOOKUP_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
@@ -776,7 +873,24 @@ public final class UsersResource {
   private static ApiRequest listRequest(UsersListParams params) {
     return ApiRequest.builder("GET", "/v3/users/")
         .params(params)
-        .queryFields("limit", "offset")
+        .queryFields("limit", "offset", "lookup")
+        .build();
+  }
+
+  private static final ResponseHandler<UsersLookupResponse> LOOKUP_RESPONSE = Responses.json(Conv.model(UsersLookupResponse::fromJson));
+
+  private static ApiRequest lookupRequest(UsersLookupRequest params) {
+    return ApiRequest.builder("POST", "/v3/users/lookup/")
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<UsersLookupDetail> GET_LOOKUP_RESPONSE = Responses.json(Conv.model(UsersLookupDetail::fromJson));
+
+  private static ApiRequest getLookupRequest(String lookupId) {
+    return ApiRequest.builder("GET", "/v3/users/lookup/{lookup_id}/")
+        .pathParam("lookup_id", lookupId)
         .build();
   }
 
@@ -969,6 +1083,90 @@ public final class UsersResource {
      */
     public CompletableFuture<RawResponse<Page<UserListItem>>> listAsync() {
       return client.executeAsync(listRequest(UsersListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
+    }
+
+    /**
+     * {@link #lookup(UsersLookupRequest, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<UsersLookupResponse> lookup(UsersLookupRequest params, RequestOptions options) {
+      return client.execute(lookupRequest(params), options, LOOKUP_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #lookup(UsersLookupRequest, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<UsersLookupResponse>> lookupAsync(UsersLookupRequest params, RequestOptions options) {
+      return client.executeAsync(lookupRequest(params), options, LOOKUP_RESPONSE);
+    }
+
+    /**
+     * {@link #lookup(UsersLookupRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<UsersLookupResponse> lookup(UsersLookupRequest params) {
+      return client.execute(lookupRequest(params), RequestOptions.none(), LOOKUP_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #lookup(UsersLookupRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<UsersLookupResponse>> lookupAsync(UsersLookupRequest params) {
+      return client.executeAsync(lookupRequest(params), RequestOptions.none(), LOOKUP_RESPONSE);
+    }
+
+    /**
+     * {@link #getLookup(String, RequestOptions)} with the raw response.
+     *
+     * @param lookupId the {@code lookup_id}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<UsersLookupDetail> getLookup(String lookupId, RequestOptions options) {
+      return client.execute(getLookupRequest(lookupId), options, GET_LOOKUP_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #getLookup(String, RequestOptions)} with the raw response.
+     *
+     * @param lookupId the {@code lookup_id}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<UsersLookupDetail>> getLookupAsync(String lookupId, RequestOptions options) {
+      return client.executeAsync(getLookupRequest(lookupId), options, GET_LOOKUP_RESPONSE);
+    }
+
+    /**
+     * {@link #getLookup(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param lookupId the {@code lookup_id}
+     * @return the result
+     */
+    public RawResponse<UsersLookupDetail> getLookup(String lookupId) {
+      return client.execute(getLookupRequest(lookupId), RequestOptions.none(), GET_LOOKUP_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #getLookup(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param lookupId the {@code lookup_id}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<UsersLookupDetail>> getLookupAsync(String lookupId) {
+      return client.executeAsync(getLookupRequest(lookupId), RequestOptions.none(), GET_LOOKUP_RESPONSE);
     }
 
     /**
