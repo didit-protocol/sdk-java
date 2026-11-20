@@ -16,6 +16,7 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.NetworkSignalSearchRequest;
 import me.didit.types.NetworkTagRequest;
 import me.didit.types.NetworksListParams;
 import me.didit.types.NetworksRetrieveGraphParams;
@@ -44,6 +45,23 @@ final class NetworksResourceTest {
     TestJson.assertJsonEquals(example, result._json());
     assertEquals(example.path("results").size(), result.results().size());
     TestModels.readAll(result.results());
+  }
+
+  @Test
+  void searchSignals() {
+    NetworkSignalSearchRequest params = NetworkSignalSearchRequest.builder().signalType(NetworkSignalSearchRequest.SignalType.IP_ADDRESS).value("value-value").image("value-image").issuingState("value-issuing-state").documentType("value-document-type").region("value-region").tag("value-tag").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/organization/{organization_id}/application/{application_id}/networks/signals/search/", "200");
+    transport.respondJson(200, example);
+    var result = client.networks().searchSignals(params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/organization/00000000-0000-4000-8000-0000000000a1/application/00000000-0000-4000-8000-0000000000a2/networks/signals/search/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"signal_type\":\"ip_address\",\"value\":\"value-value\",\"image\":\"value-image\",\"issuing_state\":\"value-issuing-state\",\"document_type\":\"value-document-type\",\"region\":\"value-region\",\"tag\":\"value-tag\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 
   @Test

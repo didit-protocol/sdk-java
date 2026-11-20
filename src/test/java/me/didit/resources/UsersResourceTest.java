@@ -21,6 +21,7 @@ import me.didit.types.OngoingMonitoringToggleRequest;
 import me.didit.types.UsersBatchDeleteParams;
 import me.didit.types.UsersCreateParams;
 import me.didit.types.UsersListParams;
+import me.didit.types.UsersLookupRequest;
 import me.didit.types.UsersSetAmlMonitoringParams;
 import me.didit.types.UsersUpdateParams;
 import me.didit.types.UsersUpdateStatusParams;
@@ -35,20 +36,53 @@ final class UsersResourceTest {
 
   @Test
   void list() {
-    UsersListParams params = UsersListParams.builder().limit(1L).offset(1L).build();
+    UsersListParams params = UsersListParams.builder().limit(1L).offset(1L).lookup("00000000-0000-4000-8000-00000000092c").build();
     JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/users/", "200");
     transport.respondJson(200, example);
     var result = client.users().list(params);
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/v3/users/", request.path());
-    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1"))), request.query());
+    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("offset", List.of("1")), Map.entry("lookup", List.of("00000000-0000-4000-8000-00000000092c"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, result._json());
     assertEquals(example.path("results").size(), result.results().size());
     TestModels.readAll(result.results());
+  }
+
+  @Test
+  void lookup() {
+    UsersLookupRequest params = UsersLookupRequest.builder().identifiers(List.of("value-identifiers")).build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/users/lookup/", "201");
+    transport.respondJson(201, example);
+    var result = client.users().lookup(params);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/users/lookup/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    TestJson.assertJsonEquals("{\"identifiers\":[\"value-identifiers\"]}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void getLookup() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/users/lookup/{lookup_id}/", "200");
+    transport.respondJson(200, example);
+    var result = client.users().getLookup("00000000-0000-4000-8000-000000008789");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/users/lookup/00000000-0000-4000-8000-000000008789/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 
   @Test

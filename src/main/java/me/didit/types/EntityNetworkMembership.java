@@ -225,7 +225,10 @@ public final class EntityNetworkMembership extends JsonModel {
     /** The value {@code "address"}. */
     public static final SignalTypes ADDRESS = new SignalTypes("address");
 
-    private static final List<SignalTypes> KNOWN_VALUES = List.of(IP_ADDRESS, DEVICE, FACE, DOCUMENT_NUMBER, PHONE, EMAIL, ADDRESS);
+    /** The value {@code "wallet_address"}. */
+    public static final SignalTypes WALLET_ADDRESS = new SignalTypes("wallet_address");
+
+    private static final List<SignalTypes> KNOWN_VALUES = List.of(IP_ADDRESS, DEVICE, FACE, DOCUMENT_NUMBER, PHONE, EMAIL, ADDRESS, WALLET_ADDRESS);
 
     private SignalTypes(String value) {
       super(value);

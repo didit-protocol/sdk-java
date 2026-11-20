@@ -15,6 +15,8 @@ import me.didit.types.NetworkDetailResponse;
 import me.didit.types.NetworkGraph;
 import me.didit.types.NetworkListItem;
 import me.didit.types.NetworkMap;
+import me.didit.types.NetworkSignalSearchRequest;
+import me.didit.types.NetworkSignalSearchResponse;
 import me.didit.types.NetworkTagRequest;
 import me.didit.types.NetworksListMembersResponse;
 import me.didit.types.NetworksListParams;
@@ -137,6 +139,55 @@ public final class NetworksResource {
    */
   public CompletableFuture<Page<NetworkListItem>> listAsync() {
     return client.executeAsync(listRequest(NetworksListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Search signals
+   *
+   * <p>Check one value against every network of your organization before you open an investigation. Choose a <code>signal_type</code> and send its value: an address, a phone number, an email, a device fingerprint, a document number with its issuing state and type, or a face image. A <code>wallet_address</code> search takes the address and optionally its destination tag or memo in <code>tag</code>, and answers with the <code>wallet</code> object: accounts, payouts, the amount paid out and the payout dates. A wallet many accounts use is a shared service: it answers <code>match_count: 0</code> and no matches, with <code>is_shared_service: true</code>.
+   *
+   * <p>Requires the <code>read:networks</code> permission. Searches are limited per organization: when the budget is spent the call answers <code>429</code>.
+   *
+   * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/networks/signals/search/}
+   * <p>Application scoped: the organization and application ids come from the client options.
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public NetworkSignalSearchResponse searchSignals(NetworkSignalSearchRequest params, RequestOptions options) {
+    return client.execute(searchSignalsRequest(params), options, SEARCH_SIGNALS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #searchSignals(NetworkSignalSearchRequest, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<NetworkSignalSearchResponse> searchSignalsAsync(NetworkSignalSearchRequest params, RequestOptions options) {
+    return client.executeAsync(searchSignalsRequest(params), options, SEARCH_SIGNALS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #searchSignals(NetworkSignalSearchRequest, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return the result
+   */
+  public NetworkSignalSearchResponse searchSignals(NetworkSignalSearchRequest params) {
+    return client.execute(searchSignalsRequest(params), RequestOptions.none(), SEARCH_SIGNALS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #searchSignals(NetworkSignalSearchRequest, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<NetworkSignalSearchResponse> searchSignalsAsync(NetworkSignalSearchRequest params) {
+    return client.executeAsync(searchSignalsRequest(params), RequestOptions.none(), SEARCH_SIGNALS_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
@@ -675,6 +726,16 @@ public final class NetworksResource {
         .build();
   }
 
+  private static final ResponseHandler<NetworkSignalSearchResponse> SEARCH_SIGNALS_RESPONSE = Responses.json(Conv.model(NetworkSignalSearchResponse::fromJson));
+
+  private static ApiRequest searchSignalsRequest(NetworkSignalSearchRequest params) {
+    return ApiRequest.builder("POST", "/v3/organization/{organization_id}/application/{application_id}/networks/signals/search/")
+        .applicationScoped()
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON_OR_MULTIPART)
+        .build();
+  }
+
   private static final ResponseHandler<NetworkDetailResponse> RETRIEVE_RESPONSE = Responses.json(Conv.model(NetworkDetailResponse::fromJson));
 
   private static ApiRequest retrieveRequest(String networkUuid) {
@@ -851,6 +912,48 @@ public final class NetworksResource {
      */
     public CompletableFuture<RawResponse<Page<NetworkListItem>>> listAsync() {
       return client.executeAsync(listRequest(NetworksListParams.builder().build()), RequestOptions.none(), LIST_RESPONSE);
+    }
+
+    /**
+     * {@link #searchSignals(NetworkSignalSearchRequest, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<NetworkSignalSearchResponse> searchSignals(NetworkSignalSearchRequest params, RequestOptions options) {
+      return client.execute(searchSignalsRequest(params), options, SEARCH_SIGNALS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #searchSignals(NetworkSignalSearchRequest, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<NetworkSignalSearchResponse>> searchSignalsAsync(NetworkSignalSearchRequest params, RequestOptions options) {
+      return client.executeAsync(searchSignalsRequest(params), options, SEARCH_SIGNALS_RESPONSE);
+    }
+
+    /**
+     * {@link #searchSignals(NetworkSignalSearchRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<NetworkSignalSearchResponse> searchSignals(NetworkSignalSearchRequest params) {
+      return client.execute(searchSignalsRequest(params), RequestOptions.none(), SEARCH_SIGNALS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #searchSignals(NetworkSignalSearchRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<NetworkSignalSearchResponse>> searchSignalsAsync(NetworkSignalSearchRequest params) {
+      return client.executeAsync(searchSignalsRequest(params), RequestOptions.none(), SEARCH_SIGNALS_RESPONSE);
     }
 
     /**
