@@ -173,7 +173,7 @@ public final class AmlScreenParams extends JsonModel {
   }
 
   /**
-   * Keep re-screening this profile and push changes via webhook. Requires <code>save_api_request=true</code> (else <code>400</code>).
+   * Keep this profile under provider-driven ongoing monitoring and push the provider's updates via webhook. Requires <code>save_api_request=true</code> (else <code>400</code>).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -356,7 +356,7 @@ public final class AmlScreenParams extends JsonModel {
     }
 
     /**
-     * Keep re-screening this profile and push changes via webhook. Requires <code>save_api_request=true</code> (else <code>400</code>).
+     * Keep this profile under provider-driven ongoing monitoring and push the provider's updates via webhook. Requires <code>save_api_request=true</code> (else <code>400</code>).
      *
      * @param includeOngoingMonitoring the value
      * @return this builder

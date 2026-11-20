@@ -121,7 +121,7 @@ public final class WebhookEventPayload extends JsonUnion {
   /**
    * Whether this value is a {@code SessionDataUpdatedEvent}.
    *
-   * Data of a verification session changed without a status change, for example after a manual review edit, a step override or an ongoing-monitoring rescreen. <code>decision</code> is sent only for <code>Approved</code>, <code>Declined</code>, <code>In Review</code> and <code>Abandoned</code>; it has the shape of <code>GET /v3/session/{sessionId}/decision/</code> for destinations on webhook version 3 (the default), and the older reduced shape for version 1 or 2 destinations. Business sessions always receive the version 3 business decision.
+   * Data of a verification session changed without a status change, for example after a manual review edit, a step override or an ongoing-monitoring update. <code>decision</code> is sent only for <code>Approved</code>, <code>Declined</code>, <code>In Review</code> and <code>Abandoned</code>; it has the shape of <code>GET /v3/session/{sessionId}/decision/</code> for destinations on webhook version 3 (the default), and the older reduced shape for version 1 or 2 destinations. Business sessions always receive the version 3 business decision.
    *
    * @return true when it matches
    */
