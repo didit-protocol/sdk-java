@@ -10,7 +10,7 @@ import me.didit.core.JsonUnion;
 /**
  * Body of a signed webhook delivery, discriminated by <code>webhook_type</code>. <code>activity.created</code> can be subscribed to but is not sent today. Treat any other <code>webhook_type</code> as a new event type and keep the raw body.
  *
- * <p>One of: {@code SessionStatusUpdatedEvent}, {@code SessionDataUpdatedEvent}, {@code UserStatusUpdatedEvent}, {@code UserDataUpdatedEvent}, {@code BusinessStatusUpdatedEvent}, {@code BusinessDataUpdatedEvent}, {@code TransactionCreatedEvent}, {@code TransactionStatusUpdatedEvent}, {@code TravelRuleStatusUpdatedEvent}, {@code WorkflowComplianceChangedEvent}, {@code TransactionRuleSuggestionsCreatedEvent}. Check with the {@code is...}
+ * <p>One of: {@code SessionStatusUpdatedEvent}, {@code SessionDataUpdatedEvent}, {@code UserStatusUpdatedEvent}, {@code UserDataUpdatedEvent}, {@code BusinessStatusUpdatedEvent}, {@code BusinessDataUpdatedEvent}, {@code TransactionCreatedEvent}, {@code TransactionStatusUpdatedEvent}, {@code TravelRuleStatusUpdatedEvent}, {@code WorkflowComplianceChangedEvent}, {@code TransactionRuleSuggestionsCreatedEvent}, {@code MessageStatusUpdatedEvent}. Check with the {@code is...}
  * methods and read with the {@code as...} methods; the fields every variant has are readable directly.
  */
 public final class WebhookEventPayload extends JsonUnion {
@@ -406,5 +406,35 @@ public final class WebhookEventPayload extends JsonUnion {
    */
   public Optional<TransactionRuleSuggestionsCreatedEvent> asTransactionRuleSuggestionsCreatedEvent() {
     return isTransactionRuleSuggestionsCreatedEvent() ? Optional.of(Conv.model(TransactionRuleSuggestionsCreatedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code MessageStatusUpdatedEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofMessageStatusUpdatedEvent(MessageStatusUpdatedEvent value) {
+    return new WebhookEventPayload(Conv.model(MessageStatusUpdatedEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code MessageStatusUpdatedEvent}.
+   *
+   * A transactional message sent with <code>POST /v3/messages/</code> changed status: one event per status of each attempt. Events can arrive out of order; order them by <code>occurred_at</code>. <code>final</code> is <code>false</code> while the message may still change, including when a failed attempt is followed by another channel (<code>next_channel</code>). The payload never carries the text or the recipient: read them with <code>GET /v3/messages/{message_id}/</code>.
+   *
+   * @return true when it matches
+   */
+  public boolean isMessageStatusUpdatedEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code MessageStatusUpdatedEvent}.
+   *
+   * @return the value, or empty when {@link #isMessageStatusUpdatedEvent()} is false
+   */
+  public Optional<MessageStatusUpdatedEvent> asMessageStatusUpdatedEvent() {
+    return isMessageStatusUpdatedEvent() ? Optional.of(Conv.model(MessageStatusUpdatedEvent::fromJson).read(json)) : Optional.empty();
   }
 }
