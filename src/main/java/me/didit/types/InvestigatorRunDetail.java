@@ -15,7 +15,7 @@ import me.didit.core.JsonModel;
 import org.jspecify.annotations.Nullable;
 
 public final class InvestigatorRunDetail extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("run_id", "kind", "queue", "stage", "subject", "recommendation", "recommendation_detail", "confidence", "summary", "sources_count", "ready_to_accept", "guardrails", "waiting_since", "due_at", "prepared_at", "status", "is_open", "lookups", "duration_ms", "agent_version", "prepared_before_opened", "report", "trail", "decision", "autonomy");
+  private static final Set<String> KNOWN_FIELDS = Set.of("run_id", "kind", "queue", "stage", "subject", "recommendation", "recommendation_detail", "confidence", "summary", "sources_count", "ready_to_accept", "guardrails", "waiting_since", "due_at", "prepared_at", "free_report", "example", "status", "is_open", "lookups", "duration_ms", "agent_version", "prepared_before_opened", "report", "trail", "decision", "autonomy");
 
   private InvestigatorRunDetail(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -198,6 +198,26 @@ public final class InvestigatorRunDetail extends JsonModel {
    */
   public Optional<OffsetDateTime> preparedAt() {
     return Json.optional(json, "prepared_at", Conv.DATE_TIME);
+  }
+
+  /**
+   * True for one of the organization's free reports: a review run at stage <code>none</code>, with no setup, never charged.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> freeReport() {
+    return Json.optional(json, "free_report", Conv.BOOLEAN);
+  }
+
+  /**
+   * True for an example report shown on a sandbox application. Example reports are read only and never cost anything.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> example() {
+    return Json.optional(json, "example", Conv.BOOLEAN);
   }
 
   /**
@@ -461,6 +481,26 @@ public final class InvestigatorRunDetail extends JsonModel {
      */
     public Builder preparedAt(@Nullable OffsetDateTime preparedAt) {
       return setNullable("prepared_at", Conv.DATE_TIME, preparedAt);
+    }
+
+    /**
+     * True for one of the organization's free reports: a review run at stage <code>none</code>, with no setup, never charged.
+     *
+     * @param freeReport the value
+     * @return this builder
+     */
+    public Builder freeReport(boolean freeReport) {
+      return set("free_report", Conv.BOOLEAN, freeReport);
+    }
+
+    /**
+     * True for an example report shown on a sandbox application. Example reports are read only and never cost anything.
+     *
+     * @param example the value
+     * @return this builder
+     */
+    public Builder example(boolean example) {
+      return set("example", Conv.BOOLEAN, example);
     }
 
     /**

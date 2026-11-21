@@ -276,4 +276,20 @@ final class InvestigatorResourceTest {
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
+
+  @Test
+  void retrieveOffer() {
+    JsonNode example = TestJson.parse("{}");
+    transport.respondJson(200, example);
+    var result = client.investigator().retrieveOffer();
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/investigator/offer/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
 }

@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class InvestigatorQueueRow extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("run_id", "kind", "queue", "stage", "subject", "recommendation", "recommendation_detail", "confidence", "summary", "sources_count", "ready_to_accept", "guardrails", "waiting_since", "due_at", "prepared_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("run_id", "kind", "queue", "stage", "subject", "recommendation", "recommendation_detail", "confidence", "summary", "sources_count", "ready_to_accept", "guardrails", "waiting_since", "due_at", "prepared_at", "free_report", "example");
 
   private InvestigatorQueueRow(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -201,6 +201,26 @@ public final class InvestigatorQueueRow extends JsonModel {
     return Json.optional(json, "prepared_at", Conv.DATE_TIME);
   }
 
+  /**
+   * True for one of the organization's free reports: a review run at stage <code>none</code>, with no setup, never charged.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> freeReport() {
+    return Json.optional(json, "free_report", Conv.BOOLEAN);
+  }
+
+  /**
+   * True for an example report shown on a sandbox application. Example reports are read only and never cost anything.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> example() {
+    return Json.optional(json, "example", Conv.BOOLEAN);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -365,6 +385,26 @@ public final class InvestigatorQueueRow extends JsonModel {
     }
 
     /**
+     * True for one of the organization's free reports: a review run at stage <code>none</code>, with no setup, never charged.
+     *
+     * @param freeReport the value
+     * @return this builder
+     */
+    public Builder freeReport(boolean freeReport) {
+      return set("free_report", Conv.BOOLEAN, freeReport);
+    }
+
+    /**
+     * True for an example report shown on a sandbox application. Example reports are read only and never cost anything.
+     *
+     * @param example the value
+     * @return this builder
+     */
+    public Builder example(boolean example) {
+      return set("example", Conv.BOOLEAN, example);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code InvestigatorQueueRow}
@@ -483,13 +523,16 @@ public final class InvestigatorQueueRow extends JsonModel {
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
   public static final class Stage extends StringEnum {
+    /** The value {@code "none"}. */
+    public static final Stage NONE = new Stage("none");
+
     /** The value {@code "shadow"}. */
     public static final Stage SHADOW = new Stage("shadow");
 
     /** The value {@code "live"}. */
     public static final Stage LIVE = new Stage("live");
 
-    private static final List<Stage> KNOWN_VALUES = List.of(SHADOW, LIVE);
+    private static final List<Stage> KNOWN_VALUES = List.of(NONE, SHADOW, LIVE);
 
     private Stage(String value) {
       super(value);
