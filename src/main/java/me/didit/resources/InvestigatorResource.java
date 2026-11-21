@@ -25,6 +25,7 @@ import me.didit.types.InvestigatorOverrideRequest;
 import me.didit.types.InvestigatorQueueRow;
 import me.didit.types.InvestigatorRetrieveDashboardParams;
 import me.didit.types.InvestigatorRetrieveDashboardResponse;
+import me.didit.types.InvestigatorRetrieveOfferResponse;
 import me.didit.types.InvestigatorRetrievePerformanceParams;
 import me.didit.types.InvestigatorRetrievePerformanceResponse;
 import me.didit.types.InvestigatorRetrieveSummaryParams;
@@ -931,6 +932,48 @@ public final class InvestigatorResource {
     return client.executeAsync(updateSettingsRequest(params), RequestOptions.none(), UPDATE_SETTINGS_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Investigator agent offer
+   *
+   * <p>Whether to offer the Investigator agent to this application: its decisions taken by hand in the last 30 days, the average handling time, the people who stopped halfway and whether follow-ups are on. Read from the daily analytics, never from a scan of sessions. <code>show</code> is true when 20 or more decisions were taken by hand and the agent is not set up, or when follow-ups are off and 50 or more people stopped halfway.
+   *
+   * <p>{@code GET /v3/investigator/offer/}
+   *
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public InvestigatorRetrieveOfferResponse retrieveOffer(RequestOptions options) {
+    return client.execute(retrieveOfferRequest(), options, RETRIEVE_OFFER_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveOffer(RequestOptions)}.
+   *
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<InvestigatorRetrieveOfferResponse> retrieveOfferAsync(RequestOptions options) {
+    return client.executeAsync(retrieveOfferRequest(), options, RETRIEVE_OFFER_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retrieveOffer(RequestOptions)}, with the client's options.
+   *
+   * @return the result
+   */
+  public InvestigatorRetrieveOfferResponse retrieveOffer() {
+    return client.execute(retrieveOfferRequest(), RequestOptions.none(), RETRIEVE_OFFER_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveOffer(RequestOptions)}, with the client's options.
+   *
+   * @return a future completed with the result
+   */
+  public CompletableFuture<InvestigatorRetrieveOfferResponse> retrieveOfferAsync() {
+    return client.executeAsync(retrieveOfferRequest(), RequestOptions.none(), RETRIEVE_OFFER_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<InvestigatorRetrieveSummaryResponse> RETRIEVE_SUMMARY_RESPONSE = Responses.json(Conv.model(InvestigatorRetrieveSummaryResponse::fromJson));
 
   private static ApiRequest retrieveSummaryRequest(InvestigatorRetrieveSummaryParams params) {
@@ -1051,6 +1094,13 @@ public final class InvestigatorResource {
     return ApiRequest.builder("PATCH", "/v3/investigator/settings/")
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<InvestigatorRetrieveOfferResponse> RETRIEVE_OFFER_RESPONSE = Responses.json(Conv.model(InvestigatorRetrieveOfferResponse::fromJson));
+
+  private static ApiRequest retrieveOfferRequest() {
+    return ApiRequest.builder("GET", "/v3/investigator/offer/")
         .build();
   }
 
@@ -1876,6 +1926,44 @@ public final class InvestigatorResource {
      */
     public CompletableFuture<RawResponse<InvestigatorSettings>> updateSettingsAsync(InvestigatorSettings params) {
       return client.executeAsync(updateSettingsRequest(params), RequestOptions.none(), UPDATE_SETTINGS_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveOffer(RequestOptions)} with the raw response.
+     *
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<InvestigatorRetrieveOfferResponse> retrieveOffer(RequestOptions options) {
+      return client.execute(retrieveOfferRequest(), options, RETRIEVE_OFFER_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveOffer(RequestOptions)} with the raw response.
+     *
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<InvestigatorRetrieveOfferResponse>> retrieveOfferAsync(RequestOptions options) {
+      return client.executeAsync(retrieveOfferRequest(), options, RETRIEVE_OFFER_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveOffer(RequestOptions)} with the raw response, with the client's options.
+     *
+     * @return the result
+     */
+    public RawResponse<InvestigatorRetrieveOfferResponse> retrieveOffer() {
+      return client.execute(retrieveOfferRequest(), RequestOptions.none(), RETRIEVE_OFFER_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveOffer(RequestOptions)} with the raw response, with the client's options.
+     *
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<InvestigatorRetrieveOfferResponse>> retrieveOfferAsync() {
+      return client.executeAsync(retrieveOfferRequest(), RequestOptions.none(), RETRIEVE_OFFER_RESPONSE);
     }
   }
 }

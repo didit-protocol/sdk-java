@@ -15,7 +15,7 @@ import me.didit.core.JsonModel;
 import org.jspecify.annotations.Nullable;
 
 public final class InvestigatorRetrieveSummaryResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("stage", "last_report_at", "prepared_today", "ready_to_accept", "open", "decided_today", "automation_rate_month", "preparing");
+  private static final Set<String> KNOWN_FIELDS = Set.of("stage", "last_report_at", "prepared_today", "ready_to_accept", "open", "decided_today", "automation_rate_month", "preparing", "free_reports");
 
   private InvestigatorRetrieveSummaryResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -51,7 +51,7 @@ public final class InvestigatorRetrieveSummaryResponse extends JsonModel {
   }
 
   /**
-   * The <code>stage</code> field.
+   * <code>none</code> (not set up; free reports still run while <code>free_reports.remaining</code> is above 0), <code>shadow</code> or <code>live</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -130,6 +130,16 @@ public final class InvestigatorRetrieveSummaryResponse extends JsonModel {
     return Json.optional(json, "preparing", Conv.LONG);
   }
 
+  /**
+   * The organization's free reports: the first reports run with no setup, on any plan, and are never charged.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<InvestigatorRetrieveSummaryResponse.FreeReports> freeReports() {
+    return Json.optional(json, "free_reports", Conv.model(InvestigatorRetrieveSummaryResponse.FreeReports::fromJson));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -144,7 +154,7 @@ public final class InvestigatorRetrieveSummaryResponse extends JsonModel {
     }
 
     /**
-     * The <code>stage</code> field.
+     * <code>none</code> (not set up; free reports still run while <code>free_reports.remaining</code> is above 0), <code>shadow</code> or <code>live</code>.
      *
      * @param stage the value
      * @return this builder
@@ -224,6 +234,16 @@ public final class InvestigatorRetrieveSummaryResponse extends JsonModel {
     }
 
     /**
+     * The organization's free reports: the first reports run with no setup, on any plan, and are never charged.
+     *
+     * @param freeReports the value
+     * @return this builder
+     */
+    public Builder freeReports(InvestigatorRetrieveSummaryResponse.FreeReports freeReports) {
+      return set("free_reports", Conv.model(InvestigatorRetrieveSummaryResponse.FreeReports::fromJson), freeReports);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code InvestigatorRetrieveSummaryResponse}
@@ -235,6 +255,134 @@ public final class InvestigatorRetrieveSummaryResponse extends JsonModel {
     @Override
     protected Builder self() {
       return this;
+    }
+  }
+
+  /**
+   * The organization's free reports: the first reports run with no setup, on any plan, and are never charged.
+   */
+  public static final class FreeReports extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("limit", "used", "remaining");
+
+    private FreeReports(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code FreeReports} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static FreeReports fromJson(JsonNode json) {
+      return new FreeReports(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * The <code>limit</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Long> limit() {
+      return Json.optional(json, "limit", Conv.LONG);
+    }
+
+    /**
+     * The <code>used</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Long> used() {
+      return Json.optional(json, "used", Conv.LONG);
+    }
+
+    /**
+     * The <code>remaining</code> field.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Long> remaining() {
+      return Json.optional(json, "remaining", Conv.LONG);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link FreeReports}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(FreeReports from) {
+        super(from);
+      }
+
+      /**
+       * The <code>limit</code> field.
+       *
+       * @param limit the value
+       * @return this builder
+       */
+      public Builder limit(long limit) {
+        return set("limit", Conv.LONG, limit);
+      }
+
+      /**
+       * The <code>used</code> field.
+       *
+       * @param used the value
+       * @return this builder
+       */
+      public Builder used(long used) {
+        return set("used", Conv.LONG, used);
+      }
+
+      /**
+       * The <code>remaining</code> field.
+       *
+       * @param remaining the value
+       * @return this builder
+       */
+      public Builder remaining(long remaining) {
+        return set("remaining", Conv.LONG, remaining);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code FreeReports}
+       */
+      public FreeReports build() {
+        return new FreeReports(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
     }
   }
 }
