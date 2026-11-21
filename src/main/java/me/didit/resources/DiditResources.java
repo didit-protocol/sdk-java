@@ -35,6 +35,7 @@ public abstract class DiditResources {
   private final IpResource ip;
   private final KybResource kyb;
   private final ListsResource lists;
+  private final MessagesResource messages;
   private final MonitoringEventsResource monitoringEvents;
   private final NetworksResource networks;
   private final PassiveLivenessResource passiveLiveness;
@@ -87,6 +88,7 @@ public abstract class DiditResources {
     this.ip = new IpResource(client);
     this.kyb = new KybResource(client);
     this.lists = new ListsResource(client);
+    this.messages = new MessagesResource(client);
     this.monitoringEvents = new MonitoringEventsResource(client);
     this.networks = new NetworksResource(client);
     this.passiveLiveness = new PassiveLivenessResource(client);
@@ -348,6 +350,15 @@ public abstract class DiditResources {
    */
   public final ListsResource lists() {
     return lists;
+  }
+
+  /**
+   * The {@code messages} resource.
+   *
+   * @return the resource
+   */
+  public final MessagesResource messages() {
+    return messages;
   }
 
   /**
