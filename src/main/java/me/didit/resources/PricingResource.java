@@ -10,6 +10,8 @@ import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
 import me.didit.types.BankVerificationPricing;
+import me.didit.types.PricingPriceBookParams;
+import me.didit.types.PublicPriceBook;
 
 /** The {@code pricing} resource: {@code client.pricing()}. */
 public final class PricingResource {
@@ -78,11 +80,111 @@ public final class PricingResource {
     return client.executeAsync(bankVerificationRequest(), RequestOptions.none(), BANK_VERIFICATION_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Get the price book (public, unauthenticated)
+   *
+   * <p>Returns Didit's public list prices: every plan with its monthly and yearly price and its discount, the white label price, Didit's fee on each Messages channel, and every flat usage price. Use it to quote Didit's prices in your own product or to check a price before you build a workflow.
+   *
+   * <p>Public: send no auth header. The response contains no organization data and is the same for every caller. It carries an <code>ETag</code>, so send <code>If-None-Match</code> to get a <code>304 Not Modified</code> when nothing changed.
+   *
+   * <p><b>Messages fees.</b> An SMS costs the carrier's price per segment plus Didit's fee per segment (<code>message_fee_usd_by_channel.sms</code>, also <code>messages_fee_usd</code>). A WhatsApp message sent from Didit's number costs WhatsApp's rate plus Didit's own WhatsApp fee (<code>message_fee_usd_by_channel.whatsapp</code>); sent from your own WhatsApp Business account, WhatsApp bills you directly and Didit charges only its fee. The carrier's and WhatsApp's parts are passed on at cost.
+   *
+   * <p>These are list prices before your plan discount, which applies to Didit's fee only on carrier-priced items and to the whole price everywhere else. A negotiated or contract price replaces the list price for your organization. Per-item prices are on their own feeds, such as [phone verification prices](/getting-started/phone-verification-pricing) and [bank verification prices](/getting-started/bank-verification-pricing).
+   *
+   * <p>{@code GET /v3/organization/price-book/}
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public PublicPriceBook priceBook(PricingPriceBookParams params, RequestOptions options) {
+    return client.execute(priceBookRequest(params), options, PRICE_BOOK_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #priceBook(PricingPriceBookParams, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<PublicPriceBook> priceBookAsync(PricingPriceBookParams params, RequestOptions options) {
+    return client.executeAsync(priceBookRequest(params), options, PRICE_BOOK_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #priceBook(PricingPriceBookParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return the result
+   */
+  public PublicPriceBook priceBook(PricingPriceBookParams params) {
+    return client.execute(priceBookRequest(params), RequestOptions.none(), PRICE_BOOK_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #priceBook(PricingPriceBookParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<PublicPriceBook> priceBookAsync(PricingPriceBookParams params) {
+    return client.executeAsync(priceBookRequest(params), RequestOptions.none(), PRICE_BOOK_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #priceBook(PricingPriceBookParams, RequestOptions)}, without parameters.
+   *
+   * @param options per-request options
+   * @return the result
+   */
+  public PublicPriceBook priceBook(RequestOptions options) {
+    return client.execute(priceBookRequest(PricingPriceBookParams.builder().build()), options, PRICE_BOOK_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #priceBook(PricingPriceBookParams, RequestOptions)}, without parameters.
+   *
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<PublicPriceBook> priceBookAsync(RequestOptions options) {
+    return client.executeAsync(priceBookRequest(PricingPriceBookParams.builder().build()), options, PRICE_BOOK_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #priceBook(PricingPriceBookParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @return the result
+   */
+  public PublicPriceBook priceBook() {
+    return client.execute(priceBookRequest(PricingPriceBookParams.builder().build()), RequestOptions.none(), PRICE_BOOK_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #priceBook(PricingPriceBookParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @return a future completed with the result
+   */
+  public CompletableFuture<PublicPriceBook> priceBookAsync() {
+    return client.executeAsync(priceBookRequest(PricingPriceBookParams.builder().build()), RequestOptions.none(), PRICE_BOOK_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<BankVerificationPricing> BANK_VERIFICATION_RESPONSE = Responses.json(Conv.model(BankVerificationPricing::fromJson));
 
   private static ApiRequest bankVerificationRequest() {
     return ApiRequest.builder("GET", "/v3/organization/bank-verification-pricing/")
         .auth(ApiRequest.Auth.NONE)
+        .build();
+  }
+
+  private static final ResponseHandler<PublicPriceBook> PRICE_BOOK_RESPONSE = Responses.json(Conv.model(PublicPriceBook::fromJson));
+
+  private static ApiRequest priceBookRequest(PricingPriceBookParams params) {
+    return ApiRequest.builder("GET", "/v3/organization/price-book/")
+        .auth(ApiRequest.Auth.NONE)
+        .params(params)
+        .headerField("If-None-Match", "If-None-Match")
         .build();
   }
 
@@ -130,6 +232,86 @@ public final class PricingResource {
      */
     public CompletableFuture<RawResponse<BankVerificationPricing>> bankVerificationAsync() {
       return client.executeAsync(bankVerificationRequest(), RequestOptions.none(), BANK_VERIFICATION_RESPONSE);
+    }
+
+    /**
+     * {@link #priceBook(PricingPriceBookParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<PublicPriceBook> priceBook(PricingPriceBookParams params, RequestOptions options) {
+      return client.execute(priceBookRequest(params), options, PRICE_BOOK_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #priceBook(PricingPriceBookParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<PublicPriceBook>> priceBookAsync(PricingPriceBookParams params, RequestOptions options) {
+      return client.executeAsync(priceBookRequest(params), options, PRICE_BOOK_RESPONSE);
+    }
+
+    /**
+     * {@link #priceBook(PricingPriceBookParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<PublicPriceBook> priceBook(PricingPriceBookParams params) {
+      return client.execute(priceBookRequest(params), RequestOptions.none(), PRICE_BOOK_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #priceBook(PricingPriceBookParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<PublicPriceBook>> priceBookAsync(PricingPriceBookParams params) {
+      return client.executeAsync(priceBookRequest(params), RequestOptions.none(), PRICE_BOOK_RESPONSE);
+    }
+
+    /**
+     * {@link #priceBook(PricingPriceBookParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<PublicPriceBook> priceBook(RequestOptions options) {
+      return client.execute(priceBookRequest(PricingPriceBookParams.builder().build()), options, PRICE_BOOK_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #priceBook(PricingPriceBookParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<PublicPriceBook>> priceBookAsync(RequestOptions options) {
+      return client.executeAsync(priceBookRequest(PricingPriceBookParams.builder().build()), options, PRICE_BOOK_RESPONSE);
+    }
+
+    /**
+     * {@link #priceBook(PricingPriceBookParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @return the result
+     */
+    public RawResponse<PublicPriceBook> priceBook() {
+      return client.execute(priceBookRequest(PricingPriceBookParams.builder().build()), RequestOptions.none(), PRICE_BOOK_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #priceBook(PricingPriceBookParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<PublicPriceBook>> priceBookAsync() {
+      return client.executeAsync(priceBookRequest(PricingPriceBookParams.builder().build()), RequestOptions.none(), PRICE_BOOK_RESPONSE);
     }
   }
 }

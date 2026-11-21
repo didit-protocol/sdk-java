@@ -14,6 +14,7 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.PricingPriceBookParams;
 import org.junit.jupiter.api.Test;
 
 /** One test per operation of {@code pricing}, against a stubbed HTTP layer. */
@@ -33,6 +34,24 @@ final class PricingResourceTest {
     assertEquals(Map.of(), request.query());
     assertEquals(null, request.header("x-api-key"));
     assertEquals(null, request.header("Authorization"));
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void priceBook() {
+    PricingPriceBookParams params = PricingPriceBookParams.builder().ifNoneMatch("value-if-none-match").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/organization/price-book/", "200");
+    transport.respondJson(200, example);
+    var result = client.pricing().priceBook(params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/organization/price-book/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals(null, request.header("x-api-key"));
+    assertEquals(null, request.header("Authorization"));
+    assertEquals("value-if-none-match", request.header("If-None-Match"));
     assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
