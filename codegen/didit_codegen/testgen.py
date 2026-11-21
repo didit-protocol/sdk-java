@@ -507,9 +507,12 @@ def emit_test(om: OpModel, ctx: Ctx) -> str:
     lines.append(f"    assertEquals({java_string(path)}, request.path());")
     lines.append(f"    assertEquals({java_map_of_lists(query, ctx)}, request.query());")
     auth = op.sdk.get("auth")
+    # The origin follows the document: account.json operations (authentication_setup takes the
+    # API key there) go to the account API, everything else to the verification API.
+    origin = "https://apx.didit.me" if op.spec == "account" else "https://verification.didit.me"
     if auth == "api_key":
         lines.append('    assertEquals("test-api-key", request.header("x-api-key"));')
-        lines.append('    assertEquals("https://verification.didit.me", request.origin());')
+        lines.append(f"    assertEquals({java_string(origin)}, request.origin());")
     elif auth == "account_token":
         lines.append('    assertEquals("Bearer test-account-token", request.header("Authorization"));')
         lines.append('    assertEquals(null, request.header("x-api-key"));')
