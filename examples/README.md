@@ -11,6 +11,7 @@ Runnable examples of the Didit Java SDK. Set `DIDIT_API_KEY` (and `DIDIT_BASE_UR
 | `TransactionScreeningExample` | Transaction monitoring |
 | `TravelRuleExample` | Wallet screening and the VASP directory with automatic pagination |
 | `AuthenticationExample` | Verifying access tokens and asking for a step-up |
+| `BankDataExample` | Create a Bank Link, verify `bank.connection.created` and read the accounts: `./gradlew :examples:bankData` |
 | `KotlinQuickstart.kt` | The quickstart in Kotlin, with `when` over webhook events |
 
 Webhook receivers:
