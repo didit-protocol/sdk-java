@@ -184,7 +184,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * Where the browser goes at the end, with <code>link_id</code>, <code>status</code> and a signed <code>state</code> (for display only: the webhook and <code>get_link</code> are authoritative). Must exactly match a redirect URL registered for your application (scheme, host, port, path and query: no prefix, no trailing-slash or case tolerance), otherwise the call answers <code>400 redirect_url_not_registered</code>. In sandbox only, a plain <code>http</code> address of <code>localhost</code>, <code>127.0.0.1</code> or <code>[::1]</code> (any port and path, no credentials, no fragment) needs no registration. Without one, automatic return to your page is not promised: after a full-page bank hop the person returns to the page that opened the link when its origin is in <code>allowed_origins</code>, and otherwise the flow ends on Didit's own result page.
+   * Where the browser goes at the end, with <code>link_id</code>, <code>status</code> and a signed <code>state</code> (for display only: the webhook and <code>get_link</code> are authoritative). In a sandbox application a plain <code>http</code> address of <code>localhost</code>, <code>127.0.0.1</code> or <code>[::1]</code> (any port and path, no credentials, no fragment) needs no registration. Any other address answers <code>400 redirect_url_not_registered</code>: registering other addresses is not available yet. Without a <code>redirect_url</code> the person finishes on Didit's own result page.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -194,7 +194,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * HTTPS origins allowed to embed this link, up to 50. Must be among your application's allowed domains, which are the default; an origin outside them answers <code>403 link_origin_not_allowed</code>.
+   * Accepted and not used today: reserved for Didit's embedded Bank Link, which is not released yet. HTTPS origins, up to 50.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -264,7 +264,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * Sandbox applications only: shapes what the Didit Test Bank does in this link, so a test can reach each outcome. Ignored in a live application.
+   * Sandbox applications only: picks the Didit Test Bank customer. Ignored in a live application.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -417,7 +417,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * Where the browser goes at the end, with <code>link_id</code>, <code>status</code> and a signed <code>state</code> (for display only: the webhook and <code>get_link</code> are authoritative). Must exactly match a redirect URL registered for your application (scheme, host, port, path and query: no prefix, no trailing-slash or case tolerance), otherwise the call answers <code>400 redirect_url_not_registered</code>. In sandbox only, a plain <code>http</code> address of <code>localhost</code>, <code>127.0.0.1</code> or <code>[::1]</code> (any port and path, no credentials, no fragment) needs no registration. Without one, automatic return to your page is not promised: after a full-page bank hop the person returns to the page that opened the link when its origin is in <code>allowed_origins</code>, and otherwise the flow ends on Didit's own result page.
+     * Where the browser goes at the end, with <code>link_id</code>, <code>status</code> and a signed <code>state</code> (for display only: the webhook and <code>get_link</code> are authoritative). In a sandbox application a plain <code>http</code> address of <code>localhost</code>, <code>127.0.0.1</code> or <code>[::1]</code> (any port and path, no credentials, no fragment) needs no registration. Any other address answers <code>400 redirect_url_not_registered</code>: registering other addresses is not available yet. Without a <code>redirect_url</code> the person finishes on Didit's own result page.
      *
      * @param redirectUrl the value
      * @return this builder
@@ -427,7 +427,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * HTTPS origins allowed to embed this link, up to 50. Must be among your application's allowed domains, which are the default; an origin outside them answers <code>403 link_origin_not_allowed</code>.
+     * Accepted and not used today: reserved for Didit's embedded Bank Link, which is not released yet. HTTPS origins, up to 50.
      *
      * @param allowedOrigins the value
      * @return this builder
@@ -497,7 +497,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * Sandbox applications only: shapes what the Didit Test Bank does in this link, so a test can reach each outcome. Ignored in a live application.
+     * Sandbox applications only: picks the Didit Test Bank customer. Ignored in a live application.
      *
      * @param sandbox the value
      * @return this builder
@@ -785,7 +785,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * Sandbox applications only: shapes what the Didit Test Bank does in this link, so a test can reach each outcome. Ignored in a live application.
+   * Sandbox applications only: picks the Didit Test Bank customer. Ignored in a live application.
    */
   public static final class Sandbox extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("persona", "switches");
@@ -824,7 +824,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * The account set the Test Bank offers. <code>no_ongoing</code> makes the bank refuse ongoing access.
+     * The Test Bank customer: <code>personal_basic</code> (one current account, 60 movements), <code>business_multi</code> (three accounts held by a company), <code>long_history</code> (one account with 400 days and 1,400 movements; a read returns the last 365 days, so set <code>history_days</code> to 365), <code>pending</code> (includes pending transactions), <code>sparse_fields</code> (no value date, no counterparty IBAN, no bank reference) or <code>no_ongoing</code> (a bank that only allows one-time access: use <code>allow_one_time_fallback</code>).
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -834,7 +834,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * Behaviours to switch on for the run.
+     * Accepted and reserved for the sandbox simulator: the values change nothing today.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -857,7 +857,7 @@ public final class BankLinkCreateRequest extends JsonModel {
       }
 
       /**
-       * The account set the Test Bank offers. <code>no_ongoing</code> makes the bank refuse ongoing access.
+       * The Test Bank customer: <code>personal_basic</code> (one current account, 60 movements), <code>business_multi</code> (three accounts held by a company), <code>long_history</code> (one account with 400 days and 1,400 movements; a read returns the last 365 days, so set <code>history_days</code> to 365), <code>pending</code> (includes pending transactions), <code>sparse_fields</code> (no value date, no counterparty IBAN, no bank reference) or <code>no_ongoing</code> (a bank that only allows one-time access: use <code>allow_one_time_fallback</code>).
        *
        * @param persona the value
        * @return this builder
@@ -867,7 +867,7 @@ public final class BankLinkCreateRequest extends JsonModel {
       }
 
       /**
-       * Behaviours to switch on for the run.
+       * Accepted and reserved for the sandbox simulator: the values change nothing today.
        *
        * @param switches the value
        * @return this builder
@@ -892,7 +892,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * The account set the Test Bank offers. <code>no_ongoing</code> makes the bank refuse ongoing access.
+     * The Test Bank customer: <code>personal_basic</code> (one current account, 60 movements), <code>business_multi</code> (three accounts held by a company), <code>long_history</code> (one account with 400 days and 1,400 movements; a read returns the last 365 days, so set <code>history_days</code> to 365), <code>pending</code> (includes pending transactions), <code>sparse_fields</code> (no value date, no counterparty IBAN, no bank reference) or <code>no_ongoing</code> (a bank that only allows one-time access: use <code>allow_one_time_fallback</code>).
      *
      * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
      */

@@ -50,7 +50,7 @@ public final class BankRenewLinkRequest extends JsonModel {
   }
 
   /**
-   * Where the browser goes at the end. Must exactly match a registered redirect URL (scheme, host, port, path and query), otherwise <code>400 redirect_url_not_registered</code>. In sandbox only, a plain <code>http</code> localhost address needs no registration.
+   * Where the browser goes at the end. In a sandbox application a plain <code>http</code> address of <code>localhost</code>, <code>127.0.0.1</code> or <code>[::1]</code> needs no registration. Any other address answers <code>400 redirect_url_not_registered</code>: registering other addresses is not available yet.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -60,7 +60,7 @@ public final class BankRenewLinkRequest extends JsonModel {
   }
 
   /**
-   * HTTPS origins allowed to embed this link, up to 50, among your application's allowed domains.
+   * Accepted and not used today: reserved for Didit's embedded Bank Link, which is not released yet. HTTPS origins, up to 50.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -103,7 +103,7 @@ public final class BankRenewLinkRequest extends JsonModel {
     }
 
     /**
-     * Where the browser goes at the end. Must exactly match a registered redirect URL (scheme, host, port, path and query), otherwise <code>400 redirect_url_not_registered</code>. In sandbox only, a plain <code>http</code> localhost address needs no registration.
+     * Where the browser goes at the end. In a sandbox application a plain <code>http</code> address of <code>localhost</code>, <code>127.0.0.1</code> or <code>[::1]</code> needs no registration. Any other address answers <code>400 redirect_url_not_registered</code>: registering other addresses is not available yet.
      *
      * @param redirectUrl the value
      * @return this builder
@@ -113,7 +113,7 @@ public final class BankRenewLinkRequest extends JsonModel {
     }
 
     /**
-     * HTTPS origins allowed to embed this link, up to 50, among your application's allowed domains.
+     * Accepted and not used today: reserved for Didit's embedded Bank Link, which is not released yet. HTTPS origins, up to 50.
      *
      * @param allowedOrigins the value
      * @return this builder

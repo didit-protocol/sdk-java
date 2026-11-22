@@ -12,7 +12,7 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 
 /**
- * Accepted deletion. The connection's bank data is being deleted and its data operations answer <code>409 connection_not_active</code>; reading the connection returns a minimal record with this <code>erasure</code> status.
+ * The record of a deletion. The connection's bank data is deleted and its data operations answer <code>409 connection_not_active</code>; reading the connection returns a minimal record with this <code>erasure</code> record.
  */
 public final class BankConnectionDeletion extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("id", "erasure");
@@ -61,7 +61,7 @@ public final class BankConnectionDeletion extends JsonModel {
   }
 
   /**
-   * Progress of a deletion you asked for.
+   * The record of a deletion you asked for. The deletion itself is immediate: the connection's data is deleted and unreadable when the call returns. <code>status</code> is the confirmation of it.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -94,7 +94,7 @@ public final class BankConnectionDeletion extends JsonModel {
     }
 
     /**
-     * Progress of a deletion you asked for.
+     * The record of a deletion you asked for. The deletion itself is immediate: the connection's data is deleted and unreadable when the call returns. <code>status</code> is the confirmation of it.
      *
      * @param erasure the value
      * @return this builder
