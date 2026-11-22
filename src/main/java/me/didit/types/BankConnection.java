@@ -95,7 +95,7 @@ public final class BankConnection extends JsonModel {
   }
 
   /**
-   * Why the connection is in this status. <code>paused_by_customer</code> is reserved. On a <code>deleted</code> connection: <code>deleted_by_customer</code>, <code>consent_lapsed</code>, <code>retention_elapsed</code>, <code>application_deleted</code> or <code>restored_after_deletion</code>.
+   * Why the connection is in this status. <code>paused_by_customer</code> is reserved. On a <code>deleted</code> connection: <code>deleted_by_customer</code>, <code>consent_lapsed</code>, <code>retention_elapsed</code> or <code>application_deleted</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -185,7 +185,7 @@ public final class BankConnection extends JsonModel {
   }
 
   /**
-   * Reserved. Always <code>null</code>.
+   * The person's own access page. <code>null</code> until the access page is available.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -308,7 +308,7 @@ public final class BankConnection extends JsonModel {
     }
 
     /**
-     * Why the connection is in this status. <code>paused_by_customer</code> is reserved. On a <code>deleted</code> connection: <code>deleted_by_customer</code>, <code>consent_lapsed</code>, <code>retention_elapsed</code>, <code>application_deleted</code> or <code>restored_after_deletion</code>.
+     * Why the connection is in this status. <code>paused_by_customer</code> is reserved. On a <code>deleted</code> connection: <code>deleted_by_customer</code>, <code>consent_lapsed</code>, <code>retention_elapsed</code> or <code>application_deleted</code>.
      *
      * @param statusReason the value, or {@code null} to send JSON null
      * @return this builder
@@ -398,7 +398,7 @@ public final class BankConnection extends JsonModel {
     }
 
     /**
-     * Reserved. Always <code>null</code>.
+     * The person's own access page. <code>null</code> until the access page is available.
      *
      * @param manageUrl the value, or {@code null} to send JSON null
      * @return this builder
@@ -631,7 +631,7 @@ public final class BankConnection extends JsonModel {
   }
 
   /**
-   * Why the connection is in this status. <code>paused_by_customer</code> is reserved. On a <code>deleted</code> connection: <code>deleted_by_customer</code>, <code>consent_lapsed</code>, <code>retention_elapsed</code>, <code>application_deleted</code> or <code>restored_after_deletion</code>.
+   * Why the connection is in this status. <code>paused_by_customer</code> is reserved. On a <code>deleted</code> connection: <code>deleted_by_customer</code>, <code>consent_lapsed</code>, <code>retention_elapsed</code> or <code>application_deleted</code>.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -675,10 +675,7 @@ public final class BankConnection extends JsonModel {
     /** The value {@code "application_deleted"}. */
     public static final StatusReason APPLICATION_DELETED = new StatusReason("application_deleted");
 
-    /** The value {@code "restored_after_deletion"}. */
-    public static final StatusReason RESTORED_AFTER_DELETION = new StatusReason("restored_after_deletion");
-
-    private static final List<StatusReason> KNOWN_VALUES = List.of(COLLECTION_COMPLETE, CONSENT_EXPIRED, CONSENT_LAPSED, BANK_REQUIRES_SIGN_IN, REVOKED_BY_END_USER, REVOKED_BY_BANK, REVOKED_BY_CUSTOMER, INSUFFICIENT_BALANCE, PAUSED_BY_CUSTOMER, FIRST_SYNC_FAILED, DELETED_BY_CUSTOMER, RETENTION_ELAPSED, APPLICATION_DELETED, RESTORED_AFTER_DELETION);
+    private static final List<StatusReason> KNOWN_VALUES = List.of(COLLECTION_COMPLETE, CONSENT_EXPIRED, CONSENT_LAPSED, BANK_REQUIRES_SIGN_IN, REVOKED_BY_END_USER, REVOKED_BY_BANK, REVOKED_BY_CUSTOMER, INSUFFICIENT_BALANCE, PAUSED_BY_CUSTOMER, FIRST_SYNC_FAILED, DELETED_BY_CUSTOMER, RETENTION_ELAPSED, APPLICATION_DELETED);
 
     private StatusReason(String value) {
       super(value);

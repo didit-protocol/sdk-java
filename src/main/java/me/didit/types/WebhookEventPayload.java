@@ -721,7 +721,7 @@ public final class WebhookEventPayload extends JsonUnion {
   /**
    * Whether this value is a {@code BankConnectionDeletedEvent}.
    *
-   * The data of a connection was deleted. <code>erasure_status</code> is <code>erased</code>. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   * The data of a connection was deleted. <code>erasure_status</code> is <code>erased</code> and <code>reason</code> says why it was deleted. Sent for live and sandbox applications.
    *
    * @return true when it matches
    */

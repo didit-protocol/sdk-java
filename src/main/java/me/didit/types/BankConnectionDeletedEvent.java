@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /**
- * The data of a connection was deleted. <code>erasure_status</code> is <code>erased</code>. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+ * The data of a connection was deleted. <code>erasure_status</code> is <code>erased</code> and <code>reason</code> says why it was deleted. Sent for live and sandbox applications.
  */
 public final class BankConnectionDeletedEvent extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("event_id", "timestamp", "created_at", "application_id", "environment", "connection_id", "status", "erasure_status", "reason", "erased_at", "webhook_type");
@@ -125,7 +125,7 @@ public final class BankConnectionDeletedEvent extends JsonModel {
   }
 
   /**
-   * The deletion finished.
+   * The confirmation of the deletion: <code>erased</code>.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -248,7 +248,7 @@ public final class BankConnectionDeletedEvent extends JsonModel {
     }
 
     /**
-     * The deletion finished.
+     * The confirmation of the deletion: <code>erased</code>.
      *
      * @param erasureStatus the value
      * @return this builder

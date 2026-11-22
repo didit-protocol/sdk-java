@@ -62,7 +62,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
   }
 
   /**
-   * Your VASP's regulatory regime code. Default <code>"EU"</code>. Didit maps it to the regime it stamps on your Travel Rule transactions as <code>travel_rule_regime</code> (for example <code>EU</code> or an EU member code becomes <code>eu</code>), which transaction rules can key on, and it decides which data fields the exchange must share. Other Didit customers see <code>vasp_jurisdiction</code> in the VASP directory; while <code>vasp_jurisdiction</code> is empty, the directory shows this value instead.
+   * Your VASP's regulatory regime code. Default <code>"EU"</code>. Didit maps it to the regime it stamps on your Travel Rule transactions as <code>travel_rule_regime</code> (for example <code>EU</code> or an EU member code becomes <code>eu</code>, <code>CA</code> or <code>CAN</code> becomes <code>canada</code>, <code>US</code> or <code>USA</code> becomes <code>us</code>), which transaction rules can key on, and it decides which data fields the exchange must share. Canada (FINTRAC) requires the originator name and a structured address and the beneficiary name, a structured address and wallet address; the United States (FinCEN) requires the originator name and a structured address and the beneficiary name and wallet address. A structured address has town_name, country, and an address_line or a street_name with a building_number or building_name; a single-line address is refused. Other Didit customers see <code>vasp_jurisdiction</code> in the VASP directory; while <code>vasp_jurisdiction</code> is empty, the directory shows this value instead.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -365,7 +365,7 @@ public final class TravelRuleSettingsDetail extends JsonModel {
     }
 
     /**
-     * Your VASP's regulatory regime code. Default <code>"EU"</code>. Didit maps it to the regime it stamps on your Travel Rule transactions as <code>travel_rule_regime</code> (for example <code>EU</code> or an EU member code becomes <code>eu</code>), which transaction rules can key on, and it decides which data fields the exchange must share. Other Didit customers see <code>vasp_jurisdiction</code> in the VASP directory; while <code>vasp_jurisdiction</code> is empty, the directory shows this value instead.
+     * Your VASP's regulatory regime code. Default <code>"EU"</code>. Didit maps it to the regime it stamps on your Travel Rule transactions as <code>travel_rule_regime</code> (for example <code>EU</code> or an EU member code becomes <code>eu</code>, <code>CA</code> or <code>CAN</code> becomes <code>canada</code>, <code>US</code> or <code>USA</code> becomes <code>us</code>), which transaction rules can key on, and it decides which data fields the exchange must share. Canada (FINTRAC) requires the originator name and a structured address and the beneficiary name, a structured address and wallet address; the United States (FinCEN) requires the originator name and a structured address and the beneficiary name and wallet address. A structured address has town_name, country, and an address_line or a street_name with a building_number or building_name; a single-line address is refused. Other Didit customers see <code>vasp_jurisdiction</code> in the VASP directory; while <code>vasp_jurisdiction</code> is empty, the directory shows this value instead.
      *
      * @param jurisdiction the value
      * @return this builder

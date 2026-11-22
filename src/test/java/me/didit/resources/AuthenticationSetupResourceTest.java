@@ -15,6 +15,7 @@ import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
 import me.didit.types.AuthenticationSetupGetBrandingParams;
+import me.didit.types.AuthenticationSetupGetEmailParams;
 import me.didit.types.AuthenticationSetupGetEmailsParams;
 import me.didit.types.SetupAndroidApp;
 import me.didit.types.SetupBrandingTexts;
@@ -203,13 +204,14 @@ final class AuthenticationSetupResourceTest {
 
   @Test
   void getEmail() {
+    AuthenticationSetupGetEmailParams params = AuthenticationSetupGetEmailParams.builder().organization("value-organization").role(AuthenticationSetupGetEmailParams.Role.MEMBER).agent("value-agent").build();
     JsonNode example = SpecExamples.response("account.json", "GET", "/organizations/{organization_id}/applications/{application_id}/authentication/emails/{key}/", "200");
     transport.respondJson(200, example);
-    var result = client.authenticationSetup().getEmail("00000000-0000-4000-8000-00000001a919", "00000000-0000-4000-8000-000000019356", "00000000-0000-4000-8000-00000000e51b");
+    var result = client.authenticationSetup().getEmail("00000000-0000-4000-8000-00000001a919", "00000000-0000-4000-8000-000000019356", "00000000-0000-4000-8000-00000000e51b", params);
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/organizations/00000000-0000-4000-8000-00000001a919/applications/00000000-0000-4000-8000-000000019356/authentication/emails/00000000-0000-4000-8000-00000000e51b/", request.path());
-    assertEquals(Map.of(), request.query());
+    assertEquals(Map.ofEntries(Map.entry("organization", List.of("value-organization")), Map.entry("role", List.of("member")), Map.entry("agent", List.of("value-agent"))), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://apx.didit.me", request.origin());
     assertEquals(0, request.body().length);

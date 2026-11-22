@@ -181,7 +181,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
   }
 
   /**
-   * Merged per entity type: an entity type you leave out keeps its current choice. A choice that cannot meet the originator obligations of your <code>jurisdiction</code> regime (EU TFR or FATF Recommendation 16), an empty list included, is refused with <code>400</code>.
+   * Merged per entity type: an entity type you leave out keeps its current choice. A choice that cannot meet the originator obligations of your <code>jurisdiction</code> regime (EU TFR, FINTRAC for <code>canada</code>, FinCEN for <code>us</code>, or FATF Recommendation 16), an empty list included, is refused with <code>400</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -444,7 +444,7 @@ public final class TravelRuleSettingsUpdate extends JsonModel {
     }
 
     /**
-     * Merged per entity type: an entity type you leave out keeps its current choice. A choice that cannot meet the originator obligations of your <code>jurisdiction</code> regime (EU TFR or FATF Recommendation 16), an empty list included, is refused with <code>400</code>.
+     * Merged per entity type: an entity type you leave out keeps its current choice. A choice that cannot meet the originator obligations of your <code>jurisdiction</code> regime (EU TFR, FINTRAC for <code>canada</code>, FinCEN for <code>us</code>, or FATF Recommendation 16), an empty list included, is refused with <code>400</code>.
      *
      * @param dataSharingFields the value
      * @return this builder

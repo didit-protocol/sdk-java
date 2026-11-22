@@ -103,7 +103,7 @@ public final class BankSignInPricing extends JsonModel {
   }
 
   /**
-   * One-time data prices of a Bank Link, present only where Bank data is switched on. <code>null</code> where the country offers no one-time data: use <code>add_ons</code>.
+   * One-time data prices of a Bank Link, present only where Bank data is switched on. <code>null</code> where the country offers no one-time data: use <code>add_ons</code>. Where the country offers the one-time bundle, the object also carries <code>bundle_included: true</code> and <code>transactions_usd</code> is that bundle: one read of transactions and balances.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -176,7 +176,7 @@ public final class BankSignInPricing extends JsonModel {
     }
 
     /**
-     * One-time data prices of a Bank Link, present only where Bank data is switched on. <code>null</code> where the country offers no one-time data: use <code>add_ons</code>.
+     * One-time data prices of a Bank Link, present only where Bank data is switched on. <code>null</code> where the country offers no one-time data: use <code>add_ons</code>. Where the country offers the one-time bundle, the object also carries <code>bundle_included: true</code> and <code>transactions_usd</code> is that bundle: one read of transactions and balances.
      *
      * @param oneTimeData the value, or {@code null} to send JSON null
      * @return this builder
@@ -363,7 +363,7 @@ public final class BankSignInPricing extends JsonModel {
     }
 
     /**
-     * List price per active connection per calendar month, a decimal string with 4 decimals in USD. <code>null</code> when not available. Ongoing access is billed per active connection per month, with every account, reads, refreshes within the bank's limits and renewals included; the current price is on the pricing page (https://docs.didit.me/getting-started/pricing). Amounts in examples are illustrative; the price for a country is shown on the pricing page and in the console.
+     * List price per active connection per calendar month, a decimal string with 4 decimals in USD. <code>null</code> when not available. Ongoing access is billed per active connection per month, with every account, reads, refreshes within the bank's limits and renewals included; the current price is on the pricing page (https://docs.didit.me/getting-started/pricing). Amounts in examples are illustrative; the price for a country is shown on the pricing page.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -396,7 +396,7 @@ public final class BankSignInPricing extends JsonModel {
       }
 
       /**
-       * List price per active connection per calendar month, a decimal string with 4 decimals in USD. <code>null</code> when not available. Ongoing access is billed per active connection per month, with every account, reads, refreshes within the bank's limits and renewals included; the current price is on the pricing page (https://docs.didit.me/getting-started/pricing). Amounts in examples are illustrative; the price for a country is shown on the pricing page and in the console.
+       * List price per active connection per calendar month, a decimal string with 4 decimals in USD. <code>null</code> when not available. Ongoing access is billed per active connection per month, with every account, reads, refreshes within the bank's limits and renewals included; the current price is on the pricing page (https://docs.didit.me/getting-started/pricing). Amounts in examples are illustrative; the price for a country is shown on the pricing page.
        *
        * @param priceUsdPerMonth the value, or {@code null} to send JSON null
        * @return this builder
@@ -425,7 +425,7 @@ public final class BankSignInPricing extends JsonModel {
   }
 
   public static final class OneTimeData extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("balances_usd", "transactions_usd");
+    private static final Set<String> KNOWN_FIELDS = Set.of("balances_usd", "transactions_usd", "bundle_included");
 
     private OneTimeData(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -480,6 +480,16 @@ public final class BankSignInPricing extends JsonModel {
       return Json.optional(json, "transactions_usd", Conv.STRING);
     }
 
+    /**
+     * <code>true</code> when <code>transactions_usd</code> is the one-time bundle: one read that carries transactions and balances together, so the <code>balance</code> add-on is not charged on top of it. Absent - never <code>false</code> - where <code>transactions_usd</code> is the separate transactions add-on price, including while the one-time bundle is not offered in the country.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Boolean> bundleIncluded() {
+      return Json.optional(json, "bundle_included", Conv.BOOLEAN);
+    }
+
     @Override
     protected Set<String> knownFields() {
       return KNOWN_FIELDS;
@@ -511,6 +521,16 @@ public final class BankSignInPricing extends JsonModel {
        */
       public Builder transactionsUsd(@Nullable String transactionsUsd) {
         return setNullable("transactions_usd", Conv.STRING, transactionsUsd);
+      }
+
+      /**
+       * <code>true</code> when <code>transactions_usd</code> is the one-time bundle: one read that carries transactions and balances together, so the <code>balance</code> add-on is not charged on top of it. Absent - never <code>false</code> - where <code>transactions_usd</code> is the separate transactions add-on price, including while the one-time bundle is not offered in the country.
+       *
+       * @param bundleIncluded the value
+       * @return this builder
+       */
+      public Builder bundleIncluded(boolean bundleIncluded) {
+        return set("bundle_included", Conv.BOOLEAN, bundleIncluded);
       }
 
       /**
