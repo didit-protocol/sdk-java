@@ -51,6 +51,38 @@ public abstract class WebhookEvent {
         return new WorkflowComplianceChangedEvent(json, verifiedBy);
       case KybRegistrySearchResolvedEvent.TYPE:
         return new KybRegistrySearchResolvedEvent(json, verifiedBy);
+      case BankLinkCompletedEvent.TYPE:
+        return new BankLinkCompletedEvent(json, verifiedBy);
+      case BankLinkCancelledEvent.TYPE:
+        return new BankLinkCancelledEvent(json, verifiedBy);
+      case BankLinkExpiredEvent.TYPE:
+        return new BankLinkExpiredEvent(json, verifiedBy);
+      case BankLinkFailedEvent.TYPE:
+        return new BankLinkFailedEvent(json, verifiedBy);
+      case BankConnectionCreatedEvent.TYPE:
+        return new BankConnectionCreatedEvent(json, verifiedBy);
+      case BankConnectionUpdatedEvent.TYPE:
+        return new BankConnectionUpdatedEvent(json, verifiedBy);
+      case BankConnectionConsentExpiringEvent.TYPE:
+        return new BankConnectionConsentExpiringEvent(json, verifiedBy);
+      case BankConnectionRenewalRequiredEvent.TYPE:
+        return new BankConnectionRenewalRequiredEvent(json, verifiedBy);
+      case BankConnectionRenewedEvent.TYPE:
+        return new BankConnectionRenewedEvent(json, verifiedBy);
+      case BankConnectionRevokedEvent.TYPE:
+        return new BankConnectionRevokedEvent(json, verifiedBy);
+      case BankConnectionDeletedEvent.TYPE:
+        return new BankConnectionDeletedEvent(json, verifiedBy);
+      case BankConnectionHistoryCompleteEvent.TYPE:
+        return new BankConnectionHistoryCompleteEvent(json, verifiedBy);
+      case BankDataUpdatedEvent.TYPE:
+        return new BankDataUpdatedEvent(json, verifiedBy);
+      case BankSyncCompletedEvent.TYPE:
+        return new BankSyncCompletedEvent(json, verifiedBy);
+      case BankSyncFailedEvent.TYPE:
+        return new BankSyncFailedEvent(json, verifiedBy);
+      case BankSyncRecoveredEvent.TYPE:
+        return new BankSyncRecoveredEvent(json, verifiedBy);
       default:
         return new UnknownEvent(json, verifiedBy);
     }

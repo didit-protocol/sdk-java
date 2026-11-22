@@ -55,3 +55,9 @@ example(
 )
 
 example("quickstart", "me.didit.examples.Quickstart", "Runs the quickstart against DIDIT_BASE_URL.")
+
+example(
+  "bankData",
+  "me.didit.examples.BankDataExample",
+  "Creates a Bank Link and reads a connection's accounts.",
+)
