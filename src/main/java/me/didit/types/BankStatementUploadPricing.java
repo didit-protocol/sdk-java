@@ -49,7 +49,7 @@ public final class BankStatementUploadPricing extends JsonModel {
   }
 
   /**
-   * Price of a statement upload after a charged bank attempt. Decimal string with 4 decimals, in USD.
+   * Price of a statement upload with no charged bank attempt before it. After a charged bank attempt in the same session the statement costs nothing extra. Decimal string with 4 decimals, in USD.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -69,7 +69,7 @@ public final class BankStatementUploadPricing extends JsonModel {
   }
 
   /**
-   * <code>true</code> when a statement upload can run on its own, with no bank attempt first. <code>false</code> in production; sandbox sessions can test it without billing.
+   * <code>true</code> when a statement upload can run on its own, with no bank attempt first, at <code>price_usd</code>.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -92,7 +92,7 @@ public final class BankStatementUploadPricing extends JsonModel {
     }
 
     /**
-     * Price of a statement upload after a charged bank attempt. Decimal string with 4 decimals, in USD.
+     * Price of a statement upload with no charged bank attempt before it. After a charged bank attempt in the same session the statement costs nothing extra. Decimal string with 4 decimals, in USD.
      *
      * @param priceUsd the value
      * @return this builder
@@ -112,7 +112,7 @@ public final class BankStatementUploadPricing extends JsonModel {
     }
 
     /**
-     * <code>true</code> when a statement upload can run on its own, with no bank attempt first. <code>false</code> in production; sandbox sessions can test it without billing.
+     * <code>true</code> when a statement upload can run on its own, with no bank attempt first, at <code>price_usd</code>.
      *
      * @param standaloneAvailable the value
      * @return this builder
