@@ -10,7 +10,7 @@ import me.didit.core.JsonUnion;
 /**
  * Body of a signed webhook delivery, discriminated by <code>webhook_type</code>. <code>activity.created</code> can be subscribed to but is not sent today. Treat any other <code>webhook_type</code> as a new event type and keep the raw body.
  *
- * <p>One of: {@code SessionStatusUpdatedEvent}, {@code SessionDataUpdatedEvent}, {@code UserStatusUpdatedEvent}, {@code UserDataUpdatedEvent}, {@code BusinessStatusUpdatedEvent}, {@code BusinessDataUpdatedEvent}, {@code TransactionCreatedEvent}, {@code TransactionStatusUpdatedEvent}, {@code TravelRuleStatusUpdatedEvent}, {@code WorkflowComplianceChangedEvent}, {@code TransactionRuleSuggestionsCreatedEvent}, {@code MessageStatusUpdatedEvent}. Check with the {@code is...}
+ * <p>One of: {@code SessionStatusUpdatedEvent}, {@code SessionDataUpdatedEvent}, {@code UserStatusUpdatedEvent}, {@code UserDataUpdatedEvent}, {@code BusinessStatusUpdatedEvent}, {@code BusinessDataUpdatedEvent}, {@code TransactionCreatedEvent}, {@code TransactionStatusUpdatedEvent}, {@code TravelRuleStatusUpdatedEvent}, {@code WorkflowComplianceChangedEvent}, {@code TransactionRuleSuggestionsCreatedEvent}, {@code BankLinkCompletedEvent}, {@code BankLinkCancelledEvent}, {@code BankLinkExpiredEvent}, {@code BankLinkFailedEvent}, {@code BankConnectionCreatedEvent}, {@code BankConnectionUpdatedEvent}, {@code BankConnectionConsentExpiringEvent}, {@code BankConnectionRenewalRequiredEvent}, {@code BankConnectionRenewedEvent}, {@code BankConnectionRevokedEvent}, {@code BankConnectionDeletedEvent}, {@code BankConnectionHistoryCompleteEvent}, {@code BankDataUpdatedEvent}, {@code BankSyncCompletedEvent}, {@code BankSyncFailedEvent}, {@code BankSyncRecoveredEvent}, {@code MessageStatusUpdatedEvent}. Check with the {@code is...}
  * methods and read with the {@code as...} methods; the fields every variant has are readable directly.
  */
 public final class WebhookEventPayload extends JsonUnion {
@@ -406,6 +406,486 @@ public final class WebhookEventPayload extends JsonUnion {
    */
   public Optional<TransactionRuleSuggestionsCreatedEvent> asTransactionRuleSuggestionsCreatedEvent() {
     return isTransactionRuleSuggestionsCreatedEvent() ? Optional.of(Conv.model(TransactionRuleSuggestionsCreatedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankLinkCompletedEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankLinkCompletedEvent(BankLinkCompletedEvent value) {
+    return new WebhookEventPayload(Conv.model(BankLinkCompletedEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankLinkCompletedEvent}.
+   *
+   * A Bank Link was completed: the person connected a bank or renewed a connection. <code>data.connection_id</code> is set, and <code>data.check_id</code> when the link asked for an ownership comparison. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankLinkCompletedEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankLinkCompletedEvent}.
+   *
+   * @return the value, or empty when {@link #isBankLinkCompletedEvent()} is false
+   */
+  public Optional<BankLinkCompletedEvent> asBankLinkCompletedEvent() {
+    return isBankLinkCompletedEvent() ? Optional.of(Conv.model(BankLinkCompletedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankLinkCancelledEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankLinkCancelledEvent(BankLinkCancelledEvent value) {
+    return new WebhookEventPayload(Conv.model(BankLinkCancelledEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankLinkCancelledEvent}.
+   *
+   * A Bank Link was cancelled, by the person or by <code>cancel_link</code>. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankLinkCancelledEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankLinkCancelledEvent}.
+   *
+   * @return the value, or empty when {@link #isBankLinkCancelledEvent()} is false
+   */
+  public Optional<BankLinkCancelledEvent> asBankLinkCancelledEvent() {
+    return isBankLinkCancelledEvent() ? Optional.of(Conv.model(BankLinkCancelledEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankLinkExpiredEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankLinkExpiredEvent(BankLinkExpiredEvent value) {
+    return new WebhookEventPayload(Conv.model(BankLinkExpiredEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankLinkExpiredEvent}.
+   *
+   * A Bank Link expired before it was completed. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankLinkExpiredEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankLinkExpiredEvent}.
+   *
+   * @return the value, or empty when {@link #isBankLinkExpiredEvent()} is false
+   */
+  public Optional<BankLinkExpiredEvent> asBankLinkExpiredEvent() {
+    return isBankLinkExpiredEvent() ? Optional.of(Conv.model(BankLinkExpiredEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankLinkFailedEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankLinkFailedEvent(BankLinkFailedEvent value) {
+    return new WebhookEventPayload(Conv.model(BankLinkFailedEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankLinkFailedEvent}.
+   *
+   * A Bank Link failed. <code>data.error_code</code> says why, for example <code>duplicate_conflict</code>. Nothing was published or charged. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankLinkFailedEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankLinkFailedEvent}.
+   *
+   * @return the value, or empty when {@link #isBankLinkFailedEvent()} is false
+   */
+  public Optional<BankLinkFailedEvent> asBankLinkFailedEvent() {
+    return isBankLinkFailedEvent() ? Optional.of(Conv.model(BankLinkFailedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankConnectionCreatedEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankConnectionCreatedEvent(BankConnectionCreatedEvent value) {
+    return new WebhookEventPayload(Conv.model(BankConnectionCreatedEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankConnectionCreatedEvent}.
+   *
+   * The first sync of a connection finished and its accounts are readable. Read the connection, then its accounts. <code>initial_status</code> says whether it <code>succeeded</code> or was <code>partial</code>. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankConnectionCreatedEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankConnectionCreatedEvent}.
+   *
+   * @return the value, or empty when {@link #isBankConnectionCreatedEvent()} is false
+   */
+  public Optional<BankConnectionCreatedEvent> asBankConnectionCreatedEvent() {
+    return isBankConnectionCreatedEvent() ? Optional.of(Conv.model(BankConnectionCreatedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankConnectionUpdatedEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankConnectionUpdatedEvent(BankConnectionUpdatedEvent value) {
+    return new WebhookEventPayload(Conv.model(BankConnectionUpdatedEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankConnectionUpdatedEvent}.
+   *
+   * A connection's status changed in a way no other event reports. It is sent when a revocation starts: <code>revocation_status</code> is <code>pending</code> until the bank confirms, then <code>bank.connection.revoked</code> follows. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankConnectionUpdatedEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankConnectionUpdatedEvent}.
+   *
+   * @return the value, or empty when {@link #isBankConnectionUpdatedEvent()} is false
+   */
+  public Optional<BankConnectionUpdatedEvent> asBankConnectionUpdatedEvent() {
+    return isBankConnectionUpdatedEvent() ? Optional.of(Conv.model(BankConnectionUpdatedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankConnectionConsentExpiringEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankConnectionConsentExpiringEvent(BankConnectionConsentExpiringEvent value) {
+    return new WebhookEventPayload(Conv.model(BankConnectionConsentExpiringEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankConnectionConsentExpiringEvent}.
+   *
+   * The consent ends soon. Sent 14, 7 and 1 day before the end. Renew with <code>renew_connection</code>. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankConnectionConsentExpiringEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankConnectionConsentExpiringEvent}.
+   *
+   * @return the value, or empty when {@link #isBankConnectionConsentExpiringEvent()} is false
+   */
+  public Optional<BankConnectionConsentExpiringEvent> asBankConnectionConsentExpiringEvent() {
+    return isBankConnectionConsentExpiringEvent() ? Optional.of(Conv.model(BankConnectionConsentExpiringEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankConnectionRenewalRequiredEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankConnectionRenewalRequiredEvent(BankConnectionRenewalRequiredEvent value) {
+    return new WebhookEventPayload(Conv.model(BankConnectionRenewalRequiredEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankConnectionRenewalRequiredEvent}.
+   *
+   * The consent ended or the bank asks the person to sign in again. Data stays readable as last synced and nothing is charged until the connection is renewed. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankConnectionRenewalRequiredEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankConnectionRenewalRequiredEvent}.
+   *
+   * @return the value, or empty when {@link #isBankConnectionRenewalRequiredEvent()} is false
+   */
+  public Optional<BankConnectionRenewalRequiredEvent> asBankConnectionRenewalRequiredEvent() {
+    return isBankConnectionRenewalRequiredEvent() ? Optional.of(Conv.model(BankConnectionRenewalRequiredEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankConnectionRenewedEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankConnectionRenewedEvent(BankConnectionRenewedEvent value) {
+    return new WebhookEventPayload(Conv.model(BankConnectionRenewedEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankConnectionRenewedEvent}.
+   *
+   * A renew link completed. The connection and account ids are unchanged. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankConnectionRenewedEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankConnectionRenewedEvent}.
+   *
+   * @return the value, or empty when {@link #isBankConnectionRenewedEvent()} is false
+   */
+  public Optional<BankConnectionRenewedEvent> asBankConnectionRenewedEvent() {
+    return isBankConnectionRenewedEvent() ? Optional.of(Conv.model(BankConnectionRenewedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankConnectionRevokedEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankConnectionRevokedEvent(BankConnectionRevokedEvent value) {
+    return new WebhookEventPayload(Conv.model(BankConnectionRevokedEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankConnectionRevokedEvent}.
+   *
+   * Access ended and the bank confirmed it. <code>ended_by</code> says who ended it: the person, the bank or you. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankConnectionRevokedEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankConnectionRevokedEvent}.
+   *
+   * @return the value, or empty when {@link #isBankConnectionRevokedEvent()} is false
+   */
+  public Optional<BankConnectionRevokedEvent> asBankConnectionRevokedEvent() {
+    return isBankConnectionRevokedEvent() ? Optional.of(Conv.model(BankConnectionRevokedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankConnectionDeletedEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankConnectionDeletedEvent(BankConnectionDeletedEvent value) {
+    return new WebhookEventPayload(Conv.model(BankConnectionDeletedEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankConnectionDeletedEvent}.
+   *
+   * The data of a connection was deleted. <code>erasure_status</code> is <code>erased</code>. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankConnectionDeletedEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankConnectionDeletedEvent}.
+   *
+   * @return the value, or empty when {@link #isBankConnectionDeletedEvent()} is false
+   */
+  public Optional<BankConnectionDeletedEvent> asBankConnectionDeletedEvent() {
+    return isBankConnectionDeletedEvent() ? Optional.of(Conv.model(BankConnectionDeletedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankConnectionHistoryCompleteEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankConnectionHistoryCompleteEvent(BankConnectionHistoryCompleteEvent value) {
+    return new WebhookEventPayload(Conv.model(BankConnectionHistoryCompleteEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankConnectionHistoryCompleteEvent}.
+   *
+   * The history backfill of a connection ended. Ranges the bank could not deliver are in each account's <code>history_coverage.missing_ranges</code>. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankConnectionHistoryCompleteEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankConnectionHistoryCompleteEvent}.
+   *
+   * @return the value, or empty when {@link #isBankConnectionHistoryCompleteEvent()} is false
+   */
+  public Optional<BankConnectionHistoryCompleteEvent> asBankConnectionHistoryCompleteEvent() {
+    return isBankConnectionHistoryCompleteEvent() ? Optional.of(Conv.model(BankConnectionHistoryCompleteEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankDataUpdatedEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankDataUpdatedEvent(BankDataUpdatedEvent value) {
+    return new WebhookEventPayload(Conv.model(BankDataUpdatedEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankDataUpdatedEvent}.
+   *
+   * A sync stored changes, or the first read of a connection published its accounts (a one-time link included). Call the change feed (<code>sync_transactions</code>) to read them. Nothing is pushed. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankDataUpdatedEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankDataUpdatedEvent}.
+   *
+   * @return the value, or empty when {@link #isBankDataUpdatedEvent()} is false
+   */
+  public Optional<BankDataUpdatedEvent> asBankDataUpdatedEvent() {
+    return isBankDataUpdatedEvent() ? Optional.of(Conv.model(BankDataUpdatedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankSyncCompletedEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankSyncCompletedEvent(BankSyncCompletedEvent value) {
+    return new WebhookEventPayload(Conv.model(BankSyncCompletedEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankSyncCompletedEvent}.
+   *
+   * A sync finished. Off by default: subscribe to it only if you want to see every sync. <code>bank.data.updated</code> stays the default signal. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankSyncCompletedEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankSyncCompletedEvent}.
+   *
+   * @return the value, or empty when {@link #isBankSyncCompletedEvent()} is false
+   */
+  public Optional<BankSyncCompletedEvent> asBankSyncCompletedEvent() {
+    return isBankSyncCompletedEvent() ? Optional.of(Conv.model(BankSyncCompletedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankSyncFailedEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankSyncFailedEvent(BankSyncFailedEvent value) {
+    return new WebhookEventPayload(Conv.model(BankSyncFailedEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankSyncFailedEvent}.
+   *
+   * Syncs have been failing for 24 hours. The connection stays <code>active</code> with <code>sync.status: failing</code> while they are retried. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankSyncFailedEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankSyncFailedEvent}.
+   *
+   * @return the value, or empty when {@link #isBankSyncFailedEvent()} is false
+   */
+  public Optional<BankSyncFailedEvent> asBankSyncFailedEvent() {
+    return isBankSyncFailedEvent() ? Optional.of(Conv.model(BankSyncFailedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code BankSyncRecoveredEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofBankSyncRecoveredEvent(BankSyncRecoveredEvent value) {
+    return new WebhookEventPayload(Conv.model(BankSyncRecoveredEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code BankSyncRecoveredEvent}.
+   *
+   * Syncs work again after <code>bank.sync.failed</code>. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   *
+   * @return true when it matches
+   */
+  public boolean isBankSyncRecoveredEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code BankSyncRecoveredEvent}.
+   *
+   * @return the value, or empty when {@link #isBankSyncRecoveredEvent()} is false
+   */
+  public Optional<BankSyncRecoveredEvent> asBankSyncRecoveredEvent() {
+    return isBankSyncRecoveredEvent() ? Optional.of(Conv.model(BankSyncRecoveredEvent::fromJson).read(json)) : Optional.empty();
   }
 
   /**
