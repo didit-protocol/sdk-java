@@ -106,10 +106,58 @@ public final class WebhookEvent extends StringEnum {
   /** The value {@code "investigator.external.report.ready"}. */
   public static final WebhookEvent INVESTIGATOR_EXTERNAL_REPORT_READY = new WebhookEvent("investigator.external.report.ready");
 
+  /** The value {@code "bank.link.completed"}. */
+  public static final WebhookEvent BANK_LINK_COMPLETED = new WebhookEvent("bank.link.completed");
+
+  /** The value {@code "bank.link.cancelled"}. */
+  public static final WebhookEvent BANK_LINK_CANCELLED = new WebhookEvent("bank.link.cancelled");
+
+  /** The value {@code "bank.link.expired"}. */
+  public static final WebhookEvent BANK_LINK_EXPIRED = new WebhookEvent("bank.link.expired");
+
+  /** The value {@code "bank.link.failed"}. */
+  public static final WebhookEvent BANK_LINK_FAILED = new WebhookEvent("bank.link.failed");
+
+  /** The value {@code "bank.connection.created"}. */
+  public static final WebhookEvent BANK_CONNECTION_CREATED = new WebhookEvent("bank.connection.created");
+
+  /** The value {@code "bank.connection.updated"}. */
+  public static final WebhookEvent BANK_CONNECTION_UPDATED = new WebhookEvent("bank.connection.updated");
+
+  /** The value {@code "bank.connection.consent_expiring"}. */
+  public static final WebhookEvent BANK_CONNECTION_CONSENT_EXPIRING = new WebhookEvent("bank.connection.consent_expiring");
+
+  /** The value {@code "bank.connection.renewal_required"}. */
+  public static final WebhookEvent BANK_CONNECTION_RENEWAL_REQUIRED = new WebhookEvent("bank.connection.renewal_required");
+
+  /** The value {@code "bank.connection.renewed"}. */
+  public static final WebhookEvent BANK_CONNECTION_RENEWED = new WebhookEvent("bank.connection.renewed");
+
+  /** The value {@code "bank.connection.revoked"}. */
+  public static final WebhookEvent BANK_CONNECTION_REVOKED = new WebhookEvent("bank.connection.revoked");
+
+  /** The value {@code "bank.connection.deleted"}. */
+  public static final WebhookEvent BANK_CONNECTION_DELETED = new WebhookEvent("bank.connection.deleted");
+
+  /** The value {@code "bank.connection.history_complete"}. */
+  public static final WebhookEvent BANK_CONNECTION_HISTORY_COMPLETE = new WebhookEvent("bank.connection.history_complete");
+
+  /** The value {@code "bank.data.updated"}. */
+  public static final WebhookEvent BANK_DATA_UPDATED = new WebhookEvent("bank.data.updated");
+
+  /** The value {@code "bank.sync.completed"}. */
+  public static final WebhookEvent BANK_SYNC_COMPLETED = new WebhookEvent("bank.sync.completed");
+
+  /** The value {@code "bank.sync.failed"}. */
+  public static final WebhookEvent BANK_SYNC_FAILED = new WebhookEvent("bank.sync.failed");
+
+  /** The value {@code "bank.sync.recovered"}. */
+  public static final WebhookEvent BANK_SYNC_RECOVERED = new WebhookEvent("bank.sync.recovered");
+
   /** The value {@code "message.status.updated"}. */
   public static final WebhookEvent MESSAGE_STATUS_UPDATED = new WebhookEvent("message.status.updated");
 
-  private static final List<WebhookEvent> KNOWN_VALUES = List.of(STATUS_UPDATED, DATA_UPDATED, USER_STATUS_UPDATED, USER_DATA_UPDATED, BUSINESS_STATUS_UPDATED, BUSINESS_DATA_UPDATED, ACTIVITY_CREATED, TRANSACTION_CREATED, TRANSACTION_STATUS_UPDATED, TRAVEL_RULE_STATUS_UPDATED, WORKFLOW_COMPLIANCE_CHANGED, TRANSACTION_RULE_SUGGESTIONS_CREATED, AUTH_SIGNUP, AUTH_LOGIN, AUTH_LOGIN_FAILED, AUTH_PASSWORD_RESET_REQUESTED, AUTH_PASSWORD_RESET_COMPLETED, AUTH_MFA_CHANGED, AUTH_NEW_DEVICE, AUTH_ACCOUNT_LOCKED, INVESTIGATOR_REPORT_READY, INVESTIGATOR_DECISION_AUTOMATED, INVESTIGATOR_DECISION_OVERRIDDEN, INVESTIGATOR_DECISION_CONTESTED, INVESTIGATOR_QUESTION_RAISED, INVESTIGATOR_AUTOMATION_PAUSED, INVESTIGATOR_RFI_ANSWERED, INVESTIGATOR_RFI_OVERDUE, INVESTIGATOR_DRIFT_DETECTED, INVESTIGATOR_SLA_BREACHED, INVESTIGATOR_QA_FAILED, INVESTIGATOR_EXTERNAL_REPORT_READY, MESSAGE_STATUS_UPDATED);
+  private static final List<WebhookEvent> KNOWN_VALUES = List.of(STATUS_UPDATED, DATA_UPDATED, USER_STATUS_UPDATED, USER_DATA_UPDATED, BUSINESS_STATUS_UPDATED, BUSINESS_DATA_UPDATED, ACTIVITY_CREATED, TRANSACTION_CREATED, TRANSACTION_STATUS_UPDATED, TRAVEL_RULE_STATUS_UPDATED, WORKFLOW_COMPLIANCE_CHANGED, TRANSACTION_RULE_SUGGESTIONS_CREATED, AUTH_SIGNUP, AUTH_LOGIN, AUTH_LOGIN_FAILED, AUTH_PASSWORD_RESET_REQUESTED, AUTH_PASSWORD_RESET_COMPLETED, AUTH_MFA_CHANGED, AUTH_NEW_DEVICE, AUTH_ACCOUNT_LOCKED, INVESTIGATOR_REPORT_READY, INVESTIGATOR_DECISION_AUTOMATED, INVESTIGATOR_DECISION_OVERRIDDEN, INVESTIGATOR_DECISION_CONTESTED, INVESTIGATOR_QUESTION_RAISED, INVESTIGATOR_AUTOMATION_PAUSED, INVESTIGATOR_RFI_ANSWERED, INVESTIGATOR_RFI_OVERDUE, INVESTIGATOR_DRIFT_DETECTED, INVESTIGATOR_SLA_BREACHED, INVESTIGATOR_QA_FAILED, INVESTIGATOR_EXTERNAL_REPORT_READY, BANK_LINK_COMPLETED, BANK_LINK_CANCELLED, BANK_LINK_EXPIRED, BANK_LINK_FAILED, BANK_CONNECTION_CREATED, BANK_CONNECTION_UPDATED, BANK_CONNECTION_CONSENT_EXPIRING, BANK_CONNECTION_RENEWAL_REQUIRED, BANK_CONNECTION_RENEWED, BANK_CONNECTION_REVOKED, BANK_CONNECTION_DELETED, BANK_CONNECTION_HISTORY_COMPLETE, BANK_DATA_UPDATED, BANK_SYNC_COMPLETED, BANK_SYNC_FAILED, BANK_SYNC_RECOVERED, MESSAGE_STATUS_UPDATED);
 
   private WebhookEvent(String value) {
     super(value);
