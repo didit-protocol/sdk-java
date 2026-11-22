@@ -405,11 +405,11 @@ public final class BankResource {
   /**
    * Delete a bank connection
    *
-   * <p>Deletes the connection's bank data and stops access at the bank. The connection's accounts, balances, transactions, sync history, consent records and ownership results are deleted. Deletion is irreversible.
+   * <p>Deletes the connection's bank data and stops access at the bank. Deletion is immediate and irreversible: when the call returns, the connection's accounts, balances, transactions, sync history, consent records and ownership results are deleted, and its data operations (refresh, sync runs, accounts, balances, transactions and the change feed) answer <code>409 connection_not_active</code>.
    *
-   * <p>It starts at once: the response is <code>202</code> with <code>erasure.status</code> <code>pending</code>, and from that moment the connection's data operations (refresh, sync runs, accounts, balances, transactions and the change feed) answer <code>409 connection_not_active</code>. The connection then reads with <code>erasure.status</code> <code>erased</code>, or <code>failed</code> if deletion could not be confirmed within 24 hours; a failed deletion is retried until it completes. A deleted connection reads as a minimal record: its id, <code>status: deleted</code>, the reason, its dates and its <code>erasure</code> status, and it holds no accounts, balances, transactions, consent or sync data.
+   * <p>A deleted connection reads as a minimal record: its id, <code>status: deleted</code>, the reason, its dates and its <code>erasure</code> record (<code>requested_at</code>, <code>erased_at</code> and <code>status</code>, the confirmation of the deletion: <code>pending</code> while it is being confirmed, including the end of access at the bank, <code>erased</code> once confirmed, <code>failed</code> if the confirmation has not arrived yet and is repeated automatically, with nothing needed from you). It holds no accounts, balances, transactions, consent or sync data. <code>bank.connection.deleted</code> confirms the deletion.
    *
-   * <p>Not affected: your other connections, the charges already made (they are not refunded), and any data you already downloaded, which is your own copy. Repeating the call returns the current state. To stop access without deleting, use <code>revoke_connection</code>.
+   * <p>Not affected: your other connections, the charges already made (they are not refunded), and any data you already downloaded, which is your own copy. Repeating the call is safe. To stop access without deleting, use <code>revoke_connection</code>.
    *
    * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): write for this operation, which changes something. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
    *
