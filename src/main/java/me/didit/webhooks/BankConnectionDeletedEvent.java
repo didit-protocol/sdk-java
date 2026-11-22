@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import me.didit.types.BankConnectionDeletedData;
 
 /**
- * {@code bank.connection.deleted}: the stored data of a connection was deleted.
- * {@code erasure_status} is {@code erased}.
+ * {@code bank.connection.deleted}: the stored data of a connection was deleted. {@code
+ * erasure_status} is {@code erased}.
  */
 public final class BankConnectionDeletedEvent extends BankEvent {
   /** The {@code webhook_type} of this event. */

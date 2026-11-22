@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import me.didit.types.BankConnectionUpdatedData;
 
 /**
- * {@code bank.connection.updated}: a connection's status changed in a way no other event reports.
- * A revocation starts with {@code revocation_status: pending} until the bank confirms it.
+ * {@code bank.connection.updated}: a connection's status changed in a way no other event reports. A
+ * revocation starts with {@code revocation_status: pending} until the bank confirms it.
  */
 public final class BankConnectionUpdatedEvent extends BankEvent {
   /** The {@code webhook_type} of this event. */
