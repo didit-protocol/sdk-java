@@ -133,7 +133,7 @@ public final class BankConnectionSync extends JsonModel {
   }
 
   /**
-   * How many times a day the automatic sync runs for this connection, between one and four depending on the bank. Where the bank allows more unattended reads, at least two a day always remain for live syncs. Your application can lower it to once a day in its settings.
+   * How many times a day the automatic sync runs for this connection, between one and four depending on the bank. Where the bank allows more unattended reads, at least two a day always remain for live syncs.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -246,7 +246,7 @@ public final class BankConnectionSync extends JsonModel {
     }
 
     /**
-     * How many times a day the automatic sync runs for this connection, between one and four depending on the bank. Where the bank allows more unattended reads, at least two a day always remain for live syncs. Your application can lower it to once a day in its settings.
+     * How many times a day the automatic sync runs for this connection, between one and four depending on the bank. Where the bank allows more unattended reads, at least two a day always remain for live syncs.
      *
      * @param frequencyPerDay the value
      * @return this builder

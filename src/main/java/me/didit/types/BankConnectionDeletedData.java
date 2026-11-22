@@ -75,7 +75,7 @@ public final class BankConnectionDeletedData extends JsonModel {
   }
 
   /**
-   * The deletion finished.
+   * The confirmation of the deletion: <code>erased</code>.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -138,7 +138,7 @@ public final class BankConnectionDeletedData extends JsonModel {
     }
 
     /**
-     * The deletion finished.
+     * The confirmation of the deletion: <code>erased</code>.
      *
      * @param erasureStatus the value
      * @return this builder
@@ -228,7 +228,7 @@ public final class BankConnectionDeletedData extends JsonModel {
   }
 
   /**
-   * The deletion finished.
+   * The confirmation of the deletion: <code>erased</code>.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -285,10 +285,7 @@ public final class BankConnectionDeletedData extends JsonModel {
     /** The value {@code "application_deleted"}. */
     public static final Reason APPLICATION_DELETED = new Reason("application_deleted");
 
-    /** The value {@code "restored_after_deletion"}. */
-    public static final Reason RESTORED_AFTER_DELETION = new Reason("restored_after_deletion");
-
-    private static final List<Reason> KNOWN_VALUES = List.of(DELETED_BY_CUSTOMER, CONSENT_LAPSED, RETENTION_ELAPSED, APPLICATION_DELETED, RESTORED_AFTER_DELETION);
+    private static final List<Reason> KNOWN_VALUES = List.of(DELETED_BY_CUSTOMER, CONSENT_LAPSED, RETENTION_ELAPSED, APPLICATION_DELETED);
 
     private Reason(String value) {
       super(value);

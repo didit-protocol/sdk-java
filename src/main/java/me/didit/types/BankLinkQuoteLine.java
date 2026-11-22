@@ -69,7 +69,7 @@ public final class BankLinkQuoteLine extends JsonModel {
   }
 
   /**
-   * Price of one unit in USD, a decimal string with 4 decimals. Amounts in examples are illustrative; the price for a country is shown on the pricing page and in the console.
+   * Price of one unit in USD, a decimal string with 4 decimals. Amounts in examples are illustrative; the price for a country is shown on the pricing page.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -112,7 +112,7 @@ public final class BankLinkQuoteLine extends JsonModel {
     }
 
     /**
-     * Price of one unit in USD, a decimal string with 4 decimals. Amounts in examples are illustrative; the price for a country is shown on the pricing page and in the console.
+     * Price of one unit in USD, a decimal string with 4 decimals. Amounts in examples are illustrative; the price for a country is shown on the pricing page.
      *
      * @param priceUsd the value
      * @return this builder

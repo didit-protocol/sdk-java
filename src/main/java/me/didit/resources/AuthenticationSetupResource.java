@@ -10,6 +10,7 @@ import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
 import me.didit.types.AuthenticationSetupGetBrandingParams;
+import me.didit.types.AuthenticationSetupGetEmailParams;
 import me.didit.types.AuthenticationSetupGetEmailsParams;
 import me.didit.types.SetupBranding;
 import me.didit.types.SetupBrandingUpdate;
@@ -862,22 +863,76 @@ public final class AuthenticationSetupResource {
   /**
    * Preview a sign-in email
    *
-   * <p>Returns one email as it renders, with sample codes and links. An invitation preview uses a sample organization for a grant or named key. A console session can see a customer organization's name. The address of a console member is left out for a grant or a key, which have no mailbox. An email Authentication does not send answers <code>{"error": "email_not_sent_by_authentication"}</code>.
+   * <p>Returns one email as it renders, with sample codes and links. An invitation preview uses a sample organization for a grant or named key, or the <code>organization</code> and <code>role</code> you pass. <code>agentoff</code> is the email a person receives when your team ends an agent's access with a notification; <code>agent</code> names the agent. A console session can see a customer organization's name. The address of a console member is left out for a grant or a key, which have no mailbox. An email Authentication does not send answers <code>{"error": "email_not_sent_by_authentication"}</code>.
    *
    * <p>{@code GET /organizations/{organization_id}/applications/{application_id}/authentication/emails/{key}/}
    *
    * @param organizationId UUID of the organization that owns the application.
    * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
    * @param key The email: `code`, `magic`, `reset`, `device`, `invite`, `org`, `agent` or `agentoff`.
+   * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public SetupEmail getEmail(String organizationId, String applicationId, String key, RequestOptions options) {
-    return client.execute(getEmailRequest(organizationId, applicationId, key), options, GET_EMAIL_RESPONSE).data();
+  public SetupEmail getEmail(String organizationId, String applicationId, String key, AuthenticationSetupGetEmailParams params, RequestOptions options) {
+    return client.execute(getEmailRequest(organizationId, applicationId, key, params), options, GET_EMAIL_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #getEmail(String, String, String, RequestOptions)}.
+   * Asynchronous {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)}.
+   *
+   * @param organizationId the {@code organization_id}
+   * @param applicationId the {@code application_id}
+   * @param key the {@code key}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SetupEmail> getEmailAsync(String organizationId, String applicationId, String key, AuthenticationSetupGetEmailParams params, RequestOptions options) {
+    return client.executeAsync(getEmailRequest(organizationId, applicationId, key, params), options, GET_EMAIL_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)}, with the client's options.
+   *
+   * @param organizationId the {@code organization_id}
+   * @param applicationId the {@code application_id}
+   * @param key the {@code key}
+   * @param params the request parameters
+   * @return the result
+   */
+  public SetupEmail getEmail(String organizationId, String applicationId, String key, AuthenticationSetupGetEmailParams params) {
+    return client.execute(getEmailRequest(organizationId, applicationId, key, params), RequestOptions.none(), GET_EMAIL_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)}, with the client's options.
+   *
+   * @param organizationId the {@code organization_id}
+   * @param applicationId the {@code application_id}
+   * @param key the {@code key}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<SetupEmail> getEmailAsync(String organizationId, String applicationId, String key, AuthenticationSetupGetEmailParams params) {
+    return client.executeAsync(getEmailRequest(organizationId, applicationId, key, params), RequestOptions.none(), GET_EMAIL_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)}, without parameters.
+   *
+   * @param organizationId the {@code organization_id}
+   * @param applicationId the {@code application_id}
+   * @param key the {@code key}
+   * @param options per-request options
+   * @return the result
+   */
+  public SetupEmail getEmail(String organizationId, String applicationId, String key, RequestOptions options) {
+    return client.execute(getEmailRequest(organizationId, applicationId, key, AuthenticationSetupGetEmailParams.builder().build()), options, GET_EMAIL_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)}, without parameters.
    *
    * @param organizationId the {@code organization_id}
    * @param applicationId the {@code application_id}
@@ -886,11 +941,11 @@ public final class AuthenticationSetupResource {
    * @return a future completed with the result
    */
   public CompletableFuture<SetupEmail> getEmailAsync(String organizationId, String applicationId, String key, RequestOptions options) {
-    return client.executeAsync(getEmailRequest(organizationId, applicationId, key), options, GET_EMAIL_RESPONSE).thenApply(RawResponse::data);
+    return client.executeAsync(getEmailRequest(organizationId, applicationId, key, AuthenticationSetupGetEmailParams.builder().build()), options, GET_EMAIL_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Same as {@link #getEmail(String, String, String, RequestOptions)}, with the client's options.
+   * Same as {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param organizationId the {@code organization_id}
    * @param applicationId the {@code application_id}
@@ -898,11 +953,11 @@ public final class AuthenticationSetupResource {
    * @return the result
    */
   public SetupEmail getEmail(String organizationId, String applicationId, String key) {
-    return client.execute(getEmailRequest(organizationId, applicationId, key), RequestOptions.none(), GET_EMAIL_RESPONSE).data();
+    return client.execute(getEmailRequest(organizationId, applicationId, key, AuthenticationSetupGetEmailParams.builder().build()), RequestOptions.none(), GET_EMAIL_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #getEmail(String, String, String, RequestOptions)}, with the client's options.
+   * Asynchronous {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)}, without parameters, with the client's options.
    *
    * @param organizationId the {@code organization_id}
    * @param applicationId the {@code application_id}
@@ -910,7 +965,7 @@ public final class AuthenticationSetupResource {
    * @return a future completed with the result
    */
   public CompletableFuture<SetupEmail> getEmailAsync(String organizationId, String applicationId, String key) {
-    return client.executeAsync(getEmailRequest(organizationId, applicationId, key), RequestOptions.none(), GET_EMAIL_RESPONSE).thenApply(RawResponse::data);
+    return client.executeAsync(getEmailRequest(organizationId, applicationId, key, AuthenticationSetupGetEmailParams.builder().build()), RequestOptions.none(), GET_EMAIL_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
@@ -1688,12 +1743,14 @@ public final class AuthenticationSetupResource {
 
   private static final ResponseHandler<SetupEmail> GET_EMAIL_RESPONSE = Responses.json(Conv.model(SetupEmail::fromJson));
 
-  private static ApiRequest getEmailRequest(String organizationId, String applicationId, String key) {
+  private static ApiRequest getEmailRequest(String organizationId, String applicationId, String key, AuthenticationSetupGetEmailParams params) {
     return ApiRequest.builder("GET", "/organizations/{organization_id}/applications/{application_id}/authentication/emails/{key}/")
         .account()
         .pathParam("organization_id", organizationId)
         .pathParam("application_id", applicationId)
         .pathParam("key", key)
+        .params(params)
+        .queryFields("organization", "role", "agent")
         .build();
   }
 
@@ -2592,7 +2649,61 @@ public final class AuthenticationSetupResource {
     }
 
     /**
-     * {@link #getEmail(String, String, String, RequestOptions)} with the raw response.
+     * {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)} with the raw response.
+     *
+     * @param organizationId the {@code organization_id}
+     * @param applicationId the {@code application_id}
+     * @param key the {@code key}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<SetupEmail> getEmail(String organizationId, String applicationId, String key, AuthenticationSetupGetEmailParams params, RequestOptions options) {
+      return client.execute(getEmailRequest(organizationId, applicationId, key, params), options, GET_EMAIL_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)} with the raw response.
+     *
+     * @param organizationId the {@code organization_id}
+     * @param applicationId the {@code application_id}
+     * @param key the {@code key}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SetupEmail>> getEmailAsync(String organizationId, String applicationId, String key, AuthenticationSetupGetEmailParams params, RequestOptions options) {
+      return client.executeAsync(getEmailRequest(organizationId, applicationId, key, params), options, GET_EMAIL_RESPONSE);
+    }
+
+    /**
+     * {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param organizationId the {@code organization_id}
+     * @param applicationId the {@code application_id}
+     * @param key the {@code key}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<SetupEmail> getEmail(String organizationId, String applicationId, String key, AuthenticationSetupGetEmailParams params) {
+      return client.execute(getEmailRequest(organizationId, applicationId, key, params), RequestOptions.none(), GET_EMAIL_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param organizationId the {@code organization_id}
+     * @param applicationId the {@code application_id}
+     * @param key the {@code key}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<SetupEmail>> getEmailAsync(String organizationId, String applicationId, String key, AuthenticationSetupGetEmailParams params) {
+      return client.executeAsync(getEmailRequest(organizationId, applicationId, key, params), RequestOptions.none(), GET_EMAIL_RESPONSE);
+    }
+
+    /**
+     * {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param organizationId the {@code organization_id}
      * @param applicationId the {@code application_id}
@@ -2601,11 +2712,11 @@ public final class AuthenticationSetupResource {
      * @return the result
      */
     public RawResponse<SetupEmail> getEmail(String organizationId, String applicationId, String key, RequestOptions options) {
-      return client.execute(getEmailRequest(organizationId, applicationId, key), options, GET_EMAIL_RESPONSE);
+      return client.execute(getEmailRequest(organizationId, applicationId, key, AuthenticationSetupGetEmailParams.builder().build()), options, GET_EMAIL_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #getEmail(String, String, String, RequestOptions)} with the raw response.
+     * Asynchronous {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)} with the raw response, without parameters.
      *
      * @param organizationId the {@code organization_id}
      * @param applicationId the {@code application_id}
@@ -2614,11 +2725,11 @@ public final class AuthenticationSetupResource {
      * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<SetupEmail>> getEmailAsync(String organizationId, String applicationId, String key, RequestOptions options) {
-      return client.executeAsync(getEmailRequest(organizationId, applicationId, key), options, GET_EMAIL_RESPONSE);
+      return client.executeAsync(getEmailRequest(organizationId, applicationId, key, AuthenticationSetupGetEmailParams.builder().build()), options, GET_EMAIL_RESPONSE);
     }
 
     /**
-     * {@link #getEmail(String, String, String, RequestOptions)} with the raw response, with the client's options.
+     * {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param organizationId the {@code organization_id}
      * @param applicationId the {@code application_id}
@@ -2626,11 +2737,11 @@ public final class AuthenticationSetupResource {
      * @return the result
      */
     public RawResponse<SetupEmail> getEmail(String organizationId, String applicationId, String key) {
-      return client.execute(getEmailRequest(organizationId, applicationId, key), RequestOptions.none(), GET_EMAIL_RESPONSE);
+      return client.execute(getEmailRequest(organizationId, applicationId, key, AuthenticationSetupGetEmailParams.builder().build()), RequestOptions.none(), GET_EMAIL_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #getEmail(String, String, String, RequestOptions)} with the raw response, with the client's options.
+     * Asynchronous {@link #getEmail(String, String, String, AuthenticationSetupGetEmailParams, RequestOptions)} with the raw response, without parameters, with the client's options.
      *
      * @param organizationId the {@code organization_id}
      * @param applicationId the {@code application_id}
@@ -2638,7 +2749,7 @@ public final class AuthenticationSetupResource {
      * @return a future completed with the result
      */
     public CompletableFuture<RawResponse<SetupEmail>> getEmailAsync(String organizationId, String applicationId, String key) {
-      return client.executeAsync(getEmailRequest(organizationId, applicationId, key), RequestOptions.none(), GET_EMAIL_RESPONSE);
+      return client.executeAsync(getEmailRequest(organizationId, applicationId, key, AuthenticationSetupGetEmailParams.builder().build()), RequestOptions.none(), GET_EMAIL_RESPONSE);
     }
 
     /**

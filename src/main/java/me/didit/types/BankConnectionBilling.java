@@ -63,7 +63,7 @@ public final class BankConnectionBilling extends JsonModel {
   }
 
   /**
-   * Your price for the month meter today, for your application and the country, in USD, a decimal string with 4 decimals. A connection is charged for a month only when every accepted scope published data for at least one account in that month. <code>null</code> for one-time connections and in the sandbox. Ongoing access is billed per active connection per month; the current price is on the pricing page (https://docs.didit.me/getting-started/pricing). Amounts in examples are illustrative; the price for a country is shown on the pricing page and in the console.
+   * Your price for the month meter today, for your application and the country, in USD, a decimal string with 4 decimals. A connection is charged for a month only when every accepted scope published data for at least one account in that month. <code>null</code> for one-time connections and in the sandbox. Ongoing access is billed per active connection per month; the current price is on the pricing page (https://docs.didit.me/getting-started/pricing). Amounts in examples are illustrative; the price for a country is shown on the pricing page.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -106,7 +106,7 @@ public final class BankConnectionBilling extends JsonModel {
     }
 
     /**
-     * Your price for the month meter today, for your application and the country, in USD, a decimal string with 4 decimals. A connection is charged for a month only when every accepted scope published data for at least one account in that month. <code>null</code> for one-time connections and in the sandbox. Ongoing access is billed per active connection per month; the current price is on the pricing page (https://docs.didit.me/getting-started/pricing). Amounts in examples are illustrative; the price for a country is shown on the pricing page and in the console.
+     * Your price for the month meter today, for your application and the country, in USD, a decimal string with 4 decimals. A connection is charged for a month only when every accepted scope published data for at least one account in that month. <code>null</code> for one-time connections and in the sandbox. Ongoing access is billed per active connection per month; the current price is on the pricing page (https://docs.didit.me/getting-started/pricing). Amounts in examples are illustrative; the price for a country is shown on the pricing page.
      *
      * @param priceUsd the value, or {@code null} to send JSON null
      * @return this builder
