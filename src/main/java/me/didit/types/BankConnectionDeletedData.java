@@ -75,7 +75,7 @@ public final class BankConnectionDeletedData extends JsonModel {
   }
 
   /**
-   * The deletion finished.
+   * The confirmation of the deletion: <code>erased</code>.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -138,7 +138,7 @@ public final class BankConnectionDeletedData extends JsonModel {
     }
 
     /**
-     * The deletion finished.
+     * The confirmation of the deletion: <code>erased</code>.
      *
      * @param erasureStatus the value
      * @return this builder
@@ -228,7 +228,7 @@ public final class BankConnectionDeletedData extends JsonModel {
   }
 
   /**
-   * The deletion finished.
+   * The confirmation of the deletion: <code>erased</code>.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */

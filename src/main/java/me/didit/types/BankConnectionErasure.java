@@ -15,7 +15,9 @@ import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
-/** Progress of a deletion you asked for. */
+/**
+ * The record of a deletion you asked for. The deletion itself is immediate: the connection's data is deleted and unreadable when the call returns. <code>status</code> is the confirmation of it.
+ */
 public final class BankConnectionErasure extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("status", "requested_at", "erased_at");
 
@@ -53,7 +55,7 @@ public final class BankConnectionErasure extends JsonModel {
   }
 
   /**
-   * <code>pending</code> while deletion runs, <code>erased</code> when no stored copy and no access at the bank remain, <code>failed</code> when it could not be confirmed within 24 hours. A failed deletion keeps the connection's data closed, is retried, and Didit is alerted.
+   * The confirmation of the deletion. <code>pending</code>: the deletion is being confirmed, including the end of access at the bank. <code>erased</code>: confirmed, with <code>erased_at</code>. <code>failed</code>: the confirmation has not arrived yet and is repeated automatically; nothing is needed from you. The data is deleted and not readable in any of the three.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -63,7 +65,7 @@ public final class BankConnectionErasure extends JsonModel {
   }
 
   /**
-   * The <code>requested_at</code> field.
+   * When you asked for the deletion.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -73,7 +75,7 @@ public final class BankConnectionErasure extends JsonModel {
   }
 
   /**
-   * When the deletion finished. <code>null</code> until <code>status</code> is <code>erased</code>.
+   * When the deletion was confirmed. <code>null</code> until <code>status</code> is <code>erased</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -96,7 +98,7 @@ public final class BankConnectionErasure extends JsonModel {
     }
 
     /**
-     * <code>pending</code> while deletion runs, <code>erased</code> when no stored copy and no access at the bank remain, <code>failed</code> when it could not be confirmed within 24 hours. A failed deletion keeps the connection's data closed, is retried, and Didit is alerted.
+     * The confirmation of the deletion. <code>pending</code>: the deletion is being confirmed, including the end of access at the bank. <code>erased</code>: confirmed, with <code>erased_at</code>. <code>failed</code>: the confirmation has not arrived yet and is repeated automatically; nothing is needed from you. The data is deleted and not readable in any of the three.
      *
      * @param status the value
      * @return this builder
@@ -106,7 +108,7 @@ public final class BankConnectionErasure extends JsonModel {
     }
 
     /**
-     * The <code>requested_at</code> field.
+     * When you asked for the deletion.
      *
      * @param requestedAt the value
      * @return this builder
@@ -116,7 +118,7 @@ public final class BankConnectionErasure extends JsonModel {
     }
 
     /**
-     * When the deletion finished. <code>null</code> until <code>status</code> is <code>erased</code>.
+     * When the deletion was confirmed. <code>null</code> until <code>status</code> is <code>erased</code>.
      *
      * @param erasedAt the value, or {@code null} to send JSON null
      * @return this builder
@@ -145,7 +147,7 @@ public final class BankConnectionErasure extends JsonModel {
   }
 
   /**
-   * <code>pending</code> while deletion runs, <code>erased</code> when no stored copy and no access at the bank remain, <code>failed</code> when it could not be confirmed within 24 hours. A failed deletion keeps the connection's data closed, is retried, and Didit is alerted.
+   * The confirmation of the deletion. <code>pending</code>: the deletion is being confirmed, including the end of access at the bank. <code>erased</code>: confirmed, with <code>erased_at</code>. <code>failed</code>: the confirmation has not arrived yet and is repeated automatically; nothing is needed from you. The data is deleted and not readable in any of the three.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
