@@ -46,8 +46,7 @@ public final class BankDataExample {
                     .build());
     System.out.println("Bank Link " + link.id() + ": send the user to " + link.url().orElse("?"));
 
-    String connectionId =
-        args.length > 0 ? args[0] : System.getenv("DIDIT_BANK_CONNECTION_ID");
+    String connectionId = args.length > 0 ? args[0] : System.getenv("DIDIT_BANK_CONNECTION_ID");
     if (connectionId != null && !connectionId.isEmpty()) {
       readAccounts(client, connectionId);
     }

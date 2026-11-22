@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import me.didit.types.BankConnectionHistoryCompleteData;
 
 /**
- * {@code bank.connection.history_complete}: the history backfill of a connection ended.
- * {@code partial} means the bank could not deliver every requested range.
+ * {@code bank.connection.history_complete}: the history backfill of a connection ended. {@code
+ * partial} means the bank could not deliver every requested range.
  */
 public final class BankConnectionHistoryCompleteEvent extends BankEvent {
   /** The {@code webhook_type} of this event. */

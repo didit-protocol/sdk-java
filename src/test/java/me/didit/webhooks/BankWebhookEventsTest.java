@@ -56,9 +56,7 @@ final class BankWebhookEventsTest {
     BankLinkCompletedEvent link = (BankLinkCompletedEvent) verify(BankLinkCompletedEvent.TYPE);
     assertEquals("bbbbbbbb-0000-4000-8000-000000000001", link.data().linkId());
     assertEquals("completed", link.data().status().value());
-    assertEquals(
-        "cccccccc-0000-4000-8000-000000000001",
-        link.data().connectionId().orElseThrow());
+    assertEquals("cccccccc-0000-4000-8000-000000000001", link.data().connectionId().orElseThrow());
 
     BankConnectionCreatedEvent created =
         (BankConnectionCreatedEvent) verify(BankConnectionCreatedEvent.TYPE);
