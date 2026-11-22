@@ -17,7 +17,7 @@ import org.jspecify.annotations.Nullable;
  * Bank sign-in: the person signs in to their bank. Priced by market, the same for every bank in it.
  */
 public final class BankSignInPricing extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("available", "market", "price_usd", "add_ons");
+  private static final Set<String> KNOWN_FIELDS = Set.of("available", "market", "price_usd", "add_ons", "ongoing", "one_time_data");
 
   private BankSignInPricing(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -92,6 +92,26 @@ public final class BankSignInPricing extends JsonModel {
     return Json.required(json, "add_ons", Conv.model(BankSignInPricing.AddOns::fromJson));
   }
 
+  /**
+   * Ongoing access to bank data (Bank Link <code>access: ongoing</code>). Present only where Bank data is switched on.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<BankSignInPricing.Ongoing> ongoing() {
+    return Json.optional(json, "ongoing", Conv.model(BankSignInPricing.Ongoing::fromJson));
+  }
+
+  /**
+   * One-time data prices of a Bank Link, present only where Bank data is switched on. <code>null</code> where the country offers no one-time data: use <code>add_ons</code>. Where the country offers the one-time bundle, the object also carries <code>bundle_included: true</code> and <code>transactions_usd</code> is that bundle: one read of transactions and balances.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<BankSignInPricing.OneTimeData> oneTimeData() {
+    return Json.optional(json, "one_time_data", Conv.model(BankSignInPricing.OneTimeData::fromJson));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -143,6 +163,26 @@ public final class BankSignInPricing extends JsonModel {
      */
     public Builder addOns(BankSignInPricing.AddOns addOns) {
       return set("add_ons", Conv.model(BankSignInPricing.AddOns::fromJson), addOns);
+    }
+
+    /**
+     * Ongoing access to bank data (Bank Link <code>access: ongoing</code>). Present only where Bank data is switched on.
+     *
+     * @param ongoing the value
+     * @return this builder
+     */
+    public Builder ongoing(BankSignInPricing.Ongoing ongoing) {
+      return set("ongoing", Conv.model(BankSignInPricing.Ongoing::fromJson), ongoing);
+    }
+
+    /**
+     * One-time data prices of a Bank Link, present only where Bank data is switched on. <code>null</code> where the country offers no one-time data: use <code>add_ons</code>. Where the country offers the one-time bundle, the object also carries <code>bundle_included: true</code> and <code>transactions_usd</code> is that bundle: one read of transactions and balances.
+     *
+     * @param oneTimeData the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder oneTimeData(BankSignInPricing.@Nullable OneTimeData oneTimeData) {
+      return setNullable("one_time_data", Conv.model(BankSignInPricing.OneTimeData::fromJson), oneTimeData);
     }
 
     /**
@@ -264,6 +304,245 @@ public final class BankSignInPricing extends JsonModel {
        */
       public AddOns build() {
         return new AddOns(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+  }
+
+  /**
+   * Ongoing access to bank data (Bank Link <code>access: ongoing</code>). Present only where Bank data is switched on.
+   */
+  public static final class Ongoing extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("available", "price_usd_per_month");
+
+    private Ongoing(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Ongoing} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Ongoing fromJson(JsonNode json) {
+      return new Ongoing(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * <code>true</code> only where at least one bank offers ongoing access in this country.
+     *
+     * @return the value
+     * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+     */
+    public boolean available() {
+      return Json.required(json, "available", Conv.BOOLEAN);
+    }
+
+    /**
+     * List price per active connection per calendar month, a decimal string with 4 decimals in USD. <code>null</code> when not available. Ongoing access is billed per active connection per month, with every account, reads, refreshes within the bank's limits and renewals included; the current price is on the pricing page (https://docs.didit.me/getting-started/pricing). Amounts in examples are illustrative; the price for a country is shown on the pricing page.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> priceUsdPerMonth() {
+      return Json.optional(json, "price_usd_per_month", Conv.STRING);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Ongoing}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Ongoing from) {
+        super(from);
+      }
+
+      /**
+       * <code>true</code> only where at least one bank offers ongoing access in this country.
+       *
+       * @param available the value
+       * @return this builder
+       */
+      public Builder available(boolean available) {
+        return set("available", Conv.BOOLEAN, available);
+      }
+
+      /**
+       * List price per active connection per calendar month, a decimal string with 4 decimals in USD. <code>null</code> when not available. Ongoing access is billed per active connection per month, with every account, reads, refreshes within the bank's limits and renewals included; the current price is on the pricing page (https://docs.didit.me/getting-started/pricing). Amounts in examples are illustrative; the price for a country is shown on the pricing page.
+       *
+       * @param priceUsdPerMonth the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder priceUsdPerMonth(@Nullable String priceUsdPerMonth) {
+        return setNullable("price_usd_per_month", Conv.STRING, priceUsdPerMonth);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Ongoing}
+       * @throws IllegalStateException when a required field is missing
+       */
+      public Ongoing build() {
+        require("available", false);
+        require("price_usd_per_month", true);
+        return new Ongoing(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+  }
+
+  public static final class OneTimeData extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("balances_usd", "transactions_usd", "bundle_included");
+
+    private OneTimeData(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code OneTimeData} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static OneTimeData fromJson(JsonNode json) {
+      return new OneTimeData(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * Price of one read of balances only. Decimal string with 4 decimals in USD.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> balancesUsd() {
+      return Json.optional(json, "balances_usd", Conv.STRING);
+    }
+
+    /**
+     * Price of one read of transactions, with or without balances. Decimal string with 4 decimals in USD.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> transactionsUsd() {
+      return Json.optional(json, "transactions_usd", Conv.STRING);
+    }
+
+    /**
+     * <code>true</code> when <code>transactions_usd</code> is the one-time bundle: one read that carries transactions and balances together, so the <code>balance</code> add-on is not charged on top of it. Absent - never <code>false</code> - where <code>transactions_usd</code> is the separate transactions add-on price, including while the one-time bundle is not offered in the country.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Boolean> bundleIncluded() {
+      return Json.optional(json, "bundle_included", Conv.BOOLEAN);
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link OneTimeData}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(OneTimeData from) {
+        super(from);
+      }
+
+      /**
+       * Price of one read of balances only. Decimal string with 4 decimals in USD.
+       *
+       * @param balancesUsd the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder balancesUsd(@Nullable String balancesUsd) {
+        return setNullable("balances_usd", Conv.STRING, balancesUsd);
+      }
+
+      /**
+       * Price of one read of transactions, with or without balances. Decimal string with 4 decimals in USD.
+       *
+       * @param transactionsUsd the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder transactionsUsd(@Nullable String transactionsUsd) {
+        return setNullable("transactions_usd", Conv.STRING, transactionsUsd);
+      }
+
+      /**
+       * <code>true</code> when <code>transactions_usd</code> is the one-time bundle: one read that carries transactions and balances together, so the <code>balance</code> add-on is not charged on top of it. Absent - never <code>false</code> - where <code>transactions_usd</code> is the separate transactions add-on price, including while the one-time bundle is not offered in the country.
+       *
+       * @param bundleIncluded the value
+       * @return this builder
+       */
+      public Builder bundleIncluded(boolean bundleIncluded) {
+        return set("bundle_included", Conv.BOOLEAN, bundleIncluded);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code OneTimeData}
+       * @throws IllegalStateException when a required field is missing
+       */
+      public OneTimeData build() {
+        require("balances_usd", true);
+        require("transactions_usd", true);
+        return new OneTimeData(buildJson(), buildFiles());
       }
 
       @Override

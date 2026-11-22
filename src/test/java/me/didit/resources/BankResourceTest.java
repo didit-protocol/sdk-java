@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
@@ -18,6 +20,17 @@ import me.didit.testing.TestModels;
 import me.didit.types.BankAccountCheckHolder;
 import me.didit.types.BankAccountCheckPersonHolder;
 import me.didit.types.BankAccountCheckRequest;
+import me.didit.types.BankLinkCreateRequest;
+import me.didit.types.BankLinkEndUser;
+import me.didit.types.BankLinkOwnershipRequest;
+import me.didit.types.BankListAccountsParams;
+import me.didit.types.BankListConnectionsParams;
+import me.didit.types.BankListInstitutionsParams;
+import me.didit.types.BankListSyncRunsParams;
+import me.didit.types.BankListTransactionsParams;
+import me.didit.types.BankRefreshConnectionParams;
+import me.didit.types.BankRenewLinkRequest;
+import me.didit.types.BankSyncTransactionsParams;
 import org.junit.jupiter.api.Test;
 
 /** One test per operation of {@code bank}, against a stubbed HTTP layer. */
@@ -41,6 +54,333 @@ final class BankResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"country\":\"value-country\",\"account\":{\"iban\":\"value-iban\",\"account_number\":\"value-account-number\"},\"holder\":{\"full_name\":\"value-full-name\"},\"vendor_data\":\"value-vendor-data\",\"consent\":true}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void createLink() {
+    BankLinkCreateRequest params = BankLinkCreateRequest.builder().mode(BankLinkCreateRequest.Mode.CONNECT).connectionId("00000000-0000-4000-8000-00000000254a").access(BankLinkCreateRequest.Access.ONE_TIME).country("USD").institutionId("value-institution-id").segment(BankLinkCreateRequest.Segment.PERSONAL).data(List.of(BankLinkCreateRequest.Data.ACCOUNTS)).historyDays(1L).historyFrom(LocalDate.parse("2026-11-01")).extendedHistory(BankLinkCreateRequest.ExtendedHistory.STANDARD).consentDays(1L).ownership(BankLinkOwnershipRequest.builder().compare(BankLinkOwnershipRequest.Compare.NONE).match(BankLinkOwnershipRequest.Match.ANY_HOLDER).build()).endUser(BankLinkEndUser.builder().reference("value-reference").email("user@example.com").build()).redirectUrl("https://example.com/callback").allowedOrigins(List.of("https://example.com/callback")).language("value-language").vendorData("value-vendor-data").expiresIn(1L).duplicates(BankLinkCreateRequest.Duplicates.REUSE).allowOneTimeFallback(true).acceptReducedGrant(true).sandbox(BankLinkCreateRequest.Sandbox.builder().persona(BankLinkCreateRequest.Sandbox.Persona.PERSONAL_BASIC).switches(List.of(BankLinkCreateRequest.Sandbox.Switches.PARTIAL_GRANT)).build()).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/bank/links/", "201");
+    transport.respondJson(201, example);
+    var result = client.bank().createLink(params, options);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/bank/links/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    TestJson.assertJsonEquals("{\"mode\":\"connect\",\"connection_id\":\"00000000-0000-4000-8000-00000000254a\",\"access\":\"one_time\",\"country\":\"USD\",\"institution_id\":\"value-institution-id\",\"segment\":\"personal\",\"data\":[\"accounts\"],\"history_days\":1,\"history_from\":\"2026-11-01\",\"extended_history\":\"standard\",\"consent_days\":1,\"ownership\":{\"compare\":\"none\",\"match\":\"any_holder\"},\"end_user\":{\"reference\":\"value-reference\",\"email\":\"user@example.com\"},\"redirect_url\":\"https://example.com/callback\",\"allowed_origins\":[\"https://example.com/callback\"],\"language\":\"value-language\",\"vendor_data\":\"value-vendor-data\",\"expires_in\":1,\"duplicates\":\"reuse\",\"allow_one_time_fallback\":true,\"accept_reduced_grant\":true,\"sandbox\":{\"persona\":\"personal_basic\",\"switches\":[\"partial_grant\"]}}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void getLink() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/bank/links/{id}/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().getLink("00000000-0000-4000-8000-000000003010");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/bank/links/00000000-0000-4000-8000-000000003010/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void cancelLink() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/bank/links/{id}/cancel/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().cancelLink("00000000-0000-4000-8000-00000000444b", options);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/bank/links/00000000-0000-4000-8000-00000000444b/cancel/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listConnections() {
+    BankListConnectionsParams params = BankListConnectionsParams.builder().status(BankListConnectionsParams.Status.PENDING).access(BankListConnectionsParams.Access.ONE_TIME).institutionId("value-institution-id").country("USD").vendorData("value-vendor-data").endUserReference("value-end-user-reference").consentExpiresBefore(OffsetDateTime.parse("2026-11-01T10:15:30Z")).createdAfter(OffsetDateTime.parse("2026-11-01T10:15:30Z")).limit(1L).cursor("value-cursor").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/bank/connections/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().listConnections(params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/bank/connections/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("status", List.of("pending")), Map.entry("access", List.of("one_time")), Map.entry("institution_id", List.of("value-institution-id")), Map.entry("country", List.of("USD")), Map.entry("vendor_data", List.of("value-vendor-data")), Map.entry("end_user_reference", List.of("value-end-user-reference")), Map.entry("consent_expires_before", List.of("2026-11-01T10:15:30Z")), Map.entry("created_after", List.of("2026-11-01T10:15:30Z")), Map.entry("limit", List.of("1")), Map.entry("cursor", List.of("value-cursor"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void getConnection() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/bank/connections/{id}/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().getConnection("00000000-0000-4000-8000-000000005e71");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/bank/connections/00000000-0000-4000-8000-000000005e71/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void deleteConnection() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "DELETE", "/v3/bank/connections/{id}/", "202");
+    transport.respondJson(202, example);
+    var result = client.bank().deleteConnection("00000000-0000-4000-8000-000000007a9f", options);
+    RecordedRequest request = transport.only();
+    assertEquals("DELETE", request.method());
+    assertEquals("/v3/bank/connections/00000000-0000-4000-8000-000000007a9f/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void refreshConnection() {
+    BankRefreshConnectionParams params = BankRefreshConnectionParams.builder().prefer("value-prefer").wait_(true).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/bank/connections/{id}/refresh/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().refreshConnection("00000000-0000-4000-8000-000000008578", params, options);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/bank/connections/00000000-0000-4000-8000-000000008578/refresh/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("value-prefer", request.header("Prefer"));
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    TestJson.assertJsonEquals("{\"wait\":true}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    assertEquals(200, result.statusCode());
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listSyncRuns() {
+    BankListSyncRunsParams params = BankListSyncRunsParams.builder().limit(1L).cursor("value-cursor").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/bank/connections/{id}/sync-runs/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().listSyncRuns("00000000-0000-4000-8000-000000006089", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/bank/connections/00000000-0000-4000-8000-000000006089/sync-runs/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("cursor", List.of("value-cursor"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void getSyncRun() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/bank/connections/{id}/sync-runs/{sync_id}/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().getSyncRun("00000000-0000-4000-8000-000000004e50", "00000000-0000-4000-8000-000000007c43");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/bank/connections/00000000-0000-4000-8000-000000004e50/sync-runs/00000000-0000-4000-8000-000000007c43/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void renewConnection() {
+    BankRenewLinkRequest params = BankRenewLinkRequest.builder().redirectUrl("https://example.com/callback").allowedOrigins(List.of("https://example.com/callback")).language("value-language").expiresIn(1L).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/bank/connections/{id}/renew/", "201");
+    transport.respondJson(201, example);
+    var result = client.bank().renewConnection("00000000-0000-4000-8000-00000000716e", params, options);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/bank/connections/00000000-0000-4000-8000-00000000716e/renew/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    TestJson.assertJsonEquals("{\"redirect_url\":\"https://example.com/callback\",\"allowed_origins\":[\"https://example.com/callback\"],\"language\":\"value-language\",\"expires_in\":1}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void revokeConnection() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/bank/connections/{id}/revoke/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().revokeConnection("00000000-0000-4000-8000-000000007b43", options);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/bank/connections/00000000-0000-4000-8000-000000007b43/revoke/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listAccounts() {
+    BankListAccountsParams params = BankListAccountsParams.builder().limit(1L).cursor("value-cursor").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/bank/connections/{id}/accounts/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().listAccounts("00000000-0000-4000-8000-0000000056d1", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/bank/connections/00000000-0000-4000-8000-0000000056d1/accounts/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("limit", List.of("1")), Map.entry("cursor", List.of("value-cursor"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void getAccount() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/bank/accounts/{account_id}/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().getAccount("00000000-0000-4000-8000-000000008fc4");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/bank/accounts/00000000-0000-4000-8000-000000008fc4/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void getBalances() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/bank/accounts/{account_id}/balances/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().getBalances("00000000-0000-4000-8000-000000009933");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/bank/accounts/00000000-0000-4000-8000-000000009933/balances/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listTransactions() {
+    BankListTransactionsParams params = BankListTransactionsParams.builder().dateFrom(LocalDate.parse("2026-11-01")).dateTo(LocalDate.parse("2026-11-01")).status(BankListTransactionsParams.Status.BOOKED).limit(1L).pageToken("value-page-token").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/bank/accounts/{account_id}/transactions/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().listTransactions("00000000-0000-4000-8000-00000000dac1", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/bank/accounts/00000000-0000-4000-8000-00000000dac1/transactions/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("date_from", List.of("2026-11-01")), Map.entry("date_to", List.of("2026-11-01")), Map.entry("status", List.of("booked")), Map.entry("limit", List.of("1")), Map.entry("page_token", List.of("value-page-token"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void syncTransactions() {
+    BankSyncTransactionsParams params = BankSyncTransactionsParams.builder().cursor("value-cursor").limit(1L).pageToken("value-page-token").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/bank/connections/{id}/transactions/sync/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().syncTransactions("00000000-0000-4000-8000-000000007c9d", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/bank/connections/00000000-0000-4000-8000-000000007c9d/transactions/sync/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("cursor", List.of("value-cursor")), Map.entry("limit", List.of("1")), Map.entry("page_token", List.of("value-page-token"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void listInstitutions() {
+    BankListInstitutionsParams params = BankListInstitutionsParams.builder().country("USD").segment(BankListInstitutionsParams.Segment.PERSONAL).access(BankListInstitutionsParams.Access.ONE_TIME).q("value-q").limit(1L).cursor("value-cursor").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/bank/institutions/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().listInstitutions(params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/bank/institutions/", request.path());
+    assertEquals(Map.ofEntries(Map.entry("country", List.of("USD")), Map.entry("segment", List.of("personal")), Map.entry("access", List.of("one_time")), Map.entry("q", List.of("value-q")), Map.entry("limit", List.of("1")), Map.entry("cursor", List.of("value-cursor"))), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void getInstitution() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/bank/institutions/{id}/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().getInstitution("00000000-0000-4000-8000-000000006a3a");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/bank/institutions/00000000-0000-4000-8000-000000006a3a/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void getCoverage() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/bank/coverage/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().getCoverage();
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/bank/coverage/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
