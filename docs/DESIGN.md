@@ -210,7 +210,7 @@ Every SDK test suite runs every vector and asserts the expected outcome, and ass
 
 ### 9.4 Typed events
 
-Parse the verified body into a discriminated union on `webhook_type`: `status.updated`, `data.updated`, `user.status.updated`, `user.data.updated`, `business.status.updated`, `business.data.updated`, `activity.created`, `transaction.created`, `transaction.status.updated`, `travel_rule.status.updated`, `workflow.compliance_changed`, `kyb.registry_search.resolved`, plus an `UnknownEvent` that keeps the raw payload for any other type.
+Parse the verified body into a discriminated union on `webhook_type`: `status.updated`, `data.updated`, `user.status.updated`, `user.data.updated`, `business.status.updated`, `business.data.updated`, `activity.created`, `transaction.created`, `transaction.status.updated`, `travel_rule.status.updated`, `workflow.compliance_changed`, `kyb.registry_search.resolved`, the `bank.link.*`, `bank.connection.*`, `bank.data.updated` and `bank.sync.*` types of section 16, plus an `UnknownEvent` that keeps the raw payload for any other type.
 Envelope fields on every event: `event_id`, `webhook_type`, `timestamp`, `created_at`, `application_id`, `environment` (`live` or `sandbox`).
 Session events add `session_id`, `business_session_id`, `session_kind`, `status`, `workflow_id`, `workflow_version`, `vendor_data`, `metadata`, `decision`, `resubmit_info`; transaction events add `transaction_id`, `txn_id`, `status`, `score`, `severity`, `amount`, `currency`, `direction`, `action_required`; Travel Rule events add `transaction_id`, `txn_id`, `travel_rule_status`, `rail`, `direction`; user and business events add `vendor_user_id` or `vendor_business_id`, `vendor_data`, `status`.
 Where the spec has a schema for the payload (for example the session decision), reuse the generated type.
@@ -284,7 +284,7 @@ Ruby: `net/http` from the standard library, `jwt` only for Authentication.
 ## 14. Documentation and positioning
 
 - README: one-line pitch ("The official Didit <language> library"), install, a quickstart (create a session, read the decision, verify a webhook), configuration, errors, pagination, webhooks, Authentication, links to docs.didit.me, supported runtimes, and versioning policy.
-- `examples/`: runnable examples for the main flows (KYC session, standalone ID verification, AML screening, transaction screening, Travel Rule, Authentication token verification) and webhook receivers for the popular frameworks.
+- `examples/`: runnable examples for the main flows (KYC session, standalone ID verification, AML screening, transaction screening, Travel Rule, Authentication token verification) bank data (create a link, wait for the connection, read accounts) and webhook receivers for the popular frameworks.
 - Package metadata with description, keywords (identity verification, KYC, KYB, AML, liveness, transaction monitoring, Travel Rule, Didit), homepage `https://didit.me`, docs `https://docs.didit.me`, repository and license.
 - docs.didit.me gets a Server SDKs section and per-operation code samples in every language (OpenAPI `x-codeSamples`), published together with the first release.
 - License MIT (`Copyright (c) 2026 Didit`), like the client SDKs. `SECURITY.md` points to GitHub private vulnerability reporting and support@didit.me.
