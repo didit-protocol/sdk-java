@@ -1,0 +1,490 @@
+# Changelog
+
+## [1.31.0](https://github.com/didit-protocol/sdk-java/compare/v1.30.0...v1.31.0) (2026-11-23)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-23 ([f232a4a](https://github.com/didit-protocol/sdk-java/commit/f232a4a5eb3f3b816bede492c3484b5d62c7f3a7))
+
+## [1.30.0](https://github.com/didit-protocol/sdk-java/compare/v1.29.0...v1.30.0) (2026-11-23)
+
+
+### Features
+
+* **bank:** Bank data operations and typed bank.* webhook events ([#108](https://github.com/didit-protocol/sdk-java/issues/108)) ([72eba70](https://github.com/didit-protocol/sdk-java/commit/72eba70f7a3a45cd7597119fb0231f19d61683b6))
+
+## [1.29.0](https://github.com/didit-protocol/sdk-java/compare/v1.28.0...v1.29.0) (2026-11-22)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-22 ([5c7a9d4](https://github.com/didit-protocol/sdk-java/commit/5c7a9d443c8e3eff36c5515c5fea611e0a8ea09b))
+
+## [1.28.0](https://github.com/didit-protocol/sdk-java/compare/v1.27.0...v1.28.0) (2026-11-22)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-22 ([477a1d5](https://github.com/didit-protocol/sdk-java/commit/477a1d59a826e0cd1ce0c3af85aa81e3a2f1fbad))
+
+## [1.27.0](https://github.com/didit-protocol/sdk-java/compare/v1.26.0...v1.27.0) (2026-11-21)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-21 ([65d2521](https://github.com/didit-protocol/sdk-java/commit/65d2521d7f674fa16fc65d8158694e4c7bda2b0b))
+
+## [1.26.0](https://github.com/didit-protocol/sdk-java/compare/v1.25.0...v1.26.0) (2026-11-21)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-21 ([2c29b22](https://github.com/didit-protocol/sdk-java/commit/2c29b22a6b441de8e5da4b614e505112e1c80ab8))
+
+## [1.25.0](https://github.com/didit-protocol/sdk-java/compare/v1.24.0...v1.25.0) (2026-11-21)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-21 ([a91d96f](https://github.com/didit-protocol/sdk-java/commit/a91d96f568fe1c00099ab03852702d4903259b4c))
+
+## [1.24.0](https://github.com/didit-protocol/sdk-java/compare/v1.23.0...v1.24.0) (2026-11-20)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-20 ([6db645a](https://github.com/didit-protocol/sdk-java/commit/6db645a23ea7b2a013f0cd46b5bd83ceb45cda44))
+
+## [1.23.0](https://github.com/didit-protocol/sdk-java/compare/v1.22.0...v1.23.0) (2026-11-19)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-19 ([7aa5028](https://github.com/didit-protocol/sdk-java/commit/7aa5028d84c28fb92ff0032b0b4dae6e47f33208))
+
+## [1.22.0](https://github.com/didit-protocol/sdk-java/compare/v1.21.0...v1.22.0) (2026-11-19)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-19 ([4f11e87](https://github.com/didit-protocol/sdk-java/commit/4f11e87b9a66521ed6ba3e9be3ba8b586c72253b))
+
+## [1.21.0](https://github.com/didit-protocol/sdk-java/compare/v1.20.0...v1.21.0) (2026-11-18)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-18 ([47cf53c](https://github.com/didit-protocol/sdk-java/commit/47cf53c2c3395c531c2739da2350adc3b66d7ffd))
+
+## [1.20.0](https://github.com/didit-protocol/sdk-java/compare/v1.19.0...v1.20.0) (2026-11-17)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-17 ([82fb7d8](https://github.com/didit-protocol/sdk-java/commit/82fb7d8f61b14c7953e0aca4e85f74b313c9e67f))
+
+## [1.19.0](https://github.com/didit-protocol/sdk-java/compare/v1.18.0...v1.19.0) (2026-11-16)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-16 ([21bbae6](https://github.com/didit-protocol/sdk-java/commit/21bbae621400e84cd44806d47a0f8f5e271791e4))
+
+## [1.18.0](https://github.com/didit-protocol/sdk-java/compare/v1.17.0...v1.18.0) (2026-11-14)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-14 ([519e4d5](https://github.com/didit-protocol/sdk-java/commit/519e4d58126421e86f89fa22ec82d2761f6a1e8e))
+
+
+### Bug Fixes
+
+* refuse an idempotency key that is not printable ASCII before any request ([#76](https://github.com/didit-protocol/sdk-java/issues/76)) ([894b718](https://github.com/didit-protocol/sdk-java/commit/894b7185f1b65547ab5132ac9ca10ab50c1e6a9d))
+
+## [1.17.0](https://github.com/didit-protocol/sdk-java/compare/v1.16.0...v1.17.0) (2026-11-14)
+
+
+### Features
+
+* per-request idempotency key ([#59](https://github.com/didit-protocol/sdk-java/issues/59)) ([0a143f7](https://github.com/didit-protocol/sdk-java/commit/0a143f7ad4d05cc70e75a3c0e9c3a3cbe21e985b))
+
+## [1.16.0](https://github.com/didit-protocol/sdk-java/compare/v1.15.0...v1.16.0) (2026-11-14)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-14 ([2187184](https://github.com/didit-protocol/sdk-java/commit/21871843fee1ba61f8053fe5dd985d2f6fbf3e0b))
+
+## [1.15.0](https://github.com/didit-protocol/sdk-java/compare/v1.14.0...v1.15.0) (2026-11-14)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-14 ([f9c58c4](https://github.com/didit-protocol/sdk-java/commit/f9c58c42eb3d862f5844d208aa40ebd3571076bb))
+* **spec:** sync API spec 2026-11-14 ([5d31dd8](https://github.com/didit-protocol/sdk-java/commit/5d31dd8bfd988f4ed17a621e608f16913fe2c8f3))
+
+## [1.14.0](https://github.com/didit-protocol/sdk-java/compare/v1.13.0...v1.14.0) (2026-11-14)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-14 ([1fe7be8](https://github.com/didit-protocol/sdk-java/commit/1fe7be87b58e45e181519b13f3fe440b4700b846))
+
+## [1.13.0](https://github.com/didit-protocol/sdk-java/compare/v1.12.0...v1.13.0) (2026-11-14)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-14 ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+
+
+### API changes that can break typed code
+
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.gtr.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.gtr.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.gtr.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.gtr.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.gtr.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.gtr.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.sygna.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.sygna.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.sygna.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.sygna.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.sygna.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.sygna.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.trust.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.trust.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.trust.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.trust.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.trust.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.trust.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.verifyvasp.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.verifyvasp.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.verifyvasp.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.verifyvasp.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.verifyvasp.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/networks/` response `networks.verifyvasp.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.gtr.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.gtr.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.gtr.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.gtr.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.gtr.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.gtr.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.sygna.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.sygna.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.sygna.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.sygna.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.sygna.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.sygna.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.trust.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.trust.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.trust.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.trust.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.trust.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.trust.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.verifyvasp.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.verifyvasp.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.verifyvasp.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.verifyvasp.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.verifyvasp.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/settings/` response `networks.verifyvasp.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.gtr.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.gtr.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.gtr.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.gtr.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.gtr.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.gtr.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.sygna.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.sygna.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.sygna.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.sygna.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.sygna.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.sygna.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.trust.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.trust.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.trust.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.trust.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.trust.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.trust.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.verifyvasp.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.verifyvasp.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.verifyvasp.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.verifyvasp.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.verifyvasp.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `GET /v3/travel-rule/workspace/` response `settings.networks.verifyvasp.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.gtr.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.gtr.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.gtr.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.gtr.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.gtr.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.gtr.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.sygna.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.sygna.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.sygna.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.sygna.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.sygna.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.sygna.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.trust.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.trust.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.trust.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.trust.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.trust.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.trust.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.verifyvasp.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.verifyvasp.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.verifyvasp.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.verifyvasp.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.verifyvasp.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/billing/` response `settings.networks.verifyvasp.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.gtr.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.gtr.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.gtr.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.gtr.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.gtr.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.gtr.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.sygna.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.sygna.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.sygna.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.sygna.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.sygna.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.sygna.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.trust.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.trust.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.trust.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.trust.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.trust.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.trust.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.verifyvasp.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.verifyvasp.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.verifyvasp.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.verifyvasp.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.verifyvasp.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/claim/` response `settings.networks.verifyvasp.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.gtr.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.gtr.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.gtr.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.gtr.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.gtr.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.gtr.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.sygna.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.sygna.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.sygna.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.sygna.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.sygna.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.sygna.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.trust.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.trust.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.trust.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.trust.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.trust.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.trust.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.verifyvasp.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.verifyvasp.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.verifyvasp.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.verifyvasp.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.verifyvasp.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/confirm/` response `settings.networks.verifyvasp.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.gtr.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.gtr.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.gtr.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.gtr.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.gtr.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.gtr.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.sygna.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.sygna.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.sygna.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.sygna.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.sygna.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.sygna.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.trust.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.trust.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.trust.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.trust.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.trust.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.trust.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.verifyvasp.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.verifyvasp.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.verifyvasp.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.verifyvasp.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.verifyvasp.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `POST /v3/travel-rule/workspace/domain/dns/` response `settings.networks.verifyvasp.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.gtr.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.gtr.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.gtr.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.gtr.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.gtr.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.gtr.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.sygna.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.sygna.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.sygna.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.sygna.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.sygna.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.sygna.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.trust.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.trust.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.trust.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.trust.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.trust.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.trust.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.verifyvasp.connected`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.verifyvasp.platform_available`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.verifyvasp.reason`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.verifyvasp.routed_30d`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.verifyvasp.state`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+* **spec:** `PUT /v3/travel-rule/settings/` response `networks.verifyvasp.vasps_reachable`: can now be null ([443602d](https://github.com/didit-protocol/sdk-java/commit/443602d340b2b4f0e12b2f969dbf158a58d860af))
+
+## [1.12.0](https://github.com/didit-protocol/sdk-java/compare/v1.11.0...v1.12.0) (2026-11-13)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-13 ([78a338a](https://github.com/didit-protocol/sdk-java/commit/78a338a9e712d79da54ad3dabf7981535de31d75))
+
+## [1.11.0](https://github.com/didit-protocol/sdk-java/compare/v1.10.0...v1.11.0) (2026-11-13)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-13 ([2be1470](https://github.com/didit-protocol/sdk-java/commit/2be14702d0be46d6fae9ecf7d9d8dc9ec7a882c4))
+
+## [1.10.0](https://github.com/didit-protocol/sdk-java/compare/v1.9.0...v1.10.0) (2026-11-12)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-12 ([9e5b8bc](https://github.com/didit-protocol/sdk-java/commit/9e5b8bca7e23c4d30c1129c979b3b620e6341be9))
+
+## [1.9.0](https://github.com/didit-protocol/sdk-java/compare/v1.8.2...v1.9.0) (2026-11-12)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-12 ([ef26c0b](https://github.com/didit-protocol/sdk-java/commit/ef26c0bbf55ca609d5b6d1623f2ab19ab1156ed9))
+
+## [1.8.2](https://github.com/didit-protocol/sdk-java/compare/v1.8.1...v1.8.2) (2026-11-12)
+
+
+### Bug Fixes
+
+* **authentication:** a consent 2xx body with trailing content is a malformed response ([f568392](https://github.com/didit-protocol/sdk-java/commit/f56839256277c1fb79e6f3fff67f9f90c2a3b325))
+* **authentication:** a consent body that fails mid-read is a fixed-message connection error ([d597c16](https://github.com/didit-protocol/sdk-java/commit/d597c161d7cb2f8ceedfe9163322f96986e1eb56))
+* **authentication:** a failure to encode a consent request has a fixed message ([2c95a49](https://github.com/didit-protocol/sdk-java/commit/2c95a49dde169c32f00c86d3cba8026d967001c0))
+* **authentication:** a malformed 2xx consent error keeps no parser exception as its cause ([4c63b35](https://github.com/didit-protocol/sdk-java/commit/4c63b35cf7fe6b384fe4de4f6c746414800e02cd))
+* **authentication:** a malformed consent response has a fixed message, never parser text ([da9b0d7](https://github.com/didit-protocol/sdk-java/commit/da9b0d7fbfaffc586487ebc840985b80399de44c))
+* **authentication:** collect consent secrets from the JSON the request carries ([d48cf64](https://github.com/didit-protocol/sdk-java/commit/d48cf640ec80f85012741bbc8e7163136ceacce6))
+* **authentication:** read consent secrets from the bytes that were sent ([0131ae9](https://github.com/didit-protocol/sdk-java/commit/0131ae94d49dd9a76f48ca13c5503c87e11ada36))
+* **authentication:** redact the parsed agent-consent response structurally ([ff629ae](https://github.com/didit-protocol/sdk-java/commit/ff629ae2dda932e872080c41fc9a4c72a2de8c81))
+* **authentication:** redact the parsed agent-consent response, not its raw text ([2243c3f](https://github.com/didit-protocol/sdk-java/commit/2243c3f96eaf73d793d3f7ddd5bbad0659051252))
+* **authentication:** sanitize the whole consent response once on receipt ([890f943](https://github.com/didit-protocol/sdk-java/commit/890f9439b75ab16bd69d4d3f55f5baadba7ce6c4))
+* **authentication:** successful consent responses reach the caller unchanged; fold header-name case; deep bodies are not JSON ([16293e7](https://github.com/didit-protocol/sdk-java/commit/16293e7b4bf6c4d635c9bcbbff551f4dbf0cfcce))
+* **authentication:** the approval-options call encodes through the same fixed-message wrapper ([53d4e71](https://github.com/didit-protocol/sdk-java/commit/53d4e715ea6db678abf0141084add73745917210))
+* **authentication:** treat only assertion strings of 16+ characters as secrets ([f2e78fd](https://github.com/didit-protocol/sdk-java/commit/f2e78fdd4e20095ce2d66d34a041a3389f7c90ea))
+* **authentication:** withhold transport text, redact empty bodies, reject trailing content, keep safe key names ([0070ccb](https://github.com/didit-protocol/sdk-java/commit/0070ccb08e971633ef445f7d86aa5f41ed7b71e3))
+
+## [1.8.1](https://github.com/didit-protocol/sdk-java/compare/v1.8.0...v1.8.1) (2026-11-11)
+
+
+### Bug Fixes
+
+* **authentication:** redact every string of the consent assertion from errors ([771cbb7](https://github.com/didit-protocol/sdk-java/commit/771cbb7bb54603ff76084c8d3637091f4181907a))
+
+## [1.8.0](https://github.com/didit-protocol/sdk-java/compare/v1.7.0...v1.8.0) (2026-11-11)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-11 ([2136356](https://github.com/didit-protocol/sdk-java/commit/21363562e575314d6f19d1b622e75bb1a872e03e))
+
+
+### API changes that can break typed code
+
+* **spec:** `POST /v3/organization/{organization_id}/application/{application_id}/cases/` request body `links[].entity_type`: added (required) ([2136356](https://github.com/didit-protocol/sdk-java/commit/21363562e575314d6f19d1b622e75bb1a872e03e))
+* **spec:** `POST /v3/organization/{organization_id}/application/{application_id}/cases/` request body `links[].entity_uuid`: added (required) ([2136356](https://github.com/didit-protocol/sdk-java/commit/21363562e575314d6f19d1b622e75bb1a872e03e))
+* **spec:** `POST /v3/organization/{organization_id}/application/{application_id}/cases/blueprints/{blueprint_uuid}/publish/` response `content_config`: type changed from any to object ([2136356](https://github.com/didit-protocol/sdk-java/commit/21363562e575314d6f19d1b622e75bb1a872e03e))
+
+## [1.7.0](https://github.com/didit-protocol/sdk-java/compare/v1.6.0...v1.7.0) (2026-11-11)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-11 ([804ff61](https://github.com/didit-protocol/sdk-java/commit/804ff61ceb043c8a5846eca6e0baa869f311201e))
+
+## [1.6.0](https://github.com/didit-protocol/sdk-java/compare/v1.5.0...v1.6.0) (2026-11-11)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-11 ([cb47614](https://github.com/didit-protocol/sdk-java/commit/cb47614e7be7e1b9589d124eb9fd6ac20a7e32e3))
+
+## [1.5.0](https://github.com/didit-protocol/sdk-java/compare/v1.4.0...v1.5.0) (2026-11-11)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-11 ([9f29c24](https://github.com/didit-protocol/sdk-java/commit/9f29c24f63876aa573c402c6a494cf37c230051b))
+* **spec:** sync API spec 2026-11-11 ([15e55b4](https://github.com/didit-protocol/sdk-java/commit/15e55b49810a690840c519fb16dd427bb517969d))
+* **spec:** sync API spec 2026-11-11 ([19220ae](https://github.com/didit-protocol/sdk-java/commit/19220aefab9d329ae33fe7b42208afe661a256f8))
+* **spec:** sync API spec 2026-11-11 ([d290604](https://github.com/didit-protocol/sdk-java/commit/d29060448767a4195fc60a6bcbc60a49af2f75ea))
+* **spec:** sync API spec 2026-11-11 ([6e4c595](https://github.com/didit-protocol/sdk-java/commit/6e4c5953127e5f67d1a8b33dd13ccab53035b350))
+* **spec:** sync API spec 2026-11-11 ([52da1cf](https://github.com/didit-protocol/sdk-java/commit/52da1cfe4a68acc3d09da2ab636c617f68485666))
+* **spec:** sync API spec 2026-11-11 ([b98f421](https://github.com/didit-protocol/sdk-java/commit/b98f421722860cc1fdc559e11fc8f7b65cdb7b4f))
+
+## [1.4.0](https://github.com/didit-protocol/sdk-java/compare/v1.3.0...v1.4.0) (2026-11-09)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-09 ([a02ccc0](https://github.com/didit-protocol/sdk-java/commit/a02ccc0e6264fc64d8c90e24cc4e130fca62b5b3))
+
+## [1.3.0](https://github.com/didit-protocol/sdk-java/compare/v1.2.0...v1.3.0) (2026-11-07)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-07 ([f58ae72](https://github.com/didit-protocol/sdk-java/commit/f58ae72b155119a00c306649133362a738c1f28f))
+
+## [1.2.0](https://github.com/didit-protocol/sdk-java/compare/v1.1.0...v1.2.0) (2026-11-07)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-07 ([d25900d](https://github.com/didit-protocol/sdk-java/commit/d25900d399522ff743e97e41bf057bd2d0094842))
+
+## [1.1.0](https://github.com/didit-protocol/sdk-java/compare/v1.0.1...v1.1.0) (2026-11-05)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-05 (application data location) ([3fc10b2](https://github.com/didit-protocol/sdk-java/commit/3fc10b2491f36db570bd42a38efc0f81ebfd0931))
+
+## [1.0.1](https://github.com/didit-protocol/sdk-java/compare/v1.0.0...v1.0.1) (2026-10-29)
+
+
+### Bug Fixes
+
+* **release:** tag releases as v1.0.0 ([#16](https://github.com/didit-protocol/sdk-java/issues/16)) ([d9b1514](https://github.com/didit-protocol/sdk-java/commit/d9b151405068070465873649f134a55d0f1466f9))
+
+
+### Miscellaneous Chores
+
+* release 1.0.1 ([cfe08da](https://github.com/didit-protocol/sdk-java/commit/cfe08da8d1d7a847ff08548aaa548484c1f2b4d3))
+
+## [1.0.0](https://github.com/didit-protocol/sdk-java/compare/didit-java-v0.1.0...didit-java-v1.0.0) (2026-10-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* **spec:** the API spec sync changes the SDK surface (nullable fields, removed fields, account.organizations.list returns a page, the session decision response is the SessionDecision component).
+
+### Features
+
+* add bank.account_check (POST /v3/bank/account-check/) and bank_verifications on the decision ([7b3705d](https://github.com/didit-protocol/sdk-java/commit/7b3705dd23e903778a78049633c1129d2ad7d784))
+* **spec:** sync API spec 2026-10-23 ([#6](https://github.com/didit-protocol/sdk-java/issues/6)) ([7e6b5dd](https://github.com/didit-protocol/sdk-java/commit/7e6b5dd85bc424f6fc2c394778131dcb48fda276))
+* **spec:** sync API spec 2026-10-27 ([#13](https://github.com/didit-protocol/sdk-java/issues/13)) ([f9c1bb4](https://github.com/didit-protocol/sdk-java/commit/f9c1bb42234e074234346e19a1df288c18c2b234))
+
+
+### Miscellaneous Chores
+
+* release 1.0.0 ([058812d](https://github.com/didit-protocol/sdk-java/commit/058812d43421cfec22a8b89e8bd9888b600d6fe6))

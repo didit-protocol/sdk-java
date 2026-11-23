@@ -1,0 +1,37 @@
+# Secret scanning for the whole history (CI job "secret-scan"). The repository goes public on the
+# first release, so nothing that looks like a credential may be committed.
+#
+# Allowed: the upstream API documents copied byte for byte from docs.didit.me (their examples
+# hold synthetic placeholder tokens), the earlier copies of verification.json pinned by commit for
+# the spec sync tests, and the synthetic webhook secrets that start with whsec_test_.
+# Test keys for Authentication are generated at test time and never stored.
+title = "Didit Java SDK"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Upstream API documents, their pinned copies and synthetic test webhook secrets"
+paths = [
+  '''^openapi/verification\.json$''',
+  '''^openapi/account\.json$''',
+  '''^openapi/authentication\.json$''',
+  '''^openapi/webhook-vectors\.json$''',
+  '''^src/test/resources/bank-webhook-vectors\.json$''',
+  '''^codegen/tests/pinned/verification-[0-9a-f]{40}\.json$''',
+]
+regexes = [
+  '''whsec_test_[A-Za-z0-9_]+''',
+]
+
+# Synthetic consent-redaction test value: this one value, in this one test file, for this one rule.
+[[allowlists]]
+description = "Synthetic agent consent redaction test value"
+condition = "AND"
+targetRules = ["generic-api-key"]
+paths = [
+  '''^src/test/java/me/didit/authentication/AuthenticationTest\.java$''',
+]
+regexes = [
+  '''^Y3JlZGVudGlhbC1pZC0xMjM0NTY3ODkw$''',
+]
