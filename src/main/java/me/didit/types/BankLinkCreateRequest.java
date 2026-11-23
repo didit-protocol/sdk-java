@@ -204,7 +204,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * Optional. One of the [supported languages](/integration/supported-languages), the same codes the <code>language</code> of the session API takes, for example <code>es</code>, <code>pt</code>, <code>pt-BR</code> or <code>zh-CN</code> (<code>pt-PT</code> is not one of them). The match is exact and case-sensitive (<code>ES</code> and <code>pt-PT</code> are refused). A code outside that list answers <code>400 invalid_request</code> with <code>field: language</code>. Otherwise the browser language.
+   * Optional. One of the [supported languages](/integration/supported-languages), the same codes the <code>language</code> of the session API takes, for example <code>es</code>, <code>pt</code>, <code>pt-BR</code> or <code>zh-CN</code> (<code>pt-PT</code> is not one of them). The match is exact and case-sensitive (<code>ES</code> and <code>pt-PT</code> are refused). A code outside that list answers <code>400 invalid_request</code> with <code>field: language</code>. The language of the hosted page and of the consent text is, in this order: the language the person chose on the page, this <code>language</code>, the browser's language, then English.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -437,7 +437,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * Optional. One of the [supported languages](/integration/supported-languages), the same codes the <code>language</code> of the session API takes, for example <code>es</code>, <code>pt</code>, <code>pt-BR</code> or <code>zh-CN</code> (<code>pt-PT</code> is not one of them). The match is exact and case-sensitive (<code>ES</code> and <code>pt-PT</code> are refused). A code outside that list answers <code>400 invalid_request</code> with <code>field: language</code>. Otherwise the browser language.
+     * Optional. One of the [supported languages](/integration/supported-languages), the same codes the <code>language</code> of the session API takes, for example <code>es</code>, <code>pt</code>, <code>pt-BR</code> or <code>zh-CN</code> (<code>pt-PT</code> is not one of them). The match is exact and case-sensitive (<code>ES</code> and <code>pt-PT</code> are refused). A code outside that list answers <code>400 invalid_request</code> with <code>field: language</code>. The language of the hosted page and of the consent text is, in this order: the language the person chose on the page, this <code>language</code>, the browser's language, then English.
      *
      * @param language the value
      * @return this builder
