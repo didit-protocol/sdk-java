@@ -271,6 +271,8 @@ public final class BankResource {
    *
    * <p>Lists the connections of your application, newest first, with cursor pagination. All filters apply inside your application and environment.
    *
+   * <p>Connections that were deleted are left out of the list by default. To list them, ask with <code>status=deleted</code>, which returns only them. The <code>status</code> filter takes one value, so a list of statuses answers <code>400 invalid_request</code> with <code>field</code> <code>status</code>. A deleted connection is a record that the deletion happened: it carries no bank data, and reading it by id returns the same minimal record (<code>id</code>, <code>status</code>, <code>status_reason</code>, <code>created_at</code> and <code>erasure</code>).
+   *
    * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): read for this operation. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
    *
    * <p>In this list <code>sync.budgets</code> shows only the budgets that exist already; <code>GET /v3/bank/connections/{id}/</code> opens today's budgets.

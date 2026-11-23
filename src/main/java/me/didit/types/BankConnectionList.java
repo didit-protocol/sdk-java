@@ -13,7 +13,9 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 import org.jspecify.annotations.Nullable;
 
-/** A page of connections. */
+/**
+ * A page of connections. Deleted connections are not in it unless the request asked for <code>status=deleted</code>.
+ */
 public final class BankConnectionList extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("items", "next_cursor");
 
