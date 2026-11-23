@@ -2,7 +2,7 @@ package me.didit.webhooks;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.time.Clock;
@@ -11,44 +11,94 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.api.TestFactory;
 
 /** Types every {@code bank.*} event and reads its generated payload type. */
 final class BankWebhookEventsTest {
-  static Stream<Arguments> bankEvents() {
-    Map<String, Class<? extends BankEvent>> types = new LinkedHashMap<>();
-    types.put(BankLinkCompletedEvent.TYPE, BankLinkCompletedEvent.class);
-    types.put(BankLinkCancelledEvent.TYPE, BankLinkCancelledEvent.class);
-    types.put(BankLinkExpiredEvent.TYPE, BankLinkExpiredEvent.class);
-    types.put(BankLinkFailedEvent.TYPE, BankLinkFailedEvent.class);
-    types.put(BankConnectionCreatedEvent.TYPE, BankConnectionCreatedEvent.class);
-    types.put(BankConnectionUpdatedEvent.TYPE, BankConnectionUpdatedEvent.class);
-    types.put(BankConnectionConsentExpiringEvent.TYPE, BankConnectionConsentExpiringEvent.class);
-    types.put(BankConnectionRenewalRequiredEvent.TYPE, BankConnectionRenewalRequiredEvent.class);
-    types.put(BankConnectionRenewedEvent.TYPE, BankConnectionRenewedEvent.class);
-    types.put(BankConnectionRevokedEvent.TYPE, BankConnectionRevokedEvent.class);
-    types.put(BankConnectionDeletedEvent.TYPE, BankConnectionDeletedEvent.class);
-    types.put(BankConnectionHistoryCompleteEvent.TYPE, BankConnectionHistoryCompleteEvent.class);
-    types.put(BankDataUpdatedEvent.TYPE, BankDataUpdatedEvent.class);
-    types.put(BankSyncCompletedEvent.TYPE, BankSyncCompletedEvent.class);
-    types.put(BankSyncFailedEvent.TYPE, BankSyncFailedEvent.class);
-    types.put(BankSyncRecoveredEvent.TYPE, BankSyncRecoveredEvent.class);
-    return types.entrySet().stream().map(e -> Arguments.of(e.getKey(), e.getValue()));
+  @TestFactory
+  Stream<DynamicTest> verifiesAndTypesEveryBankEvent() {
+    return Stream.of(
+        delivery(
+            BankLinkCompletedEvent.TYPE,
+            BankLinkCompletedEvent.class,
+            e -> assertEquals("completed", e.data().status().value())),
+        delivery(
+            BankLinkCancelledEvent.TYPE,
+            BankLinkCancelledEvent.class,
+            e -> assertEquals("cancelled", e.data().status().value())),
+        delivery(
+            BankLinkExpiredEvent.TYPE,
+            BankLinkExpiredEvent.class,
+            e -> assertEquals("expired", e.data().status().value())),
+        delivery(
+            BankLinkFailedEvent.TYPE,
+            BankLinkFailedEvent.class,
+            e -> assertEquals("duplicate_conflict", e.data().errorCode().orElseThrow().value())),
+        delivery(
+            BankConnectionCreatedEvent.TYPE,
+            BankConnectionCreatedEvent.class,
+            e -> assertEquals("succeeded", e.data().initialStatus().value())),
+        delivery(
+            BankConnectionUpdatedEvent.TYPE,
+            BankConnectionUpdatedEvent.class,
+            e -> assertEquals("active", e.data().status().value())),
+        delivery(
+            BankConnectionConsentExpiringEvent.TYPE,
+            BankConnectionConsentExpiringEvent.class,
+            e -> assertEquals(7, e.data().daysLeft())),
+        delivery(
+            BankConnectionRenewalRequiredEvent.TYPE,
+            BankConnectionRenewalRequiredEvent.class,
+            e -> assertEquals("consent_expired", e.data().reason().value())),
+        delivery(
+            BankConnectionRenewedEvent.TYPE,
+            BankConnectionRenewedEvent.class,
+            e -> assertEquals(2, e.data().consentVersion())),
+        delivery(
+            BankConnectionRevokedEvent.TYPE,
+            BankConnectionRevokedEvent.class,
+            e -> assertEquals("bank", e.data().endedBy().value())),
+        delivery(
+            BankConnectionDeletedEvent.TYPE,
+            BankConnectionDeletedEvent.class,
+            e -> assertEquals("erased", e.data().erasureStatus().value())),
+        delivery(
+            BankConnectionHistoryCompleteEvent.TYPE,
+            BankConnectionHistoryCompleteEvent.class,
+            e -> assertEquals("complete", e.data().status().value())),
+        delivery(
+            BankDataUpdatedEvent.TYPE,
+            BankDataUpdatedEvent.class,
+            e -> assertEquals("scheduled", e.data().trigger().value())),
+        delivery(
+            BankSyncCompletedEvent.TYPE,
+            BankSyncCompletedEvent.class,
+            e -> assertEquals("partial", e.data().outcome().value())),
+        delivery(
+            BankSyncFailedEvent.TYPE,
+            BankSyncFailedEvent.class,
+            e -> assertEquals("bank_unavailable", e.data().errorCode())),
+        delivery(
+            BankSyncRecoveredEvent.TYPE,
+            BankSyncRecoveredEvent.class,
+            e -> assertEquals("eeeeeeee-0000-4000-8000-000000000002", e.data().syncId())));
   }
 
-  @ParameterizedTest(name = "{0}")
-  @MethodSource("bankEvents")
-  void verifiesAndTypesEveryBankEvent(String type, Class<? extends BankEvent> expected) {
-    BankEvent event = assertInstanceOf(BankEvent.class, verify(type));
-    assertInstanceOf(expected, event);
-    assertEquals(type, event.webhookType());
-    assertNotNull(event.data());
+  private static <E extends BankEvent> DynamicTest delivery(
+      String type, Class<E> expected, Consumer<E> checkPayload) {
+    return dynamicTest(
+        type,
+        () -> {
+          E event = assertInstanceOf(expected, verify(type));
+          assertEquals(type, event.webhookType());
+          checkPayload.accept(event);
+        });
   }
 
   @Test
