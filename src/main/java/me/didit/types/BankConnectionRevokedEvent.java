@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Access ended and the bank confirmed it. <code>ended_by</code> says who ended it: the person, the bank or you. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+ * Access ended: the person, the bank or you stopped it and the bank confirmed it, or Didit ended a one-time connection once its read was complete. <code>ended_by</code> says who ended it: <code>end_user</code>, <code>bank</code>, <code>customer</code> or <code>system</code>. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
  */
 public final class BankConnectionRevokedEvent extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("event_id", "timestamp", "created_at", "application_id", "environment", "connection_id", "status", "ended_by", "status_reason", "ended_at", "retain_until", "webhook_type");
@@ -125,7 +125,7 @@ public final class BankConnectionRevokedEvent extends JsonModel {
   }
 
   /**
-   * Who ended access.
+   * Who ended access. <code>system</code> when Didit ended it by design: a one-time connection once its read is complete.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -258,7 +258,7 @@ public final class BankConnectionRevokedEvent extends JsonModel {
     }
 
     /**
-     * Who ended access.
+     * Who ended access. <code>system</code> when Didit ended it by design: a one-time connection once its read is complete.
      *
      * @param endedBy the value
      * @return this builder

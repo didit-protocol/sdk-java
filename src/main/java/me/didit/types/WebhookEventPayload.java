@@ -691,7 +691,7 @@ public final class WebhookEventPayload extends JsonUnion {
   /**
    * Whether this value is a {@code BankConnectionRevokedEvent}.
    *
-   * Access ended and the bank confirmed it. <code>ended_by</code> says who ended it: the person, the bank or you. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   * Access ended: the person, the bank or you stopped it and the bank confirmed it, or Didit ended a one-time connection once its read was complete. <code>ended_by</code> says who ended it: <code>end_user</code>, <code>bank</code>, <code>customer</code> or <code>system</code>. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
    *
    * @return true when it matches
    */
