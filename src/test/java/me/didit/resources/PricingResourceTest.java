@@ -14,6 +14,8 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.PricingBankVerificationCountryCoverageParams;
+import me.didit.types.PricingBankVerificationCoverageParams;
 import me.didit.types.PricingPriceBookParams;
 import org.junit.jupiter.api.Test;
 
@@ -48,6 +50,42 @@ final class PricingResourceTest {
     RecordedRequest request = transport.only();
     assertEquals("GET", request.method());
     assertEquals("/v3/organization/price-book/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals(null, request.header("x-api-key"));
+    assertEquals(null, request.header("Authorization"));
+    assertEquals("value-if-none-match", request.header("If-None-Match"));
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void bankVerificationCoverage() {
+    PricingBankVerificationCoverageParams params = PricingBankVerificationCoverageParams.builder().ifNoneMatch("value-if-none-match").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/organization/bank-verification-coverage/", "200");
+    transport.respondJson(200, example);
+    var result = client.pricing().bankVerificationCoverage(params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/organization/bank-verification-coverage/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals(null, request.header("x-api-key"));
+    assertEquals(null, request.header("Authorization"));
+    assertEquals("value-if-none-match", request.header("If-None-Match"));
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void bankVerificationCountryCoverage() {
+    PricingBankVerificationCountryCoverageParams params = PricingBankVerificationCountryCoverageParams.builder().ifNoneMatch("value-if-none-match").build();
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/organization/bank-verification-coverage/{country}/", "200");
+    transport.respondJson(200, example);
+    var result = client.pricing().bankVerificationCountryCoverage("00000000-0000-4000-8000-000000020401", params);
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/organization/bank-verification-coverage/00000000-0000-4000-8000-000000020401/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals(null, request.header("x-api-key"));
     assertEquals(null, request.header("Authorization"));
