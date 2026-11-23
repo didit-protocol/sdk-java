@@ -75,7 +75,7 @@ public final class BankConnectionRevokedData extends JsonModel {
   }
 
   /**
-   * Who ended access.
+   * Who ended access. <code>system</code> when Didit ended it by design: a one-time connection once its read is complete.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -148,7 +148,7 @@ public final class BankConnectionRevokedData extends JsonModel {
     }
 
     /**
-     * Who ended access.
+     * Who ended access. <code>system</code> when Didit ended it by design: a one-time connection once its read is complete.
      *
      * @param endedBy the value
      * @return this builder
@@ -250,7 +250,7 @@ public final class BankConnectionRevokedData extends JsonModel {
   }
 
   /**
-   * Who ended access.
+   * Who ended access. <code>system</code> when Didit ended it by design: a one-time connection once its read is complete.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -264,10 +264,13 @@ public final class BankConnectionRevokedData extends JsonModel {
     /** The value {@code "customer"}. */
     public static final EndedBy CUSTOMER = new EndedBy("customer");
 
+    /** The value {@code "system"}. */
+    public static final EndedBy SYSTEM = new EndedBy("system");
+
     /** The value {@code "unknown"}. */
     public static final EndedBy UNKNOWN = new EndedBy("unknown");
 
-    private static final List<EndedBy> KNOWN_VALUES = List.of(END_USER, BANK, CUSTOMER, UNKNOWN);
+    private static final List<EndedBy> KNOWN_VALUES = List.of(END_USER, BANK, CUSTOMER, SYSTEM, UNKNOWN);
 
     private EndedBy(String value) {
       super(value);

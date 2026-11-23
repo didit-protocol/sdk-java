@@ -203,7 +203,7 @@ public final class BankConnectionConsent extends JsonModel {
   }
 
   /**
-   * Who ended access, set from evidence. <code>unknown</code> when neither the bank nor the sync says.
+   * Who ended access, set from evidence. <code>system</code> when Didit ended it by design: a one-time connection once its read is complete. <code>unknown</code> when neither the bank nor the sync says.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -376,7 +376,7 @@ public final class BankConnectionConsent extends JsonModel {
     }
 
     /**
-     * Who ended access, set from evidence. <code>unknown</code> when neither the bank nor the sync says.
+     * Who ended access, set from evidence. <code>system</code> when Didit ended it by design: a one-time connection once its read is complete. <code>unknown</code> when neither the bank nor the sync says.
      *
      * @param endedBy the value, or {@code null} to send JSON null
      * @return this builder
@@ -603,7 +603,7 @@ public final class BankConnectionConsent extends JsonModel {
   }
 
   /**
-   * Who ended access, set from evidence. <code>unknown</code> when neither the bank nor the sync says.
+   * Who ended access, set from evidence. <code>system</code> when Didit ended it by design: a one-time connection once its read is complete. <code>unknown</code> when neither the bank nor the sync says.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -617,10 +617,13 @@ public final class BankConnectionConsent extends JsonModel {
     /** The value {@code "customer"}. */
     public static final EndedBy CUSTOMER = new EndedBy("customer");
 
+    /** The value {@code "system"}. */
+    public static final EndedBy SYSTEM = new EndedBy("system");
+
     /** The value {@code "unknown"}. */
     public static final EndedBy UNKNOWN = new EndedBy("unknown");
 
-    private static final List<EndedBy> KNOWN_VALUES = List.of(END_USER, BANK, CUSTOMER, UNKNOWN);
+    private static final List<EndedBy> KNOWN_VALUES = List.of(END_USER, BANK, CUSTOMER, SYSTEM, UNKNOWN);
 
     private EndedBy(String value) {
       super(value);
