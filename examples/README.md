@@ -14,7 +14,7 @@ Runnable examples of the Didit Java SDK. Set `DIDIT_API_KEY` (and `DIDIT_BASE_UR
 | `BankDataExample` | Create a Bank Link, verify `bank.connection.created` and read the accounts: `./gradlew :examples:bankData` |
 | `KotlinQuickstart.kt` | The quickstart in Kotlin, with `when` over webhook events |
 
-To run the Bank example, configure your application's webhook endpoint to forward signed deliveries to `http://127.0.0.1:8080/webhooks/didit`, preserving the raw body and signature headers. Set `DIDIT_WEBHOOK_SECRET` and run the command on the developer workstation where you will complete consent yourself. The hosted link opens in their browser. The command exits after it receives the matching connection event and lists the accounts.
+To run the Bank example, configure your application's webhook endpoint to forward signed deliveries to `http://127.0.0.1:8080/webhooks/didit`, preserving the raw body and signature headers. Set `DIDIT_WEBHOOK_SECRET` and run the command on the developer workstation where you will complete consent yourself. The hosted link opens in your browser. The command exits after it receives the matching connection event and lists the accounts, when the link is cancelled, expires or fails, or after 30 minutes.
 
 Webhook receivers:
 

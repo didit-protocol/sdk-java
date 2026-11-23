@@ -91,6 +91,7 @@ Every method also has an `...Async` variant that returns a `CompletableFuture`, 
 | Users and businesses | `users`, `businesses`, `amlMonitoring`, `biometricTemplates` |
 | Transactions and crypto | `transactions`, `transactions().rules()`, `transactions().travelRule()`, `walletScreening`, `travelRule`, `travelRule().walletAddresses()` |
 | Cases and investigations | `cases` (with `notes`, `links`, `checklist`, `requests`, `teams`, `routingRules`, `blueprints`, `regulatoryReports`), `regulatoryReports`, `reportTemplates`, `networks` |
+| Bank data | `bank` (links, connections, accounts, balances, transactions, sync runs, institutions, coverage, `accountCheck`) |
 | Configuration | `workflows`, `questionnaires`, `webhooks().destinations()`, `customization`, `billing` |
 | Account management | `account` (`login`, `register`, ...), `account().organizations()`, `account().applications()` |
 
@@ -222,7 +223,8 @@ WebhookEvent event = Webhooks.verify(rawBody, headers, secret);
 - `X-Signature-Simple` is deprecated and covers the envelope only; `Webhooks.verify` accepts it only with `.allowSimple(true)` (`verifyParsed` never does), and then `event.isBodyAuthenticated()` is false: re-fetch the record from the API before acting on it.
 - A failed check throws `WebhookVerificationException` with `reason()`: `missing_signature`, `invalid_signature`, `missing_timestamp`, `timestamp_mismatch`, `timestamp_out_of_tolerance` or `invalid_payload`. Answer it with a 4xx status.
 
-Events are typed: `SessionStatusUpdatedEvent`, `SessionDataUpdatedEvent`, `UserStatusUpdatedEvent`, `UserDataUpdatedEvent`, `BusinessStatusUpdatedEvent`, `BusinessDataUpdatedEvent`, `ActivityCreatedEvent`, `TransactionCreatedEvent`, `TransactionStatusUpdatedEvent`, `TravelRuleStatusUpdatedEvent`, `WorkflowComplianceChangedEvent`, `KybRegistrySearchResolvedEvent`, and `UnknownEvent` for types this version does not know.
+Events are typed: `SessionStatusUpdatedEvent`, `SessionDataUpdatedEvent`, `UserStatusUpdatedEvent`, `UserDataUpdatedEvent`, `BusinessStatusUpdatedEvent`, `BusinessDataUpdatedEvent`, `ActivityCreatedEvent`, `TransactionCreatedEvent`, `TransactionStatusUpdatedEvent`, `TravelRuleStatusUpdatedEvent`, `WorkflowComplianceChangedEvent`, `KybRegistrySearchResolvedEvent`, the Bank events (`BankLinkCompletedEvent`, `BankLinkCancelledEvent`, `BankLinkExpiredEvent`, `BankLinkFailedEvent`, `BankConnectionCreatedEvent`, `BankConnectionUpdatedEvent`, `BankConnectionConsentExpiringEvent`, `BankConnectionRenewalRequiredEvent`, `BankConnectionRenewedEvent`, `BankConnectionRevokedEvent`, `BankConnectionDeletedEvent`, `BankConnectionHistoryCompleteEvent`, `BankDataUpdatedEvent`, `BankSyncCompletedEvent`, `BankSyncFailedEvent`, `BankSyncRecoveredEvent`), and `UnknownEvent` for types this version does not know.
+Bank events carry ids and statuses only: `data()` returns the link fields for `bank.link.*` and the top-level connection, data or sync fields for the others. Bank data needs the `bank-data` permission on the API key (403 `bank_data_access_denied` otherwise); see `examples/` for a runnable Bank Link example.
 Every event has `eventId()`, `webhookType()`, `timestamp()`, `createdAt()`, `applicationId()`, `environment()` and the whole payload in `_json()`.
 
 ## Transactions, wallet screening and Travel Rule
