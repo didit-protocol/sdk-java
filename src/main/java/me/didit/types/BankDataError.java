@@ -215,6 +215,9 @@ public final class BankDataError extends JsonModel {
     /** The value {@code "ongoing_access_not_available"}. */
     public static final Code ONGOING_ACCESS_NOT_AVAILABLE = new Code("ongoing_access_not_available");
 
+    /** The value {@code "country_not_available"}. */
+    public static final Code COUNTRY_NOT_AVAILABLE = new Code("country_not_available");
+
     /** The value {@code "segment_not_available"}. */
     public static final Code SEGMENT_NOT_AVAILABLE = new Code("segment_not_available");
 
@@ -235,6 +238,9 @@ public final class BankDataError extends JsonModel {
 
     /** The value {@code "connection_not_active"}. */
     public static final Code CONNECTION_NOT_ACTIVE = new Code("connection_not_active");
+
+    /** The value {@code "one_time_connection"}. */
+    public static final Code ONE_TIME_CONNECTION = new Code("one_time_connection");
 
     /** The value {@code "consent_expired"}. */
     public static final Code CONSENT_EXPIRED = new Code("consent_expired");
@@ -278,7 +284,7 @@ public final class BankDataError extends JsonModel {
     /** The value {@code "internal_error"}. */
     public static final Code INTERNAL_ERROR = new Code("internal_error");
 
-    private static final List<Code> KNOWN_VALUES = List.of(ONGOING_ACCESS_NOT_AVAILABLE, SEGMENT_NOT_AVAILABLE, WINDOW_NOT_AVAILABLE, HISTORY_WINDOW_AMBIGUOUS, REDIRECT_URL_NOT_REGISTERED, LINK_ORIGIN_NOT_ALLOWED, BANK_DATA_ACCESS_DENIED, CONNECTION_NOT_ACTIVE, CONSENT_EXPIRED, RENEWAL_NOT_NEEDED, RENEWAL_WINDOW_EXPIRED, ACCESS_REMOVED, REFRESH_LIMIT_REACHED, CURSOR_EXPIRED, PAGE_EXPIRED, INVALID_CURSOR, PAGE_TOKEN_MISMATCH, CONTRACT_RATE_MISSING, INSUFFICIENT_CREDITS, INVALID_REQUEST, NOT_FOUND, INTERNAL_ERROR);
+    private static final List<Code> KNOWN_VALUES = List.of(ONGOING_ACCESS_NOT_AVAILABLE, COUNTRY_NOT_AVAILABLE, SEGMENT_NOT_AVAILABLE, WINDOW_NOT_AVAILABLE, HISTORY_WINDOW_AMBIGUOUS, REDIRECT_URL_NOT_REGISTERED, LINK_ORIGIN_NOT_ALLOWED, BANK_DATA_ACCESS_DENIED, CONNECTION_NOT_ACTIVE, ONE_TIME_CONNECTION, CONSENT_EXPIRED, RENEWAL_NOT_NEEDED, RENEWAL_WINDOW_EXPIRED, ACCESS_REMOVED, REFRESH_LIMIT_REACHED, CURSOR_EXPIRED, PAGE_EXPIRED, INVALID_CURSOR, PAGE_TOKEN_MISMATCH, CONTRACT_RATE_MISSING, INSUFFICIENT_CREDITS, INVALID_REQUEST, NOT_FOUND, INTERNAL_ERROR);
 
     private Code(String value) {
       super(value);

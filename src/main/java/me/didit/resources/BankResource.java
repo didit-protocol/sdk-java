@@ -466,7 +466,7 @@ public final class BankResource {
    *
    * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): write for this operation, which changes something. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
    *
-   * <p>Refreshing a deleted connection answers <code>409 connection_not_active</code>.
+   * <p>Refreshing a deleted connection answers <code>409 connection_not_active</code>. A one-time connection is read once and its access then ends, so refreshing it answers <code>409 one_time_connection</code>: create a new link to read the bank again.
    *
    * <p>{@code POST /v3/bank/connections/{id}/refresh/}
    * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
@@ -709,6 +709,8 @@ public final class BankResource {
    *
    * <p>Send the returned <code>url</code> to the person: the hosted page shows what continues to be shared and until when, the person signs in at their bank once and returns to your <code>redirect_url</code>, and <code>bank.connection.renewed</code> confirms it. Afterwards the connection's <code>consent</code> shows a new <code>version</code>, <code>renewed_count</code>, <code>expires_at</code> and <code>renew_by</code>, with <code>renewal_action</code> <code>bank_auth</code>.
    *
+   * <p>A one-time connection has no consent to renew: it answers <code>409 one_time_connection</code>, and a new link reads the bank again.
+   *
    * <p>Until the consent has 30 days left or fewer it answers <code>409 renewal_not_needed</code>; after <code>consent.renewable_until</code> it answers <code>409 renewal_window_expired</code> and the person connects again.
    *
    * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): write for this operation, which changes something. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
@@ -804,7 +806,7 @@ public final class BankResource {
   /**
    * Revoke a bank connection
    *
-   * <p>Stops access to the bank. Bank fetches stop the moment you ask, even while the bank's confirmation is pending: the consent reads <code>revocation_pending</code>, then <code>revoked</code> once the bank confirms access is terminated, or <code>revocation_failed</code> while the call is retried automatically. <code>consent.ended_by</code> is <code>customer</code>.
+   * <p>Stops access to the bank. Bank fetches stop the moment you ask, even while the bank's confirmation is pending: the consent reads <code>revocation_pending</code>, then <code>revoked</code> once the bank confirms access is terminated, or <code>revocation_failed</code> while the call is retried automatically. <code>consent.ended_by</code> is <code>customer</code>. Until the bank confirms, <code>status</code> keeps its value and <code>status_reason</code> is <code>null</code>; once <code>status</code> is <code>revoked</code>, <code>status_reason</code> is <code>revoked_by_customer</code>.
    *
    * <p>Revoking does not delete anything: stored accounts, balances and transactions stay readable until <code>consent.retain_until</code>, the retention setting of your application, and nothing is charged. To delete them now, call <code>delete_connection</code>. Repeating the call returns the current state.
    *

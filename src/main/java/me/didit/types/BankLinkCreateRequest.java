@@ -74,7 +74,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * <code>one_time</code> (default) reads the data once. <code>ongoing</code> keeps access open until the consent ends or someone stops it. With <code>institution_id</code> set, a bank that cannot keep access open answers <code>400 ongoing_access_not_available</code> before any screen. Without it, the bank picker lists only banks that can.
+   * <code>one_time</code> (default) reads the data once: when the read completes the connection ends itself and reads <code>status: revoked</code> with <code>status_reason: collection_complete</code>, and its data stays readable until <code>consent.retain_until</code>. <code>ongoing</code> keeps access open until the consent ends or someone stops it. With <code>institution_id</code> set, a bank that cannot keep access open answers <code>400 ongoing_access_not_available</code> before any screen. Without it, the bank picker lists only banks that can.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -84,7 +84,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * Optional. Without it the person picks among the countries your application enabled. It has to be a country Bank Link serves; any other, <code>ZZZ</code> included, answers <code>400 invalid_request</code> with <code>field: country</code>. An empty request body stays valid.
+   * Optional. Without it the person picks among the countries your application enabled. It has to be a country Bank Link serves; a malformed value answers <code>400 invalid_request</code>, and a country the product does not serve, or where no bank is offered, answers <code>400 country_not_available</code>, both with <code>field: country</code>. An empty request body stays valid.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -307,7 +307,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * <code>one_time</code> (default) reads the data once. <code>ongoing</code> keeps access open until the consent ends or someone stops it. With <code>institution_id</code> set, a bank that cannot keep access open answers <code>400 ongoing_access_not_available</code> before any screen. Without it, the bank picker lists only banks that can.
+     * <code>one_time</code> (default) reads the data once: when the read completes the connection ends itself and reads <code>status: revoked</code> with <code>status_reason: collection_complete</code>, and its data stays readable until <code>consent.retain_until</code>. <code>ongoing</code> keeps access open until the consent ends or someone stops it. With <code>institution_id</code> set, a bank that cannot keep access open answers <code>400 ongoing_access_not_available</code> before any screen. Without it, the bank picker lists only banks that can.
      *
      * @param access the value
      * @return this builder
@@ -317,7 +317,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * Optional. Without it the person picks among the countries your application enabled. It has to be a country Bank Link serves; any other, <code>ZZZ</code> included, answers <code>400 invalid_request</code> with <code>field: country</code>. An empty request body stays valid.
+     * Optional. Without it the person picks among the countries your application enabled. It has to be a country Bank Link serves; a malformed value answers <code>400 invalid_request</code>, and a country the product does not serve, or where no bank is offered, answers <code>400 country_not_available</code>, both with <code>field: country</code>. An empty request body stays valid.
      *
      * @param country the value
      * @return this builder
@@ -565,7 +565,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * <code>one_time</code> (default) reads the data once. <code>ongoing</code> keeps access open until the consent ends or someone stops it. With <code>institution_id</code> set, a bank that cannot keep access open answers <code>400 ongoing_access_not_available</code> before any screen. Without it, the bank picker lists only banks that can.
+   * <code>one_time</code> (default) reads the data once: when the read completes the connection ends itself and reads <code>status: revoked</code> with <code>status_reason: collection_complete</code>, and its data stays readable until <code>consent.retain_until</code>. <code>ongoing</code> keeps access open until the consent ends or someone stops it. With <code>institution_id</code> set, a bank that cannot keep access open answers <code>400 ongoing_access_not_available</code> before any screen. Without it, the bank picker lists only banks that can.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
