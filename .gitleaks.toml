@@ -17,6 +17,7 @@ paths = [
   '''^openapi/account\.json$''',
   '''^openapi/authentication\.json$''',
   '''^openapi/webhook-vectors\.json$''',
+  '''^src/test/resources/bank-webhook-vectors\.json$''',
   '''^codegen/tests/pinned/verification-[0-9a-f]{40}\.json$''',
 ]
 regexes = [
