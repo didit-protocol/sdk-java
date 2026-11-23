@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.30.0](https://github.com/didit-protocol/sdk-java/compare/v1.29.0...v1.30.0) (2026-11-23)
+
+
+### Features
+
+* **bank:** Bank data operations and typed bank.* webhook events ([#108](https://github.com/didit-protocol/sdk-java/issues/108)) ([72eba70](https://github.com/didit-protocol/sdk-java/commit/72eba70f7a3a45cd7597119fb0231f19d61683b6))
+
 ## [1.29.0](https://github.com/didit-protocol/sdk-java/compare/v1.28.0...v1.29.0) (2026-11-22)
 
 
