@@ -8,9 +8,9 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import me.didit.Didit;
 import me.didit.errors.DiditException;
 import me.didit.errors.WebhookVerificationException;
-import me.didit.Didit;
 import me.didit.types.BankAccount;
 import me.didit.types.BankAccountList;
 import me.didit.types.BankLink;
@@ -23,7 +23,8 @@ import me.didit.webhooks.Webhooks;
 /**
  * Bank data: create a Bank Link, verify {@code bank.connection.created} and read the accounts.
  *
- * <p>Run on your own workstation as the consenting user. Forward signed webhook deliveries to localhost:8080/webhooks/didit.
+ * <p>Run on your own workstation as the consenting user. Forward signed webhook deliveries to
+ * localhost:8080/webhooks/didit.
  */
 public final class BankDataExample {
   private BankDataExample() {}
@@ -49,7 +50,8 @@ public final class BankDataExample {
                     .build());
     CountDownLatch finished = new CountDownLatch(1);
     HttpServer server = HttpServer.create(new InetSocketAddress("127.0.0.1", 8080), 0);
-    server.createContext("/webhooks/didit", exchange -> receive(exchange, client, link.id(), secret, finished));
+    server.createContext(
+        "/webhooks/didit", exchange -> receive(exchange, client, link.id(), secret, finished));
     server.start();
     try {
       System.out.println("Waiting for Bank Link " + link.id());
@@ -64,8 +66,9 @@ public final class BankDataExample {
     }
   }
 
-  private static void receive(HttpExchange exchange, Didit client, String linkId, String secret,
-      CountDownLatch finished) throws IOException {
+  private static void receive(
+      HttpExchange exchange, Didit client, String linkId, String secret, CountDownLatch finished)
+      throws IOException {
     try {
       if (!"POST".equals(exchange.getRequestMethod())) {
         exchange.sendResponseHeaders(405, -1);

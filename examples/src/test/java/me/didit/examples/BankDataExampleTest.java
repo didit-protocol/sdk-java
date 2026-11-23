@@ -24,26 +24,43 @@ final class BankDataExampleTest {
     Path fixtures = Path.of(System.getProperty("didit.repoRoot"), "openapi");
     ObjectMapper mapper = new ObjectMapper();
     JsonNode paths = mapper.readTree(fixtures.resolve("verification.json").toFile()).get("paths");
-    JsonNode link = paths.at("/~1v3~1bank~1links~1{id}~1/get/responses/200/content/application~1json/examples/Completed/value");
-    JsonNode accounts = paths.at("/~1v3~1bank~1connections~1{id}~1accounts~1/get/responses/200/content/application~1json/examples/Page/value");
-    JsonNode vectors = mapper.readTree(fixtures.resolve("webhook-vectors.json").toFile()).get("vectors");
-    JsonNode created = java.util.stream.StreamSupport.stream(vectors.spliterator(), false)
-        .filter(v -> v.get("name").asText().equals("bank_connection_created")).findFirst().orElseThrow();
+    JsonNode link =
+        paths.at(
+            "/~1v3~1bank~1links~1{id}~1/get/responses/200/content/application~1json/examples/Completed/value");
+    JsonNode accounts =
+        paths.at(
+            "/~1v3~1bank~1connections~1{id}~1accounts~1/get/responses/200/content/application~1json/examples/Page/value");
+    JsonNode vectors =
+        mapper.readTree(fixtures.resolve("webhook-vectors.json").toFile()).get("vectors");
+    JsonNode created =
+        java.util.stream.StreamSupport.stream(vectors.spliterator(), false)
+            .filter(v -> v.get("name").asText().equals("bank_connection_created"))
+            .findFirst()
+            .orElseThrow();
     ObjectNode event = (ObjectNode) mapper.readTree(created.get("body").asText());
     if (matches) {
       event.set("connection_id", link.get("connection_id"));
     }
 
     List<String> requests = new ArrayList<>();
-    Didit client = Didit.builder().apiKey("test-key").environment(name -> null)
-        .transport(request -> {
-          requests.add(request.uri().getPath());
-          JsonNode response = requests.size() == 1 ? link : accounts;
-          return CompletableFuture.completedFuture(new TransportResponse(200, Headers.empty(),
-              response.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8)));
-        }).build();
+    Didit client =
+        Didit.builder()
+            .apiKey("test-key")
+            .environment(name -> null)
+            .transport(
+                request -> {
+                  requests.add(request.uri().getPath());
+                  JsonNode response = requests.size() == 1 ? link : accounts;
+                  return CompletableFuture.completedFuture(
+                      new TransportResponse(
+                          200,
+                          Headers.empty(),
+                          response.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8)));
+                })
+            .build();
     String id = link.get("id").asText();
-    assertEquals(matches, BankDataExample.readMatchingAccounts(client, id, Webhooks.parseEvent(event)));
+    assertEquals(
+        matches, BankDataExample.readMatchingAccounts(client, id, Webhooks.parseEvent(event)));
     List<String> expected = new ArrayList<>(List.of("/v3/bank/links/" + id + "/"));
     if (matches) {
       expected.add("/v3/bank/connections/" + link.get("connection_id").asText() + "/accounts/");

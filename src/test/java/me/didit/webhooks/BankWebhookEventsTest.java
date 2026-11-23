@@ -24,31 +24,81 @@ final class BankWebhookEventsTest {
   @TestFactory
   Stream<DynamicTest> verifiesAndTypesEveryBankEvent() {
     return Stream.of(
-        delivery(BankLinkCompletedEvent.TYPE, BankLinkCompletedEvent.class, e -> assertEquals("completed", e.data().status().value())),
-        delivery(BankLinkCancelledEvent.TYPE, BankLinkCancelledEvent.class, e -> assertEquals("cancelled", e.data().status().value())),
-        delivery(BankLinkExpiredEvent.TYPE, BankLinkExpiredEvent.class, e -> assertEquals("expired", e.data().status().value())),
-        delivery(BankLinkFailedEvent.TYPE, BankLinkFailedEvent.class, e -> assertEquals("duplicate_conflict", e.data().errorCode().orElseThrow().value())),
-        delivery(BankConnectionCreatedEvent.TYPE, BankConnectionCreatedEvent.class, e -> assertEquals("succeeded", e.data().initialStatus().value())),
-        delivery(BankConnectionUpdatedEvent.TYPE, BankConnectionUpdatedEvent.class, e -> assertEquals("active", e.data().status().value())),
-        delivery(BankConnectionConsentExpiringEvent.TYPE, BankConnectionConsentExpiringEvent.class, e -> assertEquals(7, e.data().daysLeft())),
-        delivery(BankConnectionRenewalRequiredEvent.TYPE, BankConnectionRenewalRequiredEvent.class, e -> assertEquals("consent_expired", e.data().reason().value())),
-        delivery(BankConnectionRenewedEvent.TYPE, BankConnectionRenewedEvent.class, e -> assertEquals(2, e.data().consentVersion())),
-        delivery(BankConnectionRevokedEvent.TYPE, BankConnectionRevokedEvent.class, e -> assertEquals("bank", e.data().endedBy().value())),
-        delivery(BankConnectionDeletedEvent.TYPE, BankConnectionDeletedEvent.class, e -> assertEquals("erased", e.data().erasureStatus().value())),
-        delivery(BankConnectionHistoryCompleteEvent.TYPE, BankConnectionHistoryCompleteEvent.class, e -> assertEquals("complete", e.data().status().value())),
-        delivery(BankDataUpdatedEvent.TYPE, BankDataUpdatedEvent.class, e -> assertEquals("scheduled", e.data().trigger().value())),
-        delivery(BankSyncCompletedEvent.TYPE, BankSyncCompletedEvent.class, e -> assertEquals("partial", e.data().outcome().value())),
-        delivery(BankSyncFailedEvent.TYPE, BankSyncFailedEvent.class, e -> assertEquals("bank_unavailable", e.data().errorCode())),
-        delivery(BankSyncRecoveredEvent.TYPE, BankSyncRecoveredEvent.class, e -> assertEquals("eeeeeeee-0000-4000-8000-000000000002", e.data().syncId())));
+        delivery(
+            BankLinkCompletedEvent.TYPE,
+            BankLinkCompletedEvent.class,
+            e -> assertEquals("completed", e.data().status().value())),
+        delivery(
+            BankLinkCancelledEvent.TYPE,
+            BankLinkCancelledEvent.class,
+            e -> assertEquals("cancelled", e.data().status().value())),
+        delivery(
+            BankLinkExpiredEvent.TYPE,
+            BankLinkExpiredEvent.class,
+            e -> assertEquals("expired", e.data().status().value())),
+        delivery(
+            BankLinkFailedEvent.TYPE,
+            BankLinkFailedEvent.class,
+            e -> assertEquals("duplicate_conflict", e.data().errorCode().orElseThrow().value())),
+        delivery(
+            BankConnectionCreatedEvent.TYPE,
+            BankConnectionCreatedEvent.class,
+            e -> assertEquals("succeeded", e.data().initialStatus().value())),
+        delivery(
+            BankConnectionUpdatedEvent.TYPE,
+            BankConnectionUpdatedEvent.class,
+            e -> assertEquals("active", e.data().status().value())),
+        delivery(
+            BankConnectionConsentExpiringEvent.TYPE,
+            BankConnectionConsentExpiringEvent.class,
+            e -> assertEquals(7, e.data().daysLeft())),
+        delivery(
+            BankConnectionRenewalRequiredEvent.TYPE,
+            BankConnectionRenewalRequiredEvent.class,
+            e -> assertEquals("consent_expired", e.data().reason().value())),
+        delivery(
+            BankConnectionRenewedEvent.TYPE,
+            BankConnectionRenewedEvent.class,
+            e -> assertEquals(2, e.data().consentVersion())),
+        delivery(
+            BankConnectionRevokedEvent.TYPE,
+            BankConnectionRevokedEvent.class,
+            e -> assertEquals("bank", e.data().endedBy().value())),
+        delivery(
+            BankConnectionDeletedEvent.TYPE,
+            BankConnectionDeletedEvent.class,
+            e -> assertEquals("erased", e.data().erasureStatus().value())),
+        delivery(
+            BankConnectionHistoryCompleteEvent.TYPE,
+            BankConnectionHistoryCompleteEvent.class,
+            e -> assertEquals("complete", e.data().status().value())),
+        delivery(
+            BankDataUpdatedEvent.TYPE,
+            BankDataUpdatedEvent.class,
+            e -> assertEquals("scheduled", e.data().trigger().value())),
+        delivery(
+            BankSyncCompletedEvent.TYPE,
+            BankSyncCompletedEvent.class,
+            e -> assertEquals("partial", e.data().outcome().value())),
+        delivery(
+            BankSyncFailedEvent.TYPE,
+            BankSyncFailedEvent.class,
+            e -> assertEquals("bank_unavailable", e.data().errorCode())),
+        delivery(
+            BankSyncRecoveredEvent.TYPE,
+            BankSyncRecoveredEvent.class,
+            e -> assertEquals("eeeeeeee-0000-4000-8000-000000000002", e.data().syncId())));
   }
 
   private static <E extends BankEvent> DynamicTest delivery(
       String type, Class<E> expected, Consumer<E> checkPayload) {
-    return dynamicTest(type, () -> {
-      E event = assertInstanceOf(expected, verify(type));
-      assertEquals(type, event.webhookType());
-      checkPayload.accept(event);
-    });
+    return dynamicTest(
+        type,
+        () -> {
+          E event = assertInstanceOf(expected, verify(type));
+          assertEquals(type, event.webhookType());
+          checkPayload.accept(event);
+        });
   }
 
   @Test
