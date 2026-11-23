@@ -9,7 +9,11 @@ import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
+import me.didit.types.BankVerificationCountryCoverage;
+import me.didit.types.BankVerificationCoverage;
 import me.didit.types.BankVerificationPricing;
+import me.didit.types.PricingBankVerificationCountryCoverageParams;
+import me.didit.types.PricingBankVerificationCoverageParams;
 import me.didit.types.PricingPriceBookParams;
 import me.didit.types.PublicPriceBook;
 
@@ -170,6 +174,182 @@ public final class PricingResource {
     return client.executeAsync(priceBookRequest(PricingPriceBookParams.builder().build()), RequestOptions.none(), PRICE_BOOK_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * List the countries with bank coverage (public, unauthenticated)
+   *
+   * <p>Lists the countries where Didit covers banks, how many, and what is open today for each product. Public: no auth header. Cached publicly and revalidated with an <code>ETag</code>. What is open is read on every request from the switches the API uses, so a product that is not open today reads <code>false</code> even when its banks are listed. It carries no prices (see the bank verification pricing feed) and never names a supplier.
+   *
+   * <p>{@code GET /v3/organization/bank-verification-coverage/}
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public BankVerificationCoverage bankVerificationCoverage(PricingBankVerificationCoverageParams params, RequestOptions options) {
+    return client.execute(bankVerificationCoverageRequest(params), options, BANK_VERIFICATION_COVERAGE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BankVerificationCoverage> bankVerificationCoverageAsync(PricingBankVerificationCoverageParams params, RequestOptions options) {
+    return client.executeAsync(bankVerificationCoverageRequest(params), options, BANK_VERIFICATION_COVERAGE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return the result
+   */
+  public BankVerificationCoverage bankVerificationCoverage(PricingBankVerificationCoverageParams params) {
+    return client.execute(bankVerificationCoverageRequest(params), RequestOptions.none(), BANK_VERIFICATION_COVERAGE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BankVerificationCoverage> bankVerificationCoverageAsync(PricingBankVerificationCoverageParams params) {
+    return client.executeAsync(bankVerificationCoverageRequest(params), RequestOptions.none(), BANK_VERIFICATION_COVERAGE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)}, without parameters.
+   *
+   * @param options per-request options
+   * @return the result
+   */
+  public BankVerificationCoverage bankVerificationCoverage(RequestOptions options) {
+    return client.execute(bankVerificationCoverageRequest(PricingBankVerificationCoverageParams.builder().build()), options, BANK_VERIFICATION_COVERAGE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)}, without parameters.
+   *
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BankVerificationCoverage> bankVerificationCoverageAsync(RequestOptions options) {
+    return client.executeAsync(bankVerificationCoverageRequest(PricingBankVerificationCoverageParams.builder().build()), options, BANK_VERIFICATION_COVERAGE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @return the result
+   */
+  public BankVerificationCoverage bankVerificationCoverage() {
+    return client.execute(bankVerificationCoverageRequest(PricingBankVerificationCoverageParams.builder().build()), RequestOptions.none(), BANK_VERIFICATION_COVERAGE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BankVerificationCoverage> bankVerificationCoverageAsync() {
+    return client.executeAsync(bankVerificationCoverageRequest(PricingBankVerificationCoverageParams.builder().build()), RequestOptions.none(), BANK_VERIFICATION_COVERAGE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * List the banks of one country (public, unauthenticated)
+   *
+   * <p>Lists the banks Didit covers in one country: id, name, segments, access modes, history days, pending transactions and whether the bank is operational. Public: no auth header. One cached document per country.
+   *
+   * <p>{@code GET /v3/organization/bank-verification-coverage/{country}/}
+   *
+   * @param country ISO 3166-1 alpha-3 code, for example `ESP`.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public BankVerificationCountryCoverage bankVerificationCountryCoverage(String country, PricingBankVerificationCountryCoverageParams params, RequestOptions options) {
+    return client.execute(bankVerificationCountryCoverageRequest(country, params), options, BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)}.
+   *
+   * @param country the {@code country}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BankVerificationCountryCoverage> bankVerificationCountryCoverageAsync(String country, PricingBankVerificationCountryCoverageParams params, RequestOptions options) {
+    return client.executeAsync(bankVerificationCountryCoverageRequest(country, params), options, BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)}, with the client's options.
+   *
+   * @param country the {@code country}
+   * @param params the request parameters
+   * @return the result
+   */
+  public BankVerificationCountryCoverage bankVerificationCountryCoverage(String country, PricingBankVerificationCountryCoverageParams params) {
+    return client.execute(bankVerificationCountryCoverageRequest(country, params), RequestOptions.none(), BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)}, with the client's options.
+   *
+   * @param country the {@code country}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BankVerificationCountryCoverage> bankVerificationCountryCoverageAsync(String country, PricingBankVerificationCountryCoverageParams params) {
+    return client.executeAsync(bankVerificationCountryCoverageRequest(country, params), RequestOptions.none(), BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)}, without parameters.
+   *
+   * @param country the {@code country}
+   * @param options per-request options
+   * @return the result
+   */
+  public BankVerificationCountryCoverage bankVerificationCountryCoverage(String country, RequestOptions options) {
+    return client.execute(bankVerificationCountryCoverageRequest(country, PricingBankVerificationCountryCoverageParams.builder().build()), options, BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)}, without parameters.
+   *
+   * @param country the {@code country}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BankVerificationCountryCoverage> bankVerificationCountryCoverageAsync(String country, RequestOptions options) {
+    return client.executeAsync(bankVerificationCountryCoverageRequest(country, PricingBankVerificationCountryCoverageParams.builder().build()), options, BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param country the {@code country}
+   * @return the result
+   */
+  public BankVerificationCountryCoverage bankVerificationCountryCoverage(String country) {
+    return client.execute(bankVerificationCountryCoverageRequest(country, PricingBankVerificationCountryCoverageParams.builder().build()), RequestOptions.none(), BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param country the {@code country}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BankVerificationCountryCoverage> bankVerificationCountryCoverageAsync(String country) {
+    return client.executeAsync(bankVerificationCountryCoverageRequest(country, PricingBankVerificationCountryCoverageParams.builder().build()), RequestOptions.none(), BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<BankVerificationPricing> BANK_VERIFICATION_RESPONSE = Responses.json(Conv.model(BankVerificationPricing::fromJson));
 
   private static ApiRequest bankVerificationRequest() {
@@ -183,6 +363,27 @@ public final class PricingResource {
   private static ApiRequest priceBookRequest(PricingPriceBookParams params) {
     return ApiRequest.builder("GET", "/v3/organization/price-book/")
         .auth(ApiRequest.Auth.NONE)
+        .params(params)
+        .headerField("If-None-Match", "If-None-Match")
+        .build();
+  }
+
+  private static final ResponseHandler<BankVerificationCoverage> BANK_VERIFICATION_COVERAGE_RESPONSE = Responses.json(Conv.model(BankVerificationCoverage::fromJson));
+
+  private static ApiRequest bankVerificationCoverageRequest(PricingBankVerificationCoverageParams params) {
+    return ApiRequest.builder("GET", "/v3/organization/bank-verification-coverage/")
+        .auth(ApiRequest.Auth.NONE)
+        .params(params)
+        .headerField("If-None-Match", "If-None-Match")
+        .build();
+  }
+
+  private static final ResponseHandler<BankVerificationCountryCoverage> BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE = Responses.json(Conv.model(BankVerificationCountryCoverage::fromJson));
+
+  private static ApiRequest bankVerificationCountryCoverageRequest(String country, PricingBankVerificationCountryCoverageParams params) {
+    return ApiRequest.builder("GET", "/v3/organization/bank-verification-coverage/{country}/")
+        .auth(ApiRequest.Auth.NONE)
+        .pathParam("country", country)
         .params(params)
         .headerField("If-None-Match", "If-None-Match")
         .build();
@@ -312,6 +513,174 @@ public final class PricingResource {
      */
     public CompletableFuture<RawResponse<PublicPriceBook>> priceBookAsync() {
       return client.executeAsync(priceBookRequest(PricingPriceBookParams.builder().build()), RequestOptions.none(), PRICE_BOOK_RESPONSE);
+    }
+
+    /**
+     * {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<BankVerificationCoverage> bankVerificationCoverage(PricingBankVerificationCoverageParams params, RequestOptions options) {
+      return client.execute(bankVerificationCoverageRequest(params), options, BANK_VERIFICATION_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BankVerificationCoverage>> bankVerificationCoverageAsync(PricingBankVerificationCoverageParams params, RequestOptions options) {
+      return client.executeAsync(bankVerificationCoverageRequest(params), options, BANK_VERIFICATION_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<BankVerificationCoverage> bankVerificationCoverage(PricingBankVerificationCoverageParams params) {
+      return client.execute(bankVerificationCoverageRequest(params), RequestOptions.none(), BANK_VERIFICATION_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BankVerificationCoverage>> bankVerificationCoverageAsync(PricingBankVerificationCoverageParams params) {
+      return client.executeAsync(bankVerificationCoverageRequest(params), RequestOptions.none(), BANK_VERIFICATION_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<BankVerificationCoverage> bankVerificationCoverage(RequestOptions options) {
+      return client.execute(bankVerificationCoverageRequest(PricingBankVerificationCoverageParams.builder().build()), options, BANK_VERIFICATION_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BankVerificationCoverage>> bankVerificationCoverageAsync(RequestOptions options) {
+      return client.executeAsync(bankVerificationCoverageRequest(PricingBankVerificationCoverageParams.builder().build()), options, BANK_VERIFICATION_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @return the result
+     */
+    public RawResponse<BankVerificationCoverage> bankVerificationCoverage() {
+      return client.execute(bankVerificationCoverageRequest(PricingBankVerificationCoverageParams.builder().build()), RequestOptions.none(), BANK_VERIFICATION_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #bankVerificationCoverage(PricingBankVerificationCoverageParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BankVerificationCoverage>> bankVerificationCoverageAsync() {
+      return client.executeAsync(bankVerificationCoverageRequest(PricingBankVerificationCoverageParams.builder().build()), RequestOptions.none(), BANK_VERIFICATION_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)} with the raw response.
+     *
+     * @param country the {@code country}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<BankVerificationCountryCoverage> bankVerificationCountryCoverage(String country, PricingBankVerificationCountryCoverageParams params, RequestOptions options) {
+      return client.execute(bankVerificationCountryCoverageRequest(country, params), options, BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)} with the raw response.
+     *
+     * @param country the {@code country}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BankVerificationCountryCoverage>> bankVerificationCountryCoverageAsync(String country, PricingBankVerificationCountryCoverageParams params, RequestOptions options) {
+      return client.executeAsync(bankVerificationCountryCoverageRequest(country, params), options, BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param country the {@code country}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<BankVerificationCountryCoverage> bankVerificationCountryCoverage(String country, PricingBankVerificationCountryCoverageParams params) {
+      return client.execute(bankVerificationCountryCoverageRequest(country, params), RequestOptions.none(), BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param country the {@code country}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BankVerificationCountryCoverage>> bankVerificationCountryCoverageAsync(String country, PricingBankVerificationCountryCoverageParams params) {
+      return client.executeAsync(bankVerificationCountryCoverageRequest(country, params), RequestOptions.none(), BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param country the {@code country}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<BankVerificationCountryCoverage> bankVerificationCountryCoverage(String country, RequestOptions options) {
+      return client.execute(bankVerificationCountryCoverageRequest(country, PricingBankVerificationCountryCoverageParams.builder().build()), options, BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param country the {@code country}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BankVerificationCountryCoverage>> bankVerificationCountryCoverageAsync(String country, RequestOptions options) {
+      return client.executeAsync(bankVerificationCountryCoverageRequest(country, PricingBankVerificationCountryCoverageParams.builder().build()), options, BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param country the {@code country}
+     * @return the result
+     */
+    public RawResponse<BankVerificationCountryCoverage> bankVerificationCountryCoverage(String country) {
+      return client.execute(bankVerificationCountryCoverageRequest(country, PricingBankVerificationCountryCoverageParams.builder().build()), RequestOptions.none(), BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #bankVerificationCountryCoverage(String, PricingBankVerificationCountryCoverageParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param country the {@code country}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BankVerificationCountryCoverage>> bankVerificationCountryCoverageAsync(String country) {
+      return client.executeAsync(bankVerificationCountryCoverageRequest(country, PricingBankVerificationCountryCoverageParams.builder().build()), RequestOptions.none(), BANK_VERIFICATION_COUNTRY_COVERAGE_RESPONSE);
     }
   }
 }

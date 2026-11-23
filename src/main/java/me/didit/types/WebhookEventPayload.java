@@ -511,7 +511,7 @@ public final class WebhookEventPayload extends JsonUnion {
   /**
    * Whether this value is a {@code BankLinkFailedEvent}.
    *
-   * A Bank Link failed. <code>data.error_code</code> says why, for example <code>duplicate_conflict</code>. Nothing was published or charged. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   * A Bank Link failed: it is over. <code>data.error_code</code> says why, for example <code>duplicate_conflict</code>. A cancel at the bank sends this event with <code>bank_cancelled</code> only on the fifth cancel; before that the person returns to the list of banks and the link stays open. A bank that cannot be reached (<code>bank_unavailable</code>) also leaves the link open and sends no event. Nothing was published or charged. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
    *
    * @return true when it matches
    */

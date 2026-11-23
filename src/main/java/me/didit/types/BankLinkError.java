@@ -52,7 +52,7 @@ public final class BankLinkError extends JsonModel {
   }
 
   /**
-   * Why the link failed. A failed link is not an HTTP error: the link reads with <code>status: failed</code> and this object. A renew link whose connection changed meanwhile reads <code>renewal_not_needed</code> or <code>renewal_window_expired</code>.
+   * Why the link failed. A failed link is not an HTTP error: the link reads with <code>status: failed</code> and this object. <code>bank_cancelled</code> ends a link only on the fifth cancel at the bank: until then a person who backs out at the bank returns to the list of banks with a notice and the link stays <code>opened</code>. A bank that cannot be reached (<code>bank_unavailable</code>) also returns the person to the list of banks and leaves the link <code>opened</code>. A link ended by the simulate operation fails at once. A renew link whose connection changed meanwhile reads <code>renewal_not_needed</code> or <code>renewal_window_expired</code>.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -95,7 +95,7 @@ public final class BankLinkError extends JsonModel {
     }
 
     /**
-     * Why the link failed. A failed link is not an HTTP error: the link reads with <code>status: failed</code> and this object. A renew link whose connection changed meanwhile reads <code>renewal_not_needed</code> or <code>renewal_window_expired</code>.
+     * Why the link failed. A failed link is not an HTTP error: the link reads with <code>status: failed</code> and this object. <code>bank_cancelled</code> ends a link only on the fifth cancel at the bank: until then a person who backs out at the bank returns to the list of banks with a notice and the link stays <code>opened</code>. A bank that cannot be reached (<code>bank_unavailable</code>) also returns the person to the list of banks and leaves the link <code>opened</code>. A link ended by the simulate operation fails at once. A renew link whose connection changed meanwhile reads <code>renewal_not_needed</code> or <code>renewal_window_expired</code>.
      *
      * @param code the value
      * @return this builder
@@ -144,7 +144,7 @@ public final class BankLinkError extends JsonModel {
   }
 
   /**
-   * Why the link failed. A failed link is not an HTTP error: the link reads with <code>status: failed</code> and this object. A renew link whose connection changed meanwhile reads <code>renewal_not_needed</code> or <code>renewal_window_expired</code>.
+   * Why the link failed. A failed link is not an HTTP error: the link reads with <code>status: failed</code> and this object. <code>bank_cancelled</code> ends a link only on the fifth cancel at the bank: until then a person who backs out at the bank returns to the list of banks with a notice and the link stays <code>opened</code>. A bank that cannot be reached (<code>bank_unavailable</code>) also returns the person to the list of banks and leaves the link <code>opened</code>. A link ended by the simulate operation fails at once. A renew link whose connection changed meanwhile reads <code>renewal_not_needed</code> or <code>renewal_window_expired</code>.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
