@@ -130,7 +130,7 @@ public final class BankCoverageCountry extends JsonModel {
   }
 
   /**
-   * The deepest history any bank in the country delivers, in days.
+   * The most history a link can obtain at any bank in the country today, in days.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -243,7 +243,7 @@ public final class BankCoverageCountry extends JsonModel {
     }
 
     /**
-     * The deepest history any bank in the country delivers, in days.
+     * The most history a link can obtain at any bank in the country today, in days.
      *
      * @param historyDaysMax the value, or {@code null} to send JSON null
      * @return this builder
