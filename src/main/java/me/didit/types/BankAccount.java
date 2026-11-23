@@ -142,7 +142,7 @@ public final class BankAccount extends JsonModel {
   }
 
   /**
-   * Full identifiers, returned to server-side callers with the bank data permission.
+   * Full identifiers, returned to server-side callers with access to Bank data.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -315,7 +315,7 @@ public final class BankAccount extends JsonModel {
     }
 
     /**
-     * Full identifiers, returned to server-side callers with the bank data permission.
+     * Full identifiers, returned to server-side callers with access to Bank data.
      *
      * @param identifiers the value
      * @return this builder
