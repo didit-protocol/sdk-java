@@ -9,6 +9,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import me.didit.Didit;
 import me.didit.errors.DiditException;
 import me.didit.errors.WebhookVerificationException;
@@ -18,6 +19,10 @@ import me.didit.types.BankLink;
 import me.didit.types.BankLinkCreateRequest;
 import me.didit.types.BankLinkEndUser;
 import me.didit.webhooks.BankConnectionCreatedEvent;
+import me.didit.webhooks.BankLinkCancelledEvent;
+import me.didit.webhooks.BankLinkEvent;
+import me.didit.webhooks.BankLinkExpiredEvent;
+import me.didit.webhooks.BankLinkFailedEvent;
 import me.didit.webhooks.VerifyOptions;
 import me.didit.webhooks.WebhookEvent;
 import me.didit.webhooks.Webhooks;
@@ -62,7 +67,9 @@ public final class BankDataExample {
       } catch (IOException | IllegalArgumentException ex) {
         throw new IOException("Could not open the Bank Link in your browser.");
       }
-      finished.await();
+      if (!finished.await(30, TimeUnit.MINUTES)) {
+        System.out.println("Stopped waiting for Bank Link " + link.id() + " after 30 minutes.");
+      }
     } finally {
       server.stop(0);
     }
@@ -108,6 +115,13 @@ public final class BankDataExample {
   static boolean readMatchingAccounts(
       Didit client, String linkId, byte[] body, Map<String, ?> headers, VerifyOptions options) {
     WebhookEvent event = Webhooks.verify(body, headers, options);
+    if ((event instanceof BankLinkCancelledEvent
+            || event instanceof BankLinkExpiredEvent
+            || event instanceof BankLinkFailedEvent)
+        && ((BankLinkEvent) event).data().linkId().equals(linkId)) {
+      System.out.println("Bank Link " + linkId + " ended: " + event.webhookType());
+      return true;
+    }
     if (!(event instanceof BankConnectionCreatedEvent created)) {
       return false;
     }
