@@ -70,7 +70,7 @@ public final class BankRenewLinkRequest extends JsonModel {
   }
 
   /**
-   * The <code>language</code> field.
+   * Optional. One of the [supported languages](/integration/supported-languages), the same codes the <code>language</code> of the session API takes, for example <code>es</code>, <code>pt</code>, <code>pt-BR</code> or <code>zh-CN</code> (<code>pt-PT</code> is not one of them). The match is exact and case-sensitive (<code>ES</code> and <code>pt-PT</code> are refused). A code outside that list answers <code>400 invalid_request</code> with <code>field: language</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -123,7 +123,7 @@ public final class BankRenewLinkRequest extends JsonModel {
     }
 
     /**
-     * The <code>language</code> field.
+     * Optional. One of the [supported languages](/integration/supported-languages), the same codes the <code>language</code> of the session API takes, for example <code>es</code>, <code>pt</code>, <code>pt-BR</code> or <code>zh-CN</code> (<code>pt-PT</code> is not one of them). The match is exact and case-sensitive (<code>ES</code> and <code>pt-PT</code> are refused). A code outside that list answers <code>400 invalid_request</code> with <code>field: language</code>.
      *
      * @param language the value
      * @return this builder
