@@ -13,7 +13,7 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 import org.jspecify.annotations.Nullable;
 
-/** Full identifiers, returned to server-side callers with the bank data permission. */
+/** Full identifiers, returned to server-side callers with access to Bank data. */
 public final class BankAccountIdentifiers extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("iban", "bic", "account_number", "sort_code", "other");
 

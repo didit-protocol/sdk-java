@@ -127,7 +127,7 @@ public final class BankResource {
    *
    * <p>Confirm the outcome yourself with <code>get_link</code> or the <code>bank.link.completed</code> webhook; never trust a link id sent by the browser. History: send <code>history_from</code> or <code>history_days</code>, not both. Where the bank allows, ongoing access keeps working until the consent ends; the real date is on each connection.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): write for this operation, which changes something. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
+   * <p>Needs an API key with write access to Bank data, because this operation changes something: a full-access key has it, and a scoped key needs <code>bank-data</code> write in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>.
    *
    * <p>{@code POST /v3/bank/links/}
    * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
@@ -178,7 +178,7 @@ public final class BankResource {
    *
    * <p>A link that fails is not an HTTP error: it reads <code>200</code> with <code>status: failed</code> and an <code>error</code> object, for example <code>duplicate_conflict</code> with <code>conflicts_with</code>. <code>url</code> and <code>client_token</code> are returned only when the link is created.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): read for this operation. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>.
    *
    * <p>{@code GET /v3/bank/links/{id}/}
    *
@@ -277,7 +277,7 @@ public final class BankResource {
    *
    * <p>A link that allows the one-time fallback and meets a bank that cannot keep access open accepts the reduced access and finishes in the same call. A link that is no longer open (completed, cancelled, expired or failed) is returned unchanged, so the call is safe to repeat.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): write for this operation, which changes something. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>. Sandbox only: a live application, or a link or connection that belongs to the live environment, answers <code>404 not_found</code>, exactly as an unknown route does.
+   * <p>Needs an API key with write access to Bank data, because this operation changes something: a full-access key has it, and a scoped key needs <code>bank-data</code> write in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. Sandbox only: a live application, or a link or connection that belongs to the live environment, answers <code>404 not_found</code>, exactly as an unknown route does.
    *
    * <p>{@code POST /v3/bank/links/{id}/simulate/}
    * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
@@ -374,7 +374,7 @@ public final class BankResource {
    *
    * <p>Connections that were deleted are left out of the list by default. To list them, ask with <code>status=deleted</code>, which returns only them. The <code>status</code> filter takes one value, so a list of statuses answers <code>400 invalid_request</code> with <code>field</code> <code>status</code>. A deleted connection is a record that the deletion happened: it carries no bank data, and reading it by id returns the same minimal record (<code>id</code>, <code>status</code>, <code>status_reason</code>, <code>created_at</code> and <code>erasure</code>).
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): read for this operation. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>.
    *
    * <p>In this list <code>sync.budgets</code> shows only the budgets that exist already; <code>GET /v3/bank/connections/{id}/</code> opens today's budgets.
    *
@@ -462,7 +462,7 @@ public final class BankResource {
    *
    * <p>Returns the connection with its consent, sync state and a summary of each account. Read the data itself with the accounts, balances and transactions operations. A connection that was deleted reads as a minimal record: its id, <code>status: deleted</code>, the reason, its dates and its <code>erasure</code> status, and no accounts, balances, transactions, consent or sync data.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): read for this operation. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>.
    *
    * <p>{@code GET /v3/bank/connections/{id}/}
    *
@@ -514,7 +514,7 @@ public final class BankResource {
    *
    * <p>Not affected: your other connections, the charges already made (they are not refunded), and any data you already downloaded, which is your own copy. Repeating the call is safe. To stop access without deleting, use <code>revoke_connection</code>.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): write for this operation, which changes something. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
+   * <p>Needs an API key with write access to Bank data, because this operation changes something: a full-access key has it, and a scoped key needs <code>bank-data</code> write in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>.
    *
    * <p>{@code DELETE /v3/bank/connections/{id}/}
    * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
@@ -567,7 +567,7 @@ public final class BankResource {
    *
    * <p>When a sync stores changes, <code>bank.data.updated</code> tells you; then read the change feed.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): write for this operation, which changes something. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
+   * <p>Needs an API key with write access to Bank data, because this operation changes something: a full-access key has it, and a scoped key needs <code>bank-data</code> write in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>.
    *
    * <p>Refreshing a deleted connection answers <code>409 connection_not_active</code>. A one-time connection is read once and its access then ends, so refreshing it answers <code>409 one_time_connection</code>: create a new link to read the bank again.
    *
@@ -664,7 +664,7 @@ public final class BankResource {
    *
    * <p>Lists what each sync of a connection did, newest first, per account and resource.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): read for this operation. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>.
    *
    * <p>{@code GET /v3/bank/connections/{id}/sync-runs/}
    *
@@ -758,7 +758,7 @@ public final class BankResource {
    *
    * <p>Returns one sync run with its results per account and resource.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): read for this operation. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>.
    *
    * <p>{@code GET /v3/bank/connections/{id}/sync-runs/{sync_id}/}
    *
@@ -816,7 +816,7 @@ public final class BankResource {
    *
    * <p>Until the consent has 30 days left or fewer it answers <code>409 renewal_not_needed</code>; after <code>consent.renewable_until</code> it answers <code>409 renewal_window_expired</code> and the person connects again.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): write for this operation, which changes something. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
+   * <p>Needs an API key with write access to Bank data, because this operation changes something: a full-access key has it, and a scoped key needs <code>bank-data</code> write in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>.
    *
    * <p>{@code POST /v3/bank/connections/{id}/renew/}
    * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
@@ -913,7 +913,7 @@ public final class BankResource {
    *
    * <p>Revoking does not delete anything: stored accounts, balances and transactions stay readable until <code>consent.retain_until</code>, the retention setting of your application, and nothing is charged. To delete them now, call <code>delete_connection</code>. Repeating the call returns the current state.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): write for this operation, which changes something. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
+   * <p>Needs an API key with write access to Bank data, because this operation changes something: a full-access key has it, and a scoped key needs <code>bank-data</code> write in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>.
    *
    * <p>Revoking a connection that was deleted answers <code>200</code> with the deleted connection, so repeating the call is safe.
    *
@@ -981,7 +981,7 @@ public final class BankResource {
    *
    * <p><code>days</code> is only accepted with <code>consent_expiring</code> and <code>count</code> only with <code>new_transactions</code>: sent with another action, each answers <code>400 invalid_request</code> with <code>field</code> naming it.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): write for this operation, which changes something. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>. Sandbox only: a live application, or a link or connection that belongs to the live environment, answers <code>404 not_found</code>, exactly as an unknown route does.
+   * <p>Needs an API key with write access to Bank data, because this operation changes something: a full-access key has it, and a scoped key needs <code>bank-data</code> write in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. Sandbox only: a live application, or a link or connection that belongs to the live environment, answers <code>404 not_found</code>, exactly as an unknown route does.
    *
    * <p>{@code POST /v3/bank/connections/{id}/simulate/}
    * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
@@ -1034,7 +1034,7 @@ public final class BankResource {
    *
    * <p>Lists every account of the connection, oldest first, with full identifiers and holders. A read never bills.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): read for this operation. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
    *
    * <p>{@code GET /v3/bank/connections/{id}/accounts/}
    *
@@ -1128,7 +1128,7 @@ public final class BankResource {
    *
    * <p>Returns one account with full identifiers, holders, sync state and <code>history_coverage</code>, which says what the bank delivered of the history you asked for. <code>sync.last_synced_at</code> is when the data was fetched from the bank, not when you read it.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): read for this operation. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
    *
    * <p>{@code GET /v3/bank/accounts/{account_id}/}
    *
@@ -1176,7 +1176,7 @@ public final class BankResource {
    *
    * <p>Returns the typed balances of an account with their reference dates. Balances are replaced at each sync.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): read for this operation. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
    *
    * <p>{@code GET /v3/bank/accounts/{account_id}/balances/}
    *
@@ -1228,7 +1228,7 @@ public final class BankResource {
    *
    * <p>Response headers: <code>X-Bank-Last-Synced-At</code> and <code>Cache-Control: no-store</code>.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): read for this operation. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
    *
    * <p>{@code GET /v3/bank/accounts/{account_id}/transactions/}
    *
@@ -1326,7 +1326,7 @@ public final class BankResource {
    *
    * <p>The change log is replayable for 90 days. An older cursor answers <code>410 cursor_expired</code> with <code>bootstrap: true</code>: start again from an empty cursor. Stored history is never aged out while the connection exists. A booked pending transaction appears in <code>added</code> and the pending one in <code>removed</code> with <code>reason: pending_booked</code>. Webhook <code>bank.data.updated</code> tells you when to call.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): read for this operation. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
    *
    * <p>{@code GET /v3/bank/connections/{id}/transactions/sync/}
    *
@@ -1420,7 +1420,7 @@ public final class BankResource {
    *
    * <p>Lists the banks per country with their capabilities: segments, access modes, the longest consent and deepest history the bank offers, whether it reports pending transactions, which transaction fields it is known to send, and how the person signs in. Values come from observed data, refreshed daily; a value never observed is <code>null</code>. The same data feeds the bank picker, so use it to know what to expect before you create a link. <code>access</code> lists <code>ongoing</code> only where ongoing access is available.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): read for this operation. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>.
    *
    * <p>The list is sorted by name, then id.
    *
@@ -1510,7 +1510,7 @@ public final class BankResource {
    *
    * <p>Returns one bank with its capabilities. The id is Didit's slug, as listed by <code>list_institutions</code>.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): read for this operation. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>.
    *
    * <p>{@code GET /v3/bank/institutions/{id}/}
    *
@@ -1558,7 +1558,7 @@ public final class BankResource {
    *
    * <p>Returns one entry per country: whether bank sign-in and the account check are available, and whether ongoing access is available, with how many banks offer it, the longest consent and deepest history any of them allows, and whether business accounts are supported. Ongoing access is counted only where a bank is switched on for it. Use it to decide which countries to offer; use <code>list_institutions</code> for a single bank.
    *
-   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): read for this operation. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>.
    *
    * <p>{@code GET /v3/bank/coverage/}
    *
