@@ -64,11 +64,11 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
   /**
    * <code>Approved</code> — correct code, no declining risk. <code>Declined</code> — terminal: a declining risk matched or the attempt budget (3) was exhausted. <code>Failed</code> — wrong code, attempts remaining. <code>Expired or Not Found</code> — no pending verification for this number in the last 5 minutes.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<PhoneVerificationCheckResponse.Status> status() {
-    return Json.optional(json, "status", Conv.enumeration(PhoneVerificationCheckResponse.Status::of));
+  public PhoneVerificationCheckResponse.Status status() {
+    return Json.required(json, "status", Conv.enumeration(PhoneVerificationCheckResponse.Status::of));
   }
 
   /**
@@ -208,8 +208,10 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
      * Builds the value.
      *
      * @return a new immutable {@code PhoneVerificationCheckResponse}
+     * @throws IllegalStateException when a required field is missing
      */
     public PhoneVerificationCheckResponse build() {
+      require("status", false);
       return new PhoneVerificationCheckResponse(buildJson(), buildFiles());
     }
 

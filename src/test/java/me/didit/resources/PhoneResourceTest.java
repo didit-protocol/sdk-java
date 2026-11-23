@@ -67,7 +67,7 @@ final class PhoneResourceTest {
 
   @Test
   void checkCode() {
-    PhoneCheckCodeParams params = PhoneCheckCodeParams.builder().phoneNumber("value-phone-number").code("value-code").duplicatedPhoneNumberAction(PhoneCheckCodeParams.DuplicatedPhoneNumberAction.NO_ACTION).disposableNumberAction(PhoneCheckCodeParams.DisposableNumberAction.NO_ACTION).voipNumberAction(PhoneCheckCodeParams.VoipNumberAction.NO_ACTION).enableEnrichment(true).phoneIntelligenceScoreAction(PhoneCheckCodeParams.PhoneIntelligenceScoreAction.NO_ACTION).phoneTypeRiskAction(PhoneCheckCodeParams.PhoneTypeRiskAction.NO_ACTION).recentPortAction(PhoneCheckCodeParams.RecentPortAction.NO_ACTION).lowPhoneTrustAction(PhoneCheckCodeParams.LowPhoneTrustAction.NO_ACTION).enableSocial(true).phoneNoSocialPresenceAction(PhoneCheckCodeParams.PhoneNoSocialPresenceAction.NO_ACTION).build();
+    PhoneCheckCodeParams params = PhoneCheckCodeParams.builder().phoneNumber("value-phone-number").code("value-code").duplicatedPhoneNumberAction(PhoneCheckCodeParams.DuplicatedPhoneNumberAction.NO_ACTION).disposableNumberAction(PhoneCheckCodeParams.DisposableNumberAction.NO_ACTION).voipNumberAction(PhoneCheckCodeParams.VoipNumberAction.NO_ACTION).enableEnrichment(true).phoneIntelligenceScoreAction(PhoneCheckCodeParams.PhoneIntelligenceScoreAction.NO_ACTION).phoneTypeRiskAction(PhoneCheckCodeParams.PhoneTypeRiskAction.NO_ACTION).recentPortAction(PhoneCheckCodeParams.RecentPortAction.NO_ACTION).lowPhoneTrustAction(PhoneCheckCodeParams.LowPhoneTrustAction.NO_ACTION).enableSocial(true).phoneNoSocialPresenceAction(PhoneCheckCodeParams.PhoneNoSocialPresenceAction.NO_ACTION).factorId("value-factor-id").build();
     RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/phone/check/", "200");
     transport.respondJson(200, example);
@@ -79,7 +79,7 @@ final class PhoneResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
-    TestJson.assertJsonEquals("{\"phone_number\":\"value-phone-number\",\"code\":\"value-code\",\"duplicated_phone_number_action\":\"NO_ACTION\",\"disposable_number_action\":\"NO_ACTION\",\"voip_number_action\":\"NO_ACTION\",\"enable_enrichment\":true,\"phone_intelligence_score_action\":\"NO_ACTION\",\"phone_type_risk_action\":\"NO_ACTION\",\"recent_port_action\":\"NO_ACTION\",\"low_phone_trust_action\":\"NO_ACTION\",\"enable_social\":true,\"phone_no_social_presence_action\":\"NO_ACTION\"}", request.body());
+    TestJson.assertJsonEquals("{\"phone_number\":\"value-phone-number\",\"code\":\"value-code\",\"duplicated_phone_number_action\":\"NO_ACTION\",\"disposable_number_action\":\"NO_ACTION\",\"voip_number_action\":\"NO_ACTION\",\"enable_enrichment\":true,\"phone_intelligence_score_action\":\"NO_ACTION\",\"phone_type_risk_action\":\"NO_ACTION\",\"recent_port_action\":\"NO_ACTION\",\"low_phone_trust_action\":\"NO_ACTION\",\"enable_social\":true,\"phone_no_social_presence_action\":\"NO_ACTION\",\"factor_id\":\"value-factor-id\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
