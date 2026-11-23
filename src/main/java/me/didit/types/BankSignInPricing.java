@@ -471,7 +471,7 @@ public final class BankSignInPricing extends JsonModel {
     }
 
     /**
-     * Price of one read of transactions, with or without balances. Decimal string with 4 decimals in USD.
+     * Price of one read of transactions. Where <code>bundle_included</code> is <code>true</code> it also covers balances; otherwise balances are a separate line (<code>balances_usd</code>). Decimal string with 4 decimals in USD.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -514,7 +514,7 @@ public final class BankSignInPricing extends JsonModel {
       }
 
       /**
-       * Price of one read of transactions, with or without balances. Decimal string with 4 decimals in USD.
+       * Price of one read of transactions. Where <code>bundle_included</code> is <code>true</code> it also covers balances; otherwise balances are a separate line (<code>balances_usd</code>). Decimal string with 4 decimals in USD.
        *
        * @param transactionsUsd the value, or {@code null} to send JSON null
        * @return this builder
