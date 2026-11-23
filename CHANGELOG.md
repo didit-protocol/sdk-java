@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.37.0](https://github.com/didit-protocol/sdk-java/compare/v1.36.0...v1.37.0) (2026-11-23)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-23 ([7756908](https://github.com/didit-protocol/sdk-java/commit/7756908c06a970b168ef416c7651855e1ec2b819))
+
+
+### API changes that can break typed code
+
+* **spec:** `POST /v3/phone/check/` request body `(anyOf 1)`: type changed from object to any ([7756908](https://github.com/didit-protocol/sdk-java/commit/7756908c06a970b168ef416c7651855e1ec2b819))
+
 ## [1.36.0](https://github.com/didit-protocol/sdk-java/compare/v1.35.0...v1.36.0) (2026-11-23)
 
 
