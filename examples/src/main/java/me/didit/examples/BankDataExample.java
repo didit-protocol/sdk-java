@@ -69,7 +69,11 @@ public final class BankDataExample {
   }
 
   private static void receive(
-      HttpExchange exchange, Didit client, String linkId, VerifyOptions options, CountDownLatch finished)
+      HttpExchange exchange,
+      Didit client,
+      String linkId,
+      VerifyOptions options,
+      CountDownLatch finished)
       throws IOException {
     try {
       if (!"POST".equals(exchange.getRequestMethod())) {
@@ -101,7 +105,8 @@ public final class BankDataExample {
     }
   }
 
-  static boolean readMatchingAccounts(Didit client, String linkId, byte[] body, Map<String, ?> headers, VerifyOptions options) {
+  static boolean readMatchingAccounts(
+      Didit client, String linkId, byte[] body, Map<String, ?> headers, VerifyOptions options) {
     WebhookEvent event = Webhooks.verify(body, headers, options);
     if (!(event instanceof BankConnectionCreatedEvent created)) {
       return false;
