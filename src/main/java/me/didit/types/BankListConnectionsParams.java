@@ -52,7 +52,7 @@ public final class BankListConnectionsParams extends JsonModel {
   }
 
   /**
-   * Only connections in this status.
+   * Only connections in this status, one value. Without this filter the list leaves out <code>deleted</code> connections; <code>status=deleted</code> returns only them. A deleted connection carries no bank data.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -165,7 +165,7 @@ public final class BankListConnectionsParams extends JsonModel {
     }
 
     /**
-     * Only connections in this status.
+     * Only connections in this status, one value. Without this filter the list leaves out <code>deleted</code> connections; <code>status=deleted</code> returns only them. A deleted connection carries no bank data.
      *
      * @param status the value
      * @return this builder

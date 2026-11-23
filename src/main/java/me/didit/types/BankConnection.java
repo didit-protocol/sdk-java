@@ -85,7 +85,7 @@ public final class BankConnection extends JsonModel {
   }
 
   /**
-   * <code>pending</code>: first sync running. <code>active</code>: consent valid. <code>renewal_required</code>: the consent ended or the bank wants the person to sign in again, data readable as last synced and nothing charged. <code>paused</code>: balance too low for the month. <code>revoked</code>: access stopped by the person, the bank or you, or ended because the read of a one-time connection is complete. <code>deleted</code>: only <code>id</code>, <code>status</code>, <code>status_reason</code>, <code>created_at</code> and <code>erasure</code> remain. <code>failed</code>: the first sync never succeeded.
+   * <code>pending</code>: first sync running. <code>active</code>: consent valid. <code>renewal_required</code>: the consent ended or the bank wants the person to sign in again, data readable as last synced and nothing charged. <code>paused</code>: balance too low for the month. <code>revoked</code>: access stopped by the person, the bank or you, or ended because the read of a one-time connection is complete. <code>deleted</code>: only <code>id</code>, <code>status</code>, <code>status_reason</code>, <code>created_at</code> and <code>erasure</code> remain. The list returns these only for <code>status=deleted</code>; reading one by id always returns it. <code>failed</code>: the first sync never succeeded.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -298,7 +298,7 @@ public final class BankConnection extends JsonModel {
     }
 
     /**
-     * <code>pending</code>: first sync running. <code>active</code>: consent valid. <code>renewal_required</code>: the consent ended or the bank wants the person to sign in again, data readable as last synced and nothing charged. <code>paused</code>: balance too low for the month. <code>revoked</code>: access stopped by the person, the bank or you, or ended because the read of a one-time connection is complete. <code>deleted</code>: only <code>id</code>, <code>status</code>, <code>status_reason</code>, <code>created_at</code> and <code>erasure</code> remain. <code>failed</code>: the first sync never succeeded.
+     * <code>pending</code>: first sync running. <code>active</code>: consent valid. <code>renewal_required</code>: the consent ended or the bank wants the person to sign in again, data readable as last synced and nothing charged. <code>paused</code>: balance too low for the month. <code>revoked</code>: access stopped by the person, the bank or you, or ended because the read of a one-time connection is complete. <code>deleted</code>: only <code>id</code>, <code>status</code>, <code>status_reason</code>, <code>created_at</code> and <code>erasure</code> remain. The list returns these only for <code>status=deleted</code>; reading one by id always returns it. <code>failed</code>: the first sync never succeeded.
      *
      * @param status the value
      * @return this builder
@@ -573,7 +573,7 @@ public final class BankConnection extends JsonModel {
   }
 
   /**
-   * <code>pending</code>: first sync running. <code>active</code>: consent valid. <code>renewal_required</code>: the consent ended or the bank wants the person to sign in again, data readable as last synced and nothing charged. <code>paused</code>: balance too low for the month. <code>revoked</code>: access stopped by the person, the bank or you, or ended because the read of a one-time connection is complete. <code>deleted</code>: only <code>id</code>, <code>status</code>, <code>status_reason</code>, <code>created_at</code> and <code>erasure</code> remain. <code>failed</code>: the first sync never succeeded.
+   * <code>pending</code>: first sync running. <code>active</code>: consent valid. <code>renewal_required</code>: the consent ended or the bank wants the person to sign in again, data readable as last synced and nothing charged. <code>paused</code>: balance too low for the month. <code>revoked</code>: access stopped by the person, the bank or you, or ended because the read of a one-time connection is complete. <code>deleted</code>: only <code>id</code>, <code>status</code>, <code>status_reason</code>, <code>created_at</code> and <code>erasure</code> remain. The list returns these only for <code>status=deleted</code>; reading one by id always returns it. <code>failed</code>: the first sync never succeeded.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
