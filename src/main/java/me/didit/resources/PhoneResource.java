@@ -10,20 +10,64 @@ import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
 import me.didit.types.PhoneCheckCodeParams;
+import me.didit.types.PhoneCheckCodeResponse;
 import me.didit.types.PhoneRiskRequest;
 import me.didit.types.PhoneRiskResponse;
 import me.didit.types.PhoneSendCodeParams;
-import me.didit.types.PhoneVerificationCheckResponse;
 import me.didit.types.PhoneVerificationSendResponse;
 
 /** The {@code phone} resource: {@code client.phone()}. */
 public final class PhoneResource {
   private final ApiClient client;
   private final WithRawResponse withRawResponse;
+  private final PhoneFactorsResource factors;
+  private final PhoneNetworkResource network;
+  private final PhoneSdkKeysResource sdkKeys;
+  private final PhoneSilentResource silent;
 
   PhoneResource(ApiClient client) {
     this.client = client;
     this.withRawResponse = new WithRawResponse(client);
+    this.factors = new PhoneFactorsResource(client);
+    this.network = new PhoneNetworkResource(client);
+    this.sdkKeys = new PhoneSdkKeysResource(client);
+    this.silent = new PhoneSilentResource(client);
+  }
+
+  /**
+   * The {@code phone.factors} resource.
+   *
+   * @return the resource
+   */
+  public PhoneFactorsResource factors() {
+    return factors;
+  }
+
+  /**
+   * The {@code phone.network} resource.
+   *
+   * @return the resource
+   */
+  public PhoneNetworkResource network() {
+    return network;
+  }
+
+  /**
+   * The {@code phone.sdk_keys} resource.
+   *
+   * @return the resource
+   */
+  public PhoneSdkKeysResource sdkKeys() {
+    return sdkKeys;
+  }
+
+  /**
+   * The {@code phone.silent} resource.
+   *
+   * @return the resource
+   */
+  public PhoneSilentResource silent() {
+    return silent;
   }
 
   /**
@@ -193,7 +237,7 @@ public final class PhoneResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public PhoneVerificationCheckResponse checkCode(PhoneCheckCodeParams params, RequestOptions options) {
+  public PhoneCheckCodeResponse checkCode(PhoneCheckCodeParams params, RequestOptions options) {
     return client.execute(checkCodeRequest(params), options, CHECK_CODE_RESPONSE).data();
   }
 
@@ -204,7 +248,7 @@ public final class PhoneResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<PhoneVerificationCheckResponse> checkCodeAsync(PhoneCheckCodeParams params, RequestOptions options) {
+  public CompletableFuture<PhoneCheckCodeResponse> checkCodeAsync(PhoneCheckCodeParams params, RequestOptions options) {
     return client.executeAsync(checkCodeRequest(params), options, CHECK_CODE_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -214,7 +258,7 @@ public final class PhoneResource {
    * @param params the request parameters
    * @return the result
    */
-  public PhoneVerificationCheckResponse checkCode(PhoneCheckCodeParams params) {
+  public PhoneCheckCodeResponse checkCode(PhoneCheckCodeParams params) {
     return client.execute(checkCodeRequest(params), RequestOptions.none(), CHECK_CODE_RESPONSE).data();
   }
 
@@ -224,8 +268,46 @@ public final class PhoneResource {
    * @param params the request parameters
    * @return a future completed with the result
    */
-  public CompletableFuture<PhoneVerificationCheckResponse> checkCodeAsync(PhoneCheckCodeParams params) {
+  public CompletableFuture<PhoneCheckCodeResponse> checkCodeAsync(PhoneCheckCodeParams params) {
     return client.executeAsync(checkCodeRequest(params), RequestOptions.none(), CHECK_CODE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #checkCode(PhoneCheckCodeParams, RequestOptions)}, without parameters.
+   *
+   * @param options per-request options
+   * @return the result
+   */
+  public PhoneCheckCodeResponse checkCode(RequestOptions options) {
+    return client.execute(checkCodeRequest(PhoneCheckCodeParams.builder().build()), options, CHECK_CODE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #checkCode(PhoneCheckCodeParams, RequestOptions)}, without parameters.
+   *
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<PhoneCheckCodeResponse> checkCodeAsync(RequestOptions options) {
+    return client.executeAsync(checkCodeRequest(PhoneCheckCodeParams.builder().build()), options, CHECK_CODE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #checkCode(PhoneCheckCodeParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @return the result
+   */
+  public PhoneCheckCodeResponse checkCode() {
+    return client.execute(checkCodeRequest(PhoneCheckCodeParams.builder().build()), RequestOptions.none(), CHECK_CODE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #checkCode(PhoneCheckCodeParams, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @return a future completed with the result
+   */
+  public CompletableFuture<PhoneCheckCodeResponse> checkCodeAsync() {
+    return client.executeAsync(checkCodeRequest(PhoneCheckCodeParams.builder().build()), RequestOptions.none(), CHECK_CODE_RESPONSE).thenApply(RawResponse::data);
   }
 
   private static final ResponseHandler<PhoneRiskResponse> ASSESS_RISK_RESPONSE = Responses.json(Conv.model(PhoneRiskResponse::fromJson));
@@ -246,7 +328,7 @@ public final class PhoneResource {
         .build();
   }
 
-  private static final ResponseHandler<PhoneVerificationCheckResponse> CHECK_CODE_RESPONSE = Responses.json(Conv.model(PhoneVerificationCheckResponse::fromJson));
+  private static final ResponseHandler<PhoneCheckCodeResponse> CHECK_CODE_RESPONSE = Responses.json(Conv.union(PhoneCheckCodeResponse::fromJson));
 
   private static ApiRequest checkCodeRequest(PhoneCheckCodeParams params) {
     return ApiRequest.builder("POST", "/v3/phone/check/")
@@ -354,7 +436,7 @@ public final class PhoneResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<PhoneVerificationCheckResponse> checkCode(PhoneCheckCodeParams params, RequestOptions options) {
+    public RawResponse<PhoneCheckCodeResponse> checkCode(PhoneCheckCodeParams params, RequestOptions options) {
       return client.execute(checkCodeRequest(params), options, CHECK_CODE_RESPONSE);
     }
 
@@ -365,7 +447,7 @@ public final class PhoneResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<PhoneVerificationCheckResponse>> checkCodeAsync(PhoneCheckCodeParams params, RequestOptions options) {
+    public CompletableFuture<RawResponse<PhoneCheckCodeResponse>> checkCodeAsync(PhoneCheckCodeParams params, RequestOptions options) {
       return client.executeAsync(checkCodeRequest(params), options, CHECK_CODE_RESPONSE);
     }
 
@@ -375,7 +457,7 @@ public final class PhoneResource {
      * @param params the request parameters
      * @return the result
      */
-    public RawResponse<PhoneVerificationCheckResponse> checkCode(PhoneCheckCodeParams params) {
+    public RawResponse<PhoneCheckCodeResponse> checkCode(PhoneCheckCodeParams params) {
       return client.execute(checkCodeRequest(params), RequestOptions.none(), CHECK_CODE_RESPONSE);
     }
 
@@ -385,8 +467,46 @@ public final class PhoneResource {
      * @param params the request parameters
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<PhoneVerificationCheckResponse>> checkCodeAsync(PhoneCheckCodeParams params) {
+    public CompletableFuture<RawResponse<PhoneCheckCodeResponse>> checkCodeAsync(PhoneCheckCodeParams params) {
       return client.executeAsync(checkCodeRequest(params), RequestOptions.none(), CHECK_CODE_RESPONSE);
+    }
+
+    /**
+     * {@link #checkCode(PhoneCheckCodeParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<PhoneCheckCodeResponse> checkCode(RequestOptions options) {
+      return client.execute(checkCodeRequest(PhoneCheckCodeParams.builder().build()), options, CHECK_CODE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #checkCode(PhoneCheckCodeParams, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<PhoneCheckCodeResponse>> checkCodeAsync(RequestOptions options) {
+      return client.executeAsync(checkCodeRequest(PhoneCheckCodeParams.builder().build()), options, CHECK_CODE_RESPONSE);
+    }
+
+    /**
+     * {@link #checkCode(PhoneCheckCodeParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @return the result
+     */
+    public RawResponse<PhoneCheckCodeResponse> checkCode() {
+      return client.execute(checkCodeRequest(PhoneCheckCodeParams.builder().build()), RequestOptions.none(), CHECK_CODE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #checkCode(PhoneCheckCodeParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<PhoneCheckCodeResponse>> checkCodeAsync() {
+      return client.executeAsync(checkCodeRequest(PhoneCheckCodeParams.builder().build()), RequestOptions.none(), CHECK_CODE_RESPONSE);
     }
   }
 }

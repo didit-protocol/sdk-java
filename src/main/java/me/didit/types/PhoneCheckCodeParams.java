@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 
 /** Parameters for {&#64;code phone.check_code}. */
 public final class PhoneCheckCodeParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("phone_number", "code", "duplicated_phone_number_action", "disposable_number_action", "voip_number_action", "enable_enrichment", "phone_intelligence_score_action", "phone_type_risk_action", "recent_port_action", "low_phone_trust_action", "enable_social", "phone_no_social_presence_action");
+  private static final Set<String> KNOWN_FIELDS = Set.of("phone_number", "code", "duplicated_phone_number_action", "disposable_number_action", "voip_number_action", "enable_enrichment", "phone_intelligence_score_action", "phone_type_risk_action", "recent_port_action", "low_phone_trust_action", "enable_social", "phone_no_social_presence_action", "factor_id");
 
   private PhoneCheckCodeParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -53,21 +53,21 @@ public final class PhoneCheckCodeParams extends JsonModel {
   /**
    * The same phone number used in the matching [<code>POST /v3/phone/send/</code>](/standalone-apis/phone-send) call, in E.164 format. This is what links the check to the send.
    *
-   * @return the value
-   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public String phoneNumber() {
-    return Json.required(json, "phone_number", Conv.STRING);
+  public Optional<String> phoneNumber() {
+    return Json.optional(json, "phone_number", Conv.STRING);
   }
 
   /**
    * The OTP the end user received. Must be 4–8 numeric digits — anything else returns <code>400</code> without consuming an attempt. A well-formed but wrong code returns <code>200</code> with <code>status: "Failed"</code> and consumes one of the 3 attempts.
    *
-   * @return the value
-   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public String code() {
-    return Json.required(json, "code", Conv.STRING);
+  public Optional<String> code() {
+    return Json.optional(json, "code", Conv.STRING);
   }
 
   /**
@@ -168,6 +168,16 @@ public final class PhoneCheckCodeParams extends JsonModel {
    */
   public Optional<PhoneCheckCodeParams.PhoneNoSocialPresenceAction> phoneNoSocialPresenceAction() {
     return Json.optional(json, "phone_no_social_presence_action", Conv.enumeration(PhoneCheckCodeParams.PhoneNoSocialPresenceAction::of));
+  }
+
+  /**
+   * A TOTP factor being checked instead of a phone code, as returned when it was enrolled; send the 4-8 digit <code>code</code> its authenticator app shows. The answer is <code>{verification_id, status, attempts}</code> with <code>status</code> <code>verified</code> or <code>failed</code>; a factor that is <code>disabled</code> answers <code>400 factor_disabled</code>, an unknown one <code>404 not_found</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> factorId() {
+    return Json.optional(json, "factor_id", Conv.STRING);
   }
 
   @Override
@@ -304,14 +314,21 @@ public final class PhoneCheckCodeParams extends JsonModel {
     }
 
     /**
+     * A TOTP factor being checked instead of a phone code, as returned when it was enrolled; send the 4-8 digit <code>code</code> its authenticator app shows. The answer is <code>{verification_id, status, attempts}</code> with <code>status</code> <code>verified</code> or <code>failed</code>; a factor that is <code>disabled</code> answers <code>400 factor_disabled</code>, an unknown one <code>404 not_found</code>.
+     *
+     * @param factorId the value
+     * @return this builder
+     */
+    public Builder factorId(String factorId) {
+      return set("factor_id", Conv.STRING, factorId);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code PhoneCheckCodeParams}
-     * @throws IllegalStateException when a required field is missing
      */
     public PhoneCheckCodeParams build() {
-      require("phone_number", false);
-      require("code", false);
       return new PhoneCheckCodeParams(buildJson(), buildFiles());
     }
 
