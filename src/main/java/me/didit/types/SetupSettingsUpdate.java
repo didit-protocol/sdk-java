@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 
 /**
- * Every field is optional. Changing the application’s <code>agent_humans_only</code> setting requires an owner or admin. Enabling it also requires an enrolled passkey. A named key receives 403 <code>owner_or_admin_required</code>.
+ * Every field is optional. Changing the application’s <code>agent_humans_only</code> setting requires an owner or admin. Enabling it also requires an enrolled passkey. An API key receives 403 <code>owner_or_admin_required</code>.
  */
 public final class SetupSettingsUpdate extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("sign_in_ui", "agent_humans_only", "agents_enabled", "agent_scopes", "agent_lifetime", "agent_idle_timeout", "agent_approval", "organizations_enabled", "mfa_policy", "default_member_role", "webhook_events_disabled");
