@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import me.didit.Didit;
 import me.didit.errors.DiditException;
@@ -17,6 +18,7 @@ import me.didit.types.BankLink;
 import me.didit.types.BankLinkCreateRequest;
 import me.didit.types.BankLinkEndUser;
 import me.didit.webhooks.BankConnectionCreatedEvent;
+import me.didit.webhooks.VerifyOptions;
 import me.didit.webhooks.WebhookEvent;
 import me.didit.webhooks.Webhooks;
 
@@ -30,7 +32,7 @@ public final class BankDataExample {
   private BankDataExample() {}
 
   public static void main(String[] args) throws IOException, InterruptedException {
-    String secret = Env.require("DIDIT_WEBHOOK_SECRET");
+    VerifyOptions options = VerifyOptions.of(Env.require("DIDIT_WEBHOOK_SECRET"));
     if (!Desktop.isDesktopSupported() || !Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
       throw new IllegalStateException("Run this example on a desktop with a browser.");
     }
@@ -51,7 +53,7 @@ public final class BankDataExample {
     CountDownLatch finished = new CountDownLatch(1);
     HttpServer server = HttpServer.create(new InetSocketAddress("127.0.0.1", 8080), 0);
     server.createContext(
-        "/webhooks/didit", exchange -> receive(exchange, client, link.id(), secret, finished));
+        "/webhooks/didit", exchange -> receive(exchange, client, link.id(), options, finished));
     server.start();
     try {
       System.out.println("Waiting for Bank Link " + link.id());
@@ -67,7 +69,7 @@ public final class BankDataExample {
   }
 
   private static void receive(
-      HttpExchange exchange, Didit client, String linkId, String secret, CountDownLatch finished)
+      HttpExchange exchange, Didit client, String linkId, VerifyOptions options, CountDownLatch finished)
       throws IOException {
     try {
       if (!"POST".equals(exchange.getRequestMethod())) {
@@ -82,8 +84,7 @@ public final class BankDataExample {
       }
       boolean matched;
       try {
-        WebhookEvent event = Webhooks.verify(body, exchange.getRequestHeaders()::getFirst, secret);
-        matched = readMatchingAccounts(client, linkId, event);
+        matched = readMatchingAccounts(client, linkId, body, exchange.getRequestHeaders(), options);
       } catch (WebhookVerificationException ex) {
         exchange.sendResponseHeaders(401, -1);
         return;
@@ -100,7 +101,8 @@ public final class BankDataExample {
     }
   }
 
-  static boolean readMatchingAccounts(Didit client, String linkId, WebhookEvent event) {
+  static boolean readMatchingAccounts(Didit client, String linkId, byte[] body, Map<String, ?> headers, VerifyOptions options) {
+    WebhookEvent event = Webhooks.verify(body, headers, options);
     if (!(event instanceof BankConnectionCreatedEvent created)) {
       return false;
     }
@@ -112,7 +114,7 @@ public final class BankDataExample {
     return true;
   }
 
-  static void readAccounts(Didit client, String connectionId) {
+  private static void readAccounts(Didit client, String connectionId) {
     BankAccountList accounts = client.bank().listAccounts(connectionId);
     for (BankAccount account : accounts.items()) {
       System.out.println("Account " + account.id() + " is " + account.status());

@@ -7,13 +7,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.StreamSupport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import me.didit.Didit;
 import me.didit.core.Headers;
 import me.didit.core.TransportResponse;
-import me.didit.webhooks.Webhooks;
+import me.didit.webhooks.VerifyOptions;
+import me.didit.errors.WebhookVerificationException;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -33,13 +42,18 @@ final class BankDataExampleTest {
     JsonNode vectors =
         mapper.readTree(fixtures.resolve("webhook-vectors.json").toFile()).get("vectors");
     JsonNode created =
-        java.util.stream.StreamSupport.stream(vectors.spliterator(), false)
+        StreamSupport.stream(vectors.spliterator(), false)
             .filter(v -> v.get("name").asText().equals("bank_connection_created"))
             .findFirst()
             .orElseThrow();
-    ObjectNode event = (ObjectNode) mapper.readTree(created.get("body").asText());
+    byte[] body = created.get("body").asText().getBytes(StandardCharsets.UTF_8);
+    Map<String, String> headers = new HashMap<>();
+    created.get("headers").properties().forEach(entry -> headers.put(entry.getKey(), entry.getValue().asText()));
+    VerifyOptions options = VerifyOptions.builder().secret(created.get("secret").asText())
+        .clock(Clock.fixed(Instant.ofEpochSecond(created.get("now").asLong()), ZoneOffset.UTC)).build();
     if (matches) {
-      event.set("connection_id", link.get("connection_id"));
+      // Correlate the independent OpenAPI and signed webhook fixtures.
+      ((ObjectNode) link).set("connection_id", mapper.readTree(body).get("connection_id"));
     }
 
     List<String> requests = new ArrayList<>();
@@ -55,12 +69,13 @@ final class BankDataExampleTest {
                       new TransportResponse(
                           200,
                           Headers.empty(),
-                          response.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8)));
+                          response.toString().getBytes(StandardCharsets.UTF_8)));
                 })
             .build();
     String id = link.get("id").asText();
-    assertEquals(
-        matches, BankDataExample.readMatchingAccounts(client, id, Webhooks.parseEvent(event)));
+    assertThrows(WebhookVerificationException.class,
+        () -> BankDataExample.readMatchingAccounts(client, id, body, Map.of(), options));
+    assertEquals(matches, BankDataExample.readMatchingAccounts(client, id, body, headers, options));
     List<String> expected = new ArrayList<>(List.of("/v3/bank/links/" + id + "/"));
     if (matches) {
       expected.add("/v3/bank/connections/" + link.get("connection_id").asText() + "/accounts/");
