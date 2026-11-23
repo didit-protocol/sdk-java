@@ -17,11 +17,13 @@ import me.didit.types.BankBalances;
 import me.didit.types.BankConnection;
 import me.didit.types.BankConnectionDeletion;
 import me.didit.types.BankConnectionList;
+import me.didit.types.BankConnectionSimulateRequest;
 import me.didit.types.BankCoverage;
 import me.didit.types.BankInstitution;
 import me.didit.types.BankInstitutionList;
 import me.didit.types.BankLink;
 import me.didit.types.BankLinkCreateRequest;
+import me.didit.types.BankLinkSimulateRequest;
 import me.didit.types.BankListAccountsParams;
 import me.didit.types.BankListConnectionsParams;
 import me.didit.types.BankListInstitutionsParams;
@@ -264,6 +266,105 @@ public final class BankResource {
    */
   public CompletableFuture<BankLink> cancelLinkAsync(String id) {
     return client.executeAsync(cancelLinkRequest(id), RequestOptions.none(), CANCEL_LINK_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Simulate a bank link (sandbox)
+   *
+   * <p>Finishes a link of your sandbox application in one call, as if the person had gone through the Didit Test Bank: you choose the Test Bank customer (<code>persona</code>) and how the link ends (<code>outcome</code>). The link goes through the same completion code as a real bank sign-in, so the connection, its accounts, the first sync and the <code>bank.*</code> webhooks happen exactly as they would for a real person. Answers the link, so read <code>status</code> and <code>connection_id</code>.
+   *
+   * <p><code>outcome</code> is <code>completed</code> (the default: the person agrees and the connection is created), <code>cancelled</code> (the person leaves, the link ends <code>cancelled</code>), <code>failed</code> (the link ends <code>failed</code>; <code>error_code</code> picks the reason, <code>bank_unavailable</code> by default), <code>duplicate_conflict</code> (the person already has a connection with the same bank), <code>reduced_grant</code> (the person shares less than you asked for) or <code>renewal_login_mismatch</code> (a renewal with another bank login; on a connect link it ends as the failure it is). <code>error_code</code> is only accepted with <code>outcome: failed</code>.
+   *
+   * <p>A link that allows the one-time fallback and meets a bank that cannot keep access open accepts the reduced access and finishes in the same call. A link that is no longer open (completed, cancelled, expired or failed) is returned unchanged, so the call is safe to repeat.
+   *
+   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): write for this operation, which changes something. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>. Sandbox only: a live application, or a link or connection that belongs to the live environment, answers <code>404 not_found</code>, exactly as an unknown route does.
+   *
+   * <p>{@code POST /v3/bank/links/{id}/simulate/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   *
+   * @param id The link id.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public BankLink simulateLink(String id, BankLinkSimulateRequest params, RequestOptions options) {
+    return client.execute(simulateLinkRequest(id, params), options, SIMULATE_LINK_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)}.
+   *
+   * @param id the {@code id}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BankLink> simulateLinkAsync(String id, BankLinkSimulateRequest params, RequestOptions options) {
+    return client.executeAsync(simulateLinkRequest(id, params), options, SIMULATE_LINK_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)}, with the client's options.
+   *
+   * @param id the {@code id}
+   * @param params the request parameters
+   * @return the result
+   */
+  public BankLink simulateLink(String id, BankLinkSimulateRequest params) {
+    return client.execute(simulateLinkRequest(id, params), RequestOptions.none(), SIMULATE_LINK_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)}, with the client's options.
+   *
+   * @param id the {@code id}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BankLink> simulateLinkAsync(String id, BankLinkSimulateRequest params) {
+    return client.executeAsync(simulateLinkRequest(id, params), RequestOptions.none(), SIMULATE_LINK_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)}, without parameters.
+   *
+   * @param id the {@code id}
+   * @param options per-request options
+   * @return the result
+   */
+  public BankLink simulateLink(String id, RequestOptions options) {
+    return client.execute(simulateLinkRequest(id, BankLinkSimulateRequest.builder().build()), options, SIMULATE_LINK_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)}, without parameters.
+   *
+   * @param id the {@code id}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BankLink> simulateLinkAsync(String id, RequestOptions options) {
+    return client.executeAsync(simulateLinkRequest(id, BankLinkSimulateRequest.builder().build()), options, SIMULATE_LINK_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param id the {@code id}
+   * @return the result
+   */
+  public BankLink simulateLink(String id) {
+    return client.execute(simulateLinkRequest(id, BankLinkSimulateRequest.builder().build()), RequestOptions.none(), SIMULATE_LINK_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)}, without parameters, with the client's options.
+   *
+   * @param id the {@code id}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BankLink> simulateLinkAsync(String id) {
+    return client.executeAsync(simulateLinkRequest(id, BankLinkSimulateRequest.builder().build()), RequestOptions.none(), SIMULATE_LINK_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
@@ -856,6 +957,76 @@ public final class BankResource {
    */
   public CompletableFuture<BankConnection> revokeConnectionAsync(String id) {
     return client.executeAsync(revokeConnectionRequest(id), RequestOptions.none(), REVOKE_CONNECTION_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Simulate a bank connection event (sandbox)
+   *
+   * <p>Moves a sandbox connection through time without waiting: new transactions, a pending row that posts, a consent that is about to end or has ended, a revocation, a failing sync, a duplicate webhook or a used-up refresh allowance. It uses the real sync engine and the real webhooks, so <code>bank.*</code> deliveries, the change feed and <code>sync</code> behave as they do for a real bank. Answers the connection as <code>get_connection</code> would.
+   *
+   * <p><code>action</code> is required and is one of:
+   *
+   * <p>- <code>new_transactions</code>: the bank adds <code>count</code> booked transactions (1 to 500, default 3). A sync follows.
+   * - <code>pending_posted</code>: one day passes at the bank: pending rows leave the change feed as <code>removed</code> and their booked rows arrive as <code>added</code>. It needs a test customer with pending transactions (<code>pending</code>); with <code>personal_basic</code> nothing changes. A sync follows.
+   * - <code>booking_correction</code>: the next sync returns booked rows again with a corrected booking, so they arrive as <code>modified</code>. A sync follows.
+   * - <code>midnight_booking</code>: a row is booked across midnight, to test day boundaries. A sync follows.
+   * - <code>consent_expiring</code>: the consent now ends in <code>days</code> days and the expiry notice is sent (<code>bank.connection.consent_expiring</code>). <code>days</code> accepts only the notification thresholds, 14, 7 or 1 (default 7); any other value answers <code>400 invalid_request</code> with <code>field</code> <code>days</code>.
+   * - <code>consent_expired</code>: the consent has ended now and the connection becomes <code>renewal_required</code>.
+   * - <code>revoked_by_user</code> and <code>revoked_by_bank</code>: the bank tells Didit the consent ended, as if the person or the bank had revoked it. The connection reads <code>revoked</code> with <code>status_reason</code> <code>revoked_by_end_user</code> or <code>revoked_by_bank</code>, and <code>consent.ended_by</code> is <code>end_user</code> or <code>bank</code>.
+   * - <code>sync_failed</code>: the bank fails every read until <code>sync_recovered</code>; the connection has been failing for 24 hours, so <code>bank.sync.failed</code> is sent. A sync follows.
+   * - <code>sync_recovered</code>: the bank answers again. A sync follows.
+   * - <code>webhook_twice</code>: the last <code>bank.*</code> webhook of this connection is delivered again with the same <code>event_id</code> and a fresh signature, to test your deduplication. It answers <code>400 invalid_request</code> if the connection has no delivery yet.
+   * - <code>budget_used</code>: today's refresh allowance is used up on the bank's own day, so the next <code>refresh_connection</code> answers <code>429 refresh_limit_reached</code> with <code>Retry-After</code>, and <code>sync.live_syncs_left_today</code> and the <code>sync.budgets</code> <code>remaining</code> read 0.
+   * - <code>budget_reset</code>: today's refresh allowance is restored: <code>sync.live_syncs_left_today</code> and the <code>remaining</code> of <code>sync.budgets</code> read what they read on a new connection.
+   *
+   * <p><code>days</code> is only accepted with <code>consent_expiring</code> and <code>count</code> only with <code>new_transactions</code>: sent with another action, each answers <code>400 invalid_request</code> with <code>field</code> naming it.
+   *
+   * <p>Needs an API key with the Bank data permission (<code>bank-data</code>): write for this operation, which changes something. A key with full access does not include it: grant it explicitly when you create the key, or the call answers <code>403 bank_data_access_denied</code>. Sandbox only: a live application, or a link or connection that belongs to the live environment, answers <code>404 not_found</code>, exactly as an unknown route does.
+   *
+   * <p>{@code POST /v3/bank/connections/{id}/simulate/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   *
+   * @param id The connection id.
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public BankConnection simulateConnection(String id, BankConnectionSimulateRequest params, RequestOptions options) {
+    return client.execute(simulateConnectionRequest(id, params), options, SIMULATE_CONNECTION_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #simulateConnection(String, BankConnectionSimulateRequest, RequestOptions)}.
+   *
+   * @param id the {@code id}
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BankConnection> simulateConnectionAsync(String id, BankConnectionSimulateRequest params, RequestOptions options) {
+    return client.executeAsync(simulateConnectionRequest(id, params), options, SIMULATE_CONNECTION_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #simulateConnection(String, BankConnectionSimulateRequest, RequestOptions)}, with the client's options.
+   *
+   * @param id the {@code id}
+   * @param params the request parameters
+   * @return the result
+   */
+  public BankConnection simulateConnection(String id, BankConnectionSimulateRequest params) {
+    return client.execute(simulateConnectionRequest(id, params), RequestOptions.none(), SIMULATE_CONNECTION_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #simulateConnection(String, BankConnectionSimulateRequest, RequestOptions)}, with the client's options.
+   *
+   * @param id the {@code id}
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BankConnection> simulateConnectionAsync(String id, BankConnectionSimulateRequest params) {
+    return client.executeAsync(simulateConnectionRequest(id, params), RequestOptions.none(), SIMULATE_CONNECTION_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
@@ -1460,6 +1631,16 @@ public final class BankResource {
         .build();
   }
 
+  private static final ResponseHandler<BankLink> SIMULATE_LINK_RESPONSE = Responses.json(Conv.model(BankLink::fromJson));
+
+  private static ApiRequest simulateLinkRequest(String id, BankLinkSimulateRequest params) {
+    return ApiRequest.builder("POST", "/v3/bank/links/{id}/simulate/")
+        .pathParam("id", id)
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
   private static final ResponseHandler<BankConnectionList> LIST_CONNECTIONS_RESPONSE = Responses.json(Conv.model(BankConnectionList::fromJson));
 
   private static ApiRequest listConnectionsRequest(BankListConnectionsParams params) {
@@ -1530,6 +1711,16 @@ public final class BankResource {
   private static ApiRequest revokeConnectionRequest(String id) {
     return ApiRequest.builder("POST", "/v3/bank/connections/{id}/revoke/")
         .pathParam("id", id)
+        .build();
+  }
+
+  private static final ResponseHandler<BankConnection> SIMULATE_CONNECTION_RESPONSE = Responses.json(Conv.model(BankConnection::fromJson));
+
+  private static ApiRequest simulateConnectionRequest(String id, BankConnectionSimulateRequest params) {
+    return ApiRequest.builder("POST", "/v3/bank/connections/{id}/simulate/")
+        .pathParam("id", id)
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
         .build();
   }
 
@@ -1777,6 +1968,94 @@ public final class BankResource {
      */
     public CompletableFuture<RawResponse<BankLink>> cancelLinkAsync(String id) {
       return client.executeAsync(cancelLinkRequest(id), RequestOptions.none(), CANCEL_LINK_RESPONSE);
+    }
+
+    /**
+     * {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)} with the raw response.
+     *
+     * @param id the {@code id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<BankLink> simulateLink(String id, BankLinkSimulateRequest params, RequestOptions options) {
+      return client.execute(simulateLinkRequest(id, params), options, SIMULATE_LINK_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)} with the raw response.
+     *
+     * @param id the {@code id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BankLink>> simulateLinkAsync(String id, BankLinkSimulateRequest params, RequestOptions options) {
+      return client.executeAsync(simulateLinkRequest(id, params), options, SIMULATE_LINK_RESPONSE);
+    }
+
+    /**
+     * {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param id the {@code id}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<BankLink> simulateLink(String id, BankLinkSimulateRequest params) {
+      return client.execute(simulateLinkRequest(id, params), RequestOptions.none(), SIMULATE_LINK_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param id the {@code id}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BankLink>> simulateLinkAsync(String id, BankLinkSimulateRequest params) {
+      return client.executeAsync(simulateLinkRequest(id, params), RequestOptions.none(), SIMULATE_LINK_RESPONSE);
+    }
+
+    /**
+     * {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param id the {@code id}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<BankLink> simulateLink(String id, RequestOptions options) {
+      return client.execute(simulateLinkRequest(id, BankLinkSimulateRequest.builder().build()), options, SIMULATE_LINK_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)} with the raw response, without parameters.
+     *
+     * @param id the {@code id}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BankLink>> simulateLinkAsync(String id, RequestOptions options) {
+      return client.executeAsync(simulateLinkRequest(id, BankLinkSimulateRequest.builder().build()), options, SIMULATE_LINK_RESPONSE);
+    }
+
+    /**
+     * {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param id the {@code id}
+     * @return the result
+     */
+    public RawResponse<BankLink> simulateLink(String id) {
+      return client.execute(simulateLinkRequest(id, BankLinkSimulateRequest.builder().build()), RequestOptions.none(), SIMULATE_LINK_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #simulateLink(String, BankLinkSimulateRequest, RequestOptions)} with the raw response, without parameters, with the client's options.
+     *
+     * @param id the {@code id}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BankLink>> simulateLinkAsync(String id) {
+      return client.executeAsync(simulateLinkRequest(id, BankLinkSimulateRequest.builder().build()), RequestOptions.none(), SIMULATE_LINK_RESPONSE);
     }
 
     /**
@@ -2293,6 +2572,52 @@ public final class BankResource {
      */
     public CompletableFuture<RawResponse<BankConnection>> revokeConnectionAsync(String id) {
       return client.executeAsync(revokeConnectionRequest(id), RequestOptions.none(), REVOKE_CONNECTION_RESPONSE);
+    }
+
+    /**
+     * {@link #simulateConnection(String, BankConnectionSimulateRequest, RequestOptions)} with the raw response.
+     *
+     * @param id the {@code id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<BankConnection> simulateConnection(String id, BankConnectionSimulateRequest params, RequestOptions options) {
+      return client.execute(simulateConnectionRequest(id, params), options, SIMULATE_CONNECTION_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #simulateConnection(String, BankConnectionSimulateRequest, RequestOptions)} with the raw response.
+     *
+     * @param id the {@code id}
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BankConnection>> simulateConnectionAsync(String id, BankConnectionSimulateRequest params, RequestOptions options) {
+      return client.executeAsync(simulateConnectionRequest(id, params), options, SIMULATE_CONNECTION_RESPONSE);
+    }
+
+    /**
+     * {@link #simulateConnection(String, BankConnectionSimulateRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param id the {@code id}
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<BankConnection> simulateConnection(String id, BankConnectionSimulateRequest params) {
+      return client.execute(simulateConnectionRequest(id, params), RequestOptions.none(), SIMULATE_CONNECTION_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #simulateConnection(String, BankConnectionSimulateRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param id the {@code id}
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BankConnection>> simulateConnectionAsync(String id, BankConnectionSimulateRequest params) {
+      return client.executeAsync(simulateConnectionRequest(id, params), RequestOptions.none(), SIMULATE_CONNECTION_RESPONSE);
     }
 
     /**

@@ -20,9 +20,11 @@ import me.didit.testing.TestModels;
 import me.didit.types.BankAccountCheckHolder;
 import me.didit.types.BankAccountCheckPersonHolder;
 import me.didit.types.BankAccountCheckRequest;
+import me.didit.types.BankConnectionSimulateRequest;
 import me.didit.types.BankLinkCreateRequest;
 import me.didit.types.BankLinkEndUser;
 import me.didit.types.BankLinkOwnershipRequest;
+import me.didit.types.BankLinkSimulateRequest;
 import me.didit.types.BankListAccountsParams;
 import me.didit.types.BankListConnectionsParams;
 import me.didit.types.BankListInstitutionsParams;
@@ -107,6 +109,25 @@ final class BankResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void simulateLink() {
+    BankLinkSimulateRequest params = BankLinkSimulateRequest.builder().persona(BankLinkSimulateRequest.Persona.PERSONAL_BASIC).outcome(BankLinkSimulateRequest.Outcome.COMPLETED).errorCode(BankLinkSimulateRequest.ErrorCode.DUPLICATE_CONFLICT).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/bank/links/{id}/simulate/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().simulateLink("00000000-0000-4000-8000-00000000558f", params, options);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/bank/links/00000000-0000-4000-8000-00000000558f/simulate/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    TestJson.assertJsonEquals("{\"persona\":\"personal_basic\",\"outcome\":\"completed\",\"error_code\":\"duplicate_conflict\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
@@ -249,6 +270,25 @@ final class BankResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void simulateConnection() {
+    BankConnectionSimulateRequest params = BankConnectionSimulateRequest.builder().action(BankConnectionSimulateRequest.Action.NEW_TRANSACTIONS).days(1L).count(1L).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/bank/connections/{id}/simulate/", "200");
+    transport.respondJson(200, example);
+    var result = client.bank().simulateConnection("00000000-0000-4000-8000-00000000907a", params, options);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/bank/connections/00000000-0000-4000-8000-00000000907a/simulate/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    TestJson.assertJsonEquals("{\"action\":\"new_transactions\",\"days\":1,\"count\":1}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
