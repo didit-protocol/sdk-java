@@ -23,7 +23,7 @@ import me.didit.webhooks.Webhooks;
 /**
  * Bank data: create a Bank Link, verify {@code bank.connection.created} and read the accounts.
  *
- * <p>Run on the end user's desktop. Forward signed webhook deliveries to localhost:8080/webhooks/didit.
+ * <p>Run on your own workstation as the consenting user. Forward signed webhook deliveries to localhost:8080/webhooks/didit.
  */
 public final class BankDataExample {
   private BankDataExample() {}
