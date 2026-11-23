@@ -60,7 +60,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code GET /organizations/{organization_id}/applications/{application_id}/authentication/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param options per-request options that override the client options
    * @return the response body
    */
@@ -110,7 +110,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code PATCH /organizations/{organization_id}/applications/{application_id}/authentication/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
@@ -210,7 +210,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code PUT /organizations/{organization_id}/applications/{application_id}/authentication/methods/{name}/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param name The method: `password`, `code`, `magic`, `phone`, `passkey`, `google`, `microsoft`, `apple`, `github`, `sso` or `wallet`.
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -268,7 +268,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code GET /organizations/{organization_id}/applications/{application_id}/authentication/onboarding/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param options per-request options that override the client options
    * @return the response body
    */
@@ -318,7 +318,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code PATCH /organizations/{organization_id}/applications/{application_id}/authentication/onboarding/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
@@ -418,7 +418,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code GET /organizations/{organization_id}/applications/{application_id}/authentication/settings/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param options per-request options that override the client options
    * @return the response body
    */
@@ -463,12 +463,12 @@ public final class AuthenticationSetupResource {
   /**
    * Update the application settings
    *
-   * <p>Changes the settings in the body. <code>agent_humans_only</code> needs a person: a named API key answers 403 <code>owner_or_admin_required</code>, and turning it on needs an owner or admin with an enrolled passkey.
+   * <p>Changes the settings in the body. <code>agent_humans_only</code> needs a person: an API key answers 403 <code>owner_or_admin_required</code>, and turning it on needs an owner or admin with an enrolled passkey.
    *
    * <p>{@code PATCH /organizations/{organization_id}/applications/{application_id}/authentication/settings/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
@@ -568,7 +568,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code GET /organizations/{organization_id}/applications/{application_id}/authentication/branding/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
@@ -668,7 +668,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code PATCH /organizations/{organization_id}/applications/{application_id}/authentication/branding/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
@@ -768,7 +768,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code GET /organizations/{organization_id}/applications/{application_id}/authentication/emails/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
@@ -863,12 +863,12 @@ public final class AuthenticationSetupResource {
   /**
    * Preview a sign-in email
    *
-   * <p>Returns one email as it renders, with sample codes and links. An invitation preview uses a sample organization for a grant or named key, or the <code>organization</code> and <code>role</code> you pass. <code>agentoff</code> is the email a person receives when your team ends an agent's access with a notification; <code>agent</code> names the agent. A console session can see a customer organization's name. The address of a console member is left out for a grant or a key, which have no mailbox. An email Authentication does not send answers <code>{"error": "email_not_sent_by_authentication"}</code>.
+   * <p>Returns one email as it renders, with sample codes and links. An invitation preview uses a sample organization for a grant or an API key, or the <code>organization</code> and <code>role</code> you pass. <code>agentoff</code> is the email a person receives when your team ends an agent's access with a notification; <code>agent</code> names the agent. A console session can see a customer organization's name. The address of a console member is left out for a grant or a key, which have no mailbox. An email Authentication does not send answers <code>{"error": "email_not_sent_by_authentication"}</code>.
    *
    * <p>{@code GET /organizations/{organization_id}/applications/{application_id}/authentication/emails/{key}/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param key The email: `code`, `magic`, `reset`, `device`, `invite`, `org`, `agent` or `agentoff`.
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -971,12 +971,12 @@ public final class AuthenticationSetupResource {
   /**
    * Get bot protection
    *
-   * <p>Returns whether protection is on, each policy's mode and the last 14 days of detections. Console sessions, grants and named keys receive the same aggregate counters.
+   * <p>Returns whether protection is on, each policy's mode and the last 14 days of detections. Console sessions, grants and API keys receive the same aggregate counters.
    *
    * <p>{@code GET /organizations/{organization_id}/applications/{application_id}/authentication/protection/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param options per-request options that override the client options
    * @return the response body
    */
@@ -1026,7 +1026,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code PATCH /organizations/{organization_id}/applications/{application_id}/authentication/protection/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
@@ -1126,7 +1126,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code GET /organizations/{organization_id}/applications/{application_id}/authentication/verified/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param options per-request options that override the client options
    * @return the response body
    */
@@ -1176,7 +1176,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code PATCH /organizations/{organization_id}/applications/{application_id}/authentication/verified/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
@@ -1276,7 +1276,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code GET /organizations/{organization_id}/applications/{application_id}/authentication/domain/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param options per-request options that override the client options
    * @return the response body
    */
@@ -1326,7 +1326,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code PUT /organizations/{organization_id}/applications/{application_id}/authentication/domain/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
@@ -1380,7 +1380,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code DELETE /organizations/{organization_id}/applications/{application_id}/authentication/domain/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param options per-request options that override the client options
    * @return the response body
    */
@@ -1430,7 +1430,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code POST /organizations/{organization_id}/applications/{application_id}/authentication/domain/verify/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param options per-request options that override the client options
    * @return the response body
    */
@@ -1480,7 +1480,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code POST /organizations/{organization_id}/applications/{application_id}/authentication/domain/activate/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param options per-request options that override the client options
    * @return the response body
    */
@@ -1530,7 +1530,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code GET /organizations/{organization_id}/applications/{application_id}/authentication/native-apps/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param options per-request options that override the client options
    * @return the response body
    */
@@ -1580,7 +1580,7 @@ public final class AuthenticationSetupResource {
    * <p>{@code PUT /organizations/{organization_id}/applications/{application_id}/authentication/native-apps/}
    *
    * @param organizationId UUID of the organization that owns the application.
-   * @param applicationId UUID of the application: live or sandbox. A named key configures its own application only.
+   * @param applicationId UUID of the application: live or sandbox. An API key configures its own application only.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
