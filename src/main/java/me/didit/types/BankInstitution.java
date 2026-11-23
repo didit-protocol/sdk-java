@@ -144,7 +144,7 @@ public final class BankInstitution extends JsonModel {
   }
 
   /**
-   * The deepest history the bank delivers, in days. <code>null</code> when not observed.
+   * The most history a link can obtain at this bank today, in days. <code>null</code> when not observed.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -377,7 +377,7 @@ public final class BankInstitution extends JsonModel {
     }
 
     /**
-     * The deepest history the bank delivers, in days. <code>null</code> when not observed.
+     * The most history a link can obtain at this bank today, in days. <code>null</code> when not observed.
      *
      * @param historyDaysMax the value, or {@code null} to send JSON null
      * @return this builder

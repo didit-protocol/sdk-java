@@ -124,7 +124,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * Days of transaction history to request, 1 to 365, default 90. The bank may deliver less: each account reports what it delivered in <code>history_coverage</code>. Cannot be sent with <code>history_from</code>.
+   * The most days of transaction history to request, 1 to 365, default 90. It is a request "up to": when the bank or the connection can give less, the link still completes with the history it can give, and each account reports what was obtained in <code>history_coverage</code>. Cannot be sent with <code>history_from</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -134,7 +134,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * Start date of the history to request, instead of <code>history_days</code>. Cannot be sent with <code>history_days</code>: both together answer <code>400 history_window_ambiguous</code>. A date older than 365 days, or in the future, answers <code>400 window_not_available</code>.
+   * The earliest date of history to request, instead of <code>history_days</code>; it is a request "up to", like <code>history_days</code>: when the bank or the connection can give less, the link still completes with the history it can give and <code>history_coverage</code> reports it. Cannot be sent with <code>history_days</code>: both together answer <code>400 history_window_ambiguous</code>. A date older than 365 days, or in the future, answers <code>400 window_not_available</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -254,7 +254,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * When the bank or the person grants less than you asked for, complete the link and charge only the granted scopes. Otherwise the link ends <code>failed</code> with <code>reduced_grant</code> and nothing is charged.
+   * When the bank or the person grants less data than the link required (a data scope or an account), complete the link and charge only what was granted. Otherwise the link ends <code>failed</code> with <code>reduced_grant</code> and nothing is charged. A shorter history than asked for is never a reduced grant: the link completes and <code>history_coverage</code> reports what was obtained.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -264,7 +264,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * Sandbox applications only: picks the Didit Test Bank customer. Ignored in a live application.
+   * Sandbox applications only: picks the Didit Test Bank customer. A live application that sends it, with any key, answers <code>400 invalid_request</code> with <code>field: sandbox</code> and no link is created.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -357,7 +357,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * Days of transaction history to request, 1 to 365, default 90. The bank may deliver less: each account reports what it delivered in <code>history_coverage</code>. Cannot be sent with <code>history_from</code>.
+     * The most days of transaction history to request, 1 to 365, default 90. It is a request "up to": when the bank or the connection can give less, the link still completes with the history it can give, and each account reports what was obtained in <code>history_coverage</code>. Cannot be sent with <code>history_from</code>.
      *
      * @param historyDays the value
      * @return this builder
@@ -367,7 +367,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * Start date of the history to request, instead of <code>history_days</code>. Cannot be sent with <code>history_days</code>: both together answer <code>400 history_window_ambiguous</code>. A date older than 365 days, or in the future, answers <code>400 window_not_available</code>.
+     * The earliest date of history to request, instead of <code>history_days</code>; it is a request "up to", like <code>history_days</code>: when the bank or the connection can give less, the link still completes with the history it can give and <code>history_coverage</code> reports it. Cannot be sent with <code>history_days</code>: both together answer <code>400 history_window_ambiguous</code>. A date older than 365 days, or in the future, answers <code>400 window_not_available</code>.
      *
      * @param historyFrom the value
      * @return this builder
@@ -487,7 +487,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * When the bank or the person grants less than you asked for, complete the link and charge only the granted scopes. Otherwise the link ends <code>failed</code> with <code>reduced_grant</code> and nothing is charged.
+     * When the bank or the person grants less data than the link required (a data scope or an account), complete the link and charge only what was granted. Otherwise the link ends <code>failed</code> with <code>reduced_grant</code> and nothing is charged. A shorter history than asked for is never a reduced grant: the link completes and <code>history_coverage</code> reports what was obtained.
      *
      * @param acceptReducedGrant the value
      * @return this builder
@@ -497,7 +497,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * Sandbox applications only: picks the Didit Test Bank customer. Ignored in a live application.
+     * Sandbox applications only: picks the Didit Test Bank customer. A live application that sends it, with any key, answers <code>400 invalid_request</code> with <code>field: sandbox</code> and no link is created.
      *
      * @param sandbox the value
      * @return this builder
@@ -785,7 +785,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * Sandbox applications only: picks the Didit Test Bank customer. Ignored in a live application.
+   * Sandbox applications only: picks the Didit Test Bank customer. A live application that sends it, with any key, answers <code>400 invalid_request</code> with <code>field: sandbox</code> and no link is created.
    */
   public static final class Sandbox extends JsonModel {
     private static final Set<String> KNOWN_FIELDS = Set.of("persona", "switches");
