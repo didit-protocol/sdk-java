@@ -707,7 +707,7 @@ public final class BankResource {
    *
    * <p>Creates a renew link for this connection, a shortcut for <code>create_link</code> with <code>mode: renew</code>. The connection id and every account id stay the same.
    *
-   * <p>Opening the returned link on the hosted page is not available yet: the page that lets the person renew is still to be built.
+   * <p>Send the returned <code>url</code> to the person: the hosted page shows what continues to be shared and until when, the person signs in at their bank once and returns to your <code>redirect_url</code>, and <code>bank.connection.renewed</code> confirms it. Afterwards the connection's <code>consent</code> shows a new <code>version</code>, <code>renewed_count</code>, <code>expires_at</code> and <code>renew_by</code>, with <code>renewal_action</code> <code>bank_auth</code>.
    *
    * <p>Until the consent has 30 days left or fewer it answers <code>409 renewal_not_needed</code>; after <code>consent.renewable_until</code> it answers <code>409 renewal_window_expired</code> and the person connects again.
    *
