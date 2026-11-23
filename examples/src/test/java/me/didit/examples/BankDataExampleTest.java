@@ -40,7 +40,13 @@ final class BankDataExampleTest {
         paths.at(
             "/~1v3~1bank~1connections~1{id}~1accounts~1/get/responses/200/content/application~1json/examples/Page/value");
     JsonNode vectors =
-        mapper.readTree(fixtures.resolve("webhook-vectors.json").toFile()).get("vectors");
+        mapper
+            .readTree(
+                Path.of(
+                        System.getProperty("didit.repoRoot"),
+                        "src/test/resources/bank-webhook-vectors.json")
+                    .toFile())
+            .get("vectors");
     JsonNode created =
         StreamSupport.stream(vectors.spliterator(), false)
             .filter(v -> v.get("name").asText().equals("bank_connection_created"))

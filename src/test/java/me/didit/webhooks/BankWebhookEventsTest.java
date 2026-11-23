@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
@@ -13,7 +17,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
-import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
@@ -21,6 +24,18 @@ import org.junit.jupiter.api.TestFactory;
 
 /** Types every {@code bank.*} event and reads its generated payload type. */
 final class BankWebhookEventsTest {
+  /** Signed deliveries of the bank.* events: a hand-written fixture, not an upstream copy. */
+  private static final JsonNode BANK_VECTORS = loadBankVectors();
+
+  private static JsonNode loadBankVectors() {
+    try (InputStream in =
+        BankWebhookEventsTest.class.getResourceAsStream("/bank-webhook-vectors.json")) {
+      return TestJson.parse(new String(in.readAllBytes(), StandardCharsets.UTF_8));
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
+  }
+
   @TestFactory
   Stream<DynamicTest> verifiesAndTypesEveryBankEvent() {
     return Stream.of(
@@ -128,18 +143,14 @@ final class BankWebhookEventsTest {
     VerifyOptions options =
         VerifyOptions.builder()
             .secret(vector.get("secret").asText())
-            .tolerance(
-                Duration.ofSeconds(
-                    SpecExamples.document("webhook-vectors.json")
-                        .get("tolerance_seconds")
-                        .asLong()))
+            .tolerance(Duration.ofSeconds(BANK_VECTORS.get("tolerance_seconds").asLong()))
             .clock(Clock.fixed(Instant.ofEpochSecond(vector.get("now").asLong()), ZoneOffset.UTC))
             .build();
     return Webhooks.verify(vector.get("body").asText(), headers, options);
   }
 
   private static JsonNode vector(String type) {
-    for (JsonNode vector : SpecExamples.document("webhook-vectors.json").get("vectors")) {
+    for (JsonNode vector : BANK_VECTORS.get("vectors")) {
       if (vector.get("name").asText().endsWith("_rotation")) {
         continue;
       }
