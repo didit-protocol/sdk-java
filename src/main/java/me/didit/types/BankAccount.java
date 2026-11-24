@@ -152,7 +152,7 @@ public final class BankAccount extends JsonModel {
   }
 
   /**
-   * Identifies the same bank account across connections of one application and environment: a keyed hash of the bank's own identifiers. <code>null</code> when the bank gives no reliable identifier. Use it to recognise a bank account you already know. It is the same for one bank account in every connection of the application, while <code>id</code> and the transaction ids are new in each connection.
+   * Identifies the same bank account across connections of one application and environment: a keyed hash of the bank's own identifiers. <code>null</code> when the bank gives no reliable identifier. Use it to recognise a bank account you already know. Several accounts of one connection can share an <code>account_ref</code> (one IBAN held in several currencies, or a linked card account under the same IBAN): key an account by its <code>id</code>; <code>account_ref</code> tells you which bank account (IBAN) it belongs to. It is the same for one bank account in every connection of the application, while <code>id</code> and the transaction ids are new in each connection.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -325,7 +325,7 @@ public final class BankAccount extends JsonModel {
     }
 
     /**
-     * Identifies the same bank account across connections of one application and environment: a keyed hash of the bank's own identifiers. <code>null</code> when the bank gives no reliable identifier. Use it to recognise a bank account you already know. It is the same for one bank account in every connection of the application, while <code>id</code> and the transaction ids are new in each connection.
+     * Identifies the same bank account across connections of one application and environment: a keyed hash of the bank's own identifiers. <code>null</code> when the bank gives no reliable identifier. Use it to recognise a bank account you already know. Several accounts of one connection can share an <code>account_ref</code> (one IBAN held in several currencies, or a linked card account under the same IBAN): key an account by its <code>id</code>; <code>account_ref</code> tells you which bank account (IBAN) it belongs to. It is the same for one bank account in every connection of the application, while <code>id</code> and the transaction ids are new in each connection.
      *
      * @param accountRef the value, or {@code null} to send JSON null
      * @return this builder
