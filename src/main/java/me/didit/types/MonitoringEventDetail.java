@@ -345,7 +345,7 @@ public final class MonitoringEventDetail extends JsonModel {
   }
 
   /**
-   * The device context as stored: your <code>device_context</code> (including <code>fingerprint</code>, <code>persistent_device_id</code> and <code>bot_score</code> when sent) with <code>network_context</code> completed by IP enrichment (<code>ip_country</code>, <code>ip_country_code</code>, <code>ip_city</code>, <code>asn_number</code>, <code>asn_organization</code>, <code>is_vpn_or_tor</code>, <code>is_data_center</code>, <code>proxy_type</code>, <code>connection_type</code>) for keys you left empty.
+   * The device context as stored: your <code>device_context</code> (including <code>fingerprint</code>, <code>persistent_device_id</code> and <code>bot_score</code> when sent) with <code>network_context</code> completed by IP enrichment (<code>ip_country</code>, <code>ip_country_code</code>, <code>ip_city</code>, <code>asn_number</code>, <code>asn_organization</code>, <code>is_vpn_or_tor</code>, <code>is_data_center</code>, <code>proxy_type</code>, <code>connection_type</code>) for keys you left empty. For an event your backend submitted, <code>bot_score</code> is the integer you sent. For an event submitted from a device with a monitoring token (the Didit SDKs), <code>bot_score</code> is the score Didit decided for that request, an integer from 0 to 100, and it is absent when Didit had nothing to decide it from: absent means unknown, not 0. On those events a <code>bot_score</code> the device posted in its own <code>device_context</code> does not set the score and is returned as <code>metadata.client_bot_score</code>, an integer, present only when the device posted one.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -355,7 +355,7 @@ public final class MonitoringEventDetail extends JsonModel {
   }
 
   /**
-   * Field path to provenance: <code>customer</code> (sent by your backend), <code>sdk</code> (sent through the device lane) or <code>server</code> (derived by Didit, such as <code>received_at</code> and enriched network fields). Check it before acting on a match.
+   * Field path to provenance: <code>customer</code> (sent by your backend), <code>sdk</code> (sent through the device lane) or <code>server</code> (derived by Didit, such as <code>received_at</code> and enriched network fields). Check it before acting on a match. For an event submitted from a device with a monitoring token, the entry <code>device_context.bot_score</code> says who decided that score: <code>sdk</code> when the Didit SDK's own report alone set it, <code>server</code> when Didit raised it from the request or decided there is no score. The entry is present in that case even when <code>device_context.bot_score</code> itself is absent, so it is not a way to tell whether a score exists: read the score. Events stored before this behaviour keep the entries they were stored with.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -888,7 +888,7 @@ public final class MonitoringEventDetail extends JsonModel {
     }
 
     /**
-     * The device context as stored: your <code>device_context</code> (including <code>fingerprint</code>, <code>persistent_device_id</code> and <code>bot_score</code> when sent) with <code>network_context</code> completed by IP enrichment (<code>ip_country</code>, <code>ip_country_code</code>, <code>ip_city</code>, <code>asn_number</code>, <code>asn_organization</code>, <code>is_vpn_or_tor</code>, <code>is_data_center</code>, <code>proxy_type</code>, <code>connection_type</code>) for keys you left empty.
+     * The device context as stored: your <code>device_context</code> (including <code>fingerprint</code>, <code>persistent_device_id</code> and <code>bot_score</code> when sent) with <code>network_context</code> completed by IP enrichment (<code>ip_country</code>, <code>ip_country_code</code>, <code>ip_city</code>, <code>asn_number</code>, <code>asn_organization</code>, <code>is_vpn_or_tor</code>, <code>is_data_center</code>, <code>proxy_type</code>, <code>connection_type</code>) for keys you left empty. For an event your backend submitted, <code>bot_score</code> is the integer you sent. For an event submitted from a device with a monitoring token (the Didit SDKs), <code>bot_score</code> is the score Didit decided for that request, an integer from 0 to 100, and it is absent when Didit had nothing to decide it from: absent means unknown, not 0. On those events a <code>bot_score</code> the device posted in its own <code>device_context</code> does not set the score and is returned as <code>metadata.client_bot_score</code>, an integer, present only when the device posted one.
      *
      * @param deviceContext the value
      * @return this builder
@@ -898,7 +898,7 @@ public final class MonitoringEventDetail extends JsonModel {
     }
 
     /**
-     * Field path to provenance: <code>customer</code> (sent by your backend), <code>sdk</code> (sent through the device lane) or <code>server</code> (derived by Didit, such as <code>received_at</code> and enriched network fields). Check it before acting on a match.
+     * Field path to provenance: <code>customer</code> (sent by your backend), <code>sdk</code> (sent through the device lane) or <code>server</code> (derived by Didit, such as <code>received_at</code> and enriched network fields). Check it before acting on a match. For an event submitted from a device with a monitoring token, the entry <code>device_context.bot_score</code> says who decided that score: <code>sdk</code> when the Didit SDK's own report alone set it, <code>server</code> when Didit raised it from the request or decided there is no score. The entry is present in that case even when <code>device_context.bot_score</code> itself is absent, so it is not a way to tell whether a score exists: read the score. Events stored before this behaviour keep the entries they were stored with.
      *
      * @param fieldSources the value
      * @return this builder
