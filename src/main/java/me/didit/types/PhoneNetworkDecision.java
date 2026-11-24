@@ -154,6 +154,8 @@ public final class PhoneNetworkDecision extends JsonModel {
     public PhoneNetworkDecision build() {
       require("name", false);
       require("status", false);
+      require("decided_at", true);
+      require("reason", true);
       return new PhoneNetworkDecision(buildJson(), buildFiles());
     }
 

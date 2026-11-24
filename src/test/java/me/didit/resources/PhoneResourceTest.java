@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
+import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
@@ -15,6 +16,7 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.PhoneAssessRiskBulkParams;
 import me.didit.types.PhoneCheckCodeParams;
 import me.didit.types.PhoneRiskRequest;
 import me.didit.types.PhoneSendCodeParams;
@@ -67,7 +69,7 @@ final class PhoneResourceTest {
 
   @Test
   void checkCode() {
-    PhoneCheckCodeParams params = PhoneCheckCodeParams.builder().phoneNumber("value-phone-number").code("value-code").duplicatedPhoneNumberAction(PhoneCheckCodeParams.DuplicatedPhoneNumberAction.NO_ACTION).disposableNumberAction(PhoneCheckCodeParams.DisposableNumberAction.NO_ACTION).voipNumberAction(PhoneCheckCodeParams.VoipNumberAction.NO_ACTION).enableEnrichment(true).phoneIntelligenceScoreAction(PhoneCheckCodeParams.PhoneIntelligenceScoreAction.NO_ACTION).phoneTypeRiskAction(PhoneCheckCodeParams.PhoneTypeRiskAction.NO_ACTION).recentPortAction(PhoneCheckCodeParams.RecentPortAction.NO_ACTION).lowPhoneTrustAction(PhoneCheckCodeParams.LowPhoneTrustAction.NO_ACTION).enableSocial(true).phoneNoSocialPresenceAction(PhoneCheckCodeParams.PhoneNoSocialPresenceAction.NO_ACTION).factorId("value-factor-id").build();
+    PhoneCheckCodeParams params = PhoneCheckCodeParams.builder().phoneNumber("value-phone-number").code("value-code").duplicatedPhoneNumberAction(PhoneCheckCodeParams.DuplicatedPhoneNumberAction.NO_ACTION).disposableNumberAction(PhoneCheckCodeParams.DisposableNumberAction.NO_ACTION).voipNumberAction(PhoneCheckCodeParams.VoipNumberAction.NO_ACTION).enableEnrichment(true).phoneIntelligenceScoreAction(PhoneCheckCodeParams.PhoneIntelligenceScoreAction.NO_ACTION).phoneTypeRiskAction(PhoneCheckCodeParams.PhoneTypeRiskAction.NO_ACTION).recentPortAction(PhoneCheckCodeParams.RecentPortAction.NO_ACTION).lowPhoneTrustAction(PhoneCheckCodeParams.LowPhoneTrustAction.NO_ACTION).enableSocial(true).phoneNoSocialPresenceAction(PhoneCheckCodeParams.PhoneNoSocialPresenceAction.NO_ACTION).factorId("value-factor-id").verificationId("value-verification-id").build();
     RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/phone/check/", "200");
     transport.respondJson(200, example);
@@ -79,8 +81,59 @@ final class PhoneResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
-    TestJson.assertJsonEquals("{\"phone_number\":\"value-phone-number\",\"code\":\"value-code\",\"duplicated_phone_number_action\":\"NO_ACTION\",\"disposable_number_action\":\"NO_ACTION\",\"voip_number_action\":\"NO_ACTION\",\"enable_enrichment\":true,\"phone_intelligence_score_action\":\"NO_ACTION\",\"phone_type_risk_action\":\"NO_ACTION\",\"recent_port_action\":\"NO_ACTION\",\"low_phone_trust_action\":\"NO_ACTION\",\"enable_social\":true,\"phone_no_social_presence_action\":\"NO_ACTION\",\"factor_id\":\"value-factor-id\"}", request.body());
+    TestJson.assertJsonEquals("{\"phone_number\":\"value-phone-number\",\"code\":\"value-code\",\"duplicated_phone_number_action\":\"NO_ACTION\",\"disposable_number_action\":\"NO_ACTION\",\"voip_number_action\":\"NO_ACTION\",\"enable_enrichment\":true,\"phone_intelligence_score_action\":\"NO_ACTION\",\"phone_type_risk_action\":\"NO_ACTION\",\"recent_port_action\":\"NO_ACTION\",\"low_phone_trust_action\":\"NO_ACTION\",\"enable_social\":true,\"phone_no_social_presence_action\":\"NO_ACTION\",\"factor_id\":\"value-factor-id\",\"verification_id\":\"value-verification-id\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
+  }
+
+  @Test
+  void assessRiskBulk() {
+    PhoneAssessRiskBulkParams params = PhoneAssessRiskBulkParams.builder().file(FileUpload.of(new byte[] {37, 80, 68, 70}, "file.pdf", "application/pdf")).fields(List.of(PhoneAssessRiskBulkParams.Fields.FORMAT)).callbackUrl("https://example.com/callback").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/phone/risk/bulk/", "202");
+    transport.respondJson(202, example);
+    var result = client.phone().assessRiskBulk(params, options);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/phone/risk/bulk/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    assertEquals(Map.ofEntries(Map.entry("fields", List.of("format")), Map.entry("callback_url", List.of("https://example.com/callback"))), request.multipartFields());
+    assertEquals(Map.ofEntries(Map.entry("file", List.of("file.pdf"))), request.multipartFiles());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void retrieveRiskBulk() {
+    JsonNode example = SpecExamples.response("verification.json", "GET", "/v3/phone/risk/bulk/{job_id}/", "200");
+    transport.respondJson(200, example);
+    var result = client.phone().retrieveRiskBulk("00000000-0000-4000-8000-00000000bdcb");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/phone/risk/bulk/00000000-0000-4000-8000-00000000bdcb/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals(0, request.body().length);
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void downloadRiskBulkResults() {
+    transport.respondBinary(200, "text/csv", new byte[] {37, 80, 68, 70});
+    var result = client.phone().downloadRiskBulkResults("00000000-0000-4000-8000-0000000132c9");
+    RecordedRequest request = transport.only();
+    assertEquals("GET", request.method());
+    assertEquals("/v3/phone/risk/bulk/00000000-0000-4000-8000-0000000132c9/results/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("text/csv, application/json", request.header("Accept"));
+    assertEquals(0, request.body().length);
+    assertArrayEquals(new byte[] {37, 80, 68, 70}, result.bytes());
   }
 }

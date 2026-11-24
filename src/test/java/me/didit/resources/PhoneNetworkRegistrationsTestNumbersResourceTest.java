@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -26,15 +27,17 @@ final class PhoneNetworkRegistrationsTestNumbersResourceTest {
   @Test
   void create() {
     PhoneNetworkRegistrationTestNumberRequest params = PhoneNetworkRegistrationTestNumberRequest.builder().phoneNumber("value-phone-number").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/phone/network/registrations/{registration_id}/test-numbers/", "201");
     transport.respondJson(201, example);
-    var result = client.phone().network().registrations().testNumbers().create("00000000-0000-4000-8000-000000031f9a", params);
+    var result = client.phone().network().registrations().testNumbers().create("00000000-0000-4000-8000-000000031f9a", params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/phone/network/registrations/00000000-0000-4000-8000-000000031f9a/test-numbers/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"phone_number\":\"value-phone-number\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -42,14 +45,16 @@ final class PhoneNetworkRegistrationsTestNumbersResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.phone().network().registrations().testNumbers().delete("00000000-0000-4000-8000-000000031f7d", "00000000-0000-4000-8000-00000002d292");
+    client.phone().network().registrations().testNumbers().delete("00000000-0000-4000-8000-000000031f7d", "00000000-0000-4000-8000-00000002d292", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/phone/network/registrations/00000000-0000-4000-8000-000000031f7d/test-numbers/00000000-0000-4000-8000-00000002d292/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 }

@@ -56,7 +56,7 @@ public final class BankTransaction extends JsonModel {
   }
 
   /**
-   * Didit's id, opaque and stored at first sight. The same movement keeps its id across reads, syncs and renewals. <code>identity_quality</code> says how strong that guarantee is.
+   * Didit's id, opaque and stored at first sight, per connection. The same movement keeps its id across reads, syncs and renewals within one connection; a new connection of the same bank account has new transaction ids. To recognise a transaction across connections, use the account's <code>account_ref</code> with <code>bank_reference</code> (when <code>identity_quality</code> is <code>bank_reference</code>), or match on content as a probable match. <code>identity_quality</code> says how strong the guarantee is within the connection.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -216,7 +216,7 @@ public final class BankTransaction extends JsonModel {
   }
 
   /**
-   * The bank's immutable entry reference where it provides one. <code>null</code> otherwise, never invented.
+   * The bank's immutable entry reference where it provides one. <code>null</code> otherwise, never invented. It is the same in every connection, so with the account's <code>account_ref</code> it is the reliable key across connections when <code>identity_quality</code> is <code>bank_reference</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -226,7 +226,7 @@ public final class BankTransaction extends JsonModel {
   }
 
   /**
-   * How <code>id</code> was matched. <code>bank_reference</code> and <code>route_id</code> are stable. <code>derived</code> is matched by content: it is stable while the bank keeps reporting the entry unchanged, and a correction by the bank can then appear as one <code>removed</code> and one <code>added</code>.
+   * How <code>id</code> was matched within the connection. <code>bank_reference</code> and <code>route_id</code> are stable. <code>derived</code> is matched by content: it is stable while the bank keeps reporting the entry unchanged, and a correction by the bank can then appear as one <code>removed</code> and one <code>added</code>. Across connections only a <code>bank_reference</code> is a reliable key.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -339,7 +339,7 @@ public final class BankTransaction extends JsonModel {
     }
 
     /**
-     * Didit's id, opaque and stored at first sight. The same movement keeps its id across reads, syncs and renewals. <code>identity_quality</code> says how strong that guarantee is.
+     * Didit's id, opaque and stored at first sight, per connection. The same movement keeps its id across reads, syncs and renewals within one connection; a new connection of the same bank account has new transaction ids. To recognise a transaction across connections, use the account's <code>account_ref</code> with <code>bank_reference</code> (when <code>identity_quality</code> is <code>bank_reference</code>), or match on content as a probable match. <code>identity_quality</code> says how strong the guarantee is within the connection.
      *
      * @param id the value
      * @return this builder
@@ -499,7 +499,7 @@ public final class BankTransaction extends JsonModel {
     }
 
     /**
-     * The bank's immutable entry reference where it provides one. <code>null</code> otherwise, never invented.
+     * The bank's immutable entry reference where it provides one. <code>null</code> otherwise, never invented. It is the same in every connection, so with the account's <code>account_ref</code> it is the reliable key across connections when <code>identity_quality</code> is <code>bank_reference</code>.
      *
      * @param bankReference the value, or {@code null} to send JSON null
      * @return this builder
@@ -509,7 +509,7 @@ public final class BankTransaction extends JsonModel {
     }
 
     /**
-     * How <code>id</code> was matched. <code>bank_reference</code> and <code>route_id</code> are stable. <code>derived</code> is matched by content: it is stable while the bank keeps reporting the entry unchanged, and a correction by the bank can then appear as one <code>removed</code> and one <code>added</code>.
+     * How <code>id</code> was matched within the connection. <code>bank_reference</code> and <code>route_id</code> are stable. <code>derived</code> is matched by content: it is stable while the bank keeps reporting the entry unchanged, and a correction by the bank can then appear as one <code>removed</code> and one <code>added</code>. Across connections only a <code>bank_reference</code> is a reliable key.
      *
      * @param identityQuality the value
      * @return this builder
@@ -738,7 +738,7 @@ public final class BankTransaction extends JsonModel {
   }
 
   /**
-   * How <code>id</code> was matched. <code>bank_reference</code> and <code>route_id</code> are stable. <code>derived</code> is matched by content: it is stable while the bank keeps reporting the entry unchanged, and a correction by the bank can then appear as one <code>removed</code> and one <code>added</code>.
+   * How <code>id</code> was matched within the connection. <code>bank_reference</code> and <code>route_id</code> are stable. <code>derived</code> is matched by content: it is stable while the bank keeps reporting the entry unchanged, and a correction by the bank can then appear as one <code>removed</code> and one <code>added</code>. Across connections only a <code>bank_reference</code> is a reliable key.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */

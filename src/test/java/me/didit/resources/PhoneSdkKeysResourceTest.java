@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -45,47 +46,53 @@ final class PhoneSdkKeysResourceTest {
   @Test
   void create() {
     PhoneSdkKeyRequest params = PhoneSdkKeyRequest.builder().platform(PhoneSdkKeyRequest.Platform.IOS).appIds(List.of("value-app-ids")).name("value-name").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/phone/sdk-keys/", "201");
     transport.respondJson(201, example);
-    var result = client.phone().sdkKeys().create(params);
+    var result = client.phone().sdkKeys().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/phone/sdk-keys/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"platform\":\"ios\",\"app_ids\":[\"value-app-ids\"],\"name\":\"value-name\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
 
   @Test
-  void rotate() {
-    PhoneSdkKeyRotateRequest params = PhoneSdkKeyRotateRequest.builder().overlapHours(1L).build();
-    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/phone/sdk-keys/{key_id}/rotate/", "200");
-    transport.respondJson(200, example);
-    var result = client.phone().sdkKeys().rotate("00000000-0000-4000-8000-0000000098d3", params);
-    RecordedRequest request = transport.only();
-    assertEquals("POST", request.method());
-    assertEquals("/v3/phone/sdk-keys/00000000-0000-4000-8000-0000000098d3/rotate/", request.path());
-    assertEquals(Map.of(), request.query());
-    assertEquals("test-api-key", request.header("x-api-key"));
-    assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"overlap_hours\":1}", request.body());
-    TestJson.assertJsonEquals(example, Json.toNode(result));
-    TestModels.readAll(result);
-  }
-
-  @Test
   void revoke() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.phone().sdkKeys().revoke("00000000-0000-4000-8000-0000000098a3");
+    client.phone().sdkKeys().revoke("00000000-0000-4000-8000-0000000098a3", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/phone/sdk-keys/00000000-0000-4000-8000-0000000098a3/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
+  }
+
+  @Test
+  void rotate() {
+    PhoneSdkKeyRotateRequest params = PhoneSdkKeyRotateRequest.builder().overlapHours(1L).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/phone/sdk-keys/{key_id}/rotate/", "200");
+    transport.respondJson(200, example);
+    var result = client.phone().sdkKeys().rotate("00000000-0000-4000-8000-0000000098d3", params, options);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/phone/sdk-keys/00000000-0000-4000-8000-0000000098d3/rotate/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    TestJson.assertJsonEquals("{\"overlap_hours\":1}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 }

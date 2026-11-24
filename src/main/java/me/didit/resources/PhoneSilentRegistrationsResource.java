@@ -45,6 +45,7 @@ public final class PhoneSilentRegistrationsResource {
    * <p><b>Rate limit.</b> Requests count against the key's budget; over it the answer is <code>429</code> with <code>Retry-After</code>.
    *
    * <p>{@code POST /v3/phone/silent/registrations/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -98,7 +99,7 @@ public final class PhoneSilentRegistrationsResource {
    *
    * <p>{@code GET /v3/phone/silent/registrations/{registration_id}/}
    *
-   * @param registrationId The silent verification registration.
+   * @param registrationId The registration id, `sr_` followed by 32 hexadecimal characters (an `nr_` id of a silent verification registration works too).
    * @param options per-request options that override the client options
    * @return the response body
    */

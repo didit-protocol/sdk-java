@@ -84,41 +84,41 @@ public final class PhoneFactor extends JsonModel {
   /**
    * Your id for the user it belongs to.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<String> userId() {
-    return Json.optional(json, "user_id", Conv.STRING);
+  public String userId() {
+    return Json.required(json, "user_id", Conv.STRING);
   }
 
   /**
    * Shown in the authenticator app and in the factor list.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<String> friendlyName() {
-    return Json.optional(json, "friendly_name", Conv.STRING);
+  public String friendlyName() {
+    return Json.required(json, "friendly_name", Conv.STRING);
   }
 
   /**
    * Your keys and values, as you sent them.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<Map<String, String>> metadata() {
-    return Json.optional(json, "metadata", Conv.map(Conv.STRING));
+  public Map<String, String> metadata() {
+    return Json.required(json, "metadata", Conv.map(Conv.STRING));
   }
 
   /**
    * When it was enrolled.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<OffsetDateTime> createdAt() {
-    return Json.optional(json, "created_at", Conv.DATE_TIME);
+  public OffsetDateTime createdAt() {
+    return Json.required(json, "created_at", Conv.DATE_TIME);
   }
 
   /**
@@ -234,6 +234,11 @@ public final class PhoneFactor extends JsonModel {
       require("factor_id", false);
       require("type", false);
       require("status", false);
+      require("user_id", false);
+      require("friendly_name", false);
+      require("metadata", false);
+      require("created_at", false);
+      require("last_used_at", true);
       return new PhoneFactor(buildJson(), buildFiles());
     }
 

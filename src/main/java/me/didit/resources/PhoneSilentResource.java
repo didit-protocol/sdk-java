@@ -154,6 +154,7 @@ public final class PhoneSilentResource {
    * <p><b>Rate limit.</b> Requests count against the key's budget; over it the answer is <code>429</code> with <code>Retry-After</code>.
    *
    * <p>{@code POST /v3/phone/silent/eligibility/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options

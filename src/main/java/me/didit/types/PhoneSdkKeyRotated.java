@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.FileUpload;
@@ -83,31 +82,31 @@ public final class PhoneSdkKeyRotated extends JsonModel {
   /**
    * The bundle ids, package names or <code>https</code> origins it works for.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<List<String>> appIds() {
-    return Json.optional(json, "app_ids", Conv.list(Conv.STRING));
+  public List<String> appIds() {
+    return Json.required(json, "app_ids", Conv.list(Conv.STRING));
   }
 
   /**
    * <code>active</code> - the new value works; <code>expiring</code> - it was rotated again; <code>revoked</code> - it stopped working.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<PhoneSdkKeyRotated.Status> status() {
-    return Json.optional(json, "status", Conv.enumeration(PhoneSdkKeyRotated.Status::of));
+  public PhoneSdkKeyRotated.Status status() {
+    return Json.required(json, "status", Conv.enumeration(PhoneSdkKeyRotated.Status::of));
   }
 
   /**
    * When the key was first issued.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<OffsetDateTime> createdAt() {
-    return Json.optional(json, "created_at", Conv.DATE_TIME);
+  public OffsetDateTime createdAt() {
+    return Json.required(json, "created_at", Conv.DATE_TIME);
   }
 
   /**
@@ -213,6 +212,9 @@ public final class PhoneSdkKeyRotated extends JsonModel {
       require("key_id", false);
       require("platform", false);
       require("publishable_key", false);
+      require("app_ids", false);
+      require("status", false);
+      require("created_at", false);
       require("previous_expires_at", false);
       return new PhoneSdkKeyRotated(buildJson(), buildFiles());
     }
@@ -278,13 +280,7 @@ public final class PhoneSdkKeyRotated extends JsonModel {
     /** The value {@code "active"}. */
     public static final Status ACTIVE = new Status("active");
 
-    /** The value {@code "expiring"}. */
-    public static final Status EXPIRING = new Status("expiring");
-
-    /** The value {@code "revoked"}. */
-    public static final Status REVOKED = new Status("revoked");
-
-    private static final List<Status> KNOWN_VALUES = List.of(ACTIVE, EXPIRING, REVOKED);
+    private static final List<Status> KNOWN_VALUES = List.of(ACTIVE);
 
     private Status(String value) {
       super(value);

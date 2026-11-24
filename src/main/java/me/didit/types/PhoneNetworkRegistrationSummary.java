@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.FileUpload;
@@ -82,11 +81,11 @@ public final class PhoneNetworkRegistrationSummary extends JsonModel {
   /**
    * What you use the feature for.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<String> useCase() {
-    return Json.optional(json, "use_case", Conv.STRING);
+  public String useCase() {
+    return Json.required(json, "use_case", Conv.STRING);
   }
 
   /**
@@ -172,6 +171,7 @@ public final class PhoneNetworkRegistrationSummary extends JsonModel {
       require("registration_id", false);
       require("feature", false);
       require("country", false);
+      require("use_case", false);
       require("status", false);
       return new PhoneNetworkRegistrationSummary(buildJson(), buildFiles());
     }

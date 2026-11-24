@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.FileUpload;
@@ -61,11 +60,11 @@ public final class PhoneSilentCoverageCountry extends JsonModel {
   /**
    * <code>true</code> when the SIM check also runs over Wi-Fi, so a device without mobile data can still complete it.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<Boolean> wifi() {
-    return Json.optional(json, "wifi", Conv.BOOLEAN);
+  public boolean wifi() {
+    return Json.required(json, "wifi", Conv.BOOLEAN);
   }
 
   /**
@@ -129,6 +128,7 @@ public final class PhoneSilentCoverageCountry extends JsonModel {
      */
     public PhoneSilentCoverageCountry build() {
       require("country", false);
+      require("wifi", false);
       require("networks", false);
       return new PhoneSilentCoverageCountry(buildJson(), buildFiles());
     }

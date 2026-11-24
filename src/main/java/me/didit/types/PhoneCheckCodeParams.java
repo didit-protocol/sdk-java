@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 
 /** Parameters for {&#64;code phone.check_code}. */
 public final class PhoneCheckCodeParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("phone_number", "code", "duplicated_phone_number_action", "disposable_number_action", "voip_number_action", "enable_enrichment", "phone_intelligence_score_action", "phone_type_risk_action", "recent_port_action", "low_phone_trust_action", "enable_social", "phone_no_social_presence_action", "factor_id");
+  private static final Set<String> KNOWN_FIELDS = Set.of("phone_number", "code", "duplicated_phone_number_action", "disposable_number_action", "voip_number_action", "enable_enrichment", "phone_intelligence_score_action", "phone_type_risk_action", "recent_port_action", "low_phone_trust_action", "enable_social", "phone_no_social_presence_action", "factor_id", "verification_id");
 
   private PhoneCheckCodeParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -53,21 +53,21 @@ public final class PhoneCheckCodeParams extends JsonModel {
   /**
    * The same phone number used in the matching [<code>POST /v3/phone/send/</code>](/standalone-apis/phone-send) call, in E.164 format. This is what links the check to the send.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<String> phoneNumber() {
-    return Json.optional(json, "phone_number", Conv.STRING);
+  public String phoneNumber() {
+    return Json.required(json, "phone_number", Conv.STRING);
   }
 
   /**
    * The OTP the end user received. Must be 4–8 numeric digits — anything else returns <code>400</code> without consuming an attempt. A well-formed but wrong code returns <code>200</code> with <code>status: "Failed"</code> and consumes one of the 3 attempts.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<String> code() {
-    return Json.optional(json, "code", Conv.STRING);
+  public String code() {
+    return Json.required(json, "code", Conv.STRING);
   }
 
   /**
@@ -171,13 +171,23 @@ public final class PhoneCheckCodeParams extends JsonModel {
   }
 
   /**
-   * A TOTP factor being checked instead of a phone code, as returned when it was enrolled; send the 4-8 digit <code>code</code> its authenticator app shows. The answer is <code>{verification_id, status, attempts}</code> with <code>status</code> <code>verified</code> or <code>failed</code>; a factor that is <code>disabled</code> answers <code>400 factor_disabled</code>, an unknown one <code>404 not_found</code>.
+   * Check a TOTP factor enrolled with <code>POST /v3/phone/factors/</code> instead of a phone code: send the 4-8 digit <code>code</code> its authenticator app shows. With <code>factor_id</code> the service does not read <code>phone_number</code> (typed SDKs still take it, because it stays a required field of this request, so pass the user's number or any valid E.164 number). The answer carries <code>verification_id</code>, <code>status</code> (<code>verified</code> or <code>failed</code>) and <code>attempts</code>. A <code>disabled</code> factor answers <code>409 factor_disabled</code>, an unknown one <code>404 not_found</code> and a request without <code>code</code> <code>400 code_required</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<String> factorId() {
     return Json.optional(json, "factor_id", Conv.STRING);
+  }
+
+  /**
+   * Check the code Didit sent to a registration test number: send the <code>verification_id</code> that <code>POST /v3/phone/network/registrations/{registration_id}/test-numbers/</code> returned with the <code>code</code>. The number itself still goes in <code>phone_number</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> verificationId() {
+    return Json.optional(json, "verification_id", Conv.STRING);
   }
 
   @Override
@@ -314,7 +324,7 @@ public final class PhoneCheckCodeParams extends JsonModel {
     }
 
     /**
-     * A TOTP factor being checked instead of a phone code, as returned when it was enrolled; send the 4-8 digit <code>code</code> its authenticator app shows. The answer is <code>{verification_id, status, attempts}</code> with <code>status</code> <code>verified</code> or <code>failed</code>; a factor that is <code>disabled</code> answers <code>400 factor_disabled</code>, an unknown one <code>404 not_found</code>.
+     * Check a TOTP factor enrolled with <code>POST /v3/phone/factors/</code> instead of a phone code: send the 4-8 digit <code>code</code> its authenticator app shows. With <code>factor_id</code> the service does not read <code>phone_number</code> (typed SDKs still take it, because it stays a required field of this request, so pass the user's number or any valid E.164 number). The answer carries <code>verification_id</code>, <code>status</code> (<code>verified</code> or <code>failed</code>) and <code>attempts</code>. A <code>disabled</code> factor answers <code>409 factor_disabled</code>, an unknown one <code>404 not_found</code> and a request without <code>code</code> <code>400 code_required</code>.
      *
      * @param factorId the value
      * @return this builder
@@ -324,11 +334,24 @@ public final class PhoneCheckCodeParams extends JsonModel {
     }
 
     /**
+     * Check the code Didit sent to a registration test number: send the <code>verification_id</code> that <code>POST /v3/phone/network/registrations/{registration_id}/test-numbers/</code> returned with the <code>code</code>. The number itself still goes in <code>phone_number</code>.
+     *
+     * @param verificationId the value
+     * @return this builder
+     */
+    public Builder verificationId(String verificationId) {
+      return set("verification_id", Conv.STRING, verificationId);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code PhoneCheckCodeParams}
+     * @throws IllegalStateException when a required field is missing
      */
     public PhoneCheckCodeParams build() {
+      require("phone_number", false);
+      require("code", false);
       return new PhoneCheckCodeParams(buildJson(), buildFiles());
     }
 

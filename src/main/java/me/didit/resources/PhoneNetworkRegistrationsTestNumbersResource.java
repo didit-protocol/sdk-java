@@ -37,7 +37,7 @@ public final class PhoneNetworkRegistrationsTestNumbersResource {
    *
    * <p>Add a number you hold as a test number while the networks review a registration, so you can try the feature before it is approved: send it in E.164 (<code>phone_number</code>).
    *
-   * <p>Didit sends it a code and answers with <code>verification_id</code> and <code>status: code_sent</code>; check the code with <code>POST /v3/phone/check/</code> and the number. Once the code is checked the number is <code>verified</code>, and the feature answers for it under test access, marked <code>test: true</code>.
+   * <p>Didit sends it a code and answers with <code>verification_id</code> and <code>status: code_sent</code>; check the code with <code>POST /v3/phone/check/</code> and the <code>verification_id</code>. Once the code is checked the number is <code>verified</code>, and the feature answers for it under test access, marked <code>test: true</code>.
    *
    * <p><b>Limits.</b> A registration takes up to 5 test numbers (<code>409 too_many_test_numbers</code>), and test access ends when the networks decide (<code>409 review_finished</code>).
    *
@@ -46,8 +46,9 @@ public final class PhoneNetworkRegistrationsTestNumbersResource {
    * <p><b>Rate limit.</b> Requests count against the key's budget; over it the answer is <code>429</code> with <code>Retry-After</code>.
    *
    * <p>{@code POST /v3/phone/network/registrations/{registration_id}/test-numbers/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
-   * @param registrationId The network feature registration.
+   * @param registrationId The registration id, `nr_` followed by 32 hexadecimal characters, as it was created.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
@@ -102,8 +103,9 @@ public final class PhoneNetworkRegistrationsTestNumbersResource {
    * <p><b>Rate limit.</b> Requests count against the key's budget; over it the answer is <code>429</code> with <code>Retry-After</code>.
    *
    * <p>{@code DELETE /v3/phone/network/registrations/{registration_id}/test-numbers/{phone_number}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
-   * @param registrationId The network feature registration.
+   * @param registrationId The registration id, `nr_` followed by 32 hexadecimal characters, as it was created.
    * @param phoneNumber The test number, in E.164 and URL-encoded.
    * @param options per-request options that override the client options
    */

@@ -13,7 +13,7 @@ import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 
 /**
- * The enrollment of a TOTP factor: <code>totp.uri</code> is what the authenticator app needs.
+ * A new TOTP factor and the authenticator URI to show as a QR code. The secret is shown only here.
  */
 public final class PhoneFactorEnrollment extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("factor_id", "type", "status", "totp");
@@ -72,7 +72,7 @@ public final class PhoneFactorEnrollment extends JsonModel {
   }
 
   /**
-   * <code>unverified</code> until the first successful check, then <code>verified</code>.
+   * A new factor is <code>unverified</code> until its first check passes
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -125,7 +125,7 @@ public final class PhoneFactorEnrollment extends JsonModel {
     }
 
     /**
-     * <code>unverified</code> until the first successful check, then <code>verified</code>.
+     * A new factor is <code>unverified</code> until its first check passes
      *
      * @param status the value
      * @return this builder
@@ -205,7 +205,7 @@ public final class PhoneFactorEnrollment extends JsonModel {
   }
 
   /**
-   * <code>unverified</code> until the first successful check, then <code>verified</code>.
+   * A new factor is <code>unverified</code> until its first check passes
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -213,13 +213,7 @@ public final class PhoneFactorEnrollment extends JsonModel {
     /** The value {@code "unverified"}. */
     public static final Status UNVERIFIED = new Status("unverified");
 
-    /** The value {@code "verified"}. */
-    public static final Status VERIFIED = new Status("verified");
-
-    /** The value {@code "disabled"}. */
-    public static final Status DISABLED = new Status("disabled");
-
-    private static final List<Status> KNOWN_VALUES = List.of(UNVERIFIED, VERIFIED, DISABLED);
+    private static final List<Status> KNOWN_VALUES = List.of(UNVERIFIED);
 
     private Status(String value) {
       super(value);

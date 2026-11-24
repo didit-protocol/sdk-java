@@ -52,7 +52,7 @@ public final class PhoneSilentRegistration extends JsonModel {
   }
 
   /**
-   * The registration: track it with it.
+   * The registration: <code>sr_</code> followed by 32 hexadecimal characters
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -84,11 +84,11 @@ public final class PhoneSilentRegistration extends JsonModel {
   /**
    * Each mobile network's decision, network by network.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<List<PhoneNetworkDecision>> networks() {
-    return Json.optional(json, "networks", Conv.list(Conv.model(PhoneNetworkDecision::fromJson)));
+  public List<PhoneNetworkDecision> networks() {
+    return Json.required(json, "networks", Conv.list(Conv.model(PhoneNetworkDecision::fromJson)));
   }
 
   /**
@@ -115,7 +115,7 @@ public final class PhoneSilentRegistration extends JsonModel {
     }
 
     /**
-     * The registration: track it with it.
+     * The registration: <code>sr_</code> followed by 32 hexadecimal characters
      *
      * @param registrationId the value
      * @return this builder
@@ -174,6 +174,8 @@ public final class PhoneSilentRegistration extends JsonModel {
       require("registration_id", false);
       require("country", false);
       require("status", false);
+      require("networks", false);
+      require("live_at", true);
       return new PhoneSilentRegistration(buildJson(), buildFiles());
     }
 

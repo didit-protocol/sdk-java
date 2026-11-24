@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -44,9 +45,10 @@ final class PhoneSilentResourceTest {
   @Test
   void eligibility() {
     PhoneSilentEligibilityParams params = PhoneSilentEligibilityParams.builder().xPublishableKey("value-x-publishable-key").phoneNumber("value-phone-number").ipAddress("value-ip-address").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/phone/silent/eligibility/", "200");
     transport.respondJson(200, example);
-    var result = client.phone().silent().eligibility(params);
+    var result = client.phone().silent().eligibility(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/phone/silent/eligibility/", request.path());
@@ -54,6 +56,7 @@ final class PhoneSilentResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("value-x-publishable-key", request.header("X-Publishable-Key"));
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"phone_number\":\"value-phone-number\",\"ip_address\":\"value-ip-address\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);

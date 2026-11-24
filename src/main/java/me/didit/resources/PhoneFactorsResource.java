@@ -39,7 +39,7 @@ public final class PhoneFactorsResource {
   /**
    * List a user's enrolled factors
    *
-   * <p>List the factors enrolled for one of your users, so your app can show them and let the user pick the one to check with. <code>user_id</code> is required; <code>type</code> and <code>status</code> narrow the list.
+   * <p>List the factors enrolled for one of your users, newest first, so your app can show them and let the user pick the one to check with. <code>user_id</code> is required; <code>type</code> and <code>status</code> narrow the list.
    *
    * <p>The answer is a page: <code>count</code>, <code>next</code>, <code>previous</code> and <code>results</code>, each result a factor as Retrieve returns it.
    *
@@ -50,6 +50,8 @@ public final class PhoneFactorsResource {
    * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>.
    *
    * <p><b>Rate limit.</b> Requests count against the key's budget; over it the answer is <code>429</code> with <code>Retry-After</code>.
+   *
+   * <p><b>Permissions.</b> Only an Owner or Admin API key can list factors.
    *
    * <p>{@code GET /v3/phone/factors/}
    * <p>Returns one page; iterate it to fetch every following page automatically.
@@ -96,19 +98,20 @@ public final class PhoneFactorsResource {
   /**
    * Enroll a TOTP factor
    *
-   * <p>Enroll a TOTP factor for one of your users, so they confirm a verification with an authenticator app instead of a code. <code>type</code> is <code>totp</code> and <code>user_id</code> is your id for the user.
+   * <p>Enroll a TOTP factor for one of your users, so they confirm a verification with the code of an authenticator app instead of a phone code: <code>type</code> is <code>totp</code> and <code>user_id</code> is your id for the user.
    *
-   * <p>The answer carries <code>totp.uri</code>, the <code>otpauth://</code> URI to show as a QR code; the authenticator app scans it and starts producing codes.
+   * <p>The answer carries <code>totp.uri</code>, the <code>otpauth://</code> URI to show as a QR code. It is the only time the secret is shown.
    *
-   * <p><b>State.</b> A new factor is <code>unverified</code> until its first code passes <code>POST /v3/phone/check/</code>, then <code>verified</code>.
+   * <p><b>State.</b> A new factor is <code>unverified</code>. It becomes <code>verified</code> when its first code passes <code>POST /v3/phone/check/</code> with the <code>factor_id</code>.
    *
-   * <p><b>One of each type.</b> A user holds at most one factor: a second one answers <code>409 factor_exists</code>.
+   * <p><b>One of each type.</b> A user holds at most one factor of each type: a second one answers <code>409 factor_exists</code>.
+   *
+   * <p><b>Permissions.</b> Only an Owner or Admin API key can enroll factors.
    *
    * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>.
    *
-   * <p><b>Rate limit.</b> Requests count against the key's budget; over it the answer is <code>429</code> with <code>Retry-After</code>.
-   *
    * <p>{@code POST /v3/phone/factors/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -160,7 +163,7 @@ public final class PhoneFactorsResource {
    *
    * <p>{@code GET /v3/phone/factors/{factor_id}/}
    *
-   * @param factorId The factor.
+   * @param factorId The factor id, `fa_` followed by 32 hexadecimal characters, as enrollment returned it.
    * @param options per-request options that override the client options
    * @return the response body
    */
@@ -202,7 +205,7 @@ public final class PhoneFactorsResource {
   /**
    * Change a factor's name, metadata or state
    *
-   * <p>Change a factor without enrolling it again: rename it (<code>friendly_name</code>), replace your <code>metadata</code>, or disable it or turn it back on (<code>status</code>). The answer is the factor as it now stands.
+   * <p>Change a factor without enrolling it again: rename it (<code>friendly_name</code>), replace your <code>metadata</code>, disable it or turn it back on (<code>status</code>). The answer is the factor as it now stands.
    *
    * <p><code>disabled</code> stops the factor's checks and <code>verified</code> turns a disabled factor back on. A factor that was never verified cannot be turned on: finish its first check instead, or the call answers <code>409 factor_unverified</code>.
    *
@@ -213,8 +216,9 @@ public final class PhoneFactorsResource {
    * <p><b>Rate limit.</b> Requests count against the key's budget; over it the answer is <code>429</code> with <code>Retry-After</code>.
    *
    * <p>{@code PATCH /v3/phone/factors/{factor_id}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
-   * @param factorId The factor to change.
+   * @param factorId The factor id, `fa_` followed by 32 hexadecimal characters, as enrollment returned it.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
@@ -260,7 +264,7 @@ public final class PhoneFactorsResource {
   /**
    * Remove a factor
    *
-   * <p>Delete an enrolled factor. The factor is deleted at once: its <code>factor_id</code> stops working and the TOTP secret it held stop verifying, and the deletion cannot be undone. Verifications the factor already completed stay verified, and the user's other factors are not affected.
+   * <p>Delete an enrolled factor. The factor is deleted at once: its <code>factor_id</code> stops working, the TOTP secret it held stops verifying, and the deletion cannot be undone. Verifications the factor already completed stay verified, and the user's other factors are not affected.
    *
    * <p>Enroll the user again with <code>POST /v3/phone/factors/</code> to give them a new factor.
    *
@@ -269,8 +273,9 @@ public final class PhoneFactorsResource {
    * <p><b>Rate limit.</b> Requests count against the key's budget; over it the answer is <code>429</code> with <code>Retry-After</code>.
    *
    * <p>{@code DELETE /v3/phone/factors/{factor_id}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
-   * @param factorId The factor to delete.
+   * @param factorId The factor id, `fa_` followed by 32 hexadecimal characters, as enrollment returned it.
    * @param options per-request options that override the client options
    */
   public void delete(String factorId, RequestOptions options) {
