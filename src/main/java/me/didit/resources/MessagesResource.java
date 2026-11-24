@@ -22,6 +22,8 @@ import org.jspecify.annotations.Nullable;
 public final class MessagesResource {
   private final ApiClient client;
   private final WithRawResponse withRawResponse;
+  private final MessagesCapabilitiesResource capabilities;
+  private final MessagesConfigurationsResource configurations;
   private final MessagesConsentResource consent;
   private final MessagesConversationsResource conversations;
   private final MessagesRulesResource rules;
@@ -30,10 +32,30 @@ public final class MessagesResource {
   MessagesResource(ApiClient client) {
     this.client = client;
     this.withRawResponse = new WithRawResponse(client);
+    this.capabilities = new MessagesCapabilitiesResource(client);
+    this.configurations = new MessagesConfigurationsResource(client);
     this.consent = new MessagesConsentResource(client);
     this.conversations = new MessagesConversationsResource(client);
     this.rules = new MessagesRulesResource(client);
     this.templates = new MessagesTemplatesResource(client);
+  }
+
+  /**
+   * The {@code messages.capabilities} resource.
+   *
+   * @return the resource
+   */
+  public MessagesCapabilitiesResource capabilities() {
+    return capabilities;
+  }
+
+  /**
+   * The {@code messages.configurations} resource.
+   *
+   * @return the resource
+   */
+  public MessagesConfigurationsResource configurations() {
+    return configurations;
   }
 
   /**

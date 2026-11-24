@@ -16,7 +16,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code phone.send_code}. */
 public final class PhoneSendCodeParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("phone_number", "options", "signals", "vendor_data", "metadata");
+  private static final Set<String> KNOWN_FIELDS = Set.of("phone_number", "options", "signals", "vendor_data", "metadata", "code", "code_length", "on_conflict", "trusted_user", "force_challenge", "fraud_override");
 
   private PhoneSendCodeParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -101,6 +101,66 @@ public final class PhoneSendCodeParams extends JsonModel {
     return Json.optional(json, "metadata", Conv.OBJECT);
   }
 
+  /**
+   * Supply 4 to 10 letters and digits, such as K7P2QX. Letters match in either case. Your code takes precedence over <code>code_length</code> and <code>options.code_size</code>. Choose a channel that supports caller-supplied codes, such as WhatsApp. If the allowed channels cannot carry your code, the send returns <code>400 custom_code_unavailable</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> code() {
+    return Json.optional(json, "code", Conv.STRING);
+  }
+
+  /**
+   * 4 to 10 digits, for this request. Wins over <code>options.code_size</code> when both are sent; ignored when <code>code</code> is sent.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> codeLength() {
+    return Json.optional(json, "code_length", Conv.LONG);
+  }
+
+  /**
+   * A code is still valid: <code>replace</code> (default) sends a new one, <code>reuse</code> returns it without sending, <code>retry</code> sends the same code again in the same window (up to two retries, three sends total), <code>reject</code> answers <code>409 verification_in_progress</code>. For <code>reuse</code> and <code>retry</code>, if the pending verification does not meet the requested channel or challenge policy, the send starts a new verification. A retry also starts a new verification if the requested channel differs from the last delivery channel. Both <code>reuse</code> and <code>retry</code> start a new verification if the caller supplies a different code.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<PhoneSendCodeParams.OnConflict> onConflict() {
+    return Json.optional(json, "on_conflict", Conv.enumeration(PhoneSendCodeParams.OnConflict::of));
+  }
+
+  /**
+   * Your server vouches for this user: this one request goes past your fraud rules (velocity limits, risk score, network blocks, policies). Needs a <code>fraud_override</code> signed for it; a block list still stops the number.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> trustedUser() {
+    return Json.optional(json, "trusted_user", Conv.BOOLEAN);
+  }
+
+  /**
+   * Your server asks for a challenge on this request: Didit uses only fraud-resistant channels (<code>fraud.channels_allowed</code>) and records it as challenged by you; it is not reported or scored as fraud.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> forceChallenge() {
+    return Json.optional(json, "force_challenge", Conv.BOOLEAN);
+  }
+
+  /**
+   * A token signed for this phone number and expiry, in the form <code>v1.&lt;expires_at&gt;.&lt;signature&gt;</code>. <code>&lt;expires_at&gt;</code> is the Unix time in seconds, at most 5 minutes ahead. <code>&lt;signature&gt;</code> is the base64url encoding, without padding, of the HMAC-SHA256 of the UTF-8 string <code>v1\n&lt;phone_number&gt;\n&lt;expires_at&gt;</code> (the number in E.164 format, with a newline between each value), keyed with your application's webhook signing secret. It lets the request past a temporary network block, or with <code>trusted_user</code> past your fraud rules. An unsigned token, a past expiry, a wrong signature or one signed for another number is refused with <code>403 invalid_fraud_override</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> fraudOverride() {
+    return Json.optional(json, "fraud_override", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -162,6 +222,66 @@ public final class PhoneSendCodeParams extends JsonModel {
      */
     public Builder metadata(@Nullable Map<String, ?> metadata) {
       return setAny("metadata", metadata);
+    }
+
+    /**
+     * Supply 4 to 10 letters and digits, such as K7P2QX. Letters match in either case. Your code takes precedence over <code>code_length</code> and <code>options.code_size</code>. Choose a channel that supports caller-supplied codes, such as WhatsApp. If the allowed channels cannot carry your code, the send returns <code>400 custom_code_unavailable</code>.
+     *
+     * @param code the value
+     * @return this builder
+     */
+    public Builder code(String code) {
+      return set("code", Conv.STRING, code);
+    }
+
+    /**
+     * 4 to 10 digits, for this request. Wins over <code>options.code_size</code> when both are sent; ignored when <code>code</code> is sent.
+     *
+     * @param codeLength the value
+     * @return this builder
+     */
+    public Builder codeLength(long codeLength) {
+      return set("code_length", Conv.LONG, codeLength);
+    }
+
+    /**
+     * A code is still valid: <code>replace</code> (default) sends a new one, <code>reuse</code> returns it without sending, <code>retry</code> sends the same code again in the same window (up to two retries, three sends total), <code>reject</code> answers <code>409 verification_in_progress</code>. For <code>reuse</code> and <code>retry</code>, if the pending verification does not meet the requested channel or challenge policy, the send starts a new verification. A retry also starts a new verification if the requested channel differs from the last delivery channel. Both <code>reuse</code> and <code>retry</code> start a new verification if the caller supplies a different code.
+     *
+     * @param onConflict the value
+     * @return this builder
+     */
+    public Builder onConflict(PhoneSendCodeParams.OnConflict onConflict) {
+      return set("on_conflict", Conv.enumeration(PhoneSendCodeParams.OnConflict::of), onConflict);
+    }
+
+    /**
+     * Your server vouches for this user: this one request goes past your fraud rules (velocity limits, risk score, network blocks, policies). Needs a <code>fraud_override</code> signed for it; a block list still stops the number.
+     *
+     * @param trustedUser the value
+     * @return this builder
+     */
+    public Builder trustedUser(boolean trustedUser) {
+      return set("trusted_user", Conv.BOOLEAN, trustedUser);
+    }
+
+    /**
+     * Your server asks for a challenge on this request: Didit uses only fraud-resistant channels (<code>fraud.channels_allowed</code>) and records it as challenged by you; it is not reported or scored as fraud.
+     *
+     * @param forceChallenge the value
+     * @return this builder
+     */
+    public Builder forceChallenge(boolean forceChallenge) {
+      return set("force_challenge", Conv.BOOLEAN, forceChallenge);
+    }
+
+    /**
+     * A token signed for this phone number and expiry, in the form <code>v1.&lt;expires_at&gt;.&lt;signature&gt;</code>. <code>&lt;expires_at&gt;</code> is the Unix time in seconds, at most 5 minutes ahead. <code>&lt;signature&gt;</code> is the base64url encoding, without padding, of the HMAC-SHA256 of the UTF-8 string <code>v1\n&lt;phone_number&gt;\n&lt;expires_at&gt;</code> (the number in E.164 format, with a newline between each value), keyed with your application's webhook signing secret. It lets the request past a temporary network block, or with <code>trusted_user</code> past your fraud rules. An unsigned token, a past expiry, a wrong signature or one signed for another number is refused with <code>403 invalid_fraud_override</code>.
+     *
+     * @param fraudOverride the value
+     * @return this builder
+     */
+    public Builder fraudOverride(String fraudOverride) {
+      return set("fraud_override", Conv.STRING, fraudOverride);
     }
 
     /**
@@ -662,6 +782,55 @@ public final class PhoneSendCodeParams extends JsonModel {
       public boolean isKnown() {
         return KNOWN_VALUES.contains(this);
       }
+    }
+  }
+
+  /**
+   * A code is still valid: <code>replace</code> (default) sends a new one, <code>reuse</code> returns it without sending, <code>retry</code> sends the same code again in the same window (up to two retries, three sends total), <code>reject</code> answers <code>409 verification_in_progress</code>. For <code>reuse</code> and <code>retry</code>, if the pending verification does not meet the requested channel or challenge policy, the send starts a new verification. A retry also starts a new verification if the requested channel differs from the last delivery channel. Both <code>reuse</code> and <code>retry</code> start a new verification if the caller supplies a different code.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class OnConflict extends StringEnum {
+    /** The value {@code "replace"}. */
+    public static final OnConflict REPLACE = new OnConflict("replace");
+
+    /** The value {@code "reuse"}. */
+    public static final OnConflict REUSE = new OnConflict("reuse");
+
+    /** The value {@code "retry"}. */
+    public static final OnConflict RETRY = new OnConflict("retry");
+
+    /** The value {@code "reject"}. */
+    public static final OnConflict REJECT = new OnConflict("reject");
+
+    private static final List<OnConflict> KNOWN_VALUES = List.of(REPLACE, REUSE, RETRY, REJECT);
+
+    private OnConflict(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static OnConflict of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, OnConflict::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<OnConflict> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 }

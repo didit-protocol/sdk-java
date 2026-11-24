@@ -61,7 +61,7 @@ public final class PhoneCheckCodeParams extends JsonModel {
   }
 
   /**
-   * The OTP the end user received. Must be 4–8 numeric digits — anything else returns <code>400</code> without consuming an attempt. A well-formed but wrong code returns <code>200</code> with <code>status: "Failed"</code> and consumes one of the 3 attempts.
+   * For a delivered code, enter 4 to 10 letters or digits. Letters match in either case. A wrong delivered code consumes one attempt and returns <code>Failed</code> while attempts remain or <code>Declined</code> on the last attempt.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -181,7 +181,7 @@ public final class PhoneCheckCodeParams extends JsonModel {
   }
 
   /**
-   * Check the code Didit sent to a registration test number: send the <code>verification_id</code> that <code>POST /v3/phone/network/registrations/{registration_id}/test-numbers/</code> returned with the <code>code</code>. The number itself still goes in <code>phone_number</code>.
+   * Check this verification instead of the number's latest one: the <code>verification_id</code> a send returned, or the one <code>POST /v3/phone/network/registrations/{registration_id}/test-numbers/</code> returned for a registration test number. Didit takes the number from that verification, so the request's <code>phone_number</code> is not used, but it stays a required field. An ID that is not one of your application's checkable verifications is ignored and the check uses the latest pending verification of <code>phone_number</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -214,7 +214,7 @@ public final class PhoneCheckCodeParams extends JsonModel {
     }
 
     /**
-     * The OTP the end user received. Must be 4–8 numeric digits — anything else returns <code>400</code> without consuming an attempt. A well-formed but wrong code returns <code>200</code> with <code>status: "Failed"</code> and consumes one of the 3 attempts.
+     * For a delivered code, enter 4 to 10 letters or digits. Letters match in either case. A wrong delivered code consumes one attempt and returns <code>Failed</code> while attempts remain or <code>Declined</code> on the last attempt.
      *
      * @param code the value
      * @return this builder
@@ -334,7 +334,7 @@ public final class PhoneCheckCodeParams extends JsonModel {
     }
 
     /**
-     * Check the code Didit sent to a registration test number: send the <code>verification_id</code> that <code>POST /v3/phone/network/registrations/{registration_id}/test-numbers/</code> returned with the <code>code</code>. The number itself still goes in <code>phone_number</code>.
+     * Check this verification instead of the number's latest one: the <code>verification_id</code> a send returned, or the one <code>POST /v3/phone/network/registrations/{registration_id}/test-numbers/</code> returned for a registration test number. Didit takes the number from that verification, so the request's <code>phone_number</code> is not used, but it stays a required field. An ID that is not one of your application's checkable verifications is ignored and the check uses the latest pending verification of <code>phone_number</code>.
      *
      * @param verificationId the value
      * @return this builder

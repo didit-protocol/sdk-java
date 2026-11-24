@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 
 /** Parameters for {&#64;code messages.send}. */
 public final class MessagesSendParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("to", "to_email", "channels", "body", "template_id", "variables", "locale", "subject", "schedule_at", "expires_at", "correlation_id", "options");
+  private static final Set<String> KNOWN_FIELDS = Set.of("to", "to_email", "channels", "body", "template_id", "variables", "locale", "subject", "schedule_at", "expires_at", "correlation_id", "options", "configuration_id");
 
   private MessagesSendParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -171,6 +171,16 @@ public final class MessagesSendParams extends JsonModel {
     return Json.optional(json, "options", Conv.model(MessagesSendParams.Options::fromJson));
   }
 
+  /**
+   * One of your messaging configurations (<code>POST /v3/messages/configurations/</code>): its channel order applies unless this request sets <code>channels</code> itself, its status callback URL is used for the message's status events, and its <code>append_opt_out_line</code> applies unless <code>options.append_opt_out_line</code> is sent. A configuration that sets a sender (<code>from</code>), an <code>inbound_url</code> or <code>opt_out</code> rules cannot be used in a send yet and answers <code>400</code> on <code>configuration_id</code>, as does an id that is not one of your application's configurations or a configuration that lists no channel Messages can send on.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> configurationId() {
+    return Json.optional(json, "configuration_id", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -302,6 +312,16 @@ public final class MessagesSendParams extends JsonModel {
      */
     public Builder options(MessagesSendParams.Options options_) {
       return set("options", Conv.model(MessagesSendParams.Options::fromJson), options_);
+    }
+
+    /**
+     * One of your messaging configurations (<code>POST /v3/messages/configurations/</code>): its channel order applies unless this request sets <code>channels</code> itself, its status callback URL is used for the message's status events, and its <code>append_opt_out_line</code> applies unless <code>options.append_opt_out_line</code> is sent. A configuration that sets a sender (<code>from</code>), an <code>inbound_url</code> or <code>opt_out</code> rules cannot be used in a send yet and answers <code>400</code> on <code>configuration_id</code>, as does an id that is not one of your application's configurations or a configuration that lists no channel Messages can send on.
+     *
+     * @param configurationId the value
+     * @return this builder
+     */
+    public Builder configurationId(String configurationId) {
+      return set("configuration_id", Conv.STRING, configurationId);
     }
 
     /**

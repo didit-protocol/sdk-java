@@ -23,26 +23,45 @@ import me.didit.types.PhoneVerificationSendResponse;
 public final class PhoneResource {
   private final ApiClient client;
   private final WithRawResponse withRawResponse;
+  private final PhoneCountriesResource countries;
   private final PhoneFactorsResource factors;
+  private final PhoneFeedbackResource feedback;
   private final PhoneFraudResource fraud;
   private final PhoneLineTypeOverridesResource lineTypeOverrides;
   private final PhoneListsResource lists;
+  private final PhoneLookupsResource lookups;
   private final PhoneNetworkResource network;
   private final PhoneRateLimitsResource rateLimits;
   private final PhoneSdkKeysResource sdkKeys;
+  private final PhoneSettingsResource settings;
   private final PhoneSilentResource silent;
+  private final PhoneVerificationsResource verifications;
 
   PhoneResource(ApiClient client) {
     this.client = client;
     this.withRawResponse = new WithRawResponse(client);
+    this.countries = new PhoneCountriesResource(client);
     this.factors = new PhoneFactorsResource(client);
+    this.feedback = new PhoneFeedbackResource(client);
     this.fraud = new PhoneFraudResource(client);
     this.lineTypeOverrides = new PhoneLineTypeOverridesResource(client);
     this.lists = new PhoneListsResource(client);
+    this.lookups = new PhoneLookupsResource(client);
     this.network = new PhoneNetworkResource(client);
     this.rateLimits = new PhoneRateLimitsResource(client);
     this.sdkKeys = new PhoneSdkKeysResource(client);
+    this.settings = new PhoneSettingsResource(client);
     this.silent = new PhoneSilentResource(client);
+    this.verifications = new PhoneVerificationsResource(client);
+  }
+
+  /**
+   * The {@code phone.countries} resource.
+   *
+   * @return the resource
+   */
+  public PhoneCountriesResource countries() {
+    return countries;
   }
 
   /**
@@ -52,6 +71,15 @@ public final class PhoneResource {
    */
   public PhoneFactorsResource factors() {
     return factors;
+  }
+
+  /**
+   * The {@code phone.feedback} resource.
+   *
+   * @return the resource
+   */
+  public PhoneFeedbackResource feedback() {
+    return feedback;
   }
 
   /**
@@ -82,6 +110,15 @@ public final class PhoneResource {
   }
 
   /**
+   * The {@code phone.lookups} resource.
+   *
+   * @return the resource
+   */
+  public PhoneLookupsResource lookups() {
+    return lookups;
+  }
+
+  /**
    * The {@code phone.network} resource.
    *
    * @return the resource
@@ -109,12 +146,30 @@ public final class PhoneResource {
   }
 
   /**
+   * The {@code phone.settings} resource.
+   *
+   * @return the resource
+   */
+  public PhoneSettingsResource settings() {
+    return settings;
+  }
+
+  /**
    * The {@code phone.silent} resource.
    *
    * @return the resource
    */
   public PhoneSilentResource silent() {
     return silent;
+  }
+
+  /**
+   * The {@code phone.verifications} resource.
+   *
+   * @return the resource
+   */
+  public PhoneVerificationsResource verifications() {
+    return verifications;
   }
 
   /**
@@ -192,7 +247,9 @@ public final class PhoneResource {
    *
    * <p>Send a one-time passcode (OTP) to a phone number over WhatsApp, SMS, or another supported channel, then verify it with [<code>POST /v3/phone/check/</code>](/standalone-apis/phone-check).
    *
-   * <p><b>How send and check pair up.</b> Verification state is keyed by your application plus the E.164 <code>phone_number</code> — the check call does not take <code>request_id</code>. Each new send creates a pending verification that lives for <b>5 minutes</b>: call the check with the same number and the code the user received before the window closes. Calling send again for the same number while a verification is pending re-sends a code for that same verification (<code>status: "Retry"</code>, same <code>request_id</code>). At most one retry is attached this way (two sends total); a further send starts a fresh verification with a new <code>request_id</code>. The 5-minute window is measured from the first send and is not extended by retries.
+   * <p><b>How send and check pair up.</b> Send the same E.164 <code>phone_number</code> and the code to check the latest pending verification of that number in your application. Add the <code>verification_id</code> the send returned to check that specific verification: Didit then checks it and takes its number, so the <code>phone_number</code> of the request is not used. <code>phone_number</code> stays a required field of the request. An ID that is not one of your application's checkable verifications (unknown, cancelled, or of another application) is ignored, and the check falls back to the latest pending verification of <code>phone_number</code>. The verification window defaults to <b>5 minutes</b>. Calling send again for the same number while a verification is pending follows <code>on_conflict</code>: by default (<code>replace</code>) it starts a fresh verification with a new <code>request_id</code>; <code>retry</code> re-sends a code for the same verification (<code>status: "Retry"</code>, same <code>request_id</code> and <code>verification_id</code>), at most twice (three sends total, the first included, shared with <code>POST /v3/phone/verifications/{verification_id}/retry/</code>); <code>reuse</code> returns the pending verification without sending; <code>reject</code> answers <code>409 verification_in_progress</code>. For <code>reuse</code> and <code>retry</code>, if the pending verification does not meet the requested channel or challenge policy, the send starts a new verification. A retry also starts a new verification if the requested channel differs from the last delivery channel. Both <code>reuse</code> and <code>retry</code> start a new verification if the caller supplies a different code. A same-window retry keeps the expiry from the first send.
+   *
+   * <p><b>Conflict, challenge and code options.</b> <code>on_conflict</code> picks what happens while a code is still valid: <code>replace</code> (default) sends a new one, <code>reuse</code> returns it without sending, <code>retry</code> sends the same code again in the same window, up to two retries (three sends total, the first included), and <code>reject</code> answers <code>409 verification_in_progress</code>. <code>force_challenge</code> restricts the send to <code>fraud.channels_allowed</code> and records the challenge as yours, not as fraud. <code>trusted_user</code> needs a <code>fraud_override</code> signed for this number with your application's webhook signing secret; an unsigned or wrongly signed one returns <code>403 invalid_fraud_override</code>. <code>code</code> sets your own 4 to 10 letter-and-digit code and <code>code_length</code> the length of a Didit-made numeric code; <code>code</code> wins over <code>code_length</code>, and <code>code_length</code> wins over <code>options.code_size</code>.
    *
    * <p><b>Delivery channels.</b> <code>options.preferred_channel</code> selects the channel (<code>whatsapp</code> by default; <code>sms</code>, <code>telegram</code>, <code>voice</code>, <code>rcs</code>, <code>viber</code>, and <code>zalo</code> are also supported). When the preferred channel is unavailable for the destination country or number, delivery automatically falls back to SMS — the send still reports <code>Success</code>, and the channel actually used is reported by the check response (<code>phone.verification_method</code> and the <code>lifecycle</code> events).
    *
@@ -206,9 +263,9 @@ public final class PhoneResource {
    *
    * <p><b>Session persistence.</b> Every new verification is persisted as an API-type session: <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, the verification appears in the Business Console, and <code>status.updated</code> webhooks fire as it progresses.
    *
-   * <p><b>Sandbox.</b> Sandbox API keys skip delivery and billing: after request validation (malformed input still returns <code>400</code>), the endpoint returns a static <code>Success</code> payload with a random <code>request_id</code>; no message is sent and nothing is persisted. Use code <code>123456</code> on the sandbox check.
+   * <p><b>Sandbox.</b> A sandbox application's send takes the same path as a live one: the same validation, <code>on_conflict</code> handling, channel policy and refusals (an unsupported destination included) and the same answer, with a <code>verification_id</code> you can read, cancel or approve. Only the delivery is simulated: no message is sent and nothing is charged. In a sandbox application, use the code <code>123456</code> or the fixed code of a sandbox test number. Today the sandbox check also approves any other well-formed code for a number that has no fixed code; that is being tightened to the two codes above, so do not rely on it.
    *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
+   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. A missing <code>x-api-key</code> header, or a key that is scoped and does not carry write access to <code>sessions</code>, returns <code>403</code>; a wrong, revoked or expired key returns <code>401</code>.
    *
    * <p><b>Rate limits.</b> Shared write budget of 300 requests/min per API key across all POST/PATCH/DELETE endpoints, plus an anti-abuse cap of 4 send attempts per phone number per hour; exceeding either returns <code>429</code>.
    *
@@ -259,9 +316,9 @@ public final class PhoneResource {
    *
    * <p>Verify the OTP delivered by [<code>POST /v3/phone/send/</code>](/standalone-apis/phone-send) and get the final verification result plus phone intelligence: carrier name and line type, virtual (VoIP) and disposable flags, and duplicate usage of the number across your sessions.
    *
-   * <p><b>How the check finds the verification.</b> Matching is by your application plus the E.164 <code>phone_number</code> — <code>request_id</code> is not an input. The most recent pending verification created within the last <b>5 minutes</b> is checked. If there is none (never sent, already finalized, or older than 5 minutes) the endpoint returns <code>200</code> with <code>status: "Expired or Not Found"</code>.
+   * <p><b>How the check finds the verification.</b> Send the code and the E.164 <code>phone_number</code>: the number selects its latest pending verification in your application. Add the <code>verification_id</code> the send returned to check that specific verification: Didit then checks it and takes its number, so the <code>phone_number</code> of the request is not used. <code>phone_number</code> stays a required field of the request. An ID that is not one of your application's checkable verifications (unknown, cancelled, or of another application) is ignored, and the check falls back to the latest pending verification of <code>phone_number</code>. A finalized or expired verification, or no matching verification, returns <code>200</code> with <code>status: "Expired or Not Found"</code>.
    *
-   * <p><b>Attempt budget.</b> Each verification allows <b>3 code attempts</b>. The first two wrong codes return <code>status: "Failed"</code> with the attempts remaining and <code>phone: null</code>; the third wrong code finalizes the verification as <code>Declined</code> with a <code>VERIFICATION_CODE_ATTEMPTS_EXCEEDED</code> warning and returns the full phone report.
+   * <p><b>Attempt budget for delivered codes.</b> Your application's <code>verification.max_attempts</code> setting (3 to 10) sets how many wrong codes a verification takes, and it defaults to 5 on v3. With that default, the first four wrong codes return <code>Failed</code> with the attempts remaining and <code>phone: null</code>, and the fifth returns <code>Declined</code> with the full phone report and a <code>VERIFICATION_CODE_ATTEMPTS_EXCEEDED</code> warning. A verification started in a hosted flow uses the workflow's own limit instead.
    *
    * <p><b>Outcomes.</b> <code>Approved</code> — correct code and no declining risk. <code>Declined</code> — terminal: the code was correct but a declining risk matched (a <code>DECLINE</code> action below, a blocklisted or high-risk number), or the attempt budget was exhausted. <code>Failed</code> — wrong code, attempts remaining. <code>Expired or Not Found</code> — nothing to check. On <code>Approved</code>/<code>Declined</code> the <code>request_id</code> equals the send's <code>request_id</code> (the session id) and <code>phone</code> carries the full report (<code>carrier</code>, <code>is_virtual</code>, <code>is_disposable</code>, <code>warnings</code>, <code>lifecycle</code>, <code>matches</code>); on <code>Failed</code> and <code>Expired or Not Found</code> the <code>request_id</code> is a one-off random UUID.
    *
@@ -271,9 +328,9 @@ public final class PhoneResource {
    *
    * <p><b>Session persistence.</b> A finalized check updates the session created by the send (visible in the Business Console, queryable via <code>GET /v3/session/{sessionId}/decision/</code>) and fires a <code>status.updated</code> webhook.
    *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing: any well-formed code (4–8 digits, <code>123456</code> included) returns a static <code>Approved</code> payload with a simplified flat <code>phone</code> object (<code>status</code>, <code>phone_number</code>, <code>country_code</code>, <code>carrier_name</code>, <code>line_type</code>, <code>flags</code>); malformed input still returns <code>400</code>. Nothing is persisted.
+   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and charge nothing; malformed input still returns <code>400</code>. In a sandbox application, use the code <code>123456</code> or the fixed code of a sandbox test number. Today the sandbox check also approves any other well-formed code for a number that has no fixed code; that is being tightened to the two codes above, so do not rely on it.
    *
-   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. Missing or invalid credentials return <code>403</code> (<code>{"detail": "You do not have permission to perform this action."}</code>) — this API never returns <code>401</code>.
+   * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. A missing <code>x-api-key</code> header, or a key that is scoped and does not carry write access to <code>sessions</code>, returns <code>403</code>; a wrong, revoked or expired key returns <code>401</code>.
    *
    * <p><b>Rate limits.</b> Shared write budget of 300 requests/min per API key, plus the upstream anti-abuse cap of 4 attempts per number per hour; exceeding either returns <code>429</code>.
    *
