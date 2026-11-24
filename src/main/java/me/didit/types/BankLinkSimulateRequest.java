@@ -53,7 +53,7 @@ public final class BankLinkSimulateRequest extends JsonModel {
   }
 
   /**
-   * The Test Bank customer who signs in: <code>personal_basic</code> (one current account), <code>business_multi</code> (several business accounts), <code>long_history</code> (a long transaction history), <code>pending</code> (pending rows), <code>sparse_fields</code> (transactions with fields missing, one automatic sync a day) or <code>no_ongoing</code> (a bank that cannot keep access open).
+   * The Test Bank customer who signs in: <code>personal_basic</code> (one current account), <code>business_multi</code> (several business accounts), <code>long_history</code> (a long transaction history), <code>pending</code> (pending rows), <code>sparse_fields</code> (transactions with fields missing, one automatic sync a day), <code>no_ongoing</code> (a bank that cannot keep access open) or <code>multi_currency</code> (an EUR and a USD account on one IBAN; the connection keeps both, with one <code>account_ref</code> and a different <code>id</code> and <code>currency</code> each).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -96,7 +96,7 @@ public final class BankLinkSimulateRequest extends JsonModel {
     }
 
     /**
-     * The Test Bank customer who signs in: <code>personal_basic</code> (one current account), <code>business_multi</code> (several business accounts), <code>long_history</code> (a long transaction history), <code>pending</code> (pending rows), <code>sparse_fields</code> (transactions with fields missing, one automatic sync a day) or <code>no_ongoing</code> (a bank that cannot keep access open).
+     * The Test Bank customer who signs in: <code>personal_basic</code> (one current account), <code>business_multi</code> (several business accounts), <code>long_history</code> (a long transaction history), <code>pending</code> (pending rows), <code>sparse_fields</code> (transactions with fields missing, one automatic sync a day), <code>no_ongoing</code> (a bank that cannot keep access open) or <code>multi_currency</code> (an EUR and a USD account on one IBAN; the connection keeps both, with one <code>account_ref</code> and a different <code>id</code> and <code>currency</code> each).
      *
      * @param persona the value
      * @return this builder
@@ -141,7 +141,7 @@ public final class BankLinkSimulateRequest extends JsonModel {
   }
 
   /**
-   * The Test Bank customer who signs in: <code>personal_basic</code> (one current account), <code>business_multi</code> (several business accounts), <code>long_history</code> (a long transaction history), <code>pending</code> (pending rows), <code>sparse_fields</code> (transactions with fields missing, one automatic sync a day) or <code>no_ongoing</code> (a bank that cannot keep access open).
+   * The Test Bank customer who signs in: <code>personal_basic</code> (one current account), <code>business_multi</code> (several business accounts), <code>long_history</code> (a long transaction history), <code>pending</code> (pending rows), <code>sparse_fields</code> (transactions with fields missing, one automatic sync a day), <code>no_ongoing</code> (a bank that cannot keep access open) or <code>multi_currency</code> (an EUR and a USD account on one IBAN; the connection keeps both, with one <code>account_ref</code> and a different <code>id</code> and <code>currency</code> each).
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -164,7 +164,10 @@ public final class BankLinkSimulateRequest extends JsonModel {
     /** The value {@code "no_ongoing"}. */
     public static final Persona NO_ONGOING = new Persona("no_ongoing");
 
-    private static final List<Persona> KNOWN_VALUES = List.of(PERSONAL_BASIC, BUSINESS_MULTI, LONG_HISTORY, PENDING, SPARSE_FIELDS, NO_ONGOING);
+    /** The value {@code "multi_currency"}. */
+    public static final Persona MULTI_CURRENCY = new Persona("multi_currency");
+
+    private static final List<Persona> KNOWN_VALUES = List.of(PERSONAL_BASIC, BUSINESS_MULTI, LONG_HISTORY, PENDING, SPARSE_FIELDS, NO_ONGOING, MULTI_CURRENCY);
 
     private Persona(String value) {
       super(value);

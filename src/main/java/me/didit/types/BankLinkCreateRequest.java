@@ -824,7 +824,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * The Test Bank customer: <code>personal_basic</code> (one current account, 60 movements), <code>business_multi</code> (three accounts held by a company), <code>long_history</code> (one account with 400 days and 1,400 movements; a read returns the last 365 days, so set <code>history_days</code> to 365), <code>pending</code> (includes pending transactions), <code>sparse_fields</code> (no value date, no counterparty IBAN, no bank reference) or <code>no_ongoing</code> (a bank that only allows one-time access: use <code>allow_one_time_fallback</code>). <code>requires_email</code>: the Test Bank behaves as a bank that needs the person's email, so the link asks for an email address and a code before the bank. In sandbox no email is sent and the code is always <code>123456</code>; ignored for live applications.
+     * The Test Bank customer: <code>personal_basic</code> (one current account, 60 movements), <code>business_multi</code> (three accounts held by a company), <code>long_history</code> (one account with 400 days and 1,400 movements; a read returns the last 365 days, so set <code>history_days</code> to 365), <code>pending</code> (includes pending transactions), <code>sparse_fields</code> (no value date, no counterparty IBAN, no bank reference), <code>no_ongoing</code> (a bank that only allows one-time access: use <code>allow_one_time_fallback</code>) or <code>multi_currency</code> (one multi-currency account that the bank lists as an EUR and a USD account on the same IBAN; a link that selects both stores both, and they share one <code>account_ref</code> and differ by <code>id</code> and <code>currency</code>). <code>requires_email</code>: the Test Bank behaves as a bank that needs the person's email, so the link asks for an email address and a code before the bank. In sandbox no email is sent and the code is always <code>123456</code>; ignored for live applications.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -857,7 +857,7 @@ public final class BankLinkCreateRequest extends JsonModel {
       }
 
       /**
-       * The Test Bank customer: <code>personal_basic</code> (one current account, 60 movements), <code>business_multi</code> (three accounts held by a company), <code>long_history</code> (one account with 400 days and 1,400 movements; a read returns the last 365 days, so set <code>history_days</code> to 365), <code>pending</code> (includes pending transactions), <code>sparse_fields</code> (no value date, no counterparty IBAN, no bank reference) or <code>no_ongoing</code> (a bank that only allows one-time access: use <code>allow_one_time_fallback</code>). <code>requires_email</code>: the Test Bank behaves as a bank that needs the person's email, so the link asks for an email address and a code before the bank. In sandbox no email is sent and the code is always <code>123456</code>; ignored for live applications.
+       * The Test Bank customer: <code>personal_basic</code> (one current account, 60 movements), <code>business_multi</code> (three accounts held by a company), <code>long_history</code> (one account with 400 days and 1,400 movements; a read returns the last 365 days, so set <code>history_days</code> to 365), <code>pending</code> (includes pending transactions), <code>sparse_fields</code> (no value date, no counterparty IBAN, no bank reference), <code>no_ongoing</code> (a bank that only allows one-time access: use <code>allow_one_time_fallback</code>) or <code>multi_currency</code> (one multi-currency account that the bank lists as an EUR and a USD account on the same IBAN; a link that selects both stores both, and they share one <code>account_ref</code> and differ by <code>id</code> and <code>currency</code>). <code>requires_email</code>: the Test Bank behaves as a bank that needs the person's email, so the link asks for an email address and a code before the bank. In sandbox no email is sent and the code is always <code>123456</code>; ignored for live applications.
        *
        * @param persona the value
        * @return this builder
@@ -892,7 +892,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * The Test Bank customer: <code>personal_basic</code> (one current account, 60 movements), <code>business_multi</code> (three accounts held by a company), <code>long_history</code> (one account with 400 days and 1,400 movements; a read returns the last 365 days, so set <code>history_days</code> to 365), <code>pending</code> (includes pending transactions), <code>sparse_fields</code> (no value date, no counterparty IBAN, no bank reference) or <code>no_ongoing</code> (a bank that only allows one-time access: use <code>allow_one_time_fallback</code>). <code>requires_email</code>: the Test Bank behaves as a bank that needs the person's email, so the link asks for an email address and a code before the bank. In sandbox no email is sent and the code is always <code>123456</code>; ignored for live applications.
+     * The Test Bank customer: <code>personal_basic</code> (one current account, 60 movements), <code>business_multi</code> (three accounts held by a company), <code>long_history</code> (one account with 400 days and 1,400 movements; a read returns the last 365 days, so set <code>history_days</code> to 365), <code>pending</code> (includes pending transactions), <code>sparse_fields</code> (no value date, no counterparty IBAN, no bank reference), <code>no_ongoing</code> (a bank that only allows one-time access: use <code>allow_one_time_fallback</code>) or <code>multi_currency</code> (one multi-currency account that the bank lists as an EUR and a USD account on the same IBAN; a link that selects both stores both, and they share one <code>account_ref</code> and differ by <code>id</code> and <code>currency</code>). <code>requires_email</code>: the Test Bank behaves as a bank that needs the person's email, so the link asks for an email address and a code before the bank. In sandbox no email is sent and the code is always <code>123456</code>; ignored for live applications.
      *
      * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
      */
@@ -915,10 +915,13 @@ public final class BankLinkCreateRequest extends JsonModel {
       /** The value {@code "no_ongoing"}. */
       public static final Persona NO_ONGOING = new Persona("no_ongoing");
 
+      /** The value {@code "multi_currency"}. */
+      public static final Persona MULTI_CURRENCY = new Persona("multi_currency");
+
       /** The value {@code "requires_email"}. */
       public static final Persona REQUIRES_EMAIL = new Persona("requires_email");
 
-      private static final List<Persona> KNOWN_VALUES = List.of(PERSONAL_BASIC, BUSINESS_MULTI, LONG_HISTORY, PENDING, SPARSE_FIELDS, NO_ONGOING, REQUIRES_EMAIL);
+      private static final List<Persona> KNOWN_VALUES = List.of(PERSONAL_BASIC, BUSINESS_MULTI, LONG_HISTORY, PENDING, SPARSE_FIELDS, NO_ONGOING, MULTI_CURRENCY, REQUIRES_EMAIL);
 
       private Persona(String value) {
         super(value);
