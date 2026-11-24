@@ -111,6 +111,10 @@ class Synth:
         if cls.kind == "union":
             variant = cls.variants[0]
             expr, val = self.value(variant.type, {}, name, depth + 1)
+            if variant.type.kind == "any":
+                # A body setter takes an Object, the factory of a union variant a JsonNode.
+                self.ctx.use("me.didit.core.Json")
+                expr = f"Json.toNode({expr})"
             return f"{ref}.of{variant.name}({expr})", val
         if cls.kind == "model":
             if depth > 6:
