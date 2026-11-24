@@ -15,6 +15,8 @@ import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
 import me.didit.testing.TestJson;
 import me.didit.testing.TestModels;
+import me.didit.types.WebhookCreateRequest;
+import me.didit.types.WebhookEvent;
 import me.didit.types.WebhooksUpdateConfigParams;
 import org.junit.jupiter.api.Test;
 
@@ -55,6 +57,25 @@ final class WebhooksResourceTest {
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"webhook_url\":\"https://example.com/callback\",\"webhook_version\":\"v1\",\"rotate_secret_key\":true,\"capture_method\":\"MOBILE\",\"data_retention_months\":1,\"face_retention_policy\":\"delete_with_session\",\"face_retention_days\":1,\"biometric_consent_mode\":\"auto\",\"allowed_return_hosts\":[\"value-allowed-return-hosts\"],\"allowed_domains\":[\"value-allowed-domains\"]}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
+  }
+
+  @Test
+  void create() {
+    WebhookCreateRequest params = WebhookCreateRequest.builder().url("https://example.com/callback").events(List.of(WebhookCreateRequest.Events.ofWebhookEvent(WebhookEvent.STATUS_UPDATED))).description("value-description").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/webhooks/", "201");
+    transport.respondJson(201, example);
+    var result = client.webhooks().create(params, options);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/webhooks/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    TestJson.assertJsonEquals("{\"url\":\"https://example.com/callback\",\"events\":[\"status.updated\"],\"description\":\"value-description\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

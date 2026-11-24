@@ -10,6 +10,8 @@ import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
 import me.didit.types.WebhookConfig;
+import me.didit.types.WebhookCreateRequest;
+import me.didit.types.WebhookCreateResponse;
 import me.didit.types.WebhooksUpdateConfigParams;
 import me.didit.webhooks.WebhookMethods;
 
@@ -170,6 +172,61 @@ public final class WebhooksResource extends WebhookMethods {
     return client.executeAsync(updateConfigRequest(WebhooksUpdateConfigParams.builder().build()), RequestOptions.none(), UPDATE_CONFIG_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Add a webhook endpoint
+   *
+   * <p>Create a webhook endpoint: an HTTPS endpoint that receives the events in <code>events</code>. Send the event types to deliver, or <code>["*"]</code> for every event Didit lists: <code>*</code> is expanded when the endpoint is created and the answer lists the event names it now carries. An event Didit does not know answers <code>400 invalid_events</code>.
+   *
+   * <p>The endpoint it creates is the destination the Business Console lists and <code>GET /v3/webhook/destinations/</code> returns: <code>webhook_id</code> is that destination's <code>destination_uuid</code>, <code>secret</code> is the same signing secret as <code>secret_shared_key</code>, and <code>events</code> is its stored <code>subscribed_events</code>, changed later through <code>PATCH /v3/webhook/destinations/{destination_uuid}/</code>. <code>description</code> names it in the console; left out, it takes the host of <code>url</code>. The <code>(application, url)</code> pair must be unique among the application's destinations.
+   *
+   * <p>Didit delivers events only to the HTTPS endpoint in <code>url</code>.
+   *
+   * <p><b>Errors.</b> <code>400 invalid_url</code>: <code>url</code> is not an HTTPS URL, or the application already has an endpoint at it. <code>400 invalid_events</code>: an event in <code>events</code> is not one Didit lists.
+   *
+   * <p>A scoped API key needs <code>webhooks: write</code>.
+   *
+   * <p>{@code POST /v3/webhooks/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public WebhookCreateResponse create(WebhookCreateRequest params, RequestOptions options) {
+    return client.execute(createRequest(params), options, CREATE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #create(WebhookCreateRequest, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<WebhookCreateResponse> createAsync(WebhookCreateRequest params, RequestOptions options) {
+    return client.executeAsync(createRequest(params), options, CREATE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #create(WebhookCreateRequest, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return the result
+   */
+  public WebhookCreateResponse create(WebhookCreateRequest params) {
+    return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #create(WebhookCreateRequest, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<WebhookCreateResponse> createAsync(WebhookCreateRequest params) {
+    return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<WebhookConfig> RETRIEVE_CONFIG_RESPONSE = Responses.json(Conv.model(WebhookConfig::fromJson));
 
   private static ApiRequest retrieveConfigRequest() {
@@ -181,6 +238,15 @@ public final class WebhooksResource extends WebhookMethods {
 
   private static ApiRequest updateConfigRequest(WebhooksUpdateConfigParams params) {
     return ApiRequest.builder("PATCH", "/v3/webhook/")
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<WebhookCreateResponse> CREATE_RESPONSE = Responses.json(Conv.model(WebhookCreateResponse::fromJson));
+
+  private static ApiRequest createRequest(WebhookCreateRequest params) {
+    return ApiRequest.builder("POST", "/v3/webhooks/")
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
         .build();
@@ -310,6 +376,48 @@ public final class WebhooksResource extends WebhookMethods {
      */
     public CompletableFuture<RawResponse<WebhookConfig>> updateConfigAsync() {
       return client.executeAsync(updateConfigRequest(WebhooksUpdateConfigParams.builder().build()), RequestOptions.none(), UPDATE_CONFIG_RESPONSE);
+    }
+
+    /**
+     * {@link #create(WebhookCreateRequest, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<WebhookCreateResponse> create(WebhookCreateRequest params, RequestOptions options) {
+      return client.execute(createRequest(params), options, CREATE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #create(WebhookCreateRequest, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<WebhookCreateResponse>> createAsync(WebhookCreateRequest params, RequestOptions options) {
+      return client.executeAsync(createRequest(params), options, CREATE_RESPONSE);
+    }
+
+    /**
+     * {@link #create(WebhookCreateRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<WebhookCreateResponse> create(WebhookCreateRequest params) {
+      return client.execute(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #create(WebhookCreateRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<WebhookCreateResponse>> createAsync(WebhookCreateRequest params) {
+      return client.executeAsync(createRequest(params), RequestOptions.none(), CREATE_RESPONSE);
     }
   }
 }
