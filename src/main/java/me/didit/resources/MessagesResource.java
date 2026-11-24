@@ -26,6 +26,7 @@ public final class MessagesResource {
   private final MessagesConfigurationsResource configurations;
   private final MessagesConsentResource consent;
   private final MessagesConversationsResource conversations;
+  private final MessagesFeedbackResource feedback;
   private final MessagesRulesResource rules;
   private final MessagesTemplatesResource templates;
 
@@ -36,6 +37,7 @@ public final class MessagesResource {
     this.configurations = new MessagesConfigurationsResource(client);
     this.consent = new MessagesConsentResource(client);
     this.conversations = new MessagesConversationsResource(client);
+    this.feedback = new MessagesFeedbackResource(client);
     this.rules = new MessagesRulesResource(client);
     this.templates = new MessagesTemplatesResource(client);
   }
@@ -74,6 +76,15 @@ public final class MessagesResource {
    */
   public MessagesConversationsResource conversations() {
     return conversations;
+  }
+
+  /**
+   * The {@code messages.feedback} resource.
+   *
+   * @return the resource
+   */
+  public MessagesFeedbackResource feedback() {
+    return feedback;
   }
 
   /**

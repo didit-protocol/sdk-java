@@ -20,6 +20,7 @@ import me.didit.types.PhoneAssessRiskBulkParams;
 import me.didit.types.PhoneCheckCodeParams;
 import me.didit.types.PhoneRiskRequest;
 import me.didit.types.PhoneSendCodeParams;
+import me.didit.types.PhoneValidateRequest;
 import me.didit.types.RiskSignals;
 import org.junit.jupiter.api.Test;
 
@@ -135,5 +136,24 @@ final class PhoneResourceTest {
     assertEquals("text/csv, application/json", request.header("Accept"));
     assertEquals(0, request.body().length);
     assertArrayEquals(new byte[] {37, 80, 68, 70}, result.bytes());
+  }
+
+  @Test
+  void validate() {
+    PhoneValidateRequest params = PhoneValidateRequest.builder().phoneNumber("value-phone-number").country("value-country").build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
+    JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/phone/validate/", "200");
+    transport.respondJson(200, example);
+    var result = client.phone().validate(params, options);
+    RecordedRequest request = transport.only();
+    assertEquals("POST", request.method());
+    assertEquals("/v3/phone/validate/", request.path());
+    assertEquals(Map.of(), request.query());
+    assertEquals("test-api-key", request.header("x-api-key"));
+    assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    TestJson.assertJsonEquals("{\"phone_number\":\"value-phone-number\",\"country\":\"value-country\"}", request.body());
+    TestJson.assertJsonEquals(example, Json.toNode(result));
+    TestModels.readAll(result);
   }
 }

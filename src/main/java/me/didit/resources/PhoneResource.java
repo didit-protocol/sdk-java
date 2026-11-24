@@ -16,6 +16,8 @@ import me.didit.types.PhoneRiskBulkJob;
 import me.didit.types.PhoneRiskRequest;
 import me.didit.types.PhoneRiskResponse;
 import me.didit.types.PhoneSendCodeParams;
+import me.didit.types.PhoneValidateRequest;
+import me.didit.types.PhoneValidateResponse;
 import me.didit.types.PhoneVerificationCheckResponse;
 import me.didit.types.PhoneVerificationSendResponse;
 
@@ -23,6 +25,7 @@ import me.didit.types.PhoneVerificationSendResponse;
 public final class PhoneResource {
   private final ApiClient client;
   private final WithRawResponse withRawResponse;
+  private final PhoneBalanceResource balance;
   private final PhoneCountriesResource countries;
   private final PhoneFactorsResource factors;
   private final PhoneFeedbackResource feedback;
@@ -32,14 +35,18 @@ public final class PhoneResource {
   private final PhoneLookupsResource lookups;
   private final PhoneNetworkResource network;
   private final PhoneRateLimitsResource rateLimits;
+  private final PhoneSandboxNumbersResource sandboxNumbers;
   private final PhoneSdkKeysResource sdkKeys;
   private final PhoneSettingsResource settings;
   private final PhoneSilentResource silent;
+  private final PhoneStatsResource stats;
   private final PhoneVerificationsResource verifications;
+  private final PhoneVoicesResource voices;
 
   PhoneResource(ApiClient client) {
     this.client = client;
     this.withRawResponse = new WithRawResponse(client);
+    this.balance = new PhoneBalanceResource(client);
     this.countries = new PhoneCountriesResource(client);
     this.factors = new PhoneFactorsResource(client);
     this.feedback = new PhoneFeedbackResource(client);
@@ -49,10 +56,22 @@ public final class PhoneResource {
     this.lookups = new PhoneLookupsResource(client);
     this.network = new PhoneNetworkResource(client);
     this.rateLimits = new PhoneRateLimitsResource(client);
+    this.sandboxNumbers = new PhoneSandboxNumbersResource(client);
     this.sdkKeys = new PhoneSdkKeysResource(client);
     this.settings = new PhoneSettingsResource(client);
     this.silent = new PhoneSilentResource(client);
+    this.stats = new PhoneStatsResource(client);
     this.verifications = new PhoneVerificationsResource(client);
+    this.voices = new PhoneVoicesResource(client);
+  }
+
+  /**
+   * The {@code phone.balance} resource.
+   *
+   * @return the resource
+   */
+  public PhoneBalanceResource balance() {
+    return balance;
   }
 
   /**
@@ -137,6 +156,15 @@ public final class PhoneResource {
   }
 
   /**
+   * The {@code phone.sandbox_numbers} resource.
+   *
+   * @return the resource
+   */
+  public PhoneSandboxNumbersResource sandboxNumbers() {
+    return sandboxNumbers;
+  }
+
+  /**
    * The {@code phone.sdk_keys} resource.
    *
    * @return the resource
@@ -164,12 +192,30 @@ public final class PhoneResource {
   }
 
   /**
+   * The {@code phone.stats} resource.
+   *
+   * @return the resource
+   */
+  public PhoneStatsResource stats() {
+    return stats;
+  }
+
+  /**
    * The {@code phone.verifications} resource.
    *
    * @return the resource
    */
   public PhoneVerificationsResource verifications() {
     return verifications;
+  }
+
+  /**
+   * The {@code phone.voices} resource.
+   *
+   * @return the resource
+   */
+  public PhoneVoicesResource voices() {
+    return voices;
   }
 
   /**
@@ -257,13 +303,13 @@ public final class PhoneResource {
    *
    * <p><b>Branding.</b> SMS codes carry your application's SMS sender name, set in the Business Console, at no extra cost. Pass <code>options.sms_sender_name</code> to sign one code with another name, or <code>options.use_white_label_customization: true</code> to fall back to your white-label public name when no sender name is set. WhatsApp codes use a fixed message; connect your own WhatsApp Business number in the Business Console to send them from your business name and number, billed at the Didit fee only.
    *
-   * <p><b>Send statuses.</b> <code>Success</code> — OTP sent for a new verification; <code>Retry</code> — OTP re-sent for the pending verification; <code>Blocked</code> — the anti-fraud layer refused to send (see <code>reason</code>, e.g. <code>repeated_attempts</code>, <code>suspicious</code>, <code>spam</code>). A <code>Blocked</code> send immediately finalizes the verification as <code>Declined</code> with a high-risk warning, so a follow-up check returns <code>Expired or Not Found</code>.
+   * <p><b>Send statuses.</b> <code>Success</code> — OTP sent for a new verification; <code>Retry</code> — OTP re-sent for the pending verification; <code>Blocked</code> — the anti-fraud layer refused to send (see <code>reason</code>, e.g. <code>repeated_attempts</code>, <code>suspicious</code>, <code>spam</code>). A <code>Blocked</code> send immediately finalizes the verification as <code>Declined</code> with a high-risk warning, so a follow-up check returns <code>Expired or Not Found</code>. A sandbox test number registered as <code>blocked</code> is the exception: its send answers <code>Blocked</code> and its check answers <code>Declined</code>.
    *
    * <p><b>Billing.</b> The price depends on the destination country and the channel that actually delivers the message — see [Phone Verification Pricing](/getting-started/phone-verification-pricing). Only <code>Blocked</code> sends are guaranteed free: any other unbilled send attempt is charged at verification finalization or expiration, even if delivery was never confirmed or the delivery provider reported the message undeliverable. Checks are always free. As an anti-abuse measure, phone verification is disabled until your organization has a paid plan or makes its first top-up (<code>403</code>).
    *
    * <p><b>Session persistence.</b> Every new verification is persisted as an API-type session: <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, the verification appears in the Business Console, and <code>status.updated</code> webhooks fire as it progresses.
    *
-   * <p><b>Sandbox.</b> A sandbox application's send takes the same path as a live one: the same validation, <code>on_conflict</code> handling, channel policy and refusals (an unsupported destination included) and the same answer, with a <code>verification_id</code> you can read, cancel or approve. Only the delivery is simulated: no message is sent and nothing is charged. In a sandbox application, use the code <code>123456</code> or the fixed code of a sandbox test number. Today the sandbox check also approves any other well-formed code for a number that has no fixed code; that is being tightened to the two codes above, so do not rely on it.
+   * <p><b>Sandbox.</b> A sandbox application's send takes the same path as a live one: the same validation, <code>on_conflict</code> handling, channel policy and refusals (an unsupported destination included) and the same answer, with a <code>verification_id</code> you can read, cancel or approve. Only the delivery is simulated: no message is sent and nothing is charged. A number you registered with <code>POST /v3/phone/sandbox/numbers/</code> plays the outcome it was registered with: <code>blocked</code> answers <code>Blocked</code>, every other outcome answers <code>Success</code>, and the outcomes that end the verification at send time (<code>not_delivered</code>, <code>silent_match</code>, <code>silent_mismatch</code>) settle it. For any other number, check with <code>123456</code>, or with the <code>code</code> your send set.
    *
    * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. A missing <code>x-api-key</code> header, or a key that is scoped and does not carry write access to <code>sessions</code>, returns <code>403</code>; a wrong, revoked or expired key returns <code>401</code>.
    *
@@ -328,7 +374,7 @@ public final class PhoneResource {
    *
    * <p><b>Session persistence.</b> A finalized check updates the session created by the send (visible in the Business Console, queryable via <code>GET /v3/session/{sessionId}/decision/</code>) and fires a <code>status.updated</code> webhook.
    *
-   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and charge nothing; malformed input still returns <code>400</code>. In a sandbox application, use the code <code>123456</code> or the fixed code of a sandbox test number. Today the sandbox check also approves any other well-formed code for a number that has no fixed code; that is being tightened to the two codes above, so do not rely on it.
+   * <p><b>Sandbox.</b> Sandbox API keys skip all processing and charge nothing; malformed input still returns <code>400</code>. A number you registered with <code>POST /v3/phone/sandbox/numbers/</code> answers by its outcome: with <code>verified</code> or <code>silent_fallback</code> it accepts the fixed code it was registered with (any well-formed code when it has none), a wrong code answers <code>Failed</code> and the last attempt <code>Declined</code>; <code>silent_match</code> answers <code>Approved</code>; <code>not_delivered</code>, <code>blocked</code> and <code>silent_mismatch</code> answer <code>Declined</code>; <code>expired</code> answers <code>Expired or Not Found</code>. For any other number, the code is <code>123456</code>, or the <code>code</code> your send set; any other code answers <code>Failed</code>, and the last attempt <code>Declined</code>.
    *
    * <p><b>Authentication.</b> Send your application's API key in the <code>x-api-key</code> header. A missing <code>x-api-key</code> header, or a key that is scoped and does not carry write access to <code>sessions</code>, returns <code>403</code>; a wrong, revoked or expired key returns <code>401</code>.
    *
@@ -528,6 +574,59 @@ public final class PhoneResource {
     return client.executeAsync(downloadRiskBulkResultsRequest(jobId), RequestOptions.none(), DOWNLOAD_RISK_BULK_RESULTS_RESPONSE).thenApply(RawResponse::data);
   }
 
+  /**
+   * Validate and format a phone number
+   *
+   * <p>Check that a number can exist and return it formatted, without looking anything up: <code>valid</code>, <code>format.e164</code>, <code>format.national</code> and <code>country</code>. Send the number in international format, or a national number with <code>country</code>.
+   *
+   * <p>If the number parses but is invalid for its numbering plan, the response is <code>200</code> with <code>valid: false</code> and both formats. Validation and formatting are free: <code>charged</code> is always <code>false</code>.
+   *
+   * <p><b>Errors.</b> <code>400 invalid_phone_number</code>: not a number at all.
+   *
+   * <p>A scoped API key needs <code>phone: write</code>.
+   *
+   * <p>{@code POST /v3/phone/validate/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public PhoneValidateResponse validate(PhoneValidateRequest params, RequestOptions options) {
+    return client.execute(validateRequest(params), options, VALIDATE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #validate(PhoneValidateRequest, RequestOptions)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<PhoneValidateResponse> validateAsync(PhoneValidateRequest params, RequestOptions options) {
+    return client.executeAsync(validateRequest(params), options, VALIDATE_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #validate(PhoneValidateRequest, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return the result
+   */
+  public PhoneValidateResponse validate(PhoneValidateRequest params) {
+    return client.execute(validateRequest(params), RequestOptions.none(), VALIDATE_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #validate(PhoneValidateRequest, RequestOptions)}, with the client's options.
+   *
+   * @param params the request parameters
+   * @return a future completed with the result
+   */
+  public CompletableFuture<PhoneValidateResponse> validateAsync(PhoneValidateRequest params) {
+    return client.executeAsync(validateRequest(params), RequestOptions.none(), VALIDATE_RESPONSE).thenApply(RawResponse::data);
+  }
+
   private static final ResponseHandler<PhoneRiskResponse> ASSESS_RISK_RESPONSE = Responses.json(Conv.model(PhoneRiskResponse::fromJson));
 
   private static ApiRequest assessRiskRequest(PhoneRiskRequest params) {
@@ -578,6 +677,15 @@ public final class PhoneResource {
     return ApiRequest.builder("GET", "/v3/phone/risk/bulk/{job_id}/results/")
         .pathParam("job_id", jobId)
         .accept("text/csv")
+        .build();
+  }
+
+  private static final ResponseHandler<PhoneValidateResponse> VALIDATE_RESPONSE = Responses.json(Conv.model(PhoneValidateResponse::fromJson));
+
+  private static ApiRequest validateRequest(PhoneValidateRequest params) {
+    return ApiRequest.builder("POST", "/v3/phone/validate/")
+        .params(params)
+        .body(ApiRequest.BodyEncoding.JSON)
         .build();
   }
 
@@ -839,6 +947,48 @@ public final class PhoneResource {
      */
     public CompletableFuture<RawResponse<BinaryResponse>> downloadRiskBulkResultsAsync(String jobId) {
       return client.executeAsync(downloadRiskBulkResultsRequest(jobId), RequestOptions.none(), DOWNLOAD_RISK_BULK_RESULTS_RESPONSE);
+    }
+
+    /**
+     * {@link #validate(PhoneValidateRequest, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<PhoneValidateResponse> validate(PhoneValidateRequest params, RequestOptions options) {
+      return client.execute(validateRequest(params), options, VALIDATE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #validate(PhoneValidateRequest, RequestOptions)} with the raw response.
+     *
+     * @param params the request parameters
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<PhoneValidateResponse>> validateAsync(PhoneValidateRequest params, RequestOptions options) {
+      return client.executeAsync(validateRequest(params), options, VALIDATE_RESPONSE);
+    }
+
+    /**
+     * {@link #validate(PhoneValidateRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return the result
+     */
+    public RawResponse<PhoneValidateResponse> validate(PhoneValidateRequest params) {
+      return client.execute(validateRequest(params), RequestOptions.none(), VALIDATE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #validate(PhoneValidateRequest, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param params the request parameters
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<PhoneValidateResponse>> validateAsync(PhoneValidateRequest params) {
+      return client.executeAsync(validateRequest(params), RequestOptions.none(), VALIDATE_RESPONSE);
     }
   }
 }
