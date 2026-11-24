@@ -16,7 +16,7 @@ import org.jspecify.annotations.Nullable;
  * Reads response examples from the OpenAPI documents in {@code openapi/}, the same way the code
  * generator does, so example values never need to be copied into the repository. An operation the
  * document no longer has is read from {@code openapi/deprecated-operations.json}, which the
- * generator merges back in for the deprecated methods it still generates (DESIGN section 13).
+ * generator merges back in for the deprecated methods it still generates (DESIGN section 3.1).
  */
 public final class SpecExamples {
   private static final ObjectMapper MAPPER = new ObjectMapper();
