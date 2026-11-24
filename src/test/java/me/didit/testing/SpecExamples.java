@@ -114,9 +114,7 @@ public final class SpecExamples {
     JsonNode schemasNode = allComponents.path("schemas");
     ObjectNode schemas =
         schemasNode.isObject() ? (ObjectNode) schemasNode : allComponents.putObject("schemas");
-    Iterator<Map.Entry<String, JsonNode>> fields = components.fields();
-    while (fields.hasNext()) {
-      Map.Entry<String, JsonNode> field = fields.next();
+    for (Map.Entry<String, JsonNode> field : components.properties()) {
       if (!schemas.has(field.getKey())) {
         schemas.set(field.getKey(), field.getValue());
       }
