@@ -3,9 +3,9 @@ package me.didit.testing;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.nio.file.Files;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.Map;
@@ -31,11 +31,16 @@ public final class SpecExamples {
   }
 
   public static JsonNode document(String file) {
+    return document(repoRoot(), file);
+  }
+
+  static JsonNode document(Path root, String file) {
+    Path location = root.resolve("openapi").resolve(file).toAbsolutePath().normalize();
     return DOCS.computeIfAbsent(
-        file,
+        location.toString(),
         f -> {
           try {
-            return MAPPER.readTree(repoRoot().resolve("openapi").resolve(f).toFile());
+            return MAPPER.readTree(location.toFile());
           } catch (IOException e) {
             throw new UncheckedIOException(e);
           }
@@ -44,11 +49,15 @@ public final class SpecExamples {
 
   /** The example of the {@code status} JSON response of {@code method path}. */
   public static JsonNode response(String file, String method, String path, String status) {
-    JsonNode doc = document(file);
+    return response(repoRoot(), file, method, path, status);
+  }
+
+  static JsonNode response(Path root, String file, String method, String path, String status) {
+    JsonNode doc = document(root, file);
     String httpMethod = method.toLowerCase(java.util.Locale.ROOT);
     JsonNode op = doc.path("paths").path(path).path(httpMethod);
     if (op.isMissingNode()) {
-      JsonNode entry = deprecatedEntry(file, httpMethod, path);
+      JsonNode entry = deprecatedEntry(root, file, httpMethod, path);
       if (entry != null) {
         doc = withComponents(doc, entry.path("components"));
         op = entry.path("operation");
@@ -76,11 +85,11 @@ public final class SpecExamples {
 
   /** The registry entry of a removed operation of {@code file}, or null. */
   private static @Nullable JsonNode deprecatedEntry(
-      String file, String httpMethod, String path) {
-    if (!Files.exists(repoRoot().resolve("openapi").resolve(DEPRECATED))) {
+      Path root, String file, String httpMethod, String path) {
+    if (!Files.exists(root.resolve("openapi").resolve(DEPRECATED))) {
       return null;
     }
-    Iterator<JsonNode> entries = document(DEPRECATED).path("methods").elements();
+    Iterator<JsonNode> entries = document(root, DEPRECATED).path("methods").elements();
     while (entries.hasNext()) {
       JsonNode entry = entries.next();
       String spec = entry.path("spec").asText("verification");
@@ -93,7 +102,10 @@ public final class SpecExamples {
     return null;
   }
 
-  /** {@code doc} with the entry's schemas added where it has none of that name, as the generator does. */
+  /**
+   * {@code doc} with the entry's schemas added where it has none of that name, as the generator
+   * does.
+   */
   private static JsonNode withComponents(JsonNode doc, JsonNode components) {
     ObjectNode merged = (ObjectNode) doc.deepCopy();
     JsonNode componentsNode = merged.path("components");
@@ -102,9 +114,7 @@ public final class SpecExamples {
     JsonNode schemasNode = allComponents.path("schemas");
     ObjectNode schemas =
         schemasNode.isObject() ? (ObjectNode) schemasNode : allComponents.putObject("schemas");
-    Iterator<Map.Entry<String, JsonNode>> fields = components.fields();
-    while (fields.hasNext()) {
-      Map.Entry<String, JsonNode> field = fields.next();
+    for (Map.Entry<String, JsonNode> field : components.properties()) {
       if (!schemas.has(field.getKey())) {
         schemas.set(field.getKey(), field.getValue());
       }
