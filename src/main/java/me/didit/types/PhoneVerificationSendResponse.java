@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class PhoneVerificationSendResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("request_id", "status", "channel", "reason", "vendor_data", "metadata");
+  private static final Set<String> KNOWN_FIELDS = Set.of("request_id", "status", "channel", "reason", "vendor_data", "metadata", "verification_id", "expires_in", "fraud");
 
   private PhoneVerificationSendResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -110,6 +110,36 @@ public final class PhoneVerificationSendResponse extends JsonModel {
     return Json.optional(json, "metadata", Conv.OBJECT);
   }
 
+  /**
+   * UUID of the phone verification. Pass this value to check the code, retrieve the record, cancel, change channels, approve or retry. A same-window retry keeps this UUID. Use <code>request_id</code> to retrieve the session decision.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> verificationId() {
+    return Json.optional(json, "verification_id", Conv.STRING);
+  }
+
+  /**
+   * Seconds the code stays valid. A new send returns the full configured window; a same-window retry or a <code>reuse</code> of a pending verification returns the seconds left, because a retry keeps the expiry of the first send.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> expiresIn() {
+    return Json.optional(json, "expires_in", Conv.LONG);
+  }
+
+  /**
+   * The fraud decision for this send.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<PhoneVerificationSendResponse.Fraud> fraud() {
+    return Json.optional(json, "fraud", Conv.model(PhoneVerificationSendResponse.Fraud::fromJson));
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -184,6 +214,36 @@ public final class PhoneVerificationSendResponse extends JsonModel {
     }
 
     /**
+     * UUID of the phone verification. Pass this value to check the code, retrieve the record, cancel, change channels, approve or retry. A same-window retry keeps this UUID. Use <code>request_id</code> to retrieve the session decision.
+     *
+     * @param verificationId the value
+     * @return this builder
+     */
+    public Builder verificationId(String verificationId) {
+      return set("verification_id", Conv.STRING, verificationId);
+    }
+
+    /**
+     * Seconds the code stays valid. A new send returns the full configured window; a same-window retry or a <code>reuse</code> of a pending verification returns the seconds left, because a retry keeps the expiry of the first send.
+     *
+     * @param expiresIn the value
+     * @return this builder
+     */
+    public Builder expiresIn(long expiresIn) {
+      return set("expires_in", Conv.LONG, expiresIn);
+    }
+
+    /**
+     * The fraud decision for this send.
+     *
+     * @param fraud the value
+     * @return this builder
+     */
+    public Builder fraud(PhoneVerificationSendResponse.Fraud fraud) {
+      return set("fraud", Conv.model(PhoneVerificationSendResponse.Fraud::fromJson), fraud);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code PhoneVerificationSendResponse}
@@ -241,6 +301,278 @@ public final class PhoneVerificationSendResponse extends JsonModel {
     @Override
     public boolean isKnown() {
       return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /** The fraud decision for this send. */
+  public static final class Fraud extends JsonModel {
+    private static final Set<String> KNOWN_FIELDS = Set.of("action", "challenge_source", "channels_allowed", "exception");
+
+    private Fraud(ObjectNode json, Map<String, List<FileUpload>> files) {
+      super(json, files);
+    }
+
+    /**
+     * Reads a {@code Fraud} from JSON. Unknown fields are kept and readable
+     * through {@link #_additionalProperties()}.
+     *
+     * @param json a JSON object
+     * @return the parsed value
+     */
+    public static Fraud fromJson(JsonNode json) {
+      return new Fraud(Json.copyObject(json), Map.of());
+    }
+
+    /**
+     * Returns an empty builder.
+     *
+     * @return a new builder
+     */
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    /**
+     * Returns a builder holding a copy of every field of this value.
+     *
+     * @return a new builder
+     */
+    public Builder toBuilder() {
+      return new Builder(this);
+    }
+
+    /**
+     * allow, or challenge: the verification continues on fraud-resistant channels only.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<PhoneVerificationSendResponse.Fraud.Action> action() {
+      return Json.optional(json, "action", Conv.enumeration(PhoneVerificationSendResponse.Fraud.Action::of));
+    }
+
+    /**
+     * caller (your force_challenge) or policy (a fraud rule), when challenged.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<PhoneVerificationSendResponse.Fraud.ChallengeSource> challengeSource() {
+      return Json.optional(json, "challenge_source", Conv.enumeration(PhoneVerificationSendResponse.Fraud.ChallengeSource::of));
+    }
+
+    /**
+     * The channels it may use, when challenged.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<List<PhoneChannel>> channelsAllowed() {
+      return Json.optional(json, "channels_allowed", Conv.list(Conv.enumeration(PhoneChannel::of)));
+    }
+
+    /**
+     * trusted_user when this request went past your fraud rules as a trusted user; null otherwise.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<PhoneVerificationSendResponse.Fraud.ExceptionValue> exception() {
+      return Json.optional(json, "exception", Conv.enumeration(PhoneVerificationSendResponse.Fraud.ExceptionValue::of));
+    }
+
+    @Override
+    protected Set<String> knownFields() {
+      return KNOWN_FIELDS;
+    }
+
+    /** Builds a {@link Fraud}. */
+    public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+      private Builder() {}
+
+      private Builder(Fraud from) {
+        super(from);
+      }
+
+      /**
+       * allow, or challenge: the verification continues on fraud-resistant channels only.
+       *
+       * @param action the value
+       * @return this builder
+       */
+      public Builder action(PhoneVerificationSendResponse.Fraud.Action action) {
+        return set("action", Conv.enumeration(PhoneVerificationSendResponse.Fraud.Action::of), action);
+      }
+
+      /**
+       * caller (your force_challenge) or policy (a fraud rule), when challenged.
+       *
+       * @param challengeSource the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder challengeSource(PhoneVerificationSendResponse.Fraud.@Nullable ChallengeSource challengeSource) {
+        return setNullable("challenge_source", Conv.enumeration(PhoneVerificationSendResponse.Fraud.ChallengeSource::of), challengeSource);
+      }
+
+      /**
+       * The channels it may use, when challenged.
+       *
+       * @param channelsAllowed the value
+       * @return this builder
+       */
+      public Builder channelsAllowed(List<PhoneChannel> channelsAllowed) {
+        return set("channels_allowed", Conv.list(Conv.enumeration(PhoneChannel::of)), channelsAllowed);
+      }
+
+      /**
+       * trusted_user when this request went past your fraud rules as a trusted user; null otherwise.
+       *
+       * @param exception the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder exception(PhoneVerificationSendResponse.Fraud.@Nullable ExceptionValue exception) {
+        return setNullable("exception", Conv.enumeration(PhoneVerificationSendResponse.Fraud.ExceptionValue::of), exception);
+      }
+
+      /**
+       * Builds the value.
+       *
+       * @return a new immutable {@code Fraud}
+       */
+      public Fraud build() {
+        return new Fraud(buildJson(), buildFiles());
+      }
+
+      @Override
+      protected Builder self() {
+        return this;
+      }
+    }
+
+    /**
+     * allow, or challenge: the verification continues on fraud-resistant channels only.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class Action extends StringEnum {
+      /** The value {@code "allow"}. */
+      public static final Action ALLOW = new Action("allow");
+
+      /** The value {@code "challenge"}. */
+      public static final Action CHALLENGE = new Action("challenge");
+
+      private static final List<Action> KNOWN_VALUES = List.of(ALLOW, CHALLENGE);
+
+      private Action(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static Action of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, Action::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<Action> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     * caller (your force_challenge) or policy (a fraud rule), when challenged.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class ChallengeSource extends StringEnum {
+      /** The value {@code "caller"}. */
+      public static final ChallengeSource CALLER = new ChallengeSource("caller");
+
+      /** The value {@code "policy"}. */
+      public static final ChallengeSource POLICY = new ChallengeSource("policy");
+
+      private static final List<ChallengeSource> KNOWN_VALUES = List.of(CALLER, POLICY);
+
+      private ChallengeSource(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static ChallengeSource of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, ChallengeSource::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<ChallengeSource> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
+    }
+
+    /**
+     * trusted_user when this request went past your fraud rules as a trusted user; null otherwise.
+     *
+     * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+     */
+    public static final class ExceptionValue extends StringEnum {
+      /** The value {@code "trusted_user"}. */
+      public static final ExceptionValue TRUSTED_USER = new ExceptionValue("trusted_user");
+
+      private static final List<ExceptionValue> KNOWN_VALUES = List.of(TRUSTED_USER);
+
+      private ExceptionValue(String value) {
+        super(value);
+      }
+
+      /**
+       * Returns the constant for a known value, or a new instance for any other value.
+       *
+       * @param value the string value
+       * @return the enum value
+       */
+      public static ExceptionValue of(String value) {
+        return StringEnum.lookup(KNOWN_VALUES, value, ExceptionValue::new);
+      }
+
+      /**
+       * Returns the values known to this SDK version.
+       *
+       * @return the known values
+       */
+      public static List<ExceptionValue> knownValues() {
+        return KNOWN_VALUES;
+      }
+
+      @Override
+      public boolean isKnown() {
+        return KNOWN_VALUES.contains(this);
+      }
     }
   }
 }

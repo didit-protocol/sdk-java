@@ -48,7 +48,7 @@ final class MessagesResourceTest {
 
   @Test
   void send() {
-    MessagesSendParams params = MessagesSendParams.builder().to("value-to").toEmail("user@example.com").channels(List.of(MessagesSendParams.Channels.SMS)).body("value-body").templateId("00000000-0000-4000-8000-000000001ab8").variables(Map.of("key", "value-variables")).locale("value-locale").subject("value-subject").scheduleAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).expiresAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).correlationId("value-correlation-id").options(MessagesSendParams.Options.builder().appendOptOutLine(true).build()).build();
+    MessagesSendParams params = MessagesSendParams.builder().to("value-to").toEmail("user@example.com").channels(List.of(MessagesSendParams.Channels.SMS)).body("value-body").templateId("00000000-0000-4000-8000-000000001ab8").variables(Map.of("key", "value-variables")).locale("value-locale").subject("value-subject").scheduleAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).expiresAt(OffsetDateTime.parse("2026-11-01T10:15:30Z")).correlationId("value-correlation-id").options(MessagesSendParams.Options.builder().appendOptOutLine(true).build()).configurationId("00000000-0000-4000-8000-000000003834").build();
     RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/messages/", "201");
     transport.respondJson(201, example);
@@ -60,7 +60,7 @@ final class MessagesResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
-    TestJson.assertJsonEquals("{\"to\":\"value-to\",\"to_email\":\"user@example.com\",\"channels\":[\"sms\"],\"body\":\"value-body\",\"template_id\":\"00000000-0000-4000-8000-000000001ab8\",\"variables\":{\"key\":\"value-variables\"},\"locale\":\"value-locale\",\"subject\":\"value-subject\",\"schedule_at\":\"2026-11-01T10:15:30Z\",\"expires_at\":\"2026-11-01T10:15:30Z\",\"correlation_id\":\"value-correlation-id\",\"options\":{\"append_opt_out_line\":true}}", request.body());
+    TestJson.assertJsonEquals("{\"to\":\"value-to\",\"to_email\":\"user@example.com\",\"channels\":[\"sms\"],\"body\":\"value-body\",\"template_id\":\"00000000-0000-4000-8000-000000001ab8\",\"variables\":{\"key\":\"value-variables\"},\"locale\":\"value-locale\",\"subject\":\"value-subject\",\"schedule_at\":\"2026-11-01T10:15:30Z\",\"expires_at\":\"2026-11-01T10:15:30Z\",\"correlation_id\":\"value-correlation-id\",\"options\":{\"append_opt_out_line\":true},\"configuration_id\":\"00000000-0000-4000-8000-000000003834\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
