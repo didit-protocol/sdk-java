@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.38.1](https://github.com/didit-protocol/sdk-java/compare/v1.38.0...v1.38.1) (2026-11-24)
+
+
+### Bug Fixes
+
+* **codegen:** build a JsonNode for an untyped union variant in generated tests ([#146](https://github.com/didit-protocol/sdk-java/issues/146)) ([3d278d3](https://github.com/didit-protocol/sdk-java/commit/3d278d31755ad5b3db5f3c726a2fe98cbd57de92))
+
 ## [1.38.0](https://github.com/didit-protocol/sdk-java/compare/v1.37.0...v1.38.0) (2026-11-23)
 
 
