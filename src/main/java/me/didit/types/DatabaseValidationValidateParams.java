@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code database_validation.validate}. */
 public final class DatabaseValidationValidateParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("issuing_state", "services", "validation_type", "consent", "electoral_roll_only", "identification_number", "first_name", "last_name", "middle_name", "full_name", "date_of_birth", "personal_number", "tax_number", "document_number", "document_type", "expiration_date", "date_of_issue", "nationality", "gender", "address", "address_element_1", "address_element_2", "address_element_3", "address_element_4", "address_element_5", "postal_code", "driver_license_number", "driver_license_card_number", "driver_license_state", "driver_license_version", "passport_number", "passport_expiration_date", "passport_file_number", "passport_issue_country", "medicare_card_number", "immi_card_number", "immi_card_expiry_date", "citizenship_certificate_number", "birth_registration_number", "birth_registration_date", "birth_registration_state", "marriage_certificate_number", "change_of_name_certificate_number", "first_partner_name", "last_partner_name", "voter_id", "epic_card", "pan", "national_id", "cic", "identificador_ciudadano", "ocr", "voter_number", "emission_number", "bvn", "bank_card_number", "company_registration_number", "company_name", "initials", "licence_number", "refugee_file_number", "bank_name", "bank_account_number", "account_type", "phone_number", "right_thumb", "left_thumb", "score_level", "max_matches", "vehicle_register_number", "vehicle_licence_plate", "vin", "ssn", "phone", "landline", "email", "country_of_residence", "partial_match_action", "no_match_action", "save_api_request", "vendor_data", "metadata", "selfie");
+  private static final Set<String> KNOWN_FIELDS = Set.of("issuing_state", "services", "validation_type", "consent", "electoral_roll_only", "identification_number", "first_name", "last_name", "middle_name", "full_name", "date_of_birth", "personal_number", "tax_number", "document_number", "document_type", "expiration_date", "date_of_issue", "nationality", "gender", "address", "address_element_1", "address_element_2", "address_element_3", "address_element_4", "address_element_5", "postal_code", "driver_license_number", "driver_license_card_number", "driver_license_state", "driver_license_version", "passport_number", "passport_expiration_date", "passport_file_number", "passport_issue_country", "medicare_card_number", "immi_card_number", "immi_card_expiry_date", "citizenship_certificate_number", "birth_registration_number", "birth_registration_date", "birth_registration_state", "marriage_certificate_number", "change_of_name_certificate_number", "first_partner_name", "last_partner_name", "voter_id", "epic_card", "pan", "national_id", "cic", "identificador_ciudadano", "ocr", "voter_number", "emission_number", "bvn", "bank_card_number", "company_registration_number", "company_name", "initials", "licence_number", "refugee_file_number", "bank_name", "bank_account_number", "account_type", "phone_number", "right_thumb", "left_thumb", "cnh_qr_code_image", "score_level", "max_matches", "vehicle_register_number", "vehicle_licence_plate", "vin", "ssn", "phone", "landline", "email", "country_of_residence", "partial_match_action", "no_match_action", "save_api_request", "vendor_data", "metadata", "selfie");
 
   private DatabaseValidationValidateParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -725,6 +725,16 @@ public final class DatabaseValidationValidateParams extends JsonModel {
    */
   public Optional<String> leftThumb() {
     return Json.optional(json, "left_thumb", Conv.STRING);
+  }
+
+  /**
+   * Base64-encoded image of the CNH page carrying the Senatran QR code, required by <code>bra_cnh_facial_qrcode</code>. Send the whole page as a text field (<code>data:image/png;base64,...</code> or the bare base64 payload), never as a file part: the registry decodes the QR code server-side. JPEG, PNG or a PDF export of the digital CNH; a WebP payload returns <code>400</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> cnhQrCodeImage() {
+    return Json.optional(json, "cnh_qr_code_image", Conv.STRING);
   }
 
   /**
@@ -1570,6 +1580,16 @@ public final class DatabaseValidationValidateParams extends JsonModel {
      */
     public Builder leftThumb(String leftThumb) {
       return set("left_thumb", Conv.STRING, leftThumb);
+    }
+
+    /**
+     * Base64-encoded image of the CNH page carrying the Senatran QR code, required by <code>bra_cnh_facial_qrcode</code>. Send the whole page as a text field (<code>data:image/png;base64,...</code> or the bare base64 payload), never as a file part: the registry decodes the QR code server-side. JPEG, PNG or a PDF export of the digital CNH; a WebP payload returns <code>400</code>.
+     *
+     * @param cnhQrCodeImage the value
+     * @return this builder
+     */
+    public Builder cnhQrCodeImage(String cnhQrCodeImage) {
+      return set("cnh_qr_code_image", Conv.STRING, cnhQrCodeImage);
     }
 
     /**
