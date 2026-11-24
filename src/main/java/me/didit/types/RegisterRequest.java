@@ -48,7 +48,7 @@ public final class RegisterRequest extends JsonModel {
   }
 
   /**
-   * Any valid email address (personal, work, alias). Used as the unique account identifier.
+   * A real, deliverable mailbox address without a +tag, used as the unique account identifier. Registration rejects tags that normalization would remove, with a 400 email field error naming the canonical address. Only explicitly configured staging test mailboxes retain tags.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -81,7 +81,7 @@ public final class RegisterRequest extends JsonModel {
     }
 
     /**
-     * Any valid email address (personal, work, alias). Used as the unique account identifier.
+     * A real, deliverable mailbox address without a +tag, used as the unique account identifier. Registration rejects tags that normalization would remove, with a 400 email field error naming the canonical address. Only explicitly configured staging test mailboxes retain tags.
      *
      * @param email the value
      * @return this builder
