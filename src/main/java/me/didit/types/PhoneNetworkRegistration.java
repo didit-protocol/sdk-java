@@ -84,11 +84,11 @@ public final class PhoneNetworkRegistration extends JsonModel {
   /**
    * What you use the feature for, as submitted.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<String> useCase() {
-    return Json.optional(json, "use_case", Conv.STRING);
+  public String useCase() {
+    return Json.required(json, "use_case", Conv.STRING);
   }
 
   /**
@@ -104,11 +104,11 @@ public final class PhoneNetworkRegistration extends JsonModel {
   /**
    * Each mobile network's decision, network by network.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<List<PhoneNetworkDecision>> networks() {
-    return Json.optional(json, "networks", Conv.list(Conv.model(PhoneNetworkDecision::fromJson)));
+  public List<PhoneNetworkDecision> networks() {
+    return Json.required(json, "networks", Conv.list(Conv.model(PhoneNetworkDecision::fromJson)));
   }
 
   /**
@@ -124,21 +124,21 @@ public final class PhoneNetworkRegistration extends JsonModel {
   /**
    * <code>on</code> while the networks review: the feature answers for your verified test numbers, marked <code>test: true</code>. <code>off</code> once the registration is approved or rejected.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<PhoneNetworkRegistration.TestAccess> testAccess() {
-    return Json.optional(json, "test_access", Conv.enumeration(PhoneNetworkRegistration.TestAccess::of));
+  public PhoneNetworkRegistration.TestAccess testAccess() {
+    return Json.required(json, "test_access", Conv.enumeration(PhoneNetworkRegistration.TestAccess::of));
   }
 
   /**
    * Your test numbers for this registration, up to 5.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<List<PhoneNetworkRegistrationTestNumber>> testNumbers() {
-    return Json.optional(json, "test_numbers", Conv.list(Conv.model(PhoneNetworkRegistrationTestNumber::fromJson)));
+  public List<PhoneNetworkRegistrationTestNumberSummary> testNumbers() {
+    return Json.required(json, "test_numbers", Conv.list(Conv.model(PhoneNetworkRegistrationTestNumberSummary::fromJson)));
   }
 
   @Override
@@ -240,8 +240,8 @@ public final class PhoneNetworkRegistration extends JsonModel {
      * @param testNumbers the value
      * @return this builder
      */
-    public Builder testNumbers(List<PhoneNetworkRegistrationTestNumber> testNumbers) {
-      return set("test_numbers", Conv.list(Conv.model(PhoneNetworkRegistrationTestNumber::fromJson)), testNumbers);
+    public Builder testNumbers(List<PhoneNetworkRegistrationTestNumberSummary> testNumbers) {
+      return set("test_numbers", Conv.list(Conv.model(PhoneNetworkRegistrationTestNumberSummary::fromJson)), testNumbers);
     }
 
     /**
@@ -254,7 +254,12 @@ public final class PhoneNetworkRegistration extends JsonModel {
       require("registration_id", false);
       require("feature", false);
       require("country", false);
+      require("use_case", false);
       require("status", false);
+      require("networks", false);
+      require("live_at", true);
+      require("test_access", false);
+      require("test_numbers", false);
       return new PhoneNetworkRegistration(buildJson(), buildFiles());
     }
 

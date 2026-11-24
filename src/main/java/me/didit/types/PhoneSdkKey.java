@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.FileUpload;
@@ -54,7 +53,7 @@ public final class PhoneSdkKey extends JsonModel {
   }
 
   /**
-   * The key.
+   * The key: <code>sk_</code> followed by 32 hexadecimal characters
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -76,21 +75,21 @@ public final class PhoneSdkKey extends JsonModel {
   /**
    * Safe to ship inside the app: it can only start the checks the client SDK runs, never a server call.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<String> publishableKey() {
-    return Json.optional(json, "publishable_key", Conv.STRING);
+  public String publishableKey() {
+    return Json.required(json, "publishable_key", Conv.STRING);
   }
 
   /**
    * The bundle ids, package names or <code>https</code> origins it works for.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<List<String>> appIds() {
-    return Json.optional(json, "app_ids", Conv.list(Conv.STRING));
+  public List<String> appIds() {
+    return Json.required(json, "app_ids", Conv.list(Conv.STRING));
   }
 
   /**
@@ -106,11 +105,11 @@ public final class PhoneSdkKey extends JsonModel {
   /**
    * When it was issued.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<OffsetDateTime> createdAt() {
-    return Json.optional(json, "created_at", Conv.DATE_TIME);
+  public OffsetDateTime createdAt() {
+    return Json.required(json, "created_at", Conv.DATE_TIME);
   }
 
   @Override
@@ -127,7 +126,7 @@ public final class PhoneSdkKey extends JsonModel {
     }
 
     /**
-     * The key.
+     * The key: <code>sk_</code> followed by 32 hexadecimal characters
      *
      * @param keyId the value
      * @return this builder
@@ -195,7 +194,10 @@ public final class PhoneSdkKey extends JsonModel {
     public PhoneSdkKey build() {
       require("key_id", false);
       require("platform", false);
+      require("publishable_key", false);
+      require("app_ids", false);
       require("status", false);
+      require("created_at", false);
       return new PhoneSdkKey(buildJson(), buildFiles());
     }
 

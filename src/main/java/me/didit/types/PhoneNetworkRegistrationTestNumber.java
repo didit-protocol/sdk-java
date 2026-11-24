@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.FileUpload;
@@ -70,23 +69,23 @@ public final class PhoneNetworkRegistrationTestNumber extends JsonModel {
   }
 
   /**
-   * The verification carrying the code: check it with <code>POST /v3/phone/check/</code>.
+   * The verification of the code Didit sent: <code>pv_</code> followed by 32 hexadecimal characters. Check the code with <code>POST /v3/phone/check/</code> and this <code>verification_id</code>.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<String> verificationId() {
-    return Json.optional(json, "verification_id", Conv.STRING);
+  public String verificationId() {
+    return Json.required(json, "verification_id", Conv.STRING);
   }
 
   /**
    * <code>on</code> - the registration is under review, so the feature answers for its test numbers, with <code>test: true</code> in the answer.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<PhoneNetworkRegistrationTestNumber.TestAccess> testAccess() {
-    return Json.optional(json, "test_access", Conv.enumeration(PhoneNetworkRegistrationTestNumber.TestAccess::of));
+  public PhoneNetworkRegistrationTestNumber.TestAccess testAccess() {
+    return Json.required(json, "test_access", Conv.enumeration(PhoneNetworkRegistrationTestNumber.TestAccess::of));
   }
 
   @Override
@@ -123,7 +122,7 @@ public final class PhoneNetworkRegistrationTestNumber extends JsonModel {
     }
 
     /**
-     * The verification carrying the code: check it with <code>POST /v3/phone/check/</code>.
+     * The verification of the code Didit sent: <code>pv_</code> followed by 32 hexadecimal characters. Check the code with <code>POST /v3/phone/check/</code> and this <code>verification_id</code>.
      *
      * @param verificationId the value
      * @return this builder
@@ -151,6 +150,8 @@ public final class PhoneNetworkRegistrationTestNumber extends JsonModel {
     public PhoneNetworkRegistrationTestNumber build() {
       require("phone_number", false);
       require("status", false);
+      require("verification_id", false);
+      require("test_access", false);
       return new PhoneNetworkRegistrationTestNumber(buildJson(), buildFiles());
     }
 
@@ -169,10 +170,7 @@ public final class PhoneNetworkRegistrationTestNumber extends JsonModel {
     /** The value {@code "code_sent"}. */
     public static final Status CODE_SENT = new Status("code_sent");
 
-    /** The value {@code "verified"}. */
-    public static final Status VERIFIED = new Status("verified");
-
-    private static final List<Status> KNOWN_VALUES = List.of(CODE_SENT, VERIFIED);
+    private static final List<Status> KNOWN_VALUES = List.of(CODE_SENT);
 
     private Status(String value) {
       super(value);

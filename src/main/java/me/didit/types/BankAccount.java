@@ -52,7 +52,7 @@ public final class BankAccount extends JsonModel {
   }
 
   /**
-   * Account id. Belongs to the connection and never changes while it exists, renewals included.
+   * Account id. Belongs to the connection and never changes while it exists, renewals included; a new connection of the same bank account has a new id (use <code>account_ref</code> to recognise the account).
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -152,7 +152,7 @@ public final class BankAccount extends JsonModel {
   }
 
   /**
-   * Identifies the same bank account across connections of one application and environment: a keyed hash of the bank's own identifiers. <code>null</code> when the bank gives no reliable identifier. Use it to recognise a bank account you already know.
+   * Identifies the same bank account across connections of one application and environment: a keyed hash of the bank's own identifiers. <code>null</code> when the bank gives no reliable identifier. Use it to recognise a bank account you already know. It is the same for one bank account in every connection of the application, while <code>id</code> and the transaction ids are new in each connection.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -225,7 +225,7 @@ public final class BankAccount extends JsonModel {
     }
 
     /**
-     * Account id. Belongs to the connection and never changes while it exists, renewals included.
+     * Account id. Belongs to the connection and never changes while it exists, renewals included; a new connection of the same bank account has a new id (use <code>account_ref</code> to recognise the account).
      *
      * @param id the value
      * @return this builder
@@ -325,7 +325,7 @@ public final class BankAccount extends JsonModel {
     }
 
     /**
-     * Identifies the same bank account across connections of one application and environment: a keyed hash of the bank's own identifiers. <code>null</code> when the bank gives no reliable identifier. Use it to recognise a bank account you already know.
+     * Identifies the same bank account across connections of one application and environment: a keyed hash of the bank's own identifiers. <code>null</code> when the bank gives no reliable identifier. Use it to recognise a bank account you already know. It is the same for one bank account in every connection of the application, while <code>id</code> and the transaction ids are new in each connection.
      *
      * @param accountRef the value, or {@code null} to send JSON null
      * @return this builder

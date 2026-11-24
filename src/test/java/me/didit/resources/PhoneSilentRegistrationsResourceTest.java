@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -25,17 +26,19 @@ final class PhoneSilentRegistrationsResourceTest {
 
   @Test
   void create() {
-    PhoneSilentRegistrationRequest params = PhoneSilentRegistrationRequest.builder().country("value-country").networks(List.of("value-networks")).useCase(PhoneSilentRegistrationRequest.UseCase.SIGNUP).companyName("value-company-name").website("https://example.com/callback").monthlyVolume(1L).flowScreenshots(List.of("https://example.com/callback")).build();
+    PhoneSilentRegistrationRequest params = PhoneSilentRegistrationRequest.builder().country("value-country").networks(List.of("value-networks")).useCase(PhoneSilentRegistrationRequest.UseCase.SIGNUP).companyName("value-company-name").website("value-website").monthlyVolume(1L).flowScreenshots(List.of("value-flow-screenshots")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/phone/silent/registrations/", "201");
     transport.respondJson(201, example);
-    var result = client.phone().silent().registrations().create(params);
+    var result = client.phone().silent().registrations().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/phone/silent/registrations/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"country\":\"value-country\",\"networks\":[\"value-networks\"],\"use_case\":\"signup\",\"company_name\":\"value-company-name\",\"website\":\"https://example.com/callback\",\"monthly_volume\":1,\"flow_screenshots\":[\"https://example.com/callback\"]}", request.body());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    TestJson.assertJsonEquals("{\"country\":\"value-country\",\"networks\":[\"value-networks\"],\"use_case\":\"signup\",\"company_name\":\"value-company-name\",\"website\":\"value-website\",\"monthly_volume\":1,\"flow_screenshots\":[\"value-flow-screenshots\"]}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

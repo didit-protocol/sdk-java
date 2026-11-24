@@ -10,7 +10,7 @@ import me.didit.core.JsonUnion;
 /**
  * Body of a signed webhook delivery, discriminated by <code>webhook_type</code>. <code>activity.created</code> can be subscribed to but is not sent today. Treat any other <code>webhook_type</code> as a new event type and keep the raw body.
  *
- * <p>One of: {@code SessionStatusUpdatedEvent}, {@code SessionDataUpdatedEvent}, {@code UserStatusUpdatedEvent}, {@code UserDataUpdatedEvent}, {@code BusinessStatusUpdatedEvent}, {@code BusinessDataUpdatedEvent}, {@code TransactionCreatedEvent}, {@code TransactionStatusUpdatedEvent}, {@code TravelRuleStatusUpdatedEvent}, {@code WorkflowComplianceChangedEvent}, {@code TransactionRuleSuggestionsCreatedEvent}, {@code BankLinkCompletedEvent}, {@code BankLinkCancelledEvent}, {@code BankLinkExpiredEvent}, {@code BankLinkFailedEvent}, {@code BankConnectionCreatedEvent}, {@code BankConnectionUpdatedEvent}, {@code BankConnectionConsentExpiringEvent}, {@code BankConnectionRenewalRequiredEvent}, {@code BankConnectionRenewedEvent}, {@code BankConnectionRevokedEvent}, {@code BankConnectionDeletedEvent}, {@code BankConnectionHistoryCompleteEvent}, {@code BankDataUpdatedEvent}, {@code BankSyncCompletedEvent}, {@code BankSyncFailedEvent}, {@code BankSyncRecoveredEvent}, {@code MessageStatusUpdatedEvent}. Check with the {@code is...}
+ * <p>One of: {@code SessionStatusUpdatedEvent}, {@code SessionDataUpdatedEvent}, {@code UserStatusUpdatedEvent}, {@code UserDataUpdatedEvent}, {@code BusinessStatusUpdatedEvent}, {@code BusinessDataUpdatedEvent}, {@code TransactionCreatedEvent}, {@code TransactionStatusUpdatedEvent}, {@code TravelRuleStatusUpdatedEvent}, {@code WorkflowComplianceChangedEvent}, {@code TransactionRuleSuggestionsCreatedEvent}, {@code BankLinkCompletedEvent}, {@code BankLinkCancelledEvent}, {@code BankLinkExpiredEvent}, {@code BankLinkFailedEvent}, {@code BankConnectionCreatedEvent}, {@code BankConnectionUpdatedEvent}, {@code BankConnectionConsentExpiringEvent}, {@code BankConnectionRenewalRequiredEvent}, {@code BankConnectionRenewedEvent}, {@code BankConnectionRevokedEvent}, {@code BankConnectionDeletedEvent}, {@code BankConnectionHistoryCompleteEvent}, {@code BankDataUpdatedEvent}, {@code BankSyncCompletedEvent}, {@code BankSyncFailedEvent}, {@code BankSyncRecoveredEvent}, {@code MessageStatusUpdatedEvent}, {@code MessageReceivedEvent}, {@code ContactConsentUpdatedEvent}. Check with the {@code is...}
  * methods and read with the {@code as...} methods; the fields every variant has are readable directly.
  */
 public final class WebhookEventPayload extends JsonUnion {
@@ -916,5 +916,65 @@ public final class WebhookEventPayload extends JsonUnion {
    */
   public Optional<MessageStatusUpdatedEvent> asMessageStatusUpdatedEvent() {
     return isMessageStatusUpdatedEvent() ? Optional.of(Conv.model(MessageStatusUpdatedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code MessageReceivedEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofMessageReceivedEvent(MessageReceivedEvent value) {
+    return new WebhookEventPayload(Conv.model(MessageReceivedEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code MessageReceivedEvent}.
+   *
+   * A person replied to a message sent with <code>POST /v3/messages/</code>, on WhatsApp or Telegram. The reply's text is the event's content: Didit does not keep it in the message, and it is only in the delivery log of your webhook destination, like every webhook payload. The event names the message it answers and never the person's number or the text of what was sent: read them with <code>GET /v3/messages/{message_id}/</code>. A reply to a message you deleted, or whose recipient Didit erased after its retention, is not reported. SMS replies are not reported: the carrier route only tells Didit about STOP and START, which arrive as <code>contact.consent.updated</code>.
+   *
+   * @return true when it matches
+   */
+  public boolean isMessageReceivedEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code MessageReceivedEvent}.
+   *
+   * @return the value, or empty when {@link #isMessageReceivedEvent()} is false
+   */
+  public Optional<MessageReceivedEvent> asMessageReceivedEvent() {
+    return isMessageReceivedEvent() ? Optional.of(Conv.model(MessageReceivedEvent::fromJson).read(json)) : Optional.empty();
+  }
+
+  /**
+   * Wraps a {@code ContactConsentUpdatedEvent} value.
+   *
+   * @param value the value
+   * @return the union
+   */
+  public static WebhookEventPayload ofContactConsentUpdatedEvent(ContactConsentUpdatedEvent value) {
+    return new WebhookEventPayload(Conv.model(ContactConsentUpdatedEvent::fromJson).write(value));
+  }
+
+  /**
+   * Whether this value is a {@code ContactConsentUpdatedEvent}.
+   *
+   * A person's consent to be messaged on a channel changed: they replied STOP or START, blocked the Telegram bot, the address bounced or marked an email as spam, a Telegram chat was linked through an opt-in link or is gone, or a change was recorded with <code>PATCH /v3/messages/contacts/{to}/consent/</code>. It is sent to the application whose SMS list changed; for the lists the organization owns (email, WhatsApp, Telegram) to every application of the organization that sent the person a message on the channel through the API, and for Telegram also to those with a chat linked for the person. <code>connected</code> and <code>disconnected</code> go only to the application whose Telegram chat changed. The event names the number (or email address), which is what identifies the person it is about. Order events by <code>occurred_at</code>.
+   *
+   * @return true when it matches
+   */
+  public boolean isContactConsentUpdatedEvent() {
+    return json.isObject();
+  }
+
+  /**
+   * Reads this value as a {@code ContactConsentUpdatedEvent}.
+   *
+   * @return the value, or empty when {@link #isContactConsentUpdatedEvent()} is false
+   */
+  public Optional<ContactConsentUpdatedEvent> asContactConsentUpdatedEvent() {
+    return isContactConsentUpdatedEvent() ? Optional.of(Conv.model(ContactConsentUpdatedEvent::fromJson).read(json)) : Optional.empty();
   }
 }

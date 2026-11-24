@@ -50,7 +50,7 @@ public final class PhoneFactorCreateRequest extends JsonModel {
   }
 
   /**
-   * The factor to enroll: <code>totp</code>, for an authenticator app.
+   * The factor to enroll: <code>totp</code>, an authenticator app. Any other value answers <code>400 invalid_type</code>.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -80,7 +80,7 @@ public final class PhoneFactorCreateRequest extends JsonModel {
   }
 
   /**
-   * Up to 10 keys and values of your own, returned with the factor.
+   * Your own small object returned with the factor: up to 10 keys, each value at most 500 characters.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -103,7 +103,7 @@ public final class PhoneFactorCreateRequest extends JsonModel {
     }
 
     /**
-     * The factor to enroll: <code>totp</code>, for an authenticator app.
+     * The factor to enroll: <code>totp</code>, an authenticator app. Any other value answers <code>400 invalid_type</code>.
      *
      * @param type the value
      * @return this builder
@@ -133,7 +133,7 @@ public final class PhoneFactorCreateRequest extends JsonModel {
     }
 
     /**
-     * Up to 10 keys and values of your own, returned with the factor.
+     * Your own small object returned with the factor: up to 10 keys, each value at most 500 characters.
      *
      * @param metadata the value
      * @return this builder
@@ -161,7 +161,7 @@ public final class PhoneFactorCreateRequest extends JsonModel {
   }
 
   /**
-   * The factor to enroll: <code>totp</code>, for an authenticator app.
+   * The factor to enroll: <code>totp</code>, an authenticator app. Any other value answers <code>400 invalid_type</code>.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */

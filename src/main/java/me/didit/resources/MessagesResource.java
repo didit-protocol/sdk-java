@@ -22,10 +22,54 @@ import org.jspecify.annotations.Nullable;
 public final class MessagesResource {
   private final ApiClient client;
   private final WithRawResponse withRawResponse;
+  private final MessagesConsentResource consent;
+  private final MessagesConversationsResource conversations;
+  private final MessagesRulesResource rules;
+  private final MessagesTemplatesResource templates;
 
   MessagesResource(ApiClient client) {
     this.client = client;
     this.withRawResponse = new WithRawResponse(client);
+    this.consent = new MessagesConsentResource(client);
+    this.conversations = new MessagesConversationsResource(client);
+    this.rules = new MessagesRulesResource(client);
+    this.templates = new MessagesTemplatesResource(client);
+  }
+
+  /**
+   * The {@code messages.consent} resource.
+   *
+   * @return the resource
+   */
+  public MessagesConsentResource consent() {
+    return consent;
+  }
+
+  /**
+   * The {@code messages.conversations} resource.
+   *
+   * @return the resource
+   */
+  public MessagesConversationsResource conversations() {
+    return conversations;
+  }
+
+  /**
+   * The {@code messages.rules} resource.
+   *
+   * @return the resource
+   */
+  public MessagesRulesResource rules() {
+    return rules;
+  }
+
+  /**
+   * The {@code messages.templates} resource.
+   *
+   * @return the resource
+   */
+  public MessagesTemplatesResource templates() {
+    return templates;
   }
 
   /**
@@ -131,9 +175,9 @@ public final class MessagesResource {
    *
    * <p><b>Fallback.</b> List several <code>channels</code>: each is tried in order, and the next one is used when a channel cannot take the message (switched off, the recipient opted out, no approved WhatsApp template, balance) or when the message fails on it later (rejected, undeliverable, expired). Every attempt is in <code>attempts</code>; a skipped channel is a <code>failed</code> attempt with its <code>error</code> and no price.
    *
-   * <p><b>Statuses</b> reach your webhook destinations subscribed to <code>message.status.updated</code>.
+   * <p><b>Statuses</b> reach your webhook destinations subscribed to <code>message.status.updated</code>; a reply from the person reaches <code>message.received</code> (WhatsApp and Telegram) and a change of their consent <code>contact.consent.updated</code>.
    *
-   * <p><b>Billing.</b> SMS: the carrier's price plus Didit's fee, per segment. WhatsApp from Didit's number: WhatsApp's rate for the market plus Didit's fee; from your own connected WhatsApp Business account, WhatsApp bills its rate to your account directly and Didit charges only its fee. Email: a flat price. Your plan's discount applies to the fee, never to the carrier's or WhatsApp's part. A failed SMS or WhatsApp attempt, a skipped one and a cancelled one are free; an email is charged once the receiving mail system accepts it, so an email that bounces later is charged. SMS and WhatsApp open after your first top-up (<code>403 plan_locked</code>); a sandbox application simulates every message and charges nothing. See the [prices per country](/getting-started/pricing).
+   * <p><b>Billing.</b> SMS: the carrier's price plus Didit's fee, per segment. WhatsApp from Didit's number: WhatsApp's rate for the market plus Didit's fee; from your own connected WhatsApp Business account, WhatsApp bills its rate to your account directly and Didit charges only its fee. Email: a flat price. Your plan's discount applies to the fee, never to the carrier's or WhatsApp's part. A failed SMS or WhatsApp attempt, a skipped one and a cancelled one are free; an email is charged once the receiving mail system accepts it, so an email that bounces later is charged. SMS and WhatsApp open with a paid plan or after your first top-up (<code>403 plan_locked</code>); a sandbox application simulates every message and charges nothing. See the [prices per country](/getting-started/pricing).
    *
    * <p><b>Retention.</b> Didit erases a message's text and recipient <code>retention_days</code> after its last event (created, sent, delivered, read, failed or cancelled; 30 days unless you set another value with <code>PATCH /v3/messages/settings/</code>); the message itself, its status, channel, country, segments, price and timestamps stay, so lists and invoices still add up. A message still waiting to go out (<code>scheduled</code>, <code>queued</code>, <code>sending</code>) keeps them until it goes out; one cancelled before it went out counts from its cancellation. A request no channel can take is refused and nothing of it is stored. To erase a message sooner, delete it with <code>DELETE /v3/messages/{message_id}/</code> once it went out or ended: cancel a <code>scheduled</code> message first; a <code>queued</code> or <code>sending</code> one settles within seconds.
    *

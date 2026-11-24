@@ -93,7 +93,7 @@ public final class BankDataCursorError extends JsonModel {
   }
 
   /**
-   * What to do next, so a client can act without guessing. <code>null</code> when there is no standard next step.
+   * What to do next, so a client can act without guessing. <code>null</code> when there is no standard next step. <code>enable_bank_data_access</code> means the key has no access to Bank data: use a key that has it (a full-access key, or a scoped key that names <code>bank-data</code>).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -176,7 +176,7 @@ public final class BankDataCursorError extends JsonModel {
     }
 
     /**
-     * What to do next, so a client can act without guessing. <code>null</code> when there is no standard next step.
+     * What to do next, so a client can act without guessing. <code>null</code> when there is no standard next step. <code>enable_bank_data_access</code> means the key has no access to Bank data: use a key that has it (a full-access key, or a scoped key that names <code>bank-data</code>).
      *
      * @param nextAction the value, or {@code null} to send JSON null
      * @return this builder

@@ -93,11 +93,11 @@ public final class PhoneSilentEligibility extends JsonModel {
   /**
    * <code>true</code> when the SIM check can run over Wi-Fi instead, so the device can complete it without mobile data.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<Boolean> wifiPossible() {
-    return Json.optional(json, "wifi_possible", Conv.BOOLEAN);
+  public boolean wifiPossible() {
+    return Json.required(json, "wifi_possible", Conv.BOOLEAN);
   }
 
   @Override
@@ -146,11 +146,11 @@ public final class PhoneSilentEligibility extends JsonModel {
     /**
      * ISO 3166-1 alpha-2 country code of the number.
      *
-     * @param country the value
+     * @param country the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder country(String country) {
-      return set("country", Conv.STRING, country);
+    public Builder country(@Nullable String country) {
+      return setNullable("country", Conv.STRING, country);
     }
 
     /**
@@ -171,6 +171,10 @@ public final class PhoneSilentEligibility extends JsonModel {
      */
     public PhoneSilentEligibility build() {
       require("eligible", false);
+      require("reason", true);
+      require("network", true);
+      require("country", true);
+      require("wifi_possible", false);
       return new PhoneSilentEligibility(buildJson(), buildFiles());
     }
 

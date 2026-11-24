@@ -152,6 +152,7 @@ public final class PhoneNetworkRegistrationsResource {
    * <p><b>Rate limit.</b> Requests count against the key's budget; over it the answer is <code>429</code> with <code>Retry-After</code>.
    *
    * <p>{@code POST /v3/phone/network/registrations/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -203,7 +204,7 @@ public final class PhoneNetworkRegistrationsResource {
    *
    * <p>{@code GET /v3/phone/network/registrations/{registration_id}/}
    *
-   * @param registrationId The network feature registration.
+   * @param registrationId The registration id, `nr_` followed by 32 hexadecimal characters, as it was created.
    * @param options per-request options that override the client options
    * @return the response body
    */

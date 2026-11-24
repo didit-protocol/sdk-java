@@ -12,23 +12,22 @@ import me.didit.core.Json;
 import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 
-/** The answer to a factor check (a request that names <code>factor_id</code>). */
-public final class PhoneFactorCheckResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("verification_id", "status", "attempts");
+public final class PhoneNetworkRegistrationTestNumberSummary extends JsonModel {
+  private static final Set<String> KNOWN_FIELDS = Set.of("phone_number", "status");
 
-  private PhoneFactorCheckResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
+  private PhoneNetworkRegistrationTestNumberSummary(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
   }
 
   /**
-   * Reads a {@code PhoneFactorCheckResponse} from JSON. Unknown fields are kept and readable
+   * Reads a {@code PhoneNetworkRegistrationTestNumberSummary} from JSON. Unknown fields are kept and readable
    * through {@link #_additionalProperties()}.
    *
    * @param json a JSON object
    * @return the parsed value
    */
-  public static PhoneFactorCheckResponse fromJson(JsonNode json) {
-    return new PhoneFactorCheckResponse(Json.copyObject(json), Map.of());
+  public static PhoneNetworkRegistrationTestNumberSummary fromJson(JsonNode json) {
+    return new PhoneNetworkRegistrationTestNumberSummary(Json.copyObject(json), Map.of());
   }
 
   /**
@@ -50,33 +49,23 @@ public final class PhoneFactorCheckResponse extends JsonModel {
   }
 
   /**
-   * The factor id.
+   * The test number in E.164 format
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public String verificationId() {
-    return Json.required(json, "verification_id", Conv.STRING);
+  public String phoneNumber() {
+    return Json.required(json, "phone_number", Conv.STRING);
   }
 
   /**
-   * <code>verified</code> when the code matched; the factor is then <code>verified</code> too.
+   * <code>code_sent</code> until the code Didit sent is checked, then <code>verified</code>
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public PhoneFactorCheckResponse.Status status() {
-    return Json.required(json, "status", Conv.enumeration(PhoneFactorCheckResponse.Status::of));
-  }
-
-  /**
-   * The <code>attempts</code> field.
-   *
-   * @return the value
-   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
-   */
-  public long attempts() {
-    return Json.required(json, "attempts", Conv.LONG);
+  public PhoneNetworkRegistrationTestNumberSummary.Status status() {
+    return Json.required(json, "status", Conv.enumeration(PhoneNetworkRegistrationTestNumberSummary.Status::of));
   }
 
   @Override
@@ -84,55 +73,44 @@ public final class PhoneFactorCheckResponse extends JsonModel {
     return KNOWN_FIELDS;
   }
 
-  /** Builds a {@link PhoneFactorCheckResponse}. */
+  /** Builds a {@link PhoneNetworkRegistrationTestNumberSummary}. */
   public static final class Builder extends JsonModel.BaseBuilder<Builder> {
     private Builder() {}
 
-    private Builder(PhoneFactorCheckResponse from) {
+    private Builder(PhoneNetworkRegistrationTestNumberSummary from) {
       super(from);
     }
 
     /**
-     * The factor id.
+     * The test number in E.164 format
      *
-     * @param verificationId the value
+     * @param phoneNumber the value
      * @return this builder
      */
-    public Builder verificationId(String verificationId) {
-      return set("verification_id", Conv.STRING, verificationId);
+    public Builder phoneNumber(String phoneNumber) {
+      return set("phone_number", Conv.STRING, phoneNumber);
     }
 
     /**
-     * <code>verified</code> when the code matched; the factor is then <code>verified</code> too.
+     * <code>code_sent</code> until the code Didit sent is checked, then <code>verified</code>
      *
      * @param status the value
      * @return this builder
      */
-    public Builder status(PhoneFactorCheckResponse.Status status) {
-      return set("status", Conv.enumeration(PhoneFactorCheckResponse.Status::of), status);
-    }
-
-    /**
-     * The <code>attempts</code> field.
-     *
-     * @param attempts the value
-     * @return this builder
-     */
-    public Builder attempts(long attempts) {
-      return set("attempts", Conv.LONG, attempts);
+    public Builder status(PhoneNetworkRegistrationTestNumberSummary.Status status) {
+      return set("status", Conv.enumeration(PhoneNetworkRegistrationTestNumberSummary.Status::of), status);
     }
 
     /**
      * Builds the value.
      *
-     * @return a new immutable {@code PhoneFactorCheckResponse}
+     * @return a new immutable {@code PhoneNetworkRegistrationTestNumberSummary}
      * @throws IllegalStateException when a required field is missing
      */
-    public PhoneFactorCheckResponse build() {
-      require("verification_id", false);
+    public PhoneNetworkRegistrationTestNumberSummary build() {
+      require("phone_number", false);
       require("status", false);
-      require("attempts", false);
-      return new PhoneFactorCheckResponse(buildJson(), buildFiles());
+      return new PhoneNetworkRegistrationTestNumberSummary(buildJson(), buildFiles());
     }
 
     @Override
@@ -142,18 +120,18 @@ public final class PhoneFactorCheckResponse extends JsonModel {
   }
 
   /**
-   * <code>verified</code> when the code matched; the factor is then <code>verified</code> too.
+   * <code>code_sent</code> until the code Didit sent is checked, then <code>verified</code>
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
   public static final class Status extends StringEnum {
+    /** The value {@code "code_sent"}. */
+    public static final Status CODE_SENT = new Status("code_sent");
+
     /** The value {@code "verified"}. */
     public static final Status VERIFIED = new Status("verified");
 
-    /** The value {@code "failed"}. */
-    public static final Status FAILED = new Status("failed");
-
-    private static final List<Status> KNOWN_VALUES = List.of(VERIFIED, FAILED);
+    private static final List<Status> KNOWN_VALUES = List.of(CODE_SENT, VERIFIED);
 
     private Status(String value) {
       super(value);

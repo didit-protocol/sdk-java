@@ -12,6 +12,7 @@ import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
+import org.jspecify.annotations.Nullable;
 
 public final class PhoneNetworkRegistrationRequest extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("feature", "country", "use_case", "networks", "company_name", "website", "purpose", "monthly_volume");
@@ -215,11 +216,11 @@ public final class PhoneNetworkRegistrationRequest extends JsonModel {
     /**
      * Expected requests a month.
      *
-     * @param monthlyVolume the value
+     * @param monthlyVolume the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder monthlyVolume(long monthlyVolume) {
-      return set("monthly_volume", Conv.LONG, monthlyVolume);
+    public Builder monthlyVolume(@Nullable Long monthlyVolume) {
+      return setNullable("monthly_volume", Conv.LONG, monthlyVolume);
     }
 
     /**

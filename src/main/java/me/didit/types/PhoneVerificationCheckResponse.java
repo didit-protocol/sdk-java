@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class PhoneVerificationCheckResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("request_id", "status", "message", "phone", "vendor_data", "metadata", "created_at");
+  private static final Set<String> KNOWN_FIELDS = Set.of("request_id", "status", "message", "phone", "vendor_data", "metadata", "created_at", "verification_id", "attempts");
 
   private PhoneVerificationCheckResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -62,13 +62,13 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
   }
 
   /**
-   * <code>Approved</code> — correct code, no declining risk. <code>Declined</code> — terminal: a declining risk matched or the attempt budget (3) was exhausted. <code>Failed</code> — wrong code, attempts remaining. <code>Expired or Not Found</code> — no pending verification for this number in the last 5 minutes.
+   * <code>Approved</code> — correct code, no declining risk. <code>Declined</code> — terminal: a declining risk matched or the attempt budget (3) was exhausted. <code>Failed</code> — wrong code, attempts remaining. <code>Expired or Not Found</code> — no pending verification for this number in the last 5 minutes. For a TOTP factor check (a request that names <code>factor_id</code>) the status is <code>verified</code> (the code matched) or <code>failed</code>.
    *
-   * @return the value
-   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public PhoneVerificationCheckResponse.Status status() {
-    return Json.required(json, "status", Conv.enumeration(PhoneVerificationCheckResponse.Status::of));
+  public Optional<PhoneVerificationCheckResponse.Status> status() {
+    return Json.optional(json, "status", Conv.enumeration(PhoneVerificationCheckResponse.Status::of));
   }
 
   /**
@@ -121,6 +121,26 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
     return Json.optional(json, "created_at", Conv.DATE_TIME);
   }
 
+  /**
+   * A TOTP factor check only: the id of the factor that was checked, <code>fa_</code> followed by 32 hexadecimal characters. Not present in the answer to a phone code check.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> verificationId() {
+    return Json.optional(json, "verification_id", Conv.STRING);
+  }
+
+  /**
+   * A TOTP factor check only: the failed codes in the current window including this one. Not present in the answer to a phone code check.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> attempts() {
+    return Json.optional(json, "attempts", Conv.LONG);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -145,7 +165,7 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
     }
 
     /**
-     * <code>Approved</code> — correct code, no declining risk. <code>Declined</code> — terminal: a declining risk matched or the attempt budget (3) was exhausted. <code>Failed</code> — wrong code, attempts remaining. <code>Expired or Not Found</code> — no pending verification for this number in the last 5 minutes.
+     * <code>Approved</code> — correct code, no declining risk. <code>Declined</code> — terminal: a declining risk matched or the attempt budget (3) was exhausted. <code>Failed</code> — wrong code, attempts remaining. <code>Expired or Not Found</code> — no pending verification for this number in the last 5 minutes. For a TOTP factor check (a request that names <code>factor_id</code>) the status is <code>verified</code> (the code matched) or <code>failed</code>.
      *
      * @param status the value
      * @return this builder
@@ -205,13 +225,31 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
     }
 
     /**
+     * A TOTP factor check only: the id of the factor that was checked, <code>fa_</code> followed by 32 hexadecimal characters. Not present in the answer to a phone code check.
+     *
+     * @param verificationId the value
+     * @return this builder
+     */
+    public Builder verificationId(String verificationId) {
+      return set("verification_id", Conv.STRING, verificationId);
+    }
+
+    /**
+     * A TOTP factor check only: the failed codes in the current window including this one. Not present in the answer to a phone code check.
+     *
+     * @param attempts the value
+     * @return this builder
+     */
+    public Builder attempts(long attempts) {
+      return set("attempts", Conv.LONG, attempts);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code PhoneVerificationCheckResponse}
-     * @throws IllegalStateException when a required field is missing
      */
     public PhoneVerificationCheckResponse build() {
-      require("status", false);
       return new PhoneVerificationCheckResponse(buildJson(), buildFiles());
     }
 
@@ -222,7 +260,7 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
   }
 
   /**
-   * <code>Approved</code> — correct code, no declining risk. <code>Declined</code> — terminal: a declining risk matched or the attempt budget (3) was exhausted. <code>Failed</code> — wrong code, attempts remaining. <code>Expired or Not Found</code> — no pending verification for this number in the last 5 minutes.
+   * <code>Approved</code> — correct code, no declining risk. <code>Declined</code> — terminal: a declining risk matched or the attempt budget (3) was exhausted. <code>Failed</code> — wrong code, attempts remaining. <code>Expired or Not Found</code> — no pending verification for this number in the last 5 minutes. For a TOTP factor check (a request that names <code>factor_id</code>) the status is <code>verified</code> (the code matched) or <code>failed</code>.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -239,7 +277,13 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
     /** The value {@code "Expired or Not Found"}. */
     public static final Status EXPIRED_OR_NOT_FOUND = new Status("Expired or Not Found");
 
-    private static final List<Status> KNOWN_VALUES = List.of(APPROVED, DECLINED, FAILED, EXPIRED_OR_NOT_FOUND);
+    /** The value {@code "verified"}. */
+    public static final Status VERIFIED = new Status("verified");
+
+    /** The value {@code "failed"}. */
+    public static final Status FAILED_2 = new Status("failed");
+
+    private static final List<Status> KNOWN_VALUES = List.of(APPROVED, DECLINED, FAILED, EXPIRED_OR_NOT_FOUND, VERIFIED, FAILED_2);
 
     private Status(String value) {
       super(value);

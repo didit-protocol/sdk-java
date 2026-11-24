@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -46,15 +47,17 @@ final class PhoneFactorsResourceTest {
   @Test
   void create() {
     PhoneFactorCreateRequest params = PhoneFactorCreateRequest.builder().type(PhoneFactorCreateRequest.Type.TOTP).userId("value-user-id").friendlyName("value-friendly-name").metadata(Map.of("key", "value-metadata")).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/phone/factors/", "201");
     transport.respondJson(201, example);
-    var result = client.phone().factors().create(params);
+    var result = client.phone().factors().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/phone/factors/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"type\":\"totp\",\"user_id\":\"value-user-id\",\"friendly_name\":\"value-friendly-name\",\"metadata\":{\"key\":\"value-metadata\"}}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -79,15 +82,17 @@ final class PhoneFactorsResourceTest {
   @Test
   void update() {
     PhoneFactorUpdateRequest params = PhoneFactorUpdateRequest.builder().friendlyName("value-friendly-name").metadata(Map.of("key", "value-metadata")).status(PhoneFactorUpdateRequest.Status.DISABLED).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "PATCH", "/v3/phone/factors/{factor_id}/", "200");
     transport.respondJson(200, example);
-    var result = client.phone().factors().update("00000000-0000-4000-8000-00000000af29", params);
+    var result = client.phone().factors().update("00000000-0000-4000-8000-00000000af29", params, options);
     RecordedRequest request = transport.only();
     assertEquals("PATCH", request.method());
     assertEquals("/v3/phone/factors/00000000-0000-4000-8000-00000000af29/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     TestJson.assertJsonEquals("{\"friendly_name\":\"value-friendly-name\",\"metadata\":{\"key\":\"value-metadata\"},\"status\":\"disabled\"}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
@@ -95,14 +100,16 @@ final class PhoneFactorsResourceTest {
 
   @Test
   void delete() {
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     transport.respond(204, "");
-    client.phone().factors().delete("00000000-0000-4000-8000-00000000ae4a");
+    client.phone().factors().delete("00000000-0000-4000-8000-00000000ae4a", options);
     RecordedRequest request = transport.only();
     assertEquals("DELETE", request.method());
     assertEquals("/v3/phone/factors/00000000-0000-4000-8000-00000000ae4a/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
     assertEquals(0, request.body().length);
   }
 }

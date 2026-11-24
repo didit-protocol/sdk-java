@@ -142,6 +142,7 @@ public final class PhoneSdkKeysResource {
    * <p><b>Rate limit.</b> Requests count against the key's budget; over it the answer is <code>429</code> with <code>Retry-After</code>.
    *
    * <p>{@code POST /v3/phone/sdk-keys/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
    * @param params the request parameters
    * @param options per-request options that override the client options
@@ -183,11 +184,62 @@ public final class PhoneSdkKeysResource {
   }
 
   /**
+   * Revoke a publishable key
+   *
+   * <p>Revoke a publishable key at once: it stops starting the client SDK's checks immediately, its status becomes <code>revoked</code>, and it can neither be restored nor rotated. Apps that still ship it fail until they are updated, so issue the replacement first (<code>POST /v3/phone/sdk-keys/</code>).
+   *
+   * <p><b>Permissions.</b> Only an Owner or Admin API key may revoke a publishable key.
+   *
+   * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>.
+   *
+   * <p><b>Rate limit.</b> Requests count against the key's budget; over it the answer is <code>429</code> with <code>Retry-After</code>.
+   *
+   * <p>{@code DELETE /v3/phone/sdk-keys/{key_id}/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   *
+   * @param keyId The key id, `sk_` followed by 32 hexadecimal characters.
+   * @param options per-request options that override the client options
+   */
+  public void revoke(String keyId, RequestOptions options) {
+    client.execute(revokeRequest(keyId), options, REVOKE_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #revoke(String, RequestOptions)}.
+   *
+   * @param keyId the {@code key_id}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> revokeAsync(String keyId, RequestOptions options) {
+    return client.executeAsync(revokeRequest(keyId), options, REVOKE_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
+   * Same as {@link #revoke(String, RequestOptions)}, with the client's options.
+   *
+   * @param keyId the {@code key_id}
+   */
+  public void revoke(String keyId) {
+    client.execute(revokeRequest(keyId), RequestOptions.none(), REVOKE_RESPONSE);
+  }
+
+  /**
+   * Asynchronous {@link #revoke(String, RequestOptions)}, with the client's options.
+   *
+   * @param keyId the {@code key_id}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<Void> revokeAsync(String keyId) {
+    return client.executeAsync(revokeRequest(keyId), RequestOptions.none(), REVOKE_RESPONSE).thenAccept(response -> {});
+  }
+
+  /**
    * Rotate a publishable key with an overlap
    *
    * <p>Rotate a publishable key without breaking the app versions already installed: Didit issues a new value and keeps the old one working for <code>overlap_hours</code> (0 to 168), long enough for your update to ship. The answer is the key with its new <code>publishable_key</code>, and <code>previous_expires_at</code> is when the value it replaced stops working.
    *
-   * <p>Ship the new value, then let the overlap end. A revoked key cannot be rotated: the call answers <code>409 revoked</code>.
+   * <p>Ship the new value, then let the overlap end. A revoked key cannot be rotated (<code>409 revoked</code>) and neither can a key that was rotated already (<code>409 already_rotated</code>).
    *
    * <p><b>Permissions.</b> Only an Owner or Admin API key may rotate a publishable key.
    *
@@ -196,8 +248,9 @@ public final class PhoneSdkKeysResource {
    * <p><b>Rate limit.</b> Requests count against the key's budget; over it the answer is <code>429</code> with <code>Retry-After</code>.
    *
    * <p>{@code POST /v3/phone/sdk-keys/{key_id}/rotate/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
-   * @param keyId The publishable key to rotate.
+   * @param keyId The key id, `sk_` followed by 32 hexadecimal characters.
    * @param params the request parameters
    * @param options per-request options that override the client options
    * @return the response body
@@ -240,56 +293,6 @@ public final class PhoneSdkKeysResource {
     return client.executeAsync(rotateRequest(keyId, params), RequestOptions.none(), ROTATE_RESPONSE).thenApply(RawResponse::data);
   }
 
-  /**
-   * Revoke a publishable key
-   *
-   * <p>Revoke a publishable key at once: it stops starting the client SDK's checks immediately, its status becomes <code>revoked</code>, and it can neither be restored nor rotated. Apps that still ship it fail until they are updated, so issue the replacement first (<code>POST /v3/phone/sdk-keys/</code>).
-   *
-   * <p><b>Permissions.</b> Only an Owner or Admin API key may revoke a publishable key.
-   *
-   * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>.
-   *
-   * <p><b>Rate limit.</b> Requests count against the key's budget; over it the answer is <code>429</code> with <code>Retry-After</code>.
-   *
-   * <p>{@code DELETE /v3/phone/sdk-keys/{key_id}/}
-   *
-   * @param keyId The publishable key to revoke.
-   * @param options per-request options that override the client options
-   */
-  public void revoke(String keyId, RequestOptions options) {
-    client.execute(revokeRequest(keyId), options, REVOKE_RESPONSE);
-  }
-
-  /**
-   * Asynchronous {@link #revoke(String, RequestOptions)}.
-   *
-   * @param keyId the {@code key_id}
-   * @param options per-request options
-   * @return a future completed with the result
-   */
-  public CompletableFuture<Void> revokeAsync(String keyId, RequestOptions options) {
-    return client.executeAsync(revokeRequest(keyId), options, REVOKE_RESPONSE).thenAccept(response -> {});
-  }
-
-  /**
-   * Same as {@link #revoke(String, RequestOptions)}, with the client's options.
-   *
-   * @param keyId the {@code key_id}
-   */
-  public void revoke(String keyId) {
-    client.execute(revokeRequest(keyId), RequestOptions.none(), REVOKE_RESPONSE);
-  }
-
-  /**
-   * Asynchronous {@link #revoke(String, RequestOptions)}, with the client's options.
-   *
-   * @param keyId the {@code key_id}
-   * @return a future completed with the result
-   */
-  public CompletableFuture<Void> revokeAsync(String keyId) {
-    return client.executeAsync(revokeRequest(keyId), RequestOptions.none(), REVOKE_RESPONSE).thenAccept(response -> {});
-  }
-
   private static final ResponseHandler<PhoneSdkKeysPage> LIST_RESPONSE = Responses.json(Conv.model(PhoneSdkKeysPage::fromJson));
 
   private static ApiRequest listRequest(PhoneSdkKeysListParams params) {
@@ -308,6 +311,14 @@ public final class PhoneSdkKeysResource {
         .build();
   }
 
+  private static final ResponseHandler<@Nullable Void> REVOKE_RESPONSE = Responses.none();
+
+  private static ApiRequest revokeRequest(String keyId) {
+    return ApiRequest.builder("DELETE", "/v3/phone/sdk-keys/{key_id}/")
+        .pathParam("key_id", keyId)
+        .build();
+  }
+
   private static final ResponseHandler<PhoneSdkKeyRotated> ROTATE_RESPONSE = Responses.json(Conv.model(PhoneSdkKeyRotated::fromJson));
 
   private static ApiRequest rotateRequest(String keyId, PhoneSdkKeyRotateRequest params) {
@@ -315,14 +326,6 @@ public final class PhoneSdkKeysResource {
         .pathParam("key_id", keyId)
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
-        .build();
-  }
-
-  private static final ResponseHandler<@Nullable Void> REVOKE_RESPONSE = Responses.none();
-
-  private static ApiRequest revokeRequest(String keyId) {
-    return ApiRequest.builder("DELETE", "/v3/phone/sdk-keys/{key_id}/")
-        .pathParam("key_id", keyId)
         .build();
   }
 
@@ -457,6 +460,48 @@ public final class PhoneSdkKeysResource {
     }
 
     /**
+     * {@link #revoke(String, RequestOptions)} with the raw response.
+     *
+     * @param keyId the {@code key_id}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> revoke(String keyId, RequestOptions options) {
+      return client.execute(revokeRequest(keyId), options, REVOKE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #revoke(String, RequestOptions)} with the raw response.
+     *
+     * @param keyId the {@code key_id}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> revokeAsync(String keyId, RequestOptions options) {
+      return client.executeAsync(revokeRequest(keyId), options, REVOKE_RESPONSE);
+    }
+
+    /**
+     * {@link #revoke(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param keyId the {@code key_id}
+     * @return the result
+     */
+    public RawResponse<@Nullable Void> revoke(String keyId) {
+      return client.execute(revokeRequest(keyId), RequestOptions.none(), REVOKE_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #revoke(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param keyId the {@code key_id}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<@Nullable Void>> revokeAsync(String keyId) {
+      return client.executeAsync(revokeRequest(keyId), RequestOptions.none(), REVOKE_RESPONSE);
+    }
+
+    /**
      * {@link #rotate(String, PhoneSdkKeyRotateRequest, RequestOptions)} with the raw response.
      *
      * @param keyId the {@code key_id}
@@ -500,48 +545,6 @@ public final class PhoneSdkKeysResource {
      */
     public CompletableFuture<RawResponse<PhoneSdkKeyRotated>> rotateAsync(String keyId, PhoneSdkKeyRotateRequest params) {
       return client.executeAsync(rotateRequest(keyId, params), RequestOptions.none(), ROTATE_RESPONSE);
-    }
-
-    /**
-     * {@link #revoke(String, RequestOptions)} with the raw response.
-     *
-     * @param keyId the {@code key_id}
-     * @param options per-request options
-     * @return the result
-     */
-    public RawResponse<@Nullable Void> revoke(String keyId, RequestOptions options) {
-      return client.execute(revokeRequest(keyId), options, REVOKE_RESPONSE);
-    }
-
-    /**
-     * Asynchronous {@link #revoke(String, RequestOptions)} with the raw response.
-     *
-     * @param keyId the {@code key_id}
-     * @param options per-request options
-     * @return a future completed with the result
-     */
-    public CompletableFuture<RawResponse<@Nullable Void>> revokeAsync(String keyId, RequestOptions options) {
-      return client.executeAsync(revokeRequest(keyId), options, REVOKE_RESPONSE);
-    }
-
-    /**
-     * {@link #revoke(String, RequestOptions)} with the raw response, with the client's options.
-     *
-     * @param keyId the {@code key_id}
-     * @return the result
-     */
-    public RawResponse<@Nullable Void> revoke(String keyId) {
-      return client.execute(revokeRequest(keyId), RequestOptions.none(), REVOKE_RESPONSE);
-    }
-
-    /**
-     * Asynchronous {@link #revoke(String, RequestOptions)} with the raw response, with the client's options.
-     *
-     * @param keyId the {@code key_id}
-     * @return a future completed with the result
-     */
-    public CompletableFuture<RawResponse<@Nullable Void>> revokeAsync(String keyId) {
-      return client.executeAsync(revokeRequest(keyId), RequestOptions.none(), REVOKE_RESPONSE);
     }
   }
 }

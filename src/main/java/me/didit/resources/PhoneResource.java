@@ -4,16 +4,19 @@ package me.didit.resources;
 import java.util.concurrent.CompletableFuture;
 import me.didit.core.ApiClient;
 import me.didit.core.ApiRequest;
+import me.didit.core.BinaryResponse;
 import me.didit.core.Conv;
 import me.didit.core.RawResponse;
 import me.didit.core.RequestOptions;
 import me.didit.core.ResponseHandler;
 import me.didit.core.Responses;
+import me.didit.types.PhoneAssessRiskBulkParams;
 import me.didit.types.PhoneCheckCodeParams;
-import me.didit.types.PhoneCheckCodeResponse;
+import me.didit.types.PhoneRiskBulkJob;
 import me.didit.types.PhoneRiskRequest;
 import me.didit.types.PhoneRiskResponse;
 import me.didit.types.PhoneSendCodeParams;
+import me.didit.types.PhoneVerificationCheckResponse;
 import me.didit.types.PhoneVerificationSendResponse;
 
 /** The {@code phone} resource: {@code client.phone()}. */
@@ -21,7 +24,11 @@ public final class PhoneResource {
   private final ApiClient client;
   private final WithRawResponse withRawResponse;
   private final PhoneFactorsResource factors;
+  private final PhoneFraudResource fraud;
+  private final PhoneLineTypeOverridesResource lineTypeOverrides;
+  private final PhoneListsResource lists;
   private final PhoneNetworkResource network;
+  private final PhoneRateLimitsResource rateLimits;
   private final PhoneSdkKeysResource sdkKeys;
   private final PhoneSilentResource silent;
 
@@ -29,7 +36,11 @@ public final class PhoneResource {
     this.client = client;
     this.withRawResponse = new WithRawResponse(client);
     this.factors = new PhoneFactorsResource(client);
+    this.fraud = new PhoneFraudResource(client);
+    this.lineTypeOverrides = new PhoneLineTypeOverridesResource(client);
+    this.lists = new PhoneListsResource(client);
     this.network = new PhoneNetworkResource(client);
+    this.rateLimits = new PhoneRateLimitsResource(client);
     this.sdkKeys = new PhoneSdkKeysResource(client);
     this.silent = new PhoneSilentResource(client);
   }
@@ -44,12 +55,48 @@ public final class PhoneResource {
   }
 
   /**
+   * The {@code phone.fraud} resource.
+   *
+   * @return the resource
+   */
+  public PhoneFraudResource fraud() {
+    return fraud;
+  }
+
+  /**
+   * The {@code phone.line_type_overrides} resource.
+   *
+   * @return the resource
+   */
+  public PhoneLineTypeOverridesResource lineTypeOverrides() {
+    return lineTypeOverrides;
+  }
+
+  /**
+   * The {@code phone.lists} resource.
+   *
+   * @return the resource
+   */
+  public PhoneListsResource lists() {
+    return lists;
+  }
+
+  /**
    * The {@code phone.network} resource.
    *
    * @return the resource
    */
   public PhoneNetworkResource network() {
     return network;
+  }
+
+  /**
+   * The {@code phone.rate_limits} resource.
+   *
+   * @return the resource
+   */
+  public PhoneRateLimitsResource rateLimits() {
+    return rateLimits;
   }
 
   /**
@@ -153,7 +200,7 @@ public final class PhoneResource {
    *
    * <p><b>Send statuses.</b> <code>Success</code> — OTP sent for a new verification; <code>Retry</code> — OTP re-sent for the pending verification; <code>Blocked</code> — the anti-fraud layer refused to send (see <code>reason</code>, e.g. <code>repeated_attempts</code>, <code>suspicious</code>, <code>spam</code>). A <code>Blocked</code> send immediately finalizes the verification as <code>Declined</code> with a high-risk warning, so a follow-up check returns <code>Expired or Not Found</code>.
    *
-   * <p><b>Billing.</b> The price depends on the destination country and the channel that actually delivers the message — see [Phone Verification Pricing](/getting-started/phone-verification-pricing). Only <code>Blocked</code> sends are guaranteed free: any other unbilled send attempt is charged at verification finalization or expiration, even if delivery was never confirmed or the delivery provider reported the message undeliverable. Checks are always free. As an anti-abuse measure, phone verification is disabled until your organization's first top-up (<code>403</code>).
+   * <p><b>Billing.</b> The price depends on the destination country and the channel that actually delivers the message — see [Phone Verification Pricing](/getting-started/phone-verification-pricing). Only <code>Blocked</code> sends are guaranteed free: any other unbilled send attempt is charged at verification finalization or expiration, even if delivery was never confirmed or the delivery provider reported the message undeliverable. Checks are always free. As an anti-abuse measure, phone verification is disabled until your organization has a paid plan or makes its first top-up (<code>403</code>).
    *
    * <p><b>Session persistence.</b> Every new verification is persisted as an API-type session: <code>request_id</code> is a real session id you can pass to <code>GET /v3/session/{sessionId}/decision/</code>, the verification appears in the Business Console, and <code>status.updated</code> webhooks fire as it progresses.
    *
@@ -230,6 +277,8 @@ public final class PhoneResource {
    *
    * <p><b>Social footprint.</b> Set <code>enable_social</code> to <code>true</code> to add a <code>phone_social</code> block: the online platforms this number is registered on, with per-category counts and any profile details available. <code>profiles_registered: 0</code> means the platforms were checked and the number was found on none of them - a valid, billable answer. The block is absent when the add-on was not requested or the check could not be completed, and it is not billed in that case. Billing adds one <code>phone_social</code> unit per request on top of this endpoint's own price.
    *
+   * <p><b>TOTP factors and test numbers.</b> A request that names a <code>factor_id</code> checks that TOTP factor instead of a phone code: the service does not read <code>phone_number</code> then, but it stays a required field of the request, so typed SDK calls keep their shape. The answer is the same object with only <code>verification_id</code> (the factor), <code>status</code> (<code>verified</code> or <code>failed</code>) and <code>attempts</code>; the phone fields (<code>request_id</code>, <code>message</code>, <code>phone</code>, <code>vendor_data</code>, <code>metadata</code>, <code>created_at</code>) come back only from a phone code check. A factor that passes its first check becomes <code>verified</code>. A code is accepted once: a code already used for the factor fails. After 3 failed codes in the verification window the answer is <code>429</code> with <code>code: too_many_attempts</code>. A request that names the <code>verification_id</code> of a registration test number checks the code Didit sent to it and answers like a phone code check.
+   *
    * <p>{@code POST /v3/phone/check/}
    * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
@@ -237,7 +286,7 @@ public final class PhoneResource {
    * @param options per-request options that override the client options
    * @return the response body
    */
-  public PhoneCheckCodeResponse checkCode(PhoneCheckCodeParams params, RequestOptions options) {
+  public PhoneVerificationCheckResponse checkCode(PhoneCheckCodeParams params, RequestOptions options) {
     return client.execute(checkCodeRequest(params), options, CHECK_CODE_RESPONSE).data();
   }
 
@@ -248,7 +297,7 @@ public final class PhoneResource {
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<PhoneCheckCodeResponse> checkCodeAsync(PhoneCheckCodeParams params, RequestOptions options) {
+  public CompletableFuture<PhoneVerificationCheckResponse> checkCodeAsync(PhoneCheckCodeParams params, RequestOptions options) {
     return client.executeAsync(checkCodeRequest(params), options, CHECK_CODE_RESPONSE).thenApply(RawResponse::data);
   }
 
@@ -258,7 +307,7 @@ public final class PhoneResource {
    * @param params the request parameters
    * @return the result
    */
-  public PhoneCheckCodeResponse checkCode(PhoneCheckCodeParams params) {
+  public PhoneVerificationCheckResponse checkCode(PhoneCheckCodeParams params) {
     return client.execute(checkCodeRequest(params), RequestOptions.none(), CHECK_CODE_RESPONSE).data();
   }
 
@@ -268,46 +317,156 @@ public final class PhoneResource {
    * @param params the request parameters
    * @return a future completed with the result
    */
-  public CompletableFuture<PhoneCheckCodeResponse> checkCodeAsync(PhoneCheckCodeParams params) {
+  public CompletableFuture<PhoneVerificationCheckResponse> checkCodeAsync(PhoneCheckCodeParams params) {
     return client.executeAsync(checkCodeRequest(params), RequestOptions.none(), CHECK_CODE_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Same as {@link #checkCode(PhoneCheckCodeParams, RequestOptions)}, without parameters.
+   * Start a bulk lookup
    *
-   * @param options per-request options
-   * @return the result
+   * <p>Look up a CSV of numbers as one job: one number per line, up to 100,000 numbers, with <code>fields</code> naming the signals to return for each number. The call answers <code>202</code> with the job (<code>status</code> <code>queued</code>, <code>processed</code> 0, <code>results_url</code> <code>null</code>). Read it with <code>GET /v3/phone/risk/bulk/{job_id}/</code>; when it is done, download the CSV from <code>results_url</code>. <code>callback_url</code>, a public HTTPS URL, receives <code>{job_id, status, total, results_url}</code> when the job finishes (described by <code>PhoneRiskBulkCallback</code>).
+   *
+   * <p>Billing follows Phone Risk API pricing for each number in the file; a number that is not valid is not charged.
+   *
+   * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>.
+   *
+   * <p>{@code POST /v3/phone/risk/bulk/}
+   * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
+   *
+   * @param params the request parameters
+   * @param options per-request options that override the client options
+   * @return the response body
    */
-  public PhoneCheckCodeResponse checkCode(RequestOptions options) {
-    return client.execute(checkCodeRequest(PhoneCheckCodeParams.builder().build()), options, CHECK_CODE_RESPONSE).data();
+  public PhoneRiskBulkJob assessRiskBulk(PhoneAssessRiskBulkParams params, RequestOptions options) {
+    return client.execute(assessRiskBulkRequest(params), options, ASSESS_RISK_BULK_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #checkCode(PhoneCheckCodeParams, RequestOptions)}, without parameters.
+   * Asynchronous {@link #assessRiskBulk(PhoneAssessRiskBulkParams, RequestOptions)}.
    *
+   * @param params the request parameters
    * @param options per-request options
    * @return a future completed with the result
    */
-  public CompletableFuture<PhoneCheckCodeResponse> checkCodeAsync(RequestOptions options) {
-    return client.executeAsync(checkCodeRequest(PhoneCheckCodeParams.builder().build()), options, CHECK_CODE_RESPONSE).thenApply(RawResponse::data);
+  public CompletableFuture<PhoneRiskBulkJob> assessRiskBulkAsync(PhoneAssessRiskBulkParams params, RequestOptions options) {
+    return client.executeAsync(assessRiskBulkRequest(params), options, ASSESS_RISK_BULK_RESPONSE).thenApply(RawResponse::data);
   }
 
   /**
-   * Same as {@link #checkCode(PhoneCheckCodeParams, RequestOptions)}, without parameters, with the client's options.
+   * Same as {@link #assessRiskBulk(PhoneAssessRiskBulkParams, RequestOptions)}, with the client's options.
    *
+   * @param params the request parameters
    * @return the result
    */
-  public PhoneCheckCodeResponse checkCode() {
-    return client.execute(checkCodeRequest(PhoneCheckCodeParams.builder().build()), RequestOptions.none(), CHECK_CODE_RESPONSE).data();
+  public PhoneRiskBulkJob assessRiskBulk(PhoneAssessRiskBulkParams params) {
+    return client.execute(assessRiskBulkRequest(params), RequestOptions.none(), ASSESS_RISK_BULK_RESPONSE).data();
   }
 
   /**
-   * Asynchronous {@link #checkCode(PhoneCheckCodeParams, RequestOptions)}, without parameters, with the client's options.
+   * Asynchronous {@link #assessRiskBulk(PhoneAssessRiskBulkParams, RequestOptions)}, with the client's options.
    *
+   * @param params the request parameters
    * @return a future completed with the result
    */
-  public CompletableFuture<PhoneCheckCodeResponse> checkCodeAsync() {
-    return client.executeAsync(checkCodeRequest(PhoneCheckCodeParams.builder().build()), RequestOptions.none(), CHECK_CODE_RESPONSE).thenApply(RawResponse::data);
+  public CompletableFuture<PhoneRiskBulkJob> assessRiskBulkAsync(PhoneAssessRiskBulkParams params) {
+    return client.executeAsync(assessRiskBulkRequest(params), RequestOptions.none(), ASSESS_RISK_BULK_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Get a bulk lookup job
+   *
+   * <p>Read a bulk risk job of your application: its <code>status</code>, how many numbers it has <code>processed</code> of its <code>total</code>, and the <code>results_url</code> of the CSV once a result file exists. An unknown job, or one of another application, answers <code>404</code>.
+   *
+   * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>.
+   *
+   * <p>{@code GET /v3/phone/risk/bulk/{job_id}/}
+   *
+   * @param jobId The job, as returned when it was started.
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public PhoneRiskBulkJob retrieveRiskBulk(String jobId, RequestOptions options) {
+    return client.execute(retrieveRiskBulkRequest(jobId), options, RETRIEVE_RISK_BULK_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveRiskBulk(String, RequestOptions)}.
+   *
+   * @param jobId the {@code job_id}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<PhoneRiskBulkJob> retrieveRiskBulkAsync(String jobId, RequestOptions options) {
+    return client.executeAsync(retrieveRiskBulkRequest(jobId), options, RETRIEVE_RISK_BULK_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #retrieveRiskBulk(String, RequestOptions)}, with the client's options.
+   *
+   * @param jobId the {@code job_id}
+   * @return the result
+   */
+  public PhoneRiskBulkJob retrieveRiskBulk(String jobId) {
+    return client.execute(retrieveRiskBulkRequest(jobId), RequestOptions.none(), RETRIEVE_RISK_BULK_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #retrieveRiskBulk(String, RequestOptions)}, with the client's options.
+   *
+   * @param jobId the {@code job_id}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<PhoneRiskBulkJob> retrieveRiskBulkAsync(String jobId) {
+    return client.executeAsync(retrieveRiskBulkRequest(jobId), RequestOptions.none(), RETRIEVE_RISK_BULK_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Download bulk lookup results
+   *
+   * <p>Download the CSV of a bulk risk job: the column <code>phone_number</code> plus one column per requested signal, one row per number in the order of the uploaded file. A failed job still has the rows it answered. While no result file exists the answer is <code>409 results_not_ready</code>.
+   *
+   * <p><b>Authentication.</b> Send your application's API key in <code>x-api-key</code>.
+   *
+   * <p>{@code GET /v3/phone/risk/bulk/{job_id}/results/}
+   * <p>Returns the file; close the {@link me.didit.core.BinaryResponse} when you stream it.
+   *
+   * @param jobId The job, as returned when it was started.
+   * @param options per-request options that override the client options
+   * @return the response body
+   */
+  public BinaryResponse downloadRiskBulkResults(String jobId, RequestOptions options) {
+    return client.execute(downloadRiskBulkResultsRequest(jobId), options, DOWNLOAD_RISK_BULK_RESULTS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #downloadRiskBulkResults(String, RequestOptions)}.
+   *
+   * @param jobId the {@code job_id}
+   * @param options per-request options
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BinaryResponse> downloadRiskBulkResultsAsync(String jobId, RequestOptions options) {
+    return client.executeAsync(downloadRiskBulkResultsRequest(jobId), options, DOWNLOAD_RISK_BULK_RESULTS_RESPONSE).thenApply(RawResponse::data);
+  }
+
+  /**
+   * Same as {@link #downloadRiskBulkResults(String, RequestOptions)}, with the client's options.
+   *
+   * @param jobId the {@code job_id}
+   * @return the result
+   */
+  public BinaryResponse downloadRiskBulkResults(String jobId) {
+    return client.execute(downloadRiskBulkResultsRequest(jobId), RequestOptions.none(), DOWNLOAD_RISK_BULK_RESULTS_RESPONSE).data();
+  }
+
+  /**
+   * Asynchronous {@link #downloadRiskBulkResults(String, RequestOptions)}, with the client's options.
+   *
+   * @param jobId the {@code job_id}
+   * @return a future completed with the result
+   */
+  public CompletableFuture<BinaryResponse> downloadRiskBulkResultsAsync(String jobId) {
+    return client.executeAsync(downloadRiskBulkResultsRequest(jobId), RequestOptions.none(), DOWNLOAD_RISK_BULK_RESULTS_RESPONSE).thenApply(RawResponse::data);
   }
 
   private static final ResponseHandler<PhoneRiskResponse> ASSESS_RISK_RESPONSE = Responses.json(Conv.model(PhoneRiskResponse::fromJson));
@@ -328,12 +487,38 @@ public final class PhoneResource {
         .build();
   }
 
-  private static final ResponseHandler<PhoneCheckCodeResponse> CHECK_CODE_RESPONSE = Responses.json(Conv.union(PhoneCheckCodeResponse::fromJson));
+  private static final ResponseHandler<PhoneVerificationCheckResponse> CHECK_CODE_RESPONSE = Responses.json(Conv.model(PhoneVerificationCheckResponse::fromJson));
 
   private static ApiRequest checkCodeRequest(PhoneCheckCodeParams params) {
     return ApiRequest.builder("POST", "/v3/phone/check/")
         .params(params)
         .body(ApiRequest.BodyEncoding.JSON)
+        .build();
+  }
+
+  private static final ResponseHandler<PhoneRiskBulkJob> ASSESS_RISK_BULK_RESPONSE = Responses.json(Conv.model(PhoneRiskBulkJob::fromJson));
+
+  private static ApiRequest assessRiskBulkRequest(PhoneAssessRiskBulkParams params) {
+    return ApiRequest.builder("POST", "/v3/phone/risk/bulk/")
+        .params(params)
+        .body(ApiRequest.BodyEncoding.MULTIPART)
+        .build();
+  }
+
+  private static final ResponseHandler<PhoneRiskBulkJob> RETRIEVE_RISK_BULK_RESPONSE = Responses.json(Conv.model(PhoneRiskBulkJob::fromJson));
+
+  private static ApiRequest retrieveRiskBulkRequest(String jobId) {
+    return ApiRequest.builder("GET", "/v3/phone/risk/bulk/{job_id}/")
+        .pathParam("job_id", jobId)
+        .build();
+  }
+
+  private static final ResponseHandler<BinaryResponse> DOWNLOAD_RISK_BULK_RESULTS_RESPONSE = Responses.binary();
+
+  private static ApiRequest downloadRiskBulkResultsRequest(String jobId) {
+    return ApiRequest.builder("GET", "/v3/phone/risk/bulk/{job_id}/results/")
+        .pathParam("job_id", jobId)
+        .accept("text/csv")
         .build();
   }
 
@@ -436,7 +621,7 @@ public final class PhoneResource {
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<PhoneCheckCodeResponse> checkCode(PhoneCheckCodeParams params, RequestOptions options) {
+    public RawResponse<PhoneVerificationCheckResponse> checkCode(PhoneCheckCodeParams params, RequestOptions options) {
       return client.execute(checkCodeRequest(params), options, CHECK_CODE_RESPONSE);
     }
 
@@ -447,7 +632,7 @@ public final class PhoneResource {
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<PhoneCheckCodeResponse>> checkCodeAsync(PhoneCheckCodeParams params, RequestOptions options) {
+    public CompletableFuture<RawResponse<PhoneVerificationCheckResponse>> checkCodeAsync(PhoneCheckCodeParams params, RequestOptions options) {
       return client.executeAsync(checkCodeRequest(params), options, CHECK_CODE_RESPONSE);
     }
 
@@ -457,7 +642,7 @@ public final class PhoneResource {
      * @param params the request parameters
      * @return the result
      */
-    public RawResponse<PhoneCheckCodeResponse> checkCode(PhoneCheckCodeParams params) {
+    public RawResponse<PhoneVerificationCheckResponse> checkCode(PhoneCheckCodeParams params) {
       return client.execute(checkCodeRequest(params), RequestOptions.none(), CHECK_CODE_RESPONSE);
     }
 
@@ -467,46 +652,134 @@ public final class PhoneResource {
      * @param params the request parameters
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<PhoneCheckCodeResponse>> checkCodeAsync(PhoneCheckCodeParams params) {
+    public CompletableFuture<RawResponse<PhoneVerificationCheckResponse>> checkCodeAsync(PhoneCheckCodeParams params) {
       return client.executeAsync(checkCodeRequest(params), RequestOptions.none(), CHECK_CODE_RESPONSE);
     }
 
     /**
-     * {@link #checkCode(PhoneCheckCodeParams, RequestOptions)} with the raw response, without parameters.
+     * {@link #assessRiskBulk(PhoneAssessRiskBulkParams, RequestOptions)} with the raw response.
      *
+     * @param params the request parameters
      * @param options per-request options
      * @return the result
      */
-    public RawResponse<PhoneCheckCodeResponse> checkCode(RequestOptions options) {
-      return client.execute(checkCodeRequest(PhoneCheckCodeParams.builder().build()), options, CHECK_CODE_RESPONSE);
+    public RawResponse<PhoneRiskBulkJob> assessRiskBulk(PhoneAssessRiskBulkParams params, RequestOptions options) {
+      return client.execute(assessRiskBulkRequest(params), options, ASSESS_RISK_BULK_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #checkCode(PhoneCheckCodeParams, RequestOptions)} with the raw response, without parameters.
+     * Asynchronous {@link #assessRiskBulk(PhoneAssessRiskBulkParams, RequestOptions)} with the raw response.
      *
+     * @param params the request parameters
      * @param options per-request options
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<PhoneCheckCodeResponse>> checkCodeAsync(RequestOptions options) {
-      return client.executeAsync(checkCodeRequest(PhoneCheckCodeParams.builder().build()), options, CHECK_CODE_RESPONSE);
+    public CompletableFuture<RawResponse<PhoneRiskBulkJob>> assessRiskBulkAsync(PhoneAssessRiskBulkParams params, RequestOptions options) {
+      return client.executeAsync(assessRiskBulkRequest(params), options, ASSESS_RISK_BULK_RESPONSE);
     }
 
     /**
-     * {@link #checkCode(PhoneCheckCodeParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     * {@link #assessRiskBulk(PhoneAssessRiskBulkParams, RequestOptions)} with the raw response, with the client's options.
      *
+     * @param params the request parameters
      * @return the result
      */
-    public RawResponse<PhoneCheckCodeResponse> checkCode() {
-      return client.execute(checkCodeRequest(PhoneCheckCodeParams.builder().build()), RequestOptions.none(), CHECK_CODE_RESPONSE);
+    public RawResponse<PhoneRiskBulkJob> assessRiskBulk(PhoneAssessRiskBulkParams params) {
+      return client.execute(assessRiskBulkRequest(params), RequestOptions.none(), ASSESS_RISK_BULK_RESPONSE);
     }
 
     /**
-     * Asynchronous {@link #checkCode(PhoneCheckCodeParams, RequestOptions)} with the raw response, without parameters, with the client's options.
+     * Asynchronous {@link #assessRiskBulk(PhoneAssessRiskBulkParams, RequestOptions)} with the raw response, with the client's options.
      *
+     * @param params the request parameters
      * @return a future completed with the result
      */
-    public CompletableFuture<RawResponse<PhoneCheckCodeResponse>> checkCodeAsync() {
-      return client.executeAsync(checkCodeRequest(PhoneCheckCodeParams.builder().build()), RequestOptions.none(), CHECK_CODE_RESPONSE);
+    public CompletableFuture<RawResponse<PhoneRiskBulkJob>> assessRiskBulkAsync(PhoneAssessRiskBulkParams params) {
+      return client.executeAsync(assessRiskBulkRequest(params), RequestOptions.none(), ASSESS_RISK_BULK_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveRiskBulk(String, RequestOptions)} with the raw response.
+     *
+     * @param jobId the {@code job_id}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<PhoneRiskBulkJob> retrieveRiskBulk(String jobId, RequestOptions options) {
+      return client.execute(retrieveRiskBulkRequest(jobId), options, RETRIEVE_RISK_BULK_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveRiskBulk(String, RequestOptions)} with the raw response.
+     *
+     * @param jobId the {@code job_id}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<PhoneRiskBulkJob>> retrieveRiskBulkAsync(String jobId, RequestOptions options) {
+      return client.executeAsync(retrieveRiskBulkRequest(jobId), options, RETRIEVE_RISK_BULK_RESPONSE);
+    }
+
+    /**
+     * {@link #retrieveRiskBulk(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param jobId the {@code job_id}
+     * @return the result
+     */
+    public RawResponse<PhoneRiskBulkJob> retrieveRiskBulk(String jobId) {
+      return client.execute(retrieveRiskBulkRequest(jobId), RequestOptions.none(), RETRIEVE_RISK_BULK_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #retrieveRiskBulk(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param jobId the {@code job_id}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<PhoneRiskBulkJob>> retrieveRiskBulkAsync(String jobId) {
+      return client.executeAsync(retrieveRiskBulkRequest(jobId), RequestOptions.none(), RETRIEVE_RISK_BULK_RESPONSE);
+    }
+
+    /**
+     * {@link #downloadRiskBulkResults(String, RequestOptions)} with the raw response.
+     *
+     * @param jobId the {@code job_id}
+     * @param options per-request options
+     * @return the result
+     */
+    public RawResponse<BinaryResponse> downloadRiskBulkResults(String jobId, RequestOptions options) {
+      return client.execute(downloadRiskBulkResultsRequest(jobId), options, DOWNLOAD_RISK_BULK_RESULTS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #downloadRiskBulkResults(String, RequestOptions)} with the raw response.
+     *
+     * @param jobId the {@code job_id}
+     * @param options per-request options
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BinaryResponse>> downloadRiskBulkResultsAsync(String jobId, RequestOptions options) {
+      return client.executeAsync(downloadRiskBulkResultsRequest(jobId), options, DOWNLOAD_RISK_BULK_RESULTS_RESPONSE);
+    }
+
+    /**
+     * {@link #downloadRiskBulkResults(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param jobId the {@code job_id}
+     * @return the result
+     */
+    public RawResponse<BinaryResponse> downloadRiskBulkResults(String jobId) {
+      return client.execute(downloadRiskBulkResultsRequest(jobId), RequestOptions.none(), DOWNLOAD_RISK_BULK_RESULTS_RESPONSE);
+    }
+
+    /**
+     * Asynchronous {@link #downloadRiskBulkResults(String, RequestOptions)} with the raw response, with the client's options.
+     *
+     * @param jobId the {@code job_id}
+     * @return a future completed with the result
+     */
+    public CompletableFuture<RawResponse<BinaryResponse>> downloadRiskBulkResultsAsync(String jobId) {
+      return client.executeAsync(downloadRiskBulkResultsRequest(jobId), RequestOptions.none(), DOWNLOAD_RISK_BULK_RESULTS_RESPONSE);
     }
   }
 }

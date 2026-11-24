@@ -1034,7 +1034,7 @@ public final class BankResource {
    *
    * <p>Lists every account of the connection, oldest first, with full identifiers and holders. A read never bills.
    *
-   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
    *
    * <p>{@code GET /v3/bank/connections/{id}/accounts/}
    *
@@ -1128,7 +1128,7 @@ public final class BankResource {
    *
    * <p>Returns one account with full identifiers, holders, sync state and <code>history_coverage</code>, which says what the bank delivered of the history you asked for. <code>sync.last_synced_at</code> is when the data was fetched from the bank, not when you read it.
    *
-   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
    *
    * <p>{@code GET /v3/bank/accounts/{account_id}/}
    *
@@ -1176,7 +1176,7 @@ public final class BankResource {
    *
    * <p>Returns the typed balances of an account with their reference dates. Balances are replaced at each sync.
    *
-   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
    *
    * <p>{@code GET /v3/bank/accounts/{account_id}/balances/}
    *
@@ -1228,7 +1228,7 @@ public final class BankResource {
    *
    * <p>Response headers: <code>X-Bank-Last-Synced-At</code> and <code>Cache-Control: no-store</code>.
    *
-   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
    *
    * <p>{@code GET /v3/bank/accounts/{account_id}/transactions/}
    *
@@ -1326,7 +1326,7 @@ public final class BankResource {
    *
    * <p>The change log is replayable for 90 days. An older cursor answers <code>410 cursor_expired</code> with <code>bootstrap: true</code>: start again from an empty cursor. Stored history is never aged out while the connection exists. A booked pending transaction appears in <code>added</code> and the pending one in <code>removed</code> with <code>reason: pending_booked</code>. Webhook <code>bank.data.updated</code> tells you when to call.
    *
-   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A sandbox application reads its Test Bank data with the key alone. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
+   * <p>Needs an API key with read access to Bank data: a full-access key has it, and a scoped key needs <code>bank-data</code> read in its scopes. Otherwise the call answers <code>403 bank_data_access_denied</code>. A request without an API key (client credentials) is refused on raw data with the same <code>403</code>.
    *
    * <p>{@code GET /v3/bank/connections/{id}/transactions/sync/}
    *

@@ -60,7 +60,7 @@ public final class PhoneSdkKeyRequest extends JsonModel {
   }
 
   /**
-   * The bundle ids, package names or <code>https</code> origins the key works for.
+   * The apps the key may run in: iOS bundle ids, Android package names or web origins (<code>https://</code> and the host), matching <code>platform</code>
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -103,7 +103,7 @@ public final class PhoneSdkKeyRequest extends JsonModel {
     }
 
     /**
-     * The bundle ids, package names or <code>https</code> origins the key works for.
+     * The apps the key may run in: iOS bundle ids, Android package names or web origins (<code>https://</code> and the host), matching <code>platform</code>
      *
      * @param appIds the value
      * @return this builder

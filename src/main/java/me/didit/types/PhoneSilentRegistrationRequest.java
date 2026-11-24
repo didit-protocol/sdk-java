@@ -12,6 +12,7 @@ import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
+import org.jspecify.annotations.Nullable;
 
 public final class PhoneSilentRegistrationRequest extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("country", "networks", "use_case", "company_name", "website", "monthly_volume", "flow_screenshots");
@@ -60,7 +61,7 @@ public final class PhoneSilentRegistrationRequest extends JsonModel {
   }
 
   /**
-   * Only these mobile networks; left out, every network in the country.
+   * The mobile networks to ask, by the names <code>GET /v3/phone/silent/coverage/</code> lists; all the country's networks when you send none
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -143,7 +144,7 @@ public final class PhoneSilentRegistrationRequest extends JsonModel {
     }
 
     /**
-     * Only these mobile networks; left out, every network in the country.
+     * The mobile networks to ask, by the names <code>GET /v3/phone/silent/coverage/</code> lists; all the country's networks when you send none
      *
      * @param networks the value
      * @return this builder
@@ -185,11 +186,11 @@ public final class PhoneSilentRegistrationRequest extends JsonModel {
     /**
      * Expected silent checks a month.
      *
-     * @param monthlyVolume the value
+     * @param monthlyVolume the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder monthlyVolume(long monthlyVolume) {
-      return set("monthly_volume", Conv.LONG, monthlyVolume);
+    public Builder monthlyVolume(@Nullable Long monthlyVolume) {
+      return setNullable("monthly_volume", Conv.LONG, monthlyVolume);
     }
 
     /**

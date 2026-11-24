@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import me.didit.Didit;
 import me.didit.core.Json;
+import me.didit.core.RequestOptions;
 import me.didit.testing.MockTransport;
 import me.didit.testing.RecordedRequest;
 import me.didit.testing.SpecExamples;
@@ -44,17 +45,19 @@ final class PhoneNetworkRegistrationsResourceTest {
 
   @Test
   void create() {
-    PhoneNetworkRegistrationRequest params = PhoneNetworkRegistrationRequest.builder().feature(PhoneNetworkRegistrationRequest.Feature.SILENT_VERIFICATION).country("value-country").useCase(PhoneNetworkRegistrationRequest.UseCase.SIGNUP).networks(List.of("value-networks")).companyName("value-company-name").website("https://example.com/callback").purpose("value-purpose").monthlyVolume(1L).build();
+    PhoneNetworkRegistrationRequest params = PhoneNetworkRegistrationRequest.builder().feature(PhoneNetworkRegistrationRequest.Feature.SILENT_VERIFICATION).country("value-country").useCase(PhoneNetworkRegistrationRequest.UseCase.SIGNUP).networks(List.of("value-networks")).companyName("value-company-name").website("value-website").purpose("value-purpose").monthlyVolume(1L).build();
+    RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/phone/network/registrations/", "201");
     transport.respondJson(201, example);
-    var result = client.phone().network().registrations().create(params);
+    var result = client.phone().network().registrations().create(params, options);
     RecordedRequest request = transport.only();
     assertEquals("POST", request.method());
     assertEquals("/v3/phone/network/registrations/", request.path());
     assertEquals(Map.of(), request.query());
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
-    TestJson.assertJsonEquals("{\"feature\":\"silent_verification\",\"country\":\"value-country\",\"use_case\":\"signup\",\"networks\":[\"value-networks\"],\"company_name\":\"value-company-name\",\"website\":\"https://example.com/callback\",\"purpose\":\"value-purpose\",\"monthly_volume\":1}", request.body());
+    assertEquals("idem-1", request.header("Idempotency-Key"));
+    TestJson.assertJsonEquals("{\"feature\":\"silent_verification\",\"country\":\"value-country\",\"use_case\":\"signup\",\"networks\":[\"value-networks\"],\"company_name\":\"value-company-name\",\"website\":\"value-website\",\"purpose\":\"value-purpose\",\"monthly_volume\":1}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
