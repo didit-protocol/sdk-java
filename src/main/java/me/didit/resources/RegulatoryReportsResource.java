@@ -176,7 +176,7 @@ public final class RegulatoryReportsResource {
   /**
    * Get report
    *
-   * <p>Retrieve a regulatory report.
+   * <p>Retrieve a regulatory report. A report filed on a case answers 403 <code>plan_upgrade_required</code> when the plan or the release does not include Cases, like the case's own routes; a standalone report is not refused.
    *
    * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
@@ -223,7 +223,7 @@ public final class RegulatoryReportsResource {
   /**
    * Update report
    *
-   * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409).
+   * <p>Edit a draft or validated report's fields. Finalized reports cannot be edited (409). A report filed on a case answers 403 <code>plan_upgrade_required</code> when the plan or the release does not include Cases, like the case's own routes; a standalone report is not refused.
    *
    * <p>{@code PATCH /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/}
    * <p>Application scoped: the organization and application ids come from the client options.
@@ -409,7 +409,7 @@ public final class RegulatoryReportsResource {
   /**
    * Validate report
    *
-   * <p>Check the report against the obligatory goAML header fields (reporting entity ID, submission code, local currency, action taken, submission date), plus at least one attached transaction and a 2-letter jurisdiction, without generating any files. For jurisdiction AE, once those pass, the report's goAML XML is also checked against the UAE FIU's goAML XML schema and each problem is returned as a field and a message; finalize refuses a report that fails. FFR and PNMR reports need no attached transaction: they require the case to have a subject, otherwise validation_errors contains an error with field <code>subject</code>. Also stores the result on the report: validation_errors and validated_at are updated, and a non-finalized report's status moves to VALIDATED (no errors) or back to DRAFT (errors).
+   * <p>Check the report against the obligatory goAML header fields (reporting entity ID, submission code, local currency, action taken, submission date), plus at least one attached transaction and a 2-letter jurisdiction, without generating any files. For jurisdiction AE, once those pass, the report's goAML XML is also checked against the UAE FIU's goAML XML schema and each problem is returned as a field and a message; finalize refuses a report that fails. FFR and PNMR reports need no attached transaction: they require the case to have a subject, otherwise validation_errors contains an error with field <code>subject</code>. Also stores the result on the report: validation_errors and validated_at are updated, and a non-finalized report's status moves to VALIDATED (no errors) or back to DRAFT (errors). A report filed on a case answers 403 <code>plan_upgrade_required</code> when the plan or the release does not include Cases, like the case's own routes; a standalone report is not refused.
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/validate/}
    * <p>Application scoped: the organization and application ids come from the client options.
@@ -457,7 +457,7 @@ public final class RegulatoryReportsResource {
   /**
    * Finalize report
    *
-   * <p>Re-validate, then render the goAML XML and PDF and upload both to S3. On SAR/STR/TFR reports, this also moves the case's transaction alerts from Pending SAR to SAR filed. FFR and PNMR reports do not move alerts.
+   * <p>Re-validate, then render the goAML XML and PDF and upload both to S3. On SAR/STR/TFR reports, this also moves the case's transaction alerts from Pending SAR to SAR filed. FFR and PNMR reports do not move alerts. A report filed on a case answers 403 <code>plan_upgrade_required</code> when the plan or the release does not include Cases, like the case's own routes; a standalone report is not refused.
    *
    * <p>{@code POST /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/finalize/}
    * <p>Application scoped: the organization and application ids come from the client options.
@@ -505,7 +505,7 @@ public final class RegulatoryReportsResource {
   /**
    * Get report download URL
    *
-   * <p>Mint a presigned URL for a finalized report's goAML XML or PDF.
+   * <p>Mint a presigned URL for a finalized report's goAML XML or PDF. A report filed on a case answers 403 <code>plan_upgrade_required</code> when the plan or the release does not include Cases, like the case's own routes; a standalone report is not refused.
    *
    * <p>{@code GET /v3/organization/{organization_id}/application/{application_id}/regulatory-reports/{report_uuid}/download-url/}
    * <p>Application scoped: the organization and application ids come from the client options.
