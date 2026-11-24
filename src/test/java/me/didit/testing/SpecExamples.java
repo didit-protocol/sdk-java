@@ -3,9 +3,9 @@ package me.didit.testing;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.nio.file.Files;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.Map;
@@ -102,7 +102,10 @@ public final class SpecExamples {
     return null;
   }
 
-  /** {@code doc} with the entry's schemas added where it has none of that name, as the generator does. */
+  /**
+   * {@code doc} with the entry's schemas added where it has none of that name, as the generator
+   * does.
+   */
   private static JsonNode withComponents(JsonNode doc, JsonNode components) {
     ObjectNode merged = (ObjectNode) doc.deepCopy();
     JsonNode componentsNode = merged.path("components");

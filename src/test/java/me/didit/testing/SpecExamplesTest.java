@@ -31,7 +31,8 @@ class SpecExamplesTest {
 
   private static Path write(Path root, String file, String json) throws IOException {
     Files.createDirectories(root.resolve("openapi"));
-    return Files.write(root.resolve("openapi").resolve(file), json.getBytes(StandardCharsets.UTF_8));
+    return Files.write(
+        root.resolve("openapi").resolve(file), json.getBytes(StandardCharsets.UTF_8));
   }
 
   @Test
