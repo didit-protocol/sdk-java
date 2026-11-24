@@ -796,6 +796,8 @@ class AuthenticationDocumentTest(unittest.TestCase):
         self.assertNotIn("authentication.json", [entry[1] for entry in generator_spec.SPECS])
 
     def test_a_removed_authentication_operation_is_breaking_and_never_deprecated(self) -> None:
+        registry = self.root / "openapi/deprecated-operations.json"
+        before = registry.read_bytes() if registry.exists() else None
         del self.spec["paths"]["/session/"]["delete"]
         result = sync(self.root, {"authentication.json": as_bytes(self.spec)})
         self.assertEqual("feat", result.commit_type)
@@ -807,7 +809,8 @@ class AuthenticationDocumentTest(unittest.TestCase):
             "- `authentication.revoke_session` was removed: remove it", section(result.summary, "Authentication module")
         )
         self.assertIn("AuthenticationContractTest", section(result.summary, "Authentication module"))
-        self.assertFalse((self.root / "openapi/deprecated-operations.json").exists())
+        # The registry holds verification and account operations only: the sync leaves it as it was.
+        self.assertEqual(before, registry.read_bytes() if registry.exists() else None)
 
     def test_a_renamed_authentication_method_names_the_module_change(self) -> None:
         self.spec["paths"]["/token/"]["post"]["x-didit-sdk"]["variants"][1]["method"] = "refresh_tokens"
