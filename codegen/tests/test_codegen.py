@@ -179,6 +179,44 @@ class EmitTest(unittest.TestCase):
         self.assertIn("void create()", tests["PetsResourceTest.java"])
         self.assertIn("request.multipartFiles()", tests["PetsResourceTest.java"])
 
+    def test_union_of_untyped_variants_gets_a_json_node_in_the_generated_test(self) -> None:
+        # `match` of POST /v3/messages/rules/: each oneOf branch only says which property is required, so every
+        # variant is an untyped value, which is a JsonNode in Java and not the String a body setter accepts.
+        tmp = Path(tempfile.mkdtemp())
+        verification = fixtures.clone(fixtures.VERIFICATION)
+        verification["paths"]["/v3/rules/"] = {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["match"],
+                                "properties": {
+                                    "match": {
+                                        "type": "object",
+                                        "oneOf": [{"required": ["country"]}, {"required": ["prefix"]}],
+                                    }
+                                },
+                            }
+                        }
+                    }
+                },
+                "responses": {"200": {"description": ""}},
+            }
+        }
+        overlay = fixtures.clone(fixtures.OVERLAY)
+        overlay["operations"]["POST /v3/rules/"] = {
+            "resource": "rules",
+            "method": "create",
+            "auth": "api_key",
+            "server": True,
+        }
+        fixtures.write(tmp, verification=verification, overlay=overlay)
+        test = testgen.emit_tests(model.build(spec.load(tmp)))["RulesResourceTest.java"]
+        self.assertIn('Match.ofVariant1(Json.toNode("value"))', test)
+        self.assertIn("import me.didit.core.Json;", test)
+
     def test_check_mode(self) -> None:
         tmp = Path(tempfile.mkdtemp())
         fixtures.write(tmp)
