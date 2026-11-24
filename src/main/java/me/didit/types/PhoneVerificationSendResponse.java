@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class PhoneVerificationSendResponse extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("request_id", "status", "reason", "vendor_data", "metadata");
+  private static final Set<String> KNOWN_FIELDS = Set.of("request_id", "status", "channel", "reason", "vendor_data", "metadata");
 
   private PhoneVerificationSendResponse(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -68,6 +68,16 @@ public final class PhoneVerificationSendResponse extends JsonModel {
    */
   public Optional<PhoneVerificationSendResponse.Status> status() {
     return Json.optional(json, "status", Conv.enumeration(PhoneVerificationSendResponse.Status::of));
+  }
+
+  /**
+   * The channel the code went out on, <code>voice</code> when a call reads it, or <code>null</code> when the delivery channel is not confirmed, for example when the carrier delivers the message without saying which channel carried it. A <code>Blocked</code> send returns the channel you asked for. A send that reuses the pending code returns the channel that code went out on.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> channel() {
+    return Json.optional(json, "channel", Conv.STRING);
   }
 
   /**
@@ -131,6 +141,16 @@ public final class PhoneVerificationSendResponse extends JsonModel {
      */
     public Builder status(PhoneVerificationSendResponse.Status status) {
       return set("status", Conv.enumeration(PhoneVerificationSendResponse.Status::of), status);
+    }
+
+    /**
+     * The channel the code went out on, <code>voice</code> when a call reads it, or <code>null</code> when the delivery channel is not confirmed, for example when the carrier delivers the message without saying which channel carried it. A <code>Blocked</code> send returns the channel you asked for. A send that reuses the pending code returns the channel that code went out on.
+     *
+     * @param channel the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder channel(@Nullable String channel) {
+      return setNullable("channel", Conv.STRING, channel);
     }
 
     /**

@@ -239,7 +239,7 @@ public final class PhoneSendCodeParams extends JsonModel {
     }
 
     /**
-     * Preferred delivery channel. If the channel is unavailable for the destination country or number, the message automatically falls back to SMS — the send still reports <code>Success</code>.
+     * Preferred delivery channel. If the channel is unavailable for the destination country or number, the message automatically falls back to SMS — the send still reports <code>Success</code>. A new <code>sms</code> send to a fixed line is read out in a call instead only under the conditions in <b>Fixed lines</b> in the operation description: it never applies to a send that repeats or reuses the pending code, to a destination without voice delivery, when your routing settings do not allow voice, or in a sandbox application.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -302,7 +302,7 @@ public final class PhoneSendCodeParams extends JsonModel {
       }
 
       /**
-       * Preferred delivery channel. If the channel is unavailable for the destination country or number, the message automatically falls back to SMS — the send still reports <code>Success</code>.
+       * Preferred delivery channel. If the channel is unavailable for the destination country or number, the message automatically falls back to SMS — the send still reports <code>Success</code>. A new <code>sms</code> send to a fixed line is read out in a call instead only under the conditions in <b>Fixed lines</b> in the operation description: it never applies to a send that repeats or reuses the pending code, to a destination without voice delivery, when your routing settings do not allow voice, or in a sandbox application.
        *
        * @param preferredChannel the value
        * @return this builder
@@ -347,7 +347,7 @@ public final class PhoneSendCodeParams extends JsonModel {
     }
 
     /**
-     * Preferred delivery channel. If the channel is unavailable for the destination country or number, the message automatically falls back to SMS — the send still reports <code>Success</code>.
+     * Preferred delivery channel. If the channel is unavailable for the destination country or number, the message automatically falls back to SMS — the send still reports <code>Success</code>. A new <code>sms</code> send to a fixed line is read out in a call instead only under the conditions in <b>Fixed lines</b> in the operation description: it never applies to a send that repeats or reuses the pending code, to a destination without voice delivery, when your routing settings do not allow voice, or in a sandbox application.
      *
      * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
      */
