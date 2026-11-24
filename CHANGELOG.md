@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.39.0](https://github.com/didit-protocol/sdk-java/compare/v1.38.1...v1.39.0) (2026-11-24)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-24 ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+
+
+### API changes that can break typed code
+
+* **spec:** `GET /v3/phone/network/registrations/{registration_id}/` response `test_numbers[].test_access`: removed ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `GET /v3/phone/network/registrations/{registration_id}/` response `test_numbers[].verification_id`: removed ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `POST /v3/phone/check/` request body `code`: now required ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `POST /v3/phone/check/` request body `phone_number`: now required ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `POST /v3/phone/check/` request body: type changed from any to object ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `POST /v3/phone/check/` request body: type changed: 1 anyOf variant(s) removed ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `POST /v3/phone/check/` response `status`: no longer always present ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `POST /v3/phone/check/` response: type changed: 1 oneOf variant(s) removed ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `POST /v3/phone/factors/` response `status`: enum value "disabled" removed ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `POST /v3/phone/factors/` response `status`: enum value "verified" removed ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `POST /v3/phone/network/registrations/{registration_id}/test-numbers/` response `status`: enum value "verified" removed ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `POST /v3/phone/network/registrations/` response `test_numbers[].test_access`: removed ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `POST /v3/phone/network/registrations/` response `test_numbers[].verification_id`: removed ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `POST /v3/phone/sdk-keys/{key_id}/rotate/` response `status`: enum value "expiring" removed ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `POST /v3/phone/sdk-keys/{key_id}/rotate/` response `status`: enum value "revoked" removed ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+* **spec:** `POST /v3/phone/silent/eligibility/` response `country`: can now be null ([d33f381](https://github.com/didit-protocol/sdk-java/commit/d33f38171af0c80702dcb1697d3bd2ce1e3d5c94))
+
 ## [1.38.1](https://github.com/didit-protocol/sdk-java/compare/v1.38.0...v1.38.1) (2026-11-24)
 
 
