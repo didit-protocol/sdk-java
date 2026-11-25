@@ -985,7 +985,7 @@ public final class BankVerificationResult extends JsonModel {
     }
 
     /**
-     * The bank's ID. <code>null</code> for an account check, where no bank is picked.
+     * Didit's own ID of the bank, never the identifier the bank is reached by. It is opaque, so do not parse it, and stable for a bank in Didit's catalogue; a bank outside the catalogue has an ID that changes once the bank is added to it. The session's bank step (its start and continue calls and the saved bank lists of a workflow's bank node) accepts both the earlier form and this one; the Bank Data endpoints accept only this one. <code>null</code> for an account check, where no bank is picked.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1098,7 +1098,7 @@ public final class BankVerificationResult extends JsonModel {
       }
 
       /**
-       * The bank's ID. <code>null</code> for an account check, where no bank is picked.
+       * Didit's own ID of the bank, never the identifier the bank is reached by. It is opaque, so do not parse it, and stable for a bank in Didit's catalogue; a bank outside the catalogue has an ID that changes once the bank is added to it. The session's bank step (its start and continue calls and the saved bank lists of a workflow's bank node) accepts both the earlier form and this one; the Bank Data endpoints accept only this one. <code>null</code> for an account check, where no bank is picked.
        *
        * @param institutionId the value, or {@code null} to send JSON null
        * @return this builder
@@ -2702,7 +2702,7 @@ public final class BankVerificationResult extends JsonModel {
     }
 
     /**
-     * For <code>institution_unsupported</code>, the ID of the bank the person could not use: the bank they picked, or the bank their last attempt ended on. Didit takes it from its own list of banks, never from the person's device, so a bank that list does not have is <code>null</code>. <code>null</code> for every other reason.
+     * For <code>institution_unsupported</code>, Didit's ID of the bank the person could not use (the same ID as <code>connection.institution_id</code>): the bank they picked, or the bank their last attempt ended on. Didit takes it from its own list of banks, never from the person's device, so a bank that list does not have is <code>null</code>. <code>null</code> for every other reason.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2775,7 +2775,7 @@ public final class BankVerificationResult extends JsonModel {
       }
 
       /**
-       * For <code>institution_unsupported</code>, the ID of the bank the person could not use: the bank they picked, or the bank their last attempt ended on. Didit takes it from its own list of banks, never from the person's device, so a bank that list does not have is <code>null</code>. <code>null</code> for every other reason.
+       * For <code>institution_unsupported</code>, Didit's ID of the bank the person could not use (the same ID as <code>connection.institution_id</code>): the bank they picked, or the bank their last attempt ended on. Didit takes it from its own list of banks, never from the person's device, so a bank that list does not have is <code>null</code>. <code>null</code> for every other reason.
        *
        * @param institutionId the value, or {@code null} to send JSON null
        * @return this builder
