@@ -2790,7 +2790,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
-     * The <code>code</code> field.
+     * The warning. <code>SIGNATURE_OTP_NOT_CONFIRMED</code> means no code was sent because the code goes by SMS and the signer's phone is on your phone block list (the number, its prefix, its network or its country); the signing ended by <code>signature_otp_failed_action</code>, and the same warning in the session's activity, and in the top-level <code>warnings</code> of a version 1 decision and its webhooks, carries <code>additional_data.blocked_reason: "blocked_by_list"</code>. The signer's own flow never receives the reason. See [E-signature warnings](/core-technology/electronic-signature/warnings-electronic-signature).
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -2823,7 +2823,7 @@ public final class SignatureResult extends JsonModel {
       }
 
       /**
-       * The <code>code</code> field.
+       * The warning. <code>SIGNATURE_OTP_NOT_CONFIRMED</code> means no code was sent because the code goes by SMS and the signer's phone is on your phone block list (the number, its prefix, its network or its country); the signing ended by <code>signature_otp_failed_action</code>, and the same warning in the session's activity, and in the top-level <code>warnings</code> of a version 1 decision and its webhooks, carries <code>additional_data.blocked_reason: "blocked_by_list"</code>. The signer's own flow never receives the reason. See [E-signature warnings](/core-technology/electronic-signature/warnings-electronic-signature).
        *
        * @param code the value
        * @return this builder
@@ -2858,6 +2858,7 @@ public final class SignatureResult extends JsonModel {
     }
 
     /**
+     * The warning. <code>SIGNATURE_OTP_NOT_CONFIRMED</code> means no code was sent because the code goes by SMS and the signer's phone is on your phone block list (the number, its prefix, its network or its country); the signing ended by <code>signature_otp_failed_action</code>, and the same warning in the session's activity, and in the top-level <code>warnings</code> of a version 1 decision and its webhooks, carries <code>additional_data.blocked_reason: "blocked_by_list"</code>. The signer's own flow never receives the reason. See [E-signature warnings](/core-technology/electronic-signature/warnings-electronic-signature).
      *
      * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
      */
@@ -2867,6 +2868,9 @@ public final class SignatureResult extends JsonModel {
 
       /** The value {@code "SIGNATURE_OTP_FAILED"}. */
       public static final Code SIGNATURE_OTP_FAILED = new Code("SIGNATURE_OTP_FAILED");
+
+      /** The value {@code "SIGNATURE_OTP_NOT_CONFIRMED"}. */
+      public static final Code SIGNATURE_OTP_NOT_CONFIRMED = new Code("SIGNATURE_OTP_NOT_CONFIRMED");
 
       /** The value {@code "SIGNATURE_NAME_MISMATCH"}. */
       public static final Code SIGNATURE_NAME_MISMATCH = new Code("SIGNATURE_NAME_MISMATCH");
@@ -2880,7 +2884,7 @@ public final class SignatureResult extends JsonModel {
       /** The value {@code "SIGNATURE_FIELD_DATA_MISSING"}. */
       public static final Code SIGNATURE_FIELD_DATA_MISSING = new Code("SIGNATURE_FIELD_DATA_MISSING");
 
-      private static final List<Code> KNOWN_VALUES = List.of(SIGNATURE_DECLINED, SIGNATURE_OTP_FAILED, SIGNATURE_NAME_MISMATCH, SIGNATURE_IDENTITY_NOT_VERIFIED, SIGNATURE_DOCUMENT_CHANGED, SIGNATURE_FIELD_DATA_MISSING);
+      private static final List<Code> KNOWN_VALUES = List.of(SIGNATURE_DECLINED, SIGNATURE_OTP_FAILED, SIGNATURE_OTP_NOT_CONFIRMED, SIGNATURE_NAME_MISMATCH, SIGNATURE_IDENTITY_NOT_VERIFIED, SIGNATURE_DOCUMENT_CHANGED, SIGNATURE_FIELD_DATA_MISSING);
 
       private Code(String value) {
         super(value);
