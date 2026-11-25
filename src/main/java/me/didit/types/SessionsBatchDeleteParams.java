@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Parameters for {&#64;code sessions.batch_delete}. */
 public final class SessionsBatchDeleteParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("session_numbers", "delete_all", "retain_face_embeddings", "face_retention_days", "face_retention_deadline", "deletion_instruction", "instruction_id", "filter_status", "filter_vendor_data", "filter_search", "filter_workflow_id", "filter_date_from", "filter_date_to", "filter_country", "filter_document_type", "filter_document_name", "filter_region", "filter_didit_internal_id", "filter_session_type", "filter_api_service", "filter_screened_full_name", "filter_warning", "filter_status_initialized_as_in_review", "filter_is_kyc_to_be_reviewed", "filter_euuid", "filter_organization_name");
+  private static final Set<String> KNOWN_FIELDS = Set.of("session_numbers", "delete_all", "retain_face_embeddings", "face_retention_days", "face_retention_deadline", "deletion_instruction", "instruction_id", "filter_status", "filter_vendor_data", "filter_search", "filter_workflow_id", "filter_date_from", "filter_date_to", "filter_country", "filter_document_type", "filter_region", "filter_didit_internal_id", "filter_session_type", "filter_api_service", "filter_screened_full_name", "filter_warning", "filter_status_initialized_as_in_review", "filter_is_kyc_to_be_reviewed", "filter_euuid", "filter_organization_name");
 
   private SessionsBatchDeleteParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -202,16 +202,6 @@ public final class SessionsBatchDeleteParams extends JsonModel {
    */
   public Optional<SessionsBatchDeleteParams.FilterDocumentType> filterDocumentType() {
     return Json.optional(json, "filter_document_type", Conv.union(SessionsBatchDeleteParams.FilterDocumentType::fromJson));
-  }
-
-  /**
-   * Narrows a <code>delete_all</code> to the sessions that match the <code>document_name</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
-   *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-   */
-  public Optional<SessionsBatchDeleteParams.FilterDocumentName> filterDocumentName() {
-    return Json.optional(json, "filter_document_name", Conv.union(SessionsBatchDeleteParams.FilterDocumentName::fromJson));
   }
 
   /**
@@ -475,16 +465,6 @@ public final class SessionsBatchDeleteParams extends JsonModel {
      */
     public Builder filterDocumentType(SessionsBatchDeleteParams.FilterDocumentType filterDocumentType) {
       return set("filter_document_type", Conv.union(SessionsBatchDeleteParams.FilterDocumentType::fromJson), filterDocumentType);
-    }
-
-    /**
-     * Narrows a <code>delete_all</code> to the sessions that match the <code>document_name</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
-     *
-     * @param filterDocumentName the value
-     * @return this builder
-     */
-    public Builder filterDocumentName(SessionsBatchDeleteParams.FilterDocumentName filterDocumentName) {
-      return set("filter_document_name", Conv.union(SessionsBatchDeleteParams.FilterDocumentName::fromJson), filterDocumentName);
     }
 
     /**
@@ -936,84 +916,6 @@ public final class SessionsBatchDeleteParams extends JsonModel {
      */
     public static FilterDocumentType ofList(List<String> value) {
       return new FilterDocumentType(Conv.list(Conv.STRING).write(value));
-    }
-
-    /**
-     * Whether this value is a {@code List}.
-     *
-     * @return true when it matches
-     */
-    public boolean isList() {
-      return json.isArray();
-    }
-
-    /**
-     * Reads this value as a {@code List}.
-     *
-     * @return the value, or empty when {@link #isList()} is false
-     */
-    public Optional<List<String>> asList() {
-      return isList() ? Optional.of(Conv.list(Conv.STRING).read(json)) : Optional.empty();
-    }
-  }
-
-  /**
-   * Narrows a <code>delete_all</code> to the sessions that match the <code>document_name</code> filter of [List Sessions](/sessions-api/list-sessions), with the same values. A comma-separated string or an array. Ignored without <code>delete_all</code>. An empty value is ignored and does not narrow the selection.
-   *
-   * <p>One of: {@code String}, {@code List}. Check with the {@code is...}
-   * methods and read with the {@code as...} methods.
-   */
-  public static final class FilterDocumentName extends JsonUnion {
-    private FilterDocumentName(JsonNode json) {
-      super(json);
-    }
-
-    /**
-     * Reads a {@code FilterDocumentName} from JSON.
-     *
-     * @param json any JSON value
-     * @return the union
-     */
-    public static FilterDocumentName fromJson(JsonNode json) {
-      return new FilterDocumentName(json.deepCopy());
-    }
-
-    /**
-     * Wraps a {@code String} value.
-     *
-     * @param value the value
-     * @return the union
-     */
-    public static FilterDocumentName ofString(String value) {
-      return new FilterDocumentName(Conv.STRING.write(value));
-    }
-
-    /**
-     * Whether this value is a {@code String}.
-     *
-     * @return true when it matches
-     */
-    public boolean isString() {
-      return json.isTextual();
-    }
-
-    /**
-     * Reads this value as a {@code String}.
-     *
-     * @return the value, or empty when {@link #isString()} is false
-     */
-    public Optional<String> asString() {
-      return isString() ? Optional.of(Conv.STRING.read(json)) : Optional.empty();
-    }
-
-    /**
-     * Wraps a {@code List} value.
-     *
-     * @param value the value
-     * @return the union
-     */
-    public static FilterDocumentName ofList(List<String> value) {
-      return new FilterDocumentName(Conv.list(Conv.STRING).write(value));
     }
 
     /**
