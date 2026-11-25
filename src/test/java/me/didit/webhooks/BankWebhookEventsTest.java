@@ -22,7 +22,6 @@ import java.util.stream.Stream;
 import me.didit.testing.TestJson;
 import me.didit.types.BankConnectionRevokedData;
 import me.didit.types.BankConnectionUpdatedData;
-import me.didit.types.BankLinkEventData;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
@@ -144,43 +143,60 @@ final class BankWebhookEventsTest {
   @Test
   void correlatesRenewalLinksAcrossRedeliveries() {
     Optional<String> target = Optional.of("cccccccc-0000-4000-8000-000000000001");
-    BankLinkEventData failed =
-        assertInstanceOf(BankLinkFailedEvent.class, verify("renewal_failed")).data();
+    BankLinkEvent failed = assertInstanceOf(BankLinkFailedEvent.class, verify("renewal_failed"));
     assertEquals(target, failed.renewsConnectionId());
-    assertEquals(Optional.empty(), failed.connectionId());
+    assertEquals(Optional.empty(), failed.data().connectionId());
+    assertEquals(target, renewalTarget(failed));
 
-    BankLinkEventData completed =
-        assertInstanceOf(BankLinkCompletedEvent.class, verify("renewal_completed")).data();
+    BankLinkEvent completed =
+        assertInstanceOf(BankLinkCompletedEvent.class, verify("renewal_completed"));
     assertEquals(target, completed.renewsConnectionId());
-    assertEquals(target, completed.connectionId());
+    assertEquals(target, completed.data().connectionId());
+    assertEquals(target, renewalTarget(completed));
 
-    BankLinkEventData legacy =
-        assertInstanceOf(BankLinkFailedEvent.class, verify("legacy_renewal_failed")).data();
+    BankLinkEvent legacy =
+        assertInstanceOf(BankLinkFailedEvent.class, verify("legacy_renewal_failed"));
     assertEquals(Optional.empty(), legacy.renewsConnectionId());
-    assertEquals(target, legacy.connectionId());
+    assertEquals(target, legacy.data().connectionId());
+    assertEquals(target, renewalTarget(legacy));
 
-    BankLinkEventData newLink =
-        assertInstanceOf(BankLinkCompletedEvent.class, verify("new_link_completed")).data();
+    BankLinkEvent newLink =
+        assertInstanceOf(BankLinkCompletedEvent.class, verify("new_link_completed"));
     assertEquals(Optional.empty(), newLink.renewsConnectionId());
+
+    BankLinkEvent stored =
+        assertInstanceOf(BankLinkCompletedEvent.class, verify(BankLinkCompletedEvent.TYPE));
+    assertEquals(Optional.empty(), stored.renewsConnectionId());
+    assertEquals(target, stored.data().connectionId());
+  }
+
+  /** The correlation the README documents: the renewal target when present, else the connection. */
+  private static Optional<String> renewalTarget(BankLinkEvent event) {
+    Optional<String> renews = event.renewsConnectionId();
+    return renews.isPresent() ? renews : event.data().connectionId();
   }
 
   @Test
   void readsBothConnectionUpdateShapes() {
-    BankConnectionUpdatedData pending =
-        assertInstanceOf(BankConnectionUpdatedEvent.class, verify(BankConnectionUpdatedEvent.TYPE))
-            .data();
-    assertEquals("pending", pending.revocationStatus().orElseThrow().value());
+    BankConnectionUpdatedEvent pending =
+        assertInstanceOf(
+            BankConnectionUpdatedEvent.class, verify(BankConnectionUpdatedEvent.TYPE));
+    assertEquals(
+        BankConnectionUpdatedData.RevocationStatus.PENDING,
+        pending.revocationStatus().orElseThrow());
     assertEquals(Optional.empty(), pending.statusReason());
     assertEquals(Optional.empty(), pending.endsAt());
 
-    BankConnectionUpdatedData due =
-        assertInstanceOf(BankConnectionUpdatedEvent.class, verify("payment_due")).data();
+    BankConnectionUpdatedEvent due =
+        assertInstanceOf(BankConnectionUpdatedEvent.class, verify("payment_due"));
+    assertEquals("paused", due.data().status().value());
     assertEquals(Optional.empty(), due.revocationStatus());
-    assertEquals("insufficient_balance", due.statusReason().orElseThrow().value());
+    assertEquals(Optional.of("insufficient_balance"), due.statusReason());
     assertEquals(OffsetDateTime.parse("2026-12-01T00:00:00Z"), due.endsAt().orElseThrow());
 
-    BankConnectionUpdatedData paid =
-        assertInstanceOf(BankConnectionUpdatedEvent.class, verify("payment_received")).data();
+    BankConnectionUpdatedEvent paid =
+        assertInstanceOf(BankConnectionUpdatedEvent.class, verify("payment_received"));
+    assertEquals("active", paid.data().status().value());
     assertEquals(Optional.empty(), paid.revocationStatus());
     assertEquals(Optional.empty(), paid.statusReason());
     assertEquals(Optional.empty(), paid.endsAt());
@@ -190,8 +206,7 @@ final class BankWebhookEventsTest {
   void readsUnpaidSystemRevocation() {
     BankConnectionRevokedData revoked =
         assertInstanceOf(BankConnectionRevokedEvent.class, verify("unpaid_revocation")).data();
-    assertEquals(
-        BankConnectionRevokedData.StatusReason.UNPAID, revoked.statusReason().orElseThrow());
+    assertEquals("unpaid", revoked.statusReason().orElseThrow().value());
     assertEquals(BankConnectionRevokedData.EndedBy.SYSTEM, revoked.endedBy());
   }
 
