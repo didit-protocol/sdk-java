@@ -16,7 +16,7 @@ import org.jspecify.annotations.Nullable;
 
 /** Ids and statuses of a link. No personal data. */
 public final class BankLinkEventData extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("link_id", "status", "connection_id", "check_id", "error_code");
+  private static final Set<String> KNOWN_FIELDS = Set.of("link_id", "status", "connection_id", "check_id", "error_code", "renews_connection_id");
 
   private BankLinkEventData(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -101,6 +101,16 @@ public final class BankLinkEventData extends JsonModel {
     return Json.optional(json, "error_code", Conv.enumeration(BankLinkEventData.ErrorCode::of));
   }
 
+  /**
+   * The connection a renewal link targets. Older deliveries may omit it.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> renewsConnectionId() {
+    return Json.optional(json, "renews_connection_id", Conv.STRING);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -162,6 +172,16 @@ public final class BankLinkEventData extends JsonModel {
      */
     public Builder errorCode(BankLinkEventData.@Nullable ErrorCode errorCode) {
       return setNullable("error_code", Conv.enumeration(BankLinkEventData.ErrorCode::of), errorCode);
+    }
+
+    /**
+     * The connection a renewal link targets. Older deliveries may omit it.
+     *
+     * @param renewsConnectionId the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder renewsConnectionId(@Nullable String renewsConnectionId) {
+      return setNullable("renews_connection_id", Conv.STRING, renewsConnectionId);
     }
 
     /**

@@ -136,6 +136,35 @@ def validate_sdk(key: str, sdk: Any, origin: str) -> dict[str, Any]:
     return sdk
 
 
+def apply_bank_webhook_fields(schemas: dict[str, Any]) -> None:
+    """Bridge the stored-delivery contract until mintlify-docs #849 and #856 sync."""
+    link = schemas.get("BankLinkEventData")
+    if link is not None:
+        link["properties"].setdefault("renews_connection_id", {
+            "type": "string", "format": "uuid", "nullable": True,
+            "description": "The connection a renewal link targets. Older deliveries may omit it.",
+        })
+
+    updated = schemas.get("BankConnectionUpdatedData")
+    if updated is not None:
+        if "revocation_status" in updated["required"]:
+            updated["required"].remove("revocation_status")
+        updated["properties"].setdefault("status_reason", {
+            "type": "string", "enum": ["insufficient_balance", "first_sync_failed", None],
+            "nullable": True, "description": "Why the connection is paused or failed.",
+        })
+        updated["properties"].setdefault("ends_at", {
+            "type": "string", "format": "date-time", "nullable": True,
+            "description": "When the connection ends unless its coming month is paid.",
+        })
+
+    revoked = schemas.get("BankConnectionRevokedData")
+    if revoked is not None:
+        reasons = revoked["properties"]["status_reason"]["enum"]
+        if "unpaid" not in reasons:
+            reasons.append("unpaid")
+
+
 def load(root: Path) -> Spec:
     """Reads ``openapi/`` under ``root`` and returns every operation with its SDK naming."""
     openapi = root / "openapi"
@@ -149,6 +178,8 @@ def load(root: Path) -> Spec:
     missing: list[str] = []
     for spec_name, file_name, key_prefix in SPECS:
         data = load_json(openapi / file_name)
+        if spec_name == "verification":
+            apply_bank_webhook_fields(data.get("components", {}).get("schemas", {}))
         doc = Document(file_name, data)
         docs[spec_name] = doc
         for path, path_item in data.get("paths", {}).items():
