@@ -571,7 +571,7 @@ public final class WebhookEventPayload extends JsonUnion {
   /**
    * Whether this value is a {@code BankConnectionUpdatedEvent}.
    *
-   * A connection's status changed in a way no other event reports. It is sent when a revocation starts: <code>revocation_status</code> is <code>pending</code> until the bank confirms, then <code>bank.connection.revoked</code> follows. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   * A connection's status changed in a way no other event reports. It is sent when a revocation starts (<code>revocation_status</code> is <code>pending</code> until the bank confirms, then <code>bank.connection.revoked</code> follows), when the coming month cannot be paid (with <code>ends_at</code>), one day before the deadline for a connection already told (the same <code>ends_at</code>), when that month is then paid (<code>ends_at: null</code>), when a connection pauses or resumes, and when a first read that was never started is given up (<code>status: failed</code>, <code>status_reason: first_sync_failed</code>). The pending-revocation payload has no <code>status_reason</code> and no <code>ends_at</code>; every other payload has both. Sent for live and sandbox applications. Ids, statuses, <code>status_reason</code> and <code>ends_at</code> only: fetch the object to read it.
    *
    * @return true when it matches
    */
@@ -691,7 +691,7 @@ public final class WebhookEventPayload extends JsonUnion {
   /**
    * Whether this value is a {@code BankConnectionRevokedEvent}.
    *
-   * Access ended: the person, the bank or you stopped it and the bank confirmed it, or Didit ended a one-time connection once its read was complete. <code>ended_by</code> says who ended it: <code>end_user</code>, <code>bank</code>, <code>customer</code> or <code>system</code>. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   * Access ended: the person, the bank or you stopped it and the bank confirmed it, or Didit ended it: a one-time connection once its read was complete (<code>status_reason: collection_complete</code>), or a connection whose coming month was not paid by the deadline (<code>status_reason: unpaid</code>). It is the final signal of an ending. <code>ended_by</code> says who ended it: <code>end_user</code>, <code>bank</code>, <code>customer</code> or <code>system</code>. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
    *
    * @return true when it matches
    */

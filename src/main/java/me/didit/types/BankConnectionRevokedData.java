@@ -75,7 +75,7 @@ public final class BankConnectionRevokedData extends JsonModel {
   }
 
   /**
-   * Who ended access. <code>system</code> when Didit ended it by design: a one-time connection once its read is complete.
+   * Who ended access. <code>system</code> when Didit ended it: a one-time connection once its read is complete (<code>status_reason: collection_complete</code>), or a connection whose coming month was not paid by the deadline (<code>status_reason: unpaid</code>).
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -85,7 +85,7 @@ public final class BankConnectionRevokedData extends JsonModel {
   }
 
   /**
-   * Why the connection is in this status.
+   * Why the connection is in this status. <code>unpaid</code>: the coming month was not paid by 20:00 UTC on the last day of the month before it, so Didit ended access and removed the connection at the bank; nothing more is charged. <code>bank.connection.revoked</code> with <code>unpaid</code> is the final signal of that ending.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -148,7 +148,7 @@ public final class BankConnectionRevokedData extends JsonModel {
     }
 
     /**
-     * Who ended access. <code>system</code> when Didit ended it by design: a one-time connection once its read is complete.
+     * Who ended access. <code>system</code> when Didit ended it: a one-time connection once its read is complete (<code>status_reason: collection_complete</code>), or a connection whose coming month was not paid by the deadline (<code>status_reason: unpaid</code>).
      *
      * @param endedBy the value
      * @return this builder
@@ -158,7 +158,7 @@ public final class BankConnectionRevokedData extends JsonModel {
     }
 
     /**
-     * Why the connection is in this status.
+     * Why the connection is in this status. <code>unpaid</code>: the coming month was not paid by 20:00 UTC on the last day of the month before it, so Didit ended access and removed the connection at the bank; nothing more is charged. <code>bank.connection.revoked</code> with <code>unpaid</code> is the final signal of that ending.
      *
      * @param statusReason the value, or {@code null} to send JSON null
      * @return this builder
@@ -250,7 +250,7 @@ public final class BankConnectionRevokedData extends JsonModel {
   }
 
   /**
-   * Who ended access. <code>system</code> when Didit ended it by design: a one-time connection once its read is complete.
+   * Who ended access. <code>system</code> when Didit ended it: a one-time connection once its read is complete (<code>status_reason: collection_complete</code>), or a connection whose coming month was not paid by the deadline (<code>status_reason: unpaid</code>).
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -302,7 +302,7 @@ public final class BankConnectionRevokedData extends JsonModel {
   }
 
   /**
-   * Why the connection is in this status.
+   * Why the connection is in this status. <code>unpaid</code>: the coming month was not paid by 20:00 UTC on the last day of the month before it, so Didit ended access and removed the connection at the bank; nothing more is charged. <code>bank.connection.revoked</code> with <code>unpaid</code> is the final signal of that ending.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -334,10 +334,13 @@ public final class BankConnectionRevokedData extends JsonModel {
     /** The value {@code "first_sync_failed"}. */
     public static final StatusReason FIRST_SYNC_FAILED = new StatusReason("first_sync_failed");
 
+    /** The value {@code "unpaid"}. */
+    public static final StatusReason UNPAID = new StatusReason("unpaid");
+
     /** The value {@code "collection_complete"}. */
     public static final StatusReason COLLECTION_COMPLETE = new StatusReason("collection_complete");
 
-    private static final List<StatusReason> KNOWN_VALUES = List.of(REVOKED_BY_END_USER, REVOKED_BY_BANK, REVOKED_BY_CUSTOMER, CONSENT_EXPIRED, CONSENT_LAPSED, BANK_REQUIRES_SIGN_IN, INSUFFICIENT_BALANCE, PAUSED_BY_CUSTOMER, FIRST_SYNC_FAILED, COLLECTION_COMPLETE);
+    private static final List<StatusReason> KNOWN_VALUES = List.of(REVOKED_BY_END_USER, REVOKED_BY_BANK, REVOKED_BY_CUSTOMER, CONSENT_EXPIRED, CONSENT_LAPSED, BANK_REQUIRES_SIGN_IN, INSUFFICIENT_BALANCE, PAUSED_BY_CUSTOMER, FIRST_SYNC_FAILED, UNPAID, COLLECTION_COMPLETE);
 
     private StatusReason(String value) {
       super(value);

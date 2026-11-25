@@ -4,6 +4,7 @@ package me.didit.types;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,7 +18,7 @@ import org.jspecify.annotations.Nullable;
 
 /** What this connection costs. Sandbox is never charged. */
 public final class BankConnectionBilling extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("unit", "price_usd", "billed_through");
+  private static final Set<String> KNOWN_FIELDS = Set.of("unit", "price_usd", "billed_through", "ends_at");
 
   private BankConnectionBilling(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -63,7 +64,7 @@ public final class BankConnectionBilling extends JsonModel {
   }
 
   /**
-   * Your price for the month meter today, for your application and the country, in USD, a decimal string with 4 decimals. A connection is charged for a month only when every accepted scope published data for at least one account in that month. <code>null</code> for one-time connections and in the sandbox. Ongoing access is billed per active connection per month; the current price is on the pricing page (https://docs.didit.me/getting-started/pricing). Amounts in examples are illustrative; the price for a country is shown on the pricing page.
+   * Your price for the month meter today, for your application and the country, in USD, a decimal string with 4 decimals. A connection is charged once for each calendar month (UTC) it is active: its first month when its first sync succeeds, and every later month in advance, in the last five days of the month before it, while the connection's consent reaches into it. A connection created in the last five days of a month whose first read starts in the next month needs both months covered together before that read: with funds for only one, the read fails and neither is charged. <code>null</code> for one-time connections and in the sandbox. Ongoing access is billed per active connection per month; the current price is on the pricing page (https://docs.didit.me/getting-started/pricing). Amounts in examples are illustrative; the price for a country is shown on the pricing page.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -80,6 +81,16 @@ public final class BankConnectionBilling extends JsonModel {
    */
   public Optional<LocalDate> billedThrough() {
     return Json.optional(json, "billed_through", Conv.DATE);
+  }
+
+  /**
+   * When the connection ends unless its coming month is paid first: 20:00 UTC on the last day of the month before it. Set once a payment of the coming month has failed, while the connection is <code>active</code> or <code>paused</code>. <code>null</code> when nothing has failed yet and once the month is paid, and also while the connection is <code>pending</code>, needs renewal, is being revoked or has ended, is a sandbox connection, or its consent ends before the month begins, so a <code>null</code> alone does not mean the month was paid.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> endsAt() {
+    return Json.optional(json, "ends_at", Conv.DATE_TIME);
   }
 
   @Override
@@ -106,7 +117,7 @@ public final class BankConnectionBilling extends JsonModel {
     }
 
     /**
-     * Your price for the month meter today, for your application and the country, in USD, a decimal string with 4 decimals. A connection is charged for a month only when every accepted scope published data for at least one account in that month. <code>null</code> for one-time connections and in the sandbox. Ongoing access is billed per active connection per month; the current price is on the pricing page (https://docs.didit.me/getting-started/pricing). Amounts in examples are illustrative; the price for a country is shown on the pricing page.
+     * Your price for the month meter today, for your application and the country, in USD, a decimal string with 4 decimals. A connection is charged once for each calendar month (UTC) it is active: its first month when its first sync succeeds, and every later month in advance, in the last five days of the month before it, while the connection's consent reaches into it. A connection created in the last five days of a month whose first read starts in the next month needs both months covered together before that read: with funds for only one, the read fails and neither is charged. <code>null</code> for one-time connections and in the sandbox. Ongoing access is billed per active connection per month; the current price is on the pricing page (https://docs.didit.me/getting-started/pricing). Amounts in examples are illustrative; the price for a country is shown on the pricing page.
      *
      * @param priceUsd the value, or {@code null} to send JSON null
      * @return this builder
@@ -126,6 +137,16 @@ public final class BankConnectionBilling extends JsonModel {
     }
 
     /**
+     * When the connection ends unless its coming month is paid first: 20:00 UTC on the last day of the month before it. Set once a payment of the coming month has failed, while the connection is <code>active</code> or <code>paused</code>. <code>null</code> when nothing has failed yet and once the month is paid, and also while the connection is <code>pending</code>, needs renewal, is being revoked or has ended, is a sandbox connection, or its consent ends before the month begins, so a <code>null</code> alone does not mean the month was paid.
+     *
+     * @param endsAt the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder endsAt(@Nullable OffsetDateTime endsAt) {
+      return setNullable("ends_at", Conv.DATE_TIME, endsAt);
+    }
+
+    /**
      * Builds the value.
      *
      * @return a new immutable {@code BankConnectionBilling}
@@ -135,6 +156,7 @@ public final class BankConnectionBilling extends JsonModel {
       require("unit", false);
       require("price_usd", true);
       require("billed_through", true);
+      require("ends_at", true);
       return new BankConnectionBilling(buildJson(), buildFiles());
     }
 
