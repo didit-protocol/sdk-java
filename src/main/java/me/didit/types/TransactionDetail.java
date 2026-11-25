@@ -1813,7 +1813,7 @@ public final class TransactionDetail extends JsonModel {
      * Normalized device context, including server-side IP enrichment under network_context (geolocation, VPN/data-center flags) when an IP was provided.
      */
     public static final class Device extends JsonModel {
-      private static final Set<String> KNOWN_FIELDS = Set.of("fingerprint", "persistent_device_id", "user_agent", "browser_family", "browser_version", "platform", "os_family", "os_version", "accept_language", "session_id", "session_age_ms", "network_context");
+      private static final Set<String> KNOWN_FIELDS = Set.of("fingerprint", "persistent_device_id", "user_agent", "browser_family", "browser_version", "platform", "os_family", "os_version", "accept_language", "session_id", "session_age_ms", "network_context", "metadata");
 
       private Device(ObjectNode json, Map<String, List<FileUpload>> files) {
         super(json, files);
@@ -1968,6 +1968,16 @@ public final class TransactionDetail extends JsonModel {
         return Json.optional(json, "network_context", Conv.model(TransactionDetail.Parties.Device.NetworkContext::fromJson));
       }
 
+      /**
+       * Further keys of the device context, free-form: the <code>metadata</code> that was sent, of any shape, returned as stored. For the subject (the <code>APPLICANT</code> party) of a transaction submitted from a device with a transaction token (<code>POST /v1/transactions/</code>, the Didit SDKs), Didit adds what it read from the request, such as <code>bot_score</code>.
+       *
+       * @return the value, or empty when the field is absent or null
+       * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+       */
+      public Optional<TransactionDetail.Parties.Device.Metadata> metadata() {
+        return Json.optional(json, "metadata", Conv.model(TransactionDetail.Parties.Device.Metadata::fromJson));
+      }
+
       @Override
       protected Set<String> knownFields() {
         return KNOWN_FIELDS;
@@ -2099,6 +2109,16 @@ public final class TransactionDetail extends JsonModel {
          */
         public Builder networkContext(TransactionDetail.Parties.Device.NetworkContext networkContext) {
           return set("network_context", Conv.model(TransactionDetail.Parties.Device.NetworkContext::fromJson), networkContext);
+        }
+
+        /**
+         * Further keys of the device context, free-form: the <code>metadata</code> that was sent, of any shape, returned as stored. For the subject (the <code>APPLICANT</code> party) of a transaction submitted from a device with a transaction token (<code>POST /v1/transactions/</code>, the Didit SDKs), Didit adds what it read from the request, such as <code>bot_score</code>.
+         *
+         * @param metadata the value
+         * @return this builder
+         */
+        public Builder metadata(TransactionDetail.Parties.Device.Metadata metadata) {
+          return set("metadata", Conv.model(TransactionDetail.Parties.Device.Metadata::fromJson), metadata);
         }
 
         /**
@@ -2253,6 +2273,94 @@ public final class TransactionDetail extends JsonModel {
            */
           public NetworkContext build() {
             return new NetworkContext(buildJson(), buildFiles());
+          }
+
+          @Override
+          protected Builder self() {
+            return this;
+          }
+        }
+      }
+
+      /**
+       * Further keys of the device context, free-form: the <code>metadata</code> that was sent, of any shape, returned as stored. For the subject (the <code>APPLICANT</code> party) of a transaction submitted from a device with a transaction token (<code>POST /v1/transactions/</code>, the Didit SDKs), Didit adds what it read from the request, such as <code>bot_score</code>.
+       */
+      public static final class Metadata extends JsonModel {
+        private static final Set<String> KNOWN_FIELDS = Set.of("bot_score");
+
+        private Metadata(ObjectNode json, Map<String, List<FileUpload>> files) {
+          super(json, files);
+        }
+
+        /**
+         * Reads a {@code Metadata} from JSON. Unknown fields are kept and readable
+         * through {@link #_additionalProperties()}.
+         *
+         * @param json a JSON object
+         * @return the parsed value
+         */
+        public static Metadata fromJson(JsonNode json) {
+          return new Metadata(Json.copyObject(json), Map.of());
+        }
+
+        /**
+         * Returns an empty builder.
+         *
+         * @return a new builder
+         */
+        public static Builder builder() {
+          return new Builder();
+        }
+
+        /**
+         * Returns a builder holding a copy of every field of this value.
+         *
+         * @return a new builder
+         */
+        public Builder toBuilder() {
+          return new Builder(this);
+        }
+
+        /**
+         * The device's automation score. Its type is not fixed for every party: read it as described here. For the subject (the <code>APPLICANT</code> party) of a transaction submitted from a device with a transaction token, Didit decides it on the server and it is a number from 0 (no sign of automation) to 1 (automated): from the request itself (a user agent that names an automation tool scores 1) and from what the SDK sent, which is what it read about how the page or app is driven or, from an older SDK version, its own score. Nothing the device sends can lower it, and a <code>bot_score</code> the device posts in its own device context is not kept. It is absent when Didit had nothing to decide it from: absent means unknown, not 0. For any other party, on a transaction your backend submitted with an API key, and on transactions stored before this behaviour, it is whatever was sent in <code>metadata</code>, unchanged and of whatever type it was sent.
+         *
+         * @return the value, or empty when the field is absent or null
+         * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+         */
+        public Optional<JsonNode> botScore() {
+          return Json.optional(json, "bot_score", Conv.ANY);
+        }
+
+        @Override
+        protected Set<String> knownFields() {
+          return KNOWN_FIELDS;
+        }
+
+        /** Builds a {@link Metadata}. */
+        public static final class Builder extends JsonModel.BaseBuilder<Builder> {
+          private Builder() {}
+
+          private Builder(Metadata from) {
+            super(from);
+          }
+
+          /**
+           * The device's automation score. Its type is not fixed for every party: read it as described here. For the subject (the <code>APPLICANT</code> party) of a transaction submitted from a device with a transaction token, Didit decides it on the server and it is a number from 0 (no sign of automation) to 1 (automated): from the request itself (a user agent that names an automation tool scores 1) and from what the SDK sent, which is what it read about how the page or app is driven or, from an older SDK version, its own score. Nothing the device sends can lower it, and a <code>bot_score</code> the device posts in its own device context is not kept. It is absent when Didit had nothing to decide it from: absent means unknown, not 0. For any other party, on a transaction your backend submitted with an API key, and on transactions stored before this behaviour, it is whatever was sent in <code>metadata</code>, unchanged and of whatever type it was sent.
+           *
+           * @param botScore the value
+           * @return this builder
+           */
+          public Builder botScore(@Nullable Object botScore) {
+            return setAny("bot_score", botScore);
+          }
+
+          /**
+           * Builds the value.
+           *
+           * @return a new immutable {@code Metadata}
+           */
+          public Metadata build() {
+            return new Metadata(buildJson(), buildFiles());
           }
 
           @Override
