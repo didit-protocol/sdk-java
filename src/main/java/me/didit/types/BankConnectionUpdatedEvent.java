@@ -3,23 +3,20 @@ package me.didit.types;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
-import org.jspecify.annotations.Nullable;
 
 /**
  * A connection's status changed in a way no other event reports. It is sent when a revocation starts: <code>revocation_status</code> is <code>pending</code> until the bank confirms, then <code>bank.connection.revoked</code> follows. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
  */
 public final class BankConnectionUpdatedEvent extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("event_id", "timestamp", "created_at", "application_id", "environment", "connection_id", "status", "revocation_status", "status_reason", "ends_at", "webhook_type");
+  private static final Set<String> KNOWN_FIELDS = Set.of("event_id", "timestamp", "created_at", "application_id", "environment", "connection_id", "status", "revocation_status", "webhook_type");
 
   private BankConnectionUpdatedEvent(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -127,31 +124,11 @@ public final class BankConnectionUpdatedEvent extends JsonModel {
   /**
    * <code>pending</code>: a revocation was requested and the bank has not confirmed it yet.
    *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
-  public Optional<BankConnectionUpdatedData.RevocationStatus> revocationStatus() {
-    return Json.optional(json, "revocation_status", Conv.enumeration(BankConnectionUpdatedData.RevocationStatus::of));
-  }
-
-  /**
-   * Why the connection is paused or failed.
-   *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-   */
-  public Optional<BankConnectionUpdatedData.StatusReason> statusReason() {
-    return Json.optional(json, "status_reason", Conv.enumeration(BankConnectionUpdatedData.StatusReason::of));
-  }
-
-  /**
-   * When the connection ends unless its coming month is paid.
-   *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-   */
-  public Optional<OffsetDateTime> endsAt() {
-    return Json.optional(json, "ends_at", Conv.DATE_TIME);
+  public BankConnectionUpdatedData.RevocationStatus revocationStatus() {
+    return Json.required(json, "revocation_status", Conv.enumeration(BankConnectionUpdatedData.RevocationStatus::of));
   }
 
   /**
@@ -258,26 +235,6 @@ public final class BankConnectionUpdatedEvent extends JsonModel {
     }
 
     /**
-     * Why the connection is paused or failed.
-     *
-     * @param statusReason the value, or {@code null} to send JSON null
-     * @return this builder
-     */
-    public Builder statusReason(BankConnectionUpdatedData.@Nullable StatusReason statusReason) {
-      return setNullable("status_reason", Conv.enumeration(BankConnectionUpdatedData.StatusReason::of), statusReason);
-    }
-
-    /**
-     * When the connection ends unless its coming month is paid.
-     *
-     * @param endsAt the value, or {@code null} to send JSON null
-     * @return this builder
-     */
-    public Builder endsAt(@Nullable OffsetDateTime endsAt) {
-      return setNullable("ends_at", Conv.DATE_TIME, endsAt);
-    }
-
-    /**
      * Always <code>bank.connection.updated</code>.
      *
      * @param webhookType the value
@@ -301,6 +258,7 @@ public final class BankConnectionUpdatedEvent extends JsonModel {
       require("environment", false);
       require("connection_id", false);
       require("status", false);
+      require("revocation_status", false);
       require("webhook_type", false);
       return new BankConnectionUpdatedEvent(buildJson(), buildFiles());
     }

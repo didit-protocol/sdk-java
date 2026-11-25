@@ -337,10 +337,7 @@ public final class BankConnectionRevokedData extends JsonModel {
     /** The value {@code "collection_complete"}. */
     public static final StatusReason COLLECTION_COMPLETE = new StatusReason("collection_complete");
 
-    /** The value {@code "unpaid"}. */
-    public static final StatusReason UNPAID = new StatusReason("unpaid");
-
-    private static final List<StatusReason> KNOWN_VALUES = List.of(REVOKED_BY_END_USER, REVOKED_BY_BANK, REVOKED_BY_CUSTOMER, CONSENT_EXPIRED, CONSENT_LAPSED, BANK_REQUIRES_SIGN_IN, INSUFFICIENT_BALANCE, PAUSED_BY_CUSTOMER, FIRST_SYNC_FAILED, COLLECTION_COMPLETE, UNPAID);
+    private static final List<StatusReason> KNOWN_VALUES = List.of(REVOKED_BY_END_USER, REVOKED_BY_BANK, REVOKED_BY_CUSTOMER, CONSENT_EXPIRED, CONSENT_LAPSED, BANK_REQUIRES_SIGN_IN, INSUFFICIENT_BALANCE, PAUSED_BY_CUSTOMER, FIRST_SYNC_FAILED, COLLECTION_COMPLETE);
 
     private StatusReason(String value) {
       super(value);
