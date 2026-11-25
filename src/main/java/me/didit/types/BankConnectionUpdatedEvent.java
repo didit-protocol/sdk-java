@@ -3,20 +3,23 @@ package me.didit.types;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
+import org.jspecify.annotations.Nullable;
 
 /**
- * A connection's status changed in a way no other event reports. It is sent when a revocation starts: <code>revocation_status</code> is <code>pending</code> until the bank confirms, then <code>bank.connection.revoked</code> follows. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+ * A connection's status changed in a way no other event reports. It is sent when a revocation starts (<code>revocation_status</code> is <code>pending</code> until the bank confirms, then <code>bank.connection.revoked</code> follows), when the coming month cannot be paid (with <code>ends_at</code>), one day before the deadline for a connection already told (the same <code>ends_at</code>), when that month is then paid (<code>ends_at: null</code>), when a connection pauses or resumes, and when a first read that was never started is given up (<code>status: failed</code>, <code>status_reason: first_sync_failed</code>). The pending-revocation payload has no <code>status_reason</code> and no <code>ends_at</code>; every other payload has both. Sent for live and sandbox applications. Ids, statuses, <code>status_reason</code> and <code>ends_at</code> only: fetch the object to read it.
  */
 public final class BankConnectionUpdatedEvent extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("event_id", "timestamp", "created_at", "application_id", "environment", "connection_id", "status", "revocation_status", "webhook_type");
+  private static final Set<String> KNOWN_FIELDS = Set.of("event_id", "timestamp", "created_at", "application_id", "environment", "connection_id", "status", "revocation_status", "status_reason", "ends_at", "webhook_type");
 
   private BankConnectionUpdatedEvent(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -122,13 +125,33 @@ public final class BankConnectionUpdatedEvent extends JsonModel {
   }
 
   /**
-   * <code>pending</code>: a revocation was requested and the bank has not confirmed it yet.
+   * <code>pending</code>: a revocation was requested and the bank has not confirmed it yet. Present only in the payload that announces the revocation.
    *
-   * @return the value
-   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public BankConnectionUpdatedData.RevocationStatus revocationStatus() {
-    return Json.required(json, "revocation_status", Conv.enumeration(BankConnectionUpdatedData.RevocationStatus::of));
+  public Optional<BankConnectionUpdatedData.RevocationStatus> revocationStatus() {
+    return Json.optional(json, "revocation_status", Conv.enumeration(BankConnectionUpdatedData.RevocationStatus::of));
+  }
+
+  /**
+   * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read was never started and was given up; <code>null</code> otherwise. Absent when a revocation starts.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<BankConnectionUpdatedData.StatusReason> statusReason() {
+    return Json.optional(json, "status_reason", Conv.enumeration(BankConnectionUpdatedData.StatusReason::of));
+  }
+
+  /**
+   * When the connection ends unless its coming month is paid first. An explicit <code>null</code> once the month is paid or when nothing is pending. Absent when a revocation starts.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> endsAt() {
+    return Json.optional(json, "ends_at", Conv.DATE_TIME);
   }
 
   /**
@@ -225,13 +248,33 @@ public final class BankConnectionUpdatedEvent extends JsonModel {
     }
 
     /**
-     * <code>pending</code>: a revocation was requested and the bank has not confirmed it yet.
+     * <code>pending</code>: a revocation was requested and the bank has not confirmed it yet. Present only in the payload that announces the revocation.
      *
      * @param revocationStatus the value
      * @return this builder
      */
     public Builder revocationStatus(BankConnectionUpdatedData.RevocationStatus revocationStatus) {
       return set("revocation_status", Conv.enumeration(BankConnectionUpdatedData.RevocationStatus::of), revocationStatus);
+    }
+
+    /**
+     * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read was never started and was given up; <code>null</code> otherwise. Absent when a revocation starts.
+     *
+     * @param statusReason the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder statusReason(BankConnectionUpdatedData.@Nullable StatusReason statusReason) {
+      return setNullable("status_reason", Conv.enumeration(BankConnectionUpdatedData.StatusReason::of), statusReason);
+    }
+
+    /**
+     * When the connection ends unless its coming month is paid first. An explicit <code>null</code> once the month is paid or when nothing is pending. Absent when a revocation starts.
+     *
+     * @param endsAt the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder endsAt(@Nullable OffsetDateTime endsAt) {
+      return setNullable("ends_at", Conv.DATE_TIME, endsAt);
     }
 
     /**
@@ -258,7 +301,6 @@ public final class BankConnectionUpdatedEvent extends JsonModel {
       require("environment", false);
       require("connection_id", false);
       require("status", false);
-      require("revocation_status", false);
       require("webhook_type", false);
       return new BankConnectionUpdatedEvent(buildJson(), buildFiles());
     }

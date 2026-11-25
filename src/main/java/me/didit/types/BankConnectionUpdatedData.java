@@ -3,20 +3,23 @@ package me.didit.types;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
+import org.jspecify.annotations.Nullable;
 
 /**
- * Fields of <code>bank.connection.updated</code>. The fields are at the top level of the body, next to the envelope fields.
+ * Fields of <code>bank.connection.updated</code>. The fields are at the top level of the body, next to the envelope fields. There are two shapes. When a revocation starts: <code>connection_id</code>, <code>status</code> and <code>revocation_status: pending</code>, with no <code>status_reason</code> and no <code>ends_at</code>. For every other trigger: <code>connection_id</code>, <code>status</code>, <code>status_reason</code> and <code>ends_at</code> (always present, a date-time or an explicit <code>null</code>), and no <code>revocation_status</code>.
  */
 public final class BankConnectionUpdatedData extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("connection_id", "status", "revocation_status");
+  private static final Set<String> KNOWN_FIELDS = Set.of("connection_id", "status", "revocation_status", "status_reason", "ends_at");
 
   private BankConnectionUpdatedData(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -72,13 +75,33 @@ public final class BankConnectionUpdatedData extends JsonModel {
   }
 
   /**
-   * <code>pending</code>: a revocation was requested and the bank has not confirmed it yet.
+   * <code>pending</code>: a revocation was requested and the bank has not confirmed it yet. Present only in the payload that announces the revocation.
    *
-   * @return the value
-   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public BankConnectionUpdatedData.RevocationStatus revocationStatus() {
-    return Json.required(json, "revocation_status", Conv.enumeration(BankConnectionUpdatedData.RevocationStatus::of));
+  public Optional<BankConnectionUpdatedData.RevocationStatus> revocationStatus() {
+    return Json.optional(json, "revocation_status", Conv.enumeration(BankConnectionUpdatedData.RevocationStatus::of));
+  }
+
+  /**
+   * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read was never started and was given up; <code>null</code> otherwise. Absent when a revocation starts.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<BankConnectionUpdatedData.StatusReason> statusReason() {
+    return Json.optional(json, "status_reason", Conv.enumeration(BankConnectionUpdatedData.StatusReason::of));
+  }
+
+  /**
+   * When the connection ends unless its coming month is paid first. An explicit <code>null</code> once the month is paid or when nothing is pending. Absent when a revocation starts.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<OffsetDateTime> endsAt() {
+    return Json.optional(json, "ends_at", Conv.DATE_TIME);
   }
 
   @Override
@@ -115,13 +138,33 @@ public final class BankConnectionUpdatedData extends JsonModel {
     }
 
     /**
-     * <code>pending</code>: a revocation was requested and the bank has not confirmed it yet.
+     * <code>pending</code>: a revocation was requested and the bank has not confirmed it yet. Present only in the payload that announces the revocation.
      *
      * @param revocationStatus the value
      * @return this builder
      */
     public Builder revocationStatus(BankConnectionUpdatedData.RevocationStatus revocationStatus) {
       return set("revocation_status", Conv.enumeration(BankConnectionUpdatedData.RevocationStatus::of), revocationStatus);
+    }
+
+    /**
+     * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read was never started and was given up; <code>null</code> otherwise. Absent when a revocation starts.
+     *
+     * @param statusReason the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder statusReason(BankConnectionUpdatedData.@Nullable StatusReason statusReason) {
+      return setNullable("status_reason", Conv.enumeration(BankConnectionUpdatedData.StatusReason::of), statusReason);
+    }
+
+    /**
+     * When the connection ends unless its coming month is paid first. An explicit <code>null</code> once the month is paid or when nothing is pending. Absent when a revocation starts.
+     *
+     * @param endsAt the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder endsAt(@Nullable OffsetDateTime endsAt) {
+      return setNullable("ends_at", Conv.DATE_TIME, endsAt);
     }
 
     /**
@@ -133,7 +176,6 @@ public final class BankConnectionUpdatedData extends JsonModel {
     public BankConnectionUpdatedData build() {
       require("connection_id", false);
       require("status", false);
-      require("revocation_status", false);
       return new BankConnectionUpdatedData(buildJson(), buildFiles());
     }
 
@@ -202,7 +244,7 @@ public final class BankConnectionUpdatedData extends JsonModel {
   }
 
   /**
-   * <code>pending</code>: a revocation was requested and the bank has not confirmed it yet.
+   * <code>pending</code>: a revocation was requested and the bank has not confirmed it yet. Present only in the payload that announces the revocation.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -232,6 +274,49 @@ public final class BankConnectionUpdatedData extends JsonModel {
      * @return the known values
      */
     public static List<RevocationStatus> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
+    }
+  }
+
+  /**
+   * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read was never started and was given up; <code>null</code> otherwise. Absent when a revocation starts.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class StatusReason extends StringEnum {
+    /** The value {@code "insufficient_balance"}. */
+    public static final StatusReason INSUFFICIENT_BALANCE = new StatusReason("insufficient_balance");
+
+    /** The value {@code "first_sync_failed"}. */
+    public static final StatusReason FIRST_SYNC_FAILED = new StatusReason("first_sync_failed");
+
+    private static final List<StatusReason> KNOWN_VALUES = List.of(INSUFFICIENT_BALANCE, FIRST_SYNC_FAILED);
+
+    private StatusReason(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static StatusReason of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, StatusReason::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<StatusReason> knownValues() {
       return KNOWN_VALUES;
     }
 

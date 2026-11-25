@@ -203,7 +203,7 @@ public final class BankConnectionConsent extends JsonModel {
   }
 
   /**
-   * Who ended access, set from evidence. <code>system</code> when Didit ended it by design: a one-time connection once its read is complete. <code>unknown</code> when neither the bank nor the sync says.
+   * Who ended access, set from evidence. <code>system</code> when Didit ended it: a one-time connection once its read is complete (<code>status_reason: collection_complete</code>), or a connection whose coming month was not paid by the deadline (<code>status_reason: unpaid</code>). <code>unknown</code> when neither the bank nor the sync says.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -376,7 +376,7 @@ public final class BankConnectionConsent extends JsonModel {
     }
 
     /**
-     * Who ended access, set from evidence. <code>system</code> when Didit ended it by design: a one-time connection once its read is complete. <code>unknown</code> when neither the bank nor the sync says.
+     * Who ended access, set from evidence. <code>system</code> when Didit ended it: a one-time connection once its read is complete (<code>status_reason: collection_complete</code>), or a connection whose coming month was not paid by the deadline (<code>status_reason: unpaid</code>). <code>unknown</code> when neither the bank nor the sync says.
      *
      * @param endedBy the value, or {@code null} to send JSON null
      * @return this builder
@@ -603,7 +603,7 @@ public final class BankConnectionConsent extends JsonModel {
   }
 
   /**
-   * Who ended access, set from evidence. <code>system</code> when Didit ended it by design: a one-time connection once its read is complete. <code>unknown</code> when neither the bank nor the sync says.
+   * Who ended access, set from evidence. <code>system</code> when Didit ended it: a one-time connection once its read is complete (<code>status_reason: collection_complete</code>), or a connection whose coming month was not paid by the deadline (<code>status_reason: unpaid</code>). <code>unknown</code> when neither the bank nor the sync says.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */

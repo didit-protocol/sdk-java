@@ -85,7 +85,7 @@ public final class BankConnection extends JsonModel {
   }
 
   /**
-   * <code>pending</code>: first sync running. <code>active</code>: consent valid. <code>renewal_required</code>: the consent ended or the bank wants the person to sign in again, data readable as last synced and nothing charged. <code>paused</code>: balance too low for the month. <code>revoked</code>: access stopped by the person, the bank or you, or ended because the read of a one-time connection is complete. <code>deleted</code>: only <code>id</code>, <code>status</code>, <code>status_reason</code>, <code>created_at</code> and <code>erasure</code> remain. The list returns these only for <code>status=deleted</code>; reading one by id always returns it. <code>failed</code>: the first sync never succeeded.
+   * <code>pending</code>: first sync running. <code>active</code>: consent valid. <code>renewal_required</code>: the consent ended or the bank wants the person to sign in again, data readable as last synced; a month that begins while it waits is not charged. <code>paused</code>: the current month could not be paid, so syncing stops. It resumes by itself once your balance covers the month: when a credit reaches your wallet, or at the daily check at 05:30 UTC. <code>revoked</code>: access stopped by the person, the bank or you, ended because the read of a one-time connection is complete, or ended by Didit because its coming month was not paid by the deadline (<code>status_reason: unpaid</code>). <code>deleted</code>: only <code>id</code>, <code>status</code>, <code>status_reason</code>, <code>created_at</code> and <code>erasure</code> remain. The list returns these only for <code>status=deleted</code>; reading one by id always returns it. <code>failed</code>: the first sync never succeeded.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -95,7 +95,7 @@ public final class BankConnection extends JsonModel {
   }
 
   /**
-   * Why the connection is in this status. <code>collection_complete</code>: a one-time connection whose read is complete, so its access has ended. <code>paused_by_customer</code> is reserved. On a <code>deleted</code> connection: <code>deleted_by_customer</code>, <code>consent_lapsed</code>, <code>retention_elapsed</code> or <code>application_deleted</code>.
+   * Why the connection is in this status. <code>collection_complete</code>: a one-time connection whose read is complete, so its access has ended. <code>paused_by_customer</code> is reserved. On a <code>deleted</code> connection: <code>deleted_by_customer</code>, <code>consent_lapsed</code>, <code>retention_elapsed</code> or <code>application_deleted</code>. <code>unpaid</code>: the coming month was not paid by 20:00 UTC on the last day of the month before it, so Didit ended access and removed the connection at the bank; nothing more is charged. <code>bank.connection.revoked</code> with this reason is the final signal of that ending.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -298,7 +298,7 @@ public final class BankConnection extends JsonModel {
     }
 
     /**
-     * <code>pending</code>: first sync running. <code>active</code>: consent valid. <code>renewal_required</code>: the consent ended or the bank wants the person to sign in again, data readable as last synced and nothing charged. <code>paused</code>: balance too low for the month. <code>revoked</code>: access stopped by the person, the bank or you, or ended because the read of a one-time connection is complete. <code>deleted</code>: only <code>id</code>, <code>status</code>, <code>status_reason</code>, <code>created_at</code> and <code>erasure</code> remain. The list returns these only for <code>status=deleted</code>; reading one by id always returns it. <code>failed</code>: the first sync never succeeded.
+     * <code>pending</code>: first sync running. <code>active</code>: consent valid. <code>renewal_required</code>: the consent ended or the bank wants the person to sign in again, data readable as last synced; a month that begins while it waits is not charged. <code>paused</code>: the current month could not be paid, so syncing stops. It resumes by itself once your balance covers the month: when a credit reaches your wallet, or at the daily check at 05:30 UTC. <code>revoked</code>: access stopped by the person, the bank or you, ended because the read of a one-time connection is complete, or ended by Didit because its coming month was not paid by the deadline (<code>status_reason: unpaid</code>). <code>deleted</code>: only <code>id</code>, <code>status</code>, <code>status_reason</code>, <code>created_at</code> and <code>erasure</code> remain. The list returns these only for <code>status=deleted</code>; reading one by id always returns it. <code>failed</code>: the first sync never succeeded.
      *
      * @param status the value
      * @return this builder
@@ -308,7 +308,7 @@ public final class BankConnection extends JsonModel {
     }
 
     /**
-     * Why the connection is in this status. <code>collection_complete</code>: a one-time connection whose read is complete, so its access has ended. <code>paused_by_customer</code> is reserved. On a <code>deleted</code> connection: <code>deleted_by_customer</code>, <code>consent_lapsed</code>, <code>retention_elapsed</code> or <code>application_deleted</code>.
+     * Why the connection is in this status. <code>collection_complete</code>: a one-time connection whose read is complete, so its access has ended. <code>paused_by_customer</code> is reserved. On a <code>deleted</code> connection: <code>deleted_by_customer</code>, <code>consent_lapsed</code>, <code>retention_elapsed</code> or <code>application_deleted</code>. <code>unpaid</code>: the coming month was not paid by 20:00 UTC on the last day of the month before it, so Didit ended access and removed the connection at the bank; nothing more is charged. <code>bank.connection.revoked</code> with this reason is the final signal of that ending.
      *
      * @param statusReason the value, or {@code null} to send JSON null
      * @return this builder
@@ -573,7 +573,7 @@ public final class BankConnection extends JsonModel {
   }
 
   /**
-   * <code>pending</code>: first sync running. <code>active</code>: consent valid. <code>renewal_required</code>: the consent ended or the bank wants the person to sign in again, data readable as last synced and nothing charged. <code>paused</code>: balance too low for the month. <code>revoked</code>: access stopped by the person, the bank or you, or ended because the read of a one-time connection is complete. <code>deleted</code>: only <code>id</code>, <code>status</code>, <code>status_reason</code>, <code>created_at</code> and <code>erasure</code> remain. The list returns these only for <code>status=deleted</code>; reading one by id always returns it. <code>failed</code>: the first sync never succeeded.
+   * <code>pending</code>: first sync running. <code>active</code>: consent valid. <code>renewal_required</code>: the consent ended or the bank wants the person to sign in again, data readable as last synced; a month that begins while it waits is not charged. <code>paused</code>: the current month could not be paid, so syncing stops. It resumes by itself once your balance covers the month: when a credit reaches your wallet, or at the daily check at 05:30 UTC. <code>revoked</code>: access stopped by the person, the bank or you, ended because the read of a one-time connection is complete, or ended by Didit because its coming month was not paid by the deadline (<code>status_reason: unpaid</code>). <code>deleted</code>: only <code>id</code>, <code>status</code>, <code>status_reason</code>, <code>created_at</code> and <code>erasure</code> remain. The list returns these only for <code>status=deleted</code>; reading one by id always returns it. <code>failed</code>: the first sync never succeeded.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -631,7 +631,7 @@ public final class BankConnection extends JsonModel {
   }
 
   /**
-   * Why the connection is in this status. <code>collection_complete</code>: a one-time connection whose read is complete, so its access has ended. <code>paused_by_customer</code> is reserved. On a <code>deleted</code> connection: <code>deleted_by_customer</code>, <code>consent_lapsed</code>, <code>retention_elapsed</code> or <code>application_deleted</code>.
+   * Why the connection is in this status. <code>collection_complete</code>: a one-time connection whose read is complete, so its access has ended. <code>paused_by_customer</code> is reserved. On a <code>deleted</code> connection: <code>deleted_by_customer</code>, <code>consent_lapsed</code>, <code>retention_elapsed</code> or <code>application_deleted</code>. <code>unpaid</code>: the coming month was not paid by 20:00 UTC on the last day of the month before it, so Didit ended access and removed the connection at the bank; nothing more is charged. <code>bank.connection.revoked</code> with this reason is the final signal of that ending.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
@@ -666,6 +666,9 @@ public final class BankConnection extends JsonModel {
     /** The value {@code "first_sync_failed"}. */
     public static final StatusReason FIRST_SYNC_FAILED = new StatusReason("first_sync_failed");
 
+    /** The value {@code "unpaid"}. */
+    public static final StatusReason UNPAID = new StatusReason("unpaid");
+
     /** The value {@code "deleted_by_customer"}. */
     public static final StatusReason DELETED_BY_CUSTOMER = new StatusReason("deleted_by_customer");
 
@@ -675,7 +678,7 @@ public final class BankConnection extends JsonModel {
     /** The value {@code "application_deleted"}. */
     public static final StatusReason APPLICATION_DELETED = new StatusReason("application_deleted");
 
-    private static final List<StatusReason> KNOWN_VALUES = List.of(COLLECTION_COMPLETE, CONSENT_EXPIRED, CONSENT_LAPSED, BANK_REQUIRES_SIGN_IN, REVOKED_BY_END_USER, REVOKED_BY_BANK, REVOKED_BY_CUSTOMER, INSUFFICIENT_BALANCE, PAUSED_BY_CUSTOMER, FIRST_SYNC_FAILED, DELETED_BY_CUSTOMER, RETENTION_ELAPSED, APPLICATION_DELETED);
+    private static final List<StatusReason> KNOWN_VALUES = List.of(COLLECTION_COMPLETE, CONSENT_EXPIRED, CONSENT_LAPSED, BANK_REQUIRES_SIGN_IN, REVOKED_BY_END_USER, REVOKED_BY_BANK, REVOKED_BY_CUSTOMER, INSUFFICIENT_BALANCE, PAUSED_BY_CUSTOMER, FIRST_SYNC_FAILED, UNPAID, DELETED_BY_CUSTOMER, RETENTION_ELAPSED, APPLICATION_DELETED);
 
     private StatusReason(String value) {
       super(value);
