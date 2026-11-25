@@ -19,7 +19,7 @@ import org.jspecify.annotations.Nullable;
  * One run of Bank Link for one person: connect a bank, or renew a connection. Confirm a link yourself with <code>get_link</code>: never trust an id sent by the browser.
  */
 public final class BankLink extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("id", "mode", "access", "status", "url", "client_token", "expires_at", "connection_id", "check_id", "reused", "error", "quote", "vendor_data");
+  private static final Set<String> KNOWN_FIELDS = Set.of("id", "mode", "access", "status", "url", "client_token", "expires_at", "connection_id", "renews_connection_id", "check_id", "reused", "error", "quote", "vendor_data");
 
   private BankLink(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -125,13 +125,23 @@ public final class BankLink extends JsonModel {
   }
 
   /**
-   * The connection this link created or renewed, once <code>status</code> is <code>completed</code>.
+   * The connection this link produced or renewed. <code>null</code> until the link completes, on every kind of link.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<String> connectionId() {
     return Json.optional(json, "connection_id", Conv.STRING);
+  }
+
+  /**
+   * The connection a renewal link (<code>mode: renew</code>) targets, set when the link is created; <code>null</code> on a link that renews nothing. Always present. <code>connection_id</code> stays <code>null</code> until the link completes.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> renewsConnectionId() {
+    return Json.optional(json, "renews_connection_id", Conv.STRING);
   }
 
   /**
@@ -268,13 +278,23 @@ public final class BankLink extends JsonModel {
     }
 
     /**
-     * The connection this link created or renewed, once <code>status</code> is <code>completed</code>.
+     * The connection this link produced or renewed. <code>null</code> until the link completes, on every kind of link.
      *
      * @param connectionId the value, or {@code null} to send JSON null
      * @return this builder
      */
     public Builder connectionId(@Nullable String connectionId) {
       return setNullable("connection_id", Conv.STRING, connectionId);
+    }
+
+    /**
+     * The connection a renewal link (<code>mode: renew</code>) targets, set when the link is created; <code>null</code> on a link that renews nothing. Always present. <code>connection_id</code> stays <code>null</code> until the link completes.
+     *
+     * @param renewsConnectionId the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder renewsConnectionId(@Nullable String renewsConnectionId) {
+      return setNullable("renews_connection_id", Conv.STRING, renewsConnectionId);
     }
 
     /**
@@ -342,6 +362,7 @@ public final class BankLink extends JsonModel {
       require("client_token", true);
       require("expires_at", false);
       require("connection_id", true);
+      require("renews_connection_id", true);
       require("check_id", true);
       require("reused", false);
       require("error", true);

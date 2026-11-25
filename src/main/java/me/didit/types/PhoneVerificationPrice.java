@@ -51,7 +51,7 @@ public final class PhoneVerificationPrice extends JsonModel {
   }
 
   /**
-   * What it cost, in USD.
+   * What it cost, in USD: the estimated price until <code>final</code> is true, then the price billing recorded for the attempt. Under a contract, your invoice prices each code at the contract's rate, which this amount does not show. <code>0.0000</code> in the sandbox.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -81,7 +81,7 @@ public final class PhoneVerificationPrice extends JsonModel {
   }
 
   /**
-   * false until the carrier reports delivery, then the reported price.
+   * true once billing has recorded the attempt's charge: on its delivery report or, when no delivery report comes, no later than a few minutes after the code's 5-minute validity ends. Until then <code>amount</code> is the estimated price. Always true in the sandbox, where nothing is charged.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -104,7 +104,7 @@ public final class PhoneVerificationPrice extends JsonModel {
     }
 
     /**
-     * What it cost, in USD.
+     * What it cost, in USD: the estimated price until <code>final</code> is true, then the price billing recorded for the attempt. Under a contract, your invoice prices each code at the contract's rate, which this amount does not show. <code>0.0000</code> in the sandbox.
      *
      * @param amount the value
      * @return this builder
@@ -134,7 +134,7 @@ public final class PhoneVerificationPrice extends JsonModel {
     }
 
     /**
-     * false until the carrier reports delivery, then the reported price.
+     * true once billing has recorded the attempt's charge: on its delivery report or, when no delivery report comes, no later than a few minutes after the code's 5-minute validity ends. Until then <code>amount</code> is the estimated price. Always true in the sandbox, where nothing is charged.
      *
      * @param final_ the value
      * @return this builder

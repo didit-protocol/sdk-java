@@ -153,7 +153,7 @@ public final class PhoneVerificationAttempt extends JsonModel {
   }
 
   /**
-   * True when the attempt has been billed or has a nonzero actual price. See <code>status</code> for the delivery outcome.
+   * True when the attempt has been billed or has a nonzero actual price. Always false in the sandbox, which charges nothing. See <code>status</code> for the delivery outcome.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -286,7 +286,7 @@ public final class PhoneVerificationAttempt extends JsonModel {
     }
 
     /**
-     * True when the attempt has been billed or has a nonzero actual price. See <code>status</code> for the delivery outcome.
+     * True when the attempt has been billed or has a nonzero actual price. Always false in the sandbox, which charges nothing. See <code>status</code> for the delivery outcome.
      *
      * @param charged the value
      * @return this builder

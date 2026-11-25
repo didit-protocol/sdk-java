@@ -119,7 +119,7 @@ public final class PhoneStatsRow extends JsonModel {
   }
 
   /**
-   * Spend in USD.
+   * Spend in USD. For <code>verification</code> and <code>lookups</code>: what Didit charged, debited from your balance or invoiced under a contract in USD. For <code>messages</code>: the price recorded on each message sent. <code>0.00</code> in the sandbox.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -212,7 +212,7 @@ public final class PhoneStatsRow extends JsonModel {
     }
 
     /**
-     * Spend in USD.
+     * Spend in USD. For <code>verification</code> and <code>lookups</code>: what Didit charged, debited from your balance or invoiced under a contract in USD. For <code>messages</code>: the price recorded on each message sent. <code>0.00</code> in the sandbox.
      *
      * @param spend the value
      * @return this builder
