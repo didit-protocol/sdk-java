@@ -10,9 +10,9 @@ import me.didit.types.BankConnectionUpdatedData;
  * {@code bank.connection.updated}: a connection's status changed in a way no other event reports.
  * It has two shapes. A revocation starting carries {@code connection_id}, {@code status} and {@code
  * revocation_status: pending} until the bank confirms it. Every other update carries {@code
- * connection_id}, {@code status}, {@code status_reason} and {@code ends_at}. Read the shape-specific
- * fields with {@link #revocationStatus()}, {@link #statusReason()} and {@link #endsAt()}, which are
- * empty when the field is absent or null.
+ * connection_id}, {@code status}, {@code status_reason} and {@code ends_at}. Read the
+ * shape-specific fields with {@link #revocationStatus()}, {@link #statusReason()} and {@link
+ * #endsAt()}, which are empty when the field is absent or null.
  */
 public final class BankConnectionUpdatedEvent extends BankEvent {
   /** The {@code webhook_type} of this event. */

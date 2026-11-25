@@ -179,8 +179,7 @@ final class BankWebhookEventsTest {
   @Test
   void readsBothConnectionUpdateShapes() {
     BankConnectionUpdatedEvent pending =
-        assertInstanceOf(
-            BankConnectionUpdatedEvent.class, verify(BankConnectionUpdatedEvent.TYPE));
+        assertInstanceOf(BankConnectionUpdatedEvent.class, verify(BankConnectionUpdatedEvent.TYPE));
     assertEquals(
         BankConnectionUpdatedData.RevocationStatus.PENDING,
         pending.revocationStatus().orElseThrow());
