@@ -1177,7 +1177,7 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
       }
 
       /**
-       * USD amount billed for this event. Non-zero only on send events (the delivery price); 0 for code entries, delivery confirmations, and status events.
+       * USD price of this event. Non-zero only on send events: the send's estimated price until billing charges it, then the price billing recorded for it. 0 for code entries, delivery confirmations, and status events, and 0 on every event in the sandbox.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1230,7 +1230,7 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
         }
 
         /**
-         * USD amount billed for this event. Non-zero only on send events (the delivery price); 0 for code entries, delivery confirmations, and status events.
+         * USD price of this event. Non-zero only on send events: the send's estimated price until billing charges it, then the price billing recorded for it. 0 for code entries, delivery confirmations, and status events, and 0 on every event in the sandbox.
          *
          * @param fee the value
          * @return this builder

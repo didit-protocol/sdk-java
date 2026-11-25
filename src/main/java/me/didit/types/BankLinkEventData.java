@@ -14,9 +14,11 @@ import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
-/** Ids and statuses of a link. No personal data. */
+/**
+ * Ids and statuses of a link. No personal data. <code>renews_connection_id</code> is optional and names the connection a renewal link targets; an older stored failed, cancelled or expired renewal event does not have it and carries that connection in <code>connection_id</code>. Every delivery attempt of one event carries the same body.
+ */
 public final class BankLinkEventData extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("link_id", "status", "connection_id", "check_id", "error_code");
+  private static final Set<String> KNOWN_FIELDS = Set.of("link_id", "status", "connection_id", "renews_connection_id", "check_id", "error_code");
 
   private BankLinkEventData(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -72,13 +74,23 @@ public final class BankLinkEventData extends JsonModel {
   }
 
   /**
-   * The connection the link created or renewed.
+   * The connection the link produced or renewed. <code>null</code> until the link completes.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
   public Optional<String> connectionId() {
     return Json.optional(json, "connection_id", Conv.STRING);
+  }
+
+  /**
+   * The connection a renewal link targets, set when the link was created; <code>null</code> on a link that renews nothing. Optional: a redelivery sends the stored body again, and an event stored before this field existed does not have the key. A receiver uses the key when it is there. An older failed, cancelled or expired renewal event without it carried the connection it was renewing in <code>connection_id</code>.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<String> renewsConnectionId() {
+    return Json.optional(json, "renews_connection_id", Conv.STRING);
   }
 
   /**
@@ -135,13 +147,23 @@ public final class BankLinkEventData extends JsonModel {
     }
 
     /**
-     * The connection the link created or renewed.
+     * The connection the link produced or renewed. <code>null</code> until the link completes.
      *
      * @param connectionId the value, or {@code null} to send JSON null
      * @return this builder
      */
     public Builder connectionId(@Nullable String connectionId) {
       return setNullable("connection_id", Conv.STRING, connectionId);
+    }
+
+    /**
+     * The connection a renewal link targets, set when the link was created; <code>null</code> on a link that renews nothing. Optional: a redelivery sends the stored body again, and an event stored before this field existed does not have the key. A receiver uses the key when it is there. An older failed, cancelled or expired renewal event without it carried the connection it was renewing in <code>connection_id</code>.
+     *
+     * @param renewsConnectionId the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder renewsConnectionId(@Nullable String renewsConnectionId) {
+      return setNullable("renews_connection_id", Conv.STRING, renewsConnectionId);
     }
 
     /**

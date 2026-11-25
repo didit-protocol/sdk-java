@@ -42,7 +42,7 @@ public final class PhoneVerificationsResource {
   /**
    * List or export verifications
    *
-   * <p>List your application's verifications, newest first. Filter by status, channel, phone number, reference, tag (<code>key:value</code>) or creation time. Use <code>limit</code> and <code>offset</code> to page through JSON results: <code>next</code> and <code>previous</code> are offsets, not URLs, so send <code>next</code> as <code>offset</code> to read the next page. Use <code>format=csv</code> to export all matching verifications. The <code>template</code> query parameter does not filter these records. Verification history does not return a <code>template_used</code> field.
+   * <p>List your application's verifications, newest first. Filter by status, channel, phone number, reference, tag (<code>key:value</code>) or creation time. Use <code>limit</code> and <code>offset</code> to page through JSON results: <code>next</code> and <code>previous</code> are offsets, not URLs, so send <code>next</code> as <code>offset</code> to read the next page. Use <code>format=csv</code> to export all matching verifications. The <code>template</code> query parameter does not filter these records. Verification history does not return a <code>template_used</code> field. A Phone risk lookup is not a verification and is not listed here: read lookups with <code>GET /v3/phone/lookups/</code>.
    *
    * <p>{@code GET /v3/phone/verifications/}
    * <p>Returns one page; iterate it to fetch every following page automatically.

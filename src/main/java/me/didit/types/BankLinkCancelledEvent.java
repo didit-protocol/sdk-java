@@ -112,7 +112,7 @@ public final class BankLinkCancelledEvent extends JsonModel {
   }
 
   /**
-   * Ids and statuses of a link. No personal data.
+   * Ids and statuses of a link. No personal data. <code>renews_connection_id</code> is optional and names the connection a renewal link targets; an older stored failed, cancelled or expired renewal event does not have it and carries that connection in <code>connection_id</code>. Every delivery attempt of one event carries the same body.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -195,7 +195,7 @@ public final class BankLinkCancelledEvent extends JsonModel {
     }
 
     /**
-     * Ids and statuses of a link. No personal data.
+     * Ids and statuses of a link. No personal data. <code>renews_connection_id</code> is optional and names the connection a renewal link targets; an older stored failed, cancelled or expired renewal event does not have it and carries that connection in <code>connection_id</code>. Every delivery attempt of one event carries the same body.
      *
      * @param data the value
      * @return this builder
