@@ -16,7 +16,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /**
- * A connection's status changed in a way no other event reports. It is sent when a revocation starts (<code>revocation_status</code> is <code>pending</code> until the bank confirms, then <code>bank.connection.revoked</code> follows), when the coming month cannot be paid (with <code>ends_at</code>), one day before the deadline for a connection already told (the same <code>ends_at</code>), when that month is then paid (<code>ends_at: null</code>), when a connection pauses or resumes, and when a first read that was never started is given up (<code>status: failed</code>, <code>status_reason: first_sync_failed</code>). The pending-revocation payload has no <code>status_reason</code> and no <code>ends_at</code>; every other payload has both. Sent for live and sandbox applications. Ids, statuses, <code>status_reason</code> and <code>ends_at</code> only: fetch the object to read it.
+ * A connection's status changed in a way no other event reports. It is sent when a revocation starts (<code>revocation_status</code> is <code>pending</code> until the bank confirms, then <code>bank.connection.revoked</code> follows), when the coming month cannot be paid (with <code>ends_at</code>), one day before the deadline for a connection already told (the same <code>ends_at</code>), when that month is then paid (<code>ends_at: null</code>), when a connection pauses or resumes, and when a connection's first read did not complete, whether it was never started and given up or it ran and failed with no retry left (<code>status: failed</code>, <code>status_reason: first_sync_failed</code>, or <code>insufficient_balance</code> when the read failed because the organization's balance could not pay the connection's month). A first-read failure that will be retried sends nothing. A failed connection is never read again and cannot be resumed: create a new link for the person to connect again. The pending-revocation payload has no <code>status_reason</code> and no <code>ends_at</code>; every other payload has both. Sent for live and sandbox applications. Ids, statuses, <code>status_reason</code> and <code>ends_at</code> only: fetch the object to read it.
  */
 public final class BankConnectionUpdatedEvent extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("event_id", "timestamp", "created_at", "application_id", "environment", "connection_id", "status", "revocation_status", "status_reason", "ends_at", "webhook_type");
@@ -135,7 +135,7 @@ public final class BankConnectionUpdatedEvent extends JsonModel {
   }
 
   /**
-   * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read was never started and was given up; <code>null</code> otherwise. Absent when a revocation starts.
+   * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read did not complete, whether it was never started or it failed with no retry left (the connection ends <code>failed</code>; when the read failed because the organization's balance could not pay the connection's month, the reason is <code>insufficient_balance</code> instead); <code>null</code> otherwise. Absent when a revocation starts.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -258,7 +258,7 @@ public final class BankConnectionUpdatedEvent extends JsonModel {
     }
 
     /**
-     * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read was never started and was given up; <code>null</code> otherwise. Absent when a revocation starts.
+     * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read did not complete, whether it was never started or it failed with no retry left (the connection ends <code>failed</code>; when the read failed because the organization's balance could not pay the connection's month, the reason is <code>insufficient_balance</code> instead); <code>null</code> otherwise. Absent when a revocation starts.
      *
      * @param statusReason the value, or {@code null} to send JSON null
      * @return this builder

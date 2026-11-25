@@ -1177,7 +1177,7 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
       }
 
       /**
-       * USD price of this event. Non-zero only on send events: the send's estimated price until billing charges it, then the price billing recorded for it. 0 for code entries, delivery confirmations, and status events, and 0 on every event in the sandbox.
+       * USD price of this event. Non-zero only on send events: the send's estimated price until billing records its charge, then the price billing recorded for it. A <code>Blocked</code> send is never charged. A send whose every message was reported undeliverable is not charged either, unless a later delivery report shows one of its messages was delivered: that report charges it. A send that is not charged reads 0 from billing close, a few minutes after the code's 5-minute validity ends, and a later delivery report that charges it replaces the 0 with that charge. 0 for code entries, delivery confirmations, and status events, and 0 on every event in the sandbox.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -1230,7 +1230,7 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
         }
 
         /**
-         * USD price of this event. Non-zero only on send events: the send's estimated price until billing charges it, then the price billing recorded for it. 0 for code entries, delivery confirmations, and status events, and 0 on every event in the sandbox.
+         * USD price of this event. Non-zero only on send events: the send's estimated price until billing records its charge, then the price billing recorded for it. A <code>Blocked</code> send is never charged. A send whose every message was reported undeliverable is not charged either, unless a later delivery report shows one of its messages was delivered: that report charges it. A send that is not charged reads 0 from billing close, a few minutes after the code's 5-minute validity ends, and a later delivery report that charges it replaces the 0 with that charge. 0 for code entries, delivery confirmations, and status events, and 0 on every event in the sandbox.
          *
          * @param fee the value
          * @return this builder

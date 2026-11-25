@@ -85,7 +85,7 @@ public final class BankConnectionUpdatedData extends JsonModel {
   }
 
   /**
-   * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read was never started and was given up; <code>null</code> otherwise. Absent when a revocation starts.
+   * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read did not complete, whether it was never started or it failed with no retry left (the connection ends <code>failed</code>; when the read failed because the organization's balance could not pay the connection's month, the reason is <code>insufficient_balance</code> instead); <code>null</code> otherwise. Absent when a revocation starts.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -148,7 +148,7 @@ public final class BankConnectionUpdatedData extends JsonModel {
     }
 
     /**
-     * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read was never started and was given up; <code>null</code> otherwise. Absent when a revocation starts.
+     * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read did not complete, whether it was never started or it failed with no retry left (the connection ends <code>failed</code>; when the read failed because the organization's balance could not pay the connection's month, the reason is <code>insufficient_balance</code> instead); <code>null</code> otherwise. Absent when a revocation starts.
      *
      * @param statusReason the value, or {@code null} to send JSON null
      * @return this builder
@@ -284,7 +284,7 @@ public final class BankConnectionUpdatedData extends JsonModel {
   }
 
   /**
-   * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read was never started and was given up; <code>null</code> otherwise. Absent when a revocation starts.
+   * Why the connection is paused or failed: <code>insufficient_balance</code> while it is paused for a month it could not pay; <code>first_sync_failed</code> when its first read did not complete, whether it was never started or it failed with no retry left (the connection ends <code>failed</code>; when the read failed because the organization's balance could not pay the connection's month, the reason is <code>insufficient_balance</code> instead); <code>null</code> otherwise. Absent when a revocation starts.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
