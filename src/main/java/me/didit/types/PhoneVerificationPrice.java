@@ -51,7 +51,7 @@ public final class PhoneVerificationPrice extends JsonModel {
   }
 
   /**
-   * What it cost, in USD: the estimated price until <code>final</code> is true, then the price billing recorded for the attempt. Under a contract, your invoice prices each code at the contract's rate, which this amount does not show. <code>0.0000</code> in the sandbox.
+   * What the attempt costs, in USD. It is the estimated price, with <code>final</code> false, until billing records a charge or billing close comes (a few minutes after the code's 5-minute validity ends). Once billing records a charge it is that charge, and <code>final</code> is true. An attempt that is not charged reads <code>0.0000</code> from billing close: final for a <code>Blocked</code> attempt, which is never charged, and not final (<code>final</code> false) for an attempt whose every message was reported undeliverable, because a later delivery report showing one of its messages was delivered charges it and replaces the <code>0.0000</code>. Under a contract, your invoice prices each code at the contract's rate, which this amount does not show. <code>0.0000</code> in the sandbox.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -81,7 +81,7 @@ public final class PhoneVerificationPrice extends JsonModel {
   }
 
   /**
-   * true once billing has recorded the attempt's charge: on its delivery report or, when no delivery report comes, no later than a few minutes after the code's 5-minute validity ends. Until then <code>amount</code> is the estimated price. Always true in the sandbox, where nothing is charged.
+   * true once billing has recorded the attempt's charge (on its delivery report or, when no report comes, at billing close, a few minutes after the code's 5-minute validity ends), and from billing close for a <code>Blocked</code> attempt, which is never charged (<code>amount</code> <code>0.0000</code>). false while <code>amount</code> is the estimated price before billing close, and for an attempt whose every message was reported undeliverable: it reads <code>amount</code> <code>0.0000</code> from billing close, but a later delivery report showing one of its messages was delivered charges it. Always true in the sandbox, where nothing is charged.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -104,7 +104,7 @@ public final class PhoneVerificationPrice extends JsonModel {
     }
 
     /**
-     * What it cost, in USD: the estimated price until <code>final</code> is true, then the price billing recorded for the attempt. Under a contract, your invoice prices each code at the contract's rate, which this amount does not show. <code>0.0000</code> in the sandbox.
+     * What the attempt costs, in USD. It is the estimated price, with <code>final</code> false, until billing records a charge or billing close comes (a few minutes after the code's 5-minute validity ends). Once billing records a charge it is that charge, and <code>final</code> is true. An attempt that is not charged reads <code>0.0000</code> from billing close: final for a <code>Blocked</code> attempt, which is never charged, and not final (<code>final</code> false) for an attempt whose every message was reported undeliverable, because a later delivery report showing one of its messages was delivered charges it and replaces the <code>0.0000</code>. Under a contract, your invoice prices each code at the contract's rate, which this amount does not show. <code>0.0000</code> in the sandbox.
      *
      * @param amount the value
      * @return this builder
@@ -134,7 +134,7 @@ public final class PhoneVerificationPrice extends JsonModel {
     }
 
     /**
-     * true once billing has recorded the attempt's charge: on its delivery report or, when no delivery report comes, no later than a few minutes after the code's 5-minute validity ends. Until then <code>amount</code> is the estimated price. Always true in the sandbox, where nothing is charged.
+     * true once billing has recorded the attempt's charge (on its delivery report or, when no report comes, at billing close, a few minutes after the code's 5-minute validity ends), and from billing close for a <code>Blocked</code> attempt, which is never charged (<code>amount</code> <code>0.0000</code>). false while <code>amount</code> is the estimated price before billing close, and for an attempt whose every message was reported undeliverable: it reads <code>amount</code> <code>0.0000</code> from billing close, but a later delivery report showing one of its messages was delivered charges it. Always true in the sandbox, where nothing is charged.
      *
      * @param final_ the value
      * @return this builder
