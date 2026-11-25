@@ -17,7 +17,7 @@ import me.didit.core.StringEnum;
 
 /** Parameters for {&#64;code sessions.list}. */
 public final class SessionsListParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("session_kind", "limit", "offset", "status", "vendor_data", "search", "workflow_id", "date_from", "date_to", "tags", "decided_from", "decided_to", "country", "document_type", "document_name", "region", "didit_internal_id", "session_type", "api_service", "screened_full_name", "warning", "status_initialized_as_in_review", "is_kyc_to_be_reviewed", "euuid", "organization_name");
+  private static final Set<String> KNOWN_FIELDS = Set.of("session_kind", "limit", "offset", "status", "vendor_data", "search", "workflow_id", "date_from", "date_to", "tags", "decided_from", "decided_to", "country", "document_type", "region", "didit_internal_id", "session_type", "api_service", "screened_full_name", "warning", "status_initialized_as_in_review", "is_kyc_to_be_reviewed", "euuid", "organization_name");
 
   private SessionsListParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -190,16 +190,6 @@ public final class SessionsListParams extends JsonModel {
    */
   public Optional<String> documentType() {
     return Json.optional(json, "document_type", Conv.STRING);
-  }
-
-  /**
-   * Exact document names; multiple names can be passed comma-separated, but the value is only split on commas when it contains more than one <code> - </code> separator (a lone name with an embedded comma is matched whole). Names are as recognized by document verification (front or back side), e.g. <code>Spain - Id Card (2021)</code>. KYC rows only.
-   *
-   * @return the value, or empty when the field is absent or null
-   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
-   */
-  public Optional<String> documentName() {
-    return Json.optional(json, "document_name", Conv.STRING);
   }
 
   /**
@@ -453,16 +443,6 @@ public final class SessionsListParams extends JsonModel {
      */
     public Builder documentType(String documentType) {
       return set("document_type", Conv.STRING, documentType);
-    }
-
-    /**
-     * Exact document names; multiple names can be passed comma-separated, but the value is only split on commas when it contains more than one <code> - </code> separator (a lone name with an embedded comma is matched whole). Names are as recognized by document verification (front or back side), e.g. <code>Spain - Id Card (2021)</code>. KYC rows only.
-     *
-     * @param documentName the value
-     * @return this builder
-     */
-    public Builder documentName(String documentName) {
-      return set("document_name", Conv.STRING, documentName);
     }
 
     /**

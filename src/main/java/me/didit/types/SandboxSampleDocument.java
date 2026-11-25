@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 import org.jspecify.annotations.Nullable;
 
 public final class SandboxSampleDocument extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("sandbox_sample", "document_name", "is_default", "first_name", "last_name", "date_of_birth", "gender", "nationality", "id_country", "identification_number");
+  private static final Set<String> KNOWN_FIELDS = Set.of("sandbox_sample", "document_type", "is_default", "first_name", "last_name", "date_of_birth", "gender", "nationality", "id_country", "identification_number");
 
   private SandboxSampleDocument(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -60,13 +60,13 @@ public final class SandboxSampleDocument extends JsonModel {
   }
 
   /**
-   * The document the sandbox OCR mock returns.
+   * The type of the document the sandbox OCR mock returns: <code>P</code> (Passport), <code>ID</code> (Identity Card), <code>DL</code> (Driver's License) or <code>RP</code> (Residence Permit). Its issuing country is <code>id_country</code>.
    *
-   * @return the value
-   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
    */
-  public String documentName() {
-    return Json.required(json, "document_name", Conv.STRING);
+  public Optional<String> documentType() {
+    return Json.optional(json, "document_type", Conv.STRING);
   }
 
   /**
@@ -173,13 +173,13 @@ public final class SandboxSampleDocument extends JsonModel {
     }
 
     /**
-     * The document the sandbox OCR mock returns.
+     * The type of the document the sandbox OCR mock returns: <code>P</code> (Passport), <code>ID</code> (Identity Card), <code>DL</code> (Driver's License) or <code>RP</code> (Residence Permit). Its issuing country is <code>id_country</code>.
      *
-     * @param documentName the value
+     * @param documentType the value, or {@code null} to send JSON null
      * @return this builder
      */
-    public Builder documentName(String documentName) {
-      return set("document_name", Conv.STRING, documentName);
+    public Builder documentType(@Nullable String documentType) {
+      return setNullable("document_type", Conv.STRING, documentType);
     }
 
     /**
@@ -270,7 +270,7 @@ public final class SandboxSampleDocument extends JsonModel {
      */
     public SandboxSampleDocument build() {
       require("sandbox_sample", true);
-      require("document_name", false);
+      require("document_type", true);
       require("is_default", false);
       return new SandboxSampleDocument(buildJson(), buildFiles());
     }
