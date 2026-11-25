@@ -84,7 +84,7 @@ public final class BankInstitution extends JsonModel {
   }
 
   /**
-   * The address of the bank's logo hosted by Didit.
+   * The address of the bank's logo hosted by Didit, or <code>null</code> when Didit has no logo for the bank.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -317,7 +317,7 @@ public final class BankInstitution extends JsonModel {
     }
 
     /**
-     * The address of the bank's logo hosted by Didit.
+     * The address of the bank's logo hosted by Didit, or <code>null</code> when Didit has no logo for the bank.
      *
      * @param logoUrl the value, or {@code null} to send JSON null
      * @return this builder
