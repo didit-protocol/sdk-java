@@ -173,7 +173,7 @@ public final class BankConnectionConsent extends JsonModel {
   }
 
   /**
-   * The last moment the same connection can be revived after the consent ended. After it the person connects again. It equals <code>retain_until</code>.
+   * The last moment the same connection can be renewed with its renewal link after access ended. <code>null</code> while access has not ended and whenever the connection cannot be renewed, so a non-null value is the test for a renewal and <code>ended_by</code> does not decide it. After it the person connects again.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -346,7 +346,7 @@ public final class BankConnectionConsent extends JsonModel {
     }
 
     /**
-     * The last moment the same connection can be revived after the consent ended. After it the person connects again. It equals <code>retain_until</code>.
+     * The last moment the same connection can be renewed with its renewal link after access ended. <code>null</code> while access has not ended and whenever the connection cannot be renewed, so a non-null value is the test for a renewal and <code>ended_by</code> does not decide it. After it the person connects again.
      *
      * @param renewableUntil the value, or {@code null} to send JSON null
      * @return this builder
