@@ -154,7 +154,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * Ongoing only. How many days to ask the bank to keep access open, 1 or more. Default: the longest the bank allows. The connection reports the date the bank actually granted in <code>consent.expires_at</code>. With <code>access: one_time</code> it answers <code>400 invalid_request</code> with <code>field: consent_days</code>.
+   * Ongoing only. How many days to ask the bank to keep access open, 1 or more. Default: the longest the bank allows. On a renewal link that sends none, the bank is asked for the length the person chose before, never above the bank's maximum; only a connection with no recorded length is asked for the maximum. The connection reports the date the bank actually granted in <code>consent.expires_at</code>. With <code>access: one_time</code> it answers <code>400 invalid_request</code> with <code>field: consent_days</code>.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -387,7 +387,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * Ongoing only. How many days to ask the bank to keep access open, 1 or more. Default: the longest the bank allows. The connection reports the date the bank actually granted in <code>consent.expires_at</code>. With <code>access: one_time</code> it answers <code>400 invalid_request</code> with <code>field: consent_days</code>.
+     * Ongoing only. How many days to ask the bank to keep access open, 1 or more. Default: the longest the bank allows. On a renewal link that sends none, the bank is asked for the length the person chose before, never above the bank's maximum; only a connection with no recorded length is asked for the maximum. The connection reports the date the bank actually granted in <code>consent.expires_at</code>. With <code>access: one_time</code> it answers <code>400 invalid_request</code> with <code>field: consent_days</code>.
      *
      * @param consentDays the value
      * @return this builder

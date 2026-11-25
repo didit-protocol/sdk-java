@@ -939,7 +939,7 @@ public final class BankVerificationResult extends JsonModel {
 
   /** The latest attempt's connection. <code>null</code> before the first attempt. */
   public static final class Connection extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("status", "institution_id", "institution_name", "institution_country", "oauth", "connected_at", "consent_expires_at", "last_refreshed_at", "attempts", "reason_code");
+    private static final Set<String> KNOWN_FIELDS = Set.of("status", "institution_id", "institution_name", "logo_url", "institution_country", "oauth", "connected_at", "consent_expires_at", "last_refreshed_at", "attempts", "reason_code");
 
     private Connection(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -1002,6 +1002,16 @@ public final class BankVerificationResult extends JsonModel {
      */
     public Optional<String> institutionName() {
       return Json.optional(json, "institution_name", Conv.STRING);
+    }
+
+    /**
+     * The address of the bank's logo hosted by Didit, or <code>null</code> when Didit has no logo for the bank. <code>null</code> for an account check, where no bank is picked. Returned with <code>institution_name</code>.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> logoUrl() {
+      return Json.optional(json, "logo_url", Conv.STRING);
     }
 
     /**
@@ -1115,6 +1125,16 @@ public final class BankVerificationResult extends JsonModel {
        */
       public Builder institutionName(@Nullable String institutionName) {
         return setNullable("institution_name", Conv.STRING, institutionName);
+      }
+
+      /**
+       * The address of the bank's logo hosted by Didit, or <code>null</code> when Didit has no logo for the bank. <code>null</code> for an account check, where no bank is picked. Returned with <code>institution_name</code>.
+       *
+       * @param logoUrl the value, or {@code null} to send JSON null
+       * @return this builder
+       */
+      public Builder logoUrl(@Nullable String logoUrl) {
+        return setNullable("logo_url", Conv.STRING, logoUrl);
       }
 
       /**
