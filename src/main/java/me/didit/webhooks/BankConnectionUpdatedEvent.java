@@ -16,7 +16,7 @@ public final class BankConnectionUpdatedEvent extends BankEvent {
   }
 
   /**
-   * The connection id, status and revocation status.
+   * The connection id and status, with a pending revocation or an update reason and end time.
    *
    * @return the connection data
    */

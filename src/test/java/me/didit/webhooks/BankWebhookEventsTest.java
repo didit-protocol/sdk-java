@@ -12,12 +12,17 @@ import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 import me.didit.testing.TestJson;
+import me.didit.types.BankConnectionRevokedData;
+import me.didit.types.BankConnectionUpdatedData;
+import me.didit.types.BankLinkEventData;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
@@ -136,8 +141,62 @@ final class BankWebhookEventsTest {
     assertEquals("bank_unavailable", failed.data().errorCode());
   }
 
-  private static WebhookEvent verify(String type) {
-    JsonNode vector = vector(type);
+  @Test
+  void correlatesRenewalLinksAcrossRedeliveries() {
+    Optional<String> target = Optional.of("cccccccc-0000-4000-8000-000000000001");
+    BankLinkEventData failed =
+        assertInstanceOf(BankLinkFailedEvent.class, verify("renewal_failed")).data();
+    assertEquals(target, failed.renewsConnectionId());
+    assertEquals(Optional.empty(), failed.connectionId());
+
+    BankLinkEventData completed =
+        assertInstanceOf(BankLinkCompletedEvent.class, verify("renewal_completed")).data();
+    assertEquals(target, completed.renewsConnectionId());
+    assertEquals(target, completed.connectionId());
+
+    BankLinkEventData legacy =
+        assertInstanceOf(BankLinkFailedEvent.class, verify("legacy_renewal_failed")).data();
+    assertEquals(Optional.empty(), legacy.renewsConnectionId());
+    assertEquals(target, legacy.connectionId());
+
+    BankLinkEventData newLink =
+        assertInstanceOf(BankLinkCompletedEvent.class, verify("new_link_completed")).data();
+    assertEquals(Optional.empty(), newLink.renewsConnectionId());
+  }
+
+  @Test
+  void readsBothConnectionUpdateShapes() {
+    BankConnectionUpdatedData pending =
+        assertInstanceOf(BankConnectionUpdatedEvent.class, verify(BankConnectionUpdatedEvent.TYPE))
+            .data();
+    assertEquals("pending", pending.revocationStatus().orElseThrow().value());
+    assertEquals(Optional.empty(), pending.statusReason());
+    assertEquals(Optional.empty(), pending.endsAt());
+
+    BankConnectionUpdatedData due =
+        assertInstanceOf(BankConnectionUpdatedEvent.class, verify("payment_due")).data();
+    assertEquals(Optional.empty(), due.revocationStatus());
+    assertEquals("insufficient_balance", due.statusReason().orElseThrow().value());
+    assertEquals(OffsetDateTime.parse("2026-12-01T00:00:00Z"), due.endsAt().orElseThrow());
+
+    BankConnectionUpdatedData paid =
+        assertInstanceOf(BankConnectionUpdatedEvent.class, verify("payment_received")).data();
+    assertEquals(Optional.empty(), paid.revocationStatus());
+    assertEquals(Optional.empty(), paid.statusReason());
+    assertEquals(Optional.empty(), paid.endsAt());
+  }
+
+  @Test
+  void readsUnpaidSystemRevocation() {
+    BankConnectionRevokedData revoked =
+        assertInstanceOf(BankConnectionRevokedEvent.class, verify("unpaid_revocation")).data();
+    assertEquals(
+        BankConnectionRevokedData.StatusReason.UNPAID, revoked.statusReason().orElseThrow());
+    assertEquals(BankConnectionRevokedData.EndedBy.SYSTEM, revoked.endedBy());
+  }
+
+  private static WebhookEvent verify(String name) {
+    JsonNode vector = vector(name.replace('.', '_'));
     Map<String, String> headers = new LinkedHashMap<>();
     vector.get("headers").properties().forEach(e -> headers.put(e.getKey(), e.getValue().asText()));
     VerifyOptions options =
@@ -149,16 +208,12 @@ final class BankWebhookEventsTest {
     return Webhooks.verify(vector.get("body").asText(), headers, options);
   }
 
-  private static JsonNode vector(String type) {
+  private static JsonNode vector(String name) {
     for (JsonNode vector : BANK_VECTORS.get("vectors")) {
-      if (vector.get("name").asText().endsWith("_rotation")) {
-        continue;
-      }
-      JsonNode payload = TestJson.parse(vector.get("body").asText());
-      if (type.equals(payload.get("webhook_type").asText())) {
+      if (name.equals(vector.get("name").asText())) {
         return vector;
       }
     }
-    throw new AssertionError("No webhook vector for " + type);
+    throw new AssertionError("No webhook vector for " + name);
   }
 }

@@ -15,7 +15,7 @@ public abstract class BankLinkEvent extends BankEvent {
   }
 
   /**
-   * The link id, status, connection, ownership check and error code.
+   * The link id, status, resulting connection, renewal target, ownership check and error code.
    *
    * @return the link data
    */
