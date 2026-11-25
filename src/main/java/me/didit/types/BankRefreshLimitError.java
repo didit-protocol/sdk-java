@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 import org.jspecify.annotations.Nullable;
 
 /**
- * The refresh limit error with the connection's <code>sync</code> limits. <code>Retry-After</code> carries the seconds until the budget resets, between 1 and 86400.
+ * The refresh error with the connection's <code>sync</code> limits: <code>refresh_limit_reached</code> (the day's budget is used up; <code>Retry-After</code> is the seconds until it resets) or <code>refresh_too_soon</code> (the bank is resting after its last read; <code>Retry-After</code> is the seconds until the rest ends). Both are between 1 and 86400 seconds.
  */
 public final class BankRefreshLimitError extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("code", "message", "request_id", "field", "next_action", "retry_after", "sync");
