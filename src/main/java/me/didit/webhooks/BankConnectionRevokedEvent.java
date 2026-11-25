@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import me.didit.types.BankConnectionRevokedData;
 
 /**
- * {@code bank.connection.revoked}: access ended and the bank confirmed it. {@code ended_by} says
- * whether the person, the bank or the customer ended it.
+ * {@code bank.connection.revoked}: access ended. A {@code system} revocation can indicate an unpaid
+ * coming month or a completed one-time read.
  */
 public final class BankConnectionRevokedEvent extends BankEvent {
   /** The {@code webhook_type} of this event. */
