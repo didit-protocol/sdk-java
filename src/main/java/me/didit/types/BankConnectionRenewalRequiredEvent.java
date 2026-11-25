@@ -145,7 +145,7 @@ public final class BankConnectionRenewalRequiredEvent extends JsonModel {
   }
 
   /**
-   * The last moment the same connection can be revived. After it the person connects again.
+   * The last moment the same connection can be renewed. After it the person connects again.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -268,7 +268,7 @@ public final class BankConnectionRenewalRequiredEvent extends JsonModel {
     }
 
     /**
-     * The last moment the same connection can be revived. After it the person connects again.
+     * The last moment the same connection can be renewed. After it the person connects again.
      *
      * @param renewableUntil the value, or {@code null} to send JSON null
      * @return this builder
