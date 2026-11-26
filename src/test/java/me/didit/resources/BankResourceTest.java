@@ -239,7 +239,7 @@ final class BankResourceTest {
 
   @Test
   void renewConnection() {
-    BankRenewLinkRequest params = BankRenewLinkRequest.builder().redirectUrl("https://example.com/callback").allowedOrigins(List.of("https://example.com/callback")).language("value-language").expiresIn(1L).build();
+    BankRenewLinkRequest params = BankRenewLinkRequest.builder().redirectUrl("https://example.com/callback").allowedOrigins(List.of("https://example.com/callback")).language("value-language").expiresIn(1L).consentDays(1L).build();
     RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/bank/connections/{id}/renew/", "201");
     transport.respondJson(201, example);
@@ -251,7 +251,7 @@ final class BankResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
-    TestJson.assertJsonEquals("{\"redirect_url\":\"https://example.com/callback\",\"allowed_origins\":[\"https://example.com/callback\"],\"language\":\"value-language\",\"expires_in\":1}", request.body());
+    TestJson.assertJsonEquals("{\"redirect_url\":\"https://example.com/callback\",\"allowed_origins\":[\"https://example.com/callback\"],\"language\":\"value-language\",\"expires_in\":1,\"consent_days\":1}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }
