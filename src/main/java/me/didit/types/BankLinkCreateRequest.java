@@ -184,7 +184,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * Where the browser goes at the end, with <code>link_id</code>, <code>status</code> and a signed <code>state</code> (for display only: the webhook and <code>get_link</code> are authoritative). In a sandbox application a plain <code>http</code> address of <code>localhost</code>, <code>127.0.0.1</code> or <code>[::1]</code> (any port and path, no credentials, no fragment) needs no registration. Any other address answers <code>400 redirect_url_not_registered</code>: registering other addresses is not available yet. Without a <code>redirect_url</code> the person finishes on Didit's own result page.
+   * Where the browser goes at the end, with <code>link_id</code>, <code>status</code> and a signed <code>state</code> (for display only: the webhook and <code>get_link</code> are authoritative). <code>status</code> is the link's own status: <code>completed</code>, <code>failed</code>, <code>cancelled</code> or <code>expired</code>. In a sandbox application a plain <code>http</code> address of <code>localhost</code>, <code>127.0.0.1</code> or <code>[::1]</code> (any port and path, no credentials, no fragment) needs no registration. Any other address answers <code>400 redirect_url_not_registered</code>: registering other addresses is not available yet. Without a <code>redirect_url</code> the person finishes on Didit's own result page.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -417,7 +417,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * Where the browser goes at the end, with <code>link_id</code>, <code>status</code> and a signed <code>state</code> (for display only: the webhook and <code>get_link</code> are authoritative). In a sandbox application a plain <code>http</code> address of <code>localhost</code>, <code>127.0.0.1</code> or <code>[::1]</code> (any port and path, no credentials, no fragment) needs no registration. Any other address answers <code>400 redirect_url_not_registered</code>: registering other addresses is not available yet. Without a <code>redirect_url</code> the person finishes on Didit's own result page.
+     * Where the browser goes at the end, with <code>link_id</code>, <code>status</code> and a signed <code>state</code> (for display only: the webhook and <code>get_link</code> are authoritative). <code>status</code> is the link's own status: <code>completed</code>, <code>failed</code>, <code>cancelled</code> or <code>expired</code>. In a sandbox application a plain <code>http</code> address of <code>localhost</code>, <code>127.0.0.1</code> or <code>[::1]</code> (any port and path, no credentials, no fragment) needs no registration. Any other address answers <code>400 redirect_url_not_registered</code>: registering other addresses is not available yet. Without a <code>redirect_url</code> the person finishes on Didit's own result page.
      *
      * @param redirectUrl the value
      * @return this builder
