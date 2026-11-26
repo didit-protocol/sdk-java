@@ -23,9 +23,9 @@ public final class BankConnectionUpdatedEvent extends BankEvent {
   }
 
   /**
-   * The connection id and status. On an update that is not a revocation, {@code
-   * data().revocationStatus()} throws because the field is absent: use {@link #revocationStatus()}
-   * instead.
+   * The connection id and status. The revocation status, status reason and end time are read with
+   * {@link #revocationStatus()}, {@link #statusReason()} and {@link #endsAt()}, which are empty
+   * when the delivered shape lacks the field.
    *
    * @return the connection data
    */
