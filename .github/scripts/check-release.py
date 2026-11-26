@@ -1,9 +1,27 @@
 """Check the release metadata before CI approves a release PR."""
 
 import json
+import os
 from pathlib import Path
 import re
+import subprocess
 import sys
+
+
+def release_notes(body, repo, branch):
+    # Release Please puts oversized notes on a sibling branch.
+    notes_branch = f"{branch}--release-notes"
+    url = f"https://github.com/{repo}/blob/{notes_branch}/release-notes.md"
+    if body.strip() == (
+        "This release is too large to preview in the pull request body. "
+        f"View the full release notes here: {url}"
+    ):
+        return subprocess.check_output(
+            ["gh", "api", f"repos/{repo}/contents/release-notes.md?ref={notes_branch}",
+             "-H", "Accept: application/vnd.github.raw+json"],
+            text=True,
+        )
+    return body
 
 
 def check_release(pr, proposed, published_tag):
@@ -22,6 +40,9 @@ def check_release(pr, proposed, published_tag):
 if __name__ == "__main__":
     manifest = json.loads(Path(".release-please-manifest.json").read_text())
     try:
-        check_release(json.load(sys.stdin), manifest["."], sys.argv[1])
+        pr = json.load(sys.stdin)
+        branch = os.environ.get("GITHUB_HEAD_REF") or os.environ["GITHUB_REF_NAME"]
+        pr["body"] = release_notes(pr["body"], os.environ["GITHUB_REPOSITORY"], branch)
+        check_release(pr, manifest["."], sys.argv[1])
     except ValueError as error:
         sys.exit(str(error))

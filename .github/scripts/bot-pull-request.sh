@@ -112,8 +112,8 @@ case "$kind" in
     esac
     # The dispatched run supplies the required status for automation PRs.
     if [[ "$result" == success && "$ref" == release-please--* ]]; then
-      tag="$(gh release view --repo "$repo" --json tagName --jq .tagName)"
-      if ! gh pr view "$ref" --repo "$repo" --json headRefOid,title,body |
+      if ! tag="$(gh release view --repo "$repo" --json tagName --jq .tagName)" ||
+        ! gh pr view "$ref" --repo "$repo" --json headRefOid,title,body |
         jq -e --arg sha "$sha" 'select(.headRefOid == $sha)' |
         python3 .github/scripts/check-release.py "$tag"; then
         result=failure
@@ -123,6 +123,9 @@ case "$kind" in
       -f description="ci.yml run ${GITHUB_RUN_ID:-} (workflow_dispatch): ${result}" \
       -f target_url="${GITHUB_SERVER_URL:-https://github.com}/${repo}/actions/runs/${GITHUB_RUN_ID:-}" > /dev/null
     echo "Set the commit status CI passed=${result} on ${sha:0:10} (${ref})."
+    if [[ "$result" == failure && "$2" == success ]]; then
+      exit 1
+    fi
     if [ "$result" = success ]; then
       case "$ref" in
         chore/spec-sync | release-please--*) catch_up "$ref" ;;
