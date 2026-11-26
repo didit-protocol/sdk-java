@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Didit support
+    url: mailto:support@didit.me
+    about: Questions about your account, the API or the console.
+  - name: API reference
+    url: https://docs.didit.me
+    about: The documentation of every endpoint.
