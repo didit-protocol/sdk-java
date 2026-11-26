@@ -224,7 +224,22 @@ WebhookEvent event = Webhooks.verify(rawBody, headers, secret);
 - A failed check throws `WebhookVerificationException` with `reason()`: `missing_signature`, `invalid_signature`, `missing_timestamp`, `timestamp_mismatch`, `timestamp_out_of_tolerance` or `invalid_payload`. Answer it with a 4xx status.
 
 Events are typed: `SessionStatusUpdatedEvent`, `SessionDataUpdatedEvent`, `UserStatusUpdatedEvent`, `UserDataUpdatedEvent`, `BusinessStatusUpdatedEvent`, `BusinessDataUpdatedEvent`, `ActivityCreatedEvent`, `TransactionCreatedEvent`, `TransactionStatusUpdatedEvent`, `TravelRuleStatusUpdatedEvent`, `WorkflowComplianceChangedEvent`, `KybRegistrySearchResolvedEvent`, the Bank events (`BankLinkCompletedEvent`, `BankLinkCancelledEvent`, `BankLinkExpiredEvent`, `BankLinkFailedEvent`, `BankConnectionCreatedEvent`, `BankConnectionUpdatedEvent`, `BankConnectionConsentExpiringEvent`, `BankConnectionRenewalRequiredEvent`, `BankConnectionRenewedEvent`, `BankConnectionRevokedEvent`, `BankConnectionDeletedEvent`, `BankConnectionHistoryCompleteEvent`, `BankDataUpdatedEvent`, `BankSyncCompletedEvent`, `BankSyncFailedEvent`, `BankSyncRecoveredEvent`), and `UnknownEvent` for types this version does not know.
-Bank events carry ids and statuses only: `data()` returns the link fields for `bank.link.*` and the top-level connection, data or sync fields for the others. Bank data needs the `bank-data` permission on the API key (403 `bank_data_access_denied` otherwise); see `examples/` for a runnable Bank Link example.
+Bank events carry ids and statuses only: `data()` returns the link fields for `bank.link.*` and the top-level connection, data or sync fields for the others. Fields added after an event was first stored are optional, so a redelivered older event still decodes:
+
+- `bank.link.*`: `renewsConnectionId()` is the connection a renewal link targets, set when the link is created, and empty on a link that renews nothing or on an event stored before the field existed. `data().connectionId()` is the connection the link produced or renewed, empty until the link completes. To correlate a renewal, use `renewsConnectionId()` when present and fall back to `data().connectionId()`: an older failed renewal carries its target only in `connection_id`.
+- `bank.connection.updated` has two shapes. A revocation starting carries `revocationStatus()` (`pending`); every other update carries `statusReason()` (`insufficient_balance`, `first_sync_failed` or empty) and `endsAt()` (when the connection ends unless its coming month is paid, or empty). Read them through the event (`revocationStatus()`, `statusReason()`, `endsAt()`): a field the delivered shape lacks reads as empty.
+- `bank.connection.revoked`: `ended_by` can be `system` (Didit ended it), with `status_reason` `unpaid` when the coming month was not paid or `collection_complete` when a one-time read completed.
+
+```java
+if (event instanceof BankLinkEvent) {
+  BankLinkEvent link = (BankLinkEvent) event;
+  Optional<String> renewed = link.renewsConnectionId().or(() -> link.data().connectionId());
+} else if (event instanceof BankConnectionUpdatedEvent) {
+  Optional<OffsetDateTime> endsAt = ((BankConnectionUpdatedEvent) event).endsAt();
+}
+```
+
+Bank data needs the `bank-data` permission on the API key (403 `bank_data_access_denied` otherwise); see `examples/` for a runnable Bank Link example.
 Every event has `eventId()`, `webhookType()`, `timestamp()`, `createdAt()`, `applicationId()`, `environment()` and the whole payload in `_json()`.
 
 ## Transactions, wallet screening and Travel Rule

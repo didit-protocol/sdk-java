@@ -12,12 +12,16 @@ import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 import me.didit.testing.TestJson;
+import me.didit.types.BankConnectionRevokedData;
+import me.didit.types.BankConnectionUpdatedData;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
@@ -136,8 +140,77 @@ final class BankWebhookEventsTest {
     assertEquals("bank_unavailable", failed.data().errorCode());
   }
 
-  private static WebhookEvent verify(String type) {
-    JsonNode vector = vector(type);
+  @Test
+  void correlatesRenewalLinksAcrossRedeliveries() {
+    Optional<String> target = Optional.of("cccccccc-0000-4000-8000-000000000001");
+    BankLinkEvent failed = assertInstanceOf(BankLinkFailedEvent.class, verify("renewal_failed"));
+    assertEquals(target, failed.renewsConnectionId());
+    assertEquals(Optional.empty(), failed.data().connectionId());
+    assertEquals(target, renewalTarget(failed));
+
+    BankLinkEvent completed =
+        assertInstanceOf(BankLinkCompletedEvent.class, verify("renewal_completed"));
+    assertEquals(target, completed.renewsConnectionId());
+    assertEquals(target, completed.data().connectionId());
+    assertEquals(target, renewalTarget(completed));
+
+    BankLinkEvent legacy =
+        assertInstanceOf(BankLinkFailedEvent.class, verify("legacy_renewal_failed"));
+    assertEquals(Optional.empty(), legacy.renewsConnectionId());
+    assertEquals(target, legacy.data().connectionId());
+    assertEquals(target, renewalTarget(legacy));
+
+    BankLinkEvent newLink =
+        assertInstanceOf(BankLinkCompletedEvent.class, verify("new_link_completed"));
+    assertEquals(Optional.empty(), newLink.renewsConnectionId());
+
+    BankLinkEvent stored =
+        assertInstanceOf(BankLinkCompletedEvent.class, verify(BankLinkCompletedEvent.TYPE));
+    assertEquals(Optional.empty(), stored.renewsConnectionId());
+    assertEquals(target, stored.data().connectionId());
+  }
+
+  /** The correlation the README documents: the renewal target when present, else the connection. */
+  private static Optional<String> renewalTarget(BankLinkEvent event) {
+    Optional<String> renews = event.renewsConnectionId();
+    return renews.isPresent() ? renews : event.data().connectionId();
+  }
+
+  @Test
+  void readsBothConnectionUpdateShapes() {
+    BankConnectionUpdatedEvent pending =
+        assertInstanceOf(BankConnectionUpdatedEvent.class, verify(BankConnectionUpdatedEvent.TYPE));
+    assertEquals(
+        BankConnectionUpdatedData.RevocationStatus.PENDING,
+        pending.revocationStatus().orElseThrow());
+    assertEquals(Optional.empty(), pending.statusReason());
+    assertEquals(Optional.empty(), pending.endsAt());
+
+    BankConnectionUpdatedEvent due =
+        assertInstanceOf(BankConnectionUpdatedEvent.class, verify("payment_due"));
+    assertEquals("paused", due.data().status().value());
+    assertEquals(Optional.empty(), due.revocationStatus());
+    assertEquals(Optional.of("insufficient_balance"), due.statusReason());
+    assertEquals(OffsetDateTime.parse("2026-12-01T00:00:00Z"), due.endsAt().orElseThrow());
+
+    BankConnectionUpdatedEvent paid =
+        assertInstanceOf(BankConnectionUpdatedEvent.class, verify("payment_received"));
+    assertEquals("active", paid.data().status().value());
+    assertEquals(Optional.empty(), paid.revocationStatus());
+    assertEquals(Optional.empty(), paid.statusReason());
+    assertEquals(Optional.empty(), paid.endsAt());
+  }
+
+  @Test
+  void readsUnpaidSystemRevocation() {
+    BankConnectionRevokedData revoked =
+        assertInstanceOf(BankConnectionRevokedEvent.class, verify("unpaid_revocation")).data();
+    assertEquals("unpaid", revoked.statusReason().orElseThrow().value());
+    assertEquals(BankConnectionRevokedData.EndedBy.SYSTEM, revoked.endedBy());
+  }
+
+  private static WebhookEvent verify(String name) {
+    JsonNode vector = vector(name.replace('.', '_'));
     Map<String, String> headers = new LinkedHashMap<>();
     vector.get("headers").properties().forEach(e -> headers.put(e.getKey(), e.getValue().asText()));
     VerifyOptions options =
@@ -149,16 +222,12 @@ final class BankWebhookEventsTest {
     return Webhooks.verify(vector.get("body").asText(), headers, options);
   }
 
-  private static JsonNode vector(String type) {
+  private static JsonNode vector(String name) {
     for (JsonNode vector : BANK_VECTORS.get("vectors")) {
-      if (vector.get("name").asText().endsWith("_rotation")) {
-        continue;
-      }
-      JsonNode payload = TestJson.parse(vector.get("body").asText());
-      if (type.equals(payload.get("webhook_type").asText())) {
+      if (name.equals(vector.get("name").asText())) {
         return vector;
       }
     }
-    throw new AssertionError("No webhook vector for " + type);
+    throw new AssertionError("No webhook vector for " + name);
   }
 }
