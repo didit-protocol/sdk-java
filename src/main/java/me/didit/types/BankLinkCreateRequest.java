@@ -94,7 +94,7 @@ public final class BankLinkCreateRequest extends JsonModel {
   }
 
   /**
-   * Optional bank to preselect, from <code>list_institutions</code>. Skips the picker.
+   * Optional. The bank the person starts with, from <code>list_institutions</code>. The picker is skipped; the person can still choose another bank the link allows, for example when this one is unavailable. The connection's <code>institution</code> reports the bank that was actually connected.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -327,7 +327,7 @@ public final class BankLinkCreateRequest extends JsonModel {
     }
 
     /**
-     * Optional bank to preselect, from <code>list_institutions</code>. Skips the picker.
+     * Optional. The bank the person starts with, from <code>list_institutions</code>. The picker is skipped; the person can still choose another bank the link allows, for example when this one is unavailable. The connection's <code>institution</code> reports the bank that was actually connected.
      *
      * @param institutionId the value
      * @return this builder

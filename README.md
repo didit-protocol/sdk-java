@@ -9,7 +9,11 @@ Java 11 or newer. Gradle (Kotlin DSL):
 
 <!-- x-release-please-start-version -->
 ```kotlin
+<<<<<<< HEAD
 implementation("me.didit:didit-java:1.44.0")
+=======
+implementation("me.didit:didit-java:1.18.0")
+>>>>>>> origin/main
 ```
 
 Maven:
@@ -18,7 +22,11 @@ Maven:
 <dependency>
   <groupId>me.didit</groupId>
   <artifactId>didit-java</artifactId>
+<<<<<<< HEAD
   <version>1.44.0</version>
+=======
+  <version>1.18.0</version>
+>>>>>>> origin/main
 </dependency>
 ```
 <!-- x-release-please-end -->
