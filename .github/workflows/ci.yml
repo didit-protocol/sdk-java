@@ -57,6 +57,13 @@ jobs:
           distribution: temurin
           java-version: 21
       - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
+      - name: Validate the release pull request
+        if: startsWith(github.head_ref, 'release-please--')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag=$(gh release view --json tagName --jq .tagName)
+          jq '.pull_request' "$GITHUB_EVENT_PATH" | python3 .github/scripts/check-release.py "$tag"
       - name: Formatting (google-java-format, ktfmt)
         run: ./gradlew spotlessCheck
       - name: Compile with -Werror, errorprone and NullAway
