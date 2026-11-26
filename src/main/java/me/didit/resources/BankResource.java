@@ -814,6 +814,8 @@ public final class BankResource {
    *
    * <p>Send the returned <code>url</code> to the person: the hosted page shows what continues to be shared and until when, the person signs in at their bank once and returns to your <code>redirect_url</code>, and <code>bank.connection.renewed</code> confirms it. Afterwards the connection's <code>consent</code> shows a new <code>version</code>, <code>renewed_count</code>, <code>expires_at</code> and <code>renew_by</code>, with <code>renewal_action</code> <code>bank_auth</code>.
    *
+   * <p>Send <code>consent_days</code> to choose how many days the renewal asks the bank for; without it the renewal asks for the length the person chose before, and either way the bank's own maximum is never exceeded.
+   *
    * <p>A one-time connection has no consent to renew: it answers <code>409 one_time_connection</code>, and a new link reads the bank again.
    *
    * <p>Until the consent has 30 days left or fewer it answers <code>409 renewal_not_needed</code>; after <code>consent.renewable_until</code> it answers <code>409 renewal_window_expired</code> and the person connects again.

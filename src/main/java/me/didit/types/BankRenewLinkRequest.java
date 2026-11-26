@@ -14,7 +14,7 @@ import me.didit.core.JsonModel;
 
 /** Optional settings of a renew link. The rest comes from the connection. */
 public final class BankRenewLinkRequest extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("redirect_url", "allowed_origins", "language", "expires_in");
+  private static final Set<String> KNOWN_FIELDS = Set.of("redirect_url", "allowed_origins", "language", "expires_in", "consent_days");
 
   private BankRenewLinkRequest(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -89,6 +89,16 @@ public final class BankRenewLinkRequest extends JsonModel {
     return Json.optional(json, "expires_in", Conv.LONG);
   }
 
+  /**
+   * Optional. How many days to ask the bank to keep access open, 1 or more. Without it, the bank is asked for the length the person chose before, never above the bank's maximum; only a connection with no recorded length is asked for the maximum. With it, the bank is asked for that many days, never above its maximum: a longer value is capped, not refused. A value below 1, above 32767 or not a whole number answers <code>400 invalid_request</code> with <code>field: consent_days</code>. The connection reports the date the bank actually granted in <code>consent.expires_at</code>. <code>create_link</code> with <code>mode: renew</code> takes the same field with the same rule.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Long> consentDays() {
+    return Json.optional(json, "consent_days", Conv.LONG);
+  }
+
   @Override
   protected Set<String> knownFields() {
     return KNOWN_FIELDS;
@@ -140,6 +150,16 @@ public final class BankRenewLinkRequest extends JsonModel {
      */
     public Builder expiresIn(long expiresIn) {
       return set("expires_in", Conv.LONG, expiresIn);
+    }
+
+    /**
+     * Optional. How many days to ask the bank to keep access open, 1 or more. Without it, the bank is asked for the length the person chose before, never above the bank's maximum; only a connection with no recorded length is asked for the maximum. With it, the bank is asked for that many days, never above its maximum: a longer value is capped, not refused. A value below 1, above 32767 or not a whole number answers <code>400 invalid_request</code> with <code>field: consent_days</code>. The connection reports the date the bank actually granted in <code>consent.expires_at</code>. <code>create_link</code> with <code>mode: renew</code> takes the same field with the same rule.
+     *
+     * @param consentDays the value
+     * @return this builder
+     */
+    public Builder consentDays(long consentDays) {
+      return set("consent_days", Conv.LONG, consentDays);
     }
 
     /**
