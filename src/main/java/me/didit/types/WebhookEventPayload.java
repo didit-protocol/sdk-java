@@ -451,7 +451,7 @@ public final class WebhookEventPayload extends JsonUnion {
   /**
    * Whether this value is a {@code BankLinkCancelledEvent}.
    *
-   * A Bank Link was cancelled, by the person or by <code>cancel_link</code>. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   * A Bank Link was cancelled, by the person or by <code>cancel_link</code>. On a renewal, the person's Not now ends the link this way. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
    *
    * @return true when it matches
    */
@@ -511,7 +511,7 @@ public final class WebhookEventPayload extends JsonUnion {
   /**
    * Whether this value is a {@code BankLinkFailedEvent}.
    *
-   * A Bank Link failed: it is over. <code>data.error_code</code> says why, for example <code>duplicate_conflict</code>. A cancel at the bank sends this event with <code>bank_cancelled</code> only on the fifth cancel; before that the person returns to the list of banks and the link stays open. A bank that cannot be reached (<code>bank_unavailable</code>) also leaves the link open and sends no event. Nothing was published or charged. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+   * A Bank Link failed: it is over. <code>data.error_code</code> says why, for example <code>duplicate_conflict</code>. This event is sent when the tries are used up (the fifth attempt at the bank) or when the failure cannot be fixed by trying again, for example a sign-in as another person on a renewal, a company account that needs a second approver, access the bank does not support, or access that can no longer be renewed. A person who cancels or declines at the bank, a bank that cannot be reached, a sign-in the bank does not accept and an unexpected error while the connection is completed leave the link open and send no event. A failure that trying again cannot fix ends the link at once. One of them is reported as <code>bank_unavailable</code>: what comes back from the bank does not belong to the sign-in this link started, and the business creates a new link. This event is sent once, when the link reads <code>failed</code>; the same code with the link still <code>opened</code> sends nothing, so branch on the link's <code>status</code>, not on the code alone. This holds for a first connection and for a renewal. A link that expires ends as <code>expired</code> and one you cancel ends as <code>cancelled</code>; when the person chooses Not now on a renewal, the link ends as cancelled with <code>bank.link.cancelled</code>. Nothing was published or charged. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
    *
    * @return true when it matches
    */

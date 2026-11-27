@@ -13,7 +13,7 @@ import me.didit.core.JsonModel;
 import me.didit.core.StringEnum;
 
 /**
- * A Bank Link was cancelled, by the person or by <code>cancel_link</code>. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
+ * A Bank Link was cancelled, by the person or by <code>cancel_link</code>. On a renewal, the person's Not now ends the link this way. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.
  */
 public final class BankLinkCancelledEvent extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("event_id", "timestamp", "created_at", "application_id", "environment", "webhook_type", "data");
