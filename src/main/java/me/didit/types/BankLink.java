@@ -85,7 +85,7 @@ public final class BankLink extends JsonModel {
   }
 
   /**
-   * State of the link. <code>completed</code>, <code>cancelled</code>, <code>expired</code> and <code>failed</code> are final.
+   * State of the link. <code>completed</code>, <code>cancelled</code>, <code>expired</code> and <code>failed</code> are final. A person who cancels or declines at the bank, whose bank cannot be reached or does not accept the sign-in, or who meets an unexpected error while the connection is completed, does not end the link: it stays <code>opened</code> and the person can try again. A first connection returns to the list of banks. A renewal returns to its own step, where the person can try the same bank again or choose Not now, which ends the link as <code>cancelled</code>. The link ends <code>failed</code> when the tries are used up (the fifth attempt at the bank) or when the failure cannot be fixed by trying again.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -238,7 +238,7 @@ public final class BankLink extends JsonModel {
     }
 
     /**
-     * State of the link. <code>completed</code>, <code>cancelled</code>, <code>expired</code> and <code>failed</code> are final.
+     * State of the link. <code>completed</code>, <code>cancelled</code>, <code>expired</code> and <code>failed</code> are final. A person who cancels or declines at the bank, whose bank cannot be reached or does not accept the sign-in, or who meets an unexpected error while the connection is completed, does not end the link: it stays <code>opened</code> and the person can try again. A first connection returns to the list of banks. A renewal returns to its own step, where the person can try the same bank again or choose Not now, which ends the link as <code>cancelled</code>. The link ends <code>failed</code> when the tries are used up (the fifth attempt at the bank) or when the failure cannot be fixed by trying again.
      *
      * @param status the value
      * @return this builder
@@ -462,7 +462,7 @@ public final class BankLink extends JsonModel {
   }
 
   /**
-   * State of the link. <code>completed</code>, <code>cancelled</code>, <code>expired</code> and <code>failed</code> are final.
+   * State of the link. <code>completed</code>, <code>cancelled</code>, <code>expired</code> and <code>failed</code> are final. A person who cancels or declines at the bank, whose bank cannot be reached or does not accept the sign-in, or who meets an unexpected error while the connection is completed, does not end the link: it stays <code>opened</code> and the person can try again. A first connection returns to the list of banks. A renewal returns to its own step, where the person can try the same bank again or choose Not now, which ends the link as <code>cancelled</code>. The link ends <code>failed</code> when the tries are used up (the fifth attempt at the bank) or when the failure cannot be fixed by trying again.
    *
    * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
    */
