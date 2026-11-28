@@ -32,7 +32,7 @@ final class PhoneResourceTest {
 
   @Test
   void assessRisk() {
-    PhoneRiskRequest params = PhoneRiskRequest.builder().phoneNumber("value-phone-number").countryCode("value-country-code").signals(RiskSignals.builder().ip("192.0.2.10").deviceId("value-device-id").build()).vendorData("value-vendor-data").metadata(Map.of("key", "value")).enableSocial(true).build();
+    PhoneRiskRequest params = PhoneRiskRequest.builder().phoneNumber("value-phone-number").tier(PhoneRiskRequest.Tier.BASIC).countryCode("value-country-code").signals(RiskSignals.builder().ip("192.0.2.10").deviceId("value-device-id").build()).vendorData("value-vendor-data").metadata(Map.of("key", "value")).enableSocial(true).build();
     RequestOptions options = RequestOptions.builder().idempotencyKey("idem-1").build();
     JsonNode example = SpecExamples.response("verification.json", "POST", "/v3/phone/risk/", "200");
     transport.respondJson(200, example);
@@ -44,7 +44,7 @@ final class PhoneResourceTest {
     assertEquals("test-api-key", request.header("x-api-key"));
     assertEquals("https://verification.didit.me", request.origin());
     assertEquals("idem-1", request.header("Idempotency-Key"));
-    TestJson.assertJsonEquals("{\"phone_number\":\"value-phone-number\",\"country_code\":\"value-country-code\",\"signals\":{\"ip\":\"192.0.2.10\",\"device_id\":\"value-device-id\"},\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"enable_social\":true}", request.body());
+    TestJson.assertJsonEquals("{\"phone_number\":\"value-phone-number\",\"tier\":\"basic\",\"country_code\":\"value-country-code\",\"signals\":{\"ip\":\"192.0.2.10\",\"device_id\":\"value-device-id\"},\"vendor_data\":\"value-vendor-data\",\"metadata\":{\"key\":\"value\"},\"enable_social\":true}", request.body());
     TestJson.assertJsonEquals(example, Json.toNode(result));
     TestModels.readAll(result);
   }

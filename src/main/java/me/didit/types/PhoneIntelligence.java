@@ -18,7 +18,7 @@ import org.jspecify.annotations.Nullable;
  * Normalized phone-intelligence block. Present only when the intelligence add-on ran for this lookup; when present it is also exposed under the <code>enrichment</code> alias with identical values.
  */
 public final class PhoneIntelligence extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("score", "phone_type_risk", "phone_trust_index", "network_stability_index", "is_disposable", "is_ported", "is_recently_ported", "carrier_type", "reason_codes");
+  private static final Set<String> KNOWN_FIELDS = Set.of("score", "phone_type_risk", "phone_trust_index", "network_stability_index", "reachability", "is_disposable", "is_ported", "is_recently_ported", "carrier_type", "reason_codes");
 
   private PhoneIntelligence(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -91,6 +91,16 @@ public final class PhoneIntelligence extends JsonModel {
    */
   public Optional<Double> networkStabilityIndex() {
     return Json.optional(json, "network_stability_index", Conv.DOUBLE);
+  }
+
+  /**
+   * Whether the line could be reached on its network at the time of the lookup: <code>reachable</code>, <code>unreachable</code> or <code>unknown</code>. <code>null</code> when reachability was not checked.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<PhoneIntelligence.Reachability> reachability() {
+    return Json.optional(json, "reachability", Conv.enumeration(PhoneIntelligence.Reachability::of));
   }
 
   /**
@@ -197,6 +207,16 @@ public final class PhoneIntelligence extends JsonModel {
     }
 
     /**
+     * Whether the line could be reached on its network at the time of the lookup: <code>reachable</code>, <code>unreachable</code> or <code>unknown</code>. <code>null</code> when reachability was not checked.
+     *
+     * @param reachability the value, or {@code null} to send JSON null
+     * @return this builder
+     */
+    public Builder reachability(PhoneIntelligence.@Nullable Reachability reachability) {
+      return setNullable("reachability", Conv.enumeration(PhoneIntelligence.Reachability::of), reachability);
+    }
+
+    /**
      * <code>true</code> when the number looks disposable or virtual.
      *
      * @param isDisposable the value, or {@code null} to send JSON null
@@ -258,6 +278,52 @@ public final class PhoneIntelligence extends JsonModel {
     @Override
     protected Builder self() {
       return this;
+    }
+  }
+
+  /**
+   * Whether the line could be reached on its network at the time of the lookup: <code>reachable</code>, <code>unreachable</code> or <code>unknown</code>. <code>null</code> when reachability was not checked.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Reachability extends StringEnum {
+    /** The value {@code "reachable"}. */
+    public static final Reachability REACHABLE = new Reachability("reachable");
+
+    /** The value {@code "unreachable"}. */
+    public static final Reachability UNREACHABLE = new Reachability("unreachable");
+
+    /** The value {@code "unknown"}. */
+    public static final Reachability UNKNOWN = new Reachability("unknown");
+
+    private static final List<Reachability> KNOWN_VALUES = List.of(REACHABLE, UNREACHABLE, UNKNOWN);
+
+    private Reachability(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Reachability of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Reachability::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Reachability> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 

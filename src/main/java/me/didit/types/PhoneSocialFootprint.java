@@ -15,7 +15,7 @@ import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Social footprint of the phone number: the online platforms it is registered on. Present only when <code>enable_social</code> was set and the check completed. Every count may be null when no data was returned for it. <code>profiles_registered: 0</code> means the platforms were checked and the phone number was found on none of them - a valid, billable answer and a common synthetic-identity signal.
+ * Social footprint of the phone number: the online platforms it is registered on. Returned when a requested social check completes. Request it with <code>tier: "social"</code> on a Phone Risk lookup, or with <code>enable_social: true</code> on a risk-tier lookup or Phone Verification check. Every count may be null when no data was returned for it. <code>profiles_registered: 0</code> means the platforms were checked and the phone number was found on none of them - a valid, billable answer and a common synthetic-identity signal.
  */
 public final class PhoneSocialFootprint extends JsonModel {
   private static final Set<String> KNOWN_FIELDS = Set.of("profiles_registered", "profiles_checked", "names_found", "photos_found", "communication_breadth", "digital_footprint_diversity", "digital_sophistication_index", "engagement_depth_index", "subscription_affordability_index", "free_platforms", "full_paid_platforms", "partial_paid_platforms", "whatsapp_profile_completeness", "registered_platforms", "not_registered_platforms", "categories", "profiles");

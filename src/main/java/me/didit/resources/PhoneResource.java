@@ -230,13 +230,20 @@ public final class PhoneResource {
   /**
    * Risk-score a phone number
    *
-   * <p>Resolve a phone number and return carrier, line-type, porting, disposable-number, cross-session match, and normalized risk-intelligence signals without sending an OTP. The endpoint creates an API session and returns its id as <code>request_id</code>.
+   * <p>Look up a phone number without sending an OTP, at one of three tiers chosen with <code>tier</code>. The endpoint creates an API session and returns its id as <code>request_id</code>.
+   *
+   * <p><b>Tiers.</b>
+   * - <code>basic</code> (basic lookup, $0.006): line type (<code>phone.carrier.type</code>), current carrier (<code>phone.carrier.name</code>), porting status (<code>phone.is_ported</code>), country (<code>phone.country_code</code>) and validity (<code>phone.is_valid</code>). Original carrier (<code>phone.original_carrier</code>) and temporary-number status (<code>phone.is_disposable</code>) are reported when available. No <code>phone_intelligence</code> or <code>phone_social</code> block.
+   * - <code>risk</code> (risk and intelligence, $0.04, the default): everything in the basic lookup plus the <code>phone_intelligence</code> block: the 0-100 risk score, phone-type risk, the trust and network-stability indexes, porting signals and <code>reachability</code>.
+   * - <code>social</code> (social profiles, $0.05): everything in the basic lookup plus the <code>phone_social</code> block, the online platforms the number is registered on. No <code>phone_intelligence</code> block.
    *
    * <p><b>Decision.</b> The top-level <code>status</code> mirrors <code>phone.status</code>. It is normally <code>Approved</code>; the risk evaluation can produce <code>In Review</code> or <code>Declined</code>.
    *
-   * <p><b>Compatibility aliases.</b> Live responses expose the normalized intelligence object as both <code>phone.phone_intelligence</code> and <code>phone.enrichment</code>. The values are identical. New integrations can read <code>phone.enrichment</code>. Both keys are absent when no usable intelligence data was returned.
+   * <p><b>Invalid numbers.</b> An invalid or unparseable number is not a request error: every tier answers it with <code>200</code> and <code>phone.is_valid: false</code>, with no <code>phone_intelligence</code> or <code>phone_social</code> block and nothing billed. Read <code>phone.is_valid</code>, not the HTTP status, to tell a refused number from one that was looked up.
    *
-   * <p><b>Billing.</b> Live calls use Phone Risk API pricing. The request is billable once the lookup starts, even when some best-effort fields are unavailable. Phone Risk, including the optional <code>enable_social</code> add-on, is Phone usage: the free credit pays it only up to $1 a month, shared with phone verification codes, messages and the other Phone lookups. On the Free plan, what the $1 does not cover is paid from your top-up balance; Growth and Scale included credit pays for Phone in full. The request is refused with <code>403</code> only when the credit available to Phone, including the add-on, cannot cover it. Phone Risk has no first-top-up requirement; a top-up is needed only when the credit available to Phone (the free $1 or paid credit) cannot cover the lookup.
+   * <p><b>Compatibility aliases.</b> Live responses expose the normalized intelligence object as both <code>phone.phone_intelligence</code> and <code>phone.enrichment</code>. The values are identical. New integrations can read <code>phone.enrichment</code>. Both keys are absent on the <code>basic</code> and <code>social</code> tiers and when no usable intelligence data was returned.
+   *
+   * <p><b>Billing.</b> Each tier bills its own price once: a basic lookup $0.006, a risk and intelligence lookup $0.04, a social profiles lookup $0.05. A number the prefilter rejects - an invalid number, or a fixed line where only mobile is allowed - is answered without a paid lookup and is not billed. A risk and intelligence lookup that returns no intelligence data, and a social profiles lookup whose check could not be completed, are not billed either. Phone lookups are Phone usage, including the <code>enable_social</code> add-on on the risk tier: the free credit pays them only up to $1 a month, shared with phone verification codes, messages and the other Phone lookups. On the Free plan, what the $1 does not cover is paid from your top-up balance; Growth and Scale included credit pays for Phone in full. A request is refused with <code>403</code> only when the credit available to Phone, including the add-on, cannot cover it.
    *
    * <p><b>Sandbox.</b> Sandbox keys validate the request and return deterministic approved data without sending an OTP, consuming credits, creating a session, or contributing to Networks.
    *
@@ -244,7 +251,7 @@ public final class PhoneResource {
    *
    * <p><b>Rate limit.</b> Shared write budget of 300 requests per minute per API key across POST/PATCH/DELETE endpoints (transaction creates and event ingestion have a separate budget of 600).
    *
-   * <p><b>Social footprint.</b> Set <code>enable_social</code> to <code>true</code> to add a <code>phone_social</code> block: the online platforms this number is registered on, with per-category counts and any profile details available. <code>profiles_registered: 0</code> means the platforms were checked and the number was found on none of them - a valid, billable answer. The block is absent when the add-on was not requested or the check could not be completed, and it is not billed in that case. Billing adds one <code>phone_social</code> unit per request on top of this endpoint's own price.
+   * <p><b>Social footprint.</b> <code>phone_social</code> lists the online platforms this number is registered on, with per-category counts and any profile details available. <code>profiles_registered: 0</code> means the platforms were checked and the number was found on none of them - a valid, billable answer. Ask for it with <code>tier: "social"</code>, or add it to a risk and intelligence lookup with <code>enable_social: true</code>, which bills $0.05 on top of the $0.04. The block is absent when it was not requested or the check could not be completed, and it is not billed in that case.
    *
    * <p>{@code POST /v3/phone/risk/}
    * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
