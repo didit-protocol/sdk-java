@@ -302,7 +302,7 @@ public final class SessionsCreateKybPartyDraftResponse extends JsonModel {
     }
 
     /**
-     * Where the verification link is sent. Required when the party has to complete verification, which depends on the role settings and ownership thresholds of the workflow.
+     * Where the verification link is sent. Required at submission for a party that must complete verification when the workflow sends links by email. With notifications off, email is optional unless the workflow separately requires the field or distinct addresses are needed to distinguish ambiguous same-name people.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -475,7 +475,7 @@ public final class SessionsCreateKybPartyDraftResponse extends JsonModel {
       }
 
       /**
-       * Where the verification link is sent. Required when the party has to complete verification, which depends on the role settings and ownership thresholds of the workflow.
+       * Where the verification link is sent. Required at submission for a party that must complete verification when the workflow sends links by email. With notifications off, email is optional unless the workflow separately requires the field or distinct addresses are needed to distinguish ambiguous same-name people.
        *
        * @param email the value
        * @return this builder
