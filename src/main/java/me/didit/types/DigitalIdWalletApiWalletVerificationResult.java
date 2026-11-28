@@ -95,7 +95,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
   }
 
   /**
-   * The <code>error</code> field.
+   * Stable machine-readable code when the sign-in did not complete. For UAE PASS, <code>client_changed</code> means the application's own UAE PASS client was disabled, deleted or replaced while the person was signing in: the sign-in fails and the workflow's fallback applies.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -155,7 +155,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
   }
 
   /**
-   * The <code>attributes</code> field.
+   * The attributes the wallet shared, keyed as the wallet's catalog entry lists them. A UAE PASS sign-in returns the verified identity attributes <code>name_ar</code>, <code>emirates_id_number</code> (absent for visitors), <code>nationality</code>, <code>gender</code>, <code>document_type</code>, <code>document_issue_date</code>, <code>document_expiry_date</code> and <code>user_type</code> (<code>SOP2</code> or <code>SOP3</code>), alongside the normalized <code>full_name</code> and <code>date_of_birth</code>, and never the UAE PASS UUID.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -262,7 +262,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
     }
 
     /**
-     * The <code>error</code> field.
+     * Stable machine-readable code when the sign-in did not complete. For UAE PASS, <code>client_changed</code> means the application's own UAE PASS client was disabled, deleted or replaced while the person was signing in: the sign-in fails and the workflow's fallback applies.
      *
      * @param error the value, or {@code null} to send JSON null
      * @return this builder
@@ -322,7 +322,7 @@ public final class DigitalIdWalletApiWalletVerificationResult extends JsonModel 
     }
 
     /**
-     * The <code>attributes</code> field.
+     * The attributes the wallet shared, keyed as the wallet's catalog entry lists them. A UAE PASS sign-in returns the verified identity attributes <code>name_ar</code>, <code>emirates_id_number</code> (absent for visitors), <code>nationality</code>, <code>gender</code>, <code>document_type</code>, <code>document_issue_date</code>, <code>document_expiry_date</code> and <code>user_type</code> (<code>SOP2</code> or <code>SOP3</code>), alongside the normalized <code>full_name</code> and <code>date_of_birth</code>, and never the UAE PASS UUID.
      *
      * @param attributes the value, or {@code null} to send JSON null
      * @return this builder
