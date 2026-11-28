@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.45.0](https://github.com/didit-protocol/sdk-java/compare/v1.44.0...v1.45.0) (2026-11-28)
+
+
+### Features
+
+* **spec:** sync API spec 2026-11-25 ([64f423d](https://github.com/didit-protocol/sdk-java/commit/64f423d30d9cf37a88315fd1f5440097415e40ee))
+* **spec:** sync API spec 2026-11-25 ([c4f1c80](https://github.com/didit-protocol/sdk-java/commit/c4f1c806ff8ea258cbdfcb78481995b17dccf062))
+* **spec:** sync API spec 2026-11-25 ([20aed2d](https://github.com/didit-protocol/sdk-java/commit/20aed2d10116c7c4350e82a1efce95444271db83))
+* **spec:** sync API spec 2026-11-25 ([3518c0d](https://github.com/didit-protocol/sdk-java/commit/3518c0d3c4fd1266e3196e6d2c39f3ca7a72485f))
+* **spec:** sync API spec 2026-11-25 ([183a620](https://github.com/didit-protocol/sdk-java/commit/183a6208edd4c71039b42ff7c12bca8674ea12af))
+* **spec:** sync API spec 2026-11-25 ([853de41](https://github.com/didit-protocol/sdk-java/commit/853de41a73201250a306b6cc65a901c43ba30f68))
+* **spec:** sync API spec 2026-11-25 ([6dd3ae8](https://github.com/didit-protocol/sdk-java/commit/6dd3ae89476efc34885b5d607e4b7979529ae90c))
+* **spec:** sync API spec 2026-11-25 ([3611d12](https://github.com/didit-protocol/sdk-java/commit/3611d127d6a1635abd1feccb3a3a6fb25009ee72))
+* **spec:** sync API spec 2026-11-26 ([31c7d2a](https://github.com/didit-protocol/sdk-java/commit/31c7d2ab1e492245fa979537127a408d37a40623))
+* **spec:** sync API spec 2026-11-26 ([9f0e21a](https://github.com/didit-protocol/sdk-java/commit/9f0e21a639c3c0b363db091d1b9765f687f5654f))
+* **spec:** sync API spec 2026-11-27 ([719594c](https://github.com/didit-protocol/sdk-java/commit/719594c6a66650c3c5c00ddfec0040da57955785))
+* **spec:** sync API spec 2026-11-28 ([b2e760e](https://github.com/didit-protocol/sdk-java/commit/b2e760e82e8b8be469cc7c5bb2676836d11bb150))
+* **webhooks:** Bank link and connection event fields (renews_connection_id, ends_at, unpaid) in the hand-written webhook events [sdk-java] ([#166](https://github.com/didit-protocol/sdk-java/issues/166)) ([83c9bab](https://github.com/didit-protocol/sdk-java/commit/83c9babd7c0217cd83792048745fcd4d141ef3b3))
+
+
+### API changes that can break typed code
+
+* **spec:** `GET /v1/sandbox/scenarios/` response `sample_identity.documents[].document_name`: removed ([64f423d](https://github.com/didit-protocol/sdk-java/commit/64f423d30d9cf37a88315fd1f5440097415e40ee))
+* **spec:** `GET /v3/sessions/` parameter `document_name` (query): removed ([64f423d](https://github.com/didit-protocol/sdk-java/commit/64f423d30d9cf37a88315fd1f5440097415e40ee))
+* **spec:** `POST /v3/sessions/delete/` request body `filter_document_name`: removed ([64f423d](https://github.com/didit-protocol/sdk-java/commit/64f423d30d9cf37a88315fd1f5440097415e40ee))
+
 ## [1.44.0](https://github.com/didit-protocol/sdk-java/compare/v1.43.0...v1.44.0) (2026-11-24)
 
 
