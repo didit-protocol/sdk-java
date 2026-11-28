@@ -17,7 +17,7 @@ import org.jspecify.annotations.Nullable;
  * Partial branding update body. Provide only the fields you want to change. Hex colors accept <code>#RRGGBB</code> or <code>#RRGGBBAA</code>. Custom domain and white-label email are not accepted here.
  */
 public final class BrandingCustomizationUpdate extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("color_primary", "color_secondary", "color_background", "color_panel", "color_panel_10", "color_on_panel_1", "color_on_panel_2", "color_on_background", "color_button_1", "color_button_2", "color_button_text_1", "color_button_text_2", "color_pill_text", "border_radius_panel", "border_radius_buttons", "font_family", "font_weight", "app_public_name", "privacy_policy_url", "skip_welcome_screen", "disable_login_with_didit", "hide_progress_bar", "callback_seconds", "delete_logo_square", "delete_logo_rectangular", "delete_logo_rectangular_dark", "delete_favicon");
+  private static final Set<String> KNOWN_FIELDS = Set.of("color_primary", "color_secondary", "color_background", "color_panel", "color_panel_10", "color_on_panel_1", "color_on_panel_2", "color_on_background", "color_button_1", "color_button_2", "color_button_text_1", "color_button_text_2", "color_pill_text", "appearance", "border_radius_panel", "border_radius_buttons", "font_family", "font_weight", "app_public_name", "privacy_policy_url", "skip_welcome_screen", "disable_login_with_didit", "hide_progress_bar", "callback_seconds", "delete_logo_square", "delete_logo_rectangular", "delete_logo_rectangular_dark", "delete_favicon");
 
   private BrandingCustomizationUpdate(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -180,6 +180,16 @@ public final class BrandingCustomizationUpdate extends JsonModel {
    */
   public Optional<String> colorPillText() {
     return Json.optional(json, "color_pill_text", Conv.STRING);
+  }
+
+  /**
+   * Omit this field to keep the saved appearance.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<BrandingAppearanceUpdate> appearance() {
+    return Json.optional(json, "appearance", Conv.enumeration(BrandingAppearanceUpdate::of));
   }
 
   /**
@@ -463,6 +473,16 @@ public final class BrandingCustomizationUpdate extends JsonModel {
      */
     public Builder colorPillText(String colorPillText) {
       return set("color_pill_text", Conv.STRING, colorPillText);
+    }
+
+    /**
+     * Omit this field to keep the saved appearance.
+     *
+     * @param appearance the value
+     * @return this builder
+     */
+    public Builder appearance(BrandingAppearanceUpdate appearance) {
+      return set("appearance", Conv.enumeration(BrandingAppearanceUpdate::of), appearance);
     }
 
     /**

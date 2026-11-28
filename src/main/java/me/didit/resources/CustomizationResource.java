@@ -34,7 +34,7 @@ public final class CustomizationResource {
   /**
    * Get branding customization
    *
-   * <p>Returns the white-label branding for the application resolved from the API key: colors, fonts, border radii, logo URLs and UI/UX options. Custom domain and white-label email settings are managed only in the Business Console and are not part of this response.
+   * <p>Returns the white-label branding for the application resolved from the API key: appearance, colors, fonts, border radii, logo URLs and UI/UX options. Custom domain and white-label email settings are managed only in the Business Console and are not part of this response.
    *
    * <p>{@code GET /v3/customization/}
    *
@@ -76,7 +76,7 @@ public final class CustomizationResource {
   /**
    * Update branding customization
    *
-   * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
+   * <p>Partial update of the application's white-label branding. Send <code>application/json</code> to change appearance, colors, fonts, radii and UI options, or <code>multipart/form-data</code> to upload logo images. Only the fields you include are changed. Custom domain and white-label email cannot be set through this endpoint — use the Business Console for those.
    *
    * <p>{@code PATCH /v3/customization/}
    * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.

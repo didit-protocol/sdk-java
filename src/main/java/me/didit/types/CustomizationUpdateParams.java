@@ -8,13 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
 
 /** Parameters for {&#64;code customization.update}. */
 public final class CustomizationUpdateParams extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("image_square", "image_rectangular", "image_rectangular_dark", "image_favicon");
+  private static final Set<String> KNOWN_FIELDS = Set.of("appearance", "image_square", "image_rectangular", "image_rectangular_dark", "image_favicon");
 
   private CustomizationUpdateParams(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -47,6 +48,16 @@ public final class CustomizationUpdateParams extends JsonModel {
    */
   public Builder toBuilder() {
     return new Builder(this);
+  }
+
+  /**
+   * Omit this field or send an empty string to keep the saved appearance.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<BrandingAppearanceMultipartUpdate> appearance() {
+    return Json.optional(json, "appearance", Conv.enumeration(BrandingAppearanceMultipartUpdate::of));
   }
 
   /**
@@ -96,6 +107,16 @@ public final class CustomizationUpdateParams extends JsonModel {
 
     private Builder(CustomizationUpdateParams from) {
       super(from);
+    }
+
+    /**
+     * Omit this field or send an empty string to keep the saved appearance.
+     *
+     * @param appearance the value
+     * @return this builder
+     */
+    public Builder appearance(BrandingAppearanceMultipartUpdate appearance) {
+      return set("appearance", Conv.enumeration(BrandingAppearanceMultipartUpdate::of), appearance);
     }
 
     /**
