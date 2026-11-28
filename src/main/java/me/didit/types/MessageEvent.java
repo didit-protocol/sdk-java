@@ -145,7 +145,7 @@ public final class MessageEvent extends JsonModel {
   }
 
   /**
-   * What the message costs, in <code>currency</code>. <code>carrier</code> is the carrier's or WhatsApp's part, passed through at cost; <code>fee</code> is Didit's fee with your plan's discount. Both are <code>null</code> when one flat amount prices the message (email, or a contract or negotiated rate). <code>final</code> is <code>false</code> while the amount is an estimate, before the carrier's delivery report gives the real price.
+   * What the message costs, in <code>currency</code>. <code>carrier</code> is the carrier's or WhatsApp's part, passed through at cost. <code>fee</code> is Didit's fee with your plan's discount. When a contract rate card prices a live Telegram message, both are <code>null</code>. For all other live Telegram rates, including a negotiated rate, <code>carrier</code> is <code>0.0000</code> and <code>fee</code> equals <code>amount</code>. On other channels both fields are <code>null</code> when one flat amount prices the message (email, or a contract or negotiated rate). <code>final</code> is <code>false</code> for an estimate and <code>true</code> once the amount is billed.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -358,7 +358,7 @@ public final class MessageEvent extends JsonModel {
     }
 
     /**
-     * What the message costs, in <code>currency</code>. <code>carrier</code> is the carrier's or WhatsApp's part, passed through at cost; <code>fee</code> is Didit's fee with your plan's discount. Both are <code>null</code> when one flat amount prices the message (email, or a contract or negotiated rate). <code>final</code> is <code>false</code> while the amount is an estimate, before the carrier's delivery report gives the real price.
+     * What the message costs, in <code>currency</code>. <code>carrier</code> is the carrier's or WhatsApp's part, passed through at cost. <code>fee</code> is Didit's fee with your plan's discount. When a contract rate card prices a live Telegram message, both are <code>null</code>. For all other live Telegram rates, including a negotiated rate, <code>carrier</code> is <code>0.0000</code> and <code>fee</code> equals <code>amount</code>. On other channels both fields are <code>null</code> when one flat amount prices the message (email, or a contract or negotiated rate). <code>final</code> is <code>false</code> for an estimate and <code>true</code> once the amount is billed.
      *
      * @param price the value, or {@code null} to send JSON null
      * @return this builder
@@ -579,7 +579,10 @@ public final class MessageEvent extends JsonModel {
     /** The value {@code "email"}. */
     public static final Channel EMAIL = new Channel("email");
 
-    private static final List<Channel> KNOWN_VALUES = List.of(SMS, WHATSAPP, EMAIL);
+    /** The value {@code "telegram"}. */
+    public static final Channel TELEGRAM = new Channel("telegram");
+
+    private static final List<Channel> KNOWN_VALUES = List.of(SMS, WHATSAPP, EMAIL, TELEGRAM);
 
     private Channel(String value) {
       super(value);
@@ -624,7 +627,10 @@ public final class MessageEvent extends JsonModel {
     /** The value {@code "email"}. */
     public static final Channels EMAIL = new Channels("email");
 
-    private static final List<Channels> KNOWN_VALUES = List.of(SMS, WHATSAPP, EMAIL);
+    /** The value {@code "telegram"}. */
+    public static final Channels TELEGRAM = new Channels("telegram");
+
+    private static final List<Channels> KNOWN_VALUES = List.of(SMS, WHATSAPP, EMAIL, TELEGRAM);
 
     private Channels(String value) {
       super(value);

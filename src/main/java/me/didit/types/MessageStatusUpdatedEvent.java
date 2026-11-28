@@ -447,10 +447,13 @@ public final class MessageStatusUpdatedEvent extends JsonModel {
     /** The value {@code "whatsapp"}. */
     public static final NextChannel WHATSAPP = new NextChannel("whatsapp");
 
+    /** The value {@code "telegram"}. */
+    public static final NextChannel TELEGRAM = new NextChannel("telegram");
+
     /** The value {@code "email"}. */
     public static final NextChannel EMAIL = new NextChannel("email");
 
-    private static final List<NextChannel> KNOWN_VALUES = List.of(SMS, WHATSAPP, EMAIL);
+    private static final List<NextChannel> KNOWN_VALUES = List.of(SMS, WHATSAPP, TELEGRAM, EMAIL);
 
     private NextChannel(String value) {
       super(value);

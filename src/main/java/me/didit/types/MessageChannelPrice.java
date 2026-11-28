@@ -81,7 +81,7 @@ public final class MessageChannelPrice extends JsonModel {
   }
 
   /**
-   * The carrier's or WhatsApp's part, at cost; <code>0.0000</code> from your own connected WhatsApp Business account.
+   * The carrier's or WhatsApp's part, at cost. For standard quotes this is <code>0.0000</code> on Telegram and on your own connected WhatsApp Business account. A Telegram quote under a contract rate card returns <code>null</code> here.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -91,7 +91,7 @@ public final class MessageChannelPrice extends JsonModel {
   }
 
   /**
-   * Didit's fee with your plan's discount.
+   * Didit's fee with your plan's discount. For a standard Telegram quote this equals <code>price</code>. A Telegram quote under a contract rate card returns <code>null</code> here.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -154,7 +154,7 @@ public final class MessageChannelPrice extends JsonModel {
     }
 
     /**
-     * The carrier's or WhatsApp's part, at cost; <code>0.0000</code> from your own connected WhatsApp Business account.
+     * The carrier's or WhatsApp's part, at cost. For standard quotes this is <code>0.0000</code> on Telegram and on your own connected WhatsApp Business account. A Telegram quote under a contract rate card returns <code>null</code> here.
      *
      * @param carrier the value, or {@code null} to send JSON null
      * @return this builder
@@ -164,7 +164,7 @@ public final class MessageChannelPrice extends JsonModel {
     }
 
     /**
-     * Didit's fee with your plan's discount.
+     * Didit's fee with your plan's discount. For a standard Telegram quote this equals <code>price</code>. A Telegram quote under a contract rate card returns <code>null</code> here.
      *
      * @param fee the value, or {@code null} to send JSON null
      * @return this builder
@@ -215,10 +215,13 @@ public final class MessageChannelPrice extends JsonModel {
     /** The value {@code "whatsapp"}. */
     public static final Channel WHATSAPP = new Channel("whatsapp");
 
+    /** The value {@code "telegram"}. */
+    public static final Channel TELEGRAM = new Channel("telegram");
+
     /** The value {@code "email"}. */
     public static final Channel EMAIL = new Channel("email");
 
-    private static final List<Channel> KNOWN_VALUES = List.of(SMS, WHATSAPP, EMAIL);
+    private static final List<Channel> KNOWN_VALUES = List.of(SMS, WHATSAPP, TELEGRAM, EMAIL);
 
     private Channel(String value) {
       super(value);

@@ -52,7 +52,7 @@ public final class MessagesSendParams extends JsonModel {
   }
 
   /**
-   * Recipient: an E.164 phone number (<code>+447700900123</code>), or an email address for email.
+   * Recipient: an E.164 phone number (<code>+447700900123</code>) for SMS, WhatsApp and Telegram, or an email address for email.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
@@ -82,7 +82,7 @@ public final class MessagesSendParams extends JsonModel {
   }
 
   /**
-   * Free text, sent as written, for SMS and email. On WhatsApp free text goes out only inside a 24-hour reply window (the person wrote to you first); outside it WhatsApp delivers only an approved template, so use <code>template_id</code>, or a free-text WhatsApp attempt falls back to the next channel. Limits: SMS 1,000, WhatsApp 4,096, email 10,000 characters.
+   * Free text, sent as written, for SMS, Telegram and email. On WhatsApp free text goes out only inside a 24-hour reply window (the person wrote to you first); outside it WhatsApp delivers only an approved template, so use <code>template_id</code>, or a free-text WhatsApp attempt falls back to the next channel. Limits: SMS 1,000, WhatsApp 4,096, Telegram 4,096, email 10,000 characters. Telegram sends no formatting: the text is what the person reads.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -92,7 +92,7 @@ public final class MessagesSendParams extends JsonModel {
   }
 
   /**
-   * One of your message templates; each channel uses the template's text for that channel.
+   * One of your message templates; each channel uses the template's text for that channel (Telegram uses its SMS text, without the opt-out line).
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -195,7 +195,7 @@ public final class MessagesSendParams extends JsonModel {
     }
 
     /**
-     * Recipient: an E.164 phone number (<code>+447700900123</code>), or an email address for email.
+     * Recipient: an E.164 phone number (<code>+447700900123</code>) for SMS, WhatsApp and Telegram, or an email address for email.
      *
      * @param to the value
      * @return this builder
@@ -225,7 +225,7 @@ public final class MessagesSendParams extends JsonModel {
     }
 
     /**
-     * Free text, sent as written, for SMS and email. On WhatsApp free text goes out only inside a 24-hour reply window (the person wrote to you first); outside it WhatsApp delivers only an approved template, so use <code>template_id</code>, or a free-text WhatsApp attempt falls back to the next channel. Limits: SMS 1,000, WhatsApp 4,096, email 10,000 characters.
+     * Free text, sent as written, for SMS, Telegram and email. On WhatsApp free text goes out only inside a 24-hour reply window (the person wrote to you first); outside it WhatsApp delivers only an approved template, so use <code>template_id</code>, or a free-text WhatsApp attempt falls back to the next channel. Limits: SMS 1,000, WhatsApp 4,096, Telegram 4,096, email 10,000 characters. Telegram sends no formatting: the text is what the person reads.
      *
      * @param body the value
      * @return this builder
@@ -235,7 +235,7 @@ public final class MessagesSendParams extends JsonModel {
     }
 
     /**
-     * One of your message templates; each channel uses the template's text for that channel.
+     * One of your message templates; each channel uses the template's text for that channel (Telegram uses its SMS text, without the opt-out line).
      *
      * @param templateId the value
      * @return this builder
@@ -352,10 +352,13 @@ public final class MessagesSendParams extends JsonModel {
     /** The value {@code "whatsapp"}. */
     public static final Channels WHATSAPP = new Channels("whatsapp");
 
+    /** The value {@code "telegram"}. */
+    public static final Channels TELEGRAM = new Channels("telegram");
+
     /** The value {@code "email"}. */
     public static final Channels EMAIL = new Channels("email");
 
-    private static final List<Channels> KNOWN_VALUES = List.of(SMS, WHATSAPP, EMAIL);
+    private static final List<Channels> KNOWN_VALUES = List.of(SMS, WHATSAPP, TELEGRAM, EMAIL);
 
     private Channels(String value) {
       super(value);
