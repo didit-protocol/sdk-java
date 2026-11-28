@@ -140,6 +140,8 @@ public final class MessagesConversationsResource {
    *
    * <p>A scoped API key needs write access to messages. It also needs read access to sessions, and its workflow and approved-only session limits apply: a conversation outside them, or one whose session was deleted, answers 404 as another application's would.
    *
+   * <p>The stored answer is replayed only while the conversation is inside your key's access: once the session was erased the key is refused with <code>409</code> <code>idempotency_key_forgotten</code>, and a repeat the access no longer reaches answers <code>404</code>. Send it again with a new key.
+   *
    * <p>{@code PATCH /v3/messages/conversations/{conversation_id}/}
    * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
    *
