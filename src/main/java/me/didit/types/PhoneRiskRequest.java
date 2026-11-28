@@ -11,10 +11,11 @@ import me.didit.core.Conv;
 import me.didit.core.FileUpload;
 import me.didit.core.Json;
 import me.didit.core.JsonModel;
+import me.didit.core.StringEnum;
 import org.jspecify.annotations.Nullable;
 
 public final class PhoneRiskRequest extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("phone_number", "country_code", "signals", "vendor_data", "metadata", "enable_social");
+  private static final Set<String> KNOWN_FIELDS = Set.of("phone_number", "tier", "country_code", "signals", "vendor_data", "metadata", "enable_social");
 
   private PhoneRiskRequest(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -50,13 +51,23 @@ public final class PhoneRiskRequest extends JsonModel {
   }
 
   /**
-   * Phone number to score. It is validated and normalized to E.164.
+   * Phone number to score. Normalized to E.164 when it can be parsed; a number that cannot be parsed or is invalid is accepted and answered with <code>phone.is_valid: false</code>, not rejected.
    *
    * @return the value
    * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
    */
   public String phoneNumber() {
     return Json.required(json, "phone_number", Conv.STRING);
+  }
+
+  /**
+   * Lookup tier. <code>basic</code> ($0.006) reports line type, current carrier, porting status, country and validity. It identifies the original carrier and flags temporary numbers when that information is available. <code>risk</code> ($0.04, the default) adds the <code>phone_intelligence</code> block: the 0-100 risk score, reachability and network intelligence. <code>social</code> ($0.05) adds the <code>phone_social</code> block instead. An invalid number, or a fixed line where only mobile is allowed, is answered without a paid lookup and is not billed.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<PhoneRiskRequest.Tier> tier() {
+    return Json.optional(json, "tier", Conv.enumeration(PhoneRiskRequest.Tier::of));
   }
 
   /**
@@ -100,7 +111,7 @@ public final class PhoneRiskRequest extends JsonModel {
   }
 
   /**
-   * When true, also look up the social footprint of the number - the messaging, social, e-commerce and professional platforms it is registered on. Billed as one <code>phone_social</code> unit per request in addition to this endpoint's own price.
+   * On the <code>risk</code> tier only: when true, also return the <code>phone_social</code> block, billed as one <code>phone_social</code> unit ($0.05) on top of the $0.04 risk and intelligence lookup. To get the social profiles without the risk lookup, send <code>tier: "social"</code> instead.
    *
    * @return the value, or empty when the field is absent or null
    * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -123,13 +134,23 @@ public final class PhoneRiskRequest extends JsonModel {
     }
 
     /**
-     * Phone number to score. It is validated and normalized to E.164.
+     * Phone number to score. Normalized to E.164 when it can be parsed; a number that cannot be parsed or is invalid is accepted and answered with <code>phone.is_valid: false</code>, not rejected.
      *
      * @param phoneNumber the value
      * @return this builder
      */
     public Builder phoneNumber(String phoneNumber) {
       return set("phone_number", Conv.STRING, phoneNumber);
+    }
+
+    /**
+     * Lookup tier. <code>basic</code> ($0.006) reports line type, current carrier, porting status, country and validity. It identifies the original carrier and flags temporary numbers when that information is available. <code>risk</code> ($0.04, the default) adds the <code>phone_intelligence</code> block: the 0-100 risk score, reachability and network intelligence. <code>social</code> ($0.05) adds the <code>phone_social</code> block instead. An invalid number, or a fixed line where only mobile is allowed, is answered without a paid lookup and is not billed.
+     *
+     * @param tier the value
+     * @return this builder
+     */
+    public Builder tier(PhoneRiskRequest.Tier tier) {
+      return set("tier", Conv.enumeration(PhoneRiskRequest.Tier::of), tier);
     }
 
     /**
@@ -173,7 +194,7 @@ public final class PhoneRiskRequest extends JsonModel {
     }
 
     /**
-     * When true, also look up the social footprint of the number - the messaging, social, e-commerce and professional platforms it is registered on. Billed as one <code>phone_social</code> unit per request in addition to this endpoint's own price.
+     * On the <code>risk</code> tier only: when true, also return the <code>phone_social</code> block, billed as one <code>phone_social</code> unit ($0.05) on top of the $0.04 risk and intelligence lookup. To get the social profiles without the risk lookup, send <code>tier: "social"</code> instead.
      *
      * @param enableSocial the value
      * @return this builder
@@ -196,6 +217,52 @@ public final class PhoneRiskRequest extends JsonModel {
     @Override
     protected Builder self() {
       return this;
+    }
+  }
+
+  /**
+   * Lookup tier. <code>basic</code> ($0.006) reports line type, current carrier, porting status, country and validity. It identifies the original carrier and flags temporary numbers when that information is available. <code>risk</code> ($0.04, the default) adds the <code>phone_intelligence</code> block: the 0-100 risk score, reachability and network intelligence. <code>social</code> ($0.05) adds the <code>phone_social</code> block instead. An invalid number, or a fixed line where only mobile is allowed, is answered without a paid lookup and is not billed.
+   *
+   * <p>An open enum: {@link #of(String)} accepts values this SDK version does not know yet.
+   */
+  public static final class Tier extends StringEnum {
+    /** The value {@code "basic"}. */
+    public static final Tier BASIC = new Tier("basic");
+
+    /** The value {@code "risk"}. */
+    public static final Tier RISK = new Tier("risk");
+
+    /** The value {@code "social"}. */
+    public static final Tier SOCIAL = new Tier("social");
+
+    private static final List<Tier> KNOWN_VALUES = List.of(BASIC, RISK, SOCIAL);
+
+    private Tier(String value) {
+      super(value);
+    }
+
+    /**
+     * Returns the constant for a known value, or a new instance for any other value.
+     *
+     * @param value the string value
+     * @return the enum value
+     */
+    public static Tier of(String value) {
+      return StringEnum.lookup(KNOWN_VALUES, value, Tier::new);
+    }
+
+    /**
+     * Returns the values known to this SDK version.
+     *
+     * @return the known values
+     */
+    public static List<Tier> knownValues() {
+      return KNOWN_VALUES;
+    }
+
+    @Override
+    public boolean isKnown() {
+      return KNOWN_VALUES.contains(this);
     }
   }
 }

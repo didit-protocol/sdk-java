@@ -504,7 +504,7 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
     }
 
     /**
-     * Social footprint of the phone number: the online platforms it is registered on. Present only when <code>enable_social</code> was set and the check completed. Every count may be null when no data was returned for it. <code>profiles_registered: 0</code> means the platforms were checked and the phone number was found on none of them - a valid, billable answer and a common synthetic-identity signal.
+     * Social footprint of the phone number: the online platforms it is registered on. Returned when a requested social check completes. Request it with <code>tier: "social"</code> on a Phone Risk lookup, or with <code>enable_social: true</code> on a risk-tier lookup or Phone Verification check. Every count may be null when no data was returned for it. <code>profiles_registered: 0</code> means the platforms were checked and the phone number was found on none of them - a valid, billable answer and a common synthetic-identity signal.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -687,7 +687,7 @@ public final class PhoneVerificationCheckResponse extends JsonModel {
       }
 
       /**
-       * Social footprint of the phone number: the online platforms it is registered on. Present only when <code>enable_social</code> was set and the check completed. Every count may be null when no data was returned for it. <code>profiles_registered: 0</code> means the platforms were checked and the phone number was found on none of them - a valid, billable answer and a common synthetic-identity signal.
+       * Social footprint of the phone number: the online platforms it is registered on. Returned when a requested social check completes. Request it with <code>tier: "social"</code> on a Phone Risk lookup, or with <code>enable_social: true</code> on a risk-tier lookup or Phone Verification check. Every count may be null when no data was returned for it. <code>profiles_registered: 0</code> means the platforms were checked and the phone number was found on none of them - a valid, billable answer and a common synthetic-identity signal.
        *
        * @param phoneSocial the value, or {@code null} to send JSON null
        * @return this builder

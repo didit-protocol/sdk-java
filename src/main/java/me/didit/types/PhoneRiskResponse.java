@@ -251,7 +251,7 @@ public final class PhoneRiskResponse extends JsonModel {
 
   /** Normalized phone report, the same block used by Phone Verification responses. */
   public static final class Phone extends JsonModel {
-    private static final Set<String> KNOWN_FIELDS = Set.of("status", "phone_number_prefix", "phone_number", "full_number", "country_code", "country_name", "carrier", "is_disposable", "is_virtual", "verification_method", "verification_attempts", "verified_at", "warnings", "lifecycle", "matches", "phone_intelligence", "enrichment", "phone_social");
+    private static final Set<String> KNOWN_FIELDS = Set.of("status", "phone_number_prefix", "phone_number", "full_number", "country_code", "country_name", "carrier", "original_carrier", "is_ported", "is_valid", "is_disposable", "is_virtual", "verification_method", "verification_attempts", "verified_at", "warnings", "lifecycle", "matches", "phone_intelligence", "enrichment", "phone_social");
 
     private Phone(ObjectNode json, Map<String, List<FileUpload>> files) {
       super(json, files);
@@ -357,7 +357,37 @@ public final class PhoneRiskResponse extends JsonModel {
     }
 
     /**
-     * <code>true</code> when the number belongs to a temporary or burner number service.
+     * Carrier that first issued the number, before any port. Empty string when the lookup could not identify it.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<String> originalCarrier() {
+      return Json.optional(json, "original_carrier", Conv.STRING);
+    }
+
+    /**
+     * <code>true</code> when the number has moved from its original carrier to the current one.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Boolean> isPorted() {
+      return Json.optional(json, "is_ported", Conv.BOOLEAN);
+    }
+
+    /**
+     * <code>true</code> when the number is a valid, dialable number for its country. An invalid number is answered by the prefilter and is not billed.
+     *
+     * @return the value, or empty when the field is absent or null
+     * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+     */
+    public Optional<Boolean> isValid() {
+      return Json.optional(json, "is_valid", Conv.BOOLEAN);
+    }
+
+    /**
+     * <code>true</code> when the lookup identifies the number as temporary. Coverage varies, so a negative flag alone cannot rule out a temporary number.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -457,7 +487,7 @@ public final class PhoneRiskResponse extends JsonModel {
     }
 
     /**
-     * Social footprint of the phone number: the online platforms it is registered on. Present only when <code>enable_social</code> was set and the check completed. Every count may be null when no data was returned for it. <code>profiles_registered: 0</code> means the platforms were checked and the phone number was found on none of them - a valid, billable answer and a common synthetic-identity signal.
+     * Social footprint of the phone number: the online platforms it is registered on. Returned when a requested social check completes. Request it with <code>tier: "social"</code> on a Phone Risk lookup, or with <code>enable_social: true</code> on a risk-tier lookup or Phone Verification check. Every count may be null when no data was returned for it. <code>profiles_registered: 0</code> means the platforms were checked and the phone number was found on none of them - a valid, billable answer and a common synthetic-identity signal.
      *
      * @return the value, or empty when the field is absent or null
      * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -550,7 +580,37 @@ public final class PhoneRiskResponse extends JsonModel {
       }
 
       /**
-       * <code>true</code> when the number belongs to a temporary or burner number service.
+       * Carrier that first issued the number, before any port. Empty string when the lookup could not identify it.
+       *
+       * @param originalCarrier the value
+       * @return this builder
+       */
+      public Builder originalCarrier(String originalCarrier) {
+        return set("original_carrier", Conv.STRING, originalCarrier);
+      }
+
+      /**
+       * <code>true</code> when the number has moved from its original carrier to the current one.
+       *
+       * @param isPorted the value
+       * @return this builder
+       */
+      public Builder isPorted(boolean isPorted) {
+        return set("is_ported", Conv.BOOLEAN, isPorted);
+      }
+
+      /**
+       * <code>true</code> when the number is a valid, dialable number for its country. An invalid number is answered by the prefilter and is not billed.
+       *
+       * @param isValid the value
+       * @return this builder
+       */
+      public Builder isValid(boolean isValid) {
+        return set("is_valid", Conv.BOOLEAN, isValid);
+      }
+
+      /**
+       * <code>true</code> when the lookup identifies the number as temporary. Coverage varies, so a negative flag alone cannot rule out a temporary number.
        *
        * @param isDisposable the value
        * @return this builder
@@ -650,7 +710,7 @@ public final class PhoneRiskResponse extends JsonModel {
       }
 
       /**
-       * Social footprint of the phone number: the online platforms it is registered on. Present only when <code>enable_social</code> was set and the check completed. Every count may be null when no data was returned for it. <code>profiles_registered: 0</code> means the platforms were checked and the phone number was found on none of them - a valid, billable answer and a common synthetic-identity signal.
+       * Social footprint of the phone number: the online platforms it is registered on. Returned when a requested social check completes. Request it with <code>tier: "social"</code> on a Phone Risk lookup, or with <code>enable_social: true</code> on a risk-tier lookup or Phone Verification check. Every count may be null when no data was returned for it. <code>profiles_registered: 0</code> means the platforms were checked and the phone number was found on none of them - a valid, billable answer and a common synthetic-identity signal.
        *
        * @param phoneSocial the value, or {@code null} to send JSON null
        * @return this builder
@@ -762,7 +822,7 @@ public final class PhoneRiskResponse extends JsonModel {
       }
 
       /**
-       * Carrier name. Empty string when the lookup could not identify it.
+       * Current carrier name. Empty string when the lookup could not identify it.
        *
        * @return the value, or empty when the field is absent or null
        * @throws me.didit.errors.UnexpectedResponseException when the field has another type
@@ -795,7 +855,7 @@ public final class PhoneRiskResponse extends JsonModel {
         }
 
         /**
-         * Carrier name. Empty string when the lookup could not identify it.
+         * Current carrier name. Empty string when the lookup could not identify it.
          *
          * @param name the value
          * @return this builder
