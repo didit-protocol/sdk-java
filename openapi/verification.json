@@ -24673,7 +24673,7 @@
                   "Unknown top-level field": {
                     "value": {
                       "workflow_type": [
-                        "The v3 workflow API only accepts `workflow_label`, `is_default`, `status`, `features`, `is_white_label_enabled`, `is_desktop_allowed`, `is_session_reference_enabled`, `max_retry_attempts`, `retry_window_days`, `session_expiration_time`, `face_liveness_max_attempts`, `face_match_max_attempts`."
+                        "The v3 workflow API only accepts `workflow_label`, `is_default`, `status`, `features`, `is_white_label_enabled`, `is_desktop_allowed`, `is_welcome_handoff_enabled`, `is_session_reference_enabled`, `max_retry_attempts`, `retry_window_days`, `session_expiration_time`, `face_liveness_max_attempts`, `face_match_max_attempts`."
                       ]
                     }
                   },
@@ -65600,7 +65600,7 @@
           "auth": "api_key",
           "server": true
         },
-        "description": "UAE PASS (UAE Digital Government Authority; ARE) never returns an identity: it only confirms whether the details you declared for your user (expected_details: name, date of birth, Emirates ID number) match, so it runs only inside a verification session created with expected_details. This endpoint never starts it and always answers 403 wallet_unavailable, sandbox applications included.",
+        "description": "Start a UAE PASS sign-in (UAE Digital Government Authority; ARE) without any workflow. Billed once, only when the identity is verified. The response carries next_action.type=redirect with the URL to send the user's browser to; the user returns to return_url with request_id and result appended. Read the outcome with GET /v3/id-verification/wallets/verifications/{request_id}/ or from the webhook, never from the URL. Sandbox applications get a deterministic simulation (simulated: true) that never contacts the provider. Requires onboarding: UAE PASS signs people in with your own UAE PASS service provider account, which Didit sets up for you; until it is active this endpoint answers 403 wallet_unavailable (sandbox applications are not affected).",
         "summary": "Start UAE PASS verification",
         "parameters": [
           {
@@ -65660,7 +65660,7 @@
                 }
               }
             },
-            "description": "Never returned for UAE PASS: this endpoint always answers 403 wallet_unavailable."
+            "description": ""
           },
           "400": {
             "content": {
@@ -65680,7 +65680,7 @@
                 }
               }
             },
-            "description": "Missing credentials ({detail}), or error wallet_unavailable: always for UAE PASS, which runs only inside a verification session created with expected_details."
+            "description": "Missing credentials ({detail}), or error wallet_unavailable, insufficient_credits or contract_rate_missing. For UAE PASS, wallet_unavailable also means the application is not onboarded yet (sandbox applications are not affected)."
           },
           "409": {
             "content": {
@@ -96473,7 +96473,7 @@
     "/v3/session/imports/{importId}/retry/": {
       "post": {
         "summary": "Retry a migration",
-        "description": "Run a migration that ended again as a new job, with a new key (the old one was erased). It keeps the provider, workflow, region, status mapping and face templates choice; everything already in Didit is skipped.",
+        "description": "Supply read-only provider credentials again when retrying an API migration. Didit erases credentials when a job ends. Retrying a failed Sumsub migration keeps the same job ID and continues its preview or import from the saved position. Other eligible retries create a new job with the original migration settings and skip previously imported records.",
         "operationId": "post_v3_session_imports_retry",
         "x-didit-sdk": {
           "resource": "sessions.imports",
@@ -96530,7 +96530,7 @@
         },
         "responses": {
           "201": {
-            "description": "The new import job.",
+            "description": "The resumed job for a failed Sumsub migration, or the new job for other eligible retries.",
             "content": {
               "application/json": {
                 "schema": {
@@ -118213,6 +118213,11 @@
             "description": "Allow the verification flow to run on desktop browsers.",
             "default": false
           },
+          "is_welcome_handoff_enabled": {
+            "type": "boolean",
+            "description": "Show “Continue on another device” on the hosted verification welcome screen. Set to false to hide the QR code and link from the phone welcome.",
+            "default": true
+          },
           "is_session_reference_enabled": {
             "type": "boolean",
             "description": "On Declined and In review results, the person being verified sees a short reference to the session, such as `S-20481`, shown on one line. This is the session number as the console shows it, so your support team can find the session in the console by typing it. When `false`, the result screens show no reference. Applies to the hosted flow and the SDKs.",
@@ -118293,6 +118298,10 @@
             "type": "boolean",
             "description": "Allow the verification flow to run on desktop browsers."
           },
+          "is_welcome_handoff_enabled": {
+            "type": "boolean",
+            "description": "Show “Continue on another device” on the hosted verification welcome screen. Set to false to hide the QR code and link from the phone welcome."
+          },
           "is_session_reference_enabled": {
             "type": "boolean",
             "description": "On Declined and In review results, the person being verified sees a short reference to the session, such as `S-20481`, shown on one line. This is the session number as the console shows it, so your support team can find the session in the console by typing it. When `false`, the result screens show no reference. Applies to the hosted flow and the SDKs."
@@ -118362,7 +118371,7 @@
           },
           "config": {
             "type": "object",
-            "description": "Feature-specific settings. For `QUESTIONNAIRE`, include `questionnaire_uuid` with the `questionnaire_id` returned by the questionnaire create endpoint. For `SIGNATURE`, a workflow that goes live needs a document to sign: set `signature_documents_source` to `session` or `both` so each session can bring its own, or send `status: \"draft\"` and add the documents before you publish. `signature_level: \"aes\"` is refused with `aes_not_available` while `signature_availability.aes` is `false` on the workflow. For `BANK_VERIFICATION`, `bank_countries` is a whitelist: an empty map offers no bank and runs no check; see [Bank Verification](/management-api/workflows/feature-configs#bank-verification) for every key. The node is accepted only on an account where Bank Verification is enabled. For `OCR`, `methods` selects which ID Verification methods each country may use (document capture, non-doc lookup against a government or other authoritative source, and digital identity wallets); omit it and every country is document capture only. For `SIGNATURE`, see [E-signature settings](/management-api/workflows/feature-configs#e-signature): `signature_level` accepts `simple` (the default, no ID verification, email or phone needed), `aes` and `qes` (Qualified, an add-on that is refused with `qes_not_available` while `signature_availability.qes` is `false`), and workflow documents and their fields are managed in the console, so through the API send documents and fields per session with `signature_documents_source: \"session\"`.",
+            "description": "Feature-specific settings. For `QUESTIONNAIRE`, include `questionnaire_uuid` with the `questionnaire_id` returned by the questionnaire create endpoint. For `SIGNATURE`, a workflow that goes live needs a document to sign: set `signature_documents_source` to `session` or `both` so each session can bring its own, or send `status: \"draft\"` and add the documents before you publish. `signature_level: \"aes\"` is refused with `aes_not_available` while `signature_availability.aes` is `false` on the workflow. For `BANK_VERIFICATION`, `bank_countries` is a whitelist: an empty map offers no bank and runs no check; see [Bank Verification](/management-api/workflows/feature-configs#bank-verification) for every key. The node is accepted only on an account where Bank Verification is enabled. For `OCR`, `methods` selects which ID Verification methods each country may use (document capture, non-doc lookup against a government or other authoritative source, and digital identity wallets); omit it and every country is document capture only. For `SIGNATURE`, see [E-signature settings](/management-api/workflows/feature-configs#e-signature): `signature_level` accepts `simple` (the default, no ID verification, email or phone needed), `aes` and `qes` (Qualified, an add-on that is refused with `qes_not_available` while `signature_availability.qes` is `false`), and workflow documents and their fields are managed in the console, so through the API send documents and fields per session with `signature_documents_source: \"session\"`. For `OCR`, `methods.<ISO3>.wallet.providers` may list a wallet that requires onboarding (UAE PASS) before Didit activates it for your application, on create and on update: the workflow keeps it as configured and sessions are offered it only while it is active.",
             "additionalProperties": true
           },
           "label": {
@@ -127873,7 +127882,8 @@
           "error": {
             "type": "string",
             "nullable": true,
-            "readOnly": true
+            "readOnly": true,
+            "description": "Stable machine-readable code when the sign-in did not complete. For UAE PASS, `client_changed` means the application's own UAE PASS client was disabled, deleted or replaced while the person was signing in: the sign-in fails and the workflow's fallback applies."
           },
           "interaction": {
             "allOf": [
@@ -127913,7 +127923,8 @@
             "type": "object",
             "additionalProperties": {},
             "nullable": true,
-            "readOnly": true
+            "readOnly": true,
+            "description": "The attributes the wallet shared, keyed as the wallet's catalog entry lists them. A UAE PASS sign-in returns the verified identity attributes `name_ar`, `emirates_id_number` (absent for visitors), `nationality`, `gender`, `document_type`, `document_issue_date`, `document_expiry_date` and `user_type` (`SOP2` or `SOP3`), alongside the normalized `full_name` and `date_of_birth`, and never the UAE PASS UUID."
           },
           "level_of_assurance": {
             "type": "string",
@@ -135000,7 +135011,7 @@
                 "wallet_verification": {
                   "type": "object",
                   "nullable": true,
-                  "description": "Credential evidence. Present only when `verification_method` is `wallet`; `null` otherwise. UAE PASS (`provider` `uae_pass`) is outcome only: the identity fields of this ID verification (`full_name`, `first_name`, `last_name`, `date_of_birth`, `nationality`, the document numbers) stay `null`, `attributes` holds only whether each detail declared in `expected_details` matched, and nothing UAE PASS shared about the person is returned or kept.",
+                  "description": "Credential evidence. Present only when `verification_method` is `wallet`; `null` otherwise. A UAE PASS sign-in (`provider` `uae_pass`) returns the verified identity like every other wallet: the identity fields of this ID verification carry what UAE PASS verified, and `attributes` holds its extra attributes.",
                   "properties": {
                     "provider": {
                       "type": "string",
@@ -135049,7 +135060,7 @@
                     "attributes": {
                       "type": "object",
                       "additionalProperties": true,
-                      "description": "The attributes the wallet shared, keyed as the wallet's catalog entry lists them. For UAE PASS only the comparison with `expected_details`, one key per declared detail, each `match` or `no_match`: `name_match` (`first_name` / `last_name`), `date_of_birth_match` and `identification_number_match` (the Emirates ID number). A declared detail that does not match also raises the expected-details warning (`FULL_NAME_MISMATCH_WITH_PROVIDED`, `DOB_MISMATCH_WITH_PROVIDED` or `IDENTIFICATION_NUMBER_MISMATCH_WITH_PROVIDED`), handled by the workflow's expected-details mismatch action."
+                      "description": "The attributes the wallet shared, keyed as the wallet's catalog entry lists them. A UAE PASS sign-in returns the verified identity attributes `name_ar`, `emirates_id_number` (absent for visitors), `nationality`, `gender`, `document_type`, `document_issue_date`, `document_expiry_date` and `user_type` (`SOP2` or `SOP3`), alongside the normalized `full_name` and `date_of_birth`, and never the UAE PASS UUID. Declared `expected_details` stay optional: when a session declares them, a verified identity that contradicts them raises the expected-details warning (`FULL_NAME_MISMATCH_WITH_PROVIDED`, `DOB_MISMATCH_WITH_PROVIDED` or `IDENTIFICATION_NUMBER_MISMATCH_WITH_PROVIDED`), handled by the workflow's expected-details mismatch action."
                     },
                     "portrait": {
                       "type": "string",
@@ -140690,6 +140701,10 @@
               null
             ],
             "description": "Workflow template. `null` for graph workflows created without a template."
+          },
+          "is_welcome_handoff_enabled": {
+            "type": "boolean",
+            "description": "Whether the hosted phone welcome screen offers the QR code and link to continue on another device."
           },
           "is_default": {
             "type": "boolean",
@@ -157502,7 +157517,7 @@
               "renewal_window_expired",
               "first_sync_failed"
             ],
-            "description": "Why the link failed. A failed link is not an HTTP error: the link reads with `status: failed` and this object. `bank_cancelled` ends a link only on the fifth cancel at the bank: until then a person who backs out at the bank returns to the list of banks with a notice and the link stays `opened`. A bank that cannot be reached (`bank_unavailable`) also returns the person to the list of banks and leaves the link `opened`. A link ended by the simulate operation fails at once. A renew link whose connection changed meanwhile reads `renewal_not_needed` or `renewal_window_expired`."
+            "description": "Why the link failed. A failed link is not an HTTP error: the link reads with `status: failed` and this object. `bank_cancelled` means the person backed out or declined at the bank, and `bank_unavailable` that the bank could not be reached, did not accept the sign-in, or the connection could not be completed. The link's `status` tells whether it ended: a person who cancels or declines at the bank, a bank that cannot be reached, a sign-in the bank does not accept and an unexpected error while the connection is completed leave the link `opened` and return the person to try again, to the list of banks on a first connection and to the renewal's own step on a renewal, until the tries are used up (the fifth attempt at the bank). A failure that trying again cannot fix ends the link at once. One of them is also reported as `bank_unavailable`: what comes back from the bank does not belong to the sign-in this link started, so the link reads `failed` and the business creates a new link. The same code therefore has two meanings, and the link's `status` tells them apart: `opened` means the person can try again, `failed` means the link ended. Branch on `status`, not on the code alone. A link ended by the simulate operation fails at once. A renew link whose connection changed meanwhile reads `renewal_not_needed` or `renewal_window_expired`."
           },
           "message": {
             "type": "string",
@@ -157839,7 +157854,7 @@
               "expired",
               "failed"
             ],
-            "description": "State of the link. `completed`, `cancelled`, `expired` and `failed` are final."
+            "description": "State of the link. `completed`, `cancelled`, `expired` and `failed` are final. A person who cancels or declines at the bank, whose bank cannot be reached or does not accept the sign-in, or who meets an unexpected error while the connection is completed, does not end the link: it stays `opened` and the person can try again. A first connection returns to the list of banks. A renewal returns to its own step, where the person can try the same bank again or choose Not now, which ends the link as `cancelled`. The link ends `failed` when the tries are used up (the fifth attempt at the bank) or when the failure cannot be fixed by trying again."
           },
           "url": {
             "type": "string",
@@ -160214,7 +160229,7 @@
         ]
       },
       "BankLinkCancelledEvent": {
-        "description": "A Bank Link was cancelled, by the person or by `cancel_link`. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.",
+        "description": "A Bank Link was cancelled, by the person or by `cancel_link`. On a renewal, the person's Not now ends the link this way. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.",
         "allOf": [
           {
             "$ref": "#/components/schemas/WebhookEventEnvelope"
@@ -160268,7 +160283,7 @@
         ]
       },
       "BankLinkFailedEvent": {
-        "description": "A Bank Link failed: it is over. `data.error_code` says why, for example `duplicate_conflict`. A cancel at the bank sends this event with `bank_cancelled` only on the fifth cancel; before that the person returns to the list of banks and the link stays open. A bank that cannot be reached (`bank_unavailable`) also leaves the link open and sends no event. Nothing was published or charged. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.",
+        "description": "A Bank Link failed: it is over. `data.error_code` says why, for example `duplicate_conflict`. This event is sent when the tries are used up (the fifth attempt at the bank) or when the failure cannot be fixed by trying again, for example a sign-in as another person on a renewal, a company account that needs a second approver, access the bank does not support, or access that can no longer be renewed. A person who cancels or declines at the bank, a bank that cannot be reached, a sign-in the bank does not accept and an unexpected error while the connection is completed leave the link open and send no event. A failure that trying again cannot fix ends the link at once. One of them is reported as `bank_unavailable`: what comes back from the bank does not belong to the sign-in this link started, and the business creates a new link. This event is sent once, when the link reads `failed`; the same code with the link still `opened` sends nothing, so branch on the link's `status`, not on the code alone. This holds for a first connection and for a renewal. A link that expires ends as `expired` and one you cancel ends as `cancelled`; when the person chooses Not now on a renewal, the link ends as cancelled with `bank.link.cancelled`. Nothing was published or charged. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.",
         "allOf": [
           {
             "$ref": "#/components/schemas/WebhookEventEnvelope"
@@ -167966,7 +167981,7 @@
     "bank.link.cancelled": {
       "post": {
         "summary": "Bank link cancelled",
-        "description": "A Bank Link was cancelled, by the person or by `cancel_link`. Sent for live and sandbox applications.",
+        "description": "A Bank Link was cancelled, by the person or by `cancel_link`. On a renewal, the person's Not now ends the link this way. Sent for live and sandbox applications.",
         "tags": [
           "Webhook"
         ],
@@ -168042,7 +168057,7 @@
     "bank.link.failed": {
       "post": {
         "summary": "Bank link failed",
-        "description": "A Bank Link failed: it is over. `data.error_code` says why, for example `duplicate_conflict`. A cancel at the bank sends this event with `bank_cancelled` only on the fifth cancel; before that the person returns to the list of banks and the link stays open. A bank that cannot be reached (`bank_unavailable`) also leaves the link open and sends no event. Nothing was published or charged. Sent for live and sandbox applications.",
+        "description": "A Bank Link failed: it is over. `data.error_code` says why, for example `duplicate_conflict`. This event is sent when the tries are used up (the fifth attempt at the bank) or when the failure cannot be fixed by trying again, for example a sign-in as another person on a renewal, a company account that needs a second approver, access the bank does not support, or access that can no longer be renewed. A person who cancels or declines at the bank, a bank that cannot be reached, a sign-in the bank does not accept and an unexpected error while the connection is completed leave the link open and send no event. A failure that trying again cannot fix ends the link at once. One of them is reported as `bank_unavailable`: what comes back from the bank does not belong to the sign-in this link started, and the business creates a new link. This event is sent once, when the link reads `failed`; the same code with the link still `opened` sends nothing, so branch on the link's `status`, not on the code alone. This holds for a first connection and for a renewal. A link that expires ends as `expired` and one you cancel ends as `cancelled`; when the person chooses Not now on a renewal, the link ends as cancelled with `bank.link.cancelled`. Nothing was published or charged. Sent for live and sandbox applications. Ids and statuses only: fetch the object to read it.",
         "tags": [
           "Webhook"
         ],
