@@ -17,7 +17,7 @@ import org.jspecify.annotations.Nullable;
  * White-label branding for an application: colors, fonts, radii, logo URLs and UI/UX options. Logo URLs are read-only (set them by uploading images). Custom domain and white-label email are not included.
  */
 public final class BrandingCustomization extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("color_primary", "color_secondary", "color_background", "color_panel", "color_panel_10", "color_on_panel_1", "color_on_panel_2", "color_on_background", "color_button_1", "color_button_2", "color_button_text_1", "color_button_text_2", "color_pill_text", "border_radius_panel", "border_radius_buttons", "font_family", "font_weight", "font_url", "logo_square", "logo_rectangular", "logo_rectangular_dark", "favicon", "app_public_name", "privacy_policy_url", "skip_welcome_screen", "disable_login_with_didit", "hide_progress_bar", "callback_seconds");
+  private static final Set<String> KNOWN_FIELDS = Set.of("color_primary", "color_secondary", "color_background", "color_panel", "color_panel_10", "color_on_panel_1", "color_on_panel_2", "color_on_background", "color_button_1", "color_button_2", "color_button_text_1", "color_button_text_2", "color_pill_text", "appearance", "border_radius_panel", "border_radius_buttons", "font_family", "font_weight", "font_url", "logo_square", "logo_rectangular", "logo_rectangular_dark", "favicon", "app_public_name", "privacy_policy_url", "skip_welcome_screen", "disable_login_with_didit", "hide_progress_bar", "callback_seconds");
 
   private BrandingCustomization(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -180,6 +180,16 @@ public final class BrandingCustomization extends JsonModel {
    */
   public Optional<String> colorPillText() {
     return Json.optional(json, "color_pill_text", Conv.STRING);
+  }
+
+  /**
+   * <code>brand</code> (default for new and existing customizations) uses your colors on every device. <code>match_device</code> uses your colors on light devices and a dark background with your branding on dark devices. <code>dark</code> uses the dark background with your branding on every device. Without custom colors, the default Didit look follows the device for all three values.
+   *
+   * @return the value
+   * @throws me.didit.errors.UnexpectedResponseException when the field is absent or has another type
+   */
+  public BrandingAppearance appearance() {
+    return Json.required(json, "appearance", Conv.enumeration(BrandingAppearance::of));
   }
 
   /**
@@ -476,6 +486,16 @@ public final class BrandingCustomization extends JsonModel {
     }
 
     /**
+     * <code>brand</code> (default for new and existing customizations) uses your colors on every device. <code>match_device</code> uses your colors on light devices and a dark background with your branding on dark devices. <code>dark</code> uses the dark background with your branding on every device. Without custom colors, the default Didit look follows the device for all three values.
+     *
+     * @param appearance the value
+     * @return this builder
+     */
+    public Builder appearance(BrandingAppearance appearance) {
+      return set("appearance", Conv.enumeration(BrandingAppearance::of), appearance);
+    }
+
+    /**
      * The <code>border_radius_panel</code> field.
      *
      * @param borderRadiusPanel the value
@@ -629,8 +649,10 @@ public final class BrandingCustomization extends JsonModel {
      * Builds the value.
      *
      * @return a new immutable {@code BrandingCustomization}
+     * @throws IllegalStateException when a required field is missing
      */
     public BrandingCustomization build() {
+      require("appearance", false);
       return new BrandingCustomization(buildJson(), buildFiles());
     }
 
