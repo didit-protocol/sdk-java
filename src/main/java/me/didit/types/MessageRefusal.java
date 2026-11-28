@@ -282,10 +282,13 @@ public final class MessageRefusal extends JsonModel {
       /** The value {@code "whatsapp"}. */
       public static final Channel WHATSAPP = new Channel("whatsapp");
 
+      /** The value {@code "telegram"}. */
+      public static final Channel TELEGRAM = new Channel("telegram");
+
       /** The value {@code "email"}. */
       public static final Channel EMAIL = new Channel("email");
 
-      private static final List<Channel> KNOWN_VALUES = List.of(SMS, WHATSAPP, EMAIL);
+      private static final List<Channel> KNOWN_VALUES = List.of(SMS, WHATSAPP, TELEGRAM, EMAIL);
 
       private Channel(String value) {
         super(value);
