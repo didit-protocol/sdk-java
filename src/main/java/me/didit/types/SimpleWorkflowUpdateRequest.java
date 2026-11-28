@@ -18,7 +18,7 @@ import org.jspecify.annotations.Nullable;
  * Update workflow metadata or replace the full linear feature list. STRICT field whitelist: any key not listed here is rejected with a 400.
  */
 public final class SimpleWorkflowUpdateRequest extends JsonModel {
-  private static final Set<String> KNOWN_FIELDS = Set.of("workflow_label", "is_default", "status", "features", "is_white_label_enabled", "is_desktop_allowed", "is_session_reference_enabled", "max_retry_attempts", "retry_window_days", "face_liveness_max_attempts", "face_match_max_attempts", "session_expiration_time");
+  private static final Set<String> KNOWN_FIELDS = Set.of("workflow_label", "is_default", "status", "features", "is_white_label_enabled", "is_desktop_allowed", "is_welcome_handoff_enabled", "is_session_reference_enabled", "max_retry_attempts", "retry_window_days", "face_liveness_max_attempts", "face_match_max_attempts", "session_expiration_time");
 
   private SimpleWorkflowUpdateRequest(ObjectNode json, Map<String, List<FileUpload>> files) {
     super(json, files);
@@ -111,6 +111,16 @@ public final class SimpleWorkflowUpdateRequest extends JsonModel {
    */
   public Optional<Boolean> isDesktopAllowed() {
     return Json.optional(json, "is_desktop_allowed", Conv.BOOLEAN);
+  }
+
+  /**
+   * Show “Continue on another device” on the hosted verification welcome screen. Set to false to hide the QR code and link from the phone welcome.
+   *
+   * @return the value, or empty when the field is absent or null
+   * @throws me.didit.errors.UnexpectedResponseException when the field has another type
+   */
+  public Optional<Boolean> isWelcomeHandoffEnabled() {
+    return Json.optional(json, "is_welcome_handoff_enabled", Conv.BOOLEAN);
   }
 
   /**
@@ -244,6 +254,16 @@ public final class SimpleWorkflowUpdateRequest extends JsonModel {
      */
     public Builder isDesktopAllowed(boolean isDesktopAllowed) {
       return set("is_desktop_allowed", Conv.BOOLEAN, isDesktopAllowed);
+    }
+
+    /**
+     * Show “Continue on another device” on the hosted verification welcome screen. Set to false to hide the QR code and link from the phone welcome.
+     *
+     * @param isWelcomeHandoffEnabled the value
+     * @return this builder
+     */
+    public Builder isWelcomeHandoffEnabled(boolean isWelcomeHandoffEnabled) {
+      return set("is_welcome_handoff_enabled", Conv.BOOLEAN, isWelcomeHandoffEnabled);
     }
 
     /**

@@ -681,7 +681,7 @@ public final class SessionsImportsResource {
   /**
    * Retry a migration
    *
-   * <p>Run a migration that ended again as a new job, with a new key (the old one was erased). It keeps the provider, workflow, region, status mapping and face templates choice; everything already in Didit is skipped.
+   * <p>Supply read-only provider credentials again when retrying an API migration. Didit erases credentials when a job ends. Retrying a failed Sumsub migration keeps the same job ID and continues its preview or import from the saved position. Other eligible retries create a new job with the original migration settings and skip previously imported records.
    *
    * <p>{@code POST /v3/session/imports/{importId}/retry/}
    * <p>Accepts an {@code Idempotency-Key}: set it with {@link RequestOptions.Builder#idempotencyKey(String)}.
